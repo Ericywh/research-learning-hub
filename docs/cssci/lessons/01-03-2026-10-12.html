@@ -1,0 +1,139 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><meta name="description" content="CSSCI实证论文复现精读第1章第3节：碳密集型企业碳风险认知对企业投资效率的影响，研究设计与Stata参考代码。"><title>第1章·第3节｜碳密集型企业碳风险认知对企业投资效率的影响｜CSSCI实证精读</title><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script><style>
+:root{font-family:system-ui,-apple-system,"Noto Sans SC","Microsoft YaHei",sans-serif;color:#1b3540;background:#f6f8f6;line-height:1.82}*{box-sizing:border-box}body{margin:0}a{color:#157367;text-underline-offset:3px}nav{display:flex;flex-wrap:wrap;gap:16px;background:white;border-bottom:1px solid #dae6e1;padding:16px max(22px,calc((100vw - 1050px)/2));font-size:13px}nav a{font-weight:700;text-decoration:none}main{max-width:1050px;margin:35px auto;padding:0 18px}.intro{padding:30px;border-radius:14px;background:linear-gradient(115deg,#e5f3eb,#f7faf7);border:1px solid #d7e9df}.intro .eyebrow{font-size:12px;color:#246b5e;font-weight:700;letter-spacing:.11em}.intro h1{font-size:clamp(23px,3vw,37px);line-height:1.4;margin:10px 0}.intro p{color:#506e73;font-size:14px;margin:0}.body{display:grid;grid-template-columns:210px 1fr;gap:25px;margin:25px 0}.toc{position:sticky;top:15px;align-self:start;border:1px solid #dae6e1;background:white;border-radius:10px;padding:18px}.toc a{display:block;font-size:13px;padding:5px 0;text-decoration:none}.toc b{font-size:13px}article{background:white;border:1px solid #dae6e1;border-radius:14px;padding:28px 34px;min-width:0}h2{color:#176b61;border-bottom:1px solid #dce9e5;font-size:20px;margin:30px 0 13px;padding-bottom:7px;scroll-margin-top:20px}p{margin:10px 0}table{border-collapse:collapse;width:100%;min-width:560px;font-size:13px}td{border-bottom:1px solid #e5ede9;padding:11px 12px;vertical-align:top}tr:first-child td{background:#e9f4ee;font-weight:700}tr:last-child td{border-bottom:0}.tablewrap{overflow-x:auto;border:1px solid #dce9e5;border-radius:9px;margin:16px 0}.callout{background:#ebf6f0;border-left:4px solid #51a786;padding:12px 18px;border-radius:0 8px 8px 0}.callout p{margin:6px 0}.math{background:#f8fafa;overflow-x:auto;padding:14px;margin:20px 0}.codehead{padding:9px 15px;background:#e4f1ec;border-radius:8px 8px 0 0;font-size:13px;font-weight:700}pre{margin:0 0 18px;padding:18px;background:#152c34;color:#e1eeed;white-space:pre;overflow-x:auto;border-radius:0 0 8px 8px;line-height:1.65;font-size:13px}footer{max-width:1050px;margin:auto;padding:20px;color:#678087;font-size:12px}@media(max-width:800px){.body{display:block}.toc{position:static;margin-bottom:20px}.toc a{display:inline-block;margin-right:10px}article{padding:18px}.intro{padding:20px}}
+</style></head><body><nav><a href="../">CSSCI精读库</a><a href="../../study/">课程门户</a><a href="01-02-2026-10-11.html">上一课</a><a href="https://doi.org/10.16538/j.cnki.jsufe.2026.05.005" target="_blank" rel="noopener">DOI原文</a></nav><main><section class="intro"><div class="eyebrow">CSSCI · CHAPTER 01 · LESSON 03</div><h1>第1章·第3节｜碳密集型企业碳风险认知对企业投资效率的影响</h1><p>张晨、王融睿、王雅晴、张超 · 上海财经大学学报 · 2026年10月课程归档 · 未完成数值复现</p></section><div class="body"><aside class="toc"><b>七模块精读</b><a href="#s1">一、论文信息及贡献</a><a href="#s2">二、设计与识别</a><a href="#s3">三、核心模型与推断</a><a href="#s4">四、数据及变量</a><a href="#s5">五、Stata示例</a><a href="#s6">六、结果与稳健性</a><a href="#s7">七、审稿与复现</a><a href="#sources">来源与进度</a></aside><article><div class="callout">
+<p><strong>第1章·第3节｜全课程第3课｜2026-10-12（根据已交付聊天正文补档）</strong></p>
+<p><strong>碳密集型企业碳风险认知对企业投资效率的影响——基于外部融资与内部治理的双维驱动机制</strong></p>
+<p>正文已在聊天完成；以下是七模块完整课程归档。<strong>Stata为自行推导且未运行的示例，作者数据、原码未取得，数值复现未完成。</strong></p>
+</div>
+<h2 id="s1">一、论文信息、研究问题和真正贡献</h2>
+<div class="tablewrap"><table>
+<tr>
+<td>项目</td>
+<td>已核验结果</td>
+</tr>
+<tr>
+<td>全体作者</td>
+<td>张晨、王融睿、王雅晴、张超</td>
+</tr>
+<tr>
+<td>正式题名</td>
+<td>碳密集型企业碳风险认知对企业投资效率的影响——基于外部融资与内部治理的双维驱动机制</td>
+</tr>
+<tr>
+<td>期刊卷期</td>
+<td>《上海财经大学学报》2026年第28卷第5期，62—78页</td>
+</tr>
+<tr>
+<td>DOI</td>
+<td>10.16538/j.cnki.jsufe.2026.05.005</td>
+</tr>
+<tr>
+<td>在线出版</td>
+<td>2026-10-05</td>
+</tr>
+</table></div>
+<p>研究碳密集型企业对监管、竞争及声誉碳风险的认知，是否与投资偏离正常水平的程度相关。文章贡献是基于制度理论细化CRA文本代理指标，并尝试连接外部融资约束与内部治理两条路径。计量创新不在普通的双向固定效应本身。</p>
+<h2 id="s2">二、研究设计、估计量与识别假设</h2>
+<p>研究单位为2012—2024年中国A股碳密集型上市企业—年度。碳风险认知CRA来自社会责任报告；投资效率用实际投资与预期投资偏离的绝对值INV衡量。企业FE及年份FE排除了不随时间变的企业异质性与年度共振冲击。基准系数是给定条件的相关参数，并非作者已论证的ATT/ATE。企业投资规划、融资状态、管理层更替、环保披露策略可能使CRA与投资偏差同时变化；公司披露报告的选择亦可能影响样本构成。应审查用于Richardson模型的预期投资拟合是否存在共同的结构性偏差。</p>
+<h2 id="s3">三、核心模型、固定效应和标准误</h2>
+<div class="math">\[Invest_{it}=\alpha+\boldsymbol\theta^{\top}Z_{i,t-1}+\delta_{industry}+\lambda_t+u_{it}\]</div>
+<p>先以Richardson预期投资模型估计正常投资，其中Z包括滞后成长机会、杠杆、现金流、年龄、规模、收益率及投资水平等。结果变量取残差绝对值：</p>
+<div class="math">\[INV_{it}=|\hat u_{it}|,\qquad INV_{it}=\alpha+\beta CRA_{it}+\boldsymbol\gamma^{\top}X_{it}+\mu_i+\lambda_t+\varepsilon_{it}\]</div>
+<p>INV越小才意味着投资偏离越低，不能按正向效率评分理解。原文表3括号负数与“标准误”表述存在不一致，数值更接近t统计量；复现前必须查明。企业固定效应、年份固定效应并不足以排除同时发生的时变投资机会与披露变化。</p>
+<h2 id="s4">四、数据样本及变量表</h2>
+<div class="tablewrap"><table>
+<tr>
+<td>模块</td>
+<td>真实数据和复现限制</td>
+</tr>
+<tr>
+<td>样本</td>
+<td>334家企业、2105个企业—年度观测，2012—2024年；碳密集型行业具体C25、C26、C30、C31、C32、D44</td>
+</tr>
+<tr>
+<td>财务来源</td>
+<td>CSMAR、Wind等机构授权数据</td>
+</tr>
+<tr>
+<td>文本来源</td>
+<td>企业社会责任报告；Word2Vec扩展语义词、TF-IDF加权构造碳风险认知指数CRA</td>
+</tr>
+<tr>
+<td>投资效率</td>
+<td>INV=Richardson模型投资残差绝对值；须明确逐年估计样本、投资分子分母及缺失过滤</td>
+</tr>
+<tr>
+<td>融资/治理</td>
+<td>FC融资约束，CorpGov由八项内部治理指标的主成分分析综合</td>
+</tr>
+<tr>
+<td>待复现资料</td>
+<td>原始报告语料、停用词、完整词典、Word2Vec参数、TF-IDF加权语料范围、Richardson逐年拟合规则</td>
+</tr>
+</table></div>
+<p>文中CRA均值0.0042、标准差0.0036，INV均值0.0338、标准差0.0346。表2的CASH均值报告为负数，但正文似将CASH定义为现金及等价物占总资产比例，此处应核对口径，不得擅自改写或纠错。</p>
+<h2 id="s5">五、Stata自行推导参考代码（未运行）</h2>
+<p>依赖事先获得的合法企业年度数据，全部占位字段须逐一和作者数据字典对照，<strong>不是原始do-file，不代表成功复现</strong>。</p>
+<div class="codehead">Stata · 自行推导、未执行</div><pre><code>use &quot;authorized_firm_year_clean.dta&quot;, clear
+isid firm_id year
+xtset firm_id year
+gen double INV = .
+levelsof year, local(yrs)
+foreach yy of local yrs {
+    quietly regress invest L.growth_q L.lev L.cash ///
+      L.age L.size L.ret L.invest i.industry if year==`yy'
+    tempvar u
+    quietly predict double `u' if e(sample), resid
+    quietly replace INV = abs(`u') if e(sample)
+    drop `u'
+}
+global X SIZE LEV ROE GROWTH AGE SOE TOP BOARD INDEP ///
+    DUAL FCF CASH TMTPAY MFEE
+reghdfe INV CRA $X if !missing(INV,CRA), ///
+    absorb(firm_id year) vce(cluster firm_id)
+count if e(sample)</code></pre>
+<p>注：第一阶段现金流变量与第二阶段现金持有变量需要区分；上例没有重建完整TF-IDF或工具变量，更不保证第一阶段模型与原文所有口径一致。</p>
+<h2 id="s6">六、关键结果、稳健性和解释边界</h2>
+<div class="tablewrap"><table>
+<tr>
+<td>定位</td>
+<td>论文报告值</td>
+<td>证据边界</td>
+</tr>
+<tr>
+<td>表3列2</td>
+<td>CRA=-1.225，t约-2.95；N=2105，调整R²=0.240</td>
+<td>CRA与投资偏离绝对值负相关；不能直接因果解释</td>
+</tr>
+<tr>
+<td>表3列3/4/5</td>
+<td>RegRA=-2.183；ComRA=-0.926不显著；RepRA=-2.491</td>
+<td>不同文本维度关联存在差异</td>
+</tr>
+<tr>
+<td>表4工具变量</td>
+<td>CRA=-1.632；KP rk Wald F=293.058</td>
+<td>工具强不等于排除限制成立</td>
+</tr>
+<tr>
+<td>表4匹配</td>
+<td>CRA=-1.142</td>
+<td>选择偏差和共同支持仍须核查</td>
+</tr>
+<tr>
+<td>表7过度投资组</td>
+<td>CRA=-2.998</td>
+<td>组间比较需直接检验系数差异</td>
+</tr>
+</table></div>
+<p>CRA变动一个标准差0.0036，预测INV约变化-0.00441，相对INV均值约-13.0%；这是描述性模型尺度，不是投资效率因果性提升13%。文章进行替代指标、样本调整、匹配及工具变量等稳健性检验，但报告方向一致不能证明所有时变混杂均已消除。</p>
+<h2 id="s7">七、复现障碍、审稿及改进建议</h2>
+<p>优先核查逐年度Richardson拟合、行业虚拟变量处理、缺失值与尾部季度规则，以及CRA文本训练语料、分词、Word2Vec和TF-IDF参数。省域气候政策不确定性等工具可能直接影响投资与融资条件，需论证排除限制。文中以融资约束和治理水平解释机制，应先做严格时间先后与不同结局规格，不能把逐步回归直接当成因果中介。需要检查披露选择偏差、企业内部CRA有效变异、文本指标与实际碳风险管理行动的区分。</p>
+<p><strong>状态：官方完整HTML已核对；原始数据和原始代码未取回；参考程序未运行；无数值复现结果。</strong></p>
+<h2 id="sources">官方来源和下一课</h2>
+<ul>
+<li><a href="https://qks.shufe.edu.cn/mv_html/j00003/202605/gvSlAJb1-D4VZ-h0aV-Tj01-aNYMHhRCAEdV_WEB.htm" target="_blank" rel="noopener noreferrer">官方期刊完整HTML正文</a></li>
+<li><a href="https://doi.org/10.16538/j.cnki.jsufe.2026.05.005" target="_blank" rel="noopener noreferrer">DOI</a></li>
+<li><a href="https://app.notion.com/p/3f6b54823a1281e8ba0dcd454ce2d9ec" rel="noopener">前一课 Notion 页面</a></li>
+</ul>
+<p>本课为新序列第1章·第3节／全课程第3课；下一课为第1章·第4节。本次补档不算重讲或新增课程次数。</p></article></div></main><footer>仅发布原创学术精读，不包含受限论文PDF及机构订阅数据。作者原始代码与数值复现未获核验。</footer></body></html>
