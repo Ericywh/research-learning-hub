@@ -62,9 +62,9 @@ window.ECON_COURSE={
           "chapter": 1,
           "section": 6,
           "title": "Stata基础操作与数据分析",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-12",
+          "url": "lessons/01-06.html"
         },
         {
           "id": "01-07",
