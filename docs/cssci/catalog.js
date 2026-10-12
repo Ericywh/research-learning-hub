@@ -2,6 +2,70 @@
    完整私人精读报告未经授权不得上传，切勿包含付费PDF或私有数据。 */
 window.CSSCI_CATALOG = [
   {
+    "id": "2026-10-12-01-04-urban-investment-core-technology",
+    "date": "2026-10-12",
+    "title": "城投平台入股与企业关键核心技术突破",
+    "authors": "陈伟忠、马永强、阳鹏、张正懿",
+    "journal": "上海财经大学学报",
+    "year": 2026,
+    "volume": "28",
+    "issue": "5",
+    "pages": "79—94",
+    "doi": "10.16538/j.cnki.jsufe.2026.05.006",
+    "field": "政府资本、企业关键技术创新",
+    "methods": [
+      "双向固定效应",
+      "工具变量",
+      "多期DID",
+      "双维聚类"
+    ],
+    "data_types": [
+      "企业面板",
+      "专利摘要",
+      "股权投资"
+    ],
+    "sample": "2015—2022年A股企业、24085个企业—年度观测",
+    "status": "published",
+    "data_access": "专利来源国家知识产权局、财务股权CSMAR等；971项关键技术词条留存备索",
+    "code_access": "作者原始代码未取得；课程提供自行推导且未运行的Stata框架",
+    "replication_status": "官方完整HTML及主要表格已阅读；作者原始数据与代码未取得；数值复现未完成",
+    "article_url": "lessons/01-04-2026-10-12.html",
+    "journal_url": "https://qks.shufe.edu.cn/J/CDXB/Article/CurrentIssue/CN",
+    "fulltext_url": "https://qks.shufe.edu.cn/mv_html/j00003/202605/OZvRfsIw-P7hq-5Ojs-VeCE-fdQHJAYE6jui_WEB.htm"
+  },
+  {
+    "id": "2026-10-12-01-03-carbon-risk-investment",
+    "date": "2026-10-12",
+    "title": "碳密集型企业碳风险认知对企业投资效率的影响——基于外部融资与内部治理的双维驱动机制",
+    "authors": "张晨、王融睿、王雅晴、张超",
+    "journal": "上海财经大学学报",
+    "year": 2026,
+    "volume": "28",
+    "issue": "5",
+    "pages": "62—78",
+    "doi": "10.16538/j.cnki.jsufe.2026.05.005",
+    "field": "碳风险认知、投资效率",
+    "methods": [
+      "双向固定效应",
+      "文本分析",
+      "工具变量",
+      "倾向得分匹配"
+    ],
+    "data_types": [
+      "企业面板",
+      "社会责任报告文本",
+      "财务治理"
+    ],
+    "sample": "2012—2024年334家碳密集型上市公司、2105个企业—年度观测",
+    "status": "published",
+    "data_access": "CSMAR、Wind及企业社会责任报告；词典和TF-IDF语料参数需要复建",
+    "code_access": "原始代码未取得；课程提供自行推导且未运行的Stata框架",
+    "replication_status": "官方完整HTML已阅读；作者数据、代码未取得；数值复现未完成",
+    "article_url": "lessons/01-03-2026-10-12.html",
+    "journal_url": "https://qks.shufe.edu.cn/J/CDXB/Article/CurrentIssue/CN",
+    "fulltext_url": "https://qks.shufe.edu.cn/mv_html/j00003/202605/gvSlAJb1-D4VZ-h0aV-Tj01-aNYMHhRCAEdV_WEB.htm"
+  },
+  {
     "id": "2026-10-10-national-spirit-risk-fixed-effects",
     "date": "2026-10-10",
     "title": "民族精神的赓续传承与企业风险承担——基于相机治理能力的视角",
