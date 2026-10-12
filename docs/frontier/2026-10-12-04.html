@@ -1,0 +1,66 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>第1章·第4节｜今日研究前沿（2026-10-12）</title><meta name="description" content="研究前沿日报第004期：三篇学术论文分析与方法比较"><style>:root{font-family:system-ui,-apple-system,"PingFang SC",sans-serif;color:#1d3742;background:#f6f8f6}*{box-sizing:border-box}body{margin:0;line-height:1.85}a{color:#176f69}header{background:#18464a;color:#fff;padding:34px max(20px,calc((100vw - 920px)/2))}header a{color:#daece7}main{max-width:920px;margin:30px auto 70px;padding:0 20px}.paper{background:white;border:1px solid #e0e7e4;border-radius:14px;padding:24px 32px}h1{font-size:clamp(25px,4vw,37px);line-height:1.35}h2{border-top:1px solid #e2e9e5;padding-top:18px;margin-top:26px;font-size:21px}p{margin:12px 0}blockquote,.note{margin:12px 0;padding:12px 17px;border-left:3px solid #218075;background:#edf4f0;color:#29554f}code{font-size:.9em;background:#f0f2f1;padding:2px 4px}footer{font-size:12px;color:#678;max-width:920px;margin:auto;padding:25px}small{color:#d9ede7}</style></head><body><header><a href="./">← 返回前沿日报目录</a><h1>第1章·第4节｜今日研究前沿</h1><small>全课程第4课 · 第004期 · 2026年10月12日</small></header><main><div class="paper">
+<aside class="note"></aside>
+<p>	<strong>第004期｜2026-10-12｜第1章·第4节｜全课程第4课</strong>。上期第003课已真实归档在本父目录。本期3篇均为2026-10-08首次公开的arXiv预印本，核对了原始题目、作者、摘要与版本；HTML全文读取失败，未独立审查全部定理、实验与附录，也未执行作者程序。</p>
+
+<h2>一｜预测辅助的数据融合</h2>
+<p><strong>Prediction-Powered Data Fusion for Treatment Effect Estimation</strong>。Yonghan Jung、Shu Yang；2026-10-08首次公开；arXiv:2610.12332v1；预印本；<a href="https://arxiv.org/abs/2610.12332" rel="noopener noreferrer">官方记录 ↗</a>。</p>
+<p><strong>问题：</strong> RCT样本小但能通过随机化支持因果识别；大规模观察性数据样本大却可能存在混杂，如何吸收后者的信息但不把其偏差带入ATE或CATE？</p>
+<p><strong>数据与方法：</strong> 官方摘要报告理论方法与实验验证，没有确认具体实证数据来源。作者提出AIPW-Fusion（ATE，闭式融合权重和置信区间）、DR-Fusion和R-Fusion（CATE）。以RCT的随机化信息作为效应识别基础，将观察性数据用于提高精度，而非直接假设观察性样本无混杂。</p>
+<p><strong>关键假设边界：</strong> RCT本身必须具备有效随机分配；关于数据来源关系、融合权重、交叉拟合与区间有效性的完整正则假设需要精读正文核实，不能将“无观察性数据特殊假设”误说成“无需任何假设”。</p>
+<p><strong>创新及启发：</strong> 将随机实验识别和观察性样本预测信息分离，适合政策试点与大型行政数据结合研究。<strong>非常值得精读。</strong>未核实官方复现包。</p>
+<h2>二｜干预数据中的聚类因果图学习</h2>
+<p><strong>Score-Based Learning of Cluster DAGs from Interventions</strong>。Gaetano Tedesco、Alex Markham；2026-10-08首次公开；arXiv:2610.11947v1；预印本；<a href="https://arxiv.org/abs/2610.11947" rel="noopener noreferrer">官方记录 ↗</a>。</p>
+<p><strong>问题：</strong> 当底层变量很多时，如何同时得到有因果意义的变量簇和簇间的有向边？</p>
+<p><strong>数据与方法：</strong> 官方摘要报告合成与真实干预数据实验，但未列出真实数据的具体出处。COARSE保留“先确定簇、再确定边”的结构，在第二阶段用评分搜索替代约束检验。在线性高斯条件下，干预本身可以识别簇的因果顺序，边学习转化为按簇进行的局部BIC类搜索。</p>
+<p><strong>关键假设：</strong> 线性高斯结构、干预目标识别正确；摘要主张多项式时间复杂度与一致性，但完整的可识别性条件尚待正文核对。</p>
+<p><strong>创新及启发：</strong> 对高维因果图学习减少搜索空间；摘要报告边学习步骤在部分实验中快至两个数量级，不能不加条件地泛化到任意网络。<strong>值得精读。</strong>未核实复现包。</p>
+<h2>三｜机器学习辅助的序贯条件独立性检验</h2>
+<p><strong>Sequential Conditional Independence Testing with Machine Learning Models</strong>。Angel Reyero-Lobo、Michele Meziu、Sebastian Uriel Arias、Peter Grünwald；2026-10-08首次公开；arXiv:2610.11388v1；预印本；<a href="https://arxiv.org/abs/2610.11388" rel="noopener noreferrer">官方记录 ↗</a>。</p>
+<p><strong>问题：</strong> 使用机器学习估计条件分布时，模型误差如何影响序贯条件独立性检验的功效和错误控制？</p>
+<p><strong>数据与方法：</strong> 摘要集中讨论e-variables、model-X假设及理论误差界，未核实独立实证数据集。作者将对数最优e-variable实践功效不及交换性检验的现象分解为原假设扩大、逼近误差和估计误差，讨论介于条件独立性和交换性之间的假设结构，以及可容纳三重稳健结论的估计误差界。</p>
+<p><strong>关键假设：</strong> model-X条件分布假设（以及其估计精度），序贯有效性还须根据正文核对e-variable的条件超鞅等细节；不可假定任意机器学习模型都精确控制第一类错误。</p>
+<p><strong>创新及启发：</strong> 把理论最优性与有限样本模型逼近误差联系起来，对高维变量筛选与数据依赖的条件独立检验有直接价值。<strong>非常值得精读。</strong>未核实复现包。</p>
+<h2>四｜方法横向比较</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2>五｜今日最值得精读：RCT与观察性数据融合</h2>
+<p>首推Jung与Yang，因为它直接回应经济实证中随机实验样本有限、辅助行政或企业数据库丰富的矛盾。下一步需核对：①观察性样本任意混杂下，识别如何仍以RCT为锚；②什么权重条件确保效率改善；③ATE与CATE的区间推断如何处理估计误差和样本重叠。</p>
+<h2>六｜阅读范围与去重</h2>
+<p>第001期：MADID、弱信号政策学习、时空PPI；第002期：最优匹配、网络边处理、面板SVAR；第003期：面板PIM、CCW、RW多重插补。此次三篇均不重复。下一课为第1章·第5节｜今日研究前沿，全课程第5课。<strong>本期仅确认官方元数据与摘要：无法读取HTML全文，不能宣称已完成全文审读、数值复现或复现包验证。</strong></p>
+<h2>方法对照与书目说明</h2><p>完整原生表格可查看<a href="https://app.notion.com/p/3f7b54823a12811a8599dc2fb5a94d63?pvs=204">本课 Notion 私人讲义</a>（需要访问权限）。本页保留可公开研究分析及引用，书目细节以论文官方记录为准。</p></div></main><footer>研究学习中心 · 第004期 · 公开归档</footer></body></html>
