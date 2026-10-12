@@ -1,0 +1,146 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><meta name="description" content="CSSCI实证论文复现精读第1章第4节：城投平台入股与企业关键核心技术突破，研究设计与Stata参考代码。"><title>第1章·第4节｜城投平台入股与企业关键核心技术突破｜CSSCI实证精读</title><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script><style>
+:root{font-family:system-ui,-apple-system,"Noto Sans SC","Microsoft YaHei",sans-serif;color:#1b3540;background:#f6f8f6;line-height:1.82}*{box-sizing:border-box}body{margin:0}a{color:#157367;text-underline-offset:3px}nav{display:flex;flex-wrap:wrap;gap:16px;background:white;border-bottom:1px solid #dae6e1;padding:16px max(22px,calc((100vw - 1050px)/2));font-size:13px}nav a{font-weight:700;text-decoration:none}main{max-width:1050px;margin:35px auto;padding:0 18px}.intro{padding:30px;border-radius:14px;background:linear-gradient(115deg,#e5f3eb,#f7faf7);border:1px solid #d7e9df}.intro .eyebrow{font-size:12px;color:#246b5e;font-weight:700;letter-spacing:.11em}.intro h1{font-size:clamp(23px,3vw,37px);line-height:1.4;margin:10px 0}.intro p{color:#506e73;font-size:14px;margin:0}.body{display:grid;grid-template-columns:210px 1fr;gap:25px;margin:25px 0}.toc{position:sticky;top:15px;align-self:start;border:1px solid #dae6e1;background:white;border-radius:10px;padding:18px}.toc a{display:block;font-size:13px;padding:5px 0;text-decoration:none}.toc b{font-size:13px}article{background:white;border:1px solid #dae6e1;border-radius:14px;padding:28px 34px;min-width:0}h2{color:#176b61;border-bottom:1px solid #dce9e5;font-size:20px;margin:30px 0 13px;padding-bottom:7px;scroll-margin-top:20px}p{margin:10px 0}table{border-collapse:collapse;width:100%;min-width:560px;font-size:13px}td{border-bottom:1px solid #e5ede9;padding:11px 12px;vertical-align:top}tr:first-child td{background:#e9f4ee;font-weight:700}tr:last-child td{border-bottom:0}.tablewrap{overflow-x:auto;border:1px solid #dce9e5;border-radius:9px;margin:16px 0}.callout{background:#ebf6f0;border-left:4px solid #51a786;padding:12px 18px;border-radius:0 8px 8px 0}.callout p{margin:6px 0}.math{background:#f8fafa;overflow-x:auto;padding:14px;margin:20px 0}.codehead{padding:9px 15px;background:#e4f1ec;border-radius:8px 8px 0 0;font-size:13px;font-weight:700}pre{margin:0 0 18px;padding:18px;background:#152c34;color:#e1eeed;white-space:pre;overflow-x:auto;border-radius:0 0 8px 8px;line-height:1.65;font-size:13px}footer{max-width:1050px;margin:auto;padding:20px;color:#678087;font-size:12px}@media(max-width:800px){.body{display:block}.toc{position:static;margin-bottom:20px}.toc a{display:inline-block;margin-right:10px}article{padding:18px}.intro{padding:20px}}
+</style></head><body><nav><a href="../">CSSCI精读库</a><a href="../../study/">课程门户</a><a href="01-03-2026-10-12.html">上一课</a><a href="https://doi.org/10.16538/j.cnki.jsufe.2026.05.006" target="_blank" rel="noopener">DOI原文</a></nav><main><section class="intro"><div class="eyebrow">CSSCI · CHAPTER 01 · LESSON 04</div><h1>第1章·第4节｜城投平台入股与企业关键核心技术突破</h1><p>陈伟忠、马永强、阳鹏、张正懿 · 上海财经大学学报 · 2026年10月课程归档 · 未完成数值复现</p></section><div class="body"><aside class="toc"><b>七模块精读</b><a href="#s1">一、论文信息及贡献</a><a href="#s2">二、设计与识别</a><a href="#s3">三、核心模型与推断</a><a href="#s4">四、数据及变量</a><a href="#s5">五、Stata示例</a><a href="#s6">六、结果与稳健性</a><a href="#s7">七、审稿与复现</a><a href="#sources">来源与进度</a></aside><article><div class="callout">
+<p><strong>第1章·第4节｜全课程第4课｜2026-10-12（按主动继续课程指令授课）</strong></p>
+<p><strong>城投平台入股与企业关键核心技术突破</strong></p>
+<p>完整官方HTML、模型、表1—5和脚注均已阅读。<strong>Stata参考代码由课程编写、未经运行；作者原始数据、971项技术词典及原始代码均未取得，数值复现未完成。</strong></p>
+</div>
+<h2 id="s1">一、正式书目、研究问题与真正贡献</h2>
+<div class="tablewrap"><table>
+<tr>
+<td>项目</td>
+<td>官方记录</td>
+</tr>
+<tr>
+<td>论文</td>
+<td>城投平台入股与企业关键核心技术突破</td>
+</tr>
+<tr>
+<td>全体作者</td>
+<td>陈伟忠、马永强、阳鹏、张正懿</td>
+</tr>
+<tr>
+<td>期刊</td>
+<td>《上海财经大学学报》2026年第28卷第5期，79—94页</td>
+</tr>
+<tr>
+<td>DOI</td>
+<td>10.16538/j.cnki.jsufe.2026.05.006</td>
+</tr>
+<tr>
+<td>在线出版</td>
+<td>2026年10月5日；2025—2026版CSSCI来源期刊</td>
+</tr>
+</table></div>
+<p>研究城投平台进入A股上市公司前十大股东后，企业关键核心技术领域发明专利产出是否提高。本文不是发明一种新的面板估计量，其研究贡献在于连接政府战略引导与创新资源支持，进一步考察地方基础研究、债务压力、平台业务类型、产业链溢出以及一般策略性创新的边界。</p>
+<h2 id="s2">二、研究设计、估计量、识别变异与识别假设</h2>
+<p>研究单位为2015—2022年企业—年度。ShareList是前十大股东中城投平台合计持股比例（0—1），进入基准模型时滞后一期；Patent是企业当年申请且截至数据收集时最终获授权的关键核心技术发明专利件数加1取自然对数。</p>
+<p>企业和年份固定效应的系数主要依靠同一企业年度持股比例变化识别。未观测的时变创新机会、地方政府择优入股、纾困需求、管理层变化及产业政策冲击仍可能共同影响持股与专利。以滞后ShareList代替当期持股并不能自动消除逆向因果或预期性选择；当期财务控制项还可能处在入股的传导路径上。β是条件线性投影系数，不是无需附加假设的因果ATT。</p>
+<h2 id="s3">三、模型、系数、固定效应与标准误</h2>
+<div class="math">\[Patent_{it}=\beta_0+\beta_1ShareList_{i,t-1}+\boldsymbol\gamma^{\top}X_{it}+\mu_i+\lambda_t+\varepsilon_{it}\]</div>
+<p>企业固定效应μ、年份固定效应λ；X包括Size、Lev、ROA、Fixed、Cap、Invest、FirmAge、SOE、HighTech、Top1、Board。原文在企业和省份双维度聚类，表1列2报告β=0.2461，括号为聚类调整的t=3.2718，不能读作标准误。企业嵌套在相对稳定省份时，聚类结构可能是嵌套而非真正交叉；需要说明省级聚类数量与有效推断。</p>
+<h2 id="s4">四、数据来源、样本、变量及缺失信息</h2>
+<div class="tablewrap"><table>
+<tr>
+<td>数据层级</td>
+<td>定义或复现障碍</td>
+</tr>
+<tr>
+<td>企业年度样本</td>
+<td>2015—2022年A股上市公司，24085个企业—年度观测；剔除ST、暂停上市、上市不足一年、金融保险及主要变量缺失；连续变量双侧1%缩尾</td>
+</tr>
+<tr>
+<td>股东识别</td>
+<td>前十大股东中城投平台合计持股比例；原始穿透名单、名称合并与股份时间映射须核查</td>
+</tr>
+<tr>
+<td>专利数据</td>
+<td>国家知识产权局；研究使用最终授权的发明专利，并按专利申请年份归属</td>
+</tr>
+<tr>
+<td>关键技术词典</td>
+<td>基于工业“四基”发展目录和“卡脖子”技术目录扩展至971项技术；摘要分词去停用词后使用SequenceMatcher ratio，相似度阈值85%</td>
+</tr>
+<tr>
+<td>财务和股权</td>
+<td>CSMAR、中国研究服务数据平台；具体企业ID、资产负债表和缩尾顺序需按数据字典对齐</td>
+</tr>
+<tr>
+<td>控制变量</td>
+<td>Size、Lev、ROA、Fixed、Cap、Invest、FirmAge、SOE、HighTech、Top1、Board</td>
+</tr>
+<tr>
+<td>未得资料</td>
+<td>971项技术词条、授权观察截止日、完整原始专利匹配、公司股东名单、描述统计及多项附表部分留存备索</td>
+</tr>
+</table></div>
+<p>申请年份计数却要求事后最终获得授权，造成靠近样本末年的专利可能观察不足，出现授权滞后右删失。论文用基于授权延迟分布的修正口径处理部分后期年份，但独立复现前应取得授权窗口和技术词典。</p>
+<h2 id="s5">五、自行推导的Stata参考代码（没有运行）</h2>
+<p>以下假定企业—年度数据已经合法获得，城投平台持股和专利分类已经按论文口径完成。<strong>不是作者原始代码，不代表系数已数值复现。</strong></p>
+<div class="codehead">Stata · 自行推导、未执行</div><pre><code>use &quot;firm_year_verified.dta&quot;, clear
+isid firm_id year
+xtset firm_id year
+
+* 以最终授权的核心技术发明专利申请年份计数
+gen double Patent = ln(key_patents + 1) if key_patents&gt;=0
+
+* ShareList为前十大股东内城投合计持股比例（0到1）
+gen double LShare = L.share_list
+
+global X Size Lev ROA Fixed Cap Invest FirmAge ///
+    SOE HighTech Top1 Board
+
+* 企业FE＋年份FE；企业和省份双维聚类（原文规格）
+reghdfe Patent LShare $X, absorb(firm_id year) ///
+    vce(cluster firm_id province_id)
+
+* 省份×年份共同冲击敏感性检验（不同于原文基准）
+reghdfe Patent LShare $X, ///
+    absorb(firm_id province_id#year) ///
+    vce(cluster province_id)
+
+count if e(sample)</code></pre>
+<p>运行须核实变量存在、动态省份归属、重复证券代码、股东名单、专利文本分类、reghdfe版本及原文缩尾规则。数据缺失时程序无法复现论文结果。</p>
+<h2 id="s6">六、主要回归结果、稳健性与经济统计解释</h2>
+<div class="tablewrap"><table>
+<tr>
+<td>官方表格</td>
+<td>核对数值及边界</td>
+</tr>
+<tr>
+<td>表1列1</td>
+<td>ShareList=0.2262，企业＋省级双维聚类t=3.3505</td>
+</tr>
+<tr>
+<td>表1列2</td>
+<td>ShareList=0.2461，t=3.2718；N=24085；调整R²=0.7110</td>
+</tr>
+<tr>
+<td>表2列3</td>
+<td>风险承担代理变量ROA_SD上的ShareList=0.0295，t=2.2026</td>
+</tr>
+<tr>
+<td>表3列2</td>
+<td>政府补贴Subsidy对应ShareList=0.0027，t=2.1276</td>
+</tr>
+<tr>
+<td>表4列2/列3</td>
+<td>基础研究强地区ShareList=0.5107；城投债发行规模小地区=0.8309</td>
+</tr>
+<tr>
+<td>表5列1</td>
+<td>产业投资类城投平台=0.3676，t=2.2638</td>
+</tr>
+</table></div>
+<p>ShareList标准差0.058，因变量为ln(1+件数)，因此exp(0.2461×0.058)-1≈1.44%，表示模型预测的(1+专利件数)条件变化尺度，而不是可直接声称实得每家企业专利量因果增长1.44%。原文还将解释力度同专利样本均值进行比较。</p>
+<p>稳健性包括调整授权滞后、5公里城投平台密度和行业—城市均值偏差立方两个工具变量、首次入股多期DID及事前动态趋势、是否被持股替代指标、地区—年份高维固定效应、Heckman选择处理等。文中报告弱工具检验F=40.535、过度识别检验p=0.785；这些统计量不能证明排除限制成立。多期DID事前系数不显著亦非平行趋势自动成立；正文附注称堆叠DID结果留存备索。部分稳健性完整回归表未刊出，不能称已独立核对。</p>
+<h2 id="s7">七、复现障碍、学术审稿和改进优先级</h2>
+<p>最重要的识别挑战是地方政府可能择优投资于高技术前景企业，或针对经营不佳企业纾困；必须重建首次入股时间、检查动态事前差异，采用适合交错处理的DID稳健估计，并评估所有控制项的时间顺序。使用城投密度做IV可能反映区域产业基础、创新投入；使用由ShareList自身构造的立方偏差做IV尤其需要非常严格的排除限制论证。专利分类须人工验证阈值85%下的精确率和召回率，做80%/90%门槛检验，并处理授权滞后的右删失。若地区与企业聚类有嵌套，应核查省份数量及稳健的聚类推断。</p>
+<p><strong>复现状态：官方HTML全文和表1—5、讨论、注释已核对；原始股东、专利数据、971词条与原始程序未取得；Stata示例未运行；尚未完成数值复现。</strong></p>
+<h2 id="sources">正式来源与章末回顾</h2>
+<ul>
+<li><a href="https://qks.shufe.edu.cn/mv_html/j00003/202605/OZvRfsIw-P7hq-5Ojs-VeCE-fdQHJAYE6jui_WEB.htm" target="_blank" rel="noopener noreferrer">上海财经大学学报官方完整HTML</a></li>
+<li><a href="https://doi.org/10.16538/j.cnki.jsufe.2026.05.006" target="_blank" rel="noopener noreferrer">DOI</a></li>
+<li><a href="https://app.notion.com/p/3f7b54823a128150a22fe32db3237cd3" rel="noopener">前一课 Notion 页面</a></li>
+</ul>
+<p>第1章四课的识别线索：组内时变回归→技术测量误差→生成型投资偏差→政府资本入股选择。下一章进入DID及其条件，真正的政策处理与组别确定应同普通企业FE进行区分。</p></article></div></main><footer>仅发布原创学术精读，不包含受限论文PDF及机构订阅数据。作者原始代码与数值复现未获核验。</footer></body></html>
