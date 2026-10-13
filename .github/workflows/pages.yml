@@ -8,10 +8,10 @@ on:
       - '.github/workflows/pages.yml'
       - 'scripts/build-econometrics-public.cjs'
   workflow_dispatch:
-  # Daily fallback if a GitHub App push event did not start deployment.
-  # 02:15 UTC = 10:15 Asia/Taipei; does not alter the ChatGPT lesson schedule.
+  # Every four hours as a recovery path when GitHub App pushes do not
+  # initiate Actions; this does not alter the ChatGPT lesson schedule.
   schedule:
-    - cron: '15 2 * * *'
+    - cron: '15 */4 * * *'
 
 permissions:
   contents: read
