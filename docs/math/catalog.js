@@ -29,35 +29,35 @@ window.MATH_COURSE={
           "number": 3,
           "title": "矩阵与多变量数据表",
           "published": true,
-          "date": "2026-10-09",
-          "url": "lessons/01-03.html"
+          "date": "2026-10-11",
+          "url": "lessons/2026-10-11-01-03.html"
         },
         {
           "chapter": 1,
           "section": 4,
           "number": 4,
           "title": "矩阵与向量相乘：批量预测",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-12",
+          "url": "lessons/2026-10-12-01-04.html"
         },
         {
           "chapter": 1,
           "section": 5,
           "number": 5,
           "title": "矩阵乘法和线性映射",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-12",
+          "url": "lessons/2026-10-12-01-05.html"
         },
         {
           "chapter": 1,
           "section": 6,
           "number": 6,
           "title": "随机变量与随机向量的区别及联系",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-13",
+          "url": "lessons/2026-10-13-01-06.html"
         },
         {
           "chapter": 1,
