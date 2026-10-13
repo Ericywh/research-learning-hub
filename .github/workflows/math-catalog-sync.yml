@@ -1,0 +1,63 @@
+name: Automatically repair mathematics lesson catalog
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/math/lessons/**'
+      - 'scripts/sync_math_catalog.py'
+      - '.github/workflows/math-catalog-sync.yml'
+  # Backup check around 08:30 Asia/Taipei, independent of ChatGPT task timing.
+  schedule:
+    - cron: '30 0 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: mathematics-catalog-sync
+  cancel-in-progress: false
+
+jobs:
+  reconcile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Reconcile 73-lesson catalog using published files
+        run: python3 scripts/sync_math_catalog.py
+
+      - name: Detect catalog edits
+        id: changed
+        shell: bash
+        run: |
+          if git diff --quiet -- docs/math/catalog.js; then
+            echo "needed=false" >> "$GITHUB_OUTPUT"
+            echo "Catalog matches files; no commit needed."
+          else
+            echo "needed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Commit only repaired mathematics catalog
+        if: steps.changed.outputs.needed == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/math/catalog.js
+          git commit -m "Auto-index new mathematics lesson HTML files"
+          git push origin HEAD:main
+
+      - name: Re-publish repaired catalog to GitHub Pages
+        if: steps.changed.outputs.needed == 'true'
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run pages.yml --ref main
