@@ -72,9 +72,9 @@ window.ECON_COURSE={
           "chapter": 1,
           "section": 7,
           "title": "Python基础操作与数据分析",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-13",
+          "url": "lessons/01-07.html"
         }
       ]
     },
