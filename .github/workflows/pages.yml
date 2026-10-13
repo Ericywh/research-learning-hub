@@ -359,3 +359,65 @@ jobs:
           grep -Fq "href=\"lessons/$LATEST_ID.html\"" /tmp/econometrics-index.html
           grep -Fq '<pre' /tmp/econometrics-lesson.html
           echo "Verified newest econometrics course $LATEST_ID on public GitHub Pages."
+
+  verify-public-math:
+    name: Verify public mathematics pages
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out main source
+        uses: actions/checkout@v4
+
+      - name: Verify HTTPS catalog and every published mathematics lesson
+        shell: bash
+        env:
+          DEPLOY_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          SITE="https://ericywh.github.io/research-learning-hub/math"
+          node <<'NODE' > /tmp/math-pages.tsv
+          const fs=require('node:fs'),vm=require('node:vm');
+          const context={window:{}};
+          vm.runInNewContext(fs.readFileSync('docs/math/catalog.js','utf8'),context);
+          const chapters=context.window.MATH_COURSE.chapters;
+          if(chapters.length!==6)throw Error('Unexpected mathematics chapter count');
+          const lessons=chapters.flatMap(x=>x.lessons);
+          if(lessons.length!==73)throw Error('Expected 73 mathematics lessons');
+          let count=0;
+          for(const l of lessons) {
+            if(!l.published)continue;
+            if(!/^lessons\/[\w.-]+\.html$/.test(l.url||''))throw Error('Unsafe lesson URL');
+            const file='docs/math/'+l.url;
+            if(!fs.existsSync(file))throw Error('Missing published source: '+file);
+            if(fs.readFileSync(file,'utf8').length<1500)throw Error('Incomplete HTML: '+file);
+            console.log(l.url+'\t'+l.title);
+            count++;
+          }
+          if(!count)throw Error('No published mathematics lessons');
+          NODE
+          check() {
+            local url="$1" expected="$2" output="$3" status
+            for attempt in $(seq 1 10); do
+              status=$(curl -L -sS --connect-timeout 10 --max-time 30 -o "$output" -w '%{http_code}' "$url?verify=$DEPLOY_SHA" || true)
+              if [[ "$status" == "200" ]] && grep -Fq "$expected" "$output"; then
+                echo "PASS HTTP 200 plus content marker: $url"
+                return 0
+              fi
+              echo "Attempt $attempt: status=$status, expected marker missing at $url"
+              sleep 12
+            done
+            echo "::error::GitHub Pages mathematics HTTPS validation failed for $url"
+            return 1
+          }
+          check "$SITE/" '每日10分钟数学微课程' /tmp/math-index.html
+          check "$SITE/catalog.js" 'window.MATH_COURSE=' /tmp/math-catalog.js
+          i=0
+          while IFS=$'\t' read -r lesson title; do
+            i=$((i+1))
+            check "$SITE/$lesson" "$title" "/tmp/math-lesson-$i.html"
+            grep -Fq "$lesson" /tmp/math-catalog.js || {
+              echo "::error::Public mathematics catalog does not link $lesson"
+              exit 1
+            }
+          done </tmp/math-pages.tsv
+          echo "Mathematics GitHub Pages HTTPS verification passed for $i published lesson pages."
