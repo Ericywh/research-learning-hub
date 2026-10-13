@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>第1章·第7节｜Python基础操作与数据分析 · 计量经济学120天</title>
+<meta name="description" content="计量经济学120天系统课程第7课：Python DataFrame、官方汽车数据、Stata与Python回归比较及练习答案。"/>
+<style>:root{font-family:system-ui,-apple-system,"Noto Sans SC","Microsoft YaHei",sans-serif;background:#f6f8f7;color:#213b49;font-size:15px;line-height:1.95}*{box-sizing:border-box}body{margin:0}a{color:#176c67}header,main,footer{max-width:940px;margin:auto;padding:16px}header{display:flex;gap:22px;flex-wrap:wrap;font-size:13px}.hero{background:#e6f2ed;border-radius:16px;padding:30px;margin:12px 0 22px}.hero h1{font-size:clamp(25px,4vw,36px);line-height:1.5;margin:13px 0}.hero p,.meta{color:#4c7278}.eyebrow{letter-spacing:.09em;font-size:12px;font-weight:700;color:#24726b}section{background:white;border:1px solid #dce7e3;border-radius:14px;padding:26px;margin:15px 0}section h2{font-size:21px;line-height:1.6;color:#165f59;margin:0 0 12px}h3{font-size:17px;color:#235a5d}p{margin:12px 0}li{margin:7px 0}.equation{background:#f0f6f3;border-radius:10px;padding:20px;overflow-x:auto;text-align:center}pre{background:#182e3b;color:#eef6f8;padding:19px;border-radius:10px;overflow-x:auto;font:12px/1.8 Consolas,Monaco,monospace}p code,li code{background:#eef3f1;padding:2px 4px;border-radius:4px}nav{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap;padding:20px 0}.small{font-size:13px;color:#627d80}footer{padding:24px 16px;font-size:12px;color:#667c85}@media(max-width:650px){.hero{padding:19px}section{padding:17px}pre{font-size:11px}.equation{font-size:13px}}</style>
+<script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['$$','$$']]},svg:{fontCache:'global'}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head><body>
+<header><a href="../">← 120节课程目录</a><a href="../../study/#courses">学习中心</a></header>
+<main>
+<div class="hero"><div class="eyebrow">CHAPTER 01 · LESSON 07 / 120</div>
+<h1>第1章·第7节｜Python基础操作与数据分析</h1>
+<p>2026年10月13日 · 预计学习10—15分钟</p>
+<p>如何用Python进行数据清洗、描述统计、可视化与OLS回归，并与Stata核对结果？</p>
+<p class="small">上一讲：Stata基础操作与数据分析 · 下一讲：一元线性回归</p></div>
+<section><p>全课程第7课 / 共120课｜2026年10月13日｜预计学习10—15分钟。</p>
+</section><section><h2>一、通俗理解</h2>
+<p>研究“汽车越重，价格是否越高”时，原始数据通常不能直接用于回归：需要先检查字段、删除相关变量的缺失值、构造统一单位、观察分布，再估计模型。Python中的 <strong>DataFrame（数据框）</strong> 是按行、列组织的数据表：每行是一辆车型记录，每列是价格、重量等变量。<code>pandas</code> 负责数据整理，<code>matplotlib</code> 负责画图，<code>statsmodels</code> 负责统计建模。Python的优势不是自动得出因果结论，而是可以把数据处理和估计写成一份可重复运行的程序。</p>
+</section><section><h2>二、核心理论与公式</h2>
+<p>描述统计先回答“样本的典型水平是多少”。价格的样本均值为：</p>
+<div class="equation">$$
+\bar p=\frac{1}{n}\sum_{i=1}^{n}price_i
+$$</div>
+<p>其中 <span class="inline-math">\(n\)</span> 是非缺失价格记录数。均值容易受到极端高价车型影响，因此还应检查最小值、最大值与标准差。</p>
+<p>随后考察控制产地类别后的条件线性关系：</p>
+<div class="equation">$$
+price_i=\alpha+\beta\,weight100_i+\gamma\,foreign_i+u_i
+$$</div>
+<p><code>weight100=weight/100</code>，所以 <span class="inline-math">\(\beta\)</span> 的单位是“美元/100磅”；<code>foreign</code> 为0/1变量，<span class="inline-math">\(\gamma\)</span> 表示在重量相同的模型条件下，进口与国产车型的预测价格差。OLS（普通最小二乘法）选择系数，使样本残差平方和最小。系数可被计算需要解释变量无完全共线性；要作可信的统计推断还需合适的抽样与误差条件；要作因果解释则需要更强的外生性等识别条件。</p>
+</section><section><h2>三、实证案例与数据</h2>
+<p>继续使用Stata官方1978年汽车数据 <code>auto.dta</code>，原始数据有<strong>74条车型记录、12个变量</strong>，属于截面数据。研究变量为价格 <code>price</code>（美元）、重量 <code>weight</code>（磅）、产地 <code>foreign</code>（0国产、1进口）。Stata用 <code>sysuse auto</code> 读取；Python从<a href="https://www.stata-press.com/data/r19/auto.dta" rel="noopener noreferrer">Stata Press公开数据地址</a>读取同一数据。两端都只保留这三个变量的完整观测，避免软件默认缺失处理造成样本不一致。官方示例报告原始样本的平均价格约6165美元、平均重量约3019磅；本课不虚构未运行的回归系数。</p>
+</section><section><h2>四、Stata与Python实现</h2>
+<h3>4.1 Stata</h3>
+<pre><code class="language-javascript">* 读取官方汽车数据并固定共同样本
+sysuse auto, clear
+keep if !missing(price, weight, foreign)
+* 查看总体描述统计与按产地分组的价格
+summarize price weight
+bysort foreign: summarize price
+* 以100磅为单位构造重量变量
+generate weight100 = weight/100
+* 绘制价格—重量散点图
+scatter price weight
+* 产地控制变量；异方差稳健标准误
+regress price c.weight100 i.foreign, vce(robust)</code></pre>
+<p><code>bysort foreign:</code> 表示先按产地分组，再分别执行命令；<code>i.foreign</code> 告诉Stata把产地视为分类变量。回归结果重点看 <code>weight100</code> 的系数、稳健标准误及样本数。</p>
+<h3>4.2 Python</h3>
+<p>先安装依赖：<code>pip install pandas matplotlib statsmodels</code>。</p>
+<pre><code class="language-python">import pandas as pd
+import matplotlib.pyplot as plt
+import statsmodels.formula.api as smf
+
+# 读取与Stata相同的官方数据，保留产地数值编码
+url = &quot;https://www.stata-press.com/data/r19/auto.dta&quot;
+df = pd.read_stata(url, convert_categoricals=False)
+# 选择变量、去除缺失值，并生成每100磅重量
+d = df[[&quot;price&quot;, &quot;weight&quot;, &quot;foreign&quot;]].dropna().copy()
+d[&quot;weight100&quot;] = d[&quot;weight&quot;] / 100
+# 描述统计及分组均值
+print(d[[&quot;price&quot;, &quot;weight&quot;]].describe())
+print(d.groupby(&quot;foreign&quot;)[&quot;price&quot;].agg([&quot;count&quot;, &quot;mean&quot;]))
+# 绘制散点图
+d.plot.scatter(x=&quot;weight&quot;, y=&quot;price&quot;)
+plt.tight_layout()
+plt.show()
+# 相同线性模型；HC1稳健标准误
+fit = smf.ols(&quot;price ~ weight100 + C(foreign)&quot;, data=d).fit(
+    cov_type=&quot;HC1&quot;
+)
+print(fit.summary())</code></pre>
+<p><code>dropna()</code> 删除所选变量存在缺失的行；<code>groupby()</code> 计算各产地组统计量；<code>C(foreign)</code> 指定分类变量。两种软件在相同样本、编码和模型下，点估计应一致；Stata的 <code>vce(robust)</code> 与Python的 <code>HC1</code> 对应常用异方差稳健协方差估计。若标准误出现差异，先核对样本、变量编码和自由度处理，而不是直接认定某个软件算错。</p>
+</section><section><h2>五、初学者避坑</h2>
+<p><strong>其一，混淆“读取成功”与“数据可用”。</strong> 应检查数据类型、缺失和异常值；本例不能因为显示74行，就默认任何变量都完整。</p>
+<p><strong>其二，忽视分类变量编码。</strong> Python若直接写 <code>+ foreign</code>，在本例0/1变量下点估计仍相同，但对有三个及以上类别的变量不能照搬；应使用 <code>C()</code>。</p>
+<p><strong>其三，把稳健标准误当作因果识别。</strong> 它主要调整不确定性估计，不能消除遗漏变量、反向因果或样本选择偏差。</p>
+</section><section><h2>六、今日练习</h2>
+<p><strong>概念题：</strong> DataFrame、<code>dropna()</code> 与 <code>groupby()</code> 分别负责什么？</p>
+<p><strong>实操题：</strong> 某车型 <code>weight=3200</code> 磅，<code>weight100</code> 等于多少？如何用Python分别计算国产、进口汽车的平均价格？</p>
+<p><strong>参考答案：</strong> DataFrame是行列数据表；<code>dropna()</code> 删除指定字段存在缺失的观测；<code>groupby()</code> 按类别汇总。3200/100=32；执行 <code>d.groupby(&quot;foreign&quot;)[&quot;price&quot;].mean()</code> 即可得到两组样本均价，不必预先猜测数值。</p>
+</section><section><h2>七、学习进度</h2>
+<p><strong>当前：第1章·第7节｜Python基础操作与数据分析；全课程第7/120课。</strong> 核心是DataFrame、数据清理、分组统计和OLS双软件复现。数据：Stata官方1978汽车数据。<strong>下一节：第2章·第1节｜一元线性回归（全课程第8课）。</strong> 第一章至此完成。</p></section>
+<nav><a href="01-06.html">← 第6课</a><a href="../">返回课程目录 →</a></nav>
+</main><footer>计量经济学120天系统课程 · 本文基于已授课第7课私人Notion完整原文公开排版；不包含任何私人笔记或受限材料。</footer></body></html>
