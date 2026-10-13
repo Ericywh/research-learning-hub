@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="每日10分钟数学微课程，全课程第6课：随机变量与随机向量的区别及联系"><title>第1章·第6节｜随机变量与随机向量的区别及联系</title><link rel="stylesheet" href="../site.css"><script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script><style>
+.article-wrap{max-width:820px;margin:0 auto;padding:38px 20px 80px}.article{font-size:17px;line-height:1.9;color:#263d3a}.article h2{margin-top:1.9em;font-size:1.35em}.article h3{margin-top:1.5em}.article p{margin:1em 0}.article strong{font-weight:700}.article .callout{padding:16px 20px;border-radius:12px;background:#edf8f3;border-left:4px solid #438d74}.article .equation,.article .mathbox{overflow:auto;padding:12px;background:#f4f8f5;border-radius:8px}.article .table-scroll{overflow-x:auto}.article table{border-collapse:collapse;width:100%;margin:1.5em 0}.article td,.article th{border:1px solid #d5e3dc;padding:8px 12px}.article tr:first-child{background:#eaf5ef;font-weight:600}.article .answers{padding:12px 18px;border:1px solid #cfded5;border-radius:9px}.article summary{cursor:pointer;font-weight:700} .muted{color:#61736e;font-size:14px}</style></head>
+<body><header><div class="wrap"><a href="../">← 数学课程目录</a><a href="../../">研究学习中心 ↗</a></div></header><main class="article-wrap"><div class="kicker">MATHEMATICS · PROBABILITY · ECONOMETRICS</div><h1>第1章·第6节｜随机变量与随机向量的区别及联系</h1><p class="muted">全课程第6课 / 共73课 · 2026-10-13 · 预计学习8分钟</p><article class="article"><aside class="callout">
+<p>全课程第6课 / 共73课 · 2026年10月13日 · 预计学习8分钟 <strong>核心问题：</strong> 数据表里的数值已经确定，为什么统计模型仍要使用“随机向量”？</p>
+</aside>
+<h3>一、从数据矩阵走向概率模型</h3>
+<p>前五课讨论向量、矩阵与线性映射，重点是给定数字以后怎样计算。本课转向统计推断：<strong>观测之前，数据可能取不同数值；观测之后，才得到具体结果。</strong> 例如，某家企业下一年的研发投入与绿色专利数量在事前尚不确定。可以用两个随机变量分别描述它们，再将两者放在同一个随机向量中。随机向量不是“随机排列的数字”，而是多个随机变量组成的整体。</p>
+<h3>二、定义与必要条件</h3>
+<p>设 X 是一个实值随机变量，样本空间为 Ω。若 X、Y 定义在同一个概率空间上，则：</p>
+<div class="mathbox">\[\boxed{Z=\begin{pmatrix}X\\Y\end{pmatrix}:\Omega\to\mathbb R^2}\]</div>
+<p>称 Z 为二维随机向量。严格地说，随机变量及随机向量都需满足相应的可测性条件。 <strong>随机变量只有一个数值分量；随机向量有多个分量。</strong> 各分量可能相关，也可能独立，不能仅凭它们组成向量就作出独立性判断。 对离散随机向量，联合概率刻画分量同时取值的可能性：</p>
+<div class="mathbox">\[\boxed{p_{X,Y}(x,y)=P(X=x,\;Y=y)}\]</div>
+<p>它比两个单独的边际分布包含更多关于变量共同变化的信息。</p>
+<h3>三、手算案例：一次掷骰子产生两个随机变量</h3>
+<p>以下是公平六面骰子的理论教学案例。定义 X=1 表示点数为偶数，否则为0；Y=1 表示点数大于3，否则为0。一次掷骰子同时决定 X 和 Y。</p>
+<div class="table-scroll"><table>
+<tr>
+<td>骰子点数</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+<td>6</td>
+</tr>
+<tr>
+<td>X：偶数</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Y：大于3</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</table></div>
+<p>两个变量各有一半概率等于1：P(X=1)=P(Y=1)=1/2。但它们同时等于1的情况只有点数4和6，所以：</p>
+<div class="mathbox">\[P(X=1,Y=1)=\frac26=\frac13\ne\frac12\times\frac12\]</div>
+<p>因此 <strong>X与Y不独立</strong>。如果实际掷出4，随机向量的一次实现值就是 z=(1,1)ᵀ；实现值不再是尚未观测的随机结果。</p>
+<h3>四、统计与计量经济学应用</h3>
+<p>在企业面板研究中，可用随机向量 Zᵢ=(Rᵢ,Gᵢ)ᵀ 表示企业的研发投入和绿色创新结果；收集数据后得到具体观测值 zᵢ。将多个观测值排成矩阵，是数据组织；规定随机向量的联合分布或条件矩，则属于统计建模。<strong>矩阵乘法正确，不意味着随机性、样本选择或识别假设自动成立。</strong></p>
+<h3>五、两分钟自测</h3>
+<p><strong>第1题｜概念题：</strong> 随机向量的两个分量必须相互独立吗？一次观测得到的数值向量与随机向量有什么区别？ <strong>第2题｜计算题：</strong> 在上述骰子案例中，求 P(X=1,Y=0)。</p>
+<details class="answers">
+<summary>查看两题参考答案</summary>
+<p><strong>第1题：</strong> 不必独立。随机向量描述观测前可能出现的联合结果；观测值向量是某一次已经实现的具体数值。 <strong>第2题：</strong> 只有点数2满足“偶数且不大于3”，所以 P(X=1,Y=0)=1/6。</p>
+</details>
+<h3>六、知识衔接</h3>
+<p>前五课解决了向量与矩阵的计算问题；本课开始区分<strong>随机对象</strong>与<strong>已经实现的数据</strong>，为后续期望、方差、协方差及统计推断奠定基础。 下一课：第1章·第7节｜期望与线性性（全课程第7课）。</p></article><footer class="muted"><p>本课程为教学内容，数学与统计推断条件以各节说明为准。</p><p><a href="https://app.notion.com/p/3f8b54823a128184a10bc8bff1dc5d18?pvs=204">查看对应 Notion 私人讲义（需访问权限）</a></p><p><a href="../">返回课程目录</a></p></footer></main></body></html>
