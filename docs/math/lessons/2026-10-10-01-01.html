@@ -1,0 +1,53 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="每日10分钟数学微课程第1课（2026-10-10重新讲授版）"><title>第1章·第1节｜为什么统计学需要向量？从观测数据到随机向量与回归模型</title><link rel="stylesheet" href="../site.css"><script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script><style>.page{max-width:820px;margin:32px auto;padding:0 20px 72px}.article{font-size:17px;line-height:1.9}.article h2{margin-top:1.8em}.article table{border-collapse:collapse;margin:18px 0;width:100%}.article td{border:1px solid #cedcd6;padding:8px 12px}.scroll-table{overflow-x:auto}.article tr:first-child{background:#eaf5ef;font-weight:700}.callout{background:#edf8f2;border-left:4px solid #438d74;padding:14px 18px}.mathbox{overflow-x:auto;background:#f4f8f5;padding:10px;border-radius:8px}.article details{padding:12px;border:1px solid #c8d7d0;border-radius:9px;margin:1em 0}.article summary{cursor:pointer}.meta{color:#627d74}</style></head><body><header><div class="wrap"><a href="../">← 返回课程目录</a><a href="../../">研究学习中心 ↗</a></div></header><main class="page"><div class="kicker">MATHEMATICS · PROBABILITY · ECONOMETRICS</div><h1>第1章·第1节｜为什么统计学需要向量？从观测数据到随机向量与回归模型</h1><p class="meta">全课程第1课 / 共73课 · 2026年10月10日重讲版</p><article class="article"><aside class="callout">
+<p><strong>第1章·第1节｜全课程第1课 / 73课</strong> 原课2026-10-09交付；应用户要求2026-10-10重新从第1课讲授。预计学习约8分钟。今日核心问题：为什么统计学要把观测值组织成向量？ 下一课：第1章·第2节《向量的线性组合：从加权总分到回归预测》。</p>
+</aside>
+<h3>一、数学直觉</h3>
+<p>假设研究教育年限与收入的关系，调查了100个人。每个人有一个收入值，把100个收入按顺序排列，就得到一个向量。向量不只是几何中的箭头，也是一组有序数值构成的整体。 在统计中，向量至少完成三个任务：组织多个观测值、表达多个随机变量的联合不确定性，以及建立包含全部观测值的统一模型。 这里需要区分已经观察到的收入向量 y 和抽样前的随机收入向量 Y。前者是一组具体数字，后者描述重新抽样时可能取得的不同结果及其联合概率关系。仅知道每个分量自己的分布，并不足以确定完整的联合分布。</p>
+<h3>二、关键公式及条件</h3>
+<p>若有 n 个随机观测值，响应变量构成列向量：</p>
+<div class="mathbox">\[Y=\begin{pmatrix}Y_1\\Y_2\\\vdots\\Y_n\end{pmatrix}\in\mathbb R^n.\]</div>
+<p>在线性回归中，可写为：</p>
+<div class="mathbox">\[Y=X\beta+\varepsilon.\]</div>
+<p>Y 是 n×1 随机向量；X 是 n×p 解释变量矩阵；β 是 p×1 未知参数；ε 是 n×1 随机误差向量。矩阵形式本身不蕴含观测独立或解释变量外生。若条件期望存在且另行要求 E(ε\|X)=0，才有：</p>
+<div class="mathbox">\[E(Y\mid X)=X\beta.\]</div>
+<h3>三、统计与计量经济学应用</h3>
+<p>如果有1000个观测值、10个回归参数，逐个写出1000条方程既繁琐又不利于分析。矩阵形式能统一表达拟合值、残差与协方差结构。OLS随后将寻找使残差平方和最小的参数向量。<strong>向量表示本身不证明任何变量之间存在因果效应。</strong></p>
+<h3>四、数值案例：三个观测值</h3>
+<p>以下为教学数据，不代表实际调查结果。</p>
+<div class="scroll-table"><table>
+<tr>
+<td>个体</td>
+<td>教育年限</td>
+<td>收入（千元）</td>
+</tr>
+<tr>
+<td>A</td>
+<td>1</td>
+<td>5</td>
+</tr>
+<tr>
+<td>B</td>
+<td>2</td>
+<td>7</td>
+</tr>
+<tr>
+<td>C</td>
+<td>3</td>
+<td>8</td>
+</tr>
+</table></div>
+<p>观测向量为 y=(5,7,8)ᵀ，解释变量矩阵为 X=\[\[1,1\],\[1,2\],\[1,3\]\]，第一列为截距，第二列为教育年限。人为指定参数 β=(2,2)ᵀ，则预测向量 Xβ=(4,6,8)ᵀ，偏差 y−Xβ=(1,1,0)ᵀ。 注意：这里的 β 是指定的示例参数，不是从数据中求得的OLS估计。矩阵运算也没有证明教育年限对收入有因果效应。</p>
+<aside class="callout">
+<p><strong>教学示意，非论文或数据原图：</strong> 观测值 → 向量与解释变量矩阵 → 指定参数 → 预测向量 → 计算偏差。</p>
+</aside>
+<h3>五、两分钟自测</h3>
+<details>
+<summary>概念题：已经记录的收入向量与抽样前的随机收入向量有什么区别？向量表示是否意味着观测独立？</summary>
+<p><strong>答案：</strong> 已记录的向量是固定数值，随机向量刻画抽样前的联合不确定性。向量本身不代表分量独立。</p>
+</details>
+<details>
+<summary>计算题：上例的X是什么维度？第二个人的预测收入和样本偏差分别是多少？</summary>
+<p><strong>答案：</strong> X为3×2。第二个人的预测收入为2+2×2=6千元，偏差为7−6=1千元。</p>
+</details>
+<h3>六、知识衔接</h3>
+<p>今天掌握：向量组织多个观测，随机向量描述联合随机性；线性回归可以用矩阵一次表达整个样本。 下一节：第1章·第2节《向量的线性组合：从加权总分到回归预测》（全课程第2课）。 <strong>归档说明：</strong> 本页对应2026-10-09已存档、2026-10-10重新讲授的第1课，保留核心公式、手算案例和两道自测。<a href="https://ericywh.github.io/research-learning-hub/math/lessons/01-01.html">查看现有 GitHub Pages 课程网页</a></p></article><p><a href="https://app.notion.com/p/3f4b54823a12818fadbae8710565d853?pvs=204">对应 Notion 私人课文（需授权）</a></p><p><a href="../">返回数学课程目录</a></p></main></body></html>
