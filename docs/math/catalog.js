@@ -11,8 +11,8 @@ window.MATH_COURSE={
           "number": 1,
           "title": "为什么统计学需要向量？从观测数据到随机向量与回归模型",
           "published": true,
-          "date": "2026-10-09",
-          "url": "lessons/01-01.html"
+          "date": "2026-10-10",
+          "url": "lessons/2026-10-10-01-01.html"
         },
         {
           "chapter": 1,
