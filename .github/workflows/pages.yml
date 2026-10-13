@@ -6,6 +6,7 @@ on:
     paths:
       - 'docs/**'
       - '.github/workflows/pages.yml'
+      - 'scripts/build-econometrics-public.cjs'
   workflow_dispatch:
   # Daily fallback if a GitHub App push event did not start deployment.
   # 02:15 UTC = 10:15 Asia/Taipei; does not alter the ChatGPT lesson schedule.
@@ -152,6 +153,11 @@ jobs:
           }
           console.log('Prepared complete docs/ site and versioned catalog requests: ' + sha);
           NODE
+
+      - name: Auto-index complete econometrics lessons for the published site
+        shell: bash
+        run: |
+          node scripts/build-econometrics-public.cjs
 
       - name: Auto-index research frontier and validate lesson links
         shell: bash
@@ -300,3 +306,56 @@ jobs:
             check "$SITE/$issue" "${issue%.html}" "/tmp/frontier-$issue"
           done
           echo "Frontier public smoke test passed: archive index and ${#ISSUES[@]} latest issues."
+
+  verify-public-econometrics:
+    name: Verify public econometrics pages
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source for expected lesson list
+        uses: actions/checkout@v4
+
+      - name: Verify deployed index, catalog and newest full lesson over HTTPS
+        shell: bash
+        env:
+          DEPLOY_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          SITE="https://ericywh.github.io/research-learning-hub/econometrics"
+          node <<'NODE' > /tmp/econometrics-latest.txt
+          const fs=require('node:fs'),vm=require('node:vm');
+          const ctx={window:{}};
+          vm.runInNewContext(fs.readFileSync('docs/econometrics/catalog.js','utf8'),ctx);
+          const lessons=ctx.window.ECON_COURSE.chapters.flatMap(c=>c.lessons);
+          const files=fs.readdirSync('docs/econometrics/lessons')
+            .filter(f=>/^\d{2}-\d{2}\.html$/.test(f)).sort();
+          if(!files.length)throw Error('No full econometrics lesson files');
+          const id=files[files.length-1].replace('.html','');
+          const latest=lessons.find(l=>l.id===id);
+          if(!latest)throw Error('Newest HTML does not match the planned 120-lesson index');
+          console.log(id);
+          console.log(latest.title);
+          NODE
+          LATEST_ID=$(sed -n '1p' /tmp/econometrics-latest.txt)
+          LATEST_TITLE=$(sed -n '2p' /tmp/econometrics-latest.txt)
+          check() {
+            local url="$1" output="$2" marker="$3" status
+            for attempt in $(seq 1 10); do
+              status=$(curl -L -sS --connect-timeout 10 --max-time 30 \
+                -o "$output" -w '%{http_code}' "$url?deploy=$DEPLOY_SHA" || true)
+              if [[ "$status" == "200" ]] && grep -Fq "$marker" "$output"; then
+                echo "PASS HTTP 200 + expected content: $url"
+                return 0
+              fi
+              echo "Attempt $attempt: status=$status or stale/missing content for $url"
+              sleep 12
+            done
+            echo "::error::The public econometrics site did not update: $url"
+            return 1
+          }
+          check "$SITE/" /tmp/econometrics-index.html "计量经济学120天"
+          check "$SITE/catalog.js" /tmp/econometrics-catalog.js "\"url\": \"lessons/$LATEST_ID.html\""
+          check "$SITE/lessons/$LATEST_ID.html" /tmp/econometrics-lesson.html "$LATEST_TITLE"
+          grep -Fq "href=\"lessons/$LATEST_ID.html\"" /tmp/econometrics-index.html
+          grep -Fq '<pre' /tmp/econometrics-lesson.html
+          echo "Verified newest econometrics course $LATEST_ID on public GitHub Pages."
