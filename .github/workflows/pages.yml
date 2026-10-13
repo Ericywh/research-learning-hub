@@ -390,7 +390,9 @@ jobs:
             const file='docs/math/'+l.url;
             if(!fs.existsSync(file))throw Error('Missing published source: '+file);
             if(fs.readFileSync(file,'utf8').length<1500)throw Error('Incomplete HTML: '+file);
-            console.log(l.url+'\t'+l.title);
+            const marker=l.title.split(/[？：]/)[0];
+            if(!fs.readFileSync(file,'utf8').includes(marker))throw Error('Lesson title marker missing: '+file);
+            console.log(l.url+'\t'+marker);
             count++;
           }
           if(!count)throw Error('No published mathematics lessons');
