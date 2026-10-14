@@ -7,6 +7,7 @@ on:
       - 'docs/**'
       - '.github/workflows/pages.yml'
       - 'scripts/build-econometrics-public.cjs'
+      - 'scripts/sync-econometrics-notion.cjs'
   workflow_dispatch:
   # Every four hours as a recovery path when GitHub App pushes do not
   # initiate Actions; this does not alter the ChatGPT lesson schedule.
@@ -25,6 +26,9 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      latest_econometrics_id: ${{ steps.econometrics_latest.outputs.lesson_id }}
+      latest_econometrics_title: ${{ steps.econometrics_latest.outputs.lesson_title }}
     steps:
       - name: Check out main branch
         uses: actions/checkout@v4
@@ -154,10 +158,32 @@ jobs:
           console.log('Prepared complete docs/ site and versioned catalog requests: ' + sha);
           NODE
 
+      - name: Load complete lessons from authorized Notion source
+        shell: bash
+        env:
+          ECON_NOTION_READ_TOKEN: ${{ secrets.ECON_NOTION_READ_TOKEN }}
+        run: |
+          node scripts/sync-econometrics-notion.cjs
+
       - name: Auto-index complete econometrics lessons for the published site
         shell: bash
         run: |
           node scripts/build-econometrics-public.cjs
+
+      - name: Record newest econometrics lesson from the built artifact
+        id: econometrics_latest
+        shell: bash
+        run: |
+          node <<'NODE' >> "$GITHUB_OUTPUT"
+          const fs=require('node:fs'),vm=require('node:vm');
+          const ctx={window:{}};
+          vm.runInNewContext(fs.readFileSync('_site/econometrics/catalog.js','utf8'),ctx);
+          const list=ctx.window.ECON_COURSE.chapters.flatMap(c=>c.lessons);
+          const latest=list.filter(l=>l.published&&l.url).at(-1);
+          if(!latest)throw Error('Published economics course list is empty');
+          console.log('lesson_id='+latest.id);
+          console.log('lesson_title='+latest.title);
+          NODE
 
       - name: Auto-index research frontier and validate lesson links
         shell: bash
@@ -309,7 +335,7 @@ jobs:
 
   verify-public-econometrics:
     name: Verify public econometrics pages
-    needs: deploy
+    needs: [build, deploy]
     runs-on: ubuntu-latest
     steps:
       - name: Check out source for expected lesson list
@@ -319,25 +345,14 @@ jobs:
         shell: bash
         env:
           DEPLOY_SHA: ${{ github.sha }}
+          EXPECTED_ID: ${{ needs.build.outputs.latest_econometrics_id }}
+          EXPECTED_TITLE: ${{ needs.build.outputs.latest_econometrics_title }}
         run: |
           set -euo pipefail
           SITE="https://ericywh.github.io/research-learning-hub/econometrics"
-          node <<'NODE' > /tmp/econometrics-latest.txt
-          const fs=require('node:fs'),vm=require('node:vm');
-          const ctx={window:{}};
-          vm.runInNewContext(fs.readFileSync('docs/econometrics/catalog.js','utf8'),ctx);
-          const lessons=ctx.window.ECON_COURSE.chapters.flatMap(c=>c.lessons);
-          const files=fs.readdirSync('docs/econometrics/lessons')
-            .filter(f=>/^\d{2}-\d{2}\.html$/.test(f)).sort();
-          if(!files.length)throw Error('No full econometrics lesson files');
-          const id=files[files.length-1].replace('.html','');
-          const latest=lessons.find(l=>l.id===id);
-          if(!latest)throw Error('Newest HTML does not match the planned 120-lesson index');
-          console.log(id);
-          console.log(latest.title);
-          NODE
-          LATEST_ID=$(sed -n '1p' /tmp/econometrics-latest.txt)
-          LATEST_TITLE=$(sed -n '2p' /tmp/econometrics-latest.txt)
+          LATEST_ID="$EXPECTED_ID"
+          LATEST_TITLE="$EXPECTED_TITLE"
+          [[ -n "$LATEST_ID" && -n "$LATEST_TITLE" ]] || { echo "::error::Build did not export a latest lesson"; exit 1; }
           check() {
             local url="$1" output="$2" marker="$3" status
             for attempt in $(seq 1 10); do
