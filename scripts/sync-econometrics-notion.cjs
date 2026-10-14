@@ -73,7 +73,7 @@ function teachingDate(blocks){
 }
 function titleParts(str){
   const match=String(str||'').match(/^第\s*(\d+)\s*章[·.．]\s*第\s*(\d+)\s*节[｜|]\s*(.+?)\s*(?:[（(]全课程第\d+课[）)])?\s*$/);
-  return match?{chapter:+match[1],section:+match[2],title:match[3].trim()}:null;
+  return match?{chapter:+match[1],section:+match[2],title:match[3].replace(/[（(]全课程第\d+课[）)]$/,'').trim()}:null;
 }
 const css=':root{font:15px/1.9 system-ui,sans-serif;background:#f6f8f7;color:#213b45}*{box-sizing:border-box}body{margin:0}header,main,footer{max-width:950px;margin:auto;padding:16px}a{color:#186b65}header{display:flex;gap:22px;flex-wrap:wrap;font-size:13px}.hero{background:#e8f3ef;border-radius:16px;padding:26px;margin:15px 0}h1{font-size:clamp(24px,4vw,34px)}h2{font-size:21px;color:#195f59}h3{font-size:17px;color:#28625d}section{background:white;border:1px solid #dce7e2;border-radius:14px;padding:25px;margin:16px 0}pre{background:#1b303d;color:#eaf4f6;padding:18px;border-radius:10px;overflow-x:auto;font:12px/1.8 monospace}p code{background:#eef3f1;padding:2px 4px;border-radius:4px}.equation{background:#f0f5f3;border-radius:8px;padding:16px;text-align:center;overflow-x:auto}nav{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px}footer{color:#617778;font-size:12px}@media(max-width:650px){section,.hero{padding:17px}pre{font-size:11px}}';
 function htmlFor(l,date,blocks){
