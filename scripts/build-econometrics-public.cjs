@@ -41,7 +41,9 @@ for (const lesson of lessons) {
   allIds.add(lesson.id);
   const url = 'lessons/' + lesson.id + '.html';
   const sourceFile = path.join(root, url);
-  const exists = fs.existsSync(sourceFile);
+  const deployedFile = path.join(out, url);
+  // A verified Notion lesson may exist only in the Pages build artifact.
+  const exists = fs.existsSync(sourceFile) || fs.existsSync(deployedFile);
   if (lesson.published && !exists) throw Error('Catalog points to a missing published lesson: ' + lesson.id);
   if (!exists) continue;
 
@@ -50,7 +52,8 @@ for (const lesson of lessons) {
   }
   if (lesson.published) continue;
 
-  const html = fs.readFileSync(sourceFile, 'utf8');
+  const file = fs.existsSync(deployedFile) ? deployedFile : sourceFile;
+  const html = fs.readFileSync(file, 'utf8');
   const expectedHeading = '第' + lesson.chapter + '章·第' + lesson.section + '节｜' + lesson.title;
   if (html.length < 2500 || !/<!doctype html>/i.test(html) ||
       !html.includes(expectedHeading) || !html.includes('<h1') ||
