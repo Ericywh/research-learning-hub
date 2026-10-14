@@ -1,0 +1,33 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="本期聚焦复杂随机化设计的标准误、流式大数据中的非线性GMM，以及连续筛选后的共形预测覆盖保证。"><title>第005期｜统计与实证研究前沿日报｜2026-10-13</title>
+<style>:root{font-family:system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;color:#193644;background:#f6f8f7}*{box-sizing:border-box}body{margin:0;line-height:1.85}nav{background:#fff;border-bottom:1px solid #dce7e4;padding:14px max(18px,calc((100vw - 940px)/2))}nav a{font-weight:650;text-decoration:none}main{width:min(940px,calc(100% - 32px));margin:46px auto 70px}a{color:#176d65;text-underline-offset:3px}h1{font-size:clamp(29px,4vw,42px);line-height:1.35;margin:8px 0 18px}h2{font-size:22px;line-height:1.5;margin:10px 0 12px}p{margin:13px 0}.eyebrow{color:#298075;font-size:12px;letter-spacing:.1em;font-weight:800}.lead{max-width:820px;font-size:17px}.meta,.bibliography{font-size:13px;color:#63747d}.english{font-size:17px;font-weight:720;line-height:1.5;color:#243b47}.links{display:flex;gap:14px;flex-wrap:wrap;font-size:13px}.panel{margin:26px 0;padding:28px;border:1px solid #dfe7e3;border-radius:14px;background:#fff;box-shadow:0 6px 22px #203a3a09}.callout{background:#eff5f2;border-left:3px solid #368879;padding:13px 17px;margin-top:18px}.scroll{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:14px}td,th{padding:13px 12px;border-bottom:1px solid #e0e7e4;text-align:left;vertical-align:top}th{background:#eaf3ef}footer{padding-top:24px;margin-top:40px;border-top:1px solid #e0e8e5;font-size:12px;color:#65767f}@media(max-width:610px){.panel{padding:18px}table{min-width:650px}main{margin-top:26px}}</style></head><body><nav><a href="./">← 返回前沿日报目录</a>　<a href="../study/">学习门户</a></nav>
+<main><div class="eyebrow">RESEARCH FRONTIER / ISSUE 005 / 2026-10-13</div><h1>第1章·第5节｜今日研究前沿</h1><p class="meta">全课程第5课 · 2026-10-13 · 3篇论文方法精读</p><p class="lead">本期聚焦复杂随机化设计的标准误、流式大数据中的非线性GMM，以及连续筛选后的共形预测覆盖保证。</p>
+<div class="callout"><b>证据与版本说明：</b>本期为已交付日报的补档，依据对应日报与公开论文信息整理。数值结果均属于作者报告，未独立复现；arXiv DOI不能当作正式期刊接收证明。不同课程课次不依日历递增。</div>
+
+ <article class="panel" id="paper-1">
+ <div class="eyebrow">PAPER 01 / 随机实验与推断</div>
+ <h2>复杂随机化下，标准误究竟应依赖什么？</h2><p class="english">Simple Standard Errors for Complicated (Quasi-)Experimental Designs</p>
+ <p class="bibliography"><b>作者：</b>Sylvia Klosin、Jonathan Roth<br><b>首次公开：</b>2026-10-08 19:55:30 UTC<br><b>版本：</b>arXiv:2610.12674v1 · DOI: 10.48550/arXiv.2610.12674<br><b>论文状态：</b>arXiv预印本，未核实正式期刊发表或后续修订</p>
+ <p class="links"><a href="https://arxiv.org/abs/2610.12674">原始书目与版本记录 ↗</a><a href="https://arxiv.org/html/2610.12674v1">HTML原文 ↗</a></p>
+ <p>在空间相关处理、网络溢出等复杂分配下，常规异方差稳健或聚类标准误未必有效。作者使用校园同伴干预及空间相关处理的既有经验研究构造模拟与应用，而不是重新开展随机实验。</p><p>作者把潜在结果对比写为Horvitz–Thompson型估计量，要求处理暴露分配机制与一阶、二阶联合纳入概率已知。将“两个潜在结果不能同时观测”的关系构造成联合不可观测图，再根据连通分量建立CC方差估计器。其期望构成设计方差上界；保守性取决于连通分量间的处理效应和的异质性。</p><p>在完全随机或整群随机实验中，该估计形式退化为经典Neyman或聚类稳健方差形式。论文讨论可容许性及大样本条件。模拟的部分设置中，新方法构造的区间比替代方法短2—3倍，但不意味着所有设计都如此。</p>
+ <div class="callout"><b>科研迁移与精读判断：</b>非常值得精读。适合网络政策、空间溢出与集群试验；前提是能够合理界定暴露映射和分配机制。未核实独立公开复现仓库。</div>
+ </article>
+ <article class="panel" id="paper-2">
+ <div class="eyebrow">PAPER 02 / 大规模矩估计</div>
+ <h2>非线性GMM能否只遍历一次数据？</h2><p class="english">An efficient stochastic generalized method of moments estimator for nonlinear moment models</p>
+ <p class="bibliography"><b>作者：</b>Duy Nguyen<br><b>首次公开：</b>2026-10-09 02:04:42 UTC<br><b>版本：</b>arXiv:2610.12873v1 · DOI: 10.48550/arXiv.2610.12873<br><b>论文状态：</b>arXiv预印本，未核实正式期刊发表或后续修订</p>
+ <p class="links"><a href="https://arxiv.org/abs/2610.12873">原始书目与版本记录 ↗</a><a href="https://arxiv.org/html/2610.12873v1">HTML原文 ↗</a><a href="https://github.com/nducduy/StochasticGMM">公开代码 ↗</a></p>
+ <p>离线两步GMM需要反复读取数据并更新权重矩阵，难以适配流式数据。论文结合线性与指数型工具变量模型模拟，并使用1980年美国人口普查中254,654名女性的样本研究第三孩与劳动供给。</p><p>随机GMM每接收一个观测即更新矩条件Jacobian、协方差逆及Gauss–Newton预条件器；部分工具变量结构可借助Woodbury更新，迭代平均后获得有效GMM渐近方差。理论需要矩条件、适当步长、预条件单调性与一致初值，非线性模型的单调性通常是局部保证。</p><p>作者报告百万级模拟的估计、覆盖率接近离线GMM，且内存占用不随样本数线性增长。人口普查应用中，20种随机数据顺序的在线结果接近离线估计，但过度识别检验在多数顺序下拒绝；计算方法的效率不能替代工具变量有效性判断。</p>
+ <div class="callout"><b>科研迁移与精读判断：</b>非常值得精读，适合企业微观大样本和在线IV/GMM。作者Python/C仓库存在，但本期未运行复现。</div>
+ </article>
+ <article class="panel" id="paper-3">
+ <div class="eyebrow">PAPER 03 / 预测与选择推断</div>
+ <h2>连续筛选后如何维持共形覆盖？</h2><p class="english">Sequential Conformal Calibration under Recursive Selection</p>
+ <p class="bibliography"><b>作者：</b>Yuning Yang、Zexuan Liu、Tianci Wang、Danlin Li<br><b>首次公开：</b>2026-10-09 03:38:10 UTC<br><b>版本：</b>arXiv:2610.12937v1 · DOI: 10.48550/arXiv.2610.12937<br><b>论文状态：</b>arXiv预印本，未核实正式期刊发表或后续修订</p>
+ <p class="links"><a href="https://arxiv.org/abs/2610.12937">原始书目与版本记录 ↗</a><a href="https://arxiv.org/html/2610.12937v1">HTML原文 ↗</a></p>
+ <p>多阶段决策不断淘汰对象、重拟合评分模型，可能改变剩余校准对象与测试对象的可交换性。作者以合成库存需求和公开UCI Bike Sharing数据分析序贯校准方法。</p><p>方法在每阶段引入新的校准折；在给定前序信息时，当前幸存对象与待测对象的评分保持相应的条件可交换性，进而获得各阶段前缀的有限样本覆盖保证。无原子幸存分数设定下，论文还给出Binomial-thinned Beta覆盖过程的分析。</p><p>当评分函数固定时，幸存校准数据有条件安全复用；如果模型使用旧校准数据重新训练，则直接复用可能破坏覆盖，分块复用是一种折中。三层库存模拟中最终前缀覆盖率81.98%，目标81.82%，平均成本较Bonferroni基准低5.5%。</p>
+ <div class="callout"><b>科研迁移与精读判断：</b>值得精读，可迁移至动态政策筛选与风险预警。理论保证不等于任意协变量点的分布自由条件覆盖；独立代码仓库尚未核实。</div>
+ </article>
+<section class="panel" id="comparison"><h2>三篇方法横向对照</h2><div class="scroll"><table><thead><tr><th>维度</th><th>复杂设计CC方差</th><th>在线随机GMM</th><th>序贯共形校准</th></tr></thead><tbody><tr><td>统计目标</td><td>有效因果效应标准误</td><td>流式高效矩估计</td><td>多阶段预测覆盖</td></tr><tr><td>主要工具</td><td>不可观测图与设计方差上界</td><td>随机近似与Gauss–Newton预条件</td><td>逐阶段校准折及安全复用</td></tr><tr><td>关键条件</td><td>已知联合暴露概率</td><td>正确矩条件、初值与局部单调性</td><td>阶段条件可交换性</td></tr><tr><td>主要风险</td><td>未知分配机制或暴露映射</td><td>弱工具变量和局部理论局限</td><td>重训练造成选择依赖</td></tr><tr><td>复现状态</td><td>代码未核实</td><td>已核实Python/C仓库、未运行</td><td>独立仓库未核实</td></tr></tbody></table></div></section>
+<section class="panel" id="recommended"><h2>今日最值得精读与进一步查证</h2><p><b>首推：复杂设计CC方差。</b>空间政策和网络同伴干预下的推断，应依赖真实处理分配机制，而非仅凭惯例选择聚类层级。论文在统计推断的设计基础上提供了明确的诊断框架。</p><h3>后续核查问题</h3><ol><li>观察性准实验中，联合暴露概率能否得到可靠界定？</li><li>不可观测图只有一个连通分量时，方差上界是否过度保守？</li><li>处理效应异质性怎样影响CC方差估计器的表现？</li><li>作者公开数据与复现包是否能获得？</li></ol><p class="meta">三篇均属预印本。第二篇存在公开Python/C实现，其余独立复现仓库尚未核实。本期没有独立运行代码。</p></section>
+<footer>统计与实证研究前沿日报 · 第005期 · 2026-10-13。本页为原创论文方法评论，不包含受限全文或未经授权的私人资料。</footer></main></body></html>
