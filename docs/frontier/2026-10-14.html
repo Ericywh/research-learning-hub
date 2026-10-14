@@ -1,0 +1,33 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="本期讨论动态响应估计效率、模型比较实验的外部效度，以及局部空间关联分析中的多重检验与错误发现控制。"><title>第006期｜统计与实证研究前沿日报｜2026-10-14</title>
+<style>:root{font-family:system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;color:#193644;background:#f6f8f7}*{box-sizing:border-box}body{margin:0;line-height:1.85}nav{background:#fff;border-bottom:1px solid #dce7e4;padding:14px max(18px,calc((100vw - 940px)/2))}nav a{font-weight:650;text-decoration:none}main{width:min(940px,calc(100% - 32px));margin:46px auto 70px}a{color:#176d65;text-underline-offset:3px}h1{font-size:clamp(29px,4vw,42px);line-height:1.35;margin:8px 0 18px}h2{font-size:22px;line-height:1.5;margin:10px 0 12px}p{margin:13px 0}.eyebrow{color:#298075;font-size:12px;letter-spacing:.1em;font-weight:800}.lead{max-width:820px;font-size:17px}.meta,.bibliography{font-size:13px;color:#63747d}.english{font-size:17px;font-weight:720;line-height:1.5;color:#243b47}.links{display:flex;gap:14px;flex-wrap:wrap;font-size:13px}.panel{margin:26px 0;padding:28px;border:1px solid #dfe7e3;border-radius:14px;background:#fff;box-shadow:0 6px 22px #203a3a09}.callout{background:#eff5f2;border-left:3px solid #368879;padding:13px 17px;margin-top:18px}.scroll{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:14px}td,th{padding:13px 12px;border-bottom:1px solid #e0e7e4;text-align:left;vertical-align:top}th{background:#eaf3ef}footer{padding-top:24px;margin-top:40px;border-top:1px solid #e0e8e5;font-size:12px;color:#65767f}@media(max-width:610px){.panel{padding:18px}table{min-width:650px}main{margin-top:26px}}</style></head><body><nav><a href="./">← 返回前沿日报目录</a>　<a href="../study/">学习门户</a></nav>
+<main><div class="eyebrow">RESEARCH FRONTIER / ISSUE 006 / 2026-10-14</div><h1>第1章·第6节｜今日研究前沿</h1><p class="meta">全课程第6课 · 2026-10-14 · 3篇论文方法精读</p><p class="lead">本期讨论动态响应估计效率、模型比较实验的外部效度，以及局部空间关联分析中的多重检验与错误发现控制。</p>
+<div class="callout"><b>证据与版本说明：</b>本期为已交付日报的补档，依据对应日报与公开论文信息整理。数值结果均属于作者报告，未独立复现；arXiv DOI不能当作正式期刊接收证明。不同课程课次不依日历递增。</div>
+
+ <article class="panel" id="paper-1">
+ <div class="eyebrow">PAPER 01 / 时间序列与局部投影</div>
+ <h2>额外工具变量何以提高局部投影效率？</h2><p class="english">Intentionally Overidentifying Local Projections</p>
+ <p class="bibliography"><b>作者：</b>Junjie Guo、Endong Wang、Ke-Li Xu<br><b>首次公开：</b>2026-10-09 09:20 UTC<br><b>版本：</b>arXiv:2610.13269v1 · DOI: 10.48550/arXiv.2610.13269<br><b>论文状态：</b>arXiv预印本，未核实正式期刊发表或后续修订</p>
+ <p class="links"><a href="https://arxiv.org/abs/2610.13269">原始书目与版本记录 ↗</a><a href="https://arxiv.org/html/2610.13269v1">HTML原文 ↗</a></p>
+ <p>传统局部投影（LP）逐期使用OLS估计动态脉冲响应，虽然较少依赖整个系统的参数结构，但长预测期往往伴随较大方差。作者提出GMM-LALP，使用额外滞后变量作为排除工具变量，通过最优加权GMM增加有效矩条件。</p><p>在单位根AR(1)、独立同分布误差的特定理论设定下，新估计器渐近方差为2−1/h，而传统滞后增强LP为h，h表示响应期数。该比较不能无条件推广到任意动态过程。</p><p>论文对1985—2014年美国360个月度观测进行应用，分析经济政策不确定性与股市、利率、就业和工业生产等变量，并辅以模拟。附加矩条件是否有效、权重矩阵估计、滞后阶数与近单位根推断均需要核验；约化式响应也不自动构成结构性因果效应。</p>
+ <div class="callout"><b>科研迁移与精读判断：</b>非常值得精读，可迁移至动态政策响应与宏观计量。公开数据来源已说明，未核实作者独立复现代码。</div>
+ </article>
+ <article class="panel" id="paper-2">
+ <div class="eyebrow">PAPER 02 / 实验外部效度与核方法</div>
+ <h2>不同数据集上的模型排名能否稳定？</h2><p class="english">Kernel-based External Validity of Experimental Studies</p>
+ <p class="bibliography"><b>作者：</b>Federico Matteucci、Gerhard Neumann<br><b>首次公开：</b>2026-10-09 14:08 UTC<br><b>版本：</b>arXiv:2610.13625v1 · DOI: 10.48550/arXiv.2610.13625<br><b>论文状态：</b>arXiv预印本，未核实正式期刊发表或后续修订</p>
+ <p class="links"><a href="https://arxiv.org/abs/2610.13625">原始书目与版本记录 ↗</a><a href="https://arxiv.org/html/2610.13625v1">HTML原文 ↗</a><a href="https://github.com/DrCohomology/genexpy">公开代码 ↗</a></p>
+ <p>模型比较常根据有限的基准数据集或随机测试条件得出排名，但这一顺序可能不具有重复实验稳定性。论文提出核外部效度（KEV）指标，依据两组独立实验结果的最大均值差异（MMD）是否小于阈值定义稳定性。</p><p>作者使用MMD分位数随实验规模近似以n^(-1/2)衰减的关系，从先导实验推算所需重复次数；并强调核的选择要与科学问题匹配，如关注最优模型是否一致，还是关注完整排名一致。</p><p>研究分析32种编码器和55个语言模型的既有基准实验，并开展模拟。其理论依赖实验条件可独立抽样及目标总体的代表性；这一意义下的实验排名稳定性，并不等同于因果ATE在人群间的运输有效性。</p>
+ <div class="callout"><b>科研迁移与精读判断：</b>值得精读，适用于算法基准比较、多数据集实证稳健性评价。作者公开genexpy Python仓库，尚未独立运行。</div>
+ </article>
+ <article class="panel" id="paper-3">
+ <div class="eyebrow">PAPER 03 / 空间统计与多重检验</div>
+ <h2>空间热点检出越多，错误发现率是否越低？</h2><p class="english">How Many Significant LISA?: A multiple testing correction</p>
+ <p class="bibliography"><b>作者：</b>Giuseppe Arbia、Francesca Cardile、Vincenzo Nardelli、Niccolò Salvini<br><b>首次公开：</b>2026-10-09 12:09 UTC<br><b>版本：</b>arXiv:2610.13472v1 · DOI: 10.48550/arXiv.2610.13472<br><b>论文状态：</b>arXiv预印本，未核实正式期刊发表或后续修订</p>
+ <p class="links"><a href="https://arxiv.org/abs/2610.13472">原始书目与版本记录 ↗</a><a href="https://arxiv.org/html/2610.13472v1">HTML原文 ↗</a></p>
+ <p>局部空间关联指标（LISA）在大量地区分别检验，若忽略多重比较，容易产生不可靠的局部显著性解释。作者依据空间自相关估计有效样本量（ESS），再据此调整Bonferroni与BH检验的阈值。</p><p>在1998年哥伦比亚1,066个市镇疟疾数据中，作者报告ESS约364.5，未校正识别55个显著地区，传统BH为41个，ESS调整BH为43个。检出更多并不等于虚假发现率得到更强控制。</p><p>模拟中，当背景空间相关参数为0.8时，调整BH的功效为0.748，但按人工植入热点定义得到的FDR高达0.885。作者强调背景空间依赖可能产生真实局部关联，所谓假阳性依赖于模拟中真值的定义；不能据此宣称方法普遍严格控制5% FDR。</p>
+ <div class="callout"><b>科研迁移与精读判断：</b>值得批判性精读，可借鉴于区域创新或环境热点识别。数据来源为GeoDa，作者独立复现代码未核实。</div>
+ </article>
+<section class="panel" id="comparison"><h2>三篇方法横向对照</h2><div class="scroll"><table><thead><tr><th>维度</th><th>GMM局部投影</th><th>核外部效度</th><th>ESS-LISA</th></tr></thead><tbody><tr><td>核心任务</td><td>动态响应效率</td><td>实验排名稳定性</td><td>空间热点多重检验</td></tr><tr><td>主要方法</td><td>扩展工具变量与GMM加权</td><td>核MMD及重复实验规模关系</td><td>空间有效样本量调整检验</td></tr><tr><td>关键条件</td><td>新增滞后矩条件有效</td><td>独立条件抽样与代表性</td><td>正确描述空间相关结构</td></tr><tr><td>主要风险</td><td>约化式与结构因果混淆</td><td>外部效度定义不能混用ATE运输</td><td>高相关下FDR失控</td></tr><tr><td>代码情况</td><td>未核实</td><td>公开Python仓库已核实，未运行</td><td>未核实</td></tr></tbody></table></div></section>
+<section class="panel" id="recommended"><h2>今日最值得精读与进一步查证</h2><p><b>首推：GMM局部投影。</b>在不对整个脉冲响应轨迹施加额外平滑结构的前提下，用有效的附加矩条件提高长预测期估计效率，对实际宏观和政策动态研究有较强迁移价值。</p><h3>后续核查问题</h3><ol><li>额外滞后工具变量何时有效、何时只是冗余矩条件？</li><li>局部VARMA误设与滞后控制如何影响效率？</li><li>近单位根、HAC和bootstrap区间是否具有足够覆盖率？</li><li>能否获得论文作者的原始估计程序与数据？</li></ol><p class="meta">第006期三篇均为2026年10月9日首次公开预印本；第二篇公开genexpy代码已核实，其余独立复现仓库尚未核实，均未独立运行。</p></section>
+<footer>统计与实证研究前沿日报 · 第006期 · 2026-10-14。本页为原创论文方法评论，不包含受限全文或未经授权的私人资料。</footer></main></body></html>
