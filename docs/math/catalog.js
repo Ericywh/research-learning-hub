@@ -100,9 +100,9 @@ window.MATH_COURSE={
           "section": 11,
           "number": 11,
           "title": "线性变换如何改变均值",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-18",
+          "url": "lessons/2026-10-18-01-11.html"
         },
         {
           "chapter": 1,
