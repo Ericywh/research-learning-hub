@@ -73,27 +73,27 @@ window.MATH_COURSE={
           "section": 8,
           "number": 8,
           "title": "方差和离散程度",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-15",
+          "url": "lessons/2026-10-15-01-08.html"
         },
         {
           "chapter": 1,
           "section": 9,
           "number": 9,
           "title": "协方差与相关系数",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-16",
+          "url": "lessons/2026-10-16-01-09.html"
         },
         {
           "chapter": 1,
           "section": 10,
           "number": 10,
           "title": "协方差矩阵的结构",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-17",
+          "url": "lessons/2026-10-17-01-10.html"
         },
         {
           "chapter": 1,
