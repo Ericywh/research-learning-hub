@@ -64,9 +64,9 @@ window.MATH_COURSE={
           "section": 7,
           "number": 7,
           "title": "期望与线性性",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-14",
+          "url": "lessons/2026-10-14-01-07.html"
         },
         {
           "chapter": 1,
