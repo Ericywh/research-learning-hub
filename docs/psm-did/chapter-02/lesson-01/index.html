@@ -1,0 +1,159 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>第2章·第1节｜倾向得分估计与匹配算法</title><meta name="description" content="PSM-DID系统课程第4课：中国宽带示范城市，Logit、Probit、最近邻、卡尺匹配，双软件中文标签示例。"><style>*{box-sizing:border-box}body{font-family:system-ui,-apple-system,"Noto Sans CJK SC","Microsoft YaHei",sans-serif;line-height:1.85;color:#243544;background:#f4f7f8;margin:0}header{background:linear-gradient(115deg,#17394b,#21645c);color:white;padding:44px 20px}header>div,main{max-width:920px;margin:auto}header h1{font-size:clamp(25px,4vw,39px);margin:8px 0}header p{color:#cfebe2}main{background:white;border:1px solid #dde6e6;border-radius:14px;max-width:920px;margin: -18px auto 48px;padding:42px 50px}h2{font-size:21px;border-bottom:1px solid #dfe9e8;padding-bottom:8px;margin-top:34px}h3{font-size:17px}p{margin:9px 0 15px}a{color:#136d70}pre{overflow:auto;background:#142938;color:#e8f6f7;padding:17px;border-radius:11px;font-size:12px;line-height:1.7}table{border-collapse:collapse;width:100%;font-size:14px;margin:17px 0}th{text-align:left;background:#eaf1f1}th,td{border-bottom:1px solid #dce6e6;padding:8px 12px}.formula{margin:18px 0;overflow:auto}.subtitle{color:#587580;font-size:14px}.nav{font-size:13px;margin-bottom:25px;display:flex;gap:15px;flex-wrap:wrap}.nav a{color:#146c70}@media(max-width:650px){main{margin:-12px 10px 30px;padding:22px 16px}header{padding:32px 18px}pre{font-size:11px;padding:11px}}</style><script>window.MathJax={tex:{inlineMath:[["$","$"]]}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script></head><body><header><div><div>PSM-DID系统精讲课程 · 全课程第4课 / 共10课</div><h1>第2章·第1节｜倾向得分估计与匹配算法</h1><p>国内政策案例 · 中文标签 Stata + Python · 零基础精讲</p></div></header><main><nav class="nav"><a href="../../">← 课程目录</a><a href="../../chapter-01/lesson-03/">上一课｜PSM与DID结合</a><a href="../../../study/#courses">六门课程总入口</a></nav><p class="subtitle">全课程第4课 / 共10课 · 中国公开数据 · 零基础版</p><p>本节核心问题：怎样利用城市政策前特征估计成为试点的概率，再选择相似的对照城市？本课继续采用2014年首批“宽带中国”示范城市（城市群）政策与《中国城市统计年鉴》公开整理的城市面板数据。</p><h2>一、为什么不能只按工资匹配？</h2><p>城市是否被纳入首批试点并非随机抽签。官方公告记载2014年首批39个城市（城市群），经过城市申报、省级预审和专家评审。若只按照2013年工资寻找对照城市，可能忽略GDP、人口及产业结构差异。PSM将若干政策前特征汇总为预测概率，再据此寻找可比城市。</p><h2>二、倾向得分、Logit与Probit</h2><p>倾向得分（Propensity Score）是给定处理前协变量时，城市入选试点的条件概率。令D=1为首批试点、D=0为其他城市，X为2013年GDP、人口、第三产业占比与原有工资：</p><div class="formula">\[p(X_i)=P(D_i=1\mid X_i)\]</div><p>Logit（逻辑回归）把协变量的线性预测值通过逻辑函数转换为0到1之间的概率：</p><div class="formula">\[\widehat p_i = \frac{\exp(X_i^\top\widehat\beta)}{1+\exp(X_i^\top\widehat\beta)}\]</div><p>Probit则采用标准正态分布的累积分布函数。两者都用于二元因变量，即“是否入选”（0/1）的预测。预测概率0.72不是72%的工资效果，也不证明城市是随机抽签入选。模型系数本身也不能直接当作概率增量。</p><h2>三、最近邻匹配如何操作？</h2><p>最近邻匹配（Nearest-Neighbor Matching）通过比较倾向得分距离，寻找最相近的对照城市。定义试点城市i与候选对照城市j之间的距离：</p><div class="formula">\[d(i,j)=|\widehat p_i-\widehat p_j|\]</div><table><thead><tr><th>教学构造示例</th><th>倾向得分</th><th>与A的距离</th></tr></thead><tbody><tr><td>试点城市A</td><td>0.72</td><td>—</td></tr><tr><td>非试点城市B</td><td>0.70</td><td>0.02</td></tr><tr><td>非试点城市C</td><td>0.68</td><td>0.04</td></tr><tr><td>非试点城市D</td><td>0.55</td><td>0.17</td></tr><tr><td>非试点城市E</td><td>0.20</td><td>0.52</td></tr></tbody></table><p>一对一最近邻匹配选择城市B；一对三最近邻匹配选择B、C、D。请注意，这些数字都是人工构造的，并非实际政策样本的计算结果。即使得分相近，也需要检查GDP、人口等原始协变量是否真正平衡。</p><h2>四、卡尺匹配、共同支持和有放回</h2><p>卡尺（Caliper）是允许的最大匹配距离。在本课的概率距离尺度中，若设卡尺0.05，则只有距离不超过0.05的对照城市符合条件；如果所有候选者都超出卡尺，该试点城市不能进入卡尺匹配样本。0.05只是教学演示，不是通用最优值。Austin（2011）针对连续结局的模拟研究提出使用倾向得分logit变换值标准差的0.2倍作为一种候选卡尺，尺度与本例不同。</p><p>共同支持（Common Support/Overlap）要求处理组有相近的可比对照。缺少支持的试点城市可能被剔除，这会改变估计目标人群。有放回匹配（With Replacement）允许同一个非试点城市多次成为不同试点城市的对照；无放回匹配（Without Replacement）则最多使用一次，可能依赖匹配顺序。</p><h2>五、匹配方式对照</h2><table><thead><tr><th>方式</th><th>基本规则</th><th>主要注意事项</th></tr></thead><tbody><tr><td>一对一最近邻</td><td>选1个最近对照</td><td>最近不代表足够近</td></tr><tr><td>一对三最近邻</td><td>选3个最近对照</td><td>较远的第3个可能降低质量</td></tr><tr><td>一对一卡尺</td><td>最近距离≤设定阈值</td><td>样本可能显著减少</td></tr><tr><td>有放回</td><td>对照城市可被反复选中</td><td>后续需处理复用权重</td></tr><tr><td>无放回</td><td>对照城市最多使用一次</td><td>结果可能受匹配顺序影响</td></tr></tbody></table><h2>六、同一份国内数据：Stata和Python实操</h2><p>从CityEdu-Eco公开面板导入2013年数据，生成试点标记；先用同一组政策前协变量分别估计Logit和Probit分数，然后仅根据Logit分数做一对一最近邻、概率距离0.05卡尺及一对三最近邻三种匹配。两套代码保持同一名单和筛选原则。Stata保存带中文变量与类别标签的.dta；Python输出带中文列名的CSV。</p><p>重要数据口径：2014名单包含长株潭城市群、昆山、延边和阿坝自治州、阿拉尔等非典型地级市单元。本节先对能够直接按地级市名称对应的城市设置处理组，不把未核验的单位强行合并；这仅是教学样本映射，正式研究需要逐个对照官方名单和年鉴单位。两端程序未经过Stata/Python双端运行验证，不能报告未经核实的真实匹配结果。</p><h3>Stata源代码（中文标签）</h3><pre><code>clear all
+set more off
+* 2014首批示范城市；仅取政策前2013年特征
+import delimited &quot;https://raw.githubusercontent.com/Cause-114/CityEdu-Eco/main/data/panel.csv&quot;, clear varnames(1) encoding(&quot;UTF-8&quot;)
+keep if year == 2013
+isid city_key
+* 与官方名单对应的城市名称初步映射；城市群和自治州须进一步审计
+gen byte treat=0
+local pilots &quot;北京 天津 上海 长沙 株洲 湘潭 石家庄 大连 本溪 哈尔滨 大庆 南京 苏州 镇江&quot;
+local pilots &quot;`pilots&#x27; 金华 芜湖 安庆 福州 厦门 泉州 南昌 上饶 青岛 淄博 威海 临沂&quot;
+local pilots &quot;`pilots&#x27; 郑州 洛阳 武汉 广州 深圳 中山 成都 攀枝花 贵阳 银川 吴忠&quot;
+* 自治州和新疆县级/兵团城市的统计口径未审核，当前教学映射暂不强行合并
+foreach c of local pilots {
+    replace treat = 1 if city_key == &quot;`c&#x27;&quot;
+}
+label data &quot;中国城市2013年倾向得分与匹配教学样本&quot;
+label variable city_key &quot;城市名称&quot;
+label variable treat &quot;2014年是否属于首批示范城市（教学映射）&quot;
+label variable gdp &quot;2013年地区生产总值（亿元）&quot;
+label variable population &quot;2013年人口（百万人）&quot;
+label variable tertiary_pct &quot;2013年第三产业增加值占比（%）&quot;
+label variable wage &quot;2013年在岗职工平均工资（元）&quot;
+label define treat_zh 0 &quot;非首批示范城市&quot; 1 &quot;首批示范城市&quot;
+label values treat treat_zh
+* 缺失值和零值不能直接取自然对数
+keep if !missing(gdp,population,tertiary_pct,wage)
+keep if gdp&gt;0 &amp; population&gt;0 &amp; wage&gt;0
+egen cityid = group(city_key), label
+label variable cityid &quot;城市编号（对应中文城市名）&quot;
+gen double ln_gdp=ln(gdp)
+gen double ln_pop=ln(population)
+gen double ln_wage=ln(wage)
+label variable ln_gdp &quot;2013年GDP自然对数&quot;
+label variable ln_pop &quot;2013年人口自然对数&quot;
+label variable ln_wage &quot;2013年工资自然对数&quot;
+* 分别计算Logit与Probit得分，仅采用Logit结果匹配
+logit treat ln_gdp ln_pop tertiary_pct ln_wage
+predict double p_logit if e(sample), pr
+probit treat ln_gdp ln_pop tertiary_pct ln_wage
+predict double p_probit if e(sample), pr
+label variable p_logit &quot;Logit倾向得分（预测概率）&quot;
+label variable p_probit &quot;Probit倾向得分（预测概率）&quot;
+bysort treat: summarize p_logit p_probit
+* 在候选对照组倾向得分范围内保留处理组
+quietly summarize p_logit if treat==0, meanonly
+local lo=r(min)
+local hi=r(max)
+count if treat==1 &amp; !inrange(p_logit,`lo&#x27;,`hi&#x27;)
+drop if treat==1 &amp; !inrange(p_logit,`lo&#x27;,`hi&#x27;)
+save &quot;中国城市_2013年倾向得分_中文标签.dta&quot;, replace
+* 构造所有试点与候选非试点的距离（演示样本规模较小）
+preserve
+    keep if treat==0
+    keep cityid city_key p_logit
+    rename cityid control_id
+    rename city_key control_city
+    rename p_logit control_score
+    tempfile pool
+    save `pool&#x27;
+restore
+keep if treat==1
+keep cityid city_key p_logit
+rename cityid treated_id
+rename city_key treated_city
+rename p_logit treated_score
+cross using `pool&#x27;
+gen double distance=abs(treated_score-control_score)
+label variable distance &quot;两个城市的倾向得分绝对距离&quot;
+bysort treated_id (distance control_id): gen int match_rank=_n
+label variable match_rank &quot;候选对照城市距离排名&quot;
+tempfile allpairs
+save `allpairs&#x27;
+* 方法一：一对一最近邻，有放回
+preserve
+    keep if match_rank==1
+    count
+    save &quot;中国城市_一对一最近邻匹配.dta&quot;, replace
+restore
+* 方法二：一对一卡尺匹配，概率距离不超过0.05
+preserve
+    keep if match_rank==1 &amp; distance&lt;=0.05
+    count
+    save &quot;中国城市_卡尺005匹配.dta&quot;, replace
+restore
+* 方法三：一对三最近邻，有放回
+keep if match_rank&lt;=3
+bysort treated_id: gen byte matches_in_set=_N
+label variable matches_in_set &quot;每个试点对应的对照城市数量&quot;
+save &quot;中国城市_一对三最近邻匹配.dta&quot;, replace
+* 本课仅进行匹配，不报告政策效果或匹配后显著性。</code></pre><h3>Python源代码（中文列名）</h3><pre><code>import numpy as np
+import pandas as pd
+import statsmodels.formula.api as smf
+from sklearn.neighbors import NearestNeighbors
+
+# 真实中国公开城市年鉴整理数据；仅用2013年政策前特征
+url = &quot;https://raw.githubusercontent.com/Cause-114/CityEdu-Eco/main/data/panel.csv&quot;
+df = pd.read_csv(url)
+df = df.loc[df[&quot;year&quot;] == 2013].copy()
+assert not df[&quot;city_key&quot;].duplicated().any()
+# 与Stata一致的地级市教学映射；自治州及县级口径待审核
+pilots = &quot;&quot;&quot;北京 天津 上海 长沙 株洲 湘潭 石家庄 大连 本溪
+哈尔滨 大庆 南京 苏州 镇江 金华 芜湖 安庆 福州 厦门 泉州
+南昌 上饶 青岛 淄博 威海 临沂 郑州 洛阳 武汉 广州
+深圳 中山 成都 攀枝花 贵阳 银川 吴忠&quot;&quot;&quot;.split()
+df[&quot;treat&quot;] = df[&quot;city_key&quot;].isin(pilots).astype(int)
+cols = [&quot;gdp&quot;, &quot;population&quot;, &quot;tertiary_pct&quot;, &quot;wage&quot;]
+df = df.dropna(subset=cols).copy()
+df = df.loc[(df[[&quot;gdp&quot;, &quot;population&quot;, &quot;wage&quot;]] &gt; 0).all(axis=1)].copy()
+df[&quot;ln_gdp&quot;] = np.log(df[&quot;gdp&quot;])
+df[&quot;ln_pop&quot;] = np.log(df[&quot;population&quot;])
+df[&quot;ln_wage&quot;] = np.log(df[&quot;wage&quot;])
+formula = &quot;treat ~ ln_gdp + ln_pop + tertiary_pct + ln_wage&quot;
+# Logit和Probit都产生0到1之间的预测概率
+logit = smf.logit(formula, data=df).fit(disp=False)
+probit = smf.probit(formula, data=df).fit(disp=False)
+df[&quot;p_logit&quot;] = logit.predict(df)
+df[&quot;p_probit&quot;] = probit.predict(df)
+print(df.groupby(&quot;treat&quot;)[[&quot;p_logit&quot;, &quot;p_probit&quot;]].agg([&quot;count&quot;, &quot;mean&quot;, &quot;min&quot;, &quot;max&quot;]))
+# 使用Logit分数；只保留共同支持范围内的处理组城市
+ctrl = df.loc[df[&quot;treat&quot;] == 0].copy().reset_index(drop=True)
+trt = df.loc[df[&quot;treat&quot;] == 1].copy().reset_index(drop=True)
+assert not ctrl.empty and not trt.empty, &quot;处理组或候选对照组为空&quot;
+lo, hi = ctrl[&quot;p_logit&quot;].min(), ctrl[&quot;p_logit&quot;].max()
+trt = trt.loc[trt[&quot;p_logit&quot;].between(lo, hi)].copy().reset_index(drop=True)
+assert not trt.empty, &quot;共同支持区间内没有处理组城市&quot;
+# 一对三最近邻、有放回；第一个最近邻用于一对一和卡尺匹配
+assert len(ctrl) &gt;= 3, &quot;对照城市少于3个，不能做一对三&quot;
+nn = NearestNeighbors(n_neighbors=3, metric=&quot;euclidean&quot;)
+nn.fit(ctrl[[&quot;p_logit&quot;]])
+dist, loc = nn.kneighbors(trt[[&quot;p_logit&quot;]])
+
+def make_pairs(k: int, caliper: float | None = None) -&gt; pd.DataFrame:
+    rows = []
+    for i in range(len(trt)):
+        for rank in range(k):
+            distance = float(dist[i, rank])
+            if caliper is not None and distance &gt; caliper:
+                continue
+            j = int(loc[i, rank])
+            rows.append({&quot;试点城市&quot;: trt.loc[i, &quot;city_key&quot;],
+                         &quot;对照城市&quot;: ctrl.loc[j, &quot;city_key&quot;],
+                         &quot;试点倾向得分&quot;: float(trt.loc[i, &quot;p_logit&quot;]),
+                         &quot;对照倾向得分&quot;: float(ctrl.loc[j, &quot;p_logit&quot;]),
+                         &quot;倾向得分距离&quot;: distance,
+                         &quot;匹配顺位&quot;: rank + 1})
+    return pd.DataFrame(rows, columns=[&quot;试点城市&quot;, &quot;对照城市&quot;,
+           &quot;试点倾向得分&quot;, &quot;对照倾向得分&quot;, &quot;倾向得分距离&quot;, &quot;匹配顺位&quot;])
+
+pairs_1 = make_pairs(1)              # 最近邻，一对一，有放回
+pairs_cal = make_pairs(1, 0.05)       # 一对一卡尺匹配（概率尺度）
+pairs_3 = make_pairs(3)              # 一对三最近邻，有放回
+for title, frame, path in [
+    (&quot;一对一最近邻&quot;, pairs_1, &quot;中国城市_一对一最近邻匹配.csv&quot;),
+    (&quot;卡尺0.05&quot;, pairs_cal, &quot;中国城市_卡尺005匹配.csv&quot;),
+    (&quot;一对三最近邻&quot;, pairs_3, &quot;中国城市_一对三最近邻匹配.csv&quot;),
+]:
+    print(title, &quot;成功匹配的试点城市数：&quot;, frame[&quot;试点城市&quot;].nunique())
+    frame.to_csv(path, index=False, encoding=&quot;utf-8-sig&quot;)
+# 输出匹配关系，不估计DID/ATT；下节检查协变量平衡。</code></pre><h2>七、三个常见误区</h2><p>误区1：Logit和Probit哪个分类准确率高，哪个就一定适合匹配。错误。PSM重点是协变量平衡、共同支持和合理的研究设计，而非单纯预测分类。</p><p>误区2：卡尺越小一定越好。错误。卡尺过窄虽然限制匹配距离，却可能剔除大量试点、改变估计对象并增加估计不稳定性。</p><p>误区3：匹配结束就证明政策有因果效应。错误。还需检查匹配质量和条件平行趋势，明确潜在政策预期、2015—2016年后续试点以及结果变量的暴露时间。2014年名单于10月公布，因此2014全年工资不应当作完整一年的处理后结果。</p><h2>八、两分钟自测（恰好两题）</h2><p>概念题：某试点城市在一对一卡尺匹配中找不到距离不超过0.05的对照城市。应当强行选择最近的城市吗？</p><p>计算题：试点城市得分0.72，三个非试点城市得分分别是0.70、0.68和0.55。若设置概率距离卡尺0.05，哪些城市合格？如果采用一对一最近邻最终选择谁？</p><h3>参考答案</h3><p>概念题答案：不应强行接受违反卡尺的匹配。该试点城市在既定规则下无法匹配，可以退出该方案，研究者应记录样本损失，并审查共同支持与方案的稳健性。</p><p>计算题答案：距离分别为0.02、0.04、0.17，B和C符合0.05卡尺；一对一最近邻选距离0.02的B。</p><h2>九、课次进度与下一节</h2><p>本节完成第2章·第1节，全课程第4课/共10课。下一节为第2章·第2节《匹配质量与协变量平衡性检验》。未开始下一课，也不自动推进。</p><h2>资料来源与阅读</h2><p>2014首批官方政策公告：<a href="https://wap.miit.gov.cn/zwgk/zcwj/wjfb/gg/art/2020/art_4dab04091bea459e9cc45e0046be3fe9.html" rel="noopener">https://wap.miit.gov.cn/zwgk/zcwj/wjfb/gg/art/2020/art_4dab04091bea459e9cc45e0046be3fe9.html</a></p><p>中国城市面板原始CSV（第三方年鉴整理）：<a href="https://github.com/Cause-114/CityEdu-Eco/blob/main/data/panel.csv" rel="noopener">https://github.com/Cause-114/CityEdu-Eco/blob/main/data/panel.csv</a></p><p>中国城市面板数据说明：<a href="https://github.com/Cause-114/CityEdu-Eco/blob/main/data/DATA_NOTES.md" rel="noopener">https://github.com/Cause-114/CityEdu-Eco/blob/main/data/DATA_NOTES.md</a></p><p>Austin (2011), Optimal caliper widths: <a href="https://doi.org/10.1002/pst.433" rel="noopener">https://doi.org/10.1002/pst.433</a></p><p>Stata官方手册teffects psmatch：<a href="https://www.stata.com/manuals/teteffectspsmatch.pdf" rel="noopener">https://www.stata.com/manuals/teteffectspsmatch.pdf</a></p><p><a href="psm_match_cn.do">查看Stata完整代码</a> · <a href="psm_match_cn.py">查看Python完整代码</a></p></main></body></html>
