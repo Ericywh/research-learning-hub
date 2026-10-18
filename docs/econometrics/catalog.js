@@ -88,9 +88,9 @@ window.ECON_COURSE={
           "chapter": 2,
           "section": 1,
           "title": "一元线性回归",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-14",
+          "url": "lessons/02-01.html"
         },
         {
           "id": "02-02",
@@ -98,9 +98,9 @@ window.ECON_COURSE={
           "chapter": 2,
           "section": 2,
           "title": "OLS最小二乘法",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-15",
+          "url": "lessons/02-02.html"
         },
         {
           "id": "02-03",
@@ -108,9 +108,9 @@ window.ECON_COURSE={
           "chapter": 2,
           "section": 3,
           "title": "拟合优度R²",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-16",
+          "url": "lessons/02-03.html"
         },
         {
           "id": "02-04",
@@ -118,9 +118,9 @@ window.ECON_COURSE={
           "chapter": 2,
           "section": 4,
           "title": "多元线性回归与控制变量",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-17",
+          "url": "lessons/02-04.html"
         },
         {
           "id": "02-05",
@@ -128,9 +128,9 @@ window.ECON_COURSE={
           "chapter": 2,
           "section": 5,
           "title": "偏回归系数与教育回报",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-18",
+          "url": "lessons/02-05.html"
         },
         {
           "id": "02-06",
