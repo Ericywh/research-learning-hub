@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="course-date" content="2026-10-18">
+<title>第2章·第5节｜偏回归系数与教育回报</title><style>
+:root{font-family:system-ui,-apple-system,"Noto Sans SC","Microsoft YaHei",sans-serif;color:#223845;background:#f5f8f6}*{box-sizing:border-box}body{margin:0;line-height:1.85;font-size:16px}header,main,footer{max-width:940px;margin:auto;padding:18px 22px}header,nav{display:flex;gap:22px;flex-wrap:wrap}a{color:#166e65}h1{font-size:clamp(24px,4vw,34px);line-height:1.4}h2{font-size:23px;color:#185c53;border-bottom:1px solid #dce8e2;padding-bottom:10px;margin-top:36px}h3{font-size:18px;color:#2d665e}main{background:white;border:1px solid #dee9e3;border-radius:16px;padding:30px;margin:12px auto 30px}.meta{background:#eaf4ef;padding:17px;border-radius:9px;margin:14px 0 30px}p{margin:13px 0}pre{background:#172b38;color:#f0f5f9;border-radius:9px;padding:19px;overflow-x:auto;font:13px/1.75 ui-monospace,monospace}.code-label{margin-top:22px;font-weight:bold;color:#185c53}code{white-space:pre-wrap}p code{background:#f0f4f1;padding:2px 5px;border-radius:3px}.formula{background:#f1f6f3;padding:18px;margin:18px 0;overflow-x:auto;text-align:center}footer{color:#6a7b7b;font-size:12px}li{margin:8px 0}@media(max-width:650px){main{padding:17px;border-radius:0}pre{font-size:12px}}</style>
+<script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['$$','$$']]},svg:{fontCache:'global'}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script></head>
+<body><header><a href="../">← 计量经济学120天课程目录</a><a href="../../study/">学习中心</a></header><main>
+<h1>第2章·第5节｜偏回归系数与教育回报</h1><div class="meta">全课程第12课 / 共120课　·　授课日期：2026-10-18　·　学习时间：10—15分钟</div>
+<p>全课程第12课 / 共120课<br>授课日期：2026年10月18日（Asia/Taipei）｜预计10—15分钟</p>
+<h3>一、通俗理解</h3>
+<p>上一课在回归中同时纳入汽车重量和长度，发现一个系数的含义取决于其他解释变量。本课转向教育与工资：受教育年限较长者往往工资较高，但工作经验、任职年限和年龄也与工资有关。<strong>偏回归系数</strong>是指在模型中剔除其他控制变量所能线性解释的部分后，目标解释变量与结果变量剩余变化之间的线性斜率。<br>直觉上，可以先用工作经验等变量预测教育年限，再用同一组变量预测工资；把两次预测都未解释的部分拿来比较，得到的教育斜率与完整多元OLS中的教育系数相同。这不是另一种因果识别方法，而是同一个OLS估计量的另一种表达。</p>
+<h3>二、核心理论与公式</h3>
+<p>设定含截距的半对数工资方程：</p>
+<div class="formula">$$\ln(wage_i)=\beta_0+\beta_1grade_i+\beta_2ttl\_exp_i+\beta_3tenure_i+\beta_4age_i+u_i.$$</div>
+<p>其中 wage 为正的小时工资，grade 为已完成的受教育年级数，ttl_exp 为累计工作经验，tenure 为当前岗位任职年限，age 为年龄。(beta_1) 是其他三个变量给定时，教育增加一个年级对应的<strong>条件对数工资差异</strong>；小系数时约为 (100beta_1%)，精确百分比变化为 (100[exp(beta_1)-1]%)。<br>Frisch–Waugh–Lovell（FWL）定理给出：</p>
+<div class="formula">$$\widehat\beta_1=\frac{\sum_i\widetilde{grade}_i\widetilde{\ln(wage)}_i}{\sum_i\widetilde{grade}_i^2}.$$</div>
+<p>波浪号表示分别对截距、经验、任职年限、年龄做OLS回归后的残差。该等式要求同一样本、相同控制变量及完整模型满列秩；若教育被控制变量完全线性解释，分母为零，系数不可识别。FWL是有限样本代数恒等式，不依赖因果外生性；统计推断和因果解释则另需相应假设。</p>
+<h3>三、实证案例与数据</h3>
+<p>使用Stata Press官方示例数据 nlsw88.dta，源自1988年美国女性劳动力纵向调查的截面摘录。公开版本原始记录为2,246条；本课只保留 wage、grade、ttl_exp、tenure、age 均非缺失且 wage\&gt;0 的记录，实际有效样本量由代码报告，不预设结果。数据及变量定义可核查：<a href="https://www.stata-press.com/data/r19/g.html" target="_blank" rel="noopener noreferrer">Stata Press Release 19数据目录</a>、<a href="https://www.stata-press.com/data/r19/nlsw88.dta" target="_blank" rel="noopener noreferrer">nlsw88.dta原始文件</a>。该文件用于教学，不宜未经抽样设计核查直接推断总体教育回报。</p>
+<h3>四、Stata与Python实现</h3>
+<p>两套代码均估计同一含截距OLS模型，完整模型均使用HC1异方差稳健标准误；FWL残差回归只用来核对点估计，不将其默认标准误冒充完整模型的稳健标准误。<br><strong>Stata：</strong></p>
+<div class="code-label">Stata</div><pre><code class="language-stata">clear all
+* 读取官方数据并统一样本
+use &quot;https://www.stata-press.com/data/r19/nlsw88.dta&quot;, clear
+keep if !missing(wage, grade, ttl_exp, tenure, age) &amp; wage &gt; 0
+generate double lnwage = ln(wage)
+count
+
+* 完整模型：HC1稳健标准误
+regress lnwage grade ttl_exp tenure age, vce(robust)
+scalar b_full = _b[grade]
+display &quot;完整模型教育系数：&quot; b_full
+
+* FWL：分别剔除相同控制变量
+regress lnwage ttl_exp tenure age
+predict double ry, resid
+regress grade ttl_exp tenure age
+predict double rx, resid
+regress ry rx, nocons
+display &quot;FWL教育系数：&quot; _b[rx]</code></pre>
+<p><strong>Python：</strong></p>
+<div class="code-label">Python</div><pre><code class="language-python">import numpy as np
+import pandas as pd
+import statsmodels.api as sm
+
+url = &quot;https://www.stata-press.com/data/r19/nlsw88.dta&quot;
+cols = [&quot;wage&quot;, &quot;grade&quot;, &quot;ttl_exp&quot;, &quot;tenure&quot;, &quot;age&quot;]
+df = pd.read_stata(url)[cols].dropna().copy()
+df = df.loc[df[&quot;wage&quot;] &gt; 0].copy()
+df[&quot;lnwage&quot;] = np.log(df[&quot;wage&quot;])
+
+y = df[&quot;lnwage&quot;]
+X = sm.add_constant(df[[&quot;grade&quot;, &quot;ttl_exp&quot;, &quot;tenure&quot;, &quot;age&quot;]])
+full = sm.OLS(y, X).fit(cov_type=&quot;HC1&quot;)
+
+# FWL残差化：同一样本、同一组控制变量
+Z = sm.add_constant(df[[&quot;ttl_exp&quot;, &quot;tenure&quot;, &quot;age&quot;]])
+ry = sm.OLS(y, Z).fit().resid
+rx = sm.OLS(df[&quot;grade&quot;], Z).fit().resid
+b_fwl = np.dot(rx, ry) / np.dot(rx, rx)
+
+print(&quot;有效样本量：&quot;, len(df))
+print(&quot;完整模型教育系数：&quot;, full.params[&quot;grade&quot;])
+print(&quot;完整模型HC1标准误：&quot;, full.bse[&quot;grade&quot;])
+print(&quot;FWL教育系数：&quot;, b_fwl)</code></pre>
+<p>运行后核对两种教育系数是否仅有浮点舍入差异，并比较Stata与Python的完整模型系数和HC1标准误。本次未实际运行Stata或Python，不报告未经核实的回归数值。</p>
+<h3>五、初学者避坑</h3>
+<p><strong>误区一：把教育系数直接称为教育的因果回报。</strong> 能力、家庭背景、教育选择与就业选择可能同时影响受教育年限和工资；控制经验、任职年限、年龄仍不足以保证外生性。<br><strong>误区二：把半对数系数直接当作工资增加的美元数。</strong> 它描述条件对数工资差异；百分比近似还需要考虑系数大小。<br><strong>误区三：认为FWL残差回归自动复制完整模型的标准误。</strong> 点估计相等，但简单残差回归的自由度修正与完整模型不同。报告HC1标准误应使用完整模型。</p>
+<h3>六、今日练习</h3>
+<p><strong>概念题：</strong> 为什么FWL残差化能够得到与完整多元OLS相同的教育系数？这是否解决了教育的内生性？<br><strong>参考答案：</strong> 残差化分别移除了控制变量在教育和工资上的线性投影，剩余斜率恰好等于完整OLS中教育的偏回归系数。这是投影代数性质，不保证教育与结构误差独立，也不消除未观测能力等内生性来源。<br><strong>计算题：</strong> 某纯教学示例中，残差化后的教育值为（−1，0，1），残差化后的对数工资值为（−0.08，0，0.08）。求教育偏回归系数并解释。<br><strong>参考答案：</strong> 分子为0.16，分母为2，因此系数为0.08。在模型条件比较意义下，教育增加一个年级对应的对数工资差异为0.08，约等于8%的工资差异；精确比例约为8.33%。该例为构造数字，不是nlsw88的估计结果，更不能据此宣称因果效应。</p>
+<h3>七、学习进度</h3>
+<p>本课为<strong>第2章·第5节｜偏回归系数与教育回报</strong>，全课程第12课 / 共120课。数据来源为Stata Press官方 nlsw88.dta。依GitHub main原纲，下一课是<strong>第2章·第6节｜经典线性回归的主要假设</strong>（全课程第13课）。第8—12课GitHub源HTML未同步不代表课程未讲授；公网发布须独立核验。</p>
+<nav><a href="02-04.html">← 上一课</a><a href="../">课程总目录</a></nav>
+</main><footer>计量经济学120天系统课程｜按已完成授课讲义归档；相关性与因果解释须严格区分。</footer></body></html>
