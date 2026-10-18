@@ -2,6 +2,198 @@
    完整私人精读报告未经授权不得上传，切勿包含付费PDF或私有数据。 */
 window.CSSCI_CATALOG = [
   {
+    "id": "2026-10-18-03-02-credit-space-gvc",
+    "date": "2026-10-18",
+    "title": "信贷空间配置效率、技术创新与全球价值链攀升",
+    "authors": "张雪兰、杨瑞桐、吴蓉蓉",
+    "journal": "财经研究",
+    "year": 2026,
+    "volume": "52",
+    "issue": "8",
+    "pages": "20—34",
+    "doi": "10.16538/j.cnki.jfe.20260716.401",
+    "field": "金融资源配置、全球价值链",
+    "methods": [
+      "企业固定效应",
+      "工具变量",
+      "2SLS",
+      "机制分析"
+    ],
+    "data_types": [
+      "企业面板",
+      "城市信贷",
+      "海关与工业企业"
+    ],
+    "sample": "2004—2009年、2011—2014年企业面板；FE样本395534，IV样本360461",
+    "status": "published",
+    "data_access": "WIOD、海关贸易数据库、工业企业数据库、RESSET等按授权获取",
+    "code_access": "作者原始代码未取得；课程提供自行推导且未运行的Stata参考代码",
+    "replication_status": "官方完整HTML及公开FE/IV表格已核对；原始数据和代码未取得；未完成数值复现",
+    "article_url": "lessons/03-02-2026-10-18.html",
+    "journal_url": "https://qks.sufe.edu.cn/J/CJYJ/Article/Details/A0N4CyhS2Q-FBUp-Ooas-uJQf-rtMtYsONjIIe/CN",
+    "fulltext_url": "https://qks.sufe.edu.cn/mv_html/j00001/202608/N4CyhS2Q-FBUp-Ooas-uJQf-rtMtYsONjIIe_WEB.htm"
+  },
+  {
+    "id": "2026-10-17-03-01-data-elements-tech-complexity",
+    "date": "2026-10-17",
+    "title": "数据要素如何影响企业技术复杂度？",
+    "authors": "张帅、李长英",
+    "journal": "财经研究",
+    "year": 2026,
+    "volume": "52",
+    "issue": "6",
+    "pages": "19—33",
+    "doi": "10.16538/j.cnki.jfe.20260416.301",
+    "field": "数据要素、技术创新",
+    "methods": [
+      "企业固定效应",
+      "工具变量",
+      "2SLS",
+      "文本分析"
+    ],
+    "data_types": [
+      "企业面板",
+      "年报文本",
+      "专利IPC"
+    ],
+    "sample": "2010—2023年上市公司，清洗后45331个企业—年度，基准回归44504个观测",
+    "status": "published",
+    "data_access": "CNRDS、CSMAR及地理数据按授权获取",
+    "code_access": "作者原始代码未核验；课程提供自行推导且未运行的Stata参考代码",
+    "replication_status": "官方完整HTML与基准结果已核对；公开正文未完整列示IV数值表；未完成数值复现",
+    "article_url": "lessons/03-01-2026-10-17.html",
+    "journal_url": "https://qks.sufe.edu.cn/J/CJYJ/Article/Details/A0oUJhleUu-DeSo-pZFd-KGjJ-ATXqgyh31MKl/CN",
+    "fulltext_url": "https://qks.sufe.edu.cn/mv_html/j00001/202606/oUJhleUu-DeSo-pZFd-KGjJ-ATXqgyh31MKl_WEB.htm"
+  },
+  {
+    "id": "2026-10-16-02-04-entrepreneurship-base-npf",
+    "date": "2026-10-16",
+    "title": "双创示范基地建设对地区新质生产力的影响——来自中国城市的经验证据",
+    "authors": "邵传林、余晓琪",
+    "journal": "上海财经大学学报",
+    "year": 2026,
+    "volume": "28",
+    "issue": "5",
+    "pages": "18—32、124",
+    "doi": "10.16538/j.cnki.jsufe.2026.05.002",
+    "field": "创新政策、新质生产力",
+    "methods": [
+      "多期DID",
+      "两阶段DID",
+      "Goodman-Bacon分解",
+      "空间溢出"
+    ],
+    "data_types": [
+      "城市面板",
+      "政策试点",
+      "宏观统计"
+    ],
+    "sample": "2013—2022年273个地级市；完整控制样本2667个观测",
+    "status": "published",
+    "data_access": "中国城市统计年鉴、CNRDS、EPS及地方统计资料按授权获取",
+    "code_access": "作者原始代码未取得；课程提供自行推导且未运行的Stata参考代码",
+    "replication_status": "官方完整HTML、主要模型和公开结果已核对；原始数据和代码未取得；未完成数值复现",
+    "article_url": "lessons/02-04-2026-10-16.html",
+    "journal_url": "https://qks.sufe.edu.cn/J/CDXB/Article/Details/A0kGkwmwft-1Ab5-QWK0-GRzx-Cnnb2HljSpsY/CN",
+    "fulltext_url": "https://qks.sufe.edu.cn/mv_html/j00003/202605/kGkwmwft-1Ab5-QWK0-GRzx-Cnnb2HljSpsY_WEB.htm"
+  },
+  {
+    "id": "2026-10-15-02-03-chain-leader-coupling",
+    "date": "2026-10-15",
+    "title": "链长制下企业价值链升级与绿色转型耦合：错位纠正视角",
+    "authors": "崔琳昊、冯卓、冯烽",
+    "journal": "上海财经大学学报",
+    "year": 2026,
+    "volume": "28",
+    "issue": "5",
+    "pages": "48—61",
+    "doi": "10.16538/j.cnki.jsufe.2026.05.004",
+    "field": "产业链治理、绿色转型",
+    "methods": [
+      "多期DID",
+      "事件研究",
+      "PSM-DID",
+      "交错处理"
+    ],
+    "data_types": [
+      "企业面板",
+      "城市政策",
+      "企业文本"
+    ],
+    "sample": "2009—2023年A股制造业上市公司，基准16122个企业—年度观测",
+    "status": "published",
+    "data_access": "CSMAR、Wind、CNRDS及地方政府政策资料按授权获取",
+    "code_access": "作者原始代码未取得；课程提供自行推导且未运行的Stata参考代码",
+    "replication_status": "官方完整HTML和公开表格已核对；政策匹配表及原始代码未取得；未完成数值复现",
+    "article_url": "lessons/02-03-2026-10-15.html",
+    "journal_url": "https://qks.sufe.edu.cn/J/CDXB/Article/Details/A0K14BbTRr-zxEP-3M3x-L2lT-dk6AGAYE5Mv9/CN",
+    "fulltext_url": "https://qks.sufe.edu.cn/mv_html/j00003/202605/K14BbTRr-zxEP-3M3x-L2lT-dk6AGAYE5Mv9_WEB.htm"
+  },
+  {
+    "id": "2026-10-14-02-02-five-insurances-innovation",
+    "date": "2026-10-14",
+    "title": "社会保险“五险合一”对企业创新的影响：掣肘抑或助推？",
+    "authors": "曾益、张秋伊",
+    "journal": "上海财经大学学报",
+    "year": 2026,
+    "volume": "28",
+    "issue": "5",
+    "pages": "33—47",
+    "doi": "10.16538/j.cnki.jsufe.2026.05.003",
+    "field": "社会保险、企业创新",
+    "methods": [
+      "DIDM",
+      "多期DID",
+      "处理状态转换",
+      "稳健性检验"
+    ],
+    "data_types": [
+      "企业面板",
+      "地区政策",
+      "财务研发"
+    ],
+    "sample": "2007—2023年A股上市公司；研发变量可用观测35939，政策变量34450",
+    "status": "published",
+    "data_access": "CSMAR与手工整理地区政策信息",
+    "code_access": "作者原始代码未取得；课程提供自行推导且未运行的Stata参考代码",
+    "replication_status": "官方完整HTML、DIDM设计及主要结果已核对；原始数据与代码未取得；未完成数值复现",
+    "article_url": "lessons/02-02-2026-10-14.html",
+    "journal_url": "https://qks.sufe.edu.cn/J/CDXB/Article/2026/05/CN",
+    "fulltext_url": "https://qks.sufe.edu.cn/mv_html/j00003/202605/n4VmEB6I-Qtzh-58YD-x73f-Y98mYxjqpmy1_WEB.htm"
+  },
+  {
+    "id": "2026-10-13-02-01-fair-competition-violations",
+    "date": "2026-10-13",
+    "title": "三元共治视域下公平竞争审查制度的违规治理效应研究",
+    "authors": "吴玉彬、陈家创、石福安、李月",
+    "journal": "上海财经大学学报",
+    "year": 2026,
+    "volume": "28",
+    "issue": "5",
+    "pages": "110—124",
+    "doi": "10.16538/j.cnki.jsufe.2026.05.008",
+    "field": "竞争政策、企业违规",
+    "methods": [
+      "双重差分",
+      "事件研究",
+      "PSM-DID",
+      "安慰剂检验"
+    ],
+    "data_types": [
+      "企业面板",
+      "违规处罚",
+      "财务治理"
+    ],
+    "sample": "2008—2023年沪深A股上市公司，42785个企业—年度观测",
+    "status": "published",
+    "data_access": "上市公司违规处理研究数据库、CSMAR、Wind等按授权获取",
+    "code_access": "作者原始代码未取得；课程提供自行推导且未运行的Stata参考代码",
+    "replication_status": "官方完整HTML、主要模型和公开结果已核对；原始数据与代码未取得；未完成数值复现",
+    "article_url": "lessons/02-01-2026-10-13.html",
+    "journal_url": "https://qks.sufe.edu.cn/J/CDXB/Article/Details/A0brSy3Q3C-Hkr9-zmsu-ufCc-c2rdBG4JRmrG/CN",
+    "fulltext_url": "https://qks.sufe.edu.cn/mv_html/j00003/202605/brSy3Q3C-Hkr9-zmsu-ufCc-c2rdBG4JRmrG_WEB.htm"
+  },
+  {
     "id": "2026-10-12-01-04-urban-investment-core-technology",
     "date": "2026-10-12",
     "title": "城投平台入股与企业关键核心技术突破",
