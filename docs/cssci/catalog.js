@@ -120,7 +120,7 @@ window.CSSCI_CATALOG = [
       "城市政策",
       "企业文本"
     ],
-    "sample": "2009—2023年A股制造业上市公司，基准16122个企业—年度观测",
+    "sample": "2009—2023年A股制造业上市公司，基准16212个企业—年度观测",
     "status": "published",
     "data_access": "CSMAR、Wind、CNRDS及地方政府政策资料按授权获取",
     "code_access": "作者原始代码未取得；课程提供自行推导且未运行的Stata参考代码",
