@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="每日10分钟数学微课程，第7课：期望与线性性"><title>第1章·第7节｜期望与线性性</title><link rel="stylesheet" href="../site.css"><script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script><style>.article-wrap{max-width:830px;margin:0 auto;padding:36px 20px 80px}.article{font-size:17px;line-height:1.9;color:#263d3a}.article h2,.article h3{margin-top:1.7em}.article p{margin:1em 0}.article .math{overflow:auto;padding:12px;background:#f4f8f5;border-radius:9px}.article .table-scroll{overflow-x:auto}.article table{border-collapse:collapse;margin:18px 0;width:100%}.article td,.article th{border:1px solid #d5e3dc;padding:8px 12px}.article tr:first-child{background:#eaf5ef;font-weight:600}.article details{padding:12px;border:1px solid #cfded5;border-radius:9px}.muted{font-size:14px;color:#61736e}</style></head><body><header><div class="wrap"><a href="../">← 数学课程目录</a><a href="../../">研究学习中心 ↗</a></div></header><main class="article-wrap"><div class="kicker">MATHEMATICS · PROBABILITY · ECONOMETRICS</div><h1>第1章·第7节｜期望与线性性</h1><p class="muted">全课程第7课 / 共73课 · 2026-10-14 · 预计学习8分钟</p><article class="article"><p>全课程第7课 / 共73课｜2026年10月14日｜预计学习时间：8分钟 <strong>核心问题：</strong> 两个随机变量可能相互依赖，为什么它们的加权和仍能直接计算期望？</p>
+<h3>一、期望不是一次观测值</h3>
+<p>上一课用随机向量描述多个变量的联合随机结果。今天关注随机变量的“平均水平”。期望是按照概率加权得到的理论平均数，不是某次实际观测值，也不一定是随机变量能够取到的数。例如掷骰子的点数期望为3.5，但一次掷骰子不会出现3.5点。 对取有限个数值的离散随机变量，期望定义为：</p>
+<div class="math">\[\boxed{E(X)=\sum_x x\,P(X=x)}\]</div>
+<p>求和遍历所有可能取值。更一般地，使用线性性质时要求相关随机变量的绝对期望有限，即 (E|X|\&lt;infty)、(E|Y|\&lt;infty)；本课有限取值案例自然满足。</p>
+<h3>二、线性性为何不需要独立</h3>
+<p>设 (a,b,c) 为固定实数，则：</p>
+<div class="math">\[\boxed{E(aX+bY+c)=aE(X)+bE(Y)+c}\]</div>
+<p>理解这一点可以从联合分布出发。对有限离散的 (X,Y)，将 (ax+by+c) 乘以每个联合概率再求和；分别收集含 (x)、含 (y) 和常数的项，前两部分便化为边际期望，全部联合概率之和为1。<strong>推导中没有用到独立性。</strong> 独立性会影响乘积等非线性表达式的期望，却不是期望可加的前提。</p>
+<h3>三、手算案例：沿用上一课的骰子</h3>
+<p>仍用公平六面骰子，令 (X=1) 表示点数为偶数，否则为0；(Y=1) 表示点数大于3，否则为0。二者各有一半概率等于1，但并不独立，因为同时等于1的概率为1/3，而边际概率之积为1/4。 构造加权指标 (W=2X+3Y)。骰子依次掷出1、2、3、4、5、6时，(W) 分别为0、2、0、5、3、5。 直接按六种等概率结果计算：</p>
+<div class="math">\[E(W)=\frac{0+2+0+5+3+5}{6}=\frac{15}{6}=2.5\]</div>
+<p>使用线性性更快：(E(X)=E(Y)=1/2)，因此 (E(W)=2times1/2+3times1/2=2.5)。两种方法一致。注意，2.5是理论期望，六种实际结果中没有2.5。</p>
+<h3>四、统计与计量经济学应用</h3>
+<p>假设用企业研发投入 (R) 和绿色创新指标 (G) 构造线性综合指标 (S=2R+3G)。只要两者具有有限的绝对期望，就有 (E(S)=2E(R)+3E(G))，即使它们相关也成立。 这有助于理解线性预测与样本均值的关系，但<strong>理论期望不等于有限样本均值</strong>。要讨论样本均值是否逼近总体期望，还需要抽样及大数定律的条件；这里的系数也不自动具有因果含义。</p>
+<h3>五、两分钟自测</h3>
+<p><strong>第1题｜概念题：</strong> 期望的线性性是否要求 (X) 与 (Y) 独立？为什么期望不一定是可能出现的观测值？ <strong>第2题｜计算题：</strong> 沿用骰子案例，计算 (E(3X-2Y+1))。</p>
+<h4>参考答案</h4>
+<p><strong>第1题：</strong> 不要求独立，只需有关期望存在且有限。期望是按概率加权的平均数，可能落在所有实际可取值之间。 <strong>第2题：</strong> (3timestfrac12-2timestfrac12+1=boxed\{1.5\})。</p>
+<h3>六、阶段回顾与下一课</h3>
+<p>第1—5课建立向量、矩阵与线性变换的计算语言；第6课区分随机向量和实现值；本课把随机变量的联合结果转化为理论平均水平。请特别记住：<strong>期望可加不依赖独立，期望与一次观测值不同。</strong> 下一课：<strong>第1章·第8节｜方差和离散程度（全课程第8课）</strong>。</p></article><footer class="muted"><p><a href="https://app.notion.com/p/3f9b54823a1281bc9470e68116264260?pvs=204">Notion私人完整讲义（需权限）</a> · <a href="../">课程目录</a></p></footer></main></body></html>
