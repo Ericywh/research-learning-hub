@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="course-date" content="2026-10-15">
+<title>第2章·第2节｜OLS最小二乘法</title><style>
+:root{font-family:system-ui,-apple-system,"Noto Sans SC","Microsoft YaHei",sans-serif;color:#223845;background:#f5f8f6}*{box-sizing:border-box}body{margin:0;line-height:1.85;font-size:16px}header,main,footer{max-width:940px;margin:auto;padding:18px 22px}header,nav{display:flex;gap:22px;flex-wrap:wrap}a{color:#166e65}h1{font-size:clamp(24px,4vw,34px);line-height:1.4}h2{font-size:23px;color:#185c53;border-bottom:1px solid #dce8e2;padding-bottom:10px;margin-top:36px}h3{font-size:18px;color:#2d665e}main{background:white;border:1px solid #dee9e3;border-radius:16px;padding:30px;margin:12px auto 30px}.meta{background:#eaf4ef;padding:17px;border-radius:9px;margin:14px 0 30px}p{margin:13px 0}pre{background:#172b38;color:#f0f5f9;border-radius:9px;padding:19px;overflow-x:auto;font:13px/1.75 ui-monospace,monospace}.code-label{margin-top:22px;font-weight:bold;color:#185c53}code{white-space:pre-wrap}p code{background:#f0f4f1;padding:2px 5px;border-radius:3px}.formula{background:#f1f6f3;padding:18px;margin:18px 0;overflow-x:auto;text-align:center}footer{color:#6a7b7b;font-size:12px}li{margin:8px 0}@media(max-width:650px){main{padding:17px;border-radius:0}pre{font-size:12px}}</style>
+<script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['$$','$$']]},svg:{fontCache:'global'}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script></head>
+<body><header><a href="../">← 计量经济学120天课程目录</a><a href="../../study/">学习中心</a></header><main>
+<h1>第2章·第2节｜OLS最小二乘法</h1><div class="meta">全课程第9课 / 共120课　·　授课日期：2026-10-15　·　学习时间：10—15分钟</div>
+<p>全课程第9课 / 共120课<br>授课日期：2026年10月15日｜预计10—15分钟</p>
+<h3>一、通俗理解</h3>
+<p>上一课用直线描述汽车重量与价格的关系，但究竟怎样选出这条线？普通最小二乘法（Ordinary Least Squares，OLS）给出一个明确标准：比较每辆汽车的实际价格与直线预测价格之间的差距，选择使这些差距的<strong>平方和最小</strong>的截距和斜率。<br>每个差距称为残差。平方使正负偏差不能相互抵消，并对较大偏差给予更高权重。OLS求得的是样本中最贴合这一标准的直线，不是逐点穿过所有观测的直线，更不是自动成立的因果关系。</p>
+<h3>二、核心理论与公式</h3>
+<p>对于第 i 辆汽车，记价格为 y_i、重量为 x_i，预测价格为 a+b x_i。OLS的目标是：</p>
+<div class="formula">$$(\hat\beta_0,\hat\beta_1)=\underset{a,b}{\arg\min}\sum_{i=1}^{n}(y_i-a-bx_i)^2.$$</div>
+<p>其中 n 为有效观测数，a 是候选截距，b 是候选斜率；帽号表示样本估计值。若包含截距且 x_i 不全相同，最优解为：</p>
+<div class="formula">$$\hat\beta_1=\frac{\sum_i(x_i-\bar x)(y_i-\bar y)}{\sum_i(x_i-\bar x)^2},\qquad
+\hat\beta_0=\bar y-\hat\beta_1\bar x.$$</div>
+<p>分子反映重量与价格的共同变动，分母反映重量自身的变动。分母为零时，所有重量相同，无法单独估计斜率。含截距的OLS还有两个样本性质：残差之和为零，残差与解释变量的样本乘积和为零；这是优化结果，不是“模型正确”的证据。</p>
+<h3>三、实证案例与数据</h3>
+<p>继续使用Stata官方1978年汽车示例数据 <code>auto.dta</code>，变量 <code>price</code>（美元）与 <code>weight</code>（磅）。原始数据有74条车型记录；两软件都仅保留这两列非缺失的观测。来源：<a href="https://www.stata-press.com/data/r19/auto.dta" target="_blank" rel="noopener noreferrer">https://www.stata-press.com/data/r19/auto.dta</a> 。<br>先看一个可手算的小例子：三组观测为 (x,y)=(1,2)、(2,3)、(3,5)。平均值分别是2与10/3。按上式，斜率为1.5、截距为1/3，拟合值依次为11/6、10/3、29/6，残差依次为1/6、−1/3、1/6。残差和为零，但各点仍不一定落在直线上。<strong>这组数字仅用于演示计算，不是汽车数据的回归结果。</strong></p>
+<h3>四、Stata与Python实现</h3>
+<p>两套代码都估计含截距的 <code>price ~ weight</code>，并报告HC1型异方差稳健标准误。OLS系数由残差平方和确定；稳健标准误改变的是不确定性估计，不改变OLS系数。<br><strong>Stata</strong></p>
+<div class="code-label">Stata</div><pre><code class="language-stata">* 读取同一版本的官方数据
+use &quot;https://www.stata-press.com/data/r19/auto.dta&quot;, clear
+keep if !missing(price, weight)
+
+* 含截距OLS，报告异方差稳健标准误
+regress price weight, vce(robust)
+
+* 生成拟合值和残差，检查样本正交性质
+predict yhat, xb
+predict ehat, resid
+summarize ehat
+
+twoway (scatter price weight) (lfit price weight), legend(off)</code></pre>
+<p><strong>Python</strong>（先执行 <code>pip install pandas statsmodels matplotlib</code>）</p>
+<div class="code-label">Python</div><pre><code class="language-python">import pandas as pd
+import statsmodels.formula.api as smf
+import matplotlib.pyplot as plt
+
+# 同一数据、同一变量和缺失值处理
+d = pd.read_stata(
+    &quot;https://www.stata-press.com/data/r19/auto.dta&quot;,
+    convert_categoricals=False
+)
+d = d[[&quot;price&quot;, &quot;weight&quot;]].dropna().copy()
+
+# 与Stata vce(robust)对应的HC1标准误
+m = smf.ols(&quot;price ~ weight&quot;, data=d).fit(cov_type=&quot;HC1&quot;)
+d[&quot;yhat&quot;] = m.fittedvalues
+d[&quot;ehat&quot;] = m.resid
+print(&quot;n =&quot;, int(m.nobs))
+print(&quot;系数：&quot;, m.params)
+print(&quot;稳健标准误：&quot;, m.bse)
+print(&quot;残差和：&quot;, d[&quot;ehat&quot;].sum())
+
+ax = d.plot.scatter(x=&quot;weight&quot;, y=&quot;price&quot;, alpha=0.7)
+d.sort_values(&quot;weight&quot;).plot(x=&quot;weight&quot;, y=&quot;yhat&quot;, ax=ax, legend=False)
+plt.tight_layout()
+plt.show()</code></pre>
+<p>比较两套软件的样本量、截距、斜率和稳健标准误，应在数值精度允许的范围内一致。<strong>本课未实际运行代码，不报告未经核验的估计系数或显著性。</strong></p>
+<h3>五、初学者避坑</h3>
+<p><strong>把OLS理解成“误差最小”。</strong> 它最小化的是<strong>样本残差平方和</strong>，不是每个残差的绝对值，也不保证样本外预测误差最小。<br><strong>把OLS计算条件等同于因果识别条件。</strong> 重量有变异即可帮助求出斜率，但若车型配置同时影响重量和价格，系数仍可能含有遗漏变量偏误。要解释为因果效应，还需合适的识别假设，例如零条件均值。<br><strong>以为稳健标准误能修正斜率偏误。</strong> HC1允许一定形式的异方差下进行稳健推断，但不消除内生性；推断还依赖适当的抽样独立性或其他抽样结构假设。</p>
+<h3>六、今日练习</h3>
+<p><strong>概念题：</strong> 为什么OLS要平方残差？“残差和为零”是否足以说明拟合良好？<br><strong>实操题：</strong> 对三组观测 (1,2)、(2,3)、(3,5)，求OLS斜率和截距，并给出 x=4 时的预测值。<br><strong>参考答案</strong><br>概念题：平方防止正负残差抵消，并使较大偏差受到更大惩罚；含截距OLS的残差和本来就为零，不能据此判断拟合质量。<br>实操题：斜率1.5、截距1/3；x=4时预测值为 1/3+1.5×4=19/3≈6.33。该值属于样本范围外预测，解释时还需注意外推风险。</p>
+<h3>七、学习进度</h3>
+<p>本课：第2章·第2节，全课程第9课。核心掌握OLS优化目标、斜率与截距公式、残差性质及稳健标准误的作用。数据：Stata官方1978年汽车示例数据。<br>下一课：<strong>第2章·第3节｜拟合优度R²</strong>（全课程第10课）。</p>
+<nav><a href="02-01.html">← 上一课</a><a href="02-03.html">下一课 →</a><a href="../">课程总目录</a></nav>
+</main><footer>计量经济学120天系统课程｜按已完成授课讲义归档；相关性与因果解释须严格区分。</footer></body></html>
