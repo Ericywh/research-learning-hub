@@ -1,0 +1,318 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="PSM-DID第5课，中国宽带示范城市政策，SMD协变量平衡、共同支持、Love plot、Stata和Python实操。"><title>第5课｜匹配质量与协变量平衡性检验</title><style>*{box-sizing:border-box}body{margin:0;background:#f4f7f7;color:#243843;font-family:system-ui,-apple-system,"Noto Sans CJK SC","Microsoft Yahei",sans-serif;line-height:1.84}.hero{background:linear-gradient(115deg,#1c4854,#30746b);padding:55px 22px 58px;color:#fff}.container{max-width:960px;margin:0 auto}.eyebrow{font-size:12px;color:#d7ece6;letter-spacing:.1em}.hero h1{font-size:clamp(28px,3.5vw,40px);margin:13px 0}.hero p{opacity:.9;margin:0}.paper{max-width:960px;margin:-18px auto 50px;background:white;border:1px solid #dae7e5;border-radius:15px;padding:44px 59px;box-shadow:0 8px 30px #19414d10}a{color:#176d72}h2{font-size:22px;border-bottom:1px solid #d8e2e2;padding-bottom:10px;margin:36px 0 15px}h3{font-size:17px}p{margin:0 0 15px}strong{color:#195a59}table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14px}th{text-align:left;background:#e9f3f1}td,th{border-bottom:1px solid #dbe7e6;padding:9px 10px}td:not(:first-child),th:not(:first-child){text-align:right}li{margin-bottom:8px}.math-display{margin:23px 0;padding:5px;overflow:auto;text-align:center}.chart{border:1px solid #dce7e6;background:#fafdfe;padding:18px 21px;border-radius:12px}.chart svg{max-width:100%;height:auto}.chart h3{margin-top:0}.caption{font-size:12px;color:#71828a;margin-bottom:0}.appendix{margin-top:25px}summary{cursor:pointer;font-weight:650;padding:12px 14px;background:#ebf4f3;margin:14px 0;border-radius:9px}pre{background:#172b37;color:#e5f3f4;overflow:auto;padding:20px;border-radius:11px;font-size:12px;line-height:1.55}code{font-family:ui-monospace,Consolas,"Noto Sans Mono CJK SC",monospace}.paper :not(pre)>code{background:#eaf1f2;color:#15626b;padding:2px 4px;border-radius:4px}.links{display:flex;flex-wrap:wrap;gap:15px;font-size:13px;margin-bottom:22px}footer{max-width:960px;margin:-22px auto 35px;padding:0 18px;color:#697d84;font-size:12px}@media(max-width:700px){.hero{padding:32px 18px 50px}.paper{padding:25px 18px;margin:-16px 10px 35px}table{font-size:12px}h2{font-size:20px}pre{font-size:11px;padding:12px}}</style><script>window.MathJax={tex:{inlineMath:[['$','$']],displayMath:[['\[','\]']]}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script></head><body><header class="hero"><div class="container"><div class="eyebrow">PSM-DID SYSTEMATIC COURSE · LESSON 05 / 10</div><h1>匹配质量与协变量平衡性检验</h1><p>第2章·第2节｜中国城市公开数据｜第二章总结</p></div></header><main class="paper"><nav class="links"><a href="https://ericywh.github.io/research-learning-hub/psm-did/">课程目录 ↗</a><a href="https://github.com/Cause-114/CityEdu-Eco/blob/main/data/panel.csv">原始公开城市数据 ↗</a></nav><h1>第2章·第2节｜匹配质量与协变量平衡性检验</h1>
+<p><strong>全课程第5课 / 共10课｜中国“宽带中国”示范城市教学案例｜2026年10月18日</strong></p>
+<p>本节研究问题：<strong>PSM配对成功之后，怎样检验处理组与对照组在政策前是否真正更可比？</strong></p>
+<h2>一、匹配成功与平衡合格不是一回事</h2>
+<p>上一节使用2013年GDP、人口、第三产业比重和平均工资，估计2014年首批示范城市的倾向得分，并实施最近邻匹配。倾向得分相近，只说明在所估计的概率尺度上接近；两组仍可能在某项原始协变量上相差很大。<strong>协变量平衡（Covariate Balance）</strong>是指匹配之后，处理组和比较组的政策前变量分布接近。它需要专门诊断，不能由匹配命令是否运行成功来判断。</p>
+<h2>二、标准化均差SMD</h2>
+<p><strong>标准化均差（Standardized Mean Difference，SMD）</strong>将两组协变量均值差除以固定的标准化尺度，消除元、亿元、百分比等不同单位的影响：</p>
+<div class="math-display">\[SMD_k=\frac{\bar X_{T,k}-\bar X_{C,k}}{s_{k,0}}\]</div>
+<p>其中，T为试点城市，C为对照城市，k为某项2013年协变量。为比较匹配前后，本课使用匹配后保留的试点城市与匹配前所有候选对照城市所构成的合并标准差作为固定分母 $s_{k,0}$；匹配后对照城市被多次选中时，按出现次数计入统计。</p>
+<p><strong>构造例子（不是真实结果）：</strong> 假设2013年第三产业比重均值，试点组50%，未匹配对照组40%，匹配对照组49%；固定标准差为10个百分点，则匹配前SMD=(50−40)/10=1.00，匹配后SMD=(50−49)/10=0.10。绝对值越接近0，平均水平越接近。</p>
+<p>文献中常用 |SMD|&lt;0.1 作为<strong>经验参考值</strong>，而不是形式化显著性检验或因果识别保证。也应检查所有重要协变量是否平衡，而不是只选择报告最好的指标。</p>
+<h2>三、方差比和分布比较</h2>
+<p>平均值接近也不代表变量的离散程度相同。<strong>方差比（Variance Ratio，VR）</strong>比较两组的方差：</p>
+<div class="math-display">\[VR_k=\frac{s_{T,k}^{2}}{s_{C,k}^{2}}\]</div>
+<p>比值越接近1，表示离散程度越接近。不过方差比同样无法概括分布的每个细节。论文中通常还可比较分位数、核密度或经验累积分布曲线。</p>
+<p><strong>Love plot（平衡性图）</strong>将每项协变量匹配前后绝对SMD放在同一图上。它不是因果效应图，不反映政策提升或降低工资，只反映样本可比性。</p>
+<h2>四、共同支持与样本损失</h2>
+<p><strong>共同支持（Common Support）</strong>是指试点城市在倾向得分维度能找到有合理重叠的非试点城市。如果部分试点城市的倾向得分高于所有候选对照城市，就没有直接的可比对象；不能用最近邻强行把两个差异极大的城市配对。</p>
+<p>当匹配删除一部分试点城市以后，分析对象可能由“所有试点城市”变成“处于共同支持且成功匹配的试点城市”。需要报告原始处理组数量、因共同支持剔除的数量、卡尺剔除的数量以及最终匹配数量。</p>
+<h2>五、真实公开中国城市数据的初步计算</h2>
+<p>数据来源：<a href="https://github.com/Cause-114/CityEdu-Eco/blob/main/data/panel.csv">CityEdu-Eco公开的中国城市年度面板CSV</a>，其基于《中国城市统计年鉴》二次整理。政策来源：<a href="https://wap.miit.gov.cn/zwgk/zcwj/wjfb/gg/art/2020/art_4dab04091bea459e9cc45e0046be3fe9.html">2014年首批“宽带中国”示范城市公告</a>。</p>
+<p>教学设定：仅保留2013年GDP、人口、第三产业比重和工资完整且可进行对数变换的城市；Logit预测入选首批示范城市的概率；一对一最近邻、有放回匹配；按对照组得分范围限制共同支持；再使用原始概率差不超过0.05的卡尺。</p>
+<table>
+<thead>
+<tr>
+  <th>样本环节</th>
+  <th style="text-align:right">城市数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>2013年四项协变量完整的城市</td>
+  <td style="text-align:right">289</td>
+</tr>
+<tr>
+  <td>首批试点教学映射处理组</td>
+  <td style="text-align:right">37</td>
+</tr>
+<tr>
+  <td>候选对照组</td>
+  <td style="text-align:right">252</td>
+</tr>
+<tr>
+  <td>共同支持范围内的试点城市</td>
+  <td style="text-align:right">31</td>
+</tr>
+<tr>
+  <td>最终满足0.05卡尺并匹配的试点城市</td>
+  <td style="text-align:right">31</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+  <th>政策前协变量</th>
+  <th style="text-align:right">匹配前绝对SMD</th>
+  <th style="text-align:right">匹配后绝对SMD</th>
+  <th style="text-align:right">匹配后方差比</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>GDP自然对数</td>
+  <td style="text-align:right">1.2215</td>
+  <td style="text-align:right">0.1199</td>
+  <td style="text-align:right">1.316</td>
+</tr>
+<tr>
+  <td>人口自然对数</td>
+  <td style="text-align:right">0.3998</td>
+  <td style="text-align:right">0.2985</td>
+  <td style="text-align:right">1.108</td>
+</tr>
+<tr>
+  <td>第三产业比重</td>
+  <td style="text-align:right">0.5364</td>
+  <td style="text-align:right">0.2645</td>
+  <td style="text-align:right">0.664</td>
+</tr>
+<tr>
+  <td>在岗职工工资自然对数</td>
+  <td style="text-align:right">0.8610</td>
+  <td style="text-align:right">0.1225</td>
+  <td style="text-align:right">0.559</td>
+</tr>
+</tbody>
+</table>
+<p><strong>核心发现：</strong> 最近邻匹配使部分均值差异大幅缩小，但本次四项匹配后绝对SMD都超过0.1，尤其人口和产业结构仍存在明显差异。<strong>不能将当前教学匹配方案判定为全部合格，更不能据此估计可靠的因果政策效果。</strong></p>
+<p><strong>复核边界：</strong> 上表系根据公开原始CSV开展的独立初步核算，尚未在Stata和Python两个软件中实际交叉复核。2014年名单包含城市群、自治州和县级城市，与地级市年鉴统计单元未必一一对应；当前处理组定义与前课一样只是部分地级市教学映射，不能作为论文最终样本。原始数据的第三方再分发授权尚未核实，因此仅提供源网址，不随课再上传整套年鉴CSV。</p>
+<section class="chart" aria-label="2013年城市匹配前后的标准化均差"><h3>初步核算：匹配前后绝对SMD</h3><svg viewBox="0 0 710 260" role="img" aria-label="四个协变量匹配前后SMD：GDP 1.2215变0.1199，人口0.3998变0.2985，第三产业0.5364变0.2645，工资0.861变0.1225"><line x1="170" y1="15" x2="170" y2="212" stroke="#9aadb5"/><line x1="170" y1="212" x2="690" y2="212" stroke="#9aadb5"/><line x1="210" y1="12" x2="210" y2="212" stroke="#b88a56" stroke-dasharray="4 5"/><text x="211" y="9" fill="#866941" font-size="11">参考线0.1</text>
+<text x="7" y="49" font-size="12" fill="#2a4651">GDP自然对数</text><line x1="216.2" y1="45" x2="640.5" y2="45" stroke="#aebcc5" stroke-width="2"/><circle cx="640.5" cy="45" r="5.6" fill="#6c9aaf"/><rect x="212.2" y="41" width="8" height="8" transform="rotate(45 216.2 45)" fill="#24766b"/><text x="7" y="94" font-size="12" fill="#2a4651">人口自然对数</text><line x1="285.0" y1="90" x2="324.0" y2="90" stroke="#aebcc5" stroke-width="2"/><circle cx="324.0" cy="90" r="5.6" fill="#6c9aaf"/><rect x="281.0" y="86" width="8" height="8" transform="rotate(45 285.0 90)" fill="#24766b"/><text x="7" y="139" font-size="12" fill="#2a4651">第三产业比重</text><line x1="271.9" y1="135" x2="376.6" y2="135" stroke="#aebcc5" stroke-width="2"/><circle cx="376.6" cy="135" r="5.6" fill="#6c9aaf"/><rect x="267.9" y="131" width="8" height="8" transform="rotate(45 271.9 135)" fill="#24766b"/><text x="7" y="184" font-size="12" fill="#2a4651">工资自然对数</text><line x1="217.2" y1="180" x2="501.6" y2="180" stroke="#aebcc5" stroke-width="2"/><circle cx="501.6" cy="180" r="5.6" fill="#6c9aaf"/><rect x="213.2" y="176" width="8" height="8" transform="rotate(45 217.2 180)" fill="#24766b"/><text x="300" y="241" font-size="11" fill="#536d79">● 匹配前　　 ◆ 匹配后（固定标准差）</text></svg><p class="caption">公开CSV的初步教学核算；处理组统计口径仍需核查，尚未完成双软件交叉验证。</p></section><h2>六、Stata与Python怎么做？</h2>
+<p>双软件共同逻辑：取2013年政策前协变量→按相同地级市名单设置处理组→Logit计算倾向得分→共同支持内一对一最近邻有放回匹配→卡尺0.05→固定标准差计算匹配前后SMD→保存诊断结果。<strong>不使用2014年结果变量做匹配，也不输出政策效果的p值。</strong></p>
+<p><strong>Stata核心命令说明：</strong> <code>label variable</code>为变量设置中文标签；<code>label define</code>和<code>label values</code>给0/1处理组设置中文类别；<code>logit</code>估计倾向得分；<code>cross using</code>构造候选城市配对；<code>bysort ...: keep if _n==1</code>保留最近邻；<code>summarize</code>计算均值和方差。完整版本请查看同目录 <code>balance_cn.do</code>。</p>
+<p><strong>Python核心命令说明：</strong> <code>statsmodels.formula.api.logit</code>估计倾向得分，<code>NearestNeighbors</code>检索最近对照城市，<code>np.mean</code>和<code>np.var</code>计算固定分母SMD及方差比，<code>matplotlib</code>绘制Love plot。完整版本请查看同目录 <code>balance_cn.py</code>。</p>
+<p>注意：Stata与Python在倾向得分几乎并列时可能因排序策略不同而选中不同对照城市。报告前应对照城市ID逐一核查。本课脚本Python已通过静态语法编译，但尚未取得在两个软件中真实运行一致的证据。</p>
+<h2>七、三个常见误区</h2>
+<ol>
+<li><strong>倾向得分接近，所有协变量就一定平衡。</strong> 错误。必须在匹配后重新计算每项原始协变量的SMD、方差比等指标。</li>
+<li><strong>匹配后SMD低于0.1就证明政策有因果效果。</strong> 错误。SMD衡量已观测政策前特征的平衡，不验证条件平行趋势或不可观测混杂。</li>
+<li><strong>删掉不匹配的试点不会改变研究对象。</strong> 错误。共同支持及卡尺筛选可能改变ATT所针对的处理组范围。</li>
+</ol>
+<h2>八、两分钟自测（恰好两题）</h2>
+<p><strong>第1题｜概念题：</strong> 两组城市匹配后的倾向得分十分接近，是否可以直接判定PSM效果好？为什么？</p>
+<p><strong>参考答案：</strong> 不可以。需要检查政策前每个重要协变量的SMD、方差比、分布和共同支持；倾向得分接近不能保证原始变量都平衡。</p>
+<p><strong>第2题｜计算题：</strong> 某项产业占比在试点城市的平均值是45%，匹配前对照城市是35%，匹配后对照城市是43%，固定的合并标准差为10个百分点。计算匹配前、后的SMD。</p>
+<p><strong>参考答案：</strong> 匹配前SMD=(45−35)/10=1.00，匹配后SMD=(45−43)/10=0.20。虽然改善明显，但按|SMD|&lt;0.1这一经验参考值，仍未达标。</p>
+<h2>九、第二章知识结构与实证清单</h2>
+<p>第二章两课形成闭环：<strong>第4课学习倾向得分和匹配算法，第5课评价匹配结果。</strong> 执行清单是：政策前变量定义正确；处理组与城市统计口径核实；匹配规则透明；报告共同支持与样本损失；计算匹配前后SMD；检查方差及分布；展示Love plot；若仍失衡则重新设定匹配算法、特征或研究样本，并记录所有调整。平衡改进本身不等于DID的条件平行趋势成立。</p>
+<p><strong>已完成：第2章·第2节，全课程第5课 / 共10课。下一节：第3章·第1节｜匹配后DID估计量与模型设定。</strong></p>
+<p>参考文献：Austin, P. C. (2009). Balance diagnostics for comparing the distribution of baseline covariates between treatment groups in propensity-score matched samples. <em>Statistics in Medicine</em>, 28(25), 3083–3107. <a href="https://doi.org/10.1002/sim.3697">DOI:10.1002/sim.3697</a>.</p>
+<section class="appendix"><h2>附录｜完整双软件代码</h2><details><summary>Stata中文标签与平衡诊断（点击展开）</summary><pre><code>* PSM-DID系统课程第5课：中文Stata协变量平衡诊断
+* Stata 17+；只检查2013年政策前协变量，不估计政策因果效应。
+clear all
+set more off
+import delimited &quot;https://raw.githubusercontent.com/Cause-114/CityEdu-Eco/main/data/panel.csv&quot;, clear varnames(1) encoding(&quot;UTF-8&quot;)
+keep if year == 2013
+isid city_key
+* 延续第4课的地级市教学映射；自治州及县级城市尚未审计
+local pilots &quot;北京 天津 上海 长沙 株洲 湘潭 石家庄 大连 本溪 哈尔滨 大庆 南京 苏州 镇江&quot;
+local pilots &quot;`pilots&#x27; 金华 芜湖 安庆 福州 厦门 泉州 南昌 上饶 青岛 淄博 威海 临沂&quot;
+local pilots &quot;`pilots&#x27; 郑州 洛阳 武汉 广州 深圳 中山 成都 攀枝花 贵阳 银川 吴忠&quot;
+gen byte treat = 0
+foreach city of local pilots {
+    replace treat = 1 if city_key == &quot;`city&#x27;&quot;
+}
+label data &quot;中国城市2013年匹配质量与协变量平衡性教学数据&quot;
+label variable city_key &quot;城市名称&quot;
+label variable treat &quot;是否为2014首批宽带示范城市（教学映射）&quot;
+label variable gdp &quot;2013年GDP（亿元）&quot;
+label variable population &quot;2013年人口（百万人）&quot;
+label variable wage &quot;2013年在岗职工平均工资（元）&quot;
+label variable tertiary_pct &quot;2013年第三产业比重（%）&quot;
+label define treat_zh 0 &quot;非首批试点&quot; 1 &quot;首批试点&quot;
+label values treat treat_zh
+keep if !missing(gdp,population,tertiary_pct,wage)
+keep if gdp&gt;0 &amp; population&gt;0 &amp; wage&gt;0
+egen cityid = group(city_key), label
+label variable cityid &quot;城市编号（中文城市名）&quot;
+gen double ln_gdp = ln(gdp)
+gen double ln_pop = ln(population)
+gen double ln_wage = ln(wage)
+label variable ln_gdp &quot;2013年GDP自然对数&quot;
+label variable ln_pop &quot;2013年人口自然对数&quot;
+label variable ln_wage &quot;2013年工资自然对数&quot;
+
+* 第4课Logit设定完全一致
+logit treat ln_gdp ln_pop tertiary_pct ln_wage
+predict double pscore if e(sample), pr
+label variable pscore &quot;入选2014首批试点预测概率&quot;
+quietly summarize pscore if treat==0, meanonly
+local lo = r(min)
+local hi = r(max)
+count if treat==1 &amp; !inrange(pscore,`lo&#x27;,`hi&#x27;)
+drop if treat==1 &amp; !inrange(pscore,`lo&#x27;,`hi&#x27;)
+
+* 先保存所有合格的候选对照城市并记录其协变量分布
+local xlist &quot;ln_gdp ln_pop tertiary_pct ln_wage&quot;
+foreach v of local xlist {
+    quietly summarize `v&#x27; if treat==0
+    scalar control_mean_`v&#x27; = r(mean)
+    scalar control_sd_`v&#x27;   = r(sd)
+}
+preserve
+    keep if treat==0
+    keep cityid pscore `xlist&#x27;
+    rename cityid control_id
+    rename pscore control_score
+    foreach v of local xlist {
+        rename `v&#x27; c_`v&#x27;
+    }
+    tempfile controls
+    save `controls&#x27;
+restore
+
+* 处理组与每一个对照城市组成候选配对，并选择最近邻
+keep if treat==1
+keep cityid pscore `xlist&#x27;
+cross using `controls&#x27;
+gen double distance=abs(pscore-control_score)
+bysort cityid (distance control_id): keep if _n==1
+keep if distance&lt;=0.05
+count
+label variable distance &quot;试点与对照倾向得分概率差&quot;
+save &quot;中国城市_第5课匹配对_教学.dta&quot;, replace
+
+* 固定分母：匹配处理组与全体原始对照城市的合并标准差
+* 对照城市可多次被匹配，重复行不能在匹配后删去
+* 输出每个协变量匹配前后有符号SMD和匹配后方差比
+tempfile diagnostics
+tempname ph
+postfile `ph&#x27; str32 xname double smd_before smd_after vr_after using `diagnostics&#x27;, replace
+foreach v of local xlist {
+    quietly summarize `v&#x27;
+    local mt=r(mean)
+    local st=r(sd)
+    quietly summarize c_`v&#x27;
+    local mc=r(mean)
+    local sc=r(sd)
+    local d=sqrt((`st&#x27;^2+control_sd_`v&#x27;^2)/2)
+    local smd0=(`mt&#x27;-control_mean_`v&#x27;)/`d&#x27;
+    local smd1=(`mt&#x27;-`mc&#x27;)/`d&#x27;
+    local ratio=(`st&#x27;^2)/(`sc&#x27;^2)
+    post `ph&#x27; (&quot;`v&#x27;&quot;) (`smd0&#x27;) (`smd1&#x27;) (`ratio&#x27;)
+}
+postclose `ph&#x27;
+use `diagnostics&#x27;, clear
+label data &quot;中国城市2013年匹配前后协变量平衡诊断&quot;
+label variable xname &quot;2013年协变量（英文编码）&quot;
+label variable smd_before &quot;匹配前标准化均差&quot;
+label variable smd_after &quot;匹配后标准化均差&quot;
+label variable vr_after &quot;匹配后方差比&quot;
+gen double abs_before = abs(smd_before)
+gen double abs_after = abs(smd_after)
+label variable abs_before &quot;匹配前绝对标准化均差&quot;
+label variable abs_after &quot;匹配后绝对标准化均差&quot;
+list, noobs
+save &quot;中国城市_第5课协变量平衡诊断_中文标签.dta&quot;, replace
+* 若abs_after仍显著偏离0，须修改匹配方案；不自动宣称通过检验
+</code></pre></details><details><summary>Python匹配、平衡结果及Love plot（点击展开）</summary><pre><code>&quot;&quot;&quot;PSM-DID第5课：2013中国城市数据匹配质量与平衡性（教学用途）。
+数据源：https://github.com/Cause-114/CityEdu-Eco/blob/main/data/panel.csv
+仅用政策前协变量；不计算或声称政策因果效应。
+安装：pip install numpy pandas statsmodels scikit-learn matplotlib
+&quot;&quot;&quot;
+from pathlib import Path
+import numpy as np
+import pandas as pd
+import statsmodels.formula.api as smf
+from sklearn.neighbors import NearestNeighbors
+import matplotlib.pyplot as plt
+
+URL = &#x27;https://raw.githubusercontent.com/Cause-114/CityEdu-Eco/main/data/panel.csv&#x27;
+OUT = Path(__file__).resolve().parent
+PILOTS = &#x27;&#x27;&#x27;北京 天津 上海 长沙 株洲 湘潭 石家庄 大连 本溪 哈尔滨 大庆 南京 苏州 镇江
+金华 芜湖 安庆 福州 厦门 泉州 南昌 上饶 青岛 淄博 威海 临沂 郑州 洛阳 武汉
+广州 深圳 中山 成都 攀枝花 贵阳 银川 吴忠&#x27;&#x27;&#x27;.split()
+FEATURES = [&#x27;ln_gdp&#x27;, &#x27;ln_pop&#x27;, &#x27;tertiary_pct&#x27;, &#x27;ln_wage&#x27;]
+ZH = {&#x27;ln_gdp&#x27;:&#x27;2013年GDP自然对数&#x27;, &#x27;ln_pop&#x27;:&#x27;2013年人口自然对数&#x27;,
+      &#x27;tertiary_pct&#x27;:&#x27;2013年第三产业比重&#x27;, &#x27;ln_wage&#x27;:&#x27;2013年工资自然对数&#x27;}
+CALIPER = 0.05  # 原始概率差的教学卡尺，非0.2×logit(PS)标准差
+
+# 1. 仅选取2013年政策前资料
+try:
+    df = pd.read_csv(URL)
+except Exception as err:
+    raise RuntimeError(&#x27;无法下载CSV；请先到原仓库下载panel.csv，并把URL改为本地路径。&#x27;) from err
+df = df.loc[df[&#x27;year&#x27;].eq(2013)].copy()
+assert not df.city_key.duplicated().any(), &#x27;城市-年键不唯一&#x27;
+df[&#x27;treat&#x27;] = df.city_key.isin(PILOTS).astype(int)
+cols = [&#x27;gdp&#x27;,&#x27;population&#x27;,&#x27;tertiary_pct&#x27;,&#x27;wage&#x27;]
+df = df.dropna(subset=cols).copy()
+df = df.loc[(df[[&#x27;gdp&#x27;,&#x27;population&#x27;,&#x27;wage&#x27;]] &gt; 0).all(axis=1)].copy()
+df[&#x27;ln_gdp&#x27;] = np.log(df.gdp)
+df[&#x27;ln_pop&#x27;] = np.log(df.population)
+df[&#x27;ln_wage&#x27;] = np.log(df.wage)
+
+# 2. 与第4课保持一致的Logit模型
+model = smf.logit(&#x27;treat ~ ln_gdp + ln_pop + tertiary_pct + ln_wage&#x27;, data=df).fit(disp=False)
+df[&#x27;pscore&#x27;] = model.predict(df)
+control_pool = df.loc[df.treat.eq(0)].copy().reset_index(drop=True)
+trt_all = df.loc[df.treat.eq(1)].copy().reset_index(drop=True)
+assert len(control_pool)&gt;1 and len(trt_all)&gt;1, &#x27;没有足够的两组城市&#x27;
+lo, hi = control_pool.pscore.min(), control_pool.pscore.max()
+trt_support = trt_all.loc[trt_all.pscore.between(lo,hi)].copy().reset_index(drop=True)
+assert len(trt_support)&gt;1, &#x27;共同支持范围内不足2个处理城市&#x27;
+
+# 3. 一对一最近邻、有放回；再执行原始概率卡尺0.05
+nn = NearestNeighbors(n_neighbors=1,metric=&#x27;euclidean&#x27;).fit(control_pool[[&#x27;pscore&#x27;]])
+distance,idx = nn.kneighbors(trt_support[[&#x27;pscore&#x27;]])
+mask = distance[:,0] &lt;= CALIPER
+trt = trt_support.loc[mask].copy().reset_index(drop=True)
+ctrl = control_pool.iloc[idx[:,0][mask]].copy().reset_index(drop=True)
+assert len(trt)&gt;1, &#x27;卡尺后不足2个有效匹配城市&#x27;
+pairs = pd.DataFrame({&#x27;试点城市&#x27;:trt.city_key, &#x27;对照城市&#x27;:ctrl.city_key,
+                      &#x27;试点倾向得分&#x27;:trt.pscore, &#x27;对照倾向得分&#x27;:ctrl.pscore,
+                      &#x27;匹配距离&#x27;:distance[:,0][mask]})
+pairs.to_csv(OUT/&#x27;中国城市_一对一匹配结果_第5课.csv&#x27;,index=False,encoding=&#x27;utf-8-sig&#x27;)
+
+# 4. 使用固定的“匹配处理组 + 匹配前所有候选对照”的合并标准差为分母
+# 由于对照城市可被重复匹配，ctrl中的重复行要保留，其出现次数就是匹配权重。
+results=[]
+for var in FEATURES:
+    tx=trt[var].to_numpy()
+    cx_before=control_pool[var].to_numpy()
+    cx_after=ctrl[var].to_numpy()
+    pooled=np.sqrt((np.var(tx,ddof=1)+np.var(cx_before,ddof=1))/2)
+    smd_before=(tx.mean()-cx_before.mean())/pooled
+    smd_after=(tx.mean()-cx_after.mean())/pooled
+    ratio=np.var(tx,ddof=1)/np.var(cx_after,ddof=1)
+    results.append({&#x27;协变量&#x27;:ZH[var], &#x27;变量名&#x27;:var,
+                    &#x27;匹配前SMD&#x27;:smd_before,&#x27;匹配后SMD&#x27;:smd_after,
+                    &#x27;匹配前绝对SMD&#x27;:abs(smd_before),&#x27;匹配后绝对SMD&#x27;:abs(smd_after),
+                    &#x27;匹配后方差比&#x27;:ratio})
+balance=pd.DataFrame(results)
+balance.to_csv(OUT/&#x27;中国城市_协变量平衡诊断_第5课.csv&#x27;,index=False,encoding=&#x27;utf-8-sig&#x27;)
+
+# 5. Love plot：不因匹配程序成功就自动声称协变量合格
+fig,ax=plt.subplots(figsize=(8.1,4.4))
+y=np.arange(len(balance))
+ax.scatter(balance[&#x27;匹配前绝对SMD&#x27;],y,label=&#x27;Before matching&#x27;,marker=&#x27;o&#x27;,s=52)
+ax.scatter(balance[&#x27;匹配后绝对SMD&#x27;],y,label=&#x27;After matching&#x27;,marker=&#x27;D&#x27;,s=48)
+ax.axvline(0.1,linestyle=&#x27;--&#x27;,linewidth=1.1,label=&#x27;Reference |SMD| = 0.1&#x27;)
+ax.set_yticks(y,labels=FEATURES)
+ax.invert_yaxis()
+ax.set_xlabel(&#x27;Absolute standardized mean difference&#x27;)
+ax.set_title(&#x27;Covariate balance: 2013 Chinese city sample (illustrative policy mapping)&#x27;)
+ax.grid(alpha=.18,axis=&#x27;x&#x27;)
+ax.legend(fontsize=8)
+fig.tight_layout()
+fig.savefig(OUT/&#x27;love_plot_balance.png&#x27;,dpi=170)
+plt.close(fig)
+print(&#x27;2013年协变量完整城市数：&#x27;,len(df))
+print(&#x27;匹配前试点数：&#x27;,len(trt_all),&#x27;对照数：&#x27;,len(control_pool))
+print(&#x27;共同支持后试点数：&#x27;,len(trt_support))
+print(&#x27;卡尺成功匹配试点数：&#x27;,len(trt))
+print(balance.to_string(index=False, float_format=lambda x:f&#x27;{x:.4f}&#x27;))
+print(&#x27;提示：试点城市与年鉴城市口径为初步教学映射。匹配不等于因果识别。&#x27;)
+</code></pre></details></section></main><footer>教学研究用途：数据与政策名单映射未完成论文级复核；禁止将匹配后平衡诊断当作政策因果识别证明。</footer></body></html>
