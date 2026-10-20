@@ -1,0 +1,228 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="PSM-DID第7课：Stata完整实证操作，中国宽带中国示范城市案例；Stata和Python双软件教学及习题。"><title>第3章·第2节｜Stata完整实证操作</title><style>@page{size:A4;margin:18mm 18mm 18mm 18mm}*{box-sizing:border-box}body{font-family:system-ui,-apple-system,"Noto Sans CJK SC","PingFang SC",sans-serif;background:#f6f8f7;color:#243747;line-height:1.77;margin:0}header{background:linear-gradient(130deg,#173748,#266962);color:white;padding:43px max(calc((100vw - 860px)/2),25px)}header .ey{font-size:12px;letter-spacing:.11em;color:#b7dcd5}header h1{line-height:1.45;font-size:30px;margin:8px 0}header p{color:#c7e1d8;margin:0}main{max-width:900px;margin:-18px auto 34px;background:white;border:1px solid #e0e9e8;border-radius:13px;padding:38px 46px;box-shadow:0 9px 27px #0000000d}h2{font-size:21px;color:#1c5f5b;margin-top:29px;border-bottom:1px solid #dfe7e6;padding-bottom:9px}h3{font-size:17px}p{margin:11px 0}strong{color:#205d60}a{color:#1c746e;text-underline-offset:3px}table{width:100%;border-collapse:collapse;font-size:13px;margin:19px 0}th{background:#e9f2f0}td,th{border:1px solid #dce7e6;padding:7px;text-align:left}pre{white-space:pre;overflow:auto;background:#162d3a;color:#e4edf2;border-radius:10px;padding:15px;font-size:11px;line-height:1.55}code{font-family:ui-monospace,Consolas,monospace}p code{background:#eef4f2;color:#175d61;padding:1px 4px;border-radius:3px}blockquote{border-left:4px solid #388878;margin:14px 0;padding:6px 15px;background:#f0f8f4}.nav{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;margin-bottom:18px}.aside{padding:13px;border-left:4px solid #c48d36;background:#fff9ef;color:#5e4f31}.foot{font-size:12px;color:#687f86;margin-top:30px}@media(max-width:720px){header{padding:31px 18px}header h1{font-size:24px}main{margin:-12px 8px 20px;padding:22px 17px}pre{font-size:10px}}@media print{body{background:white}header{padding:17mm 0;background:none;color:#183b48}header p,header .ey{color:#566}main{margin:0;padding:0;border:0;box-shadow:none}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f0f3f5;color:black}a{color:black}}</style></head><body><header><div><div class="ey">PSM-DID系统精讲课程 · 全课程第7课 / 共10课</div><h1>第3章·第2节｜Stata完整实证操作</h1><p>中国真实政策背景 · 完整中文讲义 · 双软件实操</p></div></header><main><nav class="nav"><a href="https://ericywh.github.io/research-learning-hub/psm-did/">← 课程目录</a><a href="https://ericywh.github.io/research-learning-hub/psm-did/chapter-03/lesson-01/">← 第6课</a><a href="https://ericywh.github.io/research-learning-hub/psm-did/chapter-03/lesson-03/">第8课 →</a></nav><aside class="aside"><strong>实证边界：</strong>2014年10月公布的首批政策名单含复杂行政层级；当前教学映射与政策暴露时间尚不支持工资因果效应声明。上一课发现匹配后多项SMD超过0.1。本课代码所输出的配对DID数值只用来展示计算。</aside><h1>第3章·第2节｜Stata完整实证操作</h1>
+<p><strong>全课程第7课 / 共10课｜2026年10月20日单独生成</strong></p>
+<p>本节把前面讲过的概念连成可操作的Stata工作流程。研究案例仍是2014年首批“宽带中国”示范城市及公开的中国城市面板数据，但要严格区分“程序能复现”与“政策效果具有因果解释”。</p>
+<h2>一、Stata工作流应该有哪些环节？</h2>
+<p>完整脚本至少包括：下载或读取数据、核验城市—年份唯一性、建立政策处理组、设置中文标签、用2013年协变量估计Logit、检查共同支持、最近邻匹配、输出匹配关系、评价协变量平衡、计算匹配后工资变化差，以及保存运行日志。</p>
+<p><strong>脚本（do-file）</strong>是依次执行Stata命令的文本文件；<strong>日志（log）</strong>记录软件运行输出；<strong>键（key）</strong>是唯一标识记录的一组变量，这里是城市名称与数据年份；<strong>缺失值</strong>指该城市的某年统计数字不可得，不能随意填0。先做这些数据质量检查比立即运行回归重要。</p>
+<h2>二、政策名单与分析样本</h2>
+<p>本课延续前几课的<strong>地级市教学映射</strong>。正式名单包含长株潭城市群、昆山、延边、阿坝、阿拉尔等不同统计层级，不能因为公开表里没有同名地级市，就自动把它们归入非试点城市。特别是名单里的“福州（含平潭）”要避免一份数据重复计数。</p>
+<p>2014名单于10月公布，2014年全年工资只适合演示两期计算。实证论文不能将这个时间差忽略。若改用2015年以后作为处理后年份，还必须根据2015、2016新增批次清理对照组。读取网址和字典应作为脚本开头的可追溯注释。</p>
+<h2>三、Stata关键命令逐项解释</h2>
+<p><code>import delimited</code> 读取CSV；<code>isid city_key year</code> 核查一座城市每年只有一条记录；<code>label variable</code> 为变量附中文释义；<code>label define</code> 和 <code>label values</code> 为0/1政策分组附中文类别名称。</p>
+<p><code>reshape wide</code> 将“城市×年份”的长表变为每城市一行，得到2013和2014年两列工资；<code>logit</code> 估计政策入选概率；<code>predict ..., pr</code> 输出预测概率；<code>cross using</code> 组合试点城市与候选对照城市；<code>bysort cityid (distance control_id): keep if _n==1</code> 找最近邻。<strong>有放回</strong>意味着同一对照城市可在多个试点的配对中出现。</p>
+<h2>四、从匹配对到双重差分</h2>
+<p>给每个城市先计算 Δwage=wage2014−wage2013，再计算每个配对的差值：配对DID=试点城市Δwage−对照城市Δwage。</p>
+<p>在一对一有放回的情形中，对全部成功匹配的试点城市的配对DID取平均，即教学版ATT点估计。输出同时应显示匹配前、共同支持后、卡尺后分别剩余多少试点城市，并将匹配关系保存为数据文件；否则别人无法知道哪个城市和哪个城市被比较。</p>
+<h2>五、哪些结果可以写、哪些不能写？</h2>
+<p>本课可以报告匹配距离、样本数、前后SMD和一个<strong>教学版DID点估计</strong>。但当前教学样本仍存在可观测协变量失衡；此外，2014年名单公布过晚、国家宽带战略早已启动、后续批次可能污染对照组。因此本节<strong>不自动输出并解释p值</strong>，更不在未审计政策名单与识别假设前宣称试点导致了工资增长。</p>
+<p>Stata输出日志以及中文<code>.dta</code>为可复核证据。程序运行后建议将<code>describe</code>、<code>tabulate treat</code>、处理组匹配率、平衡性表与匹配对样本一起交给合作者检查，而不是只复制回归最后一行。</p>
+<h2>六、与Python的一致性检查</h2>
+<p>两个软件应该使用相同数据版本、清洗条件、2013协变量、政策名单、Logit规格、卡尺尺度和匹配是否有放回。<strong>相同倾向得分下的并列最近邻</strong>可能按不同排序规则被选中，造成少量配对不一致，必须检查具体城市对。第三章下一节将在Python中实现同一流程。</p>
+<h2>七、三个常见误区</h2>
+<ol>
+<li><strong><code>logit</code>显著说明政策有效。</strong> 错。Logit只解释谁更容易被选择为试点，与政策后工资因果效应不同。</li>
+<li><strong>Stata显示回归显著就等于有因果关系。</strong> 错。标准误、平行趋势、同期冲击和暴露时间都需分析。</li>
+<li><strong>对照城市不能重复使用。</strong> 错。有放回最近邻允许重复使用，但需要保留正确的匹配权重。</li>
+</ol>
+<h2>八、两道自测题与答案</h2>
+<p><strong>概念题：</strong> <code>isid city_key year</code> 报错时，是否可以直接跳过并继续匹配？</p>
+<p><strong>答案：</strong> 不应跳过。先检查是否存在重复城市—年份记录、名称口径不一致或合并错误，否则同一城市可能被重复计算。</p>
+<p><strong>计算题：</strong> Stata输出一个配对：试点城市工资从48,000升至55,000元，对照城市从46,000升至51,000元。该配对DID是多少？</p>
+<p><strong>答案：</strong> (55,000−48,000)−(51,000−46,000)=<strong>2,000元</strong>。</p>
+<p><strong>下一节：第3章·第3节｜Python完整实证操作（全课程第8课）。</strong></p>
+<h2>附录｜同一中国数据的Stata与Python完整示例</h2>
+<p><strong>Stata完整教学程序（中文变量标签）：</strong></p>
+<pre><code class="language-stata">* PSM-DID课程：公开中国城市数据，Stata 17+，教学并非已识别政策效果
+version 17.0
+clear all
+set more off
+capture log close
+log using &quot;psmdid_stata_教学.log&quot;, text replace
+
+import delimited &quot;https://raw.githubusercontent.com/Cause-114/CityEdu-Eco/main/data/panel.csv&quot;, clear varnames(1) encoding(&quot;UTF-8&quot;)
+keep if inlist(year,2013,2014)
+isid city_key year
+* 当前仅为部分地级市的教学级映射，不能当正式政策识别表
+local pilots &quot;北京 天津 上海 长沙 株洲 湘潭 石家庄 大连 本溪 哈尔滨 大庆 南京 苏州 镇江&quot;
+local pilots &quot;`pilots' 金华 芜湖 安庆 福州 厦门 泉州 南昌 上饶 青岛 淄博 威海 临沂&quot;
+local pilots &quot;`pilots' 郑州 洛阳 武汉 广州 深圳 中山 成都 攀枝花 贵阳 银川 吴忠&quot;
+gen byte treat=0
+foreach city of local pilots {
+    replace treat=1 if city_key==&quot;`city'&quot;
+}
+label define treat_zh 0 &quot;非首批试点&quot; 1 &quot;首批示范城市&quot;
+label values treat treat_zh
+label variable treat &quot;是否为2014年首批宽带试点（教学映射）&quot;
+label variable wage &quot;在岗职工平均工资（元）&quot;
+egen cityid=group(city_key),label
+label variable cityid &quot;城市编号（中文城市名）&quot;
+keep cityid city_key year treat wage gdp population tertiary_pct
+reshape wide wage gdp population tertiary_pct, i(cityid) j(year)
+keep if !missing(wage2013,wage2014,gdp2013,population2013,tertiary_pct2013)
+keep if gdp2013&gt;0 &amp; population2013&gt;0 &amp; wage2013&gt;0
+gen double ln_gdp=ln(gdp2013)
+gen double ln_pop=ln(population2013)
+gen double ln_wage=ln(wage2013)
+gen double d_wage=wage2014-wage2013
+label variable d_wage &quot;2013—2014工资变化（元）&quot;
+label variable ln_gdp &quot;2013年GDP自然对数&quot;
+label variable ln_pop &quot;2013年人口自然对数&quot;
+label variable ln_wage &quot;2013年工资自然对数&quot;
+logit treat ln_gdp ln_pop tertiary_pct2013 ln_wage
+predict double pscore if e(sample),pr
+label variable pscore &quot;政策入选预测概率&quot;
+qui su pscore if treat==0,meanonly
+local minc=r(min)
+local maxc=r(max)
+count if treat==1
+local nt0=r(N)
+drop if treat==1 &amp; !inrange(pscore,`minc',`maxc')
+count if treat==1
+local nts=r(N)
+local vars &quot;ln_gdp ln_pop tertiary_pct2013 ln_wage&quot;
+preserve
+    keep if treat==0
+    keep cityid pscore d_wage `vars'
+    rename cityid control_id
+    rename pscore control_score
+    rename d_wage control_change
+    foreach v of local vars {
+        rename `v' c_`v'
+    }
+    tempfile controls
+    save `controls'
+restore
+keep if treat==1
+keep cityid city_key pscore d_wage `vars'
+cross using `controls'
+gen double distance=abs(pscore-control_score)
+bysort cityid (distance control_id): keep if _n==1
+keep if distance&lt;=0.05
+gen double pair_did=d_wage-control_change
+label variable distance &quot;配对倾向得分距离&quot;
+label variable pair_did &quot;匹配对工资变化双重差分（元）&quot;
+count
+local nmatch=r(N)
+noi di &quot;匹配前试点数：&quot; `nt0' &quot;；共同支持后试点数：&quot; `nts' &quot;；卡尺后：&quot; `nmatch'
+noi su pair_did
+save &quot;中国城市_匹配后配对教学数据.dta&quot;,replace
+* 匹配后平衡性仍不合格，不提供未经论证的显著性或因果声明
+noi di &quot;第7课：导出中文标记后的匹配对以便核对。&quot;
+export delimited using &quot;第7课_Stata匹配对.csv&quot;,replace
+log close
+
+</code></pre>
+<p><strong>Python完整教学程序（中文导出字段）：</strong></p>
+<pre><code class="language-python"># -*- coding: utf-8 -*-
+'''中国城市公开面板：PSM-DID教学流水线。不将教学估计解释为因果效应。'''
+import json
+from pathlib import Path
+import numpy as np
+import pandas as pd
+import statsmodels.formula.api as smf
+from sklearn.neighbors import NearestNeighbors
+
+DATA_URL = 'https://raw.githubusercontent.com/Cause-114/CityEdu-Eco/main/data/panel.csv'
+PILOTS = '''北京 天津 上海 长沙 株洲 湘潭 石家庄 大连 本溪 哈尔滨 大庆
+南京 苏州 镇江 金华 芜湖 安庆 福州 厦门 泉州 南昌 上饶 青岛
+淄博 威海 临沂 郑州 洛阳 武汉 广州 深圳 中山 成都 攀枝花
+贵阳 银川 吴忠'''.split()
+COLS = ['ln_gdp','ln_pop','tertiary_pct2013','ln_wage']
+OUT = Path(__file__).resolve().parent
+
+
+def load_raw():
+    local = OUT / 'panel.csv'
+    if local.exists():
+        data = pd.read_csv(local)
+    else:
+        try:
+            data = pd.read_csv(DATA_URL)
+        except Exception as exc:
+            raise RuntimeError('请从数据原仓库下载panel.csv并放入程序目录。') from exc
+    assert not data.duplicated(['city_key','year']).any(), '城市—年份重复，请检查数据'
+    return data
+
+
+def prepare_and_match(caliper=0.05):
+    raw = load_raw()
+    pre = raw.loc[raw.year.eq(2013), ['city_key','wage','gdp','population','tertiary_pct']].copy()
+    pre = pre.rename(columns={'wage':'wage2013','gdp':'gdp2013',
+                              'population':'population2013','tertiary_pct':'tertiary_pct2013'})
+    post = raw.loc[raw.year.eq(2014), ['city_key','wage']].rename(columns={'wage':'wage2014'})
+    panel = pre.merge(post,on='city_key',validate='one_to_one',how='inner')
+    panel['treat'] = panel.city_key.isin(PILOTS).astype(int)
+    panel = panel.dropna(subset=['wage2013','wage2014','gdp2013','population2013',
+                                 'tertiary_pct2013']).copy()
+    panel = panel.loc[(panel[['gdp2013','population2013','wage2013']]&gt;0).all(axis=1)].copy()
+    panel['ln_gdp'] = np.log(panel.gdp2013)
+    panel['ln_pop'] = np.log(panel.population2013)
+    panel['ln_wage'] = np.log(panel.wage2013)
+    panel['d_wage'] = panel.wage2014-panel.wage2013
+    model = smf.logit('treat ~ ln_gdp + ln_pop + tertiary_pct2013 + ln_wage',
+                      data=panel).fit(disp=False)
+    panel['pscore'] = model.predict(panel)
+    control_pool = panel.loc[panel.treat.eq(0)].sort_values('city_key').reset_index(drop=True)
+    treated_all = panel.loc[panel.treat.eq(1)].sort_values('city_key').reset_index(drop=True)
+    assert len(control_pool)&gt;1 and len(treated_all)&gt;1, '处理组或对照组数量不足'
+    lo,hi = control_pool.pscore.min(),control_pool.pscore.max()
+    treated_support = treated_all.loc[treated_all.pscore.between(lo,hi)].copy().reset_index(drop=True)
+    if treated_support.empty:
+        raise ValueError('无符合共同支持的试点城市')
+    nn = NearestNeighbors(n_neighbors=1).fit(control_pool[['pscore']])
+    dist, loc = nn.kneighbors(treated_support[['pscore']])
+    ok = dist[:,0] &lt;= caliper
+    trt = treated_support.loc[ok].copy().reset_index(drop=True)
+    ctrl = control_pool.iloc[loc[:,0][ok]].copy().reset_index(drop=True)
+    if trt.empty:
+        raise ValueError('卡尺后没有成功匹配的试点城市')
+    pairs = pd.DataFrame({
+        '试点城市':trt.city_key,'对照城市':ctrl.city_key,
+        '试点概率':trt.pscore,'对照概率':ctrl.pscore,
+        '匹配距离':dist[:,0][ok],
+        '试点工资2013':trt.wage2013,'试点工资2014':trt.wage2014,
+        '对照工资2013':ctrl.wage2013,'对照工资2014':ctrl.wage2014,
+        '配对DID':trt.d_wage-ctrl.d_wage
+    })
+    def smd(x_t,x_c_before,x_c_after):
+        scale=np.sqrt((x_t.var(ddof=1)+x_c_before.var(ddof=1))/2)
+        return (x_t.mean()-x_c_before.mean())/scale,(x_t.mean()-x_c_after.mean())/scale
+    bal=[]
+    for x in COLS:
+        before,after=smd(trt[x],control_pool[x],ctrl[x])
+        bal.append({'变量':x,'匹配前SMD':before,'匹配后SMD':after,
+                    '匹配后绝对SMD':abs(after)})
+    balance=pd.DataFrame(bal)
+    n={
+      '2013_2014完整城市':len(panel),'初步试点数':len(treated_all),
+      '候选对照数':len(control_pool),'共同支持内试点数':len(treated_support),
+      '成功匹配试点数':len(trt),'对照城市去重数':ctrl.city_key.nunique(),
+      '卡尺概率差':caliper}
+    return raw,panel,trt,ctrl,pairs,balance,n
+
+
+def save_audit(prefix, pairs, balance, n, out=OUT):
+    pairs.to_csv(out/f'{prefix}_匹配对.csv',index=False,encoding='utf-8-sig')
+    balance.to_csv(out/f'{prefix}_平衡诊断.csv',index=False,encoding='utf-8-sig')
+    with (out/f'{prefix}_样本流转.json').open('w',encoding='utf-8') as f:
+        json.dump(n,f,ensure_ascii=False,indent=2)
+    print('匹配样本数:',n['成功匹配试点数'])
+    print('匹配后四项绝对SMD:',balance['匹配后绝对SMD'].round(3).tolist())
+    print('教学版配对DID平均（元）:',pairs['配对DID'].mean())
+    print('提醒：匹配与代码复现不等于可信的政策因果识别。')
+
+if __name__ == '__main__':
+    raw,panel,trt,ctrl,pairs,balance,n=prepare_and_match(0.05)
+    save_audit('第7课_跨软件核对',pairs,balance,n)
+    print('Stata和Python应逐项核对配对城市、共同支持规则与匹配距离。')
+
+</code></pre>
+<h2>主要数据与方法来源</h2>
+<ul>
+<li><a href="https://wap.miit.gov.cn/zwgk/zcwj/wjfb/gg/art/2020/art_4dab04091bea459e9cc45e0046be3fe9.html">工信部、国家发改委（2014），首批“宽带中国”示范城市公告</a></li>
+<li><a href="https://github.com/Cause-114/CityEdu-Eco/blob/main/data/panel.csv">中国城市年鉴二次整理公开数据及说明</a></li>
+<li><a href="https://doi.org/10.3982/ECTA6474">Abadie &amp; Imbens（2008），最近邻匹配bootstrap的局限</a></li>
+<li><a href="https://doi.org/10.1016/j.jeconom.2020.06.003">Sant’Anna &amp; Zhao（2020），双重稳健DID</a></li>
+<li><a href="https://doi.org/10.1016/j.jeconom.2020.12.001">Callaway &amp; Sant’Anna（2021），分批实施DID</a></li>
+</ul>
+<p class="foot">进度按正式已交付课次计数。研究结果必须在数据审计、平衡和识别检查后方可报告。</p><p class="foot"><a href="lesson_7.do">独立Stata程序（.do）</a> · <a href="lesson_7.py">独立Python程序（.py）</a> · <a href="README.md">课程与方法说明</a></p></main></body></html>

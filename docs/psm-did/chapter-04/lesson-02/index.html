@@ -1,0 +1,209 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="PSM-DID第10课：完整PSM-DID研究与论文复现，中国宽带中国示范城市案例；Stata和Python双软件教学及习题。"><title>第4章·第2节｜完整PSM-DID研究与论文复现</title><style>@page{size:A4;margin:18mm 18mm 18mm 18mm}*{box-sizing:border-box}body{font-family:system-ui,-apple-system,"Noto Sans CJK SC","PingFang SC",sans-serif;background:#f6f8f7;color:#243747;line-height:1.77;margin:0}header{background:linear-gradient(130deg,#173748,#266962);color:white;padding:43px max(calc((100vw - 860px)/2),25px)}header .ey{font-size:12px;letter-spacing:.11em;color:#b7dcd5}header h1{line-height:1.45;font-size:30px;margin:8px 0}header p{color:#c7e1d8;margin:0}main{max-width:900px;margin:-18px auto 34px;background:white;border:1px solid #e0e9e8;border-radius:13px;padding:38px 46px;box-shadow:0 9px 27px #0000000d}h2{font-size:21px;color:#1c5f5b;margin-top:29px;border-bottom:1px solid #dfe7e6;padding-bottom:9px}h3{font-size:17px}p{margin:11px 0}strong{color:#205d60}a{color:#1c746e;text-underline-offset:3px}table{width:100%;border-collapse:collapse;font-size:13px;margin:19px 0}th{background:#e9f2f0}td,th{border:1px solid #dce7e6;padding:7px;text-align:left}pre{white-space:pre;overflow:auto;background:#162d3a;color:#e4edf2;border-radius:10px;padding:15px;font-size:11px;line-height:1.55}code{font-family:ui-monospace,Consolas,monospace}p code{background:#eef4f2;color:#175d61;padding:1px 4px;border-radius:3px}blockquote{border-left:4px solid #388878;margin:14px 0;padding:6px 15px;background:#f0f8f4}.nav{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;margin-bottom:18px}.aside{padding:13px;border-left:4px solid #c48d36;background:#fff9ef;color:#5e4f31}.foot{font-size:12px;color:#687f86;margin-top:30px}@media(max-width:720px){header{padding:31px 18px}header h1{font-size:24px}main{margin:-12px 8px 20px;padding:22px 17px}pre{font-size:10px}}@media print{body{background:white}header{padding:17mm 0;background:none;color:#183b48}header p,header .ey{color:#566}main{margin:0;padding:0;border:0;box-shadow:none}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f0f3f5;color:black}a{color:black}}</style></head><body><header><div><div class="ey">PSM-DID系统精讲课程 · 全课程第10课 / 共10课</div><h1>第4章·第2节｜完整PSM-DID研究与论文复现</h1><p>中国真实政策背景 · 完整中文讲义 · 双软件实操</p></div></header><main><nav class="nav"><a href="https://ericywh.github.io/research-learning-hub/psm-did/">← 课程目录</a><a href="https://ericywh.github.io/research-learning-hub/psm-did/chapter-04/lesson-01/">← 第9课</a></nav><aside class="aside"><strong>实证边界：</strong>2014年10月公布的首批政策名单含复杂行政层级；当前教学映射与政策暴露时间尚不支持工资因果效应声明。上一课发现匹配后多项SMD超过0.1。本课代码所输出的配对DID数值只用来展示计算。</aside><h1>第4章·第2节｜完整PSM-DID研究与论文复现</h1>
+<p><strong>全课程第10课 / 共10课｜2026年10月20日单独生成</strong></p>
+<p>本课程最后一节不是再重复一种匹配方法，而是把十课知识组织成一个能够写入研究设计、允许其他研究者复核的完整流程。沿用2014年首批“宽带中国”示范城市及中国城市公开面板数据，但严禁把当前未经审计的教学匹配当作已发表论文的因果结论。</p>
+<h2>一、先把研究问题写准确</h2>
+<p>示范问题是：“2014年首批宽带示范城市资格，与城市在岗职工平均工资的后续变化有何关系？” 若要改写为“试点政策是否提高工资”，必须满足因果识别前提，并有足够证据支持。<strong>工资是名义工资还是实际工资</strong>也必须说明。若研究购买力，应按可用而可信的地区价格指数折算；当前公开面板的<code>wage</code>是年鉴整理的工资指标，不能把名义增长直接解释为实际福利提高。</p>
+<h2>二、建立正式政策识别表</h2>
+<p>第一步不是估计模型，而是下载原始政府文件，逐项整理2014、2015、2016批次。<strong>政策处理年（cohort）</strong>为城市首次进入示范名单的年份。对长株潭城市群、昆山、平潭、自治州和阿拉尔等不同统计层级，需要按研究单位明确映射规则。不要将“无同名城市行”的政策单元随意标记为未处理。整理表至少保留原始名称、规范名称、所在省份、名单批次、映射规则、核验链接与审计人员备注。</p>
+<h2>三、重新设计识别时间窗</h2>
+<p>由于首批在2014年10月公布，2014年全年工资可能只包含很短政策暴露。一个更合理的待验证方案，是将2014年作为<strong>政策过渡年</strong>，用2011—2013年识别政策前趋势，用2015—2017年观察后续变化，同时保留2014年作时间轴标记。<strong>2013年国务院已经公布全国宽带战略，政策预期也可能更早开始</strong>，因此将2013年视为完全未受预期影响仍需额外论证。</p>
+<p>对于2015—2016年新增试点，在2015—2017年期间不能一直把它们当作“从未处理的对照”。可以将2015、2016新增城市从长期对照组剔除，或采用能够处理不同批次入选的组别—时间ATT方法。哪一种更好要由研究问题和可用数据决定。</p>
+<h2>四、完整实证顺序（审计优先）</h2>
+<ol>
+<li><strong>整理与核验政策名单</strong>：首批、后续批次、行政层级和首次入选年份。输出映射表与来源。</li>
+<li><strong>清理面板</strong>：检查城市—年份唯一性、工资缺失、人口口径变化与样本范围。使用城市编码，不依赖易变化的字符串名称。</li>
+<li><strong>定义处理前协变量</strong>：经济规模、人口、产业结构、历史工资及合理的政策前趋势。区分政策前结果和可能受2013战略影响的变量。</li>
+<li><strong>估计倾向得分并匹配</strong>：报告模型、共同支持、卡尺、重复对照权重与排除规则，不以“显著性最大”为匹配标准。</li>
+<li><strong>平衡诊断</strong>：报告全部重要变量的SMD、方差比、Love plot和样本流转；未平衡则明确失败并重设方案。</li>
+<li><strong>确定DID估计对象</strong>：记录保留试点组ATT、对照组定义、政策后窗口和估计权重；谨慎选择估计量及与之相适应的推断。</li>
+<li><strong>进行稳健性检查</strong>：政策前趋势、安慰剂、不同卡尺、不同控制城市与不同时间窗。区分必要诊断与探索性分析。</li>
+<li><strong>透明写作和复现</strong>：公开合法分享的代码、数据字典、原始来源链接、版本、样本流转和完整运行说明；不能越权再分发第三方年鉴整理数据。</li>
+</ol>
+<h2>五、论文实证报告应怎样写？</h2>
+<p>建议用一张主表分开报告样本规模、匹配平衡、点估计以及经过论证的标准误与置信区间。当前教学数据初步结果为：2013年完整城市289个，试点映射37个，一对一有放回且0.05卡尺后保留31个；四项匹配后绝对SMD约0.120、0.299、0.265、0.123，说明<strong>仍有失衡</strong>。本课程不提供虚构的政策效果系数、显著性星号或假造的识别通过结论。</p>
+<p><strong>研究结论模板：</strong> “基于2014年首批示范城市与公开城市面板的初步教学匹配，若干处理前协变量的平衡尚未达到预设标准，因此现阶段结果仅用于演示匹配和双重差分的计算，不能据此做出工资因果效应判断。后续须完成批次映射与平行趋势、干扰及推断检查。”</p>
+<h2>六、完整复现脚本的用途及‘失败即停止’原则</h2>
+<p>本课Stata和Python给出<strong>研究准备与审计脚本</strong>，核对必需的政策批次映射文件<code>policy_cohorts_verified.csv</code>。如果文件不存在，程序应停止并提示人工核实2014—2016年名单，而不是自行猜测这些城市属于哪一批。文件至少包含<code>city_key,first_year,source_url</code>三个字段，<code>first_year</code>代表首次入选年份，未入选城市可留空。经过核实的政策映射数据是正式实证的前提，不能用教学试点名单直接替代。</p>
+<p>完成政策核对后，脚本对2011—2013年政策前工资趋势、2014过渡年、2015—2017年政策后结果进行样本描述与缺失审计，并导出可核对的CSV/JSON。只有在匹配质量与识别条件充分讨论后，才能另外执行因果效果模型。<strong>无须为了让程序跑出回归表而跳过政策核验。</strong></p>
+<h2>七、三个最后必须记住的判断</h2>
+<ol>
+<li><strong>PSM-DID不是简单把两个统计命令相加。</strong> 要有明确ATT、匹配权重和条件平行趋势。</li>
+<li><strong>数据清洗与名单审核不是琐事。</strong> 错误匹配政策处理身份会直接破坏研究设计。</li>
+<li><strong>能复现的程序不等于可信因果结论。</strong> 可信结论还需要数据质量、识别与统计推断三方面成立。</li>
+</ol>
+<h2>八、两道自测题与答案</h2>
+<p><strong>概念题：</strong> 如果2015年新增示范城市继续作为2015—2017年“未受处理”的对照组，会出现什么风险？</p>
+<p><strong>答案：</strong> 对照组在研究期间也受到处理，违反对照身份设定，可能污染反事实趋势并导致传统DID或匹配后DID估计偏误；必须依据政策批次重新定义样本或采用适当的分批DID设计。</p>
+<p><strong>计算题：</strong> 若最初37个教学映射试点城市中有6个因共同支持限制被排除，保留比例是多少？</p>
+<p><strong>答案：</strong> (37−6)/37=31/37≈<strong>83.8%</strong>。这说明估计可能更适用于共同支持内的31个试点城市，而不能自动推广到全部37个乃至39个政策单元。</p>
+<h2>九、十课知识闭环与研究完成状态</h2>
+<p>第1—3课是DID、PSM与结合逻辑；第4—5课是倾向得分、匹配及质量诊断；第6—8课是估计量、Stata和Python复现；第9课是统计推断与稳健性；第10课是政策名单审计、完整设计与论文复现清单。<strong>十课教学至此完成，但这不表示真实政策因果研究已经完成。</strong></p>
+<h2>附录｜政策批次核验的失败即停止脚本</h2>
+<p><strong>Stata政策核验脚本：</strong></p>
+<pre><code class="language-stata">* 第10课为失败即停止的政策映射审计，不能以教学名单直接运行DID
+clear all
+capture confirm file &quot;policy_cohorts_verified.csv&quot;
+if _rc {
+    di as error &quot;缺少人工核验的policy_cohorts_verified.csv，停止正式回归。&quot;
+    capture log close
+    exit 601
+}
+import delimited &quot;policy_cohorts_verified.csv&quot;, clear varnames(1) encoding(&quot;UTF-8&quot;)
+confirm variable city_key
+confirm variable first_year
+confirm variable source_url
+isid city_key
+count if !missing(first_year) &amp; !inlist(first_year,2014,2015,2016)
+if r(N)&gt;0 {
+    di as error &quot;首次批次年份不在2014—2016核验范围，请复核&quot;
+    capture log close
+    exit 459
+}
+label data &quot;宽带中国2014—2016批次核验表（未完成因果估计）&quot;
+label variable first_year &quot;首次入选宽带示范城市年份&quot;
+save &quot;第10课_政策批次审计表.dta&quot;,replace
+noi di &quot;已通过政策批次文件结构检查；尚未开展因果效应估计。&quot;
+capture log close
+
+</code></pre>
+<p><strong>Python政策核验脚本：</strong></p>
+<pre><code class="language-python"># -*- coding: utf-8 -*-
+'''中国城市公开面板：PSM-DID教学流水线。不将教学估计解释为因果效应。'''
+import json
+from pathlib import Path
+import numpy as np
+import pandas as pd
+import statsmodels.formula.api as smf
+from sklearn.neighbors import NearestNeighbors
+
+DATA_URL = 'https://raw.githubusercontent.com/Cause-114/CityEdu-Eco/main/data/panel.csv'
+PILOTS = '''北京 天津 上海 长沙 株洲 湘潭 石家庄 大连 本溪 哈尔滨 大庆
+南京 苏州 镇江 金华 芜湖 安庆 福州 厦门 泉州 南昌 上饶 青岛
+淄博 威海 临沂 郑州 洛阳 武汉 广州 深圳 中山 成都 攀枝花
+贵阳 银川 吴忠'''.split()
+COLS = ['ln_gdp','ln_pop','tertiary_pct2013','ln_wage']
+OUT = Path(__file__).resolve().parent
+
+
+def load_raw():
+    local = OUT / 'panel.csv'
+    if local.exists():
+        data = pd.read_csv(local)
+    else:
+        try:
+            data = pd.read_csv(DATA_URL)
+        except Exception as exc:
+            raise RuntimeError('请从数据原仓库下载panel.csv并放入程序目录。') from exc
+    assert not data.duplicated(['city_key','year']).any(), '城市—年份重复，请检查数据'
+    return data
+
+
+def prepare_and_match(caliper=0.05):
+    raw = load_raw()
+    pre = raw.loc[raw.year.eq(2013), ['city_key','wage','gdp','population','tertiary_pct']].copy()
+    pre = pre.rename(columns={'wage':'wage2013','gdp':'gdp2013',
+                              'population':'population2013','tertiary_pct':'tertiary_pct2013'})
+    post = raw.loc[raw.year.eq(2014), ['city_key','wage']].rename(columns={'wage':'wage2014'})
+    panel = pre.merge(post,on='city_key',validate='one_to_one',how='inner')
+    panel['treat'] = panel.city_key.isin(PILOTS).astype(int)
+    panel = panel.dropna(subset=['wage2013','wage2014','gdp2013','population2013',
+                                 'tertiary_pct2013']).copy()
+    panel = panel.loc[(panel[['gdp2013','population2013','wage2013']]&gt;0).all(axis=1)].copy()
+    panel['ln_gdp'] = np.log(panel.gdp2013)
+    panel['ln_pop'] = np.log(panel.population2013)
+    panel['ln_wage'] = np.log(panel.wage2013)
+    panel['d_wage'] = panel.wage2014-panel.wage2013
+    model = smf.logit('treat ~ ln_gdp + ln_pop + tertiary_pct2013 + ln_wage',
+                      data=panel).fit(disp=False)
+    panel['pscore'] = model.predict(panel)
+    control_pool = panel.loc[panel.treat.eq(0)].sort_values('city_key').reset_index(drop=True)
+    treated_all = panel.loc[panel.treat.eq(1)].sort_values('city_key').reset_index(drop=True)
+    assert len(control_pool)&gt;1 and len(treated_all)&gt;1, '处理组或对照组数量不足'
+    lo,hi = control_pool.pscore.min(),control_pool.pscore.max()
+    treated_support = treated_all.loc[treated_all.pscore.between(lo,hi)].copy().reset_index(drop=True)
+    if treated_support.empty:
+        raise ValueError('无符合共同支持的试点城市')
+    nn = NearestNeighbors(n_neighbors=1).fit(control_pool[['pscore']])
+    dist, loc = nn.kneighbors(treated_support[['pscore']])
+    ok = dist[:,0] &lt;= caliper
+    trt = treated_support.loc[ok].copy().reset_index(drop=True)
+    ctrl = control_pool.iloc[loc[:,0][ok]].copy().reset_index(drop=True)
+    if trt.empty:
+        raise ValueError('卡尺后没有成功匹配的试点城市')
+    pairs = pd.DataFrame({
+        '试点城市':trt.city_key,'对照城市':ctrl.city_key,
+        '试点概率':trt.pscore,'对照概率':ctrl.pscore,
+        '匹配距离':dist[:,0][ok],
+        '试点工资2013':trt.wage2013,'试点工资2014':trt.wage2014,
+        '对照工资2013':ctrl.wage2013,'对照工资2014':ctrl.wage2014,
+        '配对DID':trt.d_wage-ctrl.d_wage
+    })
+    def smd(x_t,x_c_before,x_c_after):
+        scale=np.sqrt((x_t.var(ddof=1)+x_c_before.var(ddof=1))/2)
+        return (x_t.mean()-x_c_before.mean())/scale,(x_t.mean()-x_c_after.mean())/scale
+    bal=[]
+    for x in COLS:
+        before,after=smd(trt[x],control_pool[x],ctrl[x])
+        bal.append({'变量':x,'匹配前SMD':before,'匹配后SMD':after,
+                    '匹配后绝对SMD':abs(after)})
+    balance=pd.DataFrame(bal)
+    n={
+      '2013_2014完整城市':len(panel),'初步试点数':len(treated_all),
+      '候选对照数':len(control_pool),'共同支持内试点数':len(treated_support),
+      '成功匹配试点数':len(trt),'对照城市去重数':ctrl.city_key.nunique(),
+      '卡尺概率差':caliper}
+    return raw,panel,trt,ctrl,pairs,balance,n
+
+
+def save_audit(prefix, pairs, balance, n, out=OUT):
+    pairs.to_csv(out/f'{prefix}_匹配对.csv',index=False,encoding='utf-8-sig')
+    balance.to_csv(out/f'{prefix}_平衡诊断.csv',index=False,encoding='utf-8-sig')
+    with (out/f'{prefix}_样本流转.json').open('w',encoding='utf-8') as f:
+        json.dump(n,f,ensure_ascii=False,indent=2)
+    print('匹配样本数:',n['成功匹配试点数'])
+    print('匹配后四项绝对SMD:',balance['匹配后绝对SMD'].round(3).tolist())
+    print('教学版配对DID平均（元）:',pairs['配对DID'].mean())
+    print('提醒：匹配与代码复现不等于可信的政策因果识别。')
+
+# 此脚本用于政策批次核验及样本审计，不把教学首批名单直接当正式政策变量。
+if __name__ == '__main__':
+    raw=load_raw()
+    verified=OUT/'policy_cohorts_verified.csv'
+    if not verified.exists():
+        raise FileNotFoundError(
+           '必须先建立经过政府公告逐条核验的policy_cohorts_verified.csv：'
+           '至少包括city_key、first_year、source_url三列。禁止以猜测批次继续估计。')
+    cohorts=pd.read_csv(verified)
+    must={'city_key','first_year','source_url'}
+    if not must.issubset(cohorts.columns):
+        raise ValueError('政策映射缺失必要列：'+str(must-set(cohorts.columns)))
+    if cohorts.city_key.duplicated().any():
+        raise ValueError('政策城市映射出现重复城市')
+    years=cohorts.first_year.dropna()
+    if not years.isin([2014,2015,2016]).all():
+        raise ValueError('首次批次仅接受核验的2014/2015/2016或未入选空值')
+    dat=raw.loc[raw.year.between(2011,2017),['city_key','year','wage']].copy()
+    dat=dat.merge(cohorts,on='city_key',how='left',validate='many_to_one',indicator=True)
+    # 所有未在映射表列出的城市身份未知；必须直接停止。表内first_year空值表示已核实从未处理。
+    if (dat['_merge'] != 'both').any():
+        raise ValueError('政策映射未覆盖全部分析城市，请逐城核对后再继续。')
+    dat = dat.drop(columns=['_merge'])
+    dat['阶段']=np.select([dat.year.le(2013),dat.year.eq(2014),dat.year.ge(2015)],
+                          ['政策前','2014过渡','政策后'],default='其他')
+    sample=dat.groupby(['阶段','year'],dropna=False).agg(
+                   城市记录数=('city_key','count'),工资有效数=('wage','count')).reset_index()
+    sample.to_csv(OUT/'第10课_政策窗口样本审计.csv',index=False,encoding='utf-8-sig')
+    dat.to_csv(OUT/'第10课_核验后审计长表.csv',index=False,encoding='utf-8-sig')
+    print(sample.to_string(index=False))
+    print('仅生成审计数据；正式ATT估计需明确处理批次、对照状态、平行趋势与标准误。')
+
+</code></pre>
+<h2>主要数据与方法来源</h2>
+<ul>
+<li><a href="https://wap.miit.gov.cn/zwgk/zcwj/wjfb/gg/art/2020/art_4dab04091bea459e9cc45e0046be3fe9.html">工信部、国家发改委（2014），首批“宽带中国”示范城市公告</a></li>
+<li><a href="https://github.com/Cause-114/CityEdu-Eco/blob/main/data/panel.csv">中国城市年鉴二次整理公开数据及说明</a></li>
+<li><a href="https://doi.org/10.3982/ECTA6474">Abadie &amp; Imbens（2008），最近邻匹配bootstrap的局限</a></li>
+<li><a href="https://doi.org/10.1016/j.jeconom.2020.06.003">Sant’Anna &amp; Zhao（2020），双重稳健DID</a></li>
+<li><a href="https://doi.org/10.1016/j.jeconom.2020.12.001">Callaway &amp; Sant’Anna（2021），分批实施DID</a></li>
+</ul>
+<p class="foot">进度按正式已交付课次计数。研究结果必须在数据审计、平衡和识别检查后方可报告。</p><p class="foot"><a href="lesson_10.do">独立Stata程序（.do）</a> · <a href="lesson_10.py">独立Python程序（.py）</a> · <a href="README.md">课程与方法说明</a></p></main></body></html>
