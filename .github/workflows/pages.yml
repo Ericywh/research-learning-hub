@@ -233,6 +233,54 @@ jobs:
         run: |
           node scripts/style-course-pages.cjs
 
+
+      - name: Verify all published lesson HTML layouts
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --check docs/assets/lesson-reader.js
+          node --check scripts/style-course-pages.cjs
+          node <<'NODE'
+          const fs=require('node:fs');
+          const path=require('node:path');
+          const names=['econometrics','math','cssci','frontier','economic-classics','psm-did'];
+          let total=0;
+          function scan(dir,out=[]){
+            for(const entry of fs.readdirSync(dir,{withFileTypes:true})){
+              const f=path.join(dir,entry.name);
+              if(entry.isDirectory())scan(f,out);
+              else if(entry.isFile() && f.endsWith('.html'))out.push(f);
+            }
+            return out;
+          }
+          function innerBody(html){
+            return html.match(/<body\b[^>]*>([\s\S]*?)<\/body>/i)?.[1]??null;
+          }
+          for(const course of names){
+            let count=0;
+            for(const source of scan(path.join('docs',course))){
+              const rel=path.relative(path.join('docs',course),source);
+              if(rel==='index.html')continue;
+              const built=path.join('_site',course,rel);
+              if(!fs.existsSync(built))throw Error('Built lesson missing: '+built);
+              const original=fs.readFileSync(source,'utf8');
+              const output=fs.readFileSync(built,'utf8');
+              if(innerBody(original)===null || innerBody(output)!==innerBody(original))
+                throw Error('Lesson body unexpectedly changed: '+built);
+              for(const marker of ['data-course-lesson="true"','lesson-reader.css','lesson-reader.js','course-themes.css']){
+                if(!output.includes(marker))throw Error('Missing '+marker+' in '+built);
+              }
+              if(!/<script\b[^>]+lesson-reader\.js[^>]*><\/script>/i.test(output))
+                throw Error('Reader script tag malformed: '+built);
+              count++;total++;
+            }
+            if(count<2)throw Error('Too few archived lessons in '+course);
+            console.log('PASS '+course+': '+count+' preserved and enhanced lessons');
+          }
+          if(total<63)throw Error('Expected at least 63 existing lessons: '+total);
+          console.log('PASS '+total+' lesson bodies preserved with valid lesson CSS / JS assets.');
+          NODE
+
       - name: Upload complete site for Pages
         uses: actions/upload-pages-artifact@v3
         with:
@@ -496,3 +544,16 @@ jobs:
           check "psm-did/" psm-did /tmp/psm-home.html
           check "psm-did/chapter-04/lesson-02/" psm-did /tmp/psm-lesson.html
           echo "Six courses: shared CSS and 12 public HTML pages verified."
+
+          for f in /tmp/econ-lesson.html /tmp/math-lesson.html /tmp/cssci-lesson.html /tmp/frontier-lesson.html /tmp/classics-lesson.html /tmp/psm-lesson.html; do
+            grep -Fq 'data-course-lesson="true"' "$f" || { echo "::error::Missing reader mode in $f"; exit 1; }
+            grep -Fq 'lesson-reader.css' "$f" || { echo "::error::Missing reader stylesheet in $f"; exit 1; }
+            grep -Fq 'lesson-reader.js' "$f" || { echo "::error::Missing reader script in $f"; exit 1; }
+          done
+          for asset in lesson-reader.css lesson-reader.js; do
+            status=$(curl -L -sS --connect-timeout 10 --max-time 30 -o "/tmp/$asset" -w '%{http_code}' "$BASE/assets/$asset?design=$DEPLOY_SHA" || true)
+            if [[ "$status" != "200" ]]; then echo "::error::Reader asset not publicly available: $asset"; exit 1; fi
+            echo "PASS reader asset HTTP 200: $asset"
+          done
+          echo "PASS six representative lesson pages load the enhanced reader."
+
