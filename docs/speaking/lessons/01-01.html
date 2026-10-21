@@ -3,157 +3,193 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#163340">
-<meta name="description" content="公众表达与脱稿演讲系统训练：第001课 60秒自然表达基线。10分钟即可照着完成的实操课程。">
-<title>第001课｜60秒自然表达基线 · 公众表达与脱稿演讲</title>
+<meta name="theme-color" content="#41378a">
+<meta name="description" content="公众表达与脱稿演讲第001课：60秒自然表达基线。10分钟练习，五步直接照做，含60秒计时器与简易自评。">
+<title>第001课 · 60秒自然表达基线 | 公众表达与脱稿演讲</title>
 <style>
-:root{color-scheme:light;--bg:#f5f7f5;--paper:#fff;--ink:#20343f;--navy:#163340;--muted:#617580;--teal:#1b786d;--line:#e1e8e5;--soft:#edf5f2;--focus:#a2d9ce;--r:18px;font-family:system-ui,-apple-system,"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);line-height:1.75;-webkit-font-smoothing:antialiased}
-a{color:var(--teal);text-underline-offset:3px}a:hover{text-decoration-thickness:2px}a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
-header{background:#fff;border-bottom:1px solid var(--line)}
-.topbar{max-width:1030px;margin:auto;padding:15px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px}
-.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--navy);font-weight:750;font-size:14px}
-.brand-icon{width:35px;height:35px;border-radius:10px;background:var(--navy);color:#fff;display:grid;place-items:center;font-size:17px}
-.breadcrumbs{font-size:13px;display:flex;gap:8px;flex-wrap:wrap;color:var(--muted)}.breadcrumbs a{color:var(--muted)}.shell{max-width:1030px;margin:28px auto 60px;padding:0 24px}
-.hero{border-radius:24px;background:linear-gradient(115deg,#163340 0%,#20564f 100%);color:#fff;padding:38px 44px;position:relative;overflow:hidden}
-.hero:after{content:"";position:absolute;width:290px;height:290px;border:1px solid rgba(255,255,255,.12);border-radius:50%;top:-120px;right:-75px;box-shadow:0 0 0 50px rgba(255,255,255,.025);pointer-events:none}
-.eyebrow{letter-spacing:.13em;font-size:11px;font-weight:800;color:#b8dcd0;text-transform:uppercase}
-.hero h1{font-size:clamp(25px,4vw,37px);line-height:1.28;letter-spacing:-.025em;margin:11px 0 12px;max-width:700px}
-.hero-desc{font-size:16px;max-width:650px;color:#e3eeeb;margin:0}.hero-badges{display:flex;gap:8px;flex-wrap:wrap;margin:25px 0 0}
-.hero-badges span{border:1px solid rgba(255,255,255,.24);border-radius:999px;padding:4px 11px;font-size:12px;color:#eef9f5}
-.course-progress{margin-top:24px;display:flex;gap:12px;align-items:center;font-size:11px;color:#c7e4dd}.course-progress-track{max-width:250px;flex:1;height:5px;background:#ffffff30;border-radius:999px;overflow:hidden}.course-progress-fill{width:.595238%;height:100%;min-width:3px;background:#a9e2d1}
-.content{display:grid;grid-template-columns:minmax(0,1fr) 280px;align-items:start;gap:22px;margin-top:23px}.maincol,.sidecol{min-width:0}.stack{display:grid;gap:20px}
-.panel{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:24px 26px}
-.section-kicker{font-size:11px;text-transform:uppercase;font-weight:800;letter-spacing:.1em;color:var(--teal);margin:0 0 7px}
-h2{font-size:21px;line-height:1.4;margin:0 0 15px;color:var(--navy)}h3{font-size:16px;margin:0;line-height:1.45}
-.question{background:var(--soft);border-left:4px solid var(--teal);border-radius:0 12px 12px 0;padding:20px 23px;margin-top:13px}
-.question strong{font-size:clamp(17px,2.25vw,21px);line-height:1.6;display:block;font-weight:750;color:#183f42}
-.question-note{font-size:13px;color:var(--muted);margin:14px 0 0}
-.steps{display:grid;gap:12px}
-.step{display:grid;grid-template-columns:76px minmax(0,1fr);gap:15px;padding:18px 16px 18px 14px;border:1px solid #e1e8e5;border-radius:14px;background:#fff}
-.step-when{font-size:14px;font-weight:800;color:#16584f;text-align:center;border-radius:10px;background:#e8f3ef;padding:12px 6px;align-self:start;line-height:1.45;font-variant-numeric:tabular-nums}
-.step-when span{display:block;font-size:11px;color:#55766d;font-weight:600;margin-top:2px}
-.step p{margin:6px 0 0;font-size:14px;color:#3b4c57;line-height:1.72}.step strong{color:var(--navy)}.step .hint{color:#567169;font-size:13px}
-.keyword{display:inline-block;background:#e8f3ef;border:1px solid #d8e9e0;border-radius:6px;padding:1px 7px;font-weight:700;color:#206859;margin-right:4px;white-space:nowrap}
-.notebox{padding:17px 20px;border-radius:14px;background:#f2f6f6;border:1px solid #e2ecea}
-.notebox p{margin:0;font-size:14px}.notebox strong{color:var(--navy)}
-.sidebar-sticky{position:sticky;top:18px}.sidecol .panel{padding:23px}.time-summary{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:12px}.time-large{font-size:32px;font-weight:800;letter-spacing:-.04em;color:var(--navy)}.time-large small{font-size:14px;font-weight:550;color:var(--muted);margin-left:3px}
-.timebar{display:flex;height:14px;overflow:hidden;border-radius:99px;background:#e1e9e6;gap:2px}
-.timebar div{height:100%}.t1{width:20%;background:#83a8ab}.t2{width:10%;background:#2f847f}.t3{width:40%;background:#1b635c}.t4{width:20%;background:#9fc9b0}.t5{width:10%;background:#bfcfbe}
-.timekeys{margin:16px 0 0;padding:0;list-style:none;display:grid;gap:8px;font-size:12px;color:var(--muted)}
-.timekeys li{display:flex;justify-content:space-between;gap:8px;align-items:center}.timekeys span:first-child:before{content:"";width:8px;height:8px;border-radius:3px;background:var(--swatch);display:inline-block;margin-right:8px}
-.timekeys b{font-weight:700;font-variant-numeric:tabular-nums;color:#35545b}
-.checks{display:grid;gap:11px}.check{display:flex;align-items:flex-start;gap:10px;font-size:14px;cursor:pointer;line-height:1.55}.check input{width:18px;height:18px;accent-color:var(--teal);flex-shrink:0;margin:2px 0 0}.score-line{display:flex;justify-content:space-between;align-items:baseline;padding-top:12px;border-top:1px solid var(--line);margin-top:12px}.score-line strong{font-size:22px;font-variant-numeric:tabular-nums;color:var(--teal)}
-label.field{display:block;font-size:12px;color:var(--muted);font-weight:650;margin:18px 0 7px}.entry{width:100%;font:inherit;border:1px solid #cad8d3;border-radius:9px;padding:9px 10px;min-height:40px;background:#fff;color:var(--ink)}
-.copy{display:flex;justify-content:center;width:100%;border:0;border-radius:10px;margin-top:17px;padding:11px 12px;background:var(--navy);color:white;font:700 13px inherit;cursor:pointer}
-.copy:hover{background:#215363}.copy:active{transform:translateY(1px)}.copystatus{font-size:12px;color:var(--teal);min-height:20px;margin:9px 0 0}
-.small{font-size:12px;color:var(--muted);line-height:1.65}.quiet{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 20px}.quiet p{font-size:13px;margin:7px 0 0;color:#4c616b}
-details{margin-top:16px;padding:13px 17px;border:1px solid var(--line);border-radius:12px;background:#fff}summary{cursor:pointer;color:var(--teal);font-weight:750;font-size:14px}details p{font-size:14px;margin:10px 0 0}
-.footer{display:flex;justify-content:space-between;gap:20px;border-top:1px solid var(--line);padding:19px 2px;color:var(--muted);font-size:13px;flex-wrap:wrap;margin-top:23px}
-@media(max-width:850px){.content{grid-template-columns:1fr}.sidecol{order:2}.sidebar-sticky{position:static}.sidecol .panel{padding:22px}.shell{margin-top:14px}}
-@media(max-width:550px){.topbar{padding:12px 16px}.breadcrumbs{font-size:12px}.shell{padding:0 12px;margin-bottom:34px}.hero{padding:27px 23px;border-radius:18px}.hero h1{font-size:27px}.hero-desc{font-size:14px}.panel{padding:20px 17px;border-radius:14px}.content{gap:14px;margin-top:14px}.step{grid-template-columns:64px minmax(0,1fr);padding:13px 11px 13px 10px;gap:10px}.step-when{font-size:12px;padding:11px 4px}.step p{font-size:13px}h2{font-size:19px}.question{padding:15px 16px}.footer{padding:16px 4px}}
-@media(print){body{background:#fff}.shell{max-width:100%;padding:0;margin:0}.hero{-webkit-print-color-adjust:exact;print-color-adjust:exact;box-shadow:none}.content{grid-template-columns:1fr}.sidebar-sticky{position:static}.panel,.step{break-inside:avoid}.copy,.topbar,details{display:none}}
+:root{color-scheme:light;--ink:#242944;--muted:#66728a;--line:#e8e8ef;--bg:#f7f8fc;--white:#fff;--purple:#6954c8;--blue:#4a94d2;--orange:#e89a42;--mint:#259d82;--pink:#d76e87;font-family:system-ui,-apple-system,"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);line-height:1.7;font-size:15px}
+a{color:#6250a4;text-underline-offset:3px}
+button,input,select{font:inherit}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid #b29cf3;outline-offset:3px}
+.sitebar{max-width:1110px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:15px;padding:16px 24px}
+.brand{color:#373d60;display:flex;gap:9px;align-items:center;font-size:13px;font-weight:800;text-decoration:none}
+.logo{height:35px;width:35px;background:#39316e;color:white;display:grid;place-items:center;border-radius:11px;font-size:18px}
+.trail{font-size:12px;color:#80849a}.trail a{color:#66678c}
+.container{max-width:1110px;margin:0 auto;padding:0 24px 48px}
+.hero{position:relative;overflow:hidden;border-radius:27px;background:linear-gradient(123deg,#393279 0%,#5647aa 52%,#7661ca 100%);min-height:292px;display:grid;grid-template-columns:minmax(0,1fr) 300px;box-shadow:0 16px 45px #4939aa24;color:#fff}
+.hero-copy{padding:40px 48px 39px;position:relative;z-index:2}
+.kicker{font-size:11px;letter-spacing:.16em;font-weight:850;color:#d9cdfd}
+.hero h1{font-size:clamp(28px,3.7vw,41px);letter-spacing:-.035em;line-height:1.25;margin:15px 0}
+.hero p{margin:0;color:#f0eeff;font-size:15px;max-width:570px}
+.pills{margin-top:20px;display:flex;gap:9px;flex-wrap:wrap}.pill{border:1px solid #ffffff65;padding:4px 12px;border-radius:100px;font-size:12px;color:white}
+.hero-art{position:relative;isolation:isolate;overflow:hidden}
+.orbit-one{position:absolute;width:270px;height:270px;border-radius:50%;border:1px solid #ffffff73;top:-75px;left:8px}
+.orbit-two{position:absolute;width:335px;height:335px;border-radius:50%;border:1px solid #ffffff45;top:-108px;left:-24px}
+.art-sun{width:123px;height:123px;border-radius:50%;background:#ffc36f;position:absolute;top:33px;right:66px;box-shadow:16px 20px 0 #ffca7731}
+.art-note{width:169px;height:104px;transform:rotate(-11deg);border-radius:17px;background:#fff5ec;position:absolute;left:18px;bottom:27px;box-shadow:12px 20px 0 #14145421;padding:21px 17px;display:flex;flex-direction:column;gap:11px}
+.art-note div{height:8px;border-radius:15px;background:#f4a0af}.art-note div:nth-child(2){width:79%;background:#80c7c5}.art-note div:nth-child(3){width:57%;background:#a89ee8}
+.art-speech{position:absolute;width:108px;height:77px;background:#8dceca;border-radius:24px 24px 24px 4px;top:107px;right:19px;transform:rotate(12deg);display:grid;place-items:center;font-size:28px;color:#2c5f6e;font-weight:900;border:4px solid #edf8e9}
+.page-grid{display:grid;grid-template-columns:minmax(0,1fr) 302px;gap:22px;margin-top:22px;align-items:start}
+.primary{min-width:0;display:grid;gap:19px}.aside{min-width:0;display:grid;gap:18px;position:sticky;top:18px}
+.paper{background:white;border:1px solid var(--line);border-radius:21px;padding:25px 28px;box-shadow:0 5px 20px #23285f06}
+.section-label{display:flex;align-items:center;gap:8px;font-weight:850;font-size:11px;letter-spacing:.13em;color:var(--purple);text-transform:uppercase;margin:0 0 5px}
+.section-label .shape{width:8px;height:8px;border-radius:3px;background:currentColor}
+h2{font-size:21px;margin:0 0 16px;line-height:1.4;letter-spacing:-.02em;color:#292d52}
+.question{padding:22px 24px;border-radius:17px;background:linear-gradient(100deg,#f3efff,#fff8f0);border-left:5px solid #8272db;color:#32305c;font-size:clamp(17px,2.2vw,22px);font-weight:760;line-height:1.6}
+.support{margin:14px 0 0;color:var(--muted);font-size:13px}
+.timeline{display:grid;gap:12px}
+.task{display:grid;grid-template-columns:88px minmax(0,1fr);gap:16px;align-items:start;padding:17px 18px;border-radius:16px;border:1px solid var(--line)}
+.task:nth-child(1){background:#f0f6ff;border-color:#dfeafb}.task:nth-child(2){background:#fff6ed;border-color:#f5e7d8}.task:nth-child(3){background:#eef9f5;border-color:#dcf0e7}.task:nth-child(4){background:#f5f1ff;border-color:#eae2fd}.task:nth-child(5){background:#fff1f4;border-color:#f6e3e8}
+.time{font-weight:850;font-size:16px;line-height:1.1;color:#3e649e;font-variant-numeric:tabular-nums;padding-top:6px}
+.task:nth-child(2) .time{color:#ad6b25}.task:nth-child(3) .time{color:#22866f}.task:nth-child(4) .time{color:#7654c3}.task:nth-child(5) .time{color:#be6078}
+.time small{display:block;font-size:11px;font-weight:700;margin-top:7px;color:#78819a}
+.task h3{margin:0 0 5px;font-size:16px;color:#293251}
+.task p{margin:0;font-size:14px;color:#49556b;line-height:1.8}
+.task p+p{margin-top:6px}
+.keyword{display:inline-block;background:#e7ddff;color:#6449b4;font-weight:750;font-size:12px;padding:1px 8px;border-radius:7px;margin-right:5px}
+.emphasis{font-weight:760;color:#252b49}
+.callout{border:1px solid #f4d6cf;background:#fff7f2;padding:18px 21px;border-radius:16px;display:flex;gap:12px;align-items:start}
+.callout-icon{width:32px;height:32px;flex-shrink:0;border-radius:10px;background:#f9dfcc;display:grid;place-items:center;color:#a65d3a;font-weight:900}
+.callout p{margin:0;font-size:14px;line-height:1.7;color:#674b4a}
+.callout strong{color:#9a4c3d}
+.panel-label{font-weight:800;color:#333b5f;font-size:14px;margin:0 0 13px}
+.chart{height:16px;display:flex;gap:3px;border-radius:100px;overflow:hidden;background:#e4e7f1}
+.chart span{display:block;height:100%}
+.chart span:nth-child(1){width:20%;background:#679fe7}.chart span:nth-child(2){width:10%;background:#efa44d}.chart span:nth-child(3){width:40%;background:#47b59b}.chart span:nth-child(4){width:20%;background:#9379df}.chart span:nth-child(5){width:10%;background:#e77f9a}
+.legends{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:7px}.legends li{display:flex;align-items:center;justify-content:space-between;gap:12px;color:#60697e;font-size:12px}.legends label{display:flex;align-items:center;gap:9px}.dot{width:9px;height:9px;display:inline-block;border-radius:3px}
+.legends b{font-variant-numeric:tabular-nums;color:#464967}
+.metric{margin-bottom:11px}.metric strong{font-size:35px;line-height:1.1;color:#39376e}
+.tiny{font-size:12px;color:#6f7b8e;margin:7px 0 12px}
+.timer-display{font-size:43px;font-weight:800;line-height:1.2;color:#3d3c78;font-variant-numeric:tabular-nums;letter-spacing:-.045em}
+.timer-row{display:flex;gap:9px;margin-top:12px}
+.btn{cursor:pointer;border:0;border-radius:10px;font-weight:750;font-size:13px;padding:10px 12px;min-height:41px}
+.btn-main{color:#fff;background:#6550b1;flex:1}.btn-main:hover{background:#524093}
+.btn-outline{border:1px solid #d7d2eb;background:#fff;color:#61568c}
+.checks{display:grid;gap:10px}.check{display:flex;align-items:start;gap:9px;font-size:14px;cursor:pointer;color:#39465e;line-height:1.55}
+.check input{width:18px;height:18px;accent-color:#6c59ba;flex-shrink:0;margin:2px 0 0}
+.score{border-top:1px solid var(--line);padding-top:12px;margin-top:13px;display:flex;align-items:center;justify-content:space-between;color:#687286;font-size:13px}
+.score strong{font-size:22px;font-variant-numeric:tabular-nums;color:#6650af}
+.field{display:block;margin:16px 0 7px;color:#525d75;font-size:12px;font-weight:700}
+.input{display:block;width:100%;background:white;color:#262a4c;border:1px solid #dad9e6;border-radius:9px;padding:9px 10px;font-size:14px;min-height:42px}
+.copy{background:#293a64;color:#fff;width:100%;margin-top:15px}.copy:hover{background:#3e4f82}
+.message{color:#6b519e;font-size:12px;min-height:18px;margin:9px 0 0}
+.next{display:flex;align-items:start;justify-content:space-between;gap:12px}
+.next strong{font-size:16px;color:#2f3355}.next p{margin:7px 0 0;font-size:13px;color:#69748a}.next-arrow{height:40px;width:40px;display:grid;place-items:center;background:#fff0cf;color:#b26d25;font-weight:900;border-radius:12px;font-size:24px;flex-shrink:0}
+details{margin-top:14px;border-top:1px solid var(--line);padding-top:14px}
+details summary{cursor:pointer;font-size:13px;font-weight:730;color:#6853b2}
+details p{font-size:13px;color:#4e586a;line-height:1.75}
+.footer{color:#768095;font-size:12px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;padding:27px 4px 5px}
+@media(max-width:910px){.page-grid{grid-template-columns:minmax(0,1fr)}.aside{position:static;grid-template-columns:repeat(2,minmax(0,1fr))}.aside .paper:last-child{grid-column:1/-1}}
+@media(max-width:650px){.container{padding:0 13px 28px}.sitebar{padding:12px 14px}.trail{font-size:11px}.hero{border-radius:20px;min-height:0;grid-template-columns:1fr}.hero-copy{padding:29px 23px 30px}.hero h1{font-size:29px}.hero-art{display:none}.page-grid{gap:14px;margin-top:14px}.primary,.aside{gap:14px;grid-template-columns:1fr}.aside .paper:last-child{grid-column:auto}.paper{border-radius:17px;padding:21px 18px}.task{grid-template-columns:68px minmax(0,1fr);gap:9px;padding:14px 12px}.time{font-size:13px}.task h3{font-size:15px}.task p{font-size:13px}.question{padding:18px 17px;font-size:18px}.callout{padding:16px}.hero p{font-size:14px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{body{background:#fff}.sitebar,.btn,details{display:none}.container{max-width:100%;padding:0}.hero{print-color-adjust:exact}.page-grid{grid-template-columns:1fr}.paper,.task{break-inside:avoid}.aside{display:none}}
 </style>
 </head>
 <body>
-<header><div class="topbar">
-<a class="brand" href="../../"><span class="brand-icon" aria-hidden="true">研</span><span>研究学习中心</span></a>
-<nav class="breadcrumbs" aria-label="面包屑导航"><a href="../">公众表达课程</a><span aria-hidden="true">/</span><span>第001课</span></nav>
-</div></header>
-<main class="shell">
-<section class="hero" aria-labelledby="lesson-title">
-<div class="eyebrow">SPEAKING PRACTICE · LESSON 001 / 168</div>
-<h1 id="lesson-title">60秒自然表达基线</h1>
-<p class="hero-desc">今天只做一件事：不写稿，对熟悉的问题自然讲话60秒，留下第一次真实表达的录音。</p>
-<div class="hero-badges"><span>第1章 · 第01节</span><span>10分钟</span><span>无需逐字稿</span><span>第1周</span></div>
-<div class="course-progress"><span>课程进度 · 第001 / 168课</span><div class="course-progress-track" aria-label="本课为168课中的第1课"><div class="course-progress-fill"></div></div></div>
+<div class="sitebar"><a href="../../" class="brand"><span class="logo" aria-hidden="true">研</span>研究学习中心</a><div class="trail"><a href="../">公众表达课程目录</a> / 第001课</div></div>
+<main class="container">
+<section class="hero" aria-labelledby="title">
+<div class="hero-copy">
+<div class="kicker">PUBLIC SPEAKING · DAY 01 / 168</div>
+<h1 id="title">60秒自然表达基线</h1>
+<p>今天不学复杂技巧。选一个熟悉的问题，自然讲话60秒，留下真实的第一次表现。</p>
+<div class="pills"><span class="pill">第1章 · 第01节</span><span class="pill">10分钟</span><span class="pill">无需逐字稿</span><span class="pill">第一周</span></div>
+</div>
+<div class="hero-art" aria-hidden="true"><div class="orbit-one"></div><div class="orbit-two"></div><div class="art-sun"></div><div class="art-note"><div></div><div></div><div></div></div><div class="art-speech">“ ”</div></div>
 </section>
-<div class="content">
-<div class="maincol stack">
-<section class="panel" aria-labelledby="question-h">
-<p class="section-kicker">TODAY'S QUESTION</p>
-<h2 id="question-h">今日题目</h2>
-<div class="question"><strong>你认为评价一篇硕士毕业论文的质量，最应该关注什么？为什么？</strong></div>
-<p class="question-note">不查资料、不写逐字稿。第一次录音前，不看参考答案。</p>
+<div class="page-grid">
+<div class="primary">
+<section class="paper">
+<div class="section-label"><span class="shape"></span>TODAY'S QUESTION</div>
+<h2>今天只回答这道题</h2>
+<div class="question">你认为评价一篇硕士毕业论文的质量，最应该关注什么？为什么？</div>
+<p class="support">请先完成第一次录音，再看网页下方的可选示范。</p>
 </section>
-<section class="panel" aria-labelledby="process-h">
-<p class="section-kicker">10-MINUTE ROUTINE</p>
-<h2 id="process-h">照着做，10分钟完成</h2>
-<div class="steps">
-<div class="step"><div class="step-when">00—02<span>2分钟</span></div><div><h3>① 准备</h3><p>打开手机录音软件，读一遍题目。<strong>只用30秒在脑中思考</strong>，不写稿、不查资料；其余时间准备录音。</p></div></div>
-<div class="step"><div class="step-when">02—03<span>1分钟</span></div><div><h3>② 第一次开口</h3><p>按下录音键，自然回答，<strong>最多60秒</strong>。讲完立即保存为“口才第001课_首次录音”。</p><p class="hint">卡壳可停一下再继续；提前说完也不用凑时长。不要重录。</p></div></div>
-<div class="step"><div class="step-when">03—07<span>4分钟</span></div><div><h3>③ 回听一次</h3><p>完整回听第一次录音，只检查三件事：是否有<strong>明确观点、至少一个理由、基本完整的意思</strong>。符合一项记1分。</p></div></div>
-<div class="step"><div class="step-when">07—09<span>2分钟</span></div><div><h3>④ 再讲一次</h3><p>这次允许用三个关键词：<span class="keyword">观点</span><span class="keyword">理由</span><span class="keyword">例子</span></p><p>先准备约1分钟，再讲最多60秒。第二次属于练习，不能覆盖第一次录音。</p></div></div>
-<div class="step"><div class="step-when">09—10<span>1分钟</span></div><div><h3>⑤ 保存记录</h3><p>记下第一次录音的实际时长、0—3分内容评分，以及最需要改进的<strong>一个问题</strong>。今天到此结束。</p></div></div>
+<section class="paper" id="steps">
+<div class="section-label"><span class="shape" style="background:var(--blue)"></span>5 ACTIONS · 10 MINUTES</div>
+<h2>照着做，10分钟完成</h2>
+<div class="timeline">
+<div class="task"><div class="time">00—02<small>2分钟</small></div><div><h3>01 · 准备</h3><p>打开手机录音软件，读一遍题目。<span class="emphasis">只用30秒在脑中思考</span>，不写稿、不查资料。</p></div></div>
+<div class="task"><div class="time">02—03<small>1分钟</small></div><div><h3>02 · 首次开口</h3><p>按下录音键，自然回答，最多60秒。保存为“口才第001课_首次录音”。</p><p>卡壳可以停顿再继续；<span class="emphasis">不要重录。</span></p></div></div>
+<div class="task"><div class="time">03—07<small>4分钟</small></div><div><h3>03 · 回听一次</h3><p>只检查三点：<span class="emphasis">观点是否明确、有没有理由、意思是否基本完整。</span>每满足一项记1分。</p></div></div>
+<div class="task"><div class="time">07—09<small>2分钟</small></div><div><h3>04 · 再讲一次</h3><p>这次只看<span class="keyword">观点</span><span class="keyword">理由</span><span class="keyword">例子</span>三个关键词。</p><p>准备1分钟，再讲1分钟；第二次录音不替换首次基线。</p></div></div>
+<div class="task"><div class="time">09—10<small>1分钟</small></div><div><h3>05 · 记下结果</h3><p>记录第一次录音的秒数、内容得分（0—3分），以及最想改进的一个问题。<span class="emphasis">结束今天的训练。</span></p></div></div>
 </div>
 </section>
-<section class="notebox" aria-label="关键提醒">
-<p><strong>提醒：</strong>今天不纠正发音，不追求完全流畅，不要反复重录。第一次录音是今后对比的基线，请保留原始文件。</p>
-</section>
-<section class="quiet" aria-label="下节课">
-<p class="section-kicker">UP NEXT</p>
-<h3>下一课｜不写逐字稿讲清一件事</h3>
-<p>第1章·第02节（全课程第002课）。第一课的练习不以评分高低判断成功。</p>
-<details><summary>完成录音后，才查看参考示范（可选）</summary>
-<p>“我认为，评价硕士毕业论文，重要的是研究问题和研究设计是否匹配。选题即使新颖，如果数据与方法不足以回答问题，结论仍然缺少充分支持。例如，发现两个变量显著相关，并不能直接证明因果关系。”</p>
-<p>这只是表达结构的例子，不是要求背诵的答案，也不用拿它和第一次录音逐字比较。</p>
-</details>
+<div class="callout" role="note"><div class="callout-icon" aria-hidden="true">!</div><p><strong>今天特别提醒</strong>：不纠正发音，不追求完全流畅，不反复重录。第一次录音保留在自己的手机中，不要上传到公开网站。</p></div>
+<section class="paper">
+<div class="section-label"><span class="shape" style="background:var(--orange)"></span>UP NEXT</div>
+<div class="next"><div><strong>下一课｜不写逐字稿讲清一件事</strong><p>第1章·第02节 · 全课程第002课。今天的评分不是考试，只用于以后和自己比较。</p></div><div class="next-arrow" aria-hidden="true">↗</div></div>
+<details><summary>首次录音完成后，可展开看一句示范</summary><p>“我认为，评价一篇硕士论文，最值得关注的是研究问题与研究设计是否匹配。选题再新颖，如果数据和方法不足以支持结论，论文的可信度也会受到影响。”</p><p>示范只是帮助理解表达结构，不需要背诵。</p></details>
 </section>
 </div>
-<aside class="sidecol" aria-label="时间安排和练习记录"><div class="stack sidebar-sticky">
-<section class="panel" aria-labelledby="time-h">
-<p class="section-kicker">TIME ALLOCATION</p><div class="time-summary"><h2 id="time-h" style="margin:0;font-size:18px">时间分配</h2><div class="time-large">10<small>分钟</small></div></div>
-<div class="timebar" role="img" aria-label="准备2分钟、首次录音1分钟、回听评价4分钟、再次练习2分钟、记录1分钟"><div class="t1"></div><div class="t2"></div><div class="t3"></div><div class="t4"></div><div class="t5"></div></div>
-<ul class="timekeys">
-<li style="--swatch:#83a8ab"><span>准备</span><b>2分钟</b></li>
-<li style="--swatch:#2f847f"><span>首次录音</span><b>1分钟</b></li>
-<li style="--swatch:#1b635c"><span>回听与评价</span><b>4分钟</b></li>
-<li style="--swatch:#9fc9b0"><span>再次练习</span><b>2分钟</b></li>
-<li style="--swatch:#bfcfbe"><span>记录</span><b>1分钟</b></li>
+<aside class="aside" aria-label="计时与记录">
+<section class="paper">
+<div class="section-label"><span class="shape" style="background:var(--orange)"></span>TIME PLAN</div>
+<h2 style="font-size:18px">10分钟分配图</h2>
+<div class="chart" role="img" aria-label="准备2分钟、首次录音1分钟、回听4分钟、再次练习2分钟、记录1分钟"><span></span><span></span><span></span><span></span><span></span></div>
+<ul class="legends">
+<li><label><span class="dot" style="background:#679fe7"></span>准备</label><b>2分钟</b></li>
+<li><label><span class="dot" style="background:#efa44d"></span>首次录音</label><b>1分钟</b></li>
+<li><label><span class="dot" style="background:#47b59b"></span>回听评价</label><b>4分钟</b></li>
+<li><label><span class="dot" style="background:#9379df"></span>二次表达</label><b>2分钟</b></li>
+<li><label><span class="dot" style="background:#e77f9a"></span>保存记录</label><b>1分钟</b></li>
 </ul>
 </section>
-<section class="panel" aria-labelledby="check-h">
-<p class="section-kicker">YOUR CHECKLIST</p><h2 id="check-h" style="font-size:18px">今日训练记录</h2>
-<p class="small">只给第一次录音评分，每满足一项记1分。</p>
-<div class="checks">
-<label class="check"><input type="checkbox" class="metric-check"><span>说出了明确观点</span></label>
-<label class="check"><input type="checkbox" class="metric-check"><span>至少给出一个理由</span></label>
-<label class="check"><input type="checkbox" class="metric-check"><span>基本表达完整意思</span></label>
-</div>
-<div class="score-line"><span class="small">内容评分</span><strong id="score" aria-live="polite">0 / 3</strong></div>
-<label class="field" for="seconds">第一次讲话用了多少秒？</label>
-<input class="entry" type="number" id="seconds" min="0" max="60" step="1" inputmode="numeric" placeholder="例如：48">
-<label class="field" for="focus">最需要改进的一点</label>
-<select class="entry" id="focus">
-<option value="思路不够清晰">思路不够清晰</option>
-<option value="观点不够明确">观点不够明确</option>
-<option value="理由说不充分">理由说不充分</option>
-<option value="紧张影响了表达">紧张影响了表达</option>
-<option value="暂时没有明显问题">暂时没有明显问题</option>
-</select>
-<button type="button" class="copy" id="copy-btn">复制训练记录</button>
-<p class="copystatus" id="copy-status" aria-live="polite"></p>
-<p class="small">记录只在当前网页中填写，不会被本页面上传或自动保存。原始录音由你自己保管。</p>
+<section class="paper">
+<div class="section-label"><span class="shape" style="background:var(--blue)"></span>SPEAKING TIMER</div>
+<h2 style="font-size:18px;margin-bottom:7px">60秒讲话计时</h2>
+<div class="timer-display" id="timer" role="timer" aria-label="倒计时秒数">01:00</div>
+<p class="tiny">计时器不会录音。请同时打开手机录音软件。</p>
+<div class="timer-row"><button type="button" class="btn btn-main" id="start">开始计时</button><button type="button" class="btn btn-outline" id="reset">重置</button></div>
+<p class="message" id="timer-note" aria-live="polite"></p>
 </section>
-</div></aside>
+<section class="paper">
+<div class="section-label"><span class="shape" style="background:var(--mint)"></span>SELF CHECK</div>
+<h2 style="font-size:18px">第一次录音自评</h2>
+<p class="tiny">每满足一项记1分，不评口误或停顿。</p>
+<div class="checks">
+<label class="check"><input type="checkbox" class="ck"><span>我说出了明确观点</span></label>
+<label class="check"><input type="checkbox" class="ck"><span>我提供了至少一个理由</span></label>
+<label class="check"><input type="checkbox" class="ck"><span>我基本讲完整了意思</span></label>
 </div>
-<footer class="footer"><span>公众表达与脱稿演讲系统训练 · 第001课 / 共168课</span><a href="../">返回完整课程目录 →</a></footer>
+<div class="score"><span>内容得分</span><strong id="score">0 / 3</strong></div>
+<label class="field" for="seconds">第一次讲话时长（秒）</label><input class="input" type="number" inputmode="numeric" min="0" max="60" id="seconds" placeholder="例如：48">
+<label class="field" for="issue">最想改进的问题</label>
+<select class="input" id="issue">
+<option>思路不够清晰</option><option>观点不够明确</option><option>理由说不充分</option><option>紧张影响了表达</option><option>暂时没有明显问题</option>
+</select>
+<button type="button" class="btn copy" id="copy">复制今日记录</button>
+<p class="message" id="copy-message" aria-live="polite"></p>
+<p class="tiny">本页不会上传或自动保存填写内容；请将复制的记录保存在自己的笔记中。</p>
+</section>
+</aside>
+</div>
+<footer class="footer"><span>公众表达与脱稿演讲系统训练 · 第001课 / 168课</span><a href="../">返回课程目录 →</a></footer>
 </main>
 <script>
 (function(){
 "use strict";
-var boxes=Array.from(document.querySelectorAll(".metric-check"));
+var boxes=Array.from(document.querySelectorAll(".ck"));
 var score=document.getElementById("score");
-var update=function(){score.textContent=boxes.filter(function(el){return el.checked}).length+" / 3";};
-boxes.forEach(function(el){el.addEventListener("change",update);});
-var button=document.getElementById("copy-btn");
-var status=document.getElementById("copy-status");
-button.addEventListener("click",function(){
-  var seconds=document.getElementById("seconds").value.trim();
-  if(seconds!=="" && (+seconds<0 || +seconds>60 || !Number.isInteger(+seconds))){status.textContent="请填写0—60之间的整数秒数。";return;}
-  var note="第001课｜60秒自然表达基线\n首次录音时长："+(seconds===""?"未填写":seconds+"秒")+"\n内容评分："+boxes.filter(function(el){return el.checked}).length+"/3\n最需改进："+document.getElementById("focus").value;
-  if(!navigator.clipboard||!navigator.clipboard.writeText){status.textContent="浏览器暂不支持一键复制，请手动记录。";return;}
-  navigator.clipboard.writeText(note).then(function(){status.textContent="记录已复制；请自行保存。";}).catch(function(){status.textContent="复制未成功，请手动记录。";});
+function count(){return boxes.filter(function(x){return x.checked}).length;}
+boxes.forEach(function(x){x.addEventListener("change",function(){score.textContent=count()+" / 3";});});
+var display=document.getElementById("timer"),start=document.getElementById("start"),reset=document.getElementById("reset"),note=document.getElementById("timer-note");
+var interval=null,remaining=60,lastTick=0;
+function draw(){display.textContent="00:"+String(remaining).padStart(2,"0");}
+function halt(){if(interval!==null){clearInterval(interval);interval=null;}start.textContent="继续计时";}
+function tick(){var now=Date.now();var elapsed=Math.floor((now-lastTick)/1000);if(elapsed>0){remaining=Math.max(0,remaining-elapsed);lastTick+=elapsed*1000;draw();if(remaining===0){halt();start.textContent="重新开始";note.textContent="60秒结束，请保存首次录音。";}}}
+start.addEventListener("click",function(){if(interval!==null){tick();halt();note.textContent="计时已暂停。";return;}if(remaining===0)remaining=60;lastTick=Date.now();draw();interval=setInterval(tick,200);start.textContent="暂停计时";note.textContent="正在计时，请自然讲话。";});
+reset.addEventListener("click",function(){halt();remaining=60;draw();start.textContent="开始计时";note.textContent="";});
+document.getElementById("copy").addEventListener("click",function(){
+var val=document.getElementById("seconds").value.trim();
+var msg=document.getElementById("copy-message");
+if(val!=="" && (!Number.isInteger(Number(val))||Number(val)<0||Number(val)>60)){msg.textContent="请输入0至60之间的整数秒数。";return;}
+var text="第001课｜60秒自然表达基线\n首次录音："+(val===""?"未填写":val+"秒")+"\n内容得分："+count()+"/3\n最需改进："+document.getElementById("issue").value;
+if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(function(){msg.textContent="记录已复制，请保存到个人笔记。";},function(){msg.textContent="复制不可用，请手动记录。";});}else{msg.textContent="当前浏览器不支持一键复制，请手动记录。";}
 });
 })();
 </script>
