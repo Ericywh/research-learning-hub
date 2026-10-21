@@ -1,12 +1,28 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="PSM-DID第6课：匹配后DID估计量与模型设定，中国宽带中国示范城市案例；Stata和Python双软件教学及习题。"><title>第3章·第1节｜匹配后DID估计量与模型设定</title><style>@page{size:A4;margin:18mm 18mm 18mm 18mm}*{box-sizing:border-box}body{font-family:system-ui,-apple-system,"Noto Sans CJK SC","PingFang SC",sans-serif;background:#f6f8f7;color:#243747;line-height:1.77;margin:0}header{background:linear-gradient(130deg,#173748,#266962);color:white;padding:43px max(calc((100vw - 860px)/2),25px)}header .ey{font-size:12px;letter-spacing:.11em;color:#b7dcd5}header h1{line-height:1.45;font-size:30px;margin:8px 0}header p{color:#c7e1d8;margin:0}main{max-width:900px;margin:-18px auto 34px;background:white;border:1px solid #e0e9e8;border-radius:13px;padding:38px 46px;box-shadow:0 9px 27px #0000000d}h2{font-size:21px;color:#1c5f5b;margin-top:29px;border-bottom:1px solid #dfe7e6;padding-bottom:9px}h3{font-size:17px}p{margin:11px 0}strong{color:#205d60}a{color:#1c746e;text-underline-offset:3px}table{width:100%;border-collapse:collapse;font-size:13px;margin:19px 0}th{background:#e9f2f0}td,th{border:1px solid #dce7e6;padding:7px;text-align:left}pre{white-space:pre;overflow:auto;background:#162d3a;color:#e4edf2;border-radius:10px;padding:15px;font-size:11px;line-height:1.55}code{font-family:ui-monospace,Consolas,monospace}p code{background:#eef4f2;color:#175d61;padding:1px 4px;border-radius:3px}blockquote{border-left:4px solid #388878;margin:14px 0;padding:6px 15px;background:#f0f8f4}.nav{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;margin-bottom:18px}.aside{padding:13px;border-left:4px solid #c48d36;background:#fff9ef;color:#5e4f31}.foot{font-size:12px;color:#687f86;margin-top:30px}@media(max-width:720px){header{padding:31px 18px}header h1{font-size:24px}main{margin:-12px 8px 20px;padding:22px 17px}pre{font-size:10px}}@media print{body{background:white}header{padding:17mm 0;background:none;color:#183b48}header p,header .ey{color:#566}main{margin:0;padding:0;border:0;box-shadow:none}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f0f3f5;color:black}a{color:black}}</style><link rel="stylesheet" href="../../assets/stable.css?v=20261021c"></head><body><header><div><div class="ey">PSM-DID系统精讲课程 · 全课程第6课 / 共10课</div><h1>第3章·第1节｜匹配后DID估计量与模型设定</h1><p>中国真实政策背景 · 完整中文讲义 · 双软件实操</p></div></header><main><nav class="nav"><a href="https://ericywh.github.io/research-learning-hub/psm-did/">← 课程目录</a><a href="https://ericywh.github.io/research-learning-hub/psm-did/chapter-03/lesson-02/">第7课 →</a></nav><aside class="aside"><strong>实证边界：</strong>2014年10月公布的首批政策名单含复杂行政层级；当前教学映射与政策暴露时间尚不支持工资因果效应声明。上一课发现匹配后多项SMD超过0.1。本课代码所输出的配对DID数值只用来展示计算。</aside><h1>第3章·第1节｜匹配后DID估计量与模型设定</h1>
+<!doctype html><html lang="zh-CN"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="PSM-DID第6课：匹配后DID估计量与模型设定，中国宽带中国示范城市案例；Stata和Python双软件教学及习题。">
+<title>第3章·第1节｜匹配后DID估计量与模型设定｜PSM-DID系统精讲课程</title>
+<link rel="stylesheet" href="../../assets/course-v3.css?v=20261021d">
+</head><body>
+<a class="skip" href="#course-main">跳转课程正文</a>
+<div class="topbar"><div class="topbar-inner"><a class="identity" href="../../"><span class="identity-mark">PSM</span>研究方法 · PSM-DID</a>
+<nav class="toplinks" aria-label="全站导航"><a href="../../">十节课程目录</a><a href="../../chapter-02/lesson-02/">← 上一课</a><a href="../../chapter-03/lesson-02/">下一课 →</a><span class="top-separator"></span><a href="../../../study/#courses">学习中心</a></nav></div></div>
+<header class="page-hero lesson-hero"><div class="hero-inner">
+<div><nav class="crumbs" aria-label="面包屑导航"><a href="../../">全部课程</a><span>/</span><span>第3章</span><span>/</span><span>第6课</span></nav><span class="kicker">CAUSAL INFERENCE / 06</span>
+<h1>第3章·第1节｜匹配后DID估计量与模型设定</h1><p class="chapter-desc">中国“宽带中国”示范城市政策 · 计量方法、诊断与双软件实操</p>
+<div class="hero-pillset"><span class="hero-pill">全课程第6课 · 共10课</span><span class="hero-pill">匹配后估计与双软件实操</span><span class="hero-pill">Stata + Python</span></div></div>
+<aside class="hero-index" aria-label="课程进度"><div><div class="counter">LEARNING PROGRESS</div><div class="large">06 <em>/ 10</em></div></div><div class="track"><span style="width:60%"></span></div><div class="sub">已完成内容归档 · 阅读第6课</div></aside>
+</div></header>
+<div class="reader-grid"><aside class="toc-side" aria-label="本课章节目录"><div class="toc-box"><div class="toc-eyebrow">ON THIS PAGE · 本课目录</div><ol><li><a href="#section-01">一、从匹配对推导ATT</a></li><li><a href="#section-02">二、手算：同一组数字两种表达</a></li><li><a href="#section-03">三、回归式为何与双重差分有关？</a></li><li><a href="#section-04">四、有效估计的前提</a></li><li><a href="#section-05">五、双软件应完成的相同步骤</a></li><li><a href="#section-06">六、三个容易混淆的问题</a></li><li><a href="#section-07">七、两道自测题与答案</a></li><li><a href="#section-08">附录｜同一中国数据的Stata与Python完整示例</a></li><li><a href="#section-09">主要数据与方法来源</a></li></ol><p class="toc-foot"><a href="../../">← 返回全部课程</a><br>第3章 · 第1节</p></div></aside>
+<details class="mobile-toc"><summary>查看本课目录（9节）</summary><ol><li><a href="#section-01">一、从匹配对推导ATT</a></li><li><a href="#section-02">二、手算：同一组数字两种表达</a></li><li><a href="#section-03">三、回归式为何与双重差分有关？</a></li><li><a href="#section-04">四、有效估计的前提</a></li><li><a href="#section-05">五、双软件应完成的相同步骤</a></li><li><a href="#section-06">六、三个容易混淆的问题</a></li><li><a href="#section-07">七、两道自测题与答案</a></li><li><a href="#section-08">附录｜同一中国数据的Stata与Python完整示例</a></li><li><a href="#section-09">主要数据与方法来源</a></li></ol></details>
+<main class="article" id="course-main"><nav class="nav"><a href="https://ericywh.github.io/research-learning-hub/psm-did/">← 课程目录</a><a href="https://ericywh.github.io/research-learning-hub/psm-did/chapter-03/lesson-02/">第7课 →</a></nav><aside class="aside"><strong>实证边界：</strong>2014年10月公布的首批政策名单含复杂行政层级；当前教学映射与政策暴露时间尚不支持工资因果效应声明。上一课发现匹配后多项SMD超过0.1。本课代码所输出的配对DID数值只用来展示计算。</aside>
 <p><strong>全课程第6课 / 共10课｜2026年10月20日单独生成</strong></p>
 <p>本节重点是把前两章已经学会的“匹配”与“双重差分”真正连接成一个估计量，并区分样本加权、固定效应回归和因果识别假设。研究对象仍为中国2014年首批“宽带中国”示范城市，结果变量是城市在岗职工平均工资。</p>
-<h2>一、从匹配对推导ATT</h2>
+<h2 id="section-01">一、从匹配对推导ATT</h2>
 <p><strong>ATT（Average Treatment Effect on the Treated）</strong>指处理组平均处理效应：对于实际接受试点政策的城市，相对于没有试点政策的反事实结果，平均改变了多少。<strong>反事实（Counterfactual）</strong>是同一城市在另一种处理状态下本应出现、却无法同时观察到的结果。</p>
 <p>设 ΔYᵢ = Yᵢ,后 − Yᵢ,前，表示城市工资的前后差值。对保留的 Nₜ 个试点城市，每个城市 i 匹配若干非试点城市 j，并赋予权重 wᵢⱼ，则一类匹配后DID点估计写作：</p>
 <p><strong>ATT̂ = (1/Nₜ) ∑ᵢ [ΔYᵢ − ∑ⱼ wᵢⱼ ΔYⱼ]，其中 ∑ⱼ wᵢⱼ = 1。</strong></p>
 <p>式中 wᵢⱼ 是“对照城市 j 在试点城市 i 的反事实变化估计中占多大比重”。一对一最近邻时，每个处理城市仅一个对照，其权重为1；一对三等权匹配时，三个对照城市各为1/3。<strong>若一个对照城市被多个试点城市重复使用，不能删除重复匹配记录</strong>，否则就改变了估计对象与权重。</p>
-<h2>二、手算：同一组数字两种表达</h2>
+<h2 id="section-02">二、手算：同一组数字两种表达</h2>
 <p>以下为明确构造的教学数字，不是2014年中国城市的真实政策估计。</p>
 <table>
 <thead>
@@ -39,28 +55,28 @@
 </tbody>
 </table>
 <p>假定B和C各占1/2，则A的匹配反事实工资增长估计为 (4,000+5,000)/2=4,500元。A的配对DID为6,000−4,500=<strong>1,500元</strong>。如果样本中有多个试点城市，再对这些配对差额取平均，得到匹配样本的ATT点估计。</p>
-<h2>三、回归式为何与双重差分有关？</h2>
+<h2 id="section-03">三、回归式为何与双重差分有关？</h2>
 <p>两期DID的常见回归表示是 Yᵢₜ = αᵢ + λₜ + τ(Dᵢ×Postₜ) + εᵢₜ。</p>
 <p>这里 <strong>αᵢ（城市固定效应）</strong>吸收城市不随时间变化的平均差异；<strong>λₜ（年份固定效应）</strong>吸收两组共同经历的年份冲击；<strong>Dᵢ×Postₜ</strong>在“首批试点城市且政策后”的观测中等于1；系数τ对应DID变化差。<strong>εᵢₜ（误差项）</strong>表示模型未解释的其他变化。</p>
 <p>若处理和对照样本已经匹配，回归必须让每个试点城市及其对应的对照变化具有与匹配设计一致的权重。直接删除重复对照或在原始全样本不加权回归，可能不再估计上述匹配ATT。对两期面板，计算城市工资差值再进行加权比较，常常比先堆叠固定效应回归更容易核对估计量。</p>
-<h2>四、有效估计的前提</h2>
+<h2 id="section-04">四、有效估计的前提</h2>
 <p><strong>条件平行趋势</strong>要求：给定匹配所用政策前特征后，没有政策时两组平均工资变化相同。它不等于“政策前GDP和工资均值相等”。此外还要审查共同支持、无预期、城市间政策溢出、样本构成和统计口径。</p>
 <p>上一课的初步中国城市匹配诊断中，2013年完整城市289个；37个进入教学版试点映射，31个找到匹配对，但匹配后四项绝对SMD约为0.120、0.299、0.265、0.123，仍未全部达到0.1参考值。因此<strong>可以教学演示估计量，却不能据此宣称已经识别出宽带政策对工资的因果效应</strong>。并且2014年10月才公布名单，2014全年工资并非充分政策暴露后的结果。</p>
-<h2>五、双软件应完成的相同步骤</h2>
+<h2 id="section-05">五、双软件应完成的相同步骤</h2>
 <p>Stata与Python都从原公开CSV读取2013、2014年工资，使用2013年GDP、人口、第三产业比重和工资估计Logit，限制共同支持，实行原始概率差0.05卡尺下的一对一有放回最近邻。按匹配对计算变化差，并明确当前输出是<strong>教学点估计</strong>。Stata保留中文变量和0/1分类标签；Python导出带中文字段的配对CSV。运行文件中的实际数值须以读者机器的运行结果为准，不能在此编造。</p>
-<h2>六、三个容易混淆的问题</h2>
+<h2 id="section-06">六、三个容易混淆的问题</h2>
 <ol>
 <li><strong>ATT是全部试点城市的平均效应吗？</strong> 如果匹配删去了无法匹配的试点城市，估计通常只代表成功匹配者。</li>
 <li><strong>配对差值可以直接当作政策效果吗？</strong> 不能。需要条件平行趋势和相关识别假设。</li>
 <li><strong>双软件回归系数一定相同吗？</strong> 如果匹配并列处理、权重、样本筛选不一致，就不一定相同；必须逐项核对。</li>
 </ol>
-<h2>七、两道自测题与答案</h2>
+<h2 id="section-07">七、两道自测题与答案</h2>
 <p><strong>概念题：</strong> 一个非试点城市被三个试点城市同时匹配到，能否在合并匹配样本时只保留该非试点城市一次？</p>
 <p><strong>答案：</strong> 不能直接删除重复使用记录。它在三个匹配对中分别承担对照作用，删除会改变匹配权重；可以改用城市层面的合并权重，但须保持权重总量对应匹配使用次数。</p>
 <p><strong>计算题：</strong> 某试点城市工资增长5,000元，两个匹配对照城市分别增长3,000和4,000元，两者等权。其配对DID是多少？</p>
 <p><strong>答案：</strong> 5,000−(3,000+4,000)/2=<strong>1,500元</strong>。</p>
 <p><strong>下一节：第3章·第2节｜Stata完整实证操作（全课程第7课）。</strong></p>
-<h2>附录｜同一中国数据的Stata与Python完整示例</h2>
+<h2 id="section-08">附录｜同一中国数据的Stata与Python完整示例</h2>
 <p><strong>Stata完整教学程序（中文变量标签）：</strong></p>
 <pre><code class="language-stata">* PSM-DID课程：公开中国城市数据，Stata 17+，教学并非已识别政策效果
 version 17.0
@@ -246,7 +262,7 @@ if __name__ == '__main__':
     print('ATT的点估计是匹配对变化差的均值，不附未经证成的标准误。')
 
 </code></pre>
-<h2>主要数据与方法来源</h2>
+<h2 id="section-09">主要数据与方法来源</h2>
 <ul>
 <li><a href="https://wap.miit.gov.cn/zwgk/zcwj/wjfb/gg/art/2020/art_4dab04091bea459e9cc45e0046be3fe9.html">工信部、国家发改委（2014），首批“宽带中国”示范城市公告</a></li>
 <li><a href="https://github.com/Cause-114/CityEdu-Eco/blob/main/data/panel.csv">中国城市年鉴二次整理公开数据及说明</a></li>
@@ -254,4 +270,5 @@ if __name__ == '__main__':
 <li><a href="https://doi.org/10.1016/j.jeconom.2020.06.003">Sant’Anna &amp; Zhao（2020），双重稳健DID</a></li>
 <li><a href="https://doi.org/10.1016/j.jeconom.2020.12.001">Callaway &amp; Sant’Anna（2021），分批实施DID</a></li>
 </ul>
-<p class="foot">进度按正式已交付课次计数。研究结果必须在数据审计、平衡和识别检查后方可报告。</p><p class="foot"><a href="lesson_6.do">独立Stata程序（.do）</a> · <a href="lesson_6.py">独立Python程序（.py）</a> · <a href="README.md">课程与方法说明</a></p></main></body></html>
+<p class="foot">进度按正式已交付课次计数。研究结果必须在数据审计、平衡和识别检查后方可报告。</p><p class="foot"><a href="lesson_6.do">独立Stata程序（.do）</a> · <a href="lesson_6.py">独立Python程序（.py）</a> · <a href="README.md">课程与方法说明</a></p><nav class="lesson-pager" aria-label="上下课导航"><a href="../../chapter-02/lesson-02/"><span>← 上一课 · 第5课</span>匹配质量与协变量平衡性检验</a><a href="../../chapter-03/lesson-02/"><span>下一课 · 第7课 →</span>Stata完整实证操作</a></nav></main></div>
+<footer class="footer">教学方法演示；正式因果识别仍须核查数据与识别假设。<p><a href="../../">← 返回PSM-DID课程目录</a></p></footer></body></html>

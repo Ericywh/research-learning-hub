@@ -1,36 +1,52 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="PSM-DID第7课：Stata完整实证操作，中国宽带中国示范城市案例；Stata和Python双软件教学及习题。"><title>第3章·第2节｜Stata完整实证操作</title><style>@page{size:A4;margin:18mm 18mm 18mm 18mm}*{box-sizing:border-box}body{font-family:system-ui,-apple-system,"Noto Sans CJK SC","PingFang SC",sans-serif;background:#f6f8f7;color:#243747;line-height:1.77;margin:0}header{background:linear-gradient(130deg,#173748,#266962);color:white;padding:43px max(calc((100vw - 860px)/2),25px)}header .ey{font-size:12px;letter-spacing:.11em;color:#b7dcd5}header h1{line-height:1.45;font-size:30px;margin:8px 0}header p{color:#c7e1d8;margin:0}main{max-width:900px;margin:-18px auto 34px;background:white;border:1px solid #e0e9e8;border-radius:13px;padding:38px 46px;box-shadow:0 9px 27px #0000000d}h2{font-size:21px;color:#1c5f5b;margin-top:29px;border-bottom:1px solid #dfe7e6;padding-bottom:9px}h3{font-size:17px}p{margin:11px 0}strong{color:#205d60}a{color:#1c746e;text-underline-offset:3px}table{width:100%;border-collapse:collapse;font-size:13px;margin:19px 0}th{background:#e9f2f0}td,th{border:1px solid #dce7e6;padding:7px;text-align:left}pre{white-space:pre;overflow:auto;background:#162d3a;color:#e4edf2;border-radius:10px;padding:15px;font-size:11px;line-height:1.55}code{font-family:ui-monospace,Consolas,monospace}p code{background:#eef4f2;color:#175d61;padding:1px 4px;border-radius:3px}blockquote{border-left:4px solid #388878;margin:14px 0;padding:6px 15px;background:#f0f8f4}.nav{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;margin-bottom:18px}.aside{padding:13px;border-left:4px solid #c48d36;background:#fff9ef;color:#5e4f31}.foot{font-size:12px;color:#687f86;margin-top:30px}@media(max-width:720px){header{padding:31px 18px}header h1{font-size:24px}main{margin:-12px 8px 20px;padding:22px 17px}pre{font-size:10px}}@media print{body{background:white}header{padding:17mm 0;background:none;color:#183b48}header p,header .ey{color:#566}main{margin:0;padding:0;border:0;box-shadow:none}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f0f3f5;color:black}a{color:black}}</style><link rel="stylesheet" href="../../assets/stable.css?v=20261021c"></head><body><header><div><div class="ey">PSM-DID系统精讲课程 · 全课程第7课 / 共10课</div><h1>第3章·第2节｜Stata完整实证操作</h1><p>中国真实政策背景 · 完整中文讲义 · 双软件实操</p></div></header><main><nav class="nav"><a href="https://ericywh.github.io/research-learning-hub/psm-did/">← 课程目录</a><a href="https://ericywh.github.io/research-learning-hub/psm-did/chapter-03/lesson-01/">← 第6课</a><a href="https://ericywh.github.io/research-learning-hub/psm-did/chapter-03/lesson-03/">第8课 →</a></nav><aside class="aside"><strong>实证边界：</strong>2014年10月公布的首批政策名单含复杂行政层级；当前教学映射与政策暴露时间尚不支持工资因果效应声明。上一课发现匹配后多项SMD超过0.1。本课代码所输出的配对DID数值只用来展示计算。</aside><h1>第3章·第2节｜Stata完整实证操作</h1>
+<!doctype html><html lang="zh-CN"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="PSM-DID第7课：Stata完整实证操作，中国宽带中国示范城市案例；Stata和Python双软件教学及习题。">
+<title>第3章·第2节｜Stata完整实证操作｜PSM-DID系统精讲课程</title>
+<link rel="stylesheet" href="../../assets/course-v3.css?v=20261021d">
+</head><body>
+<a class="skip" href="#course-main">跳转课程正文</a>
+<div class="topbar"><div class="topbar-inner"><a class="identity" href="../../"><span class="identity-mark">PSM</span>研究方法 · PSM-DID</a>
+<nav class="toplinks" aria-label="全站导航"><a href="../../">十节课程目录</a><a href="../../chapter-03/lesson-01/">← 上一课</a><a href="../../chapter-03/lesson-03/">下一课 →</a><span class="top-separator"></span><a href="../../../study/#courses">学习中心</a></nav></div></div>
+<header class="page-hero lesson-hero"><div class="hero-inner">
+<div><nav class="crumbs" aria-label="面包屑导航"><a href="../../">全部课程</a><span>/</span><span>第3章</span><span>/</span><span>第7课</span></nav><span class="kicker">CAUSAL INFERENCE / 07</span>
+<h1>第3章·第2节｜Stata完整实证操作</h1><p class="chapter-desc">中国“宽带中国”示范城市政策 · 计量方法、诊断与双软件实操</p>
+<div class="hero-pillset"><span class="hero-pill">全课程第7课 · 共10课</span><span class="hero-pill">匹配后估计与双软件实操</span><span class="hero-pill">Stata + Python</span></div></div>
+<aside class="hero-index" aria-label="课程进度"><div><div class="counter">LEARNING PROGRESS</div><div class="large">07 <em>/ 10</em></div></div><div class="track"><span style="width:70%"></span></div><div class="sub">已完成内容归档 · 阅读第7课</div></aside>
+</div></header>
+<div class="reader-grid"><aside class="toc-side" aria-label="本课章节目录"><div class="toc-box"><div class="toc-eyebrow">ON THIS PAGE · 本课目录</div><ol><li><a href="#section-01">一、Stata工作流应该有哪些环节？</a></li><li><a href="#section-02">二、政策名单与分析样本</a></li><li><a href="#section-03">三、Stata关键命令逐项解释</a></li><li><a href="#section-04">四、从匹配对到双重差分</a></li><li><a href="#section-05">五、哪些结果可以写、哪些不能写？</a></li><li><a href="#section-06">六、与Python的一致性检查</a></li><li><a href="#section-07">七、三个常见误区</a></li><li><a href="#section-08">八、两道自测题与答案</a></li><li><a href="#section-09">附录｜同一中国数据的Stata与Python完整示例</a></li><li><a href="#section-10">主要数据与方法来源</a></li></ol><p class="toc-foot"><a href="../../">← 返回全部课程</a><br>第3章 · 第2节</p></div></aside>
+<details class="mobile-toc"><summary>查看本课目录（10节）</summary><ol><li><a href="#section-01">一、Stata工作流应该有哪些环节？</a></li><li><a href="#section-02">二、政策名单与分析样本</a></li><li><a href="#section-03">三、Stata关键命令逐项解释</a></li><li><a href="#section-04">四、从匹配对到双重差分</a></li><li><a href="#section-05">五、哪些结果可以写、哪些不能写？</a></li><li><a href="#section-06">六、与Python的一致性检查</a></li><li><a href="#section-07">七、三个常见误区</a></li><li><a href="#section-08">八、两道自测题与答案</a></li><li><a href="#section-09">附录｜同一中国数据的Stata与Python完整示例</a></li><li><a href="#section-10">主要数据与方法来源</a></li></ol></details>
+<main class="article" id="course-main"><nav class="nav"><a href="https://ericywh.github.io/research-learning-hub/psm-did/">← 课程目录</a><a href="https://ericywh.github.io/research-learning-hub/psm-did/chapter-03/lesson-01/">← 第6课</a><a href="https://ericywh.github.io/research-learning-hub/psm-did/chapter-03/lesson-03/">第8课 →</a></nav><aside class="aside"><strong>实证边界：</strong>2014年10月公布的首批政策名单含复杂行政层级；当前教学映射与政策暴露时间尚不支持工资因果效应声明。上一课发现匹配后多项SMD超过0.1。本课代码所输出的配对DID数值只用来展示计算。</aside>
 <p><strong>全课程第7课 / 共10课｜2026年10月20日单独生成</strong></p>
 <p>本节把前面讲过的概念连成可操作的Stata工作流程。研究案例仍是2014年首批“宽带中国”示范城市及公开的中国城市面板数据，但要严格区分“程序能复现”与“政策效果具有因果解释”。</p>
-<h2>一、Stata工作流应该有哪些环节？</h2>
+<h2 id="section-01">一、Stata工作流应该有哪些环节？</h2>
 <p>完整脚本至少包括：下载或读取数据、核验城市—年份唯一性、建立政策处理组、设置中文标签、用2013年协变量估计Logit、检查共同支持、最近邻匹配、输出匹配关系、评价协变量平衡、计算匹配后工资变化差，以及保存运行日志。</p>
 <p><strong>脚本（do-file）</strong>是依次执行Stata命令的文本文件；<strong>日志（log）</strong>记录软件运行输出；<strong>键（key）</strong>是唯一标识记录的一组变量，这里是城市名称与数据年份；<strong>缺失值</strong>指该城市的某年统计数字不可得，不能随意填0。先做这些数据质量检查比立即运行回归重要。</p>
-<h2>二、政策名单与分析样本</h2>
+<h2 id="section-02">二、政策名单与分析样本</h2>
 <p>本课延续前几课的<strong>地级市教学映射</strong>。正式名单包含长株潭城市群、昆山、延边、阿坝、阿拉尔等不同统计层级，不能因为公开表里没有同名地级市，就自动把它们归入非试点城市。特别是名单里的“福州（含平潭）”要避免一份数据重复计数。</p>
 <p>2014名单于10月公布，2014年全年工资只适合演示两期计算。实证论文不能将这个时间差忽略。若改用2015年以后作为处理后年份，还必须根据2015、2016新增批次清理对照组。读取网址和字典应作为脚本开头的可追溯注释。</p>
-<h2>三、Stata关键命令逐项解释</h2>
+<h2 id="section-03">三、Stata关键命令逐项解释</h2>
 <p><code>import delimited</code> 读取CSV；<code>isid city_key year</code> 核查一座城市每年只有一条记录；<code>label variable</code> 为变量附中文释义；<code>label define</code> 和 <code>label values</code> 为0/1政策分组附中文类别名称。</p>
 <p><code>reshape wide</code> 将“城市×年份”的长表变为每城市一行，得到2013和2014年两列工资；<code>logit</code> 估计政策入选概率；<code>predict ..., pr</code> 输出预测概率；<code>cross using</code> 组合试点城市与候选对照城市；<code>bysort cityid (distance control_id): keep if _n==1</code> 找最近邻。<strong>有放回</strong>意味着同一对照城市可在多个试点的配对中出现。</p>
-<h2>四、从匹配对到双重差分</h2>
+<h2 id="section-04">四、从匹配对到双重差分</h2>
 <p>给每个城市先计算 Δwage=wage2014−wage2013，再计算每个配对的差值：配对DID=试点城市Δwage−对照城市Δwage。</p>
 <p>在一对一有放回的情形中，对全部成功匹配的试点城市的配对DID取平均，即教学版ATT点估计。输出同时应显示匹配前、共同支持后、卡尺后分别剩余多少试点城市，并将匹配关系保存为数据文件；否则别人无法知道哪个城市和哪个城市被比较。</p>
-<h2>五、哪些结果可以写、哪些不能写？</h2>
+<h2 id="section-05">五、哪些结果可以写、哪些不能写？</h2>
 <p>本课可以报告匹配距离、样本数、前后SMD和一个<strong>教学版DID点估计</strong>。但当前教学样本仍存在可观测协变量失衡；此外，2014年名单公布过晚、国家宽带战略早已启动、后续批次可能污染对照组。因此本节<strong>不自动输出并解释p值</strong>，更不在未审计政策名单与识别假设前宣称试点导致了工资增长。</p>
 <p>Stata输出日志以及中文<code>.dta</code>为可复核证据。程序运行后建议将<code>describe</code>、<code>tabulate treat</code>、处理组匹配率、平衡性表与匹配对样本一起交给合作者检查，而不是只复制回归最后一行。</p>
-<h2>六、与Python的一致性检查</h2>
+<h2 id="section-06">六、与Python的一致性检查</h2>
 <p>两个软件应该使用相同数据版本、清洗条件、2013协变量、政策名单、Logit规格、卡尺尺度和匹配是否有放回。<strong>相同倾向得分下的并列最近邻</strong>可能按不同排序规则被选中，造成少量配对不一致，必须检查具体城市对。第三章下一节将在Python中实现同一流程。</p>
-<h2>七、三个常见误区</h2>
+<h2 id="section-07">七、三个常见误区</h2>
 <ol>
 <li><strong><code>logit</code>显著说明政策有效。</strong> 错。Logit只解释谁更容易被选择为试点，与政策后工资因果效应不同。</li>
 <li><strong>Stata显示回归显著就等于有因果关系。</strong> 错。标准误、平行趋势、同期冲击和暴露时间都需分析。</li>
 <li><strong>对照城市不能重复使用。</strong> 错。有放回最近邻允许重复使用，但需要保留正确的匹配权重。</li>
 </ol>
-<h2>八、两道自测题与答案</h2>
+<h2 id="section-08">八、两道自测题与答案</h2>
 <p><strong>概念题：</strong> <code>isid city_key year</code> 报错时，是否可以直接跳过并继续匹配？</p>
 <p><strong>答案：</strong> 不应跳过。先检查是否存在重复城市—年份记录、名称口径不一致或合并错误，否则同一城市可能被重复计算。</p>
 <p><strong>计算题：</strong> Stata输出一个配对：试点城市工资从48,000升至55,000元，对照城市从46,000升至51,000元。该配对DID是多少？</p>
 <p><strong>答案：</strong> (55,000−48,000)−(51,000−46,000)=<strong>2,000元</strong>。</p>
 <p><strong>下一节：第3章·第3节｜Python完整实证操作（全课程第8课）。</strong></p>
-<h2>附录｜同一中国数据的Stata与Python完整示例</h2>
+<h2 id="section-09">附录｜同一中国数据的Stata与Python完整示例</h2>
 <p><strong>Stata完整教学程序（中文变量标签）：</strong></p>
 <pre><code class="language-stata">* PSM-DID课程：公开中国城市数据，Stata 17+，教学并非已识别政策效果
 version 17.0
@@ -217,7 +233,7 @@ if __name__ == '__main__':
     print('Stata和Python应逐项核对配对城市、共同支持规则与匹配距离。')
 
 </code></pre>
-<h2>主要数据与方法来源</h2>
+<h2 id="section-10">主要数据与方法来源</h2>
 <ul>
 <li><a href="https://wap.miit.gov.cn/zwgk/zcwj/wjfb/gg/art/2020/art_4dab04091bea459e9cc45e0046be3fe9.html">工信部、国家发改委（2014），首批“宽带中国”示范城市公告</a></li>
 <li><a href="https://github.com/Cause-114/CityEdu-Eco/blob/main/data/panel.csv">中国城市年鉴二次整理公开数据及说明</a></li>
@@ -225,4 +241,5 @@ if __name__ == '__main__':
 <li><a href="https://doi.org/10.1016/j.jeconom.2020.06.003">Sant’Anna &amp; Zhao（2020），双重稳健DID</a></li>
 <li><a href="https://doi.org/10.1016/j.jeconom.2020.12.001">Callaway &amp; Sant’Anna（2021），分批实施DID</a></li>
 </ul>
-<p class="foot">进度按正式已交付课次计数。研究结果必须在数据审计、平衡和识别检查后方可报告。</p><p class="foot"><a href="lesson_7.do">独立Stata程序（.do）</a> · <a href="lesson_7.py">独立Python程序（.py）</a> · <a href="README.md">课程与方法说明</a></p></main></body></html>
+<p class="foot">进度按正式已交付课次计数。研究结果必须在数据审计、平衡和识别检查后方可报告。</p><p class="foot"><a href="lesson_7.do">独立Stata程序（.do）</a> · <a href="lesson_7.py">独立Python程序（.py）</a> · <a href="README.md">课程与方法说明</a></p><nav class="lesson-pager" aria-label="上下课导航"><a href="../../chapter-03/lesson-01/"><span>← 上一课 · 第6课</span>匹配后DID估计量与模型设定</a><a href="../../chapter-03/lesson-03/"><span>下一课 · 第8课 →</span>Python完整实证操作</a></nav></main></div>
+<footer class="footer">教学方法演示；正式因果识别仍须核查数据与识别假设。<p><a href="../../">← 返回PSM-DID课程目录</a></p></footer></body></html>

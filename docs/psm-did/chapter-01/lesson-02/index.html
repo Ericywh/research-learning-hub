@@ -1,16 +1,49 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="PSM-DID系统精讲课程第2课：以中国宽带中国示范城市为例，零基础讲解选择偏差、倾向得分、匹配、条件独立性和共同支持，并提供中文Stata及Python代码。"><title>第1章·第2节｜PSM的基本原理</title><style>:root{color-scheme:light;--ink:#1b3441;--muted:#71838b;--accent:#1e726e;--line:#dce7e6;background:#f5f8f7;font-family:system-ui,-apple-system,"Noto Sans SC","PingFang SC",sans-serif}*{box-sizing:border-box}body{margin:0;color:var(--ink);line-height:1.9}.hero{padding:46px 22px 53px;background:linear-gradient(120deg,#183849,#23655e);color:#fff}.hero-inner{max-width:930px;margin:auto}.hero h1{font-size:clamp(27px,4vw,38px);line-height:1.36;margin:12px 0}.hero p{margin:0;color:#d3e5e4}.eyebrow{color:#b4dcd4;font-size:12px;letter-spacing:.13em}.main{max-width:930px;margin:-19px auto 48px;padding:40px 53px;background:white;border-radius:16px;border:1px solid var(--line);box-shadow:0 10px 26px #18384910}.nav{display:flex;flex-wrap:wrap;gap:15px;font-size:13px;margin-bottom:22px}a{color:#136e73;text-underline-offset:3px}h2{font-size:21px;line-height:1.45;margin:35px 0 15px;padding-bottom:9px;border-bottom:1px solid var(--line)}h3{font-size:17px}p{margin:0 0 14px}strong{color:#174f51}.equation{margin:19px 0;overflow:auto;padding:10px 5px}pre{margin:17px 0;padding:20px;border-radius:12px;overflow:auto;background:#152c3c;color:#e8f3f5;font-size:13px;line-height:1.75}code{font-family:ui-monospace,Consolas,monospace}li{margin:6px 0}.match{border:1px solid #dce7e6;background:#f7fbfa;border-radius:12px;padding:17px;margin:17px 0}.match h3{margin:0 0 12px}.scores{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.score{border:1px solid #d5e5e3;background:white;border-radius:10px;padding:17px;text-align:center}.score.green{background:#e6f3ee}.score small{display:block;color:#587e7a}.score strong{display:block;font-size:29px;line-height:1.4}.score span{font-size:11px;color:#6a7c80}.figcap{font-size:12px;color:var(--muted);margin-top:12px;margin-bottom:0}.caution{border-left:3px solid #28807a;padding:12px 16px;background:#ebf6f2}.footer{font-size:13px;color:#72848a;max-width:930px;margin:auto;padding:0 15px 35px}@media(max-width:650px){body{font-size:15px}.hero{padding:32px 18px 45px}.main{padding:22px 18px;margin:-12px 10px 22px}.scores{grid-template-columns:1fr}.score strong{font-size:24px}pre{font-size:12px;padding:14px}}</style><script>window.MathJax={tex:{inlineMath:[['$','$']],displayMath:[['$$','$$']]},options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script><link rel="stylesheet" href="../../assets/stable.css?v=20261021c"></head><body><header class="hero"><div class="hero-inner"><div class="eyebrow">PSM-DID系统精讲课程 · 全课程第2课 / 共10课</div><h1>第1章·第2节｜PSM的基本原理</h1><p>中国真实政策案例 · 零基础详细解释</p></div></header><main class="main"><nav class="nav" aria-label="课程导航"><a href="../../">← 四章十节目录</a><a href="../lesson-01/">上一课｜DID基础</a><a href="../../../study/#courses">六门课程总入口</a></nav><p><strong>全课程第2课 / 共10课 · 中国真实政策案例 · 零基础教学</strong></p>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="PSM-DID系统精讲课程第2课：以中国宽带中国示范城市为例，零基础讲解选择偏差、倾向得分、匹配、条件独立性和共同支持，并提供中文Stata及Python代码。">
+<title>第1章·第2节｜PSM的基本原理｜PSM-DID系统精讲课程</title>
+<link rel="stylesheet" href="../../assets/course-v3.css?v=20261021d">
+<script>window.MathJax={tex:{inlineMath:[['$','$']],displayMath:[['$$','$$']]},options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']}};</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+<a class="skip" href="#course-main">跳转课程正文</a>
+<div class="topbar"><div class="topbar-inner">
+<a class="identity" href="../../"><span class="identity-mark">PSM</span>研究方法 · PSM-DID</a>
+<nav class="toplinks" aria-label="全站导航"><a href="../../">十节课程目录</a><a href="../../chapter-01/lesson-01/">← 上一课</a><a href="../../chapter-01/lesson-03/">下一课 →</a><span class="top-separator" aria-hidden="true"></span><a href="../../../study/#courses">学习中心</a></nav>
+</div></div>
+<header class="page-hero lesson-hero">
+ <div class="hero-inner">
+  <div>
+   <nav class="crumbs" aria-label="面包屑导航"><a href="../../">全部课程</a><span>/</span><span>第1章</span><span>/</span><span>第2课</span></nav>
+   <span class="kicker">CAUSAL INFERENCE / 02</span>
+   <h1>第1章·第2节｜PSM的基本原理</h1>
+   <p class="chapter-desc">中国“宽带中国”示范城市政策 · 计量方法、诊断与双软件实操</p>
+   <div class="hero-pillset"><span class="hero-pill">全课程第2课 · 共10课</span><span class="hero-pill">基础方法与因果识别</span><span class="hero-pill">Stata + Python</span></div>
+  </div>
+  <aside class="hero-index" aria-label="课程进度"><div><div class="counter">LEARNING PROGRESS</div><div class="large">02 <em>/ 10</em></div></div><div class="track"><span style="width:20%"></span></div><div class="sub">已完成内容归档 · 阅读第2课</div></aside>
+ </div>
+</header>
+<div class="reader-grid">
+ <aside class="toc-side" aria-label="本课章节目录"><div class="toc-box"><div class="toc-eyebrow">ON THIS PAGE · 本课目录</div><ol><li><a href="#section-01">一、为什么需要PSM？</a></li><li><a href="#section-02">二、PSM、倾向得分与匹配</a></li><li><a href="#section-03">三、为什么倾向得分可能有效？</a></li><li><a href="#section-04">四、单独PSM常用的两个识别条件</a></li><li><a href="#section-05">五、匹配和加权区别</a></li><li><a href="#section-06">六、双软件：使用同一份2013年中国城市公开数据</a></li><li><a href="#section-07">七、三个重要误区</a></li><li><a href="#section-08">八、两分钟自测</a></li><li><a href="#section-09">九、学习进度</a></li></ol><p class="toc-foot"><a href="../../">← 返回全部课程</a><br>第1章 · 第2节</p></div></aside>
+ <details class="mobile-toc"><summary>查看本课目录（9节）</summary><ol><li><a href="#section-01">一、为什么需要PSM？</a></li><li><a href="#section-02">二、PSM、倾向得分与匹配</a></li><li><a href="#section-03">三、为什么倾向得分可能有效？</a></li><li><a href="#section-04">四、单独PSM常用的两个识别条件</a></li><li><a href="#section-05">五、匹配和加权区别</a></li><li><a href="#section-06">六、双软件：使用同一份2013年中国城市公开数据</a></li><li><a href="#section-07">七、三个重要误区</a></li><li><a href="#section-08">八、两分钟自测</a></li><li><a href="#section-09">九、学习进度</a></li></ol></details>
+ <main class="article" id="course-main">
+ <nav class="nav" aria-label="课程导航"><a href="../../">← 四章十节目录</a><a href="../lesson-01/">上一课｜DID基础</a><a href="../../../study/#courses">六门课程总入口</a></nav><p><strong>全课程第2课 / 共10课 · 中国真实政策案例 · 零基础教学</strong></p>
 <p><strong>核心问题：</strong> 如果试点城市原本比非试点城市更发达，怎样改善两组的可比性？</p>
-<h2>一、为什么需要PSM？</h2>
+<h2 id="section-01">一、为什么需要PSM？</h2>
 <p>2014年首批“宽带中国”示范城市（城市群）由工信部、国家发展改革委依据城市申报、省级预审和专家评审选出，共39个城市（城市群）。这不是随机分配。若试点城市GDP、人口、产业结构及工资在政策前便存在系统差异，政策后工资差异不能直接归因于政策。</p>
 <p><strong>选择偏差（Selection Bias）</strong>：处理分配与原有特征有关，使处理组和对照组直接比较可能偏离政策效果。<strong>混杂因素（Confounder）</strong>：同时与是否入选试点以及工资有关的变量，例如政策前经济规模、产业结构、原有工资水平。</p>
-<h2>二、PSM、倾向得分与匹配</h2>
+<h2 id="section-02">二、PSM、倾向得分与匹配</h2>
 <p>PSM是Propensity Score Matching（倾向得分匹配法）。先利用处理前观察到的变量预测成为首批试点的概率，再为试点城市寻找得分相近的非试点城市。</p>
 <div class="equation">$$p(X_i)=P(D_i=1\mid X_i)$$</div>
 <p>其中D=1代表2014首批试点，X为2013年GDP、人口、第三产业比重和工资。p=0.72是模型预测的条件概率，不表示政策采用随机抽签，也不是政策效应。</p>
 <p><strong>人工数值案例（非实证结果）</strong>：试点城市A的得分0.72，非试点城市B、C分别为0.69、0.18。两者与A的距离分别为0.03与0.54，最近邻规则会优先考虑B。正式匹配还需考虑卡尺和共同支持。</p>
-<div class="match" aria-label="倾向得分匹配教学数值示意"><h3>示意：谁与试点城市A更相似？</h3><div class="scores"><div class="score green"><small>试点城市 A</small><strong>0.72</strong></div><div class="score"><small>非试点城市 B</small><strong>0.69</strong><span>得分差距 0.03</span></div><div class="score"><small>非试点城市 C</small><strong>0.18</strong><span>得分差距 0.54</span></div></div><p class="figcap">人工构造倾向得分，仅解释最近邻匹配直觉，不是实际城市的估计值。</p></div><h2>三、为什么倾向得分可能有效？</h2>
+<div class="match" aria-label="倾向得分匹配教学数值示意"><h3>示意：谁与试点城市A更相似？</h3><div class="scores"><div class="score green"><small>试点城市 A</small><strong>0.72</strong></div><div class="score"><small>非试点城市 B</small><strong>0.69</strong><span>得分差距 0.03</span></div><div class="score"><small>非试点城市 C</small><strong>0.18</strong><span>得分差距 0.54</span></div></div><p class="figcap">人工构造倾向得分，仅解释最近邻匹配直觉，不是实际城市的估计值。</p></div><h2 id="section-03">三、为什么倾向得分可能有效？</h2>
 <p>Rosenbaum与Rubin（1983）的倾向得分理论认为，在正确设定和理论条件下，真实倾向得分是一种<strong>平衡得分（Balancing Score）</strong>：在给定相同真实得分时，两组的可观测协变量分布具有可比性。但估计得分相似不保证有限样本的GDP、人口等都平衡，必须做匹配诊断。</p>
-<h2>四、单独PSM常用的两个识别条件</h2>
+<h2 id="section-04">四、单独PSM常用的两个识别条件</h2>
 <p><strong>条件独立性（Conditional Independence / Unconfoundedness）</strong>：单独依赖PSM识别政策因果效应时，通常要求控制政策前X后，处理分配与潜在结果独立。</p>
 <div class="equation">$$(Y_i(0),Y_i(1))\perp D_i\mid X_i$$</div>
 <p>符号⊥表示统计独立。这个要求非常强，无法靠回归结果直接验证：如地方治理能力、隐性政策计划同时影响试点选择和工资，且未被观测，PSM仍有偏差。</p>
@@ -18,10 +51,10 @@
 <div class="equation">$$0&lt;p(X_i)&lt;1$$</div>
 <p>如果某些试点城市没有相似的非试点城市，可能被排除出匹配样本；此后ATT可能只针对保留的处理组，而不再代表全部试点城市。</p>
 <p>PSM-DID下一课将以<strong>条件平行趋势</strong>为核心识别条件，不能将单独PSM的条件独立性与PSM-DID的假设混淆；匹配不替代平行趋势。</p>
-<h2>五、匹配和加权区别</h2>
+<h2 id="section-05">五、匹配和加权区别</h2>
 <p><strong>最近邻匹配（Nearest Neighbor Matching）</strong>：为试点城市找倾向得分距离最近的对照城市。<strong>有放回</strong>指一个非试点城市可多次成为其他试点城市的匹配对象；<strong>无放回</strong>指最多使用一次。</p>
 <p><strong>加权（Weighting）</strong>：调整城市在统计平均值中的权重，使比较组在观测特征上更接近试点组。匹配和加权都须检验<strong>协变量平衡（Covariate Balance）</strong>。</p>
-<h2>六、双软件：使用同一份2013年中国城市公开数据</h2>
+<h2 id="section-06">六、双软件：使用同一份2013年中国城市公开数据</h2>
 <p>数据来源：<a href="https://github.com/Cause-114/CityEdu-Eco/blob/main/data/panel.csv">CityEdu-Eco公开CSV</a>；<a href="https://github.com/Cause-114/CityEdu-Eco/blob/main/data/DATA_NOTES.md">数据字典</a>；<a href="https://wap.miit.gov.cn/zwgk/zcwj/wjfb/gg/art/2020/art_4dab04091bea459e9cc45e0046be3fe9.html">2014首批试点官方名单</a>。选用2013年GDP、人口、第三产业比重及工资作为处理前X。2013年已实施全国宽带战略，后续还要考察政策预期效应。</p>
 <p><strong>Logit（逻辑回归）</strong>：预测0/1结果概率的一类模型。这里使用Stata官方logit命令和Python statsmodels中的相同回归公式，估计每个城市被选为首批试点的概率。本课只计算分数，具体匹配算法下节之后系统讲解。</p>
 <p><strong>Stata程序：变量及分类值标签均用中文。</strong></p>
@@ -102,17 +135,23 @@ df.to_csv("中国城市_2013年倾向得分教学样本.csv",
           index=False, encoding="utf-8-sig")
 # 此处没有匹配后政策ATT，也没有因果估计</code></pre>
 <p><strong>实证边界：</strong> 2014公告包含长株潭城市群、县级昆山、自治州等，不能机械地与地级市记录一一对应；本课使用明确标为教学级的城市名称映射，尚未逐一完成统计口径审计。两套代码未实际在Stata、Python中同时运行，不能报告未经核实的倾向得分或样本量，更不能把匹配分数当作政策因果效应。</p>
-<h2>七、三个重要误区</h2>
+<h2 id="section-07">七、三个重要误区</h2>
 <ol><li><strong>得分接近就代表所有城市特征相同。</strong> 错误；仍需检验原始协变量的标准化均差等平衡诊断。</li>
 <li><strong>PSM能消除所有选择偏差。</strong> 错误；不能自动排除不可观测混杂。</li>
 <li><strong>匹配完之后做DID便无需平行趋势。</strong> 错误；匹配不替代条件平行趋势、无预期等识别条件。</li></ol>
-<h2>八、两分钟自测</h2>
+<h2 id="section-08">八、两分钟自测</h2>
 <p><strong>概念题：</strong> 倾向得分0.80是否代表80%的政策效果？为什么？</p>
 <p><strong>计算题：</strong> 某试点城市得分0.64，三个非试点城市分别为0.61、0.48、0.79，最近邻规则优先选择哪一个？</p>
 <h3>参考答案</h3>
 <p><strong>概念题：</strong> 不是。0.80是依据政策前特征预测的被处理概率，不是效果或ATT。</p>
 <p><strong>计算题：</strong> 距离依次为0.03、0.16、0.15，因此首选得分0.61的城市；正式匹配还要满足共同支持及卡尺等要求。</p>
-<h2>九、学习进度</h2>
+<h2 id="section-09">九、学习进度</h2>
 <p>已完成：第1章·第2节《PSM的基本原理》，全课程第2课 / 共10课。核心概念：选择偏差、倾向得分、匹配与加权、条件独立性、共同支持。</p>
 <p>下一节：<strong>第1章·第3节｜PSM与DID为什么可以结合？</strong> 需用户明确指令才继续。</p>
-<p>文献：<a href="https://academic.oup.com/biomet/article-abstract/70/1/41/240879">Rosenbaum &amp; Rubin（1983），Biometrika</a></p><p class="caution">方法边界：单独PSM不能解决未观测混杂；估计倾向得分不是政策效应。2014试点名单的城市层级映射及模型输出仍需实证核验。</p><p><a href="psm_intro.do">Stata源代码</a> · <a href="psm_intro.py">Python源代码</a></p></main><footer class="footer">PSM-DID课程｜第2/10课，下一课由学习指令触发 · <a href="../../">返回课程目录</a></footer></body></html>
+<p>文献：<a href="https://academic.oup.com/biomet/article-abstract/70/1/41/240879">Rosenbaum &amp; Rubin（1983），Biometrika</a></p><p class="caution">方法边界：单独PSM不能解决未观测混杂；估计倾向得分不是政策效应。2014试点名单的城市层级映射及模型输出仍需实证核验。</p><p><a href="psm_intro.do">Stata源代码</a> · <a href="psm_intro.py">Python源代码</a></p>
+ <nav class="lesson-pager" aria-label="上下课导航"><a href="../../chapter-01/lesson-01/"><span>← 上一课 · 第1课</span>DID的基本原理</a><a href="../../chapter-01/lesson-03/"><span>下一课 · 第3课 →</span>PSM与DID为什么可以结合？</a></nav>
+ </main>
+</div>
+<footer class="footer">PSM-DID课程｜第2/10课，下一课由学习指令触发 · <a href="../../">返回课程目录</a><p><a href="../../">← 返回PSM-DID课程目录</a></p></footer>
+</body>
+</html>

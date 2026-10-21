@@ -1,13 +1,53 @@
-<!doctype html>
-<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="PSM-DID系统精讲课程：四章十节，从DID/PSM识别逻辑到匹配、Stata与Python实证、稳健性及论文复现。">
-<title>PSM-DID系统精讲课程｜研究学习中心</title>
-<style>:root{font-family:system-ui,-apple-system,"Noto Sans SC","PingFang SC",sans-serif;background:#f6f8f7;color:#1b3440}*{box-sizing:border-box}body{margin:0;line-height:1.75}.container{width:min(850px,calc(100% - 32px));margin:auto}header{padding:54px 0 47px;background:linear-gradient(125deg,#183849,#26665f);color:white}header a{color:#d9f3ea;font-size:13px;text-underline-offset:4px}h1{font-size:clamp(28px,4vw,40px);line-height:1.35;margin:12px 0 13px}header p{color:#d1e8e3;max-width:700px}.eyebrow{font-size:12px;letter-spacing:.12em;color:#9cdbce}main{padding:28px 0 55px}.panel{background:#fff;padding:27px 30px;border-radius:15px;border:1px solid #e1e8e7;margin-bottom:20px}h2{font-size:21px;margin:0 0 14px}ol{margin:0;padding-left:24px}li{padding:8px 0}li+li{border-top:1px solid #f0f2f1}.live{font-weight:650;color:#157166}.upcoming{color:#7d8e91}.badge{font-size:11px;background:#e3f1eb;border-radius:4px;padding:3px 7px;margin-left:7px}a{color:#146c67;text-underline-offset:3px}.lead{font-size:14px;color:#5d727a}.note{font-size:13px;color:#667b7d}.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}@media(max-width:650px){.panel{padding:21px 18px}.grid{grid-template-columns:1fr}header{padding:35px 0}}</style>
-<link rel="stylesheet" href="assets/stable.css?v=20261021c"></head><body><header><div class="container"><a href="../study/#courses">← 六门课程总目录</a><p class="eyebrow">PROGRAM 06 · CAUSAL INFERENCE</p><h1>PSM-DID系统精讲课程</h1><p>从基础原理到Stata与Python完整实证。四章十节，严格根据真实已交付课次推进。</p></div></header>
-<main class="container"><section class="panel"><h2>学习进度</h2><p><strong>10 / 10 节已归档</strong> · 第一至第四章共十节课程的完整正文和代码均已归档（10/10）。第6—10课于2026年10月20日分别生成；教程不能替代正式政策识别核验。</p><p class="note">课程由学习指令主动推进；“未讲授”不表示已生成网页。不会依据日期自动增加完成课次。</p></section>
-<section class="grid"><div class="panel"><h2>第一章｜基础与识别逻辑</h2><ol><li><a class="live" href="chapter-01/lesson-01/">DID的基本原理 <span class="badge">已交付 · 阅读全文 ↗</span></a></li><li><a class="live" href="chapter-01/lesson-02/">PSM的基本原理 <span class="badge">已交付 · 阅读全文 ↗</span></a></li><li><a class="live" href="chapter-01/lesson-03/">PSM与DID为什么可以结合？ <span class="badge">已交付 · 阅读全文 ↗</span></a></li></ol></div>
-<div class="panel"><h2>第二章｜倾向得分与匹配诊断</h2><ol><li><a class="live" href="chapter-02/lesson-01/">倾向得分估计与匹配算法 <span class="badge">已交付 · 阅读全文 ↗</span></a></li><li><a class="live" href="chapter-02/lesson-02/">匹配质量与协变量平衡性检验 <span class="badge">已交付 · 阅读全文 ↗</span></a></li></ol></div>
-<div class="panel"><h2>第三章｜估计与双软件实操</h2><ol><li><a class="live" href="chapter-03/lesson-01/">匹配后DID估计量与模型设定 <span class="badge">已交付 · 阅读全文 ↗</span></a></li><li><a class="live" href="chapter-03/lesson-02/">Stata完整实证操作 <span class="badge">已交付 · 阅读全文 ↗</span></a></li><li><a class="live" href="chapter-03/lesson-03/">Python完整实证操作 <span class="badge">已交付 · 阅读全文 ↗</span></a></li></ol></div>
-<div class="panel"><h2>第四章｜推断与完整研究</h2><ol><li><a class="live" href="chapter-04/lesson-01/">PSM-DID的统计推断与稳健性 <span class="badge">已交付 · 阅读全文 ↗</span></a></li><li><a class="live" href="chapter-04/lesson-02/">完整PSM-DID研究与论文复现 <span class="badge">已交付 · 阅读全文 ↗</span></a></li></ol></div></section>
-<section class="panel"><h2>贯穿课程的国内公开数据</h2><p class="lead">2014年首批“宽带中国”示范城市（城市群）政策；采用中国城市统计年鉴二次整理的2000—2022年城市面板数据，先学习试点城市与非试点城市的工资变化，再逐步进入PSM-DID的识别与实证。</p><p><a href="https://wap.miit.gov.cn/zwgk/zcwj/wjfb/gg/art/2020/art_4dab04091bea459e9cc45e0046be3fe9.html">2014年首批试点官方名单</a> · <a href="https://github.com/Cause-114/CityEdu-Eco/blob/main/data/panel.csv">城市公开CSV原仓库</a> · <a href="https://github.com/Cause-114/CityEdu-Eco/blob/main/data/DATA_NOTES.md">中文数据说明</a></p><p class="note">数据为年鉴二次整理、需核验匹配键和城市群口径；2014年名单在秋季公布，2015—2016年又有新增批次，短期DID不能直接宣称因果政策效应。Stata使用中文变量及0/1类别标签。</p></section></main>
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="PSM-DID系统精讲课程：四章十节，含双重差分、倾向得分匹配、Stata与Python实证、匹配质量诊断、稳健性及论文复现。">
+<title>PSM-DID系统精讲课程｜四章十节阅读中心</title>
+<link rel="stylesheet" href="assets/course-v3.css?v=20261021d">
+</head><body>
+<a class="skip" href="#course-content">跳转课程目录</a>
+<div class="topbar"><div class="topbar-inner"><a class="identity" href="../study/#courses"><span class="identity-mark">PSM</span>研究方法 · PSM-DID</a>
+<nav class="toplinks" aria-label="学习中心导航"><a href="#course-content">章节目录</a><a href="../study/#courses">六门课程总入口</a></nav></div></div>
+<header class="page-hero catalog-hero"><div class="hero-inner">
+<div><span class="kicker">PROGRAM 06 / CAUSAL INFERENCE</span>
+<h1>从识别逻辑到实证复现<br>PSM-DID 系统精讲</h1>
+<p class="main-desc">四章十节，围绕中国“宽带中国”示范城市政策，系统学习双重差分、倾向得分匹配、协变量平衡、匹配后估计和统计推断。每节提供可查阅的中文讲义及Stata、Python实操代码。</p>
+<div class="hero-pillset"><span class="hero-pill">全部10课已归档</span><span class="hero-pill">中国城市公开数据</span><span class="hero-pill">方法与复现并重</span></div></div>
+<div class="hero-outline" aria-label="课程学习路径">
+<div class="outline-tile"><span>01 · FOUNDATION</span><strong>DID 与 PSM基础</strong></div>
+<div class="outline-tile"><span>02 · MATCHING</span><strong>匹配及平衡诊断</strong></div>
+<div class="outline-tile"><span>03 · ESTIMATION</span><strong>双软件实证操作</strong></div>
+<div class="outline-tile"><span>04 · VALIDATION</span><strong>推断与论文复现</strong></div>
+</div></div></header>
+<main id="course-content" class="catalog-wrap">
+<div class="stats" aria-label="课程概况">
+<div class="stat"><span class="number">04</span><span class="label">章节<br>由基础到完整研究</span></div>
+<div class="stat"><span class="number">10/10</span><span class="label">课程全文<br>已全部归档</span></div>
+<div class="stat"><span class="number">02</span><span class="label">软件工具<br>Stata + Python</span></div>
+</div>
+<div class="section-topline"><h2>课程结构与全部课次</h2><p>按章节独立阅读 · 支持前后课导航</p></div>
+<div class="chapter-grid"><section class="chapter-card" aria-labelledby="chapter-1">
+<div class="chapter-overline">CHAPTER 01 / 3 LESSONS</div><h3 id="chapter-1">第1章｜基础与因果识别</h3>
+<p class="explain">从双重差分到倾向得分，再理解两者如何结合</p><ol class="lesson-links"><li><a href="chapter-01/lesson-01/"><span class="lesson-ordinal">01</span><span class="lesson-name">DID的基本原理</span><span class="go" aria-hidden="true">↗</span></a></li><li><a href="chapter-01/lesson-02/"><span class="lesson-ordinal">02</span><span class="lesson-name">PSM的基本原理</span><span class="go" aria-hidden="true">↗</span></a></li><li><a href="chapter-01/lesson-03/"><span class="lesson-ordinal">03</span><span class="lesson-name">PSM与DID为什么可以结合？</span><span class="go" aria-hidden="true">↗</span></a></li></ol></section>
+<section class="chapter-card" aria-labelledby="chapter-2">
+<div class="chapter-overline">CHAPTER 02 / 2 LESSONS</div><h3 id="chapter-2">第2章｜匹配与质量诊断</h3>
+<p class="explain">倾向得分、最近邻匹配、共同支持和协变量平衡</p><ol class="lesson-links"><li><a href="chapter-02/lesson-01/"><span class="lesson-ordinal">04</span><span class="lesson-name">倾向得分估计与匹配算法</span><span class="go" aria-hidden="true">↗</span></a></li><li><a href="chapter-02/lesson-02/"><span class="lesson-ordinal">05</span><span class="lesson-name">匹配质量与协变量平衡性检验</span><span class="go" aria-hidden="true">↗</span></a></li></ol></section>
+<section class="chapter-card" aria-labelledby="chapter-3">
+<div class="chapter-overline">CHAPTER 03 / 3 LESSONS</div><h3 id="chapter-3">第3章｜估计方法与实证操作</h3>
+<p class="explain">ATT、匹配权重及Stata、Python双软件复现</p><ol class="lesson-links"><li><a href="chapter-03/lesson-01/"><span class="lesson-ordinal">06</span><span class="lesson-name">匹配后DID估计量与模型设定</span><span class="go" aria-hidden="true">↗</span></a></li><li><a href="chapter-03/lesson-02/"><span class="lesson-ordinal">07</span><span class="lesson-name">Stata完整实证操作</span><span class="go" aria-hidden="true">↗</span></a></li><li><a href="chapter-03/lesson-03/"><span class="lesson-ordinal">08</span><span class="lesson-name">Python完整实证操作</span><span class="go" aria-hidden="true">↗</span></a></li></ol></section>
+<section class="chapter-card" aria-labelledby="chapter-4">
+<div class="chapter-overline">CHAPTER 04 / 2 LESSONS</div><h3 id="chapter-4">第4章｜统计推断与论文复现</h3>
+<p class="explain">推断、稳健性、方法局限及完整研究报告</p><ol class="lesson-links"><li><a href="chapter-04/lesson-01/"><span class="lesson-ordinal">09</span><span class="lesson-name">PSM-DID的统计推断与稳健性</span><span class="go" aria-hidden="true">↗</span></a></li><li><a href="chapter-04/lesson-02/"><span class="lesson-ordinal">10</span><span class="lesson-name">完整PSM-DID研究与论文复现</span><span class="go" aria-hidden="true">↗</span></a></li></ol></section></div>
+<div class="catalog-bottom">
+<section class="source-panel"><h3>贯穿课程的中国公开数据</h3>
+<p>教学案例基于2014年首批“宽带中国”示范城市（城市群）政策以及《中国城市统计年鉴》公开整理的城市面板数据。官方名单与城市统计口径需要另外核对。</p>
+<ul><li><a href="https://github.com/Cause-114/CityEdu-Eco/blob/main/data/panel.csv">中国城市年度面板CSV数据</a></li>
+<li><a href="https://github.com/Cause-114/CityEdu-Eco/blob/main/data/DATA_NOTES.md">数据口径与字段说明</a></li>
+<li><a href="https://wap.miit.gov.cn/zwgk/zcwj/wjfb/gg/art/2020/art_4dab04091bea459e9cc45e0046be3fe9.html">2014年首批示范城市政策公告</a></li></ul>
+</section>
+<section class="source-panel"><h3>研究与识别边界</h3>
+<p>该课程为方法教学，不等同于已经完成可发表的政策因果研究。2014年政策公布时间较晚，随后2015—2016年仍有新增试点，正式估计前需要处理城市群映射、政策暴露时间、潜在对照组污染以及前期匹配后仍未充分平衡的协变量。</p>
+<p>建议按课程顺序学习，将软件运行结果和严格的研究识别核验分开记录。</p>
+</section>
+</div>
+</main>
+<footer class="footer"><a href="../study/#courses">返回研究学习中心</a> · PSM-DID系统精讲课程 · 十节全文归档</footer>
 </body></html>

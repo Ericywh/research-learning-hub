@@ -1,35 +1,51 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="PSM-DID第9课：PSM-DID的统计推断与稳健性，中国宽带中国示范城市案例；Stata和Python双软件教学及习题。"><title>第4章·第1节｜PSM-DID的统计推断与稳健性</title><style>@page{size:A4;margin:18mm 18mm 18mm 18mm}*{box-sizing:border-box}body{font-family:system-ui,-apple-system,"Noto Sans CJK SC","PingFang SC",sans-serif;background:#f6f8f7;color:#243747;line-height:1.77;margin:0}header{background:linear-gradient(130deg,#173748,#266962);color:white;padding:43px max(calc((100vw - 860px)/2),25px)}header .ey{font-size:12px;letter-spacing:.11em;color:#b7dcd5}header h1{line-height:1.45;font-size:30px;margin:8px 0}header p{color:#c7e1d8;margin:0}main{max-width:900px;margin:-18px auto 34px;background:white;border:1px solid #e0e9e8;border-radius:13px;padding:38px 46px;box-shadow:0 9px 27px #0000000d}h2{font-size:21px;color:#1c5f5b;margin-top:29px;border-bottom:1px solid #dfe7e6;padding-bottom:9px}h3{font-size:17px}p{margin:11px 0}strong{color:#205d60}a{color:#1c746e;text-underline-offset:3px}table{width:100%;border-collapse:collapse;font-size:13px;margin:19px 0}th{background:#e9f2f0}td,th{border:1px solid #dce7e6;padding:7px;text-align:left}pre{white-space:pre;overflow:auto;background:#162d3a;color:#e4edf2;border-radius:10px;padding:15px;font-size:11px;line-height:1.55}code{font-family:ui-monospace,Consolas,monospace}p code{background:#eef4f2;color:#175d61;padding:1px 4px;border-radius:3px}blockquote{border-left:4px solid #388878;margin:14px 0;padding:6px 15px;background:#f0f8f4}.nav{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;margin-bottom:18px}.aside{padding:13px;border-left:4px solid #c48d36;background:#fff9ef;color:#5e4f31}.foot{font-size:12px;color:#687f86;margin-top:30px}@media(max-width:720px){header{padding:31px 18px}header h1{font-size:24px}main{margin:-12px 8px 20px;padding:22px 17px}pre{font-size:10px}}@media print{body{background:white}header{padding:17mm 0;background:none;color:#183b48}header p,header .ey{color:#566}main{margin:0;padding:0;border:0;box-shadow:none}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f0f3f5;color:black}a{color:black}}</style><link rel="stylesheet" href="../../assets/stable.css?v=20261021c"></head><body><header><div><div class="ey">PSM-DID系统精讲课程 · 全课程第9课 / 共10课</div><h1>第4章·第1节｜PSM-DID的统计推断与稳健性</h1><p>中国真实政策背景 · 完整中文讲义 · 双软件实操</p></div></header><main><nav class="nav"><a href="https://ericywh.github.io/research-learning-hub/psm-did/">← 课程目录</a><a href="https://ericywh.github.io/research-learning-hub/psm-did/chapter-03/lesson-03/">← 第8课</a><a href="https://ericywh.github.io/research-learning-hub/psm-did/chapter-04/lesson-02/">第10课 →</a></nav><aside class="aside"><strong>实证边界：</strong>2014年10月公布的首批政策名单含复杂行政层级；当前教学映射与政策暴露时间尚不支持工资因果效应声明。上一课发现匹配后多项SMD超过0.1。本课代码所输出的配对DID数值只用来展示计算。</aside><h1>第4章·第1节｜PSM-DID的统计推断与稳健性</h1>
+<!doctype html><html lang="zh-CN"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="PSM-DID第9课：PSM-DID的统计推断与稳健性，中国宽带中国示范城市案例；Stata和Python双软件教学及习题。">
+<title>第4章·第1节｜PSM-DID的统计推断与稳健性｜PSM-DID系统精讲课程</title>
+<link rel="stylesheet" href="../../assets/course-v3.css?v=20261021d">
+</head><body>
+<a class="skip" href="#course-main">跳转课程正文</a>
+<div class="topbar"><div class="topbar-inner"><a class="identity" href="../../"><span class="identity-mark">PSM</span>研究方法 · PSM-DID</a>
+<nav class="toplinks" aria-label="全站导航"><a href="../../">十节课程目录</a><a href="../../chapter-03/lesson-03/">← 上一课</a><a href="../../chapter-04/lesson-02/">下一课 →</a><span class="top-separator"></span><a href="../../../study/#courses">学习中心</a></nav></div></div>
+<header class="page-hero lesson-hero"><div class="hero-inner">
+<div><nav class="crumbs" aria-label="面包屑导航"><a href="../../">全部课程</a><span>/</span><span>第4章</span><span>/</span><span>第9课</span></nav><span class="kicker">CAUSAL INFERENCE / 09</span>
+<h1>第4章·第1节｜PSM-DID的统计推断与稳健性</h1><p class="chapter-desc">中国“宽带中国”示范城市政策 · 计量方法、诊断与双软件实操</p>
+<div class="hero-pillset"><span class="hero-pill">全课程第9课 · 共10课</span><span class="hero-pill">统计推断与完整研究</span><span class="hero-pill">Stata + Python</span></div></div>
+<aside class="hero-index" aria-label="课程进度"><div><div class="counter">LEARNING PROGRESS</div><div class="large">09 <em>/ 10</em></div></div><div class="track"><span style="width:90%"></span></div><div class="sub">已完成内容归档 · 阅读第9课</div></aside>
+</div></header>
+<div class="reader-grid"><aside class="toc-side" aria-label="本课章节目录"><div class="toc-box"><div class="toc-eyebrow">ON THIS PAGE · 本课目录</div><ol><li><a href="#section-01">一、三个新术语</a></li><li><a href="#section-02">二、为什么普通标准误可能不可靠？</a></li><li><a href="#section-03">三、三个层次的稳健性</a></li><li><a href="#section-04">四、与两期DID的正式推断区分</a></li><li><a href="#section-05">五、本课双软件可以验证什么？</a></li><li><a href="#section-06">六、三种常见误区</a></li><li><a href="#section-07">七、两道自测题与答案</a></li><li><a href="#section-08">附录｜同一中国数据的Stata与Python完整示例</a></li><li><a href="#section-09">主要数据与方法来源</a></li></ol><p class="toc-foot"><a href="../../">← 返回全部课程</a><br>第4章 · 第1节</p></div></aside>
+<details class="mobile-toc"><summary>查看本课目录（9节）</summary><ol><li><a href="#section-01">一、三个新术语</a></li><li><a href="#section-02">二、为什么普通标准误可能不可靠？</a></li><li><a href="#section-03">三、三个层次的稳健性</a></li><li><a href="#section-04">四、与两期DID的正式推断区分</a></li><li><a href="#section-05">五、本课双软件可以验证什么？</a></li><li><a href="#section-06">六、三种常见误区</a></li><li><a href="#section-07">七、两道自测题与答案</a></li><li><a href="#section-08">附录｜同一中国数据的Stata与Python完整示例</a></li><li><a href="#section-09">主要数据与方法来源</a></li></ol></details>
+<main class="article" id="course-main"><nav class="nav"><a href="https://ericywh.github.io/research-learning-hub/psm-did/">← 课程目录</a><a href="https://ericywh.github.io/research-learning-hub/psm-did/chapter-03/lesson-03/">← 第8课</a><a href="https://ericywh.github.io/research-learning-hub/psm-did/chapter-04/lesson-02/">第10课 →</a></nav><aside class="aside"><strong>实证边界：</strong>2014年10月公布的首批政策名单含复杂行政层级；当前教学映射与政策暴露时间尚不支持工资因果效应声明。上一课发现匹配后多项SMD超过0.1。本课代码所输出的配对DID数值只用来展示计算。</aside>
 <p><strong>全课程第9课 / 共10课｜2026年10月20日单独生成</strong></p>
 <p>从前几课的“匹配后DID点估计”到论文中的“置信区间和统计推断”，中间还有不能忽略的一步。<strong>估计量有一个数值，不等于我们知道这个数值的不确定程度。</strong> 本节讲清标准误、聚类、匹配重复使用、安慰剂检验与稳健性设计。</p>
-<h2>一、三个新术语</h2>
+<h2 id="section-01">一、三个新术语</h2>
 <p><strong>标准误（Standard Error，SE）</strong>度量估计量在重复抽样中可能产生的波动，不是回归残差标准差。<strong>置信区间（Confidence Interval）</strong>是在特定抽样与估计条件下具有预定覆盖率的区间构造。<strong>p值</strong>是在指定零假设及模型条件下观测到当前或更极端统计量的概率，不是“政策无效的概率”。</p>
 <p>例如教学设定得到匹配后DID为1,500元，若某种经过论证的有效标准误为500元，则朴素的正态近似95%区间是1,500±1.96×500，即约[520,2,480]元。<strong>这里的500元标准误纯属人为设定，不是本案例实际计算所得，更不意味着此正态近似已适用于本课数据。</strong></p>
-<h2>二、为什么普通标准误可能不可靠？</h2>
+<h2 id="section-02">二、为什么普通标准误可能不可靠？</h2>
 <p>PSM让同一非试点城市可能被多个试点城市重复使用；因此多个配对差值并不独立。又因为倾向得分与匹配关系由同一数据估计，其选择过程也可能增加不确定性。若把每个匹配对简单当作独立抽样单位计算普通均值标准误，通常不能作为正式推断依据。</p>
 <p>对于最近邻匹配估计量，Abadie与Imbens（2008）证明<strong>常规非参数bootstrap一般并不有效</strong>。Bootstrap是重复有放回抽取样本并重算统计量的方法。其有效性取决于估计量的数学性质，不能把“重复抽样很多次”当作通用解决方案。该结论针对特定最近邻匹配估计类，不能机械套到所有加权或DID估计器。</p>
 <p><strong>聚类稳健标准误（Cluster-Robust SE）</strong>允许同一城市内部不同时期结果相关，但简单对已有匹配对按城市聚类，也不一定充分处理重复使用的匹配对照、估计的倾向得分与匹配选择不确定性。正式推断应针对<strong>具体估计器</strong>选择有理论依据的方差公式或采用专门实现。</p>
-<h2>三、三个层次的稳健性</h2>
+<h2 id="section-03">三、三个层次的稳健性</h2>
 <p><strong>设计稳健性</strong>：改变匹配方法（1:1、1:3）、卡尺、协变量模型和共同支持规则，观察样本数量、平衡性和估计值如何变化。如果有的方案仍严重失衡，不应只选“政策最显著”的一个。</p>
 <p><strong>时间稳健性</strong>：在真正接受政策前的年份做<strong>安慰剂检验（Placebo Test）</strong>。例如计算相同匹配城市2011—2012年的变化差，检查在政策公布前是否已经存在明显差异。但这只是有限证据，不能证明完整的条件平行趋势。</p>
 <p><strong>政策定义稳健性</strong>：重新审计2014年首批示范城市名单，将2015、2016年新增试点从长期对照组中剔除或用能够处理分批实施的DID估计器。2014名单在10月公布，2014年全年工资不宜当作充分暴露后的完整结果。</p>
-<h2>四、与两期DID的正式推断区分</h2>
+<h2 id="section-04">四、与两期DID的正式推断区分</h2>
 <p>如果采用在特定条件下成立的<strong>双重稳健DID（Doubly Robust DID）</strong>，会同时使用倾向得分模型与结果回归模型；Sant’Anna与Zhao（2020）讨论了在其中一个工作模型正确设定时仍可一致估计ATT的性质及相应推断方法。<strong>双重稳健DID并不是把最近邻匹配结果做一次普通OLS，也不能把它与本课程的匹配对均值自动等同。</strong></p>
 <p>若扩展成2014、2015、2016不同入选年份，则应考虑分批DID，估计各组别及各时点的处理效应，而不是直接将所有批次放入未经检验的传统双向固定效应回归。</p>
-<h2>五、本课双软件可以验证什么？</h2>
+<h2 id="section-05">五、本课双软件可以验证什么？</h2>
 <p>本节Stata与Python演示采用与第6—8课一致的匹配对，分别计算2013—2014年DID点估计和2011—2012年“提前政策”变化差。还会以0.03、0.05、0.08等不同概率卡尺重复匹配，输出匹配成功数与估计变化。<strong>不自动报告p值、置信区间</strong>，这是方法审慎，而不是缺少计算能力。</p>
-<h2>六、三种常见误区</h2>
+<h2 id="section-06">六、三种常见误区</h2>
 <ol>
 <li><strong>聚类了就万事大吉。</strong> 错。聚类层级必须对应独立冲击或处理分配，且还要匹配估计过程的方差逻辑。</li>
 <li><strong>Bootstrap重复1,000次必然有效。</strong> 错。最近邻估计器在某些常见设定下常规bootstrap无效。</li>
 <li><strong>安慰剂检验不显著便证明平行趋势。</strong> 错。检验统计功效可能不足，不拒绝零假设不等于假设成立。</li>
 </ol>
-<h2>七、两道自测题与答案</h2>
+<h2 id="section-07">七、两道自测题与答案</h2>
 <p><strong>概念题：</strong> 为什么不能将一对一有放回匹配后的所有配对差值视为互相独立，直接计算普通标准误？</p>
 <p><strong>答案：</strong> 同一个非试点城市可能进入多个配对，使估计误差相互关联；估计得分和配对选择也带来额外不确定性。</p>
 <p><strong>计算题：</strong> 纯教学例子：估计值2,000元，假定使用了某个有效方法得到标准误400元。正态近似95%区间是多少？</p>
 <p><strong>答案：</strong> 2,000±1.96×400=2,000±784，即<strong>[1,216，2,784]元</strong>。数值不代表本政策估计结果。</p>
 <p><strong>下一节：第4章·第2节｜完整PSM-DID研究与论文复现（全课程第10课）。</strong></p>
-<h2>附录｜同一中国数据的Stata与Python完整示例</h2>
+<h2 id="section-08">附录｜同一中国数据的Stata与Python完整示例</h2>
 <p><strong>Stata完整教学程序（中文变量标签）：</strong></p>
 <pre><code class="language-stata">* PSM-DID课程：公开中国城市数据，Stata 17+，教学并非已识别政策效果
 version 17.0
@@ -235,7 +251,7 @@ if __name__ == '__main__':
     print('不能因placebo不显著就宣布平行趋势成立。')
 
 </code></pre>
-<h2>主要数据与方法来源</h2>
+<h2 id="section-09">主要数据与方法来源</h2>
 <ul>
 <li><a href="https://wap.miit.gov.cn/zwgk/zcwj/wjfb/gg/art/2020/art_4dab04091bea459e9cc45e0046be3fe9.html">工信部、国家发改委（2014），首批“宽带中国”示范城市公告</a></li>
 <li><a href="https://github.com/Cause-114/CityEdu-Eco/blob/main/data/panel.csv">中国城市年鉴二次整理公开数据及说明</a></li>
@@ -243,4 +259,5 @@ if __name__ == '__main__':
 <li><a href="https://doi.org/10.1016/j.jeconom.2020.06.003">Sant’Anna &amp; Zhao（2020），双重稳健DID</a></li>
 <li><a href="https://doi.org/10.1016/j.jeconom.2020.12.001">Callaway &amp; Sant’Anna（2021），分批实施DID</a></li>
 </ul>
-<p class="foot">进度按正式已交付课次计数。研究结果必须在数据审计、平衡和识别检查后方可报告。</p><p class="foot"><a href="lesson_9.do">独立Stata程序（.do）</a> · <a href="lesson_9.py">独立Python程序（.py）</a> · <a href="README.md">课程与方法说明</a></p></main></body></html>
+<p class="foot">进度按正式已交付课次计数。研究结果必须在数据审计、平衡和识别检查后方可报告。</p><p class="foot"><a href="lesson_9.do">独立Stata程序（.do）</a> · <a href="lesson_9.py">独立Python程序（.py）</a> · <a href="README.md">课程与方法说明</a></p><nav class="lesson-pager" aria-label="上下课导航"><a href="../../chapter-03/lesson-03/"><span>← 上一课 · 第8课</span>Python完整实证操作</a><a href="../../chapter-04/lesson-02/"><span>下一课 · 第10课 →</span>完整PSM-DID研究与论文复现</a></nav></main></div>
+<footer class="footer">教学方法演示；正式因果识别仍须核查数据与识别假设。<p><a href="../../">← 返回PSM-DID课程目录</a></p></footer></body></html>
