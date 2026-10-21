@@ -173,23 +173,23 @@
     // Non-Stata/Python blocks and scripts not running JS remain visible.
     const findCodeLanguage = (pre,code) => {
       const className = typeof code?.className === "string" ? code.className : "";
-      const tagged = className.match(/(?:^|\\s)language-(stata|python)(?=\\s|$)/i);
+      const tagged = className.match(/(?:^|\s)language-(stata|python)(?=\s|$)/i);
       if (tagged) return tagged[1].toLowerCase();
       const source = (code || pre).textContent || "";
       // Match code syntax before nearby prose, since old archives have
       // incorrect language-javascript tags on Stata blocks.
-      if (/(?:^|\\n)\\s*(?:import\\s+(?:numpy|pandas|matplotlib|statsmodels)\\b|from\\s+(?:numpy|pandas|matplotlib|statsmodels)\\s+import\\b)/m.test(source) ||
-          /\\b(?:pd\\.read_stata|sm\\.OLS|smf\\.ols|np\\.log|pandas\\.DataFrame)\\s*\\(/.test(source)) return "python";
-      if (/(?:^|\\n)\\s*(?:sysuse\\s+|regress\\s+|xtreg\\s+|ivregress\\s+|bysort\\s+|egen\\s+|generate\\s+|keep\\s+if\\s+|vce\\(robust\\)|clear\\s+all\\s*$)/m.test(source) ||
-          /(?:^|\\n)\\s*\\*\\s*[^\\n]*Stata/i.test(source)) return "stata";
+      if (/(?:^|\n)\s*(?:import\s+(?:numpy|pandas|matplotlib|statsmodels)\b|from\s+(?:numpy|pandas|matplotlib|statsmodels)\s+import\b)/m.test(source) ||
+          /\b(?:pd\.read_stata|sm\.OLS|smf\.ols|np\.log|pandas\.DataFrame)\s*\(/.test(source)) return "python";
+      if (/(?:^|\n)\s*(?:sysuse\s+|regress\s+|xtreg\s+|ivregress\s+|bysort\s+|egen\s+|generate\s+|keep\s+if\s+|vce\(robust\)|clear\s+all\s*$)/m.test(source) ||
+          /(?:^|\n)\s*\*\s*[^\n]*Stata/i.test(source)) return "stata";
       // A few preformatted examples have no language class or distinctive
       // syntax. Their immediately preceding code label is authoritative.
       let previous = pre.previousElementSibling;
       for (let n=0;previous && n<5;n++,previous=previous.previousElementSibling) {
         if (previous.matches("pre,.cr-reader-codebar,details")) break;
-        const label = previous.textContent?.trim().replace(/\\s+/g," ") || "";
-        if (/^(?:\\d+(?:\\.\\d+)?[\\s.:、-]*)?Stata(?:\\s*代码|\\s*示例|\\s*实现|[：:])?$/i.test(label)) return "stata";
-        if (/^(?:\\d+(?:\\.\\d+)?[\\s.:、-]*)?Python(?:\\s*代码|\\s*示例|\\s*实现|[：:])?$/i.test(label)) return "python";
+        const label = previous.textContent?.trim().replace(/\s+/g," ") || "";
+        if (/^(?:\d+(?:\.\d+)?[\s.:、-]*)?Stata(?:\s*代码|\s*示例|\s*实现|[：:])?$/i.test(label)) return "stata";
+        if (/^(?:\d+(?:\.\d+)?[\s.:、-]*)?Python(?:\s*代码|\s*示例|\s*实现|[：:])?$/i.test(label)) return "python";
       }
       return null;
     };
@@ -200,7 +200,7 @@
       if (pre.previousElementSibling?.classList?.contains("cr-reader-codebar")) continue;
       const code = pre.querySelector("code");
       const foldLang = findCodeLanguage(pre,code);
-      const lang = foldLang || code?.className?.match(/language-(stata|python|r|javascript|bash|text)\\b/i)?.[1];
+      const lang = foldLang || code?.className?.match(/language-(stata|python|r|javascript|bash|text)\b/i)?.[1];
       const bar = document.createElement("div");
       bar.className = "cr-reader-codebar";
       const caption = document.createElement("span");
