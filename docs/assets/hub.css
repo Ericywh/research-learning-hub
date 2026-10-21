@@ -36,3 +36,25 @@
 .note-panel{background:linear-gradient(135deg,#f0f5ff,#f2f8f4);border-color:#dce6ef}
 :focus-visible{outline:3px solid #dfac64;outline-offset:3px}
 @media(prefers-reduced-motion:reduce){.course-card{transition:none}}
+
+
+/* Requested course priority: public-speaking is first and editorially featured. */
+.course-card.course-card-featured{
+  grid-column:span 2;
+  --stripe:#e5a5df!important;--soft:#4a3d78!important;--symbol:#fad0ed!important;
+  background:radial-gradient(circle at 88% 17%,rgba(238,161,218,.37),transparent 38%),
+             radial-gradient(circle at 16% 105%,rgba(63,177,211,.33),transparent 55%),
+             linear-gradient(110deg,#253a68 0%,#554383 65%,#845497 100%);
+  border:1px solid rgba(255,255,255,.19);color:#fff;min-height:308px;
+  box-shadow:0 17px 45px rgba(48,44,102,.19);
+}
+.course-card.course-card-featured:before{height:5px;background:linear-gradient(90deg,#f5c077,#ed9fcb,#88d2ef)}
+.course-card.course-card-featured :is(h3,p,.program,.progress,.go){color:#fff}
+.course-card.course-card-featured h3{font-size:clamp(22px,2.3vw,29px);max-width:640px}
+.course-card.course-card-featured p{color:#e4e4f6;max-width:670px}
+.course-card.course-card-featured .symbol{background:rgba(255,255,255,.18);color:#fff}
+.course-card.course-card-featured .card-tags .tag{background:rgba(255,255,255,.15);color:#f8f6ff;border:1px solid rgba(255,255,255,.13)}
+.course-card.course-card-featured .card-foot{border-top-color:rgba(255,255,255,.21)}
+.course-card.course-card-featured .go{font-weight:800}
+.course-card.course-card-featured:hover{border-color:rgba(255,255,255,.52);box-shadow:0 21px 45px rgba(46,40,102,.22)}
+@media(max-width:560px){.course-card.course-card-featured{grid-column:span 1;min-height:290px}}
