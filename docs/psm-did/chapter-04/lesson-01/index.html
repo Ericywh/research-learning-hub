@@ -1,7 +1,7 @@
 <!doctype html><html lang="zh-CN"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="PSM-DID第9课：PSM-DID的统计推断与稳健性，中国宽带中国示范城市案例；Stata和Python双软件教学及习题。">
 <title>第4章·第1节｜PSM-DID的统计推断与稳健性｜PSM-DID系统精讲课程</title>
-<link rel="stylesheet" href="../../assets/course-v3.css?v=20261021f">
+<link rel="stylesheet" href="../../assets/course-v4.css?v=20261021g">
 </head><body>
 <a class="skip" href="#course-main">跳转课程正文</a>
 <div class="topbar"><div class="topbar-inner"><a class="identity" href="../../"><span class="identity-mark">PSM</span>研究方法 · PSM-DID</a>
@@ -12,9 +12,8 @@
 <div class="hero-pillset"><span class="hero-pill">全课程第9课 · 共10课</span><span class="hero-pill">统计推断与完整研究</span><span class="hero-pill">Stata + Python</span></div></div>
 <aside class="hero-index" aria-label="课程进度"><div><div class="counter">LEARNING PROGRESS</div><div class="large">09 <em>/ 10</em></div></div><div class="track"><span style="width:90%"></span></div><div class="sub">已完成内容归档 · 阅读第9课</div></aside>
 </div></header>
-<div class="reader-grid"><aside class="toc-side" aria-label="本课章节目录"><div class="toc-box"><div class="toc-eyebrow">ON THIS PAGE · 本课目录</div><ol><li><a href="#section-01">一、三个新术语</a></li><li><a href="#section-02">二、为什么普通标准误可能不可靠？</a></li><li><a href="#section-03">三、三个层次的稳健性</a></li><li><a href="#section-04">四、与两期DID的正式推断区分</a></li><li><a href="#section-05">五、本课双软件可以验证什么？</a></li><li><a href="#section-06">六、三种常见误区</a></li><li><a href="#section-07">七、两道自测题与答案</a></li><li><a href="#section-08">附录｜同一中国数据的Stata与Python完整示例</a></li><li><a href="#section-09">主要数据与方法来源</a></li></ol><p class="toc-foot"><a href="../../">← 返回全部课程</a><br>第4章 · 第1节</p></div></aside>
-<details class="mobile-toc"><summary>查看本课目录（9节）</summary><ol><li><a href="#section-01">一、三个新术语</a></li><li><a href="#section-02">二、为什么普通标准误可能不可靠？</a></li><li><a href="#section-03">三、三个层次的稳健性</a></li><li><a href="#section-04">四、与两期DID的正式推断区分</a></li><li><a href="#section-05">五、本课双软件可以验证什么？</a></li><li><a href="#section-06">六、三种常见误区</a></li><li><a href="#section-07">七、两道自测题与答案</a></li><li><a href="#section-08">附录｜同一中国数据的Stata与Python完整示例</a></li><li><a href="#section-09">主要数据与方法来源</a></li></ol></details>
-<main class="article" id="course-main"><nav class="nav"><a href="https://ericywh.github.io/research-learning-hub/psm-did/">← 课程目录</a><a href="https://ericywh.github.io/research-learning-hub/psm-did/chapter-03/lesson-03/">← 第8课</a><a href="https://ericywh.github.io/research-learning-hub/psm-did/chapter-04/lesson-02/">第10课 →</a></nav><aside class="aside"><strong>实证边界：</strong>2014年10月公布的首批政策名单含复杂行政层级；当前教学映射与政策暴露时间尚不支持工资因果效应声明。上一课发现匹配后多项SMD超过0.1。本课代码所输出的配对DID数值只用来展示计算。</aside>
+<div class="reader-frame"><details class="section-index"><summary><span class="toc-summary-title">本课知识目录</span><span class="toc-summary-count">9 节 · 点击展开</span></summary><nav class="section-links" aria-label="本课知识目录"><ol><li><a href="#section-01">一、三个新术语</a></li><li><a href="#section-02">二、为什么普通标准误可能不可靠？</a></li><li><a href="#section-03">三、三个层次的稳健性</a></li><li><a href="#section-04">四、与两期DID的正式推断区分</a></li><li><a href="#section-05">五、本课双软件可以验证什么？</a></li><li><a href="#section-06">六、三种常见误区</a></li><li><a href="#section-07">七、两道自测题与答案</a></li><li><a href="#section-08">附录｜同一中国数据的Stata与Python完整示例</a></li><li><a href="#section-09">主要数据与方法来源</a></li></ol></nav></details>
+ <main class="article" id="course-main"><nav class="nav"><a href="https://ericywh.github.io/research-learning-hub/psm-did/">← 课程目录</a><a href="https://ericywh.github.io/research-learning-hub/psm-did/chapter-03/lesson-03/">← 第8课</a><a href="https://ericywh.github.io/research-learning-hub/psm-did/chapter-04/lesson-02/">第10课 →</a></nav><aside class="aside"><strong>实证边界：</strong>2014年10月公布的首批政策名单含复杂行政层级；当前教学映射与政策暴露时间尚不支持工资因果效应声明。上一课发现匹配后多项SMD超过0.1。本课代码所输出的配对DID数值只用来展示计算。</aside>
 <p><strong>全课程第9课 / 共10课｜2026年10月20日单独生成</strong></p>
 <p>从前几课的“匹配后DID点估计”到论文中的“置信区间和统计推断”，中间还有不能忽略的一步。<strong>估计量有一个数值，不等于我们知道这个数值的不确定程度。</strong> 本节讲清标准误、聚类、匹配重复使用、安慰剂检验与稳健性设计。</p>
 <h2 id="section-01">一、三个新术语</h2>
