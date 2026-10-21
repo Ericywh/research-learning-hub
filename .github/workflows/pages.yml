@@ -557,3 +557,24 @@ jobs:
           done
           echo "PASS six representative lesson pages load the enhanced reader."
 
+          for page in "" "study/"; do
+            file="/tmp/featured-$(echo "$page" | tr '/' '-').html"
+            status=$(curl -L -sS --connect-timeout 10 --max-time 30 -o "$file" -w '%{http_code}' "$BASE/$page?design=$DEPLOY_SHA" || true)
+            if [[ "$status" != "200" ]]; then echo "::error::Learning hub not accessible: $page"; exit 1; fi
+            PAGE="$file" node <<'NODE'
+          const fs=require('node:fs');
+          const html=fs.readFileSync(process.env.PAGE,'utf8');
+          const first=html.match(/<div class="course-grid" id="course-grid">\s*<a[^>]*href="([^"]+)"/);
+          if(!first||!/(?:^|\/)speaking\/$/.test(first[1]))throw Error('Speaking is not the first course in '+process.env.PAGE);
+          const count=(html.match(/class="course-card(?: course-card-featured)?"/g)||[]).length;
+          if(count!==7)throw Error('Expected seven course cards, found '+count);
+          console.log('PASS public speaking first on '+process.env.PAGE);
+          NODE
+          done
+          status=$(curl -L -sS --connect-timeout 10 --max-time 30 -o /tmp/speaking-first.html -w '%{http_code}' "$BASE/speaking/lessons/01-01.html?design=$DEPLOY_SHA" || true)
+          if [[ "$status" != "200" ]] || ! grep -Fq '60秒自然表达基线' /tmp/speaking-first.html; then
+            echo "::error::Speaking first lesson not accessible"; exit 1
+          fi
+          echo "PASS speaking featured as first course and lesson page accessible."
+
+
