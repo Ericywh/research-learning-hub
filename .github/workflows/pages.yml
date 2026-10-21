@@ -551,11 +551,30 @@ jobs:
           check "frontier/2026-10-17.html" frontier /tmp/frontier-lesson.html
           check "economic-classics/" classics /tmp/classics-home.html
           check "economic-classics/lessons/02-02.html" classics /tmp/classics-lesson.html
-          check "psm-did/" psm-did /tmp/psm-home.html
-          check "psm-did/chapter-04/lesson-02/" psm-did /tmp/psm-lesson.html
-          echo "Six courses: shared CSS and 12 public HTML pages verified."
+          # PSM-DID has its own speaking-inspired layout, deliberately NOT the shared reader.
+          check_standalone() {
+            local path="$1" tmp="$2" status
+            for attempt in $(seq 1 12); do
+              status=$(curl -L -sS --connect-timeout 10 --max-time 30 -o "$tmp" -w '%{http_code}' "$BASE/$path?design=$DEPLOY_SHA" || true)
+              if [[ "$status" == "200" ]] &&
+                 grep -Fq 'speaking-layout.css' "$tmp" &&
+                 grep -Fq 'class="speaking-study"' "$tmp" &&
+                 ! grep -Fq 'lesson-reader.js' "$tmp"; then
+                echo "PASS HTTP 200 + standalone speaking-inspired PSM-DID HTML: $path"
+                return 0
+              fi
+              if (( attempt == 12 )); then echo "::error::Standalone PSM-DID page failed verification: $path"; return 1; fi
+              sleep 8
+            done
+          }
+          status=$(curl -L -sS --connect-timeout 10 --max-time 30 -o /tmp/psm-home.html -w '%{http_code}' "$BASE/psm-did/?design=$DEPLOY_SHA" || true)
+          [[ "$status" == "200" ]] || { echo "::error::PSM-DID homepage unavailable"; exit 1; }
+          check_standalone "psm-did/chapter-04/lesson-02/" /tmp/psm-lesson.html
+          status=$(curl -L -sS --connect-timeout 10 --max-time 30 -o /tmp/psm-speaking-layout.css -w '%{http_code}' "$BASE/psm-did/assets/speaking-layout.css?design=$DEPLOY_SHA" || true)
+          [[ "$status" == "200" ]] || { echo "::error::PSM-DID speaking-layout CSS unavailable"; exit 1; }
+          echo "Five shared-theme courses plus one independently styled PSM-DID course verified."
 
-          for f in /tmp/econ-lesson.html /tmp/math-lesson.html /tmp/cssci-lesson.html /tmp/frontier-lesson.html /tmp/classics-lesson.html /tmp/psm-lesson.html; do
+          for f in /tmp/econ-lesson.html /tmp/math-lesson.html /tmp/cssci-lesson.html /tmp/frontier-lesson.html /tmp/classics-lesson.html; do
             grep -Fq 'data-course-lesson="true"' "$f" || { echo "::error::Missing reader mode in $f"; exit 1; }
             grep -Fq 'lesson-reader.css' "$f" || { echo "::error::Missing reader stylesheet in $f"; exit 1; }
             grep -Fq 'lesson-reader.js' "$f" || { echo "::error::Missing reader script in $f"; exit 1; }
@@ -565,7 +584,7 @@ jobs:
             if [[ "$status" != "200" ]]; then echo "::error::Reader asset not publicly available: $asset"; exit 1; fi
             echo "PASS reader asset HTTP 200: $asset"
           done
-          echo "PASS six representative lesson pages load the enhanced reader."
+          echo "PASS five shared reader pages; PSM-DID uses the independent speaking design."
 
           for page in "" "study/"; do
             file="/tmp/featured-$(echo "$page" | tr '/' '-').html"
