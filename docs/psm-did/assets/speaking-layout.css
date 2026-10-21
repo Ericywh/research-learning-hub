@@ -83,3 +83,74 @@ body.speaking-study :is(a,summary):focus-visible{outline:3px solid #8dd8cc;outli
 @media(max-width:620px){body.speaking-study{font-size:14.5px}.sp-wrap{width:calc(100% - 24px);padding-bottom:31px}.sp-top{padding:13px 0}.sp-hero{padding:26px 22px;border-radius:16px}.sp-hero h1{font-size:26px}.sp-hero p{font-size:13px}.study-layout,.study-content,.study-aside{gap:13px}.sp-paper{padding:21px 17px;border-radius:14px}.sp-sidebar-panel .sp-toc{grid-template-columns:1fr}.study-aside{grid-template-columns:1fr}.sp-intro nav{gap:7px}.sp-section h2{font-size:19px;padding-right:0}.study-content pre{font-size:11px;padding:14px}.study-content table{font-size:12px}.sp-pager{grid-template-columns:1fr}.sp-pager a:last-child{text-align:left}}
 @media print{body.speaking-study{background:white}.sp-wrap{width:100%;max-width:none}.sp-hero{background:#fff;color:#111;box-shadow:none;border:1px solid #ddd}.sp-hero h1,.sp-hero p{color:#111}.study-layout{display:block}.study-aside{display:none}.sp-paper{box-shadow:none;break-inside:auto;border-radius:0}.sp-section h2{break-after:avoid}.study-content pre{white-space:pre-wrap;color:#111;background:#eee}.sp-pager{display:none}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+
+/* Collapsible Stata and Python source blocks (closed by default). */
+.study-content details.sp-code-fold {
+  display:block;
+  margin:20px 0 24px;
+  border:1px solid #cddfe4;
+  border-radius:12px;
+  background:#f4f9f8;
+  overflow:hidden;
+  max-width:100%;
+}
+.study-content .sp-code-fold > summary {
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:10px;
+  cursor:pointer;
+  list-style:none;
+  padding:14px 18px;
+  background:linear-gradient(112deg,#edf7f5,#f7fafb);
+  color:#24495d;
+  font-size:14px;
+  font-weight:740;
+  line-height:1.6;
+  border:0;
+}
+.study-content .sp-code-fold > summary::-webkit-details-marker {display:none}
+.study-content .sp-code-fold > summary::before {
+  content:"</>";
+  display:inline-grid;
+  place-items:center;
+  flex:0 0 34px;
+  width:34px;
+  height:30px;
+  border-radius:7px;
+  background:#dceeea;
+  color:#116c69;
+  font:750 12px/1 ui-monospace,Consolas,monospace;
+}
+.study-content .sp-code-fold > summary .sp-code-toggle {
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  margin-left:auto;
+  color:#176e6b;
+  font-size:12px;
+  font-weight:680;
+}
+.study-content .sp-code-fold > summary .sp-code-toggle::before {content:"点击展开"}
+.study-content .sp-code-fold > summary .sp-code-toggle::after {content:"⌄";font-size:18px}
+.study-content .sp-code-fold[open] > summary .sp-code-toggle::before {content:"点击收起"}
+.study-content .sp-code-fold[open] > summary .sp-code-toggle::after {content:"⌃"}
+.study-content .sp-code-fold[open] > summary {border-bottom:1px solid #cddfe4}
+.study-content .sp-code-fold > pre {
+  margin:0;
+  padding:20px 22px;
+  max-width:100%;
+  border:0;
+  border-radius:0 0 11px 11px;
+  overflow-x:auto;
+}
+@media(max-width:620px){
+  .study-content .sp-code-fold > summary {padding:12px 13px;font-size:13px}
+  .study-content .sp-code-fold > summary .sp-code-toggle {font-size:11px}
+  .study-content .sp-code-fold > pre {padding:14px}
+}
+@media print{
+  .study-content .sp-code-fold:not([open]) > pre {display:block!important}
+  .study-content .sp-code-fold > pre {white-space:pre-wrap}
+}

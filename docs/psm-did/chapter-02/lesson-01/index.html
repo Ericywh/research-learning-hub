@@ -1,6 +1,6 @@
 <!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="PSM-DID系统课程第4课：中国宽带示范城市，Logit、Probit、最近邻、卡尺匹配，双软件中文标签示例。"><title>第2章·第1节｜倾向得分估计与匹配算法 · PSM-DID系统精讲课程</title>
-<link rel="stylesheet" href="../../assets/speaking-layout.css?v=20261021s"><script>window.MathJax={tex:{inlineMath:[["$","$"]]}};</script>
+<link rel="stylesheet" href="../../assets/speaking-layout.css?v=20261021t"><script>window.MathJax={tex:{inlineMath:[["$","$"]]}};</script>
 <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script></head>
 <body class="speaking-study"><div class="sp-wrap">
 <nav class="sp-top" aria-label="课程路径"><a href="../../">← 返回课程总目录</a><span>第2章 · 第1节 · 全课程第4课</span></nav>
@@ -15,7 +15,7 @@
 <section class="sp-paper sp-section" style="--sp-section-accent:#b98c45" aria-labelledby="section-03"><div class="sp-overline">MODULE 03 / 10</div><h2 id="section-03">三、最近邻匹配如何操作？</h2><p>最近邻匹配（Nearest-Neighbor Matching）通过比较倾向得分距离，寻找最相近的对照城市。定义试点城市i与候选对照城市j之间的距离：</p><div class="formula">\[d(i,j)=|\widehat p_i-\widehat p_j|\]</div><div class="table-wrap" role="region" aria-label="可横向滚动的数据表格" tabindex="0"><table><thead><tr><th>教学构造示例</th><th>倾向得分</th><th>与A的距离</th></tr></thead><tbody><tr><td>试点城市A</td><td>0.72</td><td>—</td></tr><tr><td>非试点城市B</td><td>0.70</td><td>0.02</td></tr><tr><td>非试点城市C</td><td>0.68</td><td>0.04</td></tr><tr><td>非试点城市D</td><td>0.55</td><td>0.17</td></tr><tr><td>非试点城市E</td><td>0.20</td><td>0.52</td></tr></tbody></table></div><p>一对一最近邻匹配选择城市B；一对三最近邻匹配选择B、C、D。请注意，这些数字都是人工构造的，并非实际政策样本的计算结果。即使得分相近，也需要检查GDP、人口等原始协变量是否真正平衡。</p></section>
 <section class="sp-paper sp-section" style="--sp-section-accent:#8060b9" aria-labelledby="section-04"><div class="sp-overline">MODULE 04 / 10</div><h2 id="section-04">四、卡尺匹配、共同支持和有放回</h2><p>卡尺（Caliper）是允许的最大匹配距离。在本课的概率距离尺度中，若设卡尺0.05，则只有距离不超过0.05的对照城市符合条件；如果所有候选者都超出卡尺，该试点城市不能进入卡尺匹配样本。0.05只是教学演示，不是通用最优值。Austin（2011）针对连续结局的模拟研究提出使用倾向得分logit变换值标准差的0.2倍作为一种候选卡尺，尺度与本例不同。</p><p>共同支持（Common Support/Overlap）要求处理组有相近的可比对照。缺少支持的试点城市可能被剔除，这会改变估计目标人群。有放回匹配（With Replacement）允许同一个非试点城市多次成为不同试点城市的对照；无放回匹配（Without Replacement）则最多使用一次，可能依赖匹配顺序。</p></section>
 <section class="sp-paper sp-section" style="--sp-section-accent:#bf688c" aria-labelledby="section-05"><div class="sp-overline">MODULE 05 / 10</div><h2 id="section-05">五、匹配方式对照</h2><div class="table-wrap" role="region" aria-label="可横向滚动的数据表格" tabindex="0"><table><thead><tr><th>方式</th><th>基本规则</th><th>主要注意事项</th></tr></thead><tbody><tr><td>一对一最近邻</td><td>选1个最近对照</td><td>最近不代表足够近</td></tr><tr><td>一对三最近邻</td><td>选3个最近对照</td><td>较远的第3个可能降低质量</td></tr><tr><td>一对一卡尺</td><td>最近距离≤设定阈值</td><td>样本可能显著减少</td></tr><tr><td>有放回</td><td>对照城市可被反复选中</td><td>后续需处理复用权重</td></tr><tr><td>无放回</td><td>对照城市最多使用一次</td><td>结果可能受匹配顺序影响</td></tr></tbody></table></div></section>
-<section class="sp-paper sp-section" style="--sp-section-accent:#4383b8" aria-labelledby="section-06"><div class="sp-overline">MODULE 06 / 10</div><h2 id="section-06">六、同一份国内数据：Stata和Python实操</h2><p>从CityEdu-Eco公开面板导入2013年数据，生成试点标记；先用同一组政策前协变量分别估计Logit和Probit分数，然后仅根据Logit分数做一对一最近邻、概率距离0.05卡尺及一对三最近邻三种匹配。两套代码保持同一名单和筛选原则。Stata保存带中文变量与类别标签的.dta；Python输出带中文列名的CSV。</p><p>重要数据口径：2014名单包含长株潭城市群、昆山、延边和阿坝自治州、阿拉尔等非典型地级市单元。本节先对能够直接按地级市名称对应的城市设置处理组，不把未核验的单位强行合并；这仅是教学样本映射，正式研究需要逐个对照官方名单和年鉴单位。两端程序未经过Stata/Python双端运行验证，不能报告未经核实的真实匹配结果。</p><h3>Stata源代码（中文标签）</h3><pre><code>clear all
+<section class="sp-paper sp-section" style="--sp-section-accent:#4383b8" aria-labelledby="section-06"><div class="sp-overline">MODULE 06 / 10</div><h2 id="section-06">六、同一份国内数据：Stata和Python实操</h2><p>从CityEdu-Eco公开面板导入2013年数据，生成试点标记；先用同一组政策前协变量分别估计Logit和Probit分数，然后仅根据Logit分数做一对一最近邻、概率距离0.05卡尺及一对三最近邻三种匹配。两套代码保持同一名单和筛选原则。Stata保存带中文变量与类别标签的.dta；Python输出带中文列名的CSV。</p><p>重要数据口径：2014名单包含长株潭城市群、昆山、延边和阿坝自治州、阿拉尔等非典型地级市单元。本节先对能够直接按地级市名称对应的城市设置处理组，不把未核验的单位强行合并；这仅是教学样本映射，正式研究需要逐个对照官方名单和年鉴单位。两端程序未经过Stata/Python双端运行验证，不能报告未经核实的真实匹配结果。</p><h3>Stata源代码（中文标签）</h3><details class="sp-code-fold"><summary><span>Stata完整代码</span><span class="sp-code-toggle" aria-hidden="true"></span></summary><pre><code>clear all
 set more off
 * 2014首批示范城市；仅取政策前2013年特征
 import delimited &quot;https://raw.githubusercontent.com/Cause-114/CityEdu-Eco/main/data/panel.csv&quot;, clear varnames(1) encoding(&quot;UTF-8&quot;)
@@ -104,7 +104,7 @@ keep if match_rank&lt;=3
 bysort treated_id: gen byte matches_in_set=_N
 label variable matches_in_set &quot;每个试点对应的对照城市数量&quot;
 save &quot;中国城市_一对三最近邻匹配.dta&quot;, replace
-* 本课仅进行匹配，不报告政策效果或匹配后显著性。</code></pre><h3>Python源代码（中文列名）</h3><pre><code>import numpy as np
+* 本课仅进行匹配，不报告政策效果或匹配后显著性。</code></pre></details><h3>Python源代码（中文列名）</h3><details class="sp-code-fold"><summary><span>Python完整代码</span><span class="sp-code-toggle" aria-hidden="true"></span></summary><pre><code>import numpy as np
 import pandas as pd
 import statsmodels.formula.api as smf
 from sklearn.neighbors import NearestNeighbors
@@ -173,7 +173,7 @@ for title, frame, path in [
 ]:
     print(title, &quot;成功匹配的试点城市数：&quot;, frame[&quot;试点城市&quot;].nunique())
     frame.to_csv(path, index=False, encoding=&quot;utf-8-sig&quot;)
-# 输出匹配关系，不估计DID/ATT；下节检查协变量平衡。</code></pre></section>
+# 输出匹配关系，不估计DID/ATT；下节检查协变量平衡。</code></pre></details></section>
 <section class="sp-paper sp-section" style="--sp-section-accent:#178b80" aria-labelledby="section-07"><div class="sp-overline">MODULE 07 / 10</div><h2 id="section-07">七、三个常见误区</h2><p>误区1：Logit和Probit哪个分类准确率高，哪个就一定适合匹配。错误。PSM重点是协变量平衡、共同支持和合理的研究设计，而非单纯预测分类。</p><p>误区2：卡尺越小一定越好。错误。卡尺过窄虽然限制匹配距离，却可能剔除大量试点、改变估计对象并增加估计不稳定性。</p><p>误区3：匹配结束就证明政策有因果效应。错误。还需检查匹配质量和条件平行趋势，明确潜在政策预期、2015—2016年后续试点以及结果变量的暴露时间。2014年名单于10月公布，因此2014全年工资不应当作完整一年的处理后结果。</p></section>
 <section class="sp-paper sp-section" style="--sp-section-accent:#b98c45" aria-labelledby="section-08"><div class="sp-overline">MODULE 08 / 10</div><h2 id="section-08">八、两分钟自测（恰好两题）</h2><p>概念题：某试点城市在一对一卡尺匹配中找不到距离不超过0.05的对照城市。应当强行选择最近的城市吗？</p><p>计算题：试点城市得分0.72，三个非试点城市得分分别是0.70、0.68和0.55。若设置概率距离卡尺0.05，哪些城市合格？如果采用一对一最近邻最终选择谁？</p><h3>参考答案</h3><p>概念题答案：不应强行接受违反卡尺的匹配。该试点城市在既定规则下无法匹配，可以退出该方案，研究者应记录样本损失，并审查共同支持与方案的稳健性。</p><p>计算题答案：距离分别为0.02、0.04、0.17，B和C符合0.05卡尺；一对一最近邻选距离0.02的B。</p></section>
 <section class="sp-paper sp-section" style="--sp-section-accent:#8060b9" aria-labelledby="section-09"><div class="sp-overline">MODULE 09 / 10</div><h2 id="section-09">九、课次进度与下一节</h2><p>本节完成第2章·第1节，全课程第4课/共10课。下一节为第2章·第2节《匹配质量与协变量平衡性检验》。未开始下一课，也不自动推进。</p></section>

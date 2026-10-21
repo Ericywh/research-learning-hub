@@ -1,6 +1,6 @@
 <!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="PSM-DID第10课：完整PSM-DID研究与论文复现，中国宽带中国示范城市案例；Stata和Python双软件教学及习题。"><title>第4章·第2节｜完整PSM-DID研究与论文复现 · PSM-DID系统精讲课程</title>
-<link rel="stylesheet" href="../../assets/speaking-layout.css?v=20261021s"></head>
+<link rel="stylesheet" href="../../assets/speaking-layout.css?v=20261021t"></head>
 <body class="speaking-study"><div class="sp-wrap">
 <nav class="sp-top" aria-label="课程路径"><a href="../../">← 返回课程总目录</a><span>第4章 · 第2节 · 全课程第10课</span></nav>
 <header class="sp-hero"><div class="sp-kicker">PSM-DID TRAINING · LESSON 010 / 010</div><h1>第4章·第2节｜完整PSM-DID研究与论文复现</h1>
@@ -59,7 +59,7 @@
 </section>
 <section class="sp-paper sp-section" style="--sp-section-accent:#bf688c" aria-labelledby="section-10"><div class="sp-overline">MODULE 10 / 11</div><h2 id="section-10">附录｜政策批次核验的失败即停止脚本</h2>
 <p><strong>Stata政策核验脚本：</strong></p>
-<pre><code class="language-stata">* 第10课为失败即停止的政策映射审计，不能以教学名单直接运行DID
+<details class="sp-code-fold"><summary><span>Stata完整代码</span><span class="sp-code-toggle" aria-hidden="true"></span></summary><pre><code class="language-stata">* 第10课为失败即停止的政策映射审计，不能以教学名单直接运行DID
 clear all
 capture confirm file &quot;policy_cohorts_verified.csv&quot;
 if _rc {
@@ -84,9 +84,9 @@ save &quot;第10课_政策批次审计表.dta&quot;,replace
 noi di &quot;已通过政策批次文件结构检查；尚未开展因果效应估计。&quot;
 capture log close
 
-</code></pre>
+</code></pre></details>
 <p><strong>Python政策核验脚本：</strong></p>
-<pre><code class="language-python"># -*- coding: utf-8 -*-
+<details class="sp-code-fold"><summary><span>Python完整代码</span><span class="sp-code-toggle" aria-hidden="true"></span></summary><pre><code class="language-python"># -*- coding: utf-8 -*-
 '''中国城市公开面板：PSM-DID教学流水线。不将教学估计解释为因果效应。'''
 import json
 from pathlib import Path
@@ -216,7 +216,7 @@ if __name__ == '__main__':
     print(sample.to_string(index=False))
     print('仅生成审计数据；正式ATT估计需明确处理批次、对照状态、平行趋势与标准误。')
 
-</code></pre>
+</code></pre></details>
 </section>
 <section class="sp-paper sp-section" style="--sp-section-accent:#4383b8" aria-labelledby="section-11"><div class="sp-overline">MODULE 11 / 11</div><h2 id="section-11">主要数据与方法来源</h2>
 <ul>

@@ -1,6 +1,6 @@
 <!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="PSM-DID系统精讲课程第2课：以中国宽带中国示范城市为例，零基础讲解选择偏差、倾向得分、匹配、条件独立性和共同支持，并提供中文Stata及Python代码。"><title>第1章·第2节｜PSM的基本原理 · PSM-DID系统精讲课程</title>
-<link rel="stylesheet" href="../../assets/speaking-layout.css?v=20261021s"><script>window.MathJax={tex:{inlineMath:[['$','$']],displayMath:[['$$','$$']]},options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']}};</script>
+<link rel="stylesheet" href="../../assets/speaking-layout.css?v=20261021t"><script>window.MathJax={tex:{inlineMath:[['$','$']],displayMath:[['$$','$$']]},options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']}};</script>
 <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script></head>
 <body class="speaking-study"><div class="sp-wrap">
 <nav class="sp-top" aria-label="课程路径"><a href="../../">← 返回课程总目录</a><span>第1章 · 第2节 · 全课程第2课</span></nav>
@@ -42,7 +42,7 @@
 <p>数据来源：<a href="https://github.com/Cause-114/CityEdu-Eco/blob/main/data/panel.csv">CityEdu-Eco公开CSV</a>；<a href="https://github.com/Cause-114/CityEdu-Eco/blob/main/data/DATA_NOTES.md">数据字典</a>；<a href="https://wap.miit.gov.cn/zwgk/zcwj/wjfb/gg/art/2020/art_4dab04091bea459e9cc45e0046be3fe9.html">2014首批试点官方名单</a>。选用2013年GDP、人口、第三产业比重及工资作为处理前X。2013年已实施全国宽带战略，后续还要考察政策预期效应。</p>
 <p><strong>Logit（逻辑回归）</strong>：预测0/1结果概率的一类模型。这里使用Stata官方logit命令和Python statsmodels中的相同回归公式，估计每个城市被选为首批试点的概率。本课只计算分数，具体匹配算法下节之后系统讲解。</p>
 <p><strong>Stata程序：变量及分类值标签均用中文。</strong></p>
-<pre><code class="language-stata">clear all
+<details class="sp-code-fold"><summary><span>Stata完整代码</span><span class="sp-code-toggle" aria-hidden="true"></span></summary><pre><code class="language-stata">clear all
 set more off
 * 只使用2014年试点决定前的2013年中国城市数据
 import delimited "https://raw.githubusercontent.com/Cause-114/CityEdu-Eco/main/data/panel.csv", clear varnames(1) encoding("UTF-8")
@@ -82,9 +82,9 @@ predict double pscore if e(sample), pr
 label variable pscore "倾向得分（预测试点概率）"
 tabulate treat
 bysort treat: summarize pscore
-save "中国城市_2013年倾向得分教学样本.dta", replace</code></pre>
+save "中国城市_2013年倾向得分教学样本.dta", replace</code></pre></details>
 <p><strong>Python程序：使用相同的模型变量和筛选原则。</strong></p>
-<pre><code class="language-python">import numpy as np
+<details class="sp-code-fold"><summary><span>Python完整代码</span><span class="sp-code-toggle" aria-hidden="true"></span></summary><pre><code class="language-python">import numpy as np
 import pandas as pd
 import statsmodels.formula.api as smf
 
@@ -117,7 +117,7 @@ df["pscore"] = model.predict(df)
 print(df.groupby("treat")["pscore"].agg(["count", "min", "mean", "max"]))
 df.to_csv("中国城市_2013年倾向得分教学样本.csv",
           index=False, encoding="utf-8-sig")
-# 此处没有匹配后政策ATT，也没有因果估计</code></pre>
+# 此处没有匹配后政策ATT，也没有因果估计</code></pre></details>
 <p><strong>实证边界：</strong> 2014公告包含长株潭城市群、县级昆山、自治州等，不能机械地与地级市记录一一对应；本课使用明确标为教学级的城市名称映射，尚未逐一完成统计口径审计。两套代码未实际在Stata、Python中同时运行，不能报告未经核实的倾向得分或样本量，更不能把匹配分数当作政策因果效应。</p>
 </section>
 <section class="sp-paper sp-section" style="--sp-section-accent:#178b80" aria-labelledby="section-07"><div class="sp-overline">MODULE 07 / 09</div><h2 id="section-07">七、三个重要误区</h2>

@@ -1,6 +1,6 @@
 <!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="PSM-DID第5课，中国宽带示范城市政策，SMD协变量平衡、共同支持、Love plot、Stata和Python实操。"><title>第2章·第2节｜匹配质量与协变量平衡性检验 · PSM-DID系统精讲课程</title>
-<link rel="stylesheet" href="../../assets/speaking-layout.css?v=20261021s"><script>window.MathJax={tex:{inlineMath:[['$','$']],displayMath:[['\[','\]']]}};</script>
+<link rel="stylesheet" href="../../assets/speaking-layout.css?v=20261021t"><script>window.MathJax={tex:{inlineMath:[['$','$']],displayMath:[['\[','\]']]}};</script>
 <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script></head>
 <body class="speaking-study"><div class="sp-wrap">
 <nav class="sp-top" aria-label="课程路径"><a href="../../">← 返回课程总目录</a><span>第2章 · 第2节 · 全课程第5课</span></nav>
@@ -129,7 +129,7 @@
 <p>第二章两课形成闭环：<strong>第4课学习倾向得分和匹配算法，第5课评价匹配结果。</strong> 执行清单是：政策前变量定义正确；处理组与城市统计口径核实；匹配规则透明；报告共同支持与样本损失；计算匹配前后SMD；检查方差及分布；展示Love plot；若仍失衡则重新设定匹配算法、特征或研究样本，并记录所有调整。平衡改进本身不等于DID的条件平行趋势成立。</p>
 <p><strong>已完成：第2章·第2节，全课程第5课 / 共10课。下一节：第3章·第1节｜匹配后DID估计量与模型设定。</strong></p>
 <p>参考文献：Austin, P. C. (2009). Balance diagnostics for comparing the distribution of baseline covariates between treatment groups in propensity-score matched samples. <em>Statistics in Medicine</em>, 28(25), 3083–3107. <a href="https://doi.org/10.1002/sim.3697">DOI:10.1002/sim.3697</a>.</p>
-<section class="appendix"><h2 id="section-10">附录｜完整双软件代码</h2><details><summary>Stata中文标签与平衡诊断（点击展开）</summary><pre><code>* PSM-DID系统课程第5课：中文Stata协变量平衡诊断
+<section class="appendix"><h2 id="section-10">附录｜完整双软件代码</h2><details class="sp-code-fold"><summary><span>Stata中文标签与平衡诊断</span><span class="sp-code-toggle" aria-hidden="true"></span></summary><pre><code>* PSM-DID系统课程第5课：中文Stata协变量平衡诊断
 * Stata 17+；只检查2013年政策前协变量，不估计政策因果效应。
 clear all
 set more off
@@ -237,7 +237,7 @@ label variable abs_after &quot;匹配后绝对标准化均差&quot;
 list, noobs
 save &quot;中国城市_第5课协变量平衡诊断_中文标签.dta&quot;, replace
 * 若abs_after仍显著偏离0，须修改匹配方案；不自动宣称通过检验
-</code></pre></details><details><summary>Python匹配、平衡结果及Love plot（点击展开）</summary><pre><code>&quot;&quot;&quot;PSM-DID第5课：2013中国城市数据匹配质量与平衡性（教学用途）。
+</code></pre></details><details class="sp-code-fold"><summary><span>Python匹配、平衡结果及Love plot</span><span class="sp-code-toggle" aria-hidden="true"></span></summary><pre><code>&quot;&quot;&quot;PSM-DID第5课：2013中国城市数据匹配质量与平衡性（教学用途）。
 数据源：https://github.com/Cause-114/CityEdu-Eco/blob/main/data/panel.csv
 仅用政策前协变量；不计算或声称政策因果效应。
 安装：pip install numpy pandas statsmodels scikit-learn matplotlib

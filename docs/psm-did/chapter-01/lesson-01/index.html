@@ -1,6 +1,6 @@
 <!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="中国宽带中国示范城市政策DID零基础课程：反事实、ATT、平行趋势、中文Stata标签及Python示例。"><title>第1章·第1节｜DID的基本原理 · PSM-DID系统精讲课程</title>
-<link rel="stylesheet" href="../../assets/speaking-layout.css?v=20261021s"><script>window.MathJax={tex:{inlineMath:[['$','$']],displayMath:[['$$','$$']]},options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']}};</script>
+<link rel="stylesheet" href="../../assets/speaking-layout.css?v=20261021t"><script>window.MathJax={tex:{inlineMath:[['$','$']],displayMath:[['$$','$$']]},options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']}};</script>
 <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script></head>
 <body class="speaking-study"><div class="sp-wrap">
 <nav class="sp-top" aria-label="课程路径"><a href="../../">← 返回课程总目录</a><span>第1章 · 第1节 · 全课程第1课</span></nav>
@@ -104,7 +104,7 @@
 </section>
 <section class="sp-paper sp-section" style="--sp-section-accent:#4383b8" aria-labelledby="section-06"><div class="sp-overline">MODULE 06 / 10</div><h2 id="section-06">六、Stata：读取真实中国数据并写入中文标签</h2>
 <p>下列代码按Stata 17及以上版本编写。变量名保留英文字母以确保兼容性，通过label variable及label define/label values设置中文变量标签及类别标签。代码尚未实际运行核验。</p>
-<pre><code class="language-stata">clear all
+<details class="sp-code-fold"><summary><span>Stata完整代码</span><span class="sp-code-toggle" aria-hidden="true"></span></summary><pre><code class="language-stata">clear all
 set more off
 * 可直接从GitHub公开数据源读入；若联网失败，先下载panel.csv
 import delimited &quot;https://raw.githubusercontent.com/Cause-114/CityEdu-Eco/main/data/panel.csv&quot;, clear varnames(1) encoding(&quot;UTF-8&quot;)
@@ -138,11 +138,11 @@ label variable cityid &quot;城市编号（对应中文城市名）&quot;
 bysort cityid: keep if _N == 2
 table treat post, statistic(mean wage)
 regress wage i.treat##i.post, vce(cluster cityid)
-save &quot;中国城市_宽带中国DID教学数据.dta&quot;, replace</code></pre>
+save &quot;中国城市_宽带中国DID教学数据.dta&quot;, replace</code></pre></details>
 <p><strong>命令说明：</strong> <code>import delimited</code>导入CSV；<code>label variable</code>定义中文变量标签；<code>label define</code>和<code>label values</code>显示中文0/1类别；<code>gen</code>生成变量；<code>regress</code>做普通最小二乘（OLS）回归。<code>vce(cluster cityid)</code>允许同一城市内部误差相关，但不保证整个政策层级的推断可靠。</p>
 </section>
 <section class="sp-paper sp-section" style="--sp-section-accent:#178b80" aria-labelledby="section-07"><div class="sp-overline">MODULE 07 / 10</div><h2 id="section-07">七、Python：同数据、同规则的对照程序</h2>
-<pre><code class="language-python">import pandas as pd
+<details class="sp-code-fold"><summary><span>Python完整代码</span><span class="sp-code-toggle" aria-hidden="true"></span></summary><pre><code class="language-python">import pandas as pd
 import statsmodels.formula.api as smf
 
 url = &quot;https://raw.githubusercontent.com/Cause-114/CityEdu-Eco/main/data/panel.csv&quot;
@@ -169,7 +169,7 @@ model = smf.ols(&quot;wage ~ treat * post&quot;, data=df).fit(
     cov_type=&quot;cluster&quot;, cov_kwds={&quot;groups&quot;: df[&quot;city_key&quot;]}
 )
 print(&quot;回归交互项系数：&quot;, model.params[&quot;treat:post&quot;])
-df.to_csv(&quot;中国城市_宽带中国DID教学数据.csv&quot;, index=False, encoding=&quot;utf-8-sig&quot;)</code></pre>
+df.to_csv(&quot;中国城市_宽带中国DID教学数据.csv&quot;, index=False, encoding=&quot;utf-8-sig&quot;)</code></pre></details>
 <p>两套代码采用相同文件、样本筛选与政策规则，点估计理论上应一致，但尚未完成双软件运行核验。城市群、自治州及县级试点单位的口径仍须逐项审计；初步回归不能直接宣称因果识别成功。</p>
 </section>
 <section class="sp-paper sp-section" style="--sp-section-accent:#b98c45" aria-labelledby="section-08"><div class="sp-overline">MODULE 08 / 10</div><h2 id="section-08">八、三个重要误区</h2>

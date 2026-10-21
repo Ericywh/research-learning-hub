@@ -1,6 +1,6 @@
 <!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="PSM-DID第7课：Stata完整实证操作，中国宽带中国示范城市案例；Stata和Python双软件教学及习题。"><title>第3章·第2节｜Stata完整实证操作 · PSM-DID系统精讲课程</title>
-<link rel="stylesheet" href="../../assets/speaking-layout.css?v=20261021s"></head>
+<link rel="stylesheet" href="../../assets/speaking-layout.css?v=20261021t"></head>
 <body class="speaking-study"><div class="sp-wrap">
 <nav class="sp-top" aria-label="课程路径"><a href="../../">← 返回课程总目录</a><span>第3章 · 第2节 · 全课程第7课</span></nav>
 <header class="sp-hero"><div class="sp-kicker">PSM-DID TRAINING · LESSON 007 / 010</div><h1>第3章·第2节｜Stata完整实证操作</h1>
@@ -50,7 +50,7 @@
 </section>
 <section class="sp-paper sp-section" style="--sp-section-accent:#8060b9" aria-labelledby="section-09"><div class="sp-overline">MODULE 09 / 10</div><h2 id="section-09">附录｜同一中国数据的Stata与Python完整示例</h2>
 <p><strong>Stata完整教学程序（中文变量标签）：</strong></p>
-<pre><code class="language-stata">* PSM-DID课程：公开中国城市数据，Stata 17+，教学并非已识别政策效果
+<details class="sp-code-fold"><summary><span>Stata完整代码</span><span class="sp-code-toggle" aria-hidden="true"></span></summary><pre><code class="language-stata">* PSM-DID课程：公开中国城市数据，Stata 17+，教学并非已识别政策效果
 version 17.0
 clear all
 set more off
@@ -129,9 +129,9 @@ noi di &quot;第7课：导出中文标记后的匹配对以便核对。&quot;
 export delimited using &quot;第7课_Stata匹配对.csv&quot;,replace
 log close
 
-</code></pre>
+</code></pre></details>
 <p><strong>Python完整教学程序（中文导出字段）：</strong></p>
-<pre><code class="language-python"># -*- coding: utf-8 -*-
+<details class="sp-code-fold"><summary><span>Python完整代码</span><span class="sp-code-toggle" aria-hidden="true"></span></summary><pre><code class="language-python"># -*- coding: utf-8 -*-
 '''中国城市公开面板：PSM-DID教学流水线。不将教学估计解释为因果效应。'''
 import json
 from pathlib import Path
@@ -234,7 +234,7 @@ if __name__ == '__main__':
     save_audit('第7课_跨软件核对',pairs,balance,n)
     print('Stata和Python应逐项核对配对城市、共同支持规则与匹配距离。')
 
-</code></pre>
+</code></pre></details>
 </section>
 <section class="sp-paper sp-section" style="--sp-section-accent:#bf688c" aria-labelledby="section-10"><div class="sp-overline">MODULE 10 / 10</div><h2 id="section-10">主要数据与方法来源</h2>
 <ul>
