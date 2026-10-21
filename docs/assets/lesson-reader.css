@@ -230,3 +230,77 @@ body[data-course-lesson="true"] :is(.cr-lesson-content>nav,.cr-lesson-content>.n
 @media(prefers-reduced-motion:reduce){
   body[data-course-lesson="true"] .cr-reader-up{transition:none}
 }
+
+
+
+/* Stata and Python examples: accessible native disclosure, closed on arrival. */
+body[data-course-lesson="true"] details.cr-reader-codefold{
+  border:1px solid color-mix(in srgb,var(--cr-accent) 24%,white);
+  border-radius:13px;
+  margin:18px 0 24px;
+  background:#fff;
+  overflow:hidden;
+  box-shadow:0 7px 22px rgba(32,48,76,.055);
+}
+body[data-course-lesson="true"] details.cr-reader-codefold[data-code-language="stata"]{
+  --cr-fold-color:#316f9f;
+  --cr-fold-light:#edf5ff;
+}
+body[data-course-lesson="true"] details.cr-reader-codefold[data-code-language="python"]{
+  --cr-fold-color:#a27025;
+  --cr-fold-light:#fff8e7;
+}
+body[data-course-lesson="true"] details.cr-reader-codefold>summary{
+  display:flex;gap:13px;align-items:center;
+  padding:15px 19px;
+  list-style:none;cursor:pointer;
+  background:linear-gradient(115deg,var(--cr-fold-light),#fff 80%);
+  color:var(--cr-deep);
+  font-size:14px;font-weight:750;
+  border-left:4px solid var(--cr-fold-color);
+  user-select:none;
+}
+body[data-course-lesson="true"] details.cr-reader-codefold>summary::-webkit-details-marker{display:none}
+body[data-course-lesson="true"] details.cr-reader-codefold>summary::marker{content:""}
+body[data-course-lesson="true"] details.cr-reader-codefold>summary:hover{
+  background:linear-gradient(110deg,color-mix(in srgb,var(--cr-fold-color) 15%,white),#fff);
+}
+body[data-course-lesson="true"] .cr-reader-fold-label{
+  color:var(--cr-fold-color);font-size:14px;font-weight:820;
+}
+body[data-course-lesson="true"] .cr-reader-fold-hint{
+  color:var(--cr-muted);font-size:12px;font-weight:550;margin-left:auto;
+}
+body[data-course-lesson="true"] .cr-reader-fold-chevron{
+  color:var(--cr-fold-color);font-size:20px;font-weight:900;
+  transition:transform .16s ease;
+}
+body[data-course-lesson="true"] details.cr-reader-codefold[open] .cr-reader-fold-chevron{
+  transform:rotate(180deg);
+}
+body[data-course-lesson="true"] details.cr-reader-codefold .cr-reader-codebar{
+  margin:0!important;border-radius:0;
+}
+body[data-course-lesson="true"] details.cr-reader-codefold pre{
+  margin:0!important;border-radius:0 0 11px 11px!important;
+  border-left:0!important;border-right:0!important;border-bottom:0!important;
+  box-shadow:none!important;max-width:100%;
+}
+body[data-course-lesson="true"] details.cr-reader-codefold:focus-within{
+  border-color:var(--cr-fold-color);
+}
+@media(max-width:620px){
+  body[data-course-lesson="true"] details.cr-reader-codefold>summary{
+    padding:12px;gap:8px;
+  }
+  body[data-course-lesson="true"] .cr-reader-fold-hint{font-size:11px}
+  body[data-course-lesson="true"] .cr-reader-fold-label{font-size:13px}
+}
+@media(prefers-reduced-motion:reduce){
+  body[data-course-lesson="true"] .cr-reader-fold-chevron{transition:none}
+}
+@media print{
+  body[data-course-lesson="true"] details.cr-reader-codefold{
+    border:1px solid #cdd7e1;box-shadow:none;
+  }
+}
