@@ -1,0 +1,20 @@
+/* PSM-DID stable layout patch — 2026-10-21.
+   Keeps original page DOM and layout. No absolute positioning, grid wrappers or runtime DOM mutations. */
+html{scroll-behavior:smooth;scroll-padding-top:24px}
+body{font-family:system-ui,-apple-system,"PingFang SC","Microsoft YaHei","Noto Sans CJK SC",sans-serif!important;text-rendering:optimizeLegibility}
+main{min-width:0;overflow-wrap:break-word}
+main p,main li{overflow-wrap:break-word}
+main pre{box-sizing:border-box;max-width:100%!important;overflow-x:auto!important;overflow-y:auto;tab-size:4;-webkit-overflow-scrolling:touch}
+main pre code{word-break:normal!important}
+main table{max-width:100%}
+main img,main svg,main canvas{max-width:100%;height:auto}
+main .formula,main .equation,main .math-display,main .formula-box,main mjx-container[display="true"]{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+main details{max-width:100%}
+main h2,main h3{scroll-margin-top:25px}
+main a{overflow-wrap:anywhere}
+@media(max-width:600px){
+ main pre{font-size:12px}
+ main table{font-size:13px}
+ main{overflow-wrap:anywhere}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
