@@ -8,6 +8,7 @@ on:
       - '.github/workflows/pages.yml'
       - 'scripts/build-econometrics-public.cjs'
       - 'scripts/style-course-pages.cjs'
+      - 'scripts/render-psmdid-math.cjs'
       - 'scripts/sync-econometrics-notion.cjs'
   workflow_dispatch:
   # Every four hours as a recovery path when GitHub App pushes do not
@@ -234,6 +235,14 @@ jobs:
           node scripts/style-course-pages.cjs
 
 
+      - name: Statically render PSM-DID formulas with KaTeX (HTML + MathML)
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm install --no-save --ignore-scripts --no-audit --no-fund katex@0.16.22
+          node --check scripts/render-psmdid-math.cjs
+          node scripts/render-psmdid-math.cjs
+
       - name: Verify all published lesson HTML layouts
         shell: bash
         run: |
@@ -268,17 +277,31 @@ jobs:
               if(!fs.existsSync(built))throw Error('Built lesson missing: '+built);
               const original=fs.readFileSync(source,'utf8');
               const output=fs.readFileSync(built,'utf8');
-              if(innerBody(original)===null || innerBody(output)!==innerBody(original))
-                throw Error('Lesson body unexpectedly changed: '+built);
+              if(innerBody(original)===null || innerBody(output)===null)
+                throw Error('Invalid lesson HTML: '+built);
               if(course==='psm-did'){
-                if(output!==original)throw Error('PSM-DID HTML must not be overwritten by the shared lesson reader: '+built);
+                // Static math conversion changes rendered TeX while preserving
+                // headings, code blocks, layout and lesson prose.
                 if(!output.includes('speaking-layout.css') ||
+                   !output.includes('katex.min.css') ||
                    !output.includes('class="speaking-study"') ||
                    !output.includes('class="study-layout"') ||
                    output.includes('lesson-reader.js') ||
                    output.includes('data-course-lesson="true"'))
-                  throw Error('PSM-DID standalone lesson layout invalid: '+built);
+                  throw Error('PSM-DID standalone math layout invalid: '+built);
+                for(const tag of ['pre','h2','table']){
+                  const re=new RegExp('<'+tag+'\\b','gi');
+                  if((original.match(re)||[]).length!==(output.match(re)||[]).length)
+                    throw Error('PSM-DID original '+tag+' nodes changed: '+built);
+                }
+                if(/(?:\\\\\[|\\$\\$)/.test(original) &&
+                   !output.includes('class="katex-display"'))
+                  throw Error('Display formula not rendered in '+built);
+                if(output.includes('cdn.jsdelivr.net/npm/mathjax'))
+                  throw Error('Stale client MathJax loader remains in '+built);
               }else{
+                if(innerBody(output)!==innerBody(original))
+                  throw Error('Lesson body unexpectedly changed: '+built);
                 for(const marker of ['data-course-lesson="true"','lesson-reader.css','lesson-reader.js','course-themes.css']){
                   if(!output.includes(marker))throw Error('Missing '+marker+' in '+built);
                 }
@@ -573,6 +596,15 @@ jobs:
           status=$(curl -L -sS --connect-timeout 10 --max-time 30 -o /tmp/psm-home.html -w '%{http_code}' "$BASE/psm-did/?design=$DEPLOY_SHA" || true)
           [[ "$status" == "200" ]] || { echo "::error::PSM-DID homepage unavailable"; exit 1; }
           check_standalone "psm-did/chapter-04/lesson-02/" /tmp/psm-lesson.html
+          check_standalone "psm-did/chapter-02/lesson-02/" /tmp/psm-math.html
+          grep -Fq 'class="katex-display"' /tmp/psm-math.html ||
+            { echo "::error::PSM-DID mathematical formula is not statically rendered"; exit 1; }
+          grep -Fq 'katex.min.css' /tmp/psm-math.html ||
+            { echo "::error::KaTeX stylesheet missing in public lesson"; exit 1; }
+          grep -Fq 'class="sp-code-fold"' /tmp/psm-math.html ||
+            { echo "::error::Collapsible Stata/Python blocks missing"; exit 1; }
+          status=$(curl -L -sS --connect-timeout 10 --max-time 30 -o /tmp/katex.css -w '%{http_code}' "$BASE/psm-did/assets/katex.min.css?design=$DEPLOY_SHA" || true)
+          [[ "$status" == "200" ]] || { echo "::error::Static KaTeX CSS unavailable"; exit 1; }
           status=$(curl -L -sS --connect-timeout 10 --max-time 30 -o /tmp/psm-speaking-layout.css -w '%{http_code}' "$BASE/psm-did/assets/speaking-layout.css?design=$DEPLOY_SHA" || true)
           [[ "$status" == "200" ]] || { echo "::error::PSM-DID speaking-layout CSS unavailable"; exit 1; }
           echo "Five shared-theme courses plus one independently styled PSM-DID course verified."
