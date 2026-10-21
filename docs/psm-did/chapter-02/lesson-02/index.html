@@ -53,7 +53,7 @@
 <h2 id="section-05">五、真实公开中国城市数据的初步计算</h2>
 <p>数据来源：<a href="https://github.com/Cause-114/CityEdu-Eco/blob/main/data/panel.csv">CityEdu-Eco公开的中国城市年度面板CSV</a>，其基于《中国城市统计年鉴》二次整理。政策来源：<a href="https://wap.miit.gov.cn/zwgk/zcwj/wjfb/gg/art/2020/art_4dab04091bea459e9cc45e0046be3fe9.html">2014年首批“宽带中国”示范城市公告</a>。</p>
 <p>教学设定：仅保留2013年GDP、人口、第三产业比重和工资完整且可进行对数变换的城市；Logit预测入选首批示范城市的概率；一对一最近邻、有放回匹配；按对照组得分范围限制共同支持；再使用原始概率差不超过0.05的卡尺。</p>
-<table>
+<div class="table-wrap" role="region" aria-label="可横向滚动的数据表格" tabindex="0"><table>
 <thead>
 <tr>
   <th>样本环节</th>
@@ -82,8 +82,8 @@
   <td style="text-align:right">31</td>
 </tr>
 </tbody>
-</table>
-<table>
+</table></div>
+<div class="table-wrap" role="region" aria-label="可横向滚动的数据表格" tabindex="0"><table>
 <thead>
 <tr>
   <th>政策前协变量</th>
@@ -118,7 +118,7 @@
   <td style="text-align:right">0.559</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <p><strong>核心发现：</strong> 最近邻匹配使部分均值差异大幅缩小，但本次四项匹配后绝对SMD都超过0.1，尤其人口和产业结构仍存在明显差异。<strong>不能将当前教学匹配方案判定为全部合格，更不能据此估计可靠的因果政策效果。</strong></p>
 <p><strong>复核边界：</strong> 上表系根据公开原始CSV开展的独立初步核算，尚未在Stata和Python两个软件中实际交叉复核。2014年名单包含城市群、自治州和县级城市，与地级市年鉴统计单元未必一一对应；当前处理组定义与前课一样只是部分地级市教学映射，不能作为论文最终样本。原始数据的第三方再分发授权尚未核实，因此仅提供源网址，不随课再上传整套年鉴CSV。</p>
 <section class="chart" aria-label="2013年城市匹配前后的标准化均差"><h3>初步核算：匹配前后绝对SMD</h3><svg viewBox="0 0 710 260" role="img" aria-label="四个协变量匹配前后SMD：GDP 1.2215变0.1199，人口0.3998变0.2985，第三产业0.5364变0.2645，工资0.861变0.1225"><line x1="170" y1="15" x2="170" y2="212" stroke="#9aadb5"/><line x1="170" y1="212" x2="690" y2="212" stroke="#9aadb5"/><line x1="210" y1="12" x2="210" y2="212" stroke="#b88a56" stroke-dasharray="4 5"/><text x="211" y="9" fill="#866941" font-size="11">参考线0.1</text>

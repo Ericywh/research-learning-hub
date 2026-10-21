@@ -38,7 +38,7 @@
 <p>本课改为<strong>2014年首批“宽带中国”示范城市（城市群）政策</strong>：工信部、国家发展改革委于2014年公布39个示范城市（城市群），如北京、南京、苏州、武汉和成都等。研究问题：<strong>入选示范城市是否改变城市在岗职工平均工资？</strong> 这只是研究问题，不是既得出的因果结论。</p>
 <p>真实数据采用CityEdu-Eco公开项目根据《中国城市统计年鉴》整理的中国地级市年度面板（2000—2022，项目说明有302个城市、6686条城市年度记录、15个变量），不是官方直接发布的PSM-DID研究样本。政策名单须由官方公告另外合并。</p>
 <ul><li><a href="https://github.com/Cause-114/CityEdu-Eco/blob/main/data/panel.csv">中国城市年度面板原始CSV（项目原仓库）</a></li><li><a href="https://github.com/Cause-114/CityEdu-Eco/blob/main/data/DATA_NOTES.md">项目中文数据说明</a></li><li><a href="https://wap.miit.gov.cn/zwgk/zcwj/wjfb/gg/art/2020/art_4dab04091bea459e9cc45e0046be3fe9.html">工信部2014年首批示范名单公告</a></li><li><a href="https://www.cac.gov.cn/2015-10/20/c_1116872905.htm">工信部2015年后续示范名单</a></li><li><a href="https://www.miit.gov.cn/zwgk/zcwj/wjfb/gg/art/2020/art_3855b1fb82384bc69468bc54a2bdf56e.html">工信部2016年后续示范名单</a></li></ul>
-<table aria-label="数据变量中文名称">
+<div class="table-wrap" role="region" aria-label="可横向滚动的数据表格" tabindex="0"><table aria-label="数据变量中文名称">
 <tr class="table-head">
 <td>原始字段</td>
 <td>中文标签</td>
@@ -74,7 +74,7 @@
 <td>第三产业占GDP比重（%）</td>
 <td>后续匹配变量</td>
 </tr>
-</table>
+</table></div>
 <p><strong>数据说明：</strong> 面板数据指同一城市跨年重复观测。2014年政策名单中包含城市群、自治州和县级市，需审慎映射年鉴地级市统计单位。资料来自第三方整理，未核实其进一步公开再分发许可，因此仅链接原文件，不擅自上传整套CSV或.dta。该项目记载2020年人口统计口径变化，不能跨期不加审查地直接比较。</p>
 <h2 id="section-02">二、零基础专有名词</h2>
 <p><strong>处理组（Treatment Group）</strong>：实际入选2014年首批政策的城市；“处理”指政策干预，不是数据清洗。</p>
@@ -84,7 +84,7 @@
 <p><strong>因果效应（Causal Effect）</strong>：实际入选政策后的结果与其没有入选时反事实结果的差异，不等于简单的前后增长。</p>
 <p><strong>DID（Difference-in-Differences，双重差分法）</strong>：先求每组前后变化，再将处理组变化减去对照组变化。</p>
 <h2 id="section-03">三、2×2手算教学案例（非真实数据）</h2>
-<table aria-label="数据变量中文名称">
+<div class="table-wrap" role="region" aria-label="可横向滚动的数据表格" tabindex="0"><table aria-label="数据变量中文名称">
 <tr class="table-head">
 <td>组别</td>
 <td>2013年政策前</td>
@@ -103,7 +103,7 @@
 <td>38000元</td>
 <td>+3000元</td>
 </tr>
-</table>
+</table></div>
 <p>若试点城市未入选政策时也会增加3000元，则2014年反事实工资为40000＋3000＝43000元，而实际为45000元。两者相差2000元：</p>
 <div class="formula">$$\widehat{DID}=(45000-40000)-(38000-35000)=2000\text{元}$$</div>
 <p><strong>图示（文字路径）</strong>：试点组实际：40000→45000；试点组无政策反事实：40000→43000；对照组：35000→38000；2014年政策组实际与反事实的垂直差距为2000元。</p>
