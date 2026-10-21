@@ -446,3 +446,53 @@ jobs:
             }
           done </tmp/math-pages.tsv
           echo "Mathematics GitHub Pages HTTPS verification passed for $i published lesson pages."
+
+  verify-course-design:
+    name: Verify six themed course sites
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify shared CSS and course pages over HTTPS
+        shell: bash
+        env:
+          DEPLOY_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          BASE="https://ericywh.github.io/research-learning-hub"
+          css="/tmp/course-themes.css"
+          for attempt in $(seq 1 12); do
+            status=$(curl -L -sS --connect-timeout 10 --max-time 30 -o "$css" -w '%{http_code}' "$BASE/assets/course-themes.css?design=$DEPLOY_SHA" || true)
+            if [[ "$status" == "200" ]] && grep -Fq 'COURSE DESIGN SYSTEM' "$css" && grep -Fq -- '--cr-accent' "$css"; then
+              echo "PASS shared design CSS HTTP 200"
+              break
+            fi
+            if (( attempt == 12 )); then echo "::error::Shared design CSS not publicly available"; exit 1; fi
+            sleep 8
+          done
+          check() {
+            local path="$1" theme="$2" tmp="$3" status
+            for attempt in $(seq 1 12); do
+              status=$(curl -L -sS --connect-timeout 10 --max-time 30 -o "$tmp" -w '%{http_code}' "$BASE/$path?design=$DEPLOY_SHA" || true)
+              if [[ "$status" == "200" ]] &&
+                 grep -Fq "data-course-theme=\"$theme\"" "$tmp" &&
+                 grep -Fq 'course-themes.css' "$tmp"; then
+                echo "PASS HTTP 200 + themed HTML: $path ($theme)"
+                return 0
+              fi
+              if (( attempt == 12 )); then echo "::error::Themed page failed verification: $path"; return 1; fi
+              sleep 8
+            done
+          }
+          check "econometrics/" econometrics /tmp/econ-home.html
+          check "econometrics/lessons/02-05.html" econometrics /tmp/econ-lesson.html
+          check "math/" math /tmp/math-home.html
+          check "math/lessons/2026-10-18-01-11.html" math /tmp/math-lesson.html
+          check "cssci/" cssci /tmp/cssci-home.html
+          check "cssci/lessons/03-02-2026-10-18.html" cssci /tmp/cssci-lesson.html
+          check "frontier/" frontier /tmp/frontier-home.html
+          check "frontier/2026-10-17.html" frontier /tmp/frontier-lesson.html
+          check "economic-classics/" classics /tmp/classics-home.html
+          check "economic-classics/lessons/02-02.html" classics /tmp/classics-lesson.html
+          check "psm-did/" psm-did /tmp/psm-home.html
+          check "psm-did/chapter-04/lesson-02/" psm-did /tmp/psm-lesson.html
+          echo "Six courses: shared CSS and 12 public HTML pages verified."
