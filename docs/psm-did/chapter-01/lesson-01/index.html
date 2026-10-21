@@ -1,38 +1,19 @@
-<!doctype html>
-<html lang="zh-CN">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="中国宽带中国示范城市政策DID零基础课程：反事实、ATT、平行趋势、中文Stata标签及Python示例。">
-<title>第1章·第1节｜DID的基本原理｜PSM-DID系统精讲课程</title>
-<link rel="stylesheet" href="../../assets/course-v4.css?v=20261021g">
-<script>window.MathJax={tex:{inlineMath:[['$','$']],displayMath:[['$$','$$']]},options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']}};</script>
-<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
-</head>
-<body>
-<a class="skip" href="#course-main">跳转课程正文</a>
-<div class="topbar"><div class="topbar-inner">
-<a class="identity" href="../../"><span class="identity-mark">PSM</span>研究方法 · PSM-DID</a>
-<nav class="toplinks" aria-label="全站导航"><a href="../../">十节课程目录</a><a href="../../chapter-01/lesson-02/">下一课 →</a><span class="top-separator" aria-hidden="true"></span><a href="../../../study/#courses">学习中心</a></nav>
-</div></div>
-<header class="page-hero lesson-hero">
- <div class="hero-inner">
-  <div>
-   <nav class="crumbs" aria-label="面包屑导航"><a href="../../">全部课程</a><span>/</span><span>第1章</span><span>/</span><span>第1课</span></nav>
-   <span class="kicker">CAUSAL INFERENCE / 01</span>
-   <h1>第1章·第1节｜DID的基本原理</h1>
-   <p class="chapter-desc">中国“宽带中国”示范城市政策 · 计量方法、诊断与双软件实操</p>
-   <div class="hero-pillset"><span class="hero-pill">全课程第1课 · 共10课</span><span class="hero-pill">基础方法与因果识别</span><span class="hero-pill">Stata + Python</span></div>
-  </div>
-  <aside class="hero-index" aria-label="课程进度"><div><div class="counter">LEARNING PROGRESS</div><div class="large">01 <em>/ 10</em></div></div><div class="track"><span style="width:10%"></span></div><div class="sub">已完成内容归档 · 阅读第1课</div></aside>
- </div>
-</header>
-<div class="reader-frame"><details class="section-index"><summary><span class="toc-summary-title">本课知识目录</span><span class="toc-summary-count">10 节 · 点击展开</span></summary><nav class="section-links" aria-label="本课知识目录"><ol><li><a href="#section-01">一、真实国内政策与公开数据</a></li><li><a href="#section-02">二、零基础专有名词</a></li><li><a href="#section-03">三、2×2手算教学案例（非真实数据）</a></li><li><a href="#section-04">四、ATT与平行趋势</a></li><li><a href="#section-05">五、两期DID回归与交互项</a></li><li><a href="#section-06">六、Stata：读取真实中国数据并写入中文标签</a></li><li><a href="#section-07">七、Python：同数据、同规则的对照程序</a></li><li><a href="#section-08">八、三个重要误区</a></li><li><a href="#section-09">九、两分钟自测</a></li><li><a href="#section-10">十、进度</a></li></ol></nav></details>
- <main class="article" id="course-main">
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="中国宽带中国示范城市政策DID零基础课程：反事实、ATT、平行趋势、中文Stata标签及Python示例。"><title>第1章·第1节｜DID的基本原理 · PSM-DID系统精讲课程</title>
+<link rel="stylesheet" href="../../assets/speaking-layout.css?v=20261021s"><script>window.MathJax={tex:{inlineMath:[['$','$']],displayMath:[['$$','$$']]},options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']}};</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script></head>
+<body class="speaking-study"><div class="sp-wrap">
+<nav class="sp-top" aria-label="课程路径"><a href="../../">← 返回课程总目录</a><span>第1章 · 第1节 · 全课程第1课</span></nav>
+<header class="sp-hero"><div class="sp-kicker">PSM-DID TRAINING · LESSON 001 / 010</div><h1>第1章·第1节｜DID的基本原理</h1>
+<p>中国“宽带中国”示范城市政策 · 因果识别、匹配诊断与Stata / Python双软件方法训练</p>
+<div class="sp-pills"><span>第1课 / 共10课</span><span>识别条件与研究边界</span><span>Stata + Python</span><span>分节阅读</span></div></header>
+<div class="study-layout"><main class="study-content" id="course-main">
+<section class="sp-paper sp-intro"><div class="sp-overline">LESSON OVERVIEW · 本节导读</div>
  <nav class="links"><a href="../../">← 课程十节目录</a><a href="../../../study/#courses">六门课程总入口</a></nav><p><strong>全课程第1课 / 共10课｜第1章·第1节｜DID的基本原理（国内案例·零基础重讲版）</strong></p>
 <p><strong>本节问题：</strong> 如何利用政策实施前后试点城市与非试点城市的变化差异，估计政策可能带来的效应？</p>
 <p><strong>交付状态：</strong> 2026-10-10重讲原第1课，不增加课次。此页替换原美国最低工资数据版。</p>
-<h2 id="section-01">一、真实国内政策与公开数据</h2>
+</section>
+<section class="sp-paper sp-section" style="--sp-section-accent:#4383b8" aria-labelledby="section-01"><div class="sp-overline">MODULE 01 / 10</div><h2 id="section-01">一、真实国内政策与公开数据</h2>
 <p>本课改为<strong>2014年首批“宽带中国”示范城市（城市群）政策</strong>：工信部、国家发展改革委于2014年公布39个示范城市（城市群），如北京、南京、苏州、武汉和成都等。研究问题：<strong>入选示范城市是否改变城市在岗职工平均工资？</strong> 这只是研究问题，不是既得出的因果结论。</p>
 <p>真实数据采用CityEdu-Eco公开项目根据《中国城市统计年鉴》整理的中国地级市年度面板（2000—2022，项目说明有302个城市、6686条城市年度记录、15个变量），不是官方直接发布的PSM-DID研究样本。政策名单须由官方公告另外合并。</p>
 <ul><li><a href="https://github.com/Cause-114/CityEdu-Eco/blob/main/data/panel.csv">中国城市年度面板原始CSV（项目原仓库）</a></li><li><a href="https://github.com/Cause-114/CityEdu-Eco/blob/main/data/DATA_NOTES.md">项目中文数据说明</a></li><li><a href="https://wap.miit.gov.cn/zwgk/zcwj/wjfb/gg/art/2020/art_4dab04091bea459e9cc45e0046be3fe9.html">工信部2014年首批示范名单公告</a></li><li><a href="https://www.cac.gov.cn/2015-10/20/c_1116872905.htm">工信部2015年后续示范名单</a></li><li><a href="https://www.miit.gov.cn/zwgk/zcwj/wjfb/gg/art/2020/art_3855b1fb82384bc69468bc54a2bdf56e.html">工信部2016年后续示范名单</a></li></ul>
@@ -74,14 +55,16 @@
 </tr>
 </table></div>
 <p><strong>数据说明：</strong> 面板数据指同一城市跨年重复观测。2014年政策名单中包含城市群、自治州和县级市，需审慎映射年鉴地级市统计单位。资料来自第三方整理，未核实其进一步公开再分发许可，因此仅链接原文件，不擅自上传整套CSV或.dta。该项目记载2020年人口统计口径变化，不能跨期不加审查地直接比较。</p>
-<h2 id="section-02">二、零基础专有名词</h2>
+</section>
+<section class="sp-paper sp-section" style="--sp-section-accent:#178b80" aria-labelledby="section-02"><div class="sp-overline">MODULE 02 / 10</div><h2 id="section-02">二、零基础专有名词</h2>
 <p><strong>处理组（Treatment Group）</strong>：实际入选2014年首批政策的城市；“处理”指政策干预，不是数据清洗。</p>
 <p><strong>对照组（Control Group）</strong>：2014年尚未入选的城市，用来提供反事实变化的参考。2015、2016年会有后来试点，延长窗口时必须剔除、重分类或使用多期DID。</p>
 <p><strong>结果变量（Outcome Variable）</strong>：政策可能影响的具体指标，这里是在岗职工平均工资，不代表所有居民收入。</p>
 <p><strong>反事实（Counterfactual）</strong>：如果入选试点的城市没有入选，2014年工资本来会是多少？它无法与已经发生的结果在同一城市同时观察。</p>
 <p><strong>因果效应（Causal Effect）</strong>：实际入选政策后的结果与其没有入选时反事实结果的差异，不等于简单的前后增长。</p>
 <p><strong>DID（Difference-in-Differences，双重差分法）</strong>：先求每组前后变化，再将处理组变化减去对照组变化。</p>
-<h2 id="section-03">三、2×2手算教学案例（非真实数据）</h2>
+</section>
+<section class="sp-paper sp-section" style="--sp-section-accent:#b98c45" aria-labelledby="section-03"><div class="sp-overline">MODULE 03 / 10</div><h2 id="section-03">三、2×2手算教学案例（非真实数据）</h2>
 <div class="table-wrap" role="region" aria-label="可横向滚动的数据表格" tabindex="0"><table aria-label="数据变量中文名称">
 <tr class="table-head">
 <td>组别</td>
@@ -106,17 +89,20 @@
 <div class="formula">$$\widehat{DID}=(45000-40000)-(38000-35000)=2000\text{元}$$</div>
 <p><strong>图示（文字路径）</strong>：试点组实际：40000→45000；试点组无政策反事实：40000→43000；对照组：35000→38000；2014年政策组实际与反事实的垂直差距为2000元。</p>
 <p>第一次差分消除不随时间改变的水平差异；第二次差分扣除对照组也经历的平均变化。DID衡量的是额外增长，而非单纯谁的工资更高。</p>
-<figure class="figure"><svg viewBox="0 0 720 265" role="img" aria-label="试点组2013年40000元，2014年实际45000元，反事实43000元；对照组2013年35000元，2014年38000元" style="max-width:100%;height:auto"><line x1="70" y1="211" x2="670" y2="211" stroke="#9daeb5"/><line x1="70" y1="15" x2="70" y2="211" stroke="#9daeb5"/><polyline points="180,112 480,34" fill="none" stroke="#168576" stroke-width="4"/><polyline points="180,190 480,143" fill="none" stroke="#587bba" stroke-width="4"/><line x1="180" y1="112" x2="480" y2="65" stroke="#168576" stroke-width="3" stroke-dasharray="8 7"/><line x1="480" y1="34" x2="480" y2="65" stroke="#c58a37" stroke-width="3"/><g font-family="sans-serif" font-size="15" fill="#203543"><text x="495" y="35">试点组实际：45,000</text><text x="495" y="70">无政策反事实：43,000</text><text x="495" y="147">对照组：38,000</text><text x="180" y="239" text-anchor="middle">2013年</text><text x="480" y="239" text-anchor="middle">2014年</text></g><text x="459" y="52" text-anchor="end" font-size="14" font-weight="bold" fill="#a26d2b">ATT=2,000</text></svg><p class="figcap">教学构造工资（元），并非真实政策估计；绿色虚线为平行趋势假设下的无政策反事实。</p></figure><h2 id="section-04">四、ATT与平行趋势</h2>
+<figure class="figure"><svg viewBox="0 0 720 265" role="img" aria-label="试点组2013年40000元，2014年实际45000元，反事实43000元；对照组2013年35000元，2014年38000元" style="max-width:100%;height:auto"><line x1="70" y1="211" x2="670" y2="211" stroke="#9daeb5"/><line x1="70" y1="15" x2="70" y2="211" stroke="#9daeb5"/><polyline points="180,112 480,34" fill="none" stroke="#168576" stroke-width="4"/><polyline points="180,190 480,143" fill="none" stroke="#587bba" stroke-width="4"/><line x1="180" y1="112" x2="480" y2="65" stroke="#168576" stroke-width="3" stroke-dasharray="8 7"/><line x1="480" y1="34" x2="480" y2="65" stroke="#c58a37" stroke-width="3"/><g font-family="sans-serif" font-size="15" fill="#203543"><text x="495" y="35">试点组实际：45,000</text><text x="495" y="70">无政策反事实：43,000</text><text x="495" y="147">对照组：38,000</text><text x="180" y="239" text-anchor="middle">2013年</text><text x="480" y="239" text-anchor="middle">2014年</text></g><text x="459" y="52" text-anchor="end" font-size="14" font-weight="bold" fill="#a26d2b">ATT=2,000</text></svg><p class="figcap">教学构造工资（元），并非真实政策估计；绿色虚线为平行趋势假设下的无政策反事实。</p></figure></section>
+<section class="sp-paper sp-section" style="--sp-section-accent:#8060b9" aria-labelledby="section-04"><div class="sp-overline">MODULE 04 / 10</div><h2 id="section-04">四、ATT与平行趋势</h2>
 <p><strong>ATT（Average Treatment Effect on the Treated，处理组平均处理效应）</strong>：对于实际上入选政策的城市，入选政策后相对于其未入选政策时的平均差距。</p>
 <div class="formula">$$ATT=E[Y_1(1)-Y_1(0)\mid D=1]$$</div>
 <p>其中$<code>Y_1(1)</code>$是接受政策后的工资，$<code>Y_1(0)</code>$是同一城市不接受政策时的潜在结果，$<code>D=1</code>$是处理组，$<code>E</code>$表示求平均，“$<code>\mid</code>$”表示在给定处理组的条件下。</p>
 <p><strong>平行趋势（Parallel Trends）</strong>：如果政策没有发生，处理组和对照组的平均工资变化应当相同，而不要求两组政策前工资水平相同：</p>
 <div class="formula">$$E[Y_1(0)-Y_0(0)\mid D=1]=E[Y_1(0)-Y_0(0)\mid D=0]$$</div>
 <p>需要额外考察政策预期、其他同期冲击、政策溢出和样本构成。2014年首批名单于秋季公布，2014年全年工资只包含很短的事后暴露期，且2013年已有国家宽带战略。用2013/2014两个年份只作入门演示，不能将初步估计直接宣称为全年政策因果效应。</p>
-<h2 id="section-05">五、两期DID回归与交互项</h2>
+</section>
+<section class="sp-paper sp-section" style="--sp-section-accent:#bf688c" aria-labelledby="section-05"><div class="sp-overline">MODULE 05 / 10</div><h2 id="section-05">五、两期DID回归与交互项</h2>
 <div class="formula">$$Y_{it}=\alpha+\beta Treat_i+\gamma Post_t+\delta(Treat_i\times Post_t)+\varepsilon_{it}$$</div>
 <p>$<code>Y_{it}</code>$是城市工资，$<code>Treat_i</code>$标记是否首批试点，$<code>Post_t</code>$标记2014年，二者相乘是<strong>交互项（Interaction Term）</strong>，只在“试点且政策后”取1。其回归系数$<code>\delta</code>$是DID点估计。回归系数是从样本中估计的数字；能否解释为因果效果取决于识别假设，而非回归命令。</p>
-<h2 id="section-06">六、Stata：读取真实中国数据并写入中文标签</h2>
+</section>
+<section class="sp-paper sp-section" style="--sp-section-accent:#4383b8" aria-labelledby="section-06"><div class="sp-overline">MODULE 06 / 10</div><h2 id="section-06">六、Stata：读取真实中国数据并写入中文标签</h2>
 <p>下列代码按Stata 17及以上版本编写。变量名保留英文字母以确保兼容性，通过label variable及label define/label values设置中文变量标签及类别标签。代码尚未实际运行核验。</p>
 <pre><code class="language-stata">clear all
 set more off
@@ -154,7 +140,8 @@ table treat post, statistic(mean wage)
 regress wage i.treat##i.post, vce(cluster cityid)
 save &quot;中国城市_宽带中国DID教学数据.dta&quot;, replace</code></pre>
 <p><strong>命令说明：</strong> <code>import delimited</code>导入CSV；<code>label variable</code>定义中文变量标签；<code>label define</code>和<code>label values</code>显示中文0/1类别；<code>gen</code>生成变量；<code>regress</code>做普通最小二乘（OLS）回归。<code>vce(cluster cityid)</code>允许同一城市内部误差相关，但不保证整个政策层级的推断可靠。</p>
-<h2 id="section-07">七、Python：同数据、同规则的对照程序</h2>
+</section>
+<section class="sp-paper sp-section" style="--sp-section-accent:#178b80" aria-labelledby="section-07"><div class="sp-overline">MODULE 07 / 10</div><h2 id="section-07">七、Python：同数据、同规则的对照程序</h2>
 <pre><code class="language-python">import pandas as pd
 import statsmodels.formula.api as smf
 
@@ -184,18 +171,24 @@ model = smf.ols(&quot;wage ~ treat * post&quot;, data=df).fit(
 print(&quot;回归交互项系数：&quot;, model.params[&quot;treat:post&quot;])
 df.to_csv(&quot;中国城市_宽带中国DID教学数据.csv&quot;, index=False, encoding=&quot;utf-8-sig&quot;)</code></pre>
 <p>两套代码采用相同文件、样本筛选与政策规则，点估计理论上应一致，但尚未完成双软件运行核验。城市群、自治州及县级试点单位的口径仍须逐项审计；初步回归不能直接宣称因果识别成功。</p>
-<h2 id="section-08">八、三个重要误区</h2>
+</section>
+<section class="sp-paper sp-section" style="--sp-section-accent:#b98c45" aria-labelledby="section-08"><div class="sp-overline">MODULE 08 / 10</div><h2 id="section-08">八、三个重要误区</h2>
 <ol><li>试点城市工资增长得更多就一定是政策有效：错误；仍可能存在政策选择偏差与差异化冲击。</li><li>政策前两组平均工资不同就不能使用DID：错误；平行趋势要求反事实变化相同，不要求水平相同。</li><li>DID回归有交互项就完成因果识别：错误；仍要论证平行趋势、无预期、溢出与合理统计推断。</li></ol>
-<h2 id="section-09">九、两分钟自测</h2>
+</section>
+<section class="sp-paper sp-section" style="--sp-section-accent:#8060b9" aria-labelledby="section-09"><div class="sp-overline">MODULE 09 / 10</div><h2 id="section-09">九、两分钟自测</h2>
 <p><strong>概念题：</strong> 苏州政策后工资上涨，为什么不能据此证明是宽带政策带来的？</p>
 <p><strong>计算题：</strong> 试点组工资从50000元增至56000元，非试点组从42000增至46000元，DID为多少？</p>
 <p><strong>参考答案：</strong> (1) 上涨可能来自宏观与产业变化，无法直接观察无政策时的反事实；(2) (56000-50000)-(46000-42000)=2000元。只有识别条件成立才能作因果解释。</p>
-<h2 id="section-10">十、进度</h2>
+</section>
+<section class="sp-paper sp-section" style="--sp-section-accent:#bf688c" aria-labelledby="section-10"><div class="sp-overline">MODULE 10 / 10</div><h2 id="section-10">十、进度</h2>
 <p>本次是对第1章·第1节的重讲，<strong>全课程实际完成课次仍为1/10</strong>。本节知识：DID、处理组、对照组、反事实、ATT、平行趋势、两期回归和初步双软件处理。</p>
 <p><strong>下一节：第1章·第2节《PSM的基本原理》</strong>。需要用户明确学习指令才继续。</p><p class="notice"><strong>阅读与使用提醒：</strong>手算数据为教学构造；真实城市工资数据尚未完成全样本软件核验，2014年秋季才公布名单，短期DID结果不能自动解释为因果政策效应。</p><p>可单独查看程序：<a href="did_demo.do">Stata中文标签版本</a> · <a href="did_demo.py">Python对照版</a>。</p>
- <nav class="lesson-pager" aria-label="上下课导航"><a href="../../"><span>课程总目录</span>返回四章十节课程</a><a href="../../chapter-01/lesson-02/"><span>下一课 · 第2课 →</span>PSM的基本原理</a></nav>
- </main>
-</div>
-<footer class="footer">PSM-DID系统精讲课程 · 原课次重讲，不增加完成进度 · <a href="../../">返回课程目录</a><p><a href="../../">← 返回PSM-DID课程目录</a></p></footer>
-</body>
-</html>
+ 
+ </section>
+<nav class="sp-pager" aria-label="上下课导航"><a href="../../"><span>课程总目录</span>返回四章十节课程</a><a href="../../chapter-01/lesson-02/"><span>下一课 · 第2课 →</span>PSM的基本原理</a></nav>
+</main>
+<aside class="study-aside" aria-label="课程辅助信息">
+<section class="sp-paper sp-sidebar-panel"><div class="sp-sidebar-label">LESSON MAP · 章节导航</div><h2>本节内容目录</h2><ol class="sp-toc"><li><a href="#section-01"><span class="num">01</span>一、真实国内政策与公开数据</a></li><li><a href="#section-02"><span class="num">02</span>二、零基础专有名词</a></li><li><a href="#section-03"><span class="num">03</span>三、2×2手算教学案例（非真实数据）</a></li><li><a href="#section-04"><span class="num">04</span>四、ATT与平行趋势</a></li><li><a href="#section-05"><span class="num">05</span>五、两期DID回归与交互项</a></li><li><a href="#section-06"><span class="num">06</span>六、Stata：读取真实中国数据并写入中文标签</a></li><li><a href="#section-07"><span class="num">07</span>七、Python：同数据、同规则的对照程序</a></li><li><a href="#section-08"><span class="num">08</span>八、三个重要误区</a></li><li><a href="#section-09"><span class="num">09</span>九、两分钟自测</a></li><li><a href="#section-10"><span class="num">10</span>十、进度</a></li></ol></section>
+<section class="sp-paper sp-sidebar-panel"><div class="sp-sidebar-label">COURSE PROGRESS · 学习进度</div><div class="sp-stats"><strong>01</strong><span>/ 10 节</span></div><p>当前为第1章第1节；课程十节全文均已归档。</p><p><a href="../../">查看完整四章课程目录 →</a></p></section>
+<section class="sp-paper sp-sidebar-panel"><div class="sp-sidebar-label">METHOD NOTES · 方法提醒</div><p class="sp-guard">课程示例用于理解PSM-DID的研究设计。政策名单映射、条件平行趋势与协变量平衡仍需正式核验，不能将演示数值直接解释为政策因果效应。</p></section>
+</aside></div><footer class="sp-site-footer"><a href="../../">返回PSM-DID课程目录</a> · 课程原始正文及双软件代码完整保留</footer></div></body></html>

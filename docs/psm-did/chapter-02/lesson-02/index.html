@@ -1,54 +1,39 @@
-<!doctype html>
-<html lang="zh-CN">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="PSM-DID第5课，中国宽带示范城市政策，SMD协变量平衡、共同支持、Love plot、Stata和Python实操。">
-<title>第2章·第2节｜匹配质量与协变量平衡性检验｜PSM-DID系统精讲课程</title>
-<link rel="stylesheet" href="../../assets/course-v4.css?v=20261021g">
-<script>window.MathJax={tex:{inlineMath:[['$','$']],displayMath:[['\[','\]']]}};</script>
-<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
-</head>
-<body>
-<a class="skip" href="#course-main">跳转课程正文</a>
-<div class="topbar"><div class="topbar-inner">
-<a class="identity" href="../../"><span class="identity-mark">PSM</span>研究方法 · PSM-DID</a>
-<nav class="toplinks" aria-label="全站导航"><a href="../../">十节课程目录</a><a href="../../chapter-02/lesson-01/">← 上一课</a><a href="../../chapter-03/lesson-01/">下一课 →</a><span class="top-separator" aria-hidden="true"></span><a href="../../../study/#courses">学习中心</a></nav>
-</div></div>
-<header class="page-hero lesson-hero">
- <div class="hero-inner">
-  <div>
-   <nav class="crumbs" aria-label="面包屑导航"><a href="../../">全部课程</a><span>/</span><span>第2章</span><span>/</span><span>第5课</span></nav>
-   <span class="kicker">CAUSAL INFERENCE / 05</span>
-   <h1>第2章·第2节｜匹配质量与协变量平衡性检验</h1>
-   <p class="chapter-desc">中国“宽带中国”示范城市政策 · 计量方法、诊断与双软件实操</p>
-   <div class="hero-pillset"><span class="hero-pill">全课程第5课 · 共10课</span><span class="hero-pill">倾向得分与匹配诊断</span><span class="hero-pill">Stata + Python</span></div>
-  </div>
-  <aside class="hero-index" aria-label="课程进度"><div><div class="counter">LEARNING PROGRESS</div><div class="large">05 <em>/ 10</em></div></div><div class="track"><span style="width:50%"></span></div><div class="sub">已完成内容归档 · 阅读第5课</div></aside>
- </div>
-</header>
-<div class="reader-frame"><details class="section-index"><summary><span class="toc-summary-title">本课知识目录</span><span class="toc-summary-count">10 节 · 点击展开</span></summary><nav class="section-links" aria-label="本课知识目录"><ol><li><a href="#section-01">一、匹配成功与平衡合格不是一回事</a></li><li><a href="#section-02">二、标准化均差SMD</a></li><li><a href="#section-03">三、方差比和分布比较</a></li><li><a href="#section-04">四、共同支持与样本损失</a></li><li><a href="#section-05">五、真实公开中国城市数据的初步计算</a></li><li><a href="#section-06">六、Stata与Python怎么做？</a></li><li><a href="#section-07">七、三个常见误区</a></li><li><a href="#section-08">八、两分钟自测（恰好两题）</a></li><li><a href="#section-09">九、第二章知识结构与实证清单</a></li><li><a href="#section-10">附录｜完整双软件代码</a></li></ol></nav></details>
- <main class="article" id="course-main">
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="PSM-DID第5课，中国宽带示范城市政策，SMD协变量平衡、共同支持、Love plot、Stata和Python实操。"><title>第2章·第2节｜匹配质量与协变量平衡性检验 · PSM-DID系统精讲课程</title>
+<link rel="stylesheet" href="../../assets/speaking-layout.css?v=20261021s"><script>window.MathJax={tex:{inlineMath:[['$','$']],displayMath:[['\[','\]']]}};</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script></head>
+<body class="speaking-study"><div class="sp-wrap">
+<nav class="sp-top" aria-label="课程路径"><a href="../../">← 返回课程总目录</a><span>第2章 · 第2节 · 全课程第5课</span></nav>
+<header class="sp-hero"><div class="sp-kicker">PSM-DID TRAINING · LESSON 005 / 010</div><h1>第2章·第2节｜匹配质量与协变量平衡性检验</h1>
+<p>中国“宽带中国”示范城市政策 · 因果识别、匹配诊断与Stata / Python双软件方法训练</p>
+<div class="sp-pills"><span>第5课 / 共10课</span><span>识别条件与研究边界</span><span>Stata + Python</span><span>分节阅读</span></div></header>
+<div class="study-layout"><main class="study-content" id="course-main">
+<section class="sp-paper sp-intro"><div class="sp-overline">LESSON OVERVIEW · 本节导读</div>
  <nav class="links"><a href="https://ericywh.github.io/research-learning-hub/psm-did/">课程目录 ↗</a><a href="https://github.com/Cause-114/CityEdu-Eco/blob/main/data/panel.csv">原始公开城市数据 ↗</a></nav>
 <p><strong>全课程第5课 / 共10课｜中国“宽带中国”示范城市教学案例｜2026年10月18日</strong></p>
 <p>本节研究问题：<strong>PSM配对成功之后，怎样检验处理组与对照组在政策前是否真正更可比？</strong></p>
-<h2 id="section-01">一、匹配成功与平衡合格不是一回事</h2>
+</section>
+<section class="sp-paper sp-section" style="--sp-section-accent:#4383b8" aria-labelledby="section-01"><div class="sp-overline">MODULE 01 / 09</div><h2 id="section-01">一、匹配成功与平衡合格不是一回事</h2>
 <p>上一节使用2013年GDP、人口、第三产业比重和平均工资，估计2014年首批示范城市的倾向得分，并实施最近邻匹配。倾向得分相近，只说明在所估计的概率尺度上接近；两组仍可能在某项原始协变量上相差很大。<strong>协变量平衡（Covariate Balance）</strong>是指匹配之后，处理组和比较组的政策前变量分布接近。它需要专门诊断，不能由匹配命令是否运行成功来判断。</p>
-<h2 id="section-02">二、标准化均差SMD</h2>
+</section>
+<section class="sp-paper sp-section" style="--sp-section-accent:#178b80" aria-labelledby="section-02"><div class="sp-overline">MODULE 02 / 09</div><h2 id="section-02">二、标准化均差SMD</h2>
 <p><strong>标准化均差（Standardized Mean Difference，SMD）</strong>将两组协变量均值差除以固定的标准化尺度，消除元、亿元、百分比等不同单位的影响：</p>
 <div class="math-display">\[SMD_k=\frac{\bar X_{T,k}-\bar X_{C,k}}{s_{k,0}}\]</div>
 <p>其中，T为试点城市，C为对照城市，k为某项2013年协变量。为比较匹配前后，本课使用匹配后保留的试点城市与匹配前所有候选对照城市所构成的合并标准差作为固定分母 $s_{k,0}$；匹配后对照城市被多次选中时，按出现次数计入统计。</p>
 <p><strong>构造例子（不是真实结果）：</strong> 假设2013年第三产业比重均值，试点组50%，未匹配对照组40%，匹配对照组49%；固定标准差为10个百分点，则匹配前SMD=(50−40)/10=1.00，匹配后SMD=(50−49)/10=0.10。绝对值越接近0，平均水平越接近。</p>
 <p>文献中常用 |SMD|&lt;0.1 作为<strong>经验参考值</strong>，而不是形式化显著性检验或因果识别保证。也应检查所有重要协变量是否平衡，而不是只选择报告最好的指标。</p>
-<h2 id="section-03">三、方差比和分布比较</h2>
+</section>
+<section class="sp-paper sp-section" style="--sp-section-accent:#b98c45" aria-labelledby="section-03"><div class="sp-overline">MODULE 03 / 09</div><h2 id="section-03">三、方差比和分布比较</h2>
 <p>平均值接近也不代表变量的离散程度相同。<strong>方差比（Variance Ratio，VR）</strong>比较两组的方差：</p>
 <div class="math-display">\[VR_k=\frac{s_{T,k}^{2}}{s_{C,k}^{2}}\]</div>
 <p>比值越接近1，表示离散程度越接近。不过方差比同样无法概括分布的每个细节。论文中通常还可比较分位数、核密度或经验累积分布曲线。</p>
 <p><strong>Love plot（平衡性图）</strong>将每项协变量匹配前后绝对SMD放在同一图上。它不是因果效应图，不反映政策提升或降低工资，只反映样本可比性。</p>
-<h2 id="section-04">四、共同支持与样本损失</h2>
+</section>
+<section class="sp-paper sp-section" style="--sp-section-accent:#8060b9" aria-labelledby="section-04"><div class="sp-overline">MODULE 04 / 09</div><h2 id="section-04">四、共同支持与样本损失</h2>
 <p><strong>共同支持（Common Support）</strong>是指试点城市在倾向得分维度能找到有合理重叠的非试点城市。如果部分试点城市的倾向得分高于所有候选对照城市，就没有直接的可比对象；不能用最近邻强行把两个差异极大的城市配对。</p>
 <p>当匹配删除一部分试点城市以后，分析对象可能由“所有试点城市”变成“处于共同支持且成功匹配的试点城市”。需要报告原始处理组数量、因共同支持剔除的数量、卡尺剔除的数量以及最终匹配数量。</p>
-<h2 id="section-05">五、真实公开中国城市数据的初步计算</h2>
+</section>
+<section class="sp-paper sp-section" style="--sp-section-accent:#bf688c" aria-labelledby="section-05"><div class="sp-overline">MODULE 05 / 09</div><h2 id="section-05">五、真实公开中国城市数据的初步计算</h2>
 <p>数据来源：<a href="https://github.com/Cause-114/CityEdu-Eco/blob/main/data/panel.csv">CityEdu-Eco公开的中国城市年度面板CSV</a>，其基于《中国城市统计年鉴》二次整理。政策来源：<a href="https://wap.miit.gov.cn/zwgk/zcwj/wjfb/gg/art/2020/art_4dab04091bea459e9cc45e0046be3fe9.html">2014年首批“宽带中国”示范城市公告</a>。</p>
 <p>教学设定：仅保留2013年GDP、人口、第三产业比重和工资完整且可进行对数变换的城市；Logit预测入选首批示范城市的概率；一对一最近邻、有放回匹配；按对照组得分范围限制共同支持；再使用原始概率差不超过0.05的卡尺。</p>
 <div class="table-wrap" role="region" aria-label="可横向滚动的数据表格" tabindex="0"><table>
@@ -120,23 +105,27 @@
 <p><strong>核心发现：</strong> 最近邻匹配使部分均值差异大幅缩小，但本次四项匹配后绝对SMD都超过0.1，尤其人口和产业结构仍存在明显差异。<strong>不能将当前教学匹配方案判定为全部合格，更不能据此估计可靠的因果政策效果。</strong></p>
 <p><strong>复核边界：</strong> 上表系根据公开原始CSV开展的独立初步核算，尚未在Stata和Python两个软件中实际交叉复核。2014年名单包含城市群、自治州和县级城市，与地级市年鉴统计单元未必一一对应；当前处理组定义与前课一样只是部分地级市教学映射，不能作为论文最终样本。原始数据的第三方再分发授权尚未核实，因此仅提供源网址，不随课再上传整套年鉴CSV。</p>
 <section class="chart" aria-label="2013年城市匹配前后的标准化均差"><h3>初步核算：匹配前后绝对SMD</h3><svg viewBox="0 0 710 260" role="img" aria-label="四个协变量匹配前后SMD：GDP 1.2215变0.1199，人口0.3998变0.2985，第三产业0.5364变0.2645，工资0.861变0.1225"><line x1="170" y1="15" x2="170" y2="212" stroke="#9aadb5"/><line x1="170" y1="212" x2="690" y2="212" stroke="#9aadb5"/><line x1="210" y1="12" x2="210" y2="212" stroke="#b88a56" stroke-dasharray="4 5"/><text x="211" y="9" fill="#866941" font-size="11">参考线0.1</text>
-<text x="7" y="49" font-size="12" fill="#2a4651">GDP自然对数</text><line x1="216.2" y1="45" x2="640.5" y2="45" stroke="#aebcc5" stroke-width="2"/><circle cx="640.5" cy="45" r="5.6" fill="#6c9aaf"/><rect x="212.2" y="41" width="8" height="8" transform="rotate(45 216.2 45)" fill="#24766b"/><text x="7" y="94" font-size="12" fill="#2a4651">人口自然对数</text><line x1="285.0" y1="90" x2="324.0" y2="90" stroke="#aebcc5" stroke-width="2"/><circle cx="324.0" cy="90" r="5.6" fill="#6c9aaf"/><rect x="281.0" y="86" width="8" height="8" transform="rotate(45 285.0 90)" fill="#24766b"/><text x="7" y="139" font-size="12" fill="#2a4651">第三产业比重</text><line x1="271.9" y1="135" x2="376.6" y2="135" stroke="#aebcc5" stroke-width="2"/><circle cx="376.6" cy="135" r="5.6" fill="#6c9aaf"/><rect x="267.9" y="131" width="8" height="8" transform="rotate(45 271.9 135)" fill="#24766b"/><text x="7" y="184" font-size="12" fill="#2a4651">工资自然对数</text><line x1="217.2" y1="180" x2="501.6" y2="180" stroke="#aebcc5" stroke-width="2"/><circle cx="501.6" cy="180" r="5.6" fill="#6c9aaf"/><rect x="213.2" y="176" width="8" height="8" transform="rotate(45 217.2 180)" fill="#24766b"/><text x="300" y="241" font-size="11" fill="#536d79">● 匹配前　　 ◆ 匹配后（固定标准差）</text></svg><p class="caption">公开CSV的初步教学核算；处理组统计口径仍需核查，尚未完成双软件交叉验证。</p></section><h2 id="section-06">六、Stata与Python怎么做？</h2>
+<text x="7" y="49" font-size="12" fill="#2a4651">GDP自然对数</text><line x1="216.2" y1="45" x2="640.5" y2="45" stroke="#aebcc5" stroke-width="2"/><circle cx="640.5" cy="45" r="5.6" fill="#6c9aaf"/><rect x="212.2" y="41" width="8" height="8" transform="rotate(45 216.2 45)" fill="#24766b"/><text x="7" y="94" font-size="12" fill="#2a4651">人口自然对数</text><line x1="285.0" y1="90" x2="324.0" y2="90" stroke="#aebcc5" stroke-width="2"/><circle cx="324.0" cy="90" r="5.6" fill="#6c9aaf"/><rect x="281.0" y="86" width="8" height="8" transform="rotate(45 285.0 90)" fill="#24766b"/><text x="7" y="139" font-size="12" fill="#2a4651">第三产业比重</text><line x1="271.9" y1="135" x2="376.6" y2="135" stroke="#aebcc5" stroke-width="2"/><circle cx="376.6" cy="135" r="5.6" fill="#6c9aaf"/><rect x="267.9" y="131" width="8" height="8" transform="rotate(45 271.9 135)" fill="#24766b"/><text x="7" y="184" font-size="12" fill="#2a4651">工资自然对数</text><line x1="217.2" y1="180" x2="501.6" y2="180" stroke="#aebcc5" stroke-width="2"/><circle cx="501.6" cy="180" r="5.6" fill="#6c9aaf"/><rect x="213.2" y="176" width="8" height="8" transform="rotate(45 217.2 180)" fill="#24766b"/><text x="300" y="241" font-size="11" fill="#536d79">● 匹配前　　 ◆ 匹配后（固定标准差）</text></svg><p class="caption">公开CSV的初步教学核算；处理组统计口径仍需核查，尚未完成双软件交叉验证。</p></section></section>
+<section class="sp-paper sp-section" style="--sp-section-accent:#4383b8" aria-labelledby="section-06"><div class="sp-overline">MODULE 06 / 09</div><h2 id="section-06">六、Stata与Python怎么做？</h2>
 <p>双软件共同逻辑：取2013年政策前协变量→按相同地级市名单设置处理组→Logit计算倾向得分→共同支持内一对一最近邻有放回匹配→卡尺0.05→固定标准差计算匹配前后SMD→保存诊断结果。<strong>不使用2014年结果变量做匹配，也不输出政策效果的p值。</strong></p>
 <p><strong>Stata核心命令说明：</strong> <code>label variable</code>为变量设置中文标签；<code>label define</code>和<code>label values</code>给0/1处理组设置中文类别；<code>logit</code>估计倾向得分；<code>cross using</code>构造候选城市配对；<code>bysort ...: keep if _n==1</code>保留最近邻；<code>summarize</code>计算均值和方差。完整版本请查看同目录 <code>balance_cn.do</code>。</p>
 <p><strong>Python核心命令说明：</strong> <code>statsmodels.formula.api.logit</code>估计倾向得分，<code>NearestNeighbors</code>检索最近对照城市，<code>np.mean</code>和<code>np.var</code>计算固定分母SMD及方差比，<code>matplotlib</code>绘制Love plot。完整版本请查看同目录 <code>balance_cn.py</code>。</p>
 <p>注意：Stata与Python在倾向得分几乎并列时可能因排序策略不同而选中不同对照城市。报告前应对照城市ID逐一核查。本课脚本Python已通过静态语法编译，但尚未取得在两个软件中真实运行一致的证据。</p>
-<h2 id="section-07">七、三个常见误区</h2>
+</section>
+<section class="sp-paper sp-section" style="--sp-section-accent:#178b80" aria-labelledby="section-07"><div class="sp-overline">MODULE 07 / 09</div><h2 id="section-07">七、三个常见误区</h2>
 <ol>
 <li><strong>倾向得分接近，所有协变量就一定平衡。</strong> 错误。必须在匹配后重新计算每项原始协变量的SMD、方差比等指标。</li>
 <li><strong>匹配后SMD低于0.1就证明政策有因果效果。</strong> 错误。SMD衡量已观测政策前特征的平衡，不验证条件平行趋势或不可观测混杂。</li>
 <li><strong>删掉不匹配的试点不会改变研究对象。</strong> 错误。共同支持及卡尺筛选可能改变ATT所针对的处理组范围。</li>
 </ol>
-<h2 id="section-08">八、两分钟自测（恰好两题）</h2>
+</section>
+<section class="sp-paper sp-section" style="--sp-section-accent:#b98c45" aria-labelledby="section-08"><div class="sp-overline">MODULE 08 / 09</div><h2 id="section-08">八、两分钟自测（恰好两题）</h2>
 <p><strong>第1题｜概念题：</strong> 两组城市匹配后的倾向得分十分接近，是否可以直接判定PSM效果好？为什么？</p>
 <p><strong>参考答案：</strong> 不可以。需要检查政策前每个重要协变量的SMD、方差比、分布和共同支持；倾向得分接近不能保证原始变量都平衡。</p>
 <p><strong>第2题｜计算题：</strong> 某项产业占比在试点城市的平均值是45%，匹配前对照城市是35%，匹配后对照城市是43%，固定的合并标准差为10个百分点。计算匹配前、后的SMD。</p>
 <p><strong>参考答案：</strong> 匹配前SMD=(45−35)/10=1.00，匹配后SMD=(45−43)/10=0.20。虽然改善明显，但按|SMD|&lt;0.1这一经验参考值，仍未达标。</p>
-<h2 id="section-09">九、第二章知识结构与实证清单</h2>
+</section>
+<section class="sp-paper sp-section" style="--sp-section-accent:#8060b9" aria-labelledby="section-09"><div class="sp-overline">MODULE 09 / 09</div><h2 id="section-09">九、第二章知识结构与实证清单</h2>
 <p>第二章两课形成闭环：<strong>第4课学习倾向得分和匹配算法，第5课评价匹配结果。</strong> 执行清单是：政策前变量定义正确；处理组与城市统计口径核实；匹配规则透明；报告共同支持与样本损失；计算匹配前后SMD；检查方差及分布；展示Love plot；若仍失衡则重新设定匹配算法、特征或研究样本，并记录所有调整。平衡改进本身不等于DID的条件平行趋势成立。</p>
 <p><strong>已完成：第2章·第2节，全课程第5课 / 共10课。下一节：第3章·第1节｜匹配后DID估计量与模型设定。</strong></p>
 <p>参考文献：Austin, P. C. (2009). Balance diagnostics for comparing the distribution of baseline covariates between treatment groups in propensity-score matched samples. <em>Statistics in Medicine</em>, 28(25), 3083–3107. <a href="https://doi.org/10.1002/sim.3697">DOI:10.1002/sim.3697</a>.</p>
@@ -347,9 +336,12 @@ print(&#x27;卡尺成功匹配试点数：&#x27;,len(trt))
 print(balance.to_string(index=False, float_format=lambda x:f&#x27;{x:.4f}&#x27;))
 print(&#x27;提示：试点城市与年鉴城市口径为初步教学映射。匹配不等于因果识别。&#x27;)
 </code></pre></details></section>
- <nav class="lesson-pager" aria-label="上下课导航"><a href="../../chapter-02/lesson-01/"><span>← 上一课 · 第4课</span>倾向得分估计与匹配算法</a><a href="../../chapter-03/lesson-01/"><span>下一课 · 第6课 →</span>匹配后DID估计量与模型设定</a></nav>
- </main>
-</div>
-<footer class="footer">教学研究用途：数据与政策名单映射未完成论文级复核；禁止将匹配后平衡诊断当作政策因果识别证明。<p><a href="../../">← 返回PSM-DID课程目录</a></p></footer>
-</body>
-</html>
+ 
+ </section>
+<nav class="sp-pager" aria-label="上下课导航"><a href="../../chapter-02/lesson-01/"><span>← 上一课 · 第4课</span>倾向得分估计与匹配算法</a><a href="../../chapter-03/lesson-01/"><span>下一课 · 第6课 →</span>匹配后DID估计量与模型设定</a></nav>
+</main>
+<aside class="study-aside" aria-label="课程辅助信息">
+<section class="sp-paper sp-sidebar-panel"><div class="sp-sidebar-label">LESSON MAP · 章节导航</div><h2>本节内容目录</h2><ol class="sp-toc"><li><a href="#section-01"><span class="num">01</span>一、匹配成功与平衡合格不是一回事</a></li><li><a href="#section-02"><span class="num">02</span>二、标准化均差SMD</a></li><li><a href="#section-03"><span class="num">03</span>三、方差比和分布比较</a></li><li><a href="#section-04"><span class="num">04</span>四、共同支持与样本损失</a></li><li><a href="#section-05"><span class="num">05</span>五、真实公开中国城市数据的初步计算</a></li><li><a href="#section-06"><span class="num">06</span>六、Stata与Python怎么做？</a></li><li><a href="#section-07"><span class="num">07</span>七、三个常见误区</a></li><li><a href="#section-08"><span class="num">08</span>八、两分钟自测（恰好两题）</a></li><li><a href="#section-09"><span class="num">09</span>九、第二章知识结构与实证清单</a></li></ol></section>
+<section class="sp-paper sp-sidebar-panel"><div class="sp-sidebar-label">COURSE PROGRESS · 学习进度</div><div class="sp-stats"><strong>05</strong><span>/ 10 节</span></div><p>当前为第2章第2节；课程十节全文均已归档。</p><p><a href="../../">查看完整四章课程目录 →</a></p></section>
+<section class="sp-paper sp-sidebar-panel"><div class="sp-sidebar-label">METHOD NOTES · 方法提醒</div><p class="sp-guard">课程示例用于理解PSM-DID的研究设计。政策名单映射、条件平行趋势与协变量平衡仍需正式核验，不能将演示数值直接解释为政策因果效应。</p></section>
+</aside></div><footer class="sp-site-footer"><a href="../../">返回PSM-DID课程目录</a> · 课程原始正文及双软件代码完整保留</footer></div></body></html>

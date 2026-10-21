@@ -43,6 +43,22 @@ for(const [directory,theme] of Object.entries(themes)){
   let styled=0;let lessons=0;
   for(const file of pages){
     const original=fs.readFileSync(file,'utf8');
+    // PSM-DID uses its own static, speaking-inspired lesson layout. Do not
+    // inject the shared reader: its runtime TOC/card wrappers overlap our
+    // existing directory and can hide the published lesson body.
+    if(directory==='psm-did'){
+      if(!/<body\b/i.test(original) || !/<\/body>/i.test(original))
+        throw Error('PSM-DID source HTML is invalid: '+file);
+      const lesson=path.resolve(file)!==path.join(courseRoot,'index.html');
+      if(lesson && (!original.includes('speaking-layout.css') ||
+                    !original.includes('class="speaking-study"') ||
+                    !original.includes('class="study-layout"')))
+        throw Error('PSM-DID independent lesson layout missing: '+file);
+      if(/data-course-theme=|data-course-lesson=|lesson-reader\.js|course-themes\.css/.test(original))
+        throw Error('PSM-DID must not load global reader assets: '+file);
+      styled++;
+      continue;
+    }
     if(!/<head\b[^>]*>/i.test(original)||!/<\/head\s*>/i.test(original)||!/<body\b/i.test(original)){
       throw Error('HTML structure cannot be themed: '+path.relative(root,file));
     }

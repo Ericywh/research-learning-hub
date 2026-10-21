@@ -267,11 +267,21 @@ jobs:
               const output=fs.readFileSync(built,'utf8');
               if(innerBody(original)===null || innerBody(output)!==innerBody(original))
                 throw Error('Lesson body unexpectedly changed: '+built);
-              for(const marker of ['data-course-lesson="true"','lesson-reader.css','lesson-reader.js','course-themes.css']){
-                if(!output.includes(marker))throw Error('Missing '+marker+' in '+built);
+              if(course==='psm-did'){
+                if(output!==original)throw Error('PSM-DID HTML must not be overwritten by the shared lesson reader: '+built);
+                if(!output.includes('speaking-layout.css') ||
+                   !output.includes('class="speaking-study"') ||
+                   !output.includes('class="study-layout"') ||
+                   output.includes('lesson-reader.js') ||
+                   output.includes('data-course-lesson="true"'))
+                  throw Error('PSM-DID standalone lesson layout invalid: '+built);
+              }else{
+                for(const marker of ['data-course-lesson="true"','lesson-reader.css','lesson-reader.js','course-themes.css']){
+                  if(!output.includes(marker))throw Error('Missing '+marker+' in '+built);
+                }
+                if(!/<script\b[^>]+lesson-reader\.js[^>]*><\/script>/i.test(output))
+                  throw Error('Reader script tag malformed: '+built);
               }
-              if(!/<script\b[^>]+lesson-reader\.js[^>]*><\/script>/i.test(output))
-                throw Error('Reader script tag malformed: '+built);
               count++;total++;
             }
             if(count<2)throw Error('Too few archived lessons in '+course);

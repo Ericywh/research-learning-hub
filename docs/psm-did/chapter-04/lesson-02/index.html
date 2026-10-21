@@ -1,29 +1,27 @@
-<!doctype html><html lang="zh-CN"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="PSM-DID第10课：完整PSM-DID研究与论文复现，中国宽带中国示范城市案例；Stata和Python双软件教学及习题。">
-<title>第4章·第2节｜完整PSM-DID研究与论文复现｜PSM-DID系统精讲课程</title>
-<link rel="stylesheet" href="../../assets/course-v4.css?v=20261021g">
-</head><body>
-<a class="skip" href="#course-main">跳转课程正文</a>
-<div class="topbar"><div class="topbar-inner"><a class="identity" href="../../"><span class="identity-mark">PSM</span>研究方法 · PSM-DID</a>
-<nav class="toplinks" aria-label="全站导航"><a href="../../">十节课程目录</a><a href="../../chapter-04/lesson-01/">← 上一课</a><span class="top-separator"></span><a href="../../../study/#courses">学习中心</a></nav></div></div>
-<header class="page-hero lesson-hero"><div class="hero-inner">
-<div><nav class="crumbs" aria-label="面包屑导航"><a href="../../">全部课程</a><span>/</span><span>第4章</span><span>/</span><span>第10课</span></nav><span class="kicker">CAUSAL INFERENCE / 10</span>
-<h1>第4章·第2节｜完整PSM-DID研究与论文复现</h1><p class="chapter-desc">中国“宽带中国”示范城市政策 · 计量方法、诊断与双软件实操</p>
-<div class="hero-pillset"><span class="hero-pill">全课程第10课 · 共10课</span><span class="hero-pill">统计推断与完整研究</span><span class="hero-pill">Stata + Python</span></div></div>
-<aside class="hero-index" aria-label="课程进度"><div><div class="counter">LEARNING PROGRESS</div><div class="large">10 <em>/ 10</em></div></div><div class="track"><span style="width:100%"></span></div><div class="sub">已完成内容归档 · 阅读第10课</div></aside>
-</div></header>
-<div class="reader-frame"><details class="section-index"><summary><span class="toc-summary-title">本课知识目录</span><span class="toc-summary-count">11 节 · 点击展开</span></summary><nav class="section-links" aria-label="本课知识目录"><ol><li><a href="#section-01">一、先把研究问题写准确</a></li><li><a href="#section-02">二、建立正式政策识别表</a></li><li><a href="#section-03">三、重新设计识别时间窗</a></li><li><a href="#section-04">四、完整实证顺序（审计优先）</a></li><li><a href="#section-05">五、论文实证报告应怎样写？</a></li><li><a href="#section-06">六、完整复现脚本的用途及‘失败即停止’原则</a></li><li><a href="#section-07">七、三个最后必须记住的判断</a></li><li><a href="#section-08">八、两道自测题与答案</a></li><li><a href="#section-09">九、十课知识闭环与研究完成状态</a></li><li><a href="#section-10">附录｜政策批次核验的失败即停止脚本</a></li><li><a href="#section-11">主要数据与方法来源</a></li></ol></nav></details>
- <main class="article" id="course-main"><nav class="nav"><a href="https://ericywh.github.io/research-learning-hub/psm-did/">← 课程目录</a><a href="https://ericywh.github.io/research-learning-hub/psm-did/chapter-04/lesson-01/">← 第9课</a></nav><aside class="aside"><strong>实证边界：</strong>2014年10月公布的首批政策名单含复杂行政层级；当前教学映射与政策暴露时间尚不支持工资因果效应声明。上一课发现匹配后多项SMD超过0.1。本课代码所输出的配对DID数值只用来展示计算。</aside>
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="PSM-DID第10课：完整PSM-DID研究与论文复现，中国宽带中国示范城市案例；Stata和Python双软件教学及习题。"><title>第4章·第2节｜完整PSM-DID研究与论文复现 · PSM-DID系统精讲课程</title>
+<link rel="stylesheet" href="../../assets/speaking-layout.css?v=20261021s"></head>
+<body class="speaking-study"><div class="sp-wrap">
+<nav class="sp-top" aria-label="课程路径"><a href="../../">← 返回课程总目录</a><span>第4章 · 第2节 · 全课程第10课</span></nav>
+<header class="sp-hero"><div class="sp-kicker">PSM-DID TRAINING · LESSON 010 / 010</div><h1>第4章·第2节｜完整PSM-DID研究与论文复现</h1>
+<p>中国“宽带中国”示范城市政策 · 因果识别、匹配诊断与Stata / Python双软件方法训练</p>
+<div class="sp-pills"><span>第10课 / 共10课</span><span>识别条件与研究边界</span><span>Stata + Python</span><span>分节阅读</span></div></header>
+<div class="study-layout"><main class="study-content" id="course-main">
+<section class="sp-paper sp-intro"><div class="sp-overline">LESSON OVERVIEW · 本节导读</div><nav class="nav"><a href="https://ericywh.github.io/research-learning-hub/psm-did/">← 课程目录</a><a href="https://ericywh.github.io/research-learning-hub/psm-did/chapter-04/lesson-01/">← 第9课</a></nav><aside class="aside"><strong>实证边界：</strong>2014年10月公布的首批政策名单含复杂行政层级；当前教学映射与政策暴露时间尚不支持工资因果效应声明。上一课发现匹配后多项SMD超过0.1。本课代码所输出的配对DID数值只用来展示计算。</aside>
 <p><strong>全课程第10课 / 共10课｜2026年10月20日单独生成</strong></p>
 <p>本课程最后一节不是再重复一种匹配方法，而是把十课知识组织成一个能够写入研究设计、允许其他研究者复核的完整流程。沿用2014年首批“宽带中国”示范城市及中国城市公开面板数据，但严禁把当前未经审计的教学匹配当作已发表论文的因果结论。</p>
-<h2 id="section-01">一、先把研究问题写准确</h2>
+</section>
+<section class="sp-paper sp-section" style="--sp-section-accent:#4383b8" aria-labelledby="section-01"><div class="sp-overline">MODULE 01 / 11</div><h2 id="section-01">一、先把研究问题写准确</h2>
 <p>示范问题是：“2014年首批宽带示范城市资格，与城市在岗职工平均工资的后续变化有何关系？” 若要改写为“试点政策是否提高工资”，必须满足因果识别前提，并有足够证据支持。<strong>工资是名义工资还是实际工资</strong>也必须说明。若研究购买力，应按可用而可信的地区价格指数折算；当前公开面板的<code>wage</code>是年鉴整理的工资指标，不能把名义增长直接解释为实际福利提高。</p>
-<h2 id="section-02">二、建立正式政策识别表</h2>
+</section>
+<section class="sp-paper sp-section" style="--sp-section-accent:#178b80" aria-labelledby="section-02"><div class="sp-overline">MODULE 02 / 11</div><h2 id="section-02">二、建立正式政策识别表</h2>
 <p>第一步不是估计模型，而是下载原始政府文件，逐项整理2014、2015、2016批次。<strong>政策处理年（cohort）</strong>为城市首次进入示范名单的年份。对长株潭城市群、昆山、平潭、自治州和阿拉尔等不同统计层级，需要按研究单位明确映射规则。不要将“无同名城市行”的政策单元随意标记为未处理。整理表至少保留原始名称、规范名称、所在省份、名单批次、映射规则、核验链接与审计人员备注。</p>
-<h2 id="section-03">三、重新设计识别时间窗</h2>
+</section>
+<section class="sp-paper sp-section" style="--sp-section-accent:#b98c45" aria-labelledby="section-03"><div class="sp-overline">MODULE 03 / 11</div><h2 id="section-03">三、重新设计识别时间窗</h2>
 <p>由于首批在2014年10月公布，2014年全年工资可能只包含很短政策暴露。一个更合理的待验证方案，是将2014年作为<strong>政策过渡年</strong>，用2011—2013年识别政策前趋势，用2015—2017年观察后续变化，同时保留2014年作时间轴标记。<strong>2013年国务院已经公布全国宽带战略，政策预期也可能更早开始</strong>，因此将2013年视为完全未受预期影响仍需额外论证。</p>
 <p>对于2015—2016年新增试点，在2015—2017年期间不能一直把它们当作“从未处理的对照”。可以将2015、2016新增城市从长期对照组剔除，或采用能够处理不同批次入选的组别—时间ATT方法。哪一种更好要由研究问题和可用数据决定。</p>
-<h2 id="section-04">四、完整实证顺序（审计优先）</h2>
+</section>
+<section class="sp-paper sp-section" style="--sp-section-accent:#8060b9" aria-labelledby="section-04"><div class="sp-overline">MODULE 04 / 11</div><h2 id="section-04">四、完整实证顺序（审计优先）</h2>
 <ol>
 <li><strong>整理与核验政策名单</strong>：首批、后续批次、行政层级和首次入选年份。输出映射表与来源。</li>
 <li><strong>清理面板</strong>：检查城市—年份唯一性、工资缺失、人口口径变化与样本范围。使用城市编码，不依赖易变化的字符串名称。</li>
@@ -34,26 +32,32 @@
 <li><strong>进行稳健性检查</strong>：政策前趋势、安慰剂、不同卡尺、不同控制城市与不同时间窗。区分必要诊断与探索性分析。</li>
 <li><strong>透明写作和复现</strong>：公开合法分享的代码、数据字典、原始来源链接、版本、样本流转和完整运行说明；不能越权再分发第三方年鉴整理数据。</li>
 </ol>
-<h2 id="section-05">五、论文实证报告应怎样写？</h2>
+</section>
+<section class="sp-paper sp-section" style="--sp-section-accent:#bf688c" aria-labelledby="section-05"><div class="sp-overline">MODULE 05 / 11</div><h2 id="section-05">五、论文实证报告应怎样写？</h2>
 <p>建议用一张主表分开报告样本规模、匹配平衡、点估计以及经过论证的标准误与置信区间。当前教学数据初步结果为：2013年完整城市289个，试点映射37个，一对一有放回且0.05卡尺后保留31个；四项匹配后绝对SMD约0.120、0.299、0.265、0.123，说明<strong>仍有失衡</strong>。本课程不提供虚构的政策效果系数、显著性星号或假造的识别通过结论。</p>
 <p><strong>研究结论模板：</strong> “基于2014年首批示范城市与公开城市面板的初步教学匹配，若干处理前协变量的平衡尚未达到预设标准，因此现阶段结果仅用于演示匹配和双重差分的计算，不能据此做出工资因果效应判断。后续须完成批次映射与平行趋势、干扰及推断检查。”</p>
-<h2 id="section-06">六、完整复现脚本的用途及‘失败即停止’原则</h2>
+</section>
+<section class="sp-paper sp-section" style="--sp-section-accent:#4383b8" aria-labelledby="section-06"><div class="sp-overline">MODULE 06 / 11</div><h2 id="section-06">六、完整复现脚本的用途及‘失败即停止’原则</h2>
 <p>本课Stata和Python给出<strong>研究准备与审计脚本</strong>，核对必需的政策批次映射文件<code>policy_cohorts_verified.csv</code>。如果文件不存在，程序应停止并提示人工核实2014—2016年名单，而不是自行猜测这些城市属于哪一批。文件至少包含<code>city_key,first_year,source_url</code>三个字段，<code>first_year</code>代表首次入选年份，未入选城市可留空。经过核实的政策映射数据是正式实证的前提，不能用教学试点名单直接替代。</p>
 <p>完成政策核对后，脚本对2011—2013年政策前工资趋势、2014过渡年、2015—2017年政策后结果进行样本描述与缺失审计，并导出可核对的CSV/JSON。只有在匹配质量与识别条件充分讨论后，才能另外执行因果效果模型。<strong>无须为了让程序跑出回归表而跳过政策核验。</strong></p>
-<h2 id="section-07">七、三个最后必须记住的判断</h2>
+</section>
+<section class="sp-paper sp-section" style="--sp-section-accent:#178b80" aria-labelledby="section-07"><div class="sp-overline">MODULE 07 / 11</div><h2 id="section-07">七、三个最后必须记住的判断</h2>
 <ol>
 <li><strong>PSM-DID不是简单把两个统计命令相加。</strong> 要有明确ATT、匹配权重和条件平行趋势。</li>
 <li><strong>数据清洗与名单审核不是琐事。</strong> 错误匹配政策处理身份会直接破坏研究设计。</li>
 <li><strong>能复现的程序不等于可信因果结论。</strong> 可信结论还需要数据质量、识别与统计推断三方面成立。</li>
 </ol>
-<h2 id="section-08">八、两道自测题与答案</h2>
+</section>
+<section class="sp-paper sp-section" style="--sp-section-accent:#b98c45" aria-labelledby="section-08"><div class="sp-overline">MODULE 08 / 11</div><h2 id="section-08">八、两道自测题与答案</h2>
 <p><strong>概念题：</strong> 如果2015年新增示范城市继续作为2015—2017年“未受处理”的对照组，会出现什么风险？</p>
 <p><strong>答案：</strong> 对照组在研究期间也受到处理，违反对照身份设定，可能污染反事实趋势并导致传统DID或匹配后DID估计偏误；必须依据政策批次重新定义样本或采用适当的分批DID设计。</p>
 <p><strong>计算题：</strong> 若最初37个教学映射试点城市中有6个因共同支持限制被排除，保留比例是多少？</p>
 <p><strong>答案：</strong> (37−6)/37=31/37≈<strong>83.8%</strong>。这说明估计可能更适用于共同支持内的31个试点城市，而不能自动推广到全部37个乃至39个政策单元。</p>
-<h2 id="section-09">九、十课知识闭环与研究完成状态</h2>
+</section>
+<section class="sp-paper sp-section" style="--sp-section-accent:#8060b9" aria-labelledby="section-09"><div class="sp-overline">MODULE 09 / 11</div><h2 id="section-09">九、十课知识闭环与研究完成状态</h2>
 <p>第1—3课是DID、PSM与结合逻辑；第4—5课是倾向得分、匹配及质量诊断；第6—8课是估计量、Stata和Python复现；第9课是统计推断与稳健性；第10课是政策名单审计、完整设计与论文复现清单。<strong>十课教学至此完成，但这不表示真实政策因果研究已经完成。</strong></p>
-<h2 id="section-10">附录｜政策批次核验的失败即停止脚本</h2>
+</section>
+<section class="sp-paper sp-section" style="--sp-section-accent:#bf688c" aria-labelledby="section-10"><div class="sp-overline">MODULE 10 / 11</div><h2 id="section-10">附录｜政策批次核验的失败即停止脚本</h2>
 <p><strong>Stata政策核验脚本：</strong></p>
 <pre><code class="language-stata">* 第10课为失败即停止的政策映射审计，不能以教学名单直接运行DID
 clear all
@@ -213,7 +217,8 @@ if __name__ == '__main__':
     print('仅生成审计数据；正式ATT估计需明确处理批次、对照状态、平行趋势与标准误。')
 
 </code></pre>
-<h2 id="section-11">主要数据与方法来源</h2>
+</section>
+<section class="sp-paper sp-section" style="--sp-section-accent:#4383b8" aria-labelledby="section-11"><div class="sp-overline">MODULE 11 / 11</div><h2 id="section-11">主要数据与方法来源</h2>
 <ul>
 <li><a href="https://wap.miit.gov.cn/zwgk/zcwj/wjfb/gg/art/2020/art_4dab04091bea459e9cc45e0046be3fe9.html">工信部、国家发改委（2014），首批“宽带中国”示范城市公告</a></li>
 <li><a href="https://github.com/Cause-114/CityEdu-Eco/blob/main/data/panel.csv">中国城市年鉴二次整理公开数据及说明</a></li>
@@ -221,5 +226,10 @@ if __name__ == '__main__':
 <li><a href="https://doi.org/10.1016/j.jeconom.2020.06.003">Sant’Anna &amp; Zhao（2020），双重稳健DID</a></li>
 <li><a href="https://doi.org/10.1016/j.jeconom.2020.12.001">Callaway &amp; Sant’Anna（2021），分批实施DID</a></li>
 </ul>
-<p class="foot">进度按正式已交付课次计数。研究结果必须在数据审计、平衡和识别检查后方可报告。</p><p class="foot"><a href="lesson_10.do">独立Stata程序（.do）</a> · <a href="lesson_10.py">独立Python程序（.py）</a> · <a href="README.md">课程与方法说明</a></p><nav class="lesson-pager" aria-label="上下课导航"><a href="../../chapter-04/lesson-01/"><span>← 上一课 · 第9课</span>PSM-DID的统计推断与稳健性</a><a href="../../"><span>十节课程已完成</span>返回总目录 →</a></nav></main></div>
-<footer class="footer">教学方法演示；正式因果识别仍须核查数据与识别假设。<p><a href="../../">← 返回PSM-DID课程目录</a></p></footer></body></html>
+<p class="foot">进度按正式已交付课次计数。研究结果必须在数据审计、平衡和识别检查后方可报告。</p><p class="foot"><a href="lesson_10.do">独立Stata程序（.do）</a> · <a href="lesson_10.py">独立Python程序（.py）</a> · <a href="README.md">课程与方法说明</a></p></section>
+<nav class="sp-pager" aria-label="上下课导航"><a href="../../chapter-04/lesson-01/"><span>← 上一课 · 第9课</span>PSM-DID的统计推断与稳健性</a><a href="../../"><span>十节课程已完成</span>返回总目录 →</a></nav></main>
+<aside class="study-aside" aria-label="课程辅助信息">
+<section class="sp-paper sp-sidebar-panel"><div class="sp-sidebar-label">LESSON MAP · 章节导航</div><h2>本节内容目录</h2><ol class="sp-toc"><li><a href="#section-01"><span class="num">01</span>一、先把研究问题写准确</a></li><li><a href="#section-02"><span class="num">02</span>二、建立正式政策识别表</a></li><li><a href="#section-03"><span class="num">03</span>三、重新设计识别时间窗</a></li><li><a href="#section-04"><span class="num">04</span>四、完整实证顺序（审计优先）</a></li><li><a href="#section-05"><span class="num">05</span>五、论文实证报告应怎样写？</a></li><li><a href="#section-06"><span class="num">06</span>六、完整复现脚本的用途及‘失败即停止’原则</a></li><li><a href="#section-07"><span class="num">07</span>七、三个最后必须记住的判断</a></li><li><a href="#section-08"><span class="num">08</span>八、两道自测题与答案</a></li><li><a href="#section-09"><span class="num">09</span>九、十课知识闭环与研究完成状态</a></li><li><a href="#section-10"><span class="num">10</span>附录｜政策批次核验的失败即停止脚本</a></li><li><a href="#section-11"><span class="num">11</span>主要数据与方法来源</a></li></ol></section>
+<section class="sp-paper sp-sidebar-panel"><div class="sp-sidebar-label">COURSE PROGRESS · 学习进度</div><div class="sp-stats"><strong>10</strong><span>/ 10 节</span></div><p>当前为第4章第2节；课程十节全文均已归档。</p><p><a href="../../">查看完整四章课程目录 →</a></p></section>
+<section class="sp-paper sp-sidebar-panel"><div class="sp-sidebar-label">METHOD NOTES · 方法提醒</div><p class="sp-guard">课程示例用于理解PSM-DID的研究设计。政策名单映射、条件平行趋势与协变量平衡仍需正式核验，不能将演示数值直接解释为政策因果效应。</p></section>
+</aside></div><footer class="sp-site-footer"><a href="../../">返回PSM-DID课程目录</a> · 课程原始正文及双软件代码完整保留</footer></div></body></html>
