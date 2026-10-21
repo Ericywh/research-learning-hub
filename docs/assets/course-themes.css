@@ -1,0 +1,254 @@
+/* RESEARCH LEARNING HUB · COURSE DESIGN SYSTEM · 2026-10-21
+ * Themed only for six user-approved courses. Content, numbering and interactions are untouched.
+ * Added to built Pages HTML after each page's original inline styles.
+ */
+html{scroll-behavior:smooth}
+body[data-course-theme]{
+  --cr-ink:#263548;--cr-muted:#65768a;--cr-accent:#3757a7;--cr-accent2:#0c8d81;
+  --cr-accent3:#d98a39;--cr-accent4:#bf4d79;--cr-deep:#172e53;
+  --cr-haze:#f0f3ff;--cr-line:#e1e7ef;--cr-paper:#ffffff;
+  font-family:Inter,-apple-system,BlinkMacSystemFont,"Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  font-size:16px;line-height:1.88;color:var(--cr-ink);
+  background:radial-gradient(ellipse 56% 30% at 91% -4%,var(--cr-haze),transparent 86%),
+             linear-gradient(180deg,#f9fafc 0%,#f3f6fa 64%,#fafbfc 100%);
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  overflow-wrap:break-word;
+}
+body[data-course-theme="econometrics"]{--cr-accent:#405ac0;--cr-accent2:#118e82;--cr-accent3:#e29a3e;--cr-accent4:#c55486;--cr-deep:#172b5b;--cr-haze:#edf0ff}
+body[data-course-theme="math"]{--cr-accent:#7550bd;--cr-accent2:#2d80c4;--cr-accent3:#cf6896;--cr-accent4:#159585;--cr-deep:#372963;--cr-haze:#f1edff}
+body[data-course-theme="cssci"]{--cr-accent:#953d79;--cr-accent2:#137f95;--cr-accent3:#cc8a32;--cr-accent4:#5779c5;--cr-deep:#542346;--cr-haze:#fceef6}
+body[data-course-theme="frontier"]{--cr-accent:#257c9b;--cr-accent2:#d46159;--cr-accent3:#8466b9;--cr-accent4:#258d78;--cr-deep:#1a425c;--cr-haze:#eaf5fb}
+body[data-course-theme="classics"]{--cr-accent:#a44840;--cr-accent2:#b48732;--cr-accent3:#3d769f;--cr-accent4:#438a7a;--cr-deep:#562d39;--cr-haze:#fff1e9}
+body[data-course-theme="psm-did"]{--cr-accent:#147f80;--cr-accent2:#6c59b5;--cr-accent3:#e0943b;--cr-accent4:#cc577e;--cr-deep:#153c55;--cr-haze:#eaf9f6}
+body[data-course-theme]::selection{background:color-mix(in srgb,var(--cr-accent) 20%,white);color:var(--cr-deep)}
+body[data-course-theme] a{color:var(--cr-accent);text-underline-offset:3px;text-decoration-thickness:1px}
+body[data-course-theme] a:hover{color:var(--cr-accent2)}
+body[data-course-theme] :is(a,button,input,summary,select):focus-visible{outline:3px solid var(--cr-accent3);outline-offset:3px;border-radius:5px}
+body[data-course-theme] :is(h1,h2,h3,h4){text-wrap:balance;overflow-wrap:break-word}
+body[data-course-theme] h1{
+  color:var(--cr-deep);font-size:clamp(1.8rem,3.2vw,2.85rem);
+  line-height:1.35;letter-spacing:-.028em;font-weight:760
+}
+body[data-course-theme] :is(h2,h3){line-height:1.45}
+body[data-course-theme] :is(p,li){overflow-wrap:break-word}
+body[data-course-theme] :is(.muted,.subtitle,.hint,.meta,.lead,.note){line-height:1.8}
+body[data-course-theme] :is(.eyebrow,.kicker){
+  color:var(--cr-accent);font-weight:800;letter-spacing:.13em;
+  font-size:11px;text-transform:uppercase
+}
+body[data-course-theme] :is(main,article,.paper,.sheet,.panel,.card,.outline,.hero,.layout,.article,.reading){min-width:0}
+body[data-course-theme] :is(.paper,.panel,.card,.outline,.sheet,article.article,.reading,.article){
+  border-color:var(--cr-line);
+  box-shadow:0 5px 17px rgba(32,47,71,.035),0 20px 50px rgba(32,47,71,.035);
+}
+body[data-course-theme] :is(.paper,.panel,.card,.outline,.sheet,article.article,.reading,.article){
+  border-radius:18px;
+}
+body[data-course-theme] :is(.paper,.panel,.card,.outline,.sheet,article.article,.reading,.article):where(:not(.hero)){
+  background-color:#fff;
+}
+body[data-course-theme] :is(.hero,header .hero,section.hero){
+  background:radial-gradient(circle at 92% 12%,color-mix(in srgb,var(--cr-accent4) 54%,transparent),transparent 31%),
+             radial-gradient(circle at 68% 88%,color-mix(in srgb,var(--cr-accent2) 63%,transparent),transparent 42%),
+             linear-gradient(118deg,var(--cr-deep),var(--cr-accent));
+  color:#fff;border:1px solid rgba(255,255,255,.17);
+  box-shadow:0 18px 46px color-mix(in srgb,var(--cr-accent) 20%,transparent);
+  border-radius:24px;position:relative;isolation:isolate
+}
+body[data-course-theme] .hero :is(h1,h2,h3,p,small,.lead,.meta,.eyebrow,.kicker,.hint){color:#fff}
+body[data-course-theme] .hero :is(.lead,.meta,.hint){color:#e5edf7}
+body[data-course-theme] .hero :is(.eyebrow,.kicker){color:#ffe5ab}
+body[data-course-theme] .hero :is(.card,.hero-box){position:relative;z-index:1}
+body[data-course-theme] :is(.fact,.stat,.metric,.stats>div){
+  border:1px solid var(--cr-line);
+  background:linear-gradient(150deg,#fff,color-mix(in srgb,var(--cr-haze) 75%,white));
+  border-radius:14px
+}
+body[data-course-theme] :is(.fact,.stat,.metric,.stats>div):nth-child(3n+1){border-top:3px solid var(--cr-accent)}
+body[data-course-theme] :is(.fact,.stat,.metric,.stats>div):nth-child(3n+2){border-top:3px solid var(--cr-accent2)}
+body[data-course-theme] :is(.fact,.stat,.metric,.stats>div):nth-child(3n+3){border-top:3px solid var(--cr-accent3)}
+body[data-course-theme] :is(.fact,.stat,.metric,.stats>div) :is(strong,b){color:var(--cr-deep)}
+body[data-course-theme] :is(.eyebrow,.kicker,.code-label,.codehead){font-weight:800}
+body[data-course-theme] :is(.tag,.badge,.pill,.status.published,.state.live){
+  background:color-mix(in srgb,var(--cr-accent) 11%,white);
+  color:var(--cr-accent);border:1px solid color-mix(in srgb,var(--cr-accent) 20%,white);
+  border-radius:999px;padding:.27em .7em
+}
+body[data-course-theme] :is(.tag,.badge,.pill):nth-child(3n+2){background:color-mix(in srgb,var(--cr-accent2) 11%,white);color:var(--cr-accent2);border-color:color-mix(in srgb,var(--cr-accent2) 24%,white)}
+body[data-course-theme] :is(.tag,.badge,.pill):nth-child(3n+3){background:color-mix(in srgb,var(--cr-accent3) 12%,white);color:#91601e;border-color:color-mix(in srgb,var(--cr-accent3) 28%,white)}
+body[data-course-theme] :is(.cta,.button-link,.btn,.button-main){
+  background:linear-gradient(110deg,var(--cr-accent),var(--cr-accent2));
+  color:#fff;border-radius:11px;box-shadow:0 9px 22px color-mix(in srgb,var(--cr-accent) 18%,transparent);
+  transition:transform .18s ease,box-shadow .18s ease
+}
+body[data-course-theme] :is(.cta,.button-link,.btn,.button-main):hover{color:#fff;transform:translateY(-2px);box-shadow:0 13px 26px color-mix(in srgb,var(--cr-accent) 22%,transparent)}
+body[data-course-theme] :is(.paper,.sheet,.article,article,.panel,main)>h2,
+body[data-course-theme] :is(.paper,.sheet,.article,article,.panel) h2{
+  color:var(--cr-deep);scroll-margin-top:85px
+}
+body[data-course-theme] :is(main,article,.sheet,.paper,.panel) h2{
+  border-bottom:1px solid var(--cr-line);padding-bottom:11px
+}
+body[data-course-theme] :is(main,article,.sheet,.paper,.panel) h2:not(:first-child){margin-top:2.1em}
+body[data-course-theme] :is(article,.sheet,.paper,.panel) h2::before{
+  content:"";display:inline-block;width:.28em;height:.95em;border-radius:5px;
+  background:linear-gradient(var(--cr-accent),var(--cr-accent2));vertical-align:-.05em;
+  margin-right:.52em
+}
+body[data-course-theme] :is(article,.sheet,.paper,.panel) h3{color:var(--cr-accent)}
+body[data-course-theme] :is(.side,.toc){
+  background:linear-gradient(180deg,#fff,color-mix(in srgb,var(--cr-haze) 42%,white));
+  border:1px solid var(--cr-line);border-radius:15px;
+  box-shadow:0 10px 30px rgba(35,48,73,.05)
+}
+body[data-course-theme] :is(.side,.toc) a{display:block;border-radius:7px;padding:7px 10px}
+body[data-course-theme] :is(.side,.toc) a:hover{background:color-mix(in srgb,var(--cr-accent) 11%,white)}
+body[data-course-theme] :is(.outline,.filters,.toolbar,.tools){border-color:var(--cr-line)}
+body[data-course-theme] :is(button,.filters button,.filter){
+  accent-color:var(--cr-accent);
+  transition:background-color .14s ease,transform .14s ease
+}
+body[data-course-theme] :is(button,.filters button,.filter):where([aria-pressed="true"]){
+  background:var(--cr-accent);border-color:var(--cr-accent);color:#fff
+}
+body[data-course-theme] :is(input[type="search"],.search,.toolbar input){
+  border:1px solid var(--cr-line);border-radius:11px;background:#fff;
+  min-height:42px
+}
+body[data-course-theme] :is(.chapter,details.chapter){
+  border-color:var(--cr-line);border-radius:11px
+}
+body[data-course-theme] :is(.chapter summary,details summary){color:var(--cr-deep)}
+body[data-course-theme] :is(.lesson,.paper,.card) a{transition:color .16s ease}
+body[data-course-theme] :is(.lesson,.paper,.card) a:hover{color:var(--cr-accent2)}
+body[data-course-theme] :is(.formula,.mathbox,.math,.equation,.diagram){
+  background:linear-gradient(115deg,color-mix(in srgb,var(--cr-haze) 68%,white),#f9fcfd);
+  border:1px solid color-mix(in srgb,var(--cr-accent2) 20%,white);
+  border-left:4px solid var(--cr-accent2);
+  border-radius:12px;padding:17px 20px;margin:18px 0;
+  max-width:100%;overflow-x:auto;overflow-y:hidden
+}
+body[data-course-theme] :is(.formula,.mathbox,.math,.equation) mjx-container{max-width:100%;overflow-x:auto}
+body[data-course-theme] pre{
+  color:#e8eef9;background:linear-gradient(145deg,#17263c,#101d30);
+  border:1px solid #354761;border-top:3px solid var(--cr-accent3);
+  border-radius:11px;padding:20px 22px;line-height:1.73;font-size:13px;
+  overflow-x:auto;white-space:pre;tab-size:4;
+  box-shadow:0 14px 28px rgba(15,28,48,.10)
+}
+body[data-course-theme] pre code{
+  white-space:pre;overflow-wrap:normal;word-break:normal;
+  color:inherit;background:transparent;padding:0;border:0;
+  font:inherit
+}
+body[data-course-theme] :is(.code-label,.codehead){
+  color:var(--cr-accent);font-size:13px;letter-spacing:.03em;
+  background:color-mix(in srgb,var(--cr-haze) 65%,white);
+  padding:8px 13px;border-radius:9px;margin:18px 0 8px
+}
+body[data-course-theme] :is(.code-toolbar,.codehead)+pre{margin-top:0}
+body[data-course-theme] :is(p,li,td) code{
+  color:color-mix(in srgb,var(--cr-accent) 80%,#162b4c);
+  background:color-mix(in srgb,var(--cr-haze) 80%,white);
+  border-radius:5px;padding:.11em .33em;font-size:.87em
+}
+body[data-course-theme] :is(.table-scroll,.tablewrap,.table-wrap,.scroll){
+  overflow-x:auto;border:1px solid var(--cr-line);border-radius:12px;
+  margin:18px 0;background:#fff
+}
+body[data-course-theme] table{border-collapse:collapse;width:100%;max-width:100%;font-size:14px}
+body[data-course-theme] :is(th,td){border-color:var(--cr-line);padding:11px 14px;text-align:left;vertical-align:top}
+body[data-course-theme] th,
+body[data-course-theme] :is(table tr:first-child td){background:color-mix(in srgb,var(--cr-haze) 68%,white);color:var(--cr-deep);font-weight:750}
+body[data-course-theme] tbody tr:nth-child(even){background:#f9fafc}
+body[data-course-theme] tbody tr:hover{background:color-mix(in srgb,var(--cr-haze) 48%,white)}
+body[data-course-theme] :is(.callout,.quote,.intro,.note,.alert,.notice,.exercises){
+  border:1px solid color-mix(in srgb,var(--cr-accent3) 31%,white);
+  border-left:4px solid var(--cr-accent3);border-radius:0 12px 12px 0;
+  background:linear-gradient(110deg,color-mix(in srgb,var(--cr-accent3) 10%,white),#fff);
+  padding:17px 20px;margin:18px 0
+}
+body[data-course-theme] :is(.quote,.callout,.intro) strong{color:var(--cr-deep)}
+body[data-course-theme] details:not(.chapter){
+  border:1px solid var(--cr-line);border-radius:12px;overflow:hidden;
+  background:linear-gradient(155deg,#fff,color-mix(in srgb,var(--cr-haze) 25%,white));
+  margin:14px 0
+}
+body[data-course-theme] details:not(.chapter) summary{
+  padding:12px 17px;color:var(--cr-accent);font-weight:750;cursor:pointer
+}
+body[data-course-theme] details:not(.chapter)[open] summary{
+  background:color-mix(in srgb,var(--cr-accent) 8%,white)
+}
+body[data-course-theme] :is(.meta,.subtitle,.muted,.hint){color:var(--cr-muted)}
+body[data-course-theme] :is(.section-head,.section-top){align-items:baseline}
+body[data-course-theme] :is(.hero-box,.note-panel){border:1px solid rgba(255,255,255,.18);border-radius:16px}
+body[data-course-theme] :is(.hero-box,.note-panel) strong{color:inherit}
+body[data-course-theme] footer{color:var(--cr-muted)}
+body[data-course-theme] :is(.card,.panel,.paper,.lesson){transition:box-shadow .18s ease,border-color .18s ease}
+body[data-course-theme] :is(.card,.panel,.paper):hover{border-color:color-mix(in srgb,var(--cr-accent) 25%,white)}
+/* Specific template refinements */
+body[data-course-theme="econometrics"] .top,
+body[data-course-theme="frontier"] > header,
+body[data-course-theme="classics"] .header,
+body[data-course-theme="cssci"] > nav,
+body[data-course-theme="math"] > header{
+  background:rgba(255,255,255,.94);border-color:var(--cr-line);
+  backdrop-filter:blur(10px)
+}
+body[data-course-theme="econometrics"] .paper{margin-bottom:18px;padding:clamp(20px,3vw,35px)}
+body[data-course-theme="econometrics"] .side{top:24px}
+body[data-course-theme="econometrics"] main.wrap{max-width:1130px}
+body[data-course-theme="econometrics"] .layout{grid-template-columns:220px minmax(0,1fr)}
+body[data-course-theme="econometrics"] .formula{font-family:Georgia,serif}
+body[data-course-theme="math"] .article-wrap{max-width:970px}
+body[data-course-theme="math"] .article{padding:clamp(20px,4vw,48px);font-size:16px;line-height:1.95}
+body[data-course-theme="math"] .article .math{border-left-color:var(--cr-accent2)}
+body[data-course-theme="cssci"] .layout{gap:24px}
+body[data-course-theme="cssci"] .toc{top:28px}
+body[data-course-theme="cssci"] .layout>article{padding:clamp(20px,3vw,40px)}
+body[data-course-theme="frontier"] main{max-width:985px}
+body[data-course-theme="frontier"] .article{padding:clamp(20px,3vw,39px)}
+body[data-course-theme="frontier"] .intro{border-left-color:var(--cr-accent2)}
+body[data-course-theme="classics"] .sheet{max-width:990px;padding:clamp(25px,5vw,66px);margin-bottom:56px}
+body[data-course-theme="classics"] .sheet h1{font-family:Georgia,"Noto Serif SC","Songti SC",serif}
+body[data-course-theme="classics"] .sheet h2{border-top:0}
+body[data-course-theme="psm-did"] > header{
+  background:radial-gradient(circle at 91% 2%,#745bba,transparent 39%),
+  linear-gradient(115deg,var(--cr-deep),var(--cr-accent));
+}
+body[data-course-theme="psm-did"] > header h1{color:#fff}
+body[data-course-theme="psm-did"] > header p{color:#e5f5f2}
+body[data-course-theme="psm-did"] main{border-color:var(--cr-line)}
+body[data-course-theme="psm-did"] main .panel:nth-child(even){border-top:3px solid var(--cr-accent2)}
+body[data-course-theme="psm-did"] main .panel:nth-child(odd){border-top:3px solid var(--cr-accent3)}
+/* Responsive and accessibility */
+@media(max-width:850px){
+  body[data-course-theme="econometrics"] .layout,
+  body[data-course-theme="cssci"] .layout{grid-template-columns:minmax(0,1fr)}
+  body[data-course-theme] :is(.side,.toc){position:static;top:auto;max-width:100%;overflow-x:auto}
+  body[data-course-theme] :is(.hero,.sheet,.article,.paper,.panel){border-radius:14px}
+}
+@media(max-width:620px){
+  body[data-course-theme]{font-size:15px;line-height:1.82}
+  body[data-course-theme] h1{font-size:clamp(25px,7vw,33px)}
+  body[data-course-theme] :is(.paper,.sheet,.article,.panel,.outline){padding:19px 17px}
+  body[data-course-theme] :is(.hero,section.hero){padding:25px 19px}
+  body[data-course-theme] :is(.formula,.mathbox,.math,.equation){padding:14px 12px}
+  body[data-course-theme] pre{font-size:12px;padding:14px;line-height:1.64}
+  body[data-course-theme] table{display:block;max-width:100%;overflow-x:auto}
+  body[data-course-theme] :is(.facts,.stats){gap:9px}
+  body[data-course-theme="classics"] .sheet{margin:8px 9px 36px}
+  body[data-course-theme="psm-did"] main{margin-left:10px;margin-right:10px}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  body[data-course-theme] :is(.card,.panel,.paper,.lesson,.cta,.button-link,.btn){transition:none}
+}
+@media print{
+  body[data-course-theme]{background:#fff;color:#101820}
+  body[data-course-theme] :is(.paper,.sheet,.article,.panel,.outline){box-shadow:none;border:0}
+  body[data-course-theme] pre{background:#f2f5f8!important;color:#1c2733!important;border:1px solid #ccd5de;white-space:pre-wrap}
+  body[data-course-theme] :is(.side,.toc){display:none}
+  body[data-course-theme] a{color:inherit}
+}

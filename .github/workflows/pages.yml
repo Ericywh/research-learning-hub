@@ -7,6 +7,7 @@ on:
       - 'docs/**'
       - '.github/workflows/pages.yml'
       - 'scripts/build-econometrics-public.cjs'
+      - 'scripts/style-course-pages.cjs'
       - 'scripts/sync-econometrics-notion.cjs'
   workflow_dispatch:
   # Every four hours as a recovery path when GitHub App pushes do not
@@ -224,6 +225,13 @@ jobs:
           }
           console.log('Validated ' + issues.length + ' frontier issue pages and public index links.');
           NODE
+
+      - name: Apply shared visual design to six course sites
+        shell: bash
+        env:
+          DEPLOY_SHA: ${{ github.sha }}
+        run: |
+          node scripts/style-course-pages.cjs
 
       - name: Upload complete site for Pages
         uses: actions/upload-pages-artifact@v3
