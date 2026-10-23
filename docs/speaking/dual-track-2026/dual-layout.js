@@ -23,16 +23,50 @@ function card(kicker,title,cls){
 }
 function coloredStep(time,label,body,i){
  const color=palette[i%palette.length];
- const step=element("div","step");
+ const step=element("div","step practice-step");
  step.style.setProperty("--accent",color[0]);
  step.style.setProperty("--wash",color[1]);
- step.appendChild(element("div","when",time));
+ step.setAttribute("aria-label","第"+(i+1)+"阶段，"+time+"，"+(label||"独立训练"));
+ const rail=element("div","practice-step-rail");
+ rail.appendChild(element("span","practice-step-index",String(i+1).padStart(2,"0")));
+ rail.appendChild(element("span","when",time));
  const content=element("div","step-content");
  content.appendChild(element("h3","",label||"独立训练"));
- const p=element("p","",body);
- content.appendChild(p);
- step.appendChild(content);
+ content.appendChild(element("p","",body));
+ step.append(rail,content);
  return step;
+}
+function practiceDuration(when){
+ const found=String(when||"").match(/(\d{1,2})\s*[—–-]\s*(\d{1,2})/);
+ return found?Math.max(0,Number(found[2])-Number(found[1])):0;
+}
+function practiceScheduleOverview(items){
+ const overview=element("div","practice-overview");
+ overview.setAttribute("role","group");
+ overview.setAttribute("aria-label","本课五段训练时间分布");
+ const heading=element("div","practice-overview-head");
+ heading.append(
+  element("span","practice-overview-label","今日训练时间分布"),
+  element("span","practice-overview-total","18 MIN · 5 STAGES")
+ );
+ const segments=element("div","practice-duration-bar");
+ segments.setAttribute("aria-hidden","true");
+ const durations=items.map(x=>practiceDuration(x.when));
+ const total=durations.reduce((a,b)=>a+b,0);
+ items.forEach((item,i)=>{
+  const cell=element("span","practice-duration-segment");
+  cell.style.setProperty("--stage-color",palette[i%palette.length][0]);
+  cell.style.flexGrow=String(total===18?durations[i]:1);
+  cell.setAttribute("title",item.when+"｜"+item.title);
+  segments.appendChild(cell);
+ });
+ const labels=element("div","practice-overview-foot");
+ labels.append(
+  element("span","","按原题时长执行，不额外加时"),
+  element("span","","01 — 05")
+ );
+ overview.append(heading,segments,labels);
+ return overview;
 }
 function splitTimeSteps(text){
  const regex=/(\d{1,2}\s*[—–-]\s*\d{1,2}\s*分钟)(?:\s*[｜|]\s*([^：:\n]{1,75}))?\s*[：:]/g;
@@ -375,8 +409,10 @@ function transformMorning(lesson,main,aside){
  const title=heading?heading.textContent:"早晨独立开口训练";
  const material=learningMaterialCard(lesson,task,parsed.head);
  const taskPart=taskCard(task,title,parsed.head);
- const practice=card("18-MINUTE PRACTICE · 五步训练",title);
+ const practice=card("18-MINUTE PRACTICE · 五步训练",title,"practice-plan");
+ practice.appendChild(practiceScheduleOverview(parsed.items));
  const steps=element("div","steps");
+ steps.setAttribute("aria-label","五步训练详细要求");
  parsed.items.forEach((x,i)=>steps.appendChild(coloredStep(x.when,x.title,x.text,i)));
  practice.appendChild(steps);
  const reference=prepareAnswer(details,{
