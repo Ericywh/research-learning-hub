@@ -192,6 +192,97 @@ function reviewPanel(aside){
  panel.append(checks,status,element("p","small","记录只保存在当前浏览器，不上传个人录音或评分。"));
  aside.appendChild(panel);
 }
+
+// The learning cards below use only the scenario and question already printed in this lesson.
+// They add presentation and an evidence-aware workflow; never reveal example answers.
+const assessmentDays=new Set(["01","07","14","21","28","35","42","49","56","63"]);
+const inputLabels=["训练目标","场景","模拟场景","原创模拟情境","完整模拟材料",
+ "模拟情境","情境材料","情境","直接回答的完整题目","完整口头任务",
+ "口头练习题","明确问题","本课任务","题目","完整题目","任务要求","口头任务"];
+function labeledPart(raw,labels){
+ const value=String(raw||"").replace(/\s+/g," ").trim();
+ for(const label of labels){
+  const mark=label+"：";
+  let at=value.indexOf(mark);
+  let size=mark.length;
+  if(at<0){const alternate=label+":";at=value.indexOf(alternate);size=alternate.length;}
+  if(at<0)continue;
+  let end=value.length;
+  for(const next of inputLabels){
+   let start=value.indexOf(next+"：",at+size);
+   if(start<0)start=value.indexOf(next+":",at+size);
+   if(start>=0&&start<end)end=start;
+  }
+  const answer=value.slice(at+size,end).trim();
+  if(answer)return answer;
+ }
+ return "";
+}
+function materialLine(title,value,tone){
+ const wrap=element("div","material"+(tone?" "+tone:""));
+ wrap.appendChild(element("b","",title));
+ wrap.appendChild(element("p","",value));
+ return wrap;
+}
+function learningMaterialCard(lesson,task,prelude){
+ const box=card("READY-TO-USE MATERIAL · 今日素材",mode==="am"?"今天要回应的情境":"今天要分析的同题案例","dual-material-card");
+ if(mode==="am"){
+  const supplied=((task&&task.textContent)||"")+"\n"+String(prelude||"");
+  const situation=labeledPart(supplied,["完整模拟材料","原创模拟情境","情境材料","模拟情境","模拟场景","场景","情境"]);
+  const question=labeledPart(supplied,["直接回答的完整题目","完整口头任务","口头练习题","明确问题","完整题目","口头任务","任务要求"]);
+  if(situation)box.appendChild(materialLine("已给出的场景材料",situation,""));
+  if(question)box.appendChild(materialLine("需要独立回答的问题",question,"alt"));
+  if(!situation&&!question){
+   const original=String(prelude||"").trim()||((task&&task.textContent)||"").trim();
+   box.appendChild(materialLine("本课提供的练习题目",original||"按原题所列情境完成开口训练。",""));
+  }
+  box.appendChild(element("p","small","只需阅读本页给出的材料，无需另外查找新闻或案例。若为无提示测评，请先按原题完成首次录音，再进行分析。"));
+ }else{
+  const paragraph=lesson.querySelector(".depth-analysis p");
+  const info=paragraph?paragraph.textContent:"";
+  // First paragraph of the existing deep analysis states “情境是……”；“实际问题是……”.
+  const match=info.match(/情境是[“"]([\s\S]*?)[”"]\s*[；;,，]?\s*实际问题是[“"]([\s\S]*?)[”"]/);
+  if(match){
+   box.appendChild(materialLine("同题情境（原课材料）",match[1].trim(),""));
+   box.appendChild(materialLine("本课需要分析的问题",match[2].trim(),"alt"));
+  }else{
+   // Do not fabricate a scenario when a source field is unavailable.
+   const quoted=info.replace(/^\s*信息分层[：:]\s*/,"").trim();
+   box.appendChild(materialLine("本课已有案例与研究问题",quoted||"请依据下面的本题信息—机制—边界分析材料独立辨析。",""));
+  }
+  box.appendChild(element("p","small","素材来自本课原有案例描述，用于无声辨析；请区分已知条件与未经核实的推断，不把模拟情境写成真实新闻。"));
+ }
+ return box;
+}
+function keyReminderCard(){
+ const box=card("IMPORTANT · 重要提醒","开始前必须注意的要求","dual-reminder-card");
+ const points=mode==="am"?
+  (assessmentDays.has(day)?
+    ["本日为无提示基线或阶段复测：首次录音前只阅读原题与必要情境，不打开参考区，也不提前使用示范关键词或结构提示。","严格执行原题规定的准备与发言时长，单独保留首次录音和原始评分；测后重录不能替代测评成绩。","本课模拟情境只用于训练；不编造个人经历、数据、政策效果或未经证实的因果结论。"]:
+    ["先独立开口并保存首次录音，之后再回听、修订；练习前不要展开参考示范。","优先修正一个具体问题，并将同一表达方法迁移到陌生情境，不照读范文。","依据给出的事实表达；模拟情境不是实际新闻或个人经历。"]) :
+  ["晚间为独立的静默技巧课：可以思考或书写，不以默读替代早晨的真实录音与评分。","先完成同题推演、反例诊断与关键词整理，再打开练后参考，避免预先看到标准表达。","分析时区分情境已知信息、作者假设与待核实事实，不凭空补充案例数据。"];
+ const list=element("ul","dual-reminder-list");
+ points.forEach(v=>list.appendChild(element("li","",v)));
+ box.appendChild(list);
+ return box;
+}
+function todaysOutcomesCard(){
+ const box=card("TODAY'S OUTPUT · 今日成果",mode==="am"?"完成本课后应保留什么":"完成晚间学习后应留下什么","dual-outcome-card");
+ const outputs=mode==="am"?
+  ["首次录音：按原题时长保存音频，复测课同时记录原始准备时间和评分。",
+   "回听记录：明确指出一处贴题、结构、理由、准确性或表达自然度问题。",
+   "修改与迁移：保留重录结果，完成一段换题口头回应，不覆盖首次录音。",
+   "下次改进点：记录一条具体、可执行的表达调整。"]:
+  ["两套结构：针对同一题目，自拟两组不同的关键词或简短论证路线。",
+   "反例修订：指出至少一处不当表达及其原因，写出更准确的替换说法。",
+   "迁移记录：写下一条适用于新情境的表达原则及其边界。",
+   "独立归档：晚课纸笔成果单独记录，不能代替早课录音。"];
+ const list=element("ol","dual-outcome-list");
+ outputs.forEach(v=>list.appendChild(element("li","",v)));
+ box.appendChild(list);
+ box.appendChild(element("p","small","这是本课18分钟内的学习产出核对清单，不另增训练时长；完成状态仍由下方原有按钮记录。"));
+ return box;
+}
 function transformMorning(lesson,main,aside){
  const details=lesson.querySelector("details");
  if(!details)return false;
@@ -201,6 +292,7 @@ function transformMorning(lesson,main,aside){
  if(parsed.items.length!==5)return false;
  const heading=lesson.querySelector("h2");
  const title=heading?heading.textContent:"早晨独立开口训练";
+ const material=learningMaterialCard(lesson,task,parsed.head);
  const taskPart=taskCard(task,title,parsed.head);
  const practice=card("18-MINUTE PRACTICE · 五步训练",title);
  const steps=element("div","steps");
@@ -211,7 +303,7 @@ function transformMorning(lesson,main,aside){
  const reference=prepareAnswer(details);
  const completion=main.querySelector(".course-completion[data-completion-id]");
  if(!completion||!reference)return false;
- main.replaceChildren(taskPart,practice,reference,completion);
+ main.replaceChildren(taskPart,material,keyReminderCard(),practice,todaysOutcomesCard(),reference,completion);
  timerPanel(aside,(task?task.textContent:parsed.head)||"");
  reviewPanel(aside);
  return true;
@@ -234,6 +326,7 @@ function transformEvening(lesson,main,aside){
  const details=lesson.querySelector("details");
  const completion=main.querySelector(".course-completion[data-completion-id]");
  if(!details||!completion)return false;
+ const material=learningMaterialCard(lesson,null,"");
  const nodes=Array.from(lesson.childNodes);
  const sections=[];
  const header=nodes.find(n=>n.nodeType===1&&n.nodeName==="H2");
@@ -260,7 +353,7 @@ function transformEvening(lesson,main,aside){
  sections.forEach(normalizeLooseParagraphs);
  const reference=prepareAnswer(details);
  if(!reference)return false;
- main.replaceChildren(intro,...sections,reference,completion);
+ main.replaceChildren(intro,material,keyReminderCard(),...sections,todaysOutcomesCard(),reference,completion);
  reviewPanel(aside);
  return true;
 }
