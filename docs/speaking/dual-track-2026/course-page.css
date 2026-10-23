@@ -1,3 +1,4 @@
+@import url('../lesson-progress.css');
 
 :root{--ink:#28344b;--muted:#69758a;--line:#e5e7f0;--purple:#6e59bf;font-family:system-ui,-apple-system,"PingFang SC","Noto Sans SC","Microsoft YaHei",sans-serif}
 *{box-sizing:border-box}body{margin:0;background:#f8f9fc;color:var(--ink);line-height:1.75;font-size:15px}a{color:#5948a4;text-underline-offset:3px}button,input{font:inherit}button{cursor:pointer}a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid #ae9ce9;outline-offset:3px}
@@ -37,7 +38,6 @@
 .footer a{color:#51449e}.method-note{font-size:13px;color:#66748c}
 @media(max-width:790px){.layout{grid-template-columns:1fr}.sidebar{display:block}}
 
-@import url('../lesson-progress.css');
 
 /* Matching the legacy learning page's 295px right rail, cards and subdued task treatment. */
 :root{--accent:#5744a1}
