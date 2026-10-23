@@ -1,0 +1,71 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>第012期｜统计与实证研究前沿日报</title><style>
+:root{--bg:#f9f7f3;--paper:#fffefa;--ink:#334248;--muted:#71817f;--line:#e6e8e1;--side:#eff4f0}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 85% 0%,#f0ecf7,transparent 42%),var(--bg);font:15px/1.92 system-ui,-apple-system,"Noto Sans CJK SC","PingFang SC",sans-serif;color:var(--ink)}a{color:#497b73;text-underline-offset:4px}.layout{display:grid;grid-template-columns:250px minmax(0,1fr);max-width:1480px;margin:auto}.side{background:var(--side);border-right:1px solid var(--line);padding:35px 25px;position:sticky;top:0;height:100vh}.side h1{font:700 24px/1.4 Georgia,serif}.side a{display:block;text-decoration:none;color:#56766c;font-size:13px;padding:10px 8px}.side a:hover{background:#e0ebe3;border-radius:9px}.brand{font-size:11px;letter-spacing:.16em;color:#76978a;font-weight:800}.main{min-width:0;padding:30px 38px}.article{max-width:920px;margin:auto}.hero{background:linear-gradient(115deg,#eff5ec,#f9f1ee 55%,#f2eef8);border:1px solid var(--line);border-radius:24px;padding:40px 45px;margin-bottom:25px}.hero h1{font:700 clamp(27px,3.2vw,40px)/1.4 Georgia,"Noto Serif CJK SC",serif}.hero p{color:#687f77}.chip{display:inline-block;background:#fff9;border-radius:40px;padding:4px 13px;font-size:12px;margin:7px 8px 0 0}.callout{padding:16px 22px;border-radius:13px;background:#eef5ee;border:1px solid #e2e9e1}.paper,.section{background:var(--paper);border:1px solid var(--line);border-left:6px solid #b0cfbc;border-radius:20px;padding:29px 34px;margin:22px 0;box-shadow:0 12px 30px #34413a0a;scroll-margin-top:20px}.paper.p2{border-left-color:#c4b0df}.paper.p3{border-left-color:#edbca6}.paper h2,.section h2{font:700 23px/1.5 Georgia,"Noto Serif CJK SC",serif;margin:0 0 15px}.prose{white-space:pre-line;overflow-wrap:anywhere}.prose b{color:#50776b}.prose p{margin:13px 0}.intro{margin:0 0 20px}.section{border-left:1px solid var(--line)}table{border-collapse:collapse;width:100%;font-size:13px}td{border-bottom:1px solid var(--line);padding:10px;vertical-align:top}tr:first-child{background:#eaf1eb;font-weight:700}.toolbar{display:flex;justify-content:space-between;gap:12px;margin:0 0 20px}.toolbar input{width:70%;border:1px solid var(--line);background:var(--paper);padding:12px 16px;border-radius:12px;color:var(--ink)}button{border:1px solid var(--line);border-radius:30px;background:var(--paper);padding:10px 14px;color:var(--ink);cursor:pointer}body.dark{--bg:#1e292a;--paper:#293739;--ink:#e3ebe8;--muted:#a8bbb3;--line:#405151;--side:#233333;background:var(--bg)}body.dark .hero{background:linear-gradient(115deg,#30483c,#3c374b)}body.dark .callout{background:#354940}body.dark .prose b{color:#b7d6c6}body.dark tr:first-child{background:#3a4e48}@media(max-width:900px){.layout{display:block}.side{height:auto;position:static}.side a{display:inline-block}.main{padding:18px}.hero{padding:28px}.paper,.section{padding:23px}}@media print{.side,.toolbar{display:none}.layout{display:block}.main{padding:0}.paper{box-shadow:none}}
+</style></head><body><div class="layout"><aside class="side"><div class="brand">RESEARCH FRONTIER</div><h1>统计与实证研究前沿日报</h1><p>第012期 · 2026-10-20</p><a href="#top">本期总览</a><a href="#paper-1">论文一</a><a href="#paper-2">论文二</a><a href="#paper-3">论文三</a></aside><main class="main"><div class="article"><div class="toolbar"><input id="search" type="search" placeholder="检索本期论文…" aria-label="搜索论文"><button id="theme">◐ 夜间</button><button onclick="window.print()">⎙ 打印</button></div><header class="hero" id="top"><div class="brand">ISSUE 012 · 2026-10-20</div><h1>第012期｜今日研究前沿</h1><p>统计、计量经济学与因果推断方法精读</p><span class="chip">3篇真实论文</span><span class="chip">原Notion正文归档</span><span class="chip">不增加课程课次</span></header><div class="intro"><div class="callout">
+统计与实证研究前沿日报 · 第012期 · 2026-10-20
+
+全课程第12课
+
+第二章专题：识别、研究设计与统计推断的稳健性。本期讨论工具变量与未测混杂敏感性约束的联合部分识别、非单调缺失的模式图估计，以及分布偏移下个体化政策部署的错误发现率控制。三篇均为2026年10月15—16日首次公开的arXiv v1预印本，已核查HTML正文的核心方法、假设、模拟与应用，未独立运行作者代码。
+</div>
+
+</div><article class="paper p1" id="paper-1"><h2><span>一、工具变量能否收紧未测混杂下的ATE界限？</span></h2><div class="prose">
+
+<b>Sharp Instrumental Variable Bounds under The Marginal Sensitivity Model</b>
+
+作者：Antonio Olivas-Martinez；Eric Tchetgen Tchetgen；首次公开：2026-10-15 18:06:41 UTC；arXiv:2610.22513v1；DOI:10.48550/arXiv.2610.22513（DataCite注册待完成）；状态：预印本，未核实正式期刊发表。
+
+<a href="https://arxiv.org/abs/2610.22513" target="_blank" rel="noopener noreferrer">arXiv官方书目</a> · <a href="https://arxiv.org/html/2610.22513v1" target="_blank" rel="noopener noreferrer">公开HTML全文</a>
+
+传统边际敏感性模型（MSM）用参数Λ约束未观测混杂强度，却没有利用已有工具变量。作者构造IV-MSM，在工具变量各分层中施加敏感性约束，并要求潜在结果分布跨工具组兼容，求得潜在结果均值与总体ATE的尖锐识别集。离散结果可得显式界限；连续结果采用预设阈值函数类给出可计算外界。交叉拟合一步估计与向外置信集用于统计推断。识别依赖一致性、正值性、工具变量条件交换性、分布排除限制及敏感性界限，不要求单调性或效应同质性。
+
+论文使用俄勒冈医疗保险抽签实验公开行政数据，分析样本22,170人，以抽签为工具、Medicaid覆盖为处理、急诊使用为结果。作者报告在给定敏感性范围内IV约束可缩窄ATE区间；但排除限制若因抽签直接影响就医行为而失效，结论也会改变。对企业政策研究中“工具变量不够强以点识别ATE”的场景有启发。作者文中列出代码仓库，但本次GitHub读取返回404，不能认定复现包现已公开可用。
+
+<b>首推精读：需区分尖锐识别集、限制函数类外界与置信集的覆盖对象。</b>
+
+</div><article class="paper p2" id="paper-2"><h2><span>二、反复缺失又重新观测的数据如何估计？</span></h2><div class="prose">
+
+<b>Pattern Graph Models for Non-monotone Missing Data with an Application to Myocardial Infarction Complications</b>
+
+作者：Yanghyeon Cho；Jae Kwang Kim；Emily Berg；首次公开：2026-10-15 23:51:45 UTC；arXiv:2610.22757v1；DOI:10.48550/arXiv.2610.22757（DataCite注册待完成）；状态：预印本，未核实正式期刊发表。
+
+<a href="https://arxiv.org/abs/2610.22757" target="_blank" rel="noopener noreferrer">arXiv官方书目</a> · <a href="https://arxiv.org/html/2610.22757v1" target="_blank" rel="noopener noreferrer">公开HTML全文</a>
+
+对多变量非单调缺失，作者使用模式图表示不同观测模式及其父子关系。关键的“局部MAR赔率”限制仅要求某一缺失模式相对于父模式的概率比由该模式已观测变量决定，整体缺失机制仍可能是MNAR。作者以参数化响应概率和完整数据结果模型构造EM与分数插补（FI）估计，给出一致性、渐近正态及参数自助法方差推断。成立需要正确指定模式图、赔率模型和结果模型，及正值性、适当的插补精度；作者明确不主张双重稳健。
+
+在UCI心肌梗死并发症数据中，分析样本为1,700名患者，研究低血压、阿片类用药与死亡的统计关联。分数插补利用不完整观测，使低血压层有效样本约165，而完整病例仅57；该结果是关联而非用药因果效应。UCI原始数据及作者R代码仓库均已核实可定位，代码未运行。对企业调查中多指标交替缺报的研究具有直接迁移价值。
+
+<b>值得精读：应对不同合理模式图做敏感性分析，并单独处理数据驱动选图后的推断问题。</b>
+
+</div><article class="paper p3" id="paper-3"><h2><span>三、部署AI决策时如何控制个体层面的错误发现？</span></h2><div class="prose">
+
+<b>Conformal Policy Selection: When to Deploy AI Decisions for Targeted Intervention</b>
+
+作者：Junyu Cao；Ruijiang Gao；Maytal Saar-Tsechansky；Mingzhang Yin；首次公开：2026-10-16 04:46:32 UTC；arXiv:2610.22930v1；DOI:10.48550/arXiv.2610.22930（DataCite注册待完成）；状态：预印本，未核实正式期刊发表。
+
+<a href="https://arxiv.org/abs/2610.22930" target="_blank" rel="noopener noreferrer">arXiv官方书目</a> · <a href="https://arxiv.org/html/2610.22930v1" target="_blank" rel="noopener noreferrer">公开HTML全文</a>
+
+作者把“向哪些对象部署新政策”转化为多个个体的阈值检验，使用从行为政策到目标政策的密度比构造加权保形p值，再通过筛选—修剪程序控制被选对象中的错误发现率（FDR）。在密度比已知、校准与测试样本独立、分数对结果单调等条件下，证明有限样本FDR控制；权重误设时的渐近保证还需真实残差分数、误差独立和有界权重等额外条件。不能把有限样本保证直接套用于任意机器学习估计的权重和分数。
+
+作者开展四类模型误设模拟，并利用真实电子病历协变量构造半合成糖尿病干预场景；反事实真值由模型模拟生成，不是现实医疗行为的已识别因果效应。公开GitHub仓库包含算法、模拟、LaLonde示例与部分数据；糖尿病EHR数据受限，不能完全公开复现。对信贷干预、教育支持等高风险个体化决策有借鉴意义。
+
+<b>值得精读：尤其要核查离线策略评估的可交换性、正值性和选择后FDR定义。</b>
+
+</div></article><section class="section"><h2><span>四、方法横向比较</span></h2><div class="prose">
+
+| 维度 | IV-MSM部分识别 | 模式图分数插补 | 保形政策选择 |
+| --- | --- | --- | --- |
+| 核心问题 | 未测混杂下的ATE界限 | 非单调MNAR缺失 | 个体部署的FDR |
+| 主要方法 | 尖锐界限、交叉拟合 | 模式图、EM/FI | 加权保形p值、修剪 |
+| 关键条件 | IV有效性、Λ约束 | 模式图及双模型正确 | 分布比、独立性、分数条件 |
+| 主要边界 | 区间非点识别 | 并非双重稳健 | 有限样本结论非无条件 |
+| 数据/代码 | Oregon公开数据；代码链接404 | UCI数据、R代码已定位 | 部分代码公开；EHR受限 |
+
+</div></article><section class="section"><h2><span>五、本期首推与进一步核查</span></h2><div class="prose">
+
+本期首推Olivas-Martinez与Tchetgen Tchetgen。该文把工具变量约束与敏感性参数放在同一识别问题中，避免“有IV就必然点识别ATE”的常见误判。精读时应追问：工具变量排除限制与敏感性约束如何分别发挥作用；Λ变化时哪些取值与观测分布不兼容；连续结果的限制类外界何时逼近尖锐界限；向外置信集为何可以在阈值优化不规则时保持覆盖。
+
+</div></article><section class="section"><h2><span>六、进度与证据边界</span></h2><div class="prose">
+
+本期为第2章第5节、全课程第12课；按当前可核实历史累计12课、36篇不同论文。下一节为第2章·第6节｜今日研究前沿（全课程第13课）。以上为论文作者报告及本期方法分析，未进行独立复现。
+
+此离线HTML不是GitHub Pages部署凭证。</div><p style="font-size:12px;color:#899a92;text-align:center">第012期原文归档 · GitHub Pages阅读版</p></div></main></div><script>const s=document.getElementById('search');s.addEventListener('input',()=>document.querySelectorAll('article.paper').forEach(x=>x.hidden=!x.textContent.toLowerCase().includes(s.value.trim().toLowerCase())));const t=document.getElementById('theme');t.addEventListener('click',()=>{document.body.classList.toggle('dark');t.textContent=document.body.classList.contains('dark')?'☀ 日间':'◐ 夜间'});</script></body></html>
