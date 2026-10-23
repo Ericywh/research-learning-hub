@@ -380,7 +380,7 @@ function transformMorning(lesson,main,aside){
  parsed.items.forEach((x,i)=>steps.appendChild(coloredStep(x.when,x.title,x.text,i)));
  practice.appendChild(steps);
  const reference=prepareAnswer(details,{
-  question:(task&&task.textContent)||parsed.head,
+  question:material.querySelector(".material.alt p")?.textContent||material.querySelector(".material p")?.textContent||parsed.head,
   transfer:parsed.items[4].text
  });
  const completion=main.querySelector(".course-completion[data-completion-id]");
