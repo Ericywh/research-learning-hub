@@ -105,7 +105,12 @@ function taskCard(task,title,prefix){
  section.appendChild(q);
  return section;
 }
-function timerPanel(aside){
+function timerPanel(aside,taskText){
+ const durationHit=String(taskText||"").match(/连续录音\s*(\d+)秒/)||
+  String(taskText||"").match(/首次录音\s*(\d+)秒/)||
+  String(taskText||"").match(/录音\s*(\d+)秒/);
+ const secondsFromTask=durationHit?Number(durationHit[1]):60;
+ const defaultSeconds=[45,60,75,90,120,180,240].includes(secondsFromTask)?secondsFromTask:60;
  const panel=card("TIMER · 早晨开口","独立发言倒计时");
  panel.classList.add("dual-timer-panel");
  const clock=element("div","timer","01:00");
@@ -115,7 +120,7 @@ function timerPanel(aside){
  for(const seconds of [45,60,75,90,120,180,240]){
   const opt=element("option","",seconds+"秒");
   opt.value=String(seconds);
-  if(seconds===60)opt.selected=true;
+  if(seconds===defaultSeconds)opt.selected=true;
   select.appendChild(opt);
  }
  const buttons=element("div","buttons");
@@ -127,7 +132,7 @@ function timerPanel(aside){
  const tip=element("p","small","计时器不会录音；请使用设备自带录音工具，测评课严格按原题指定时长执行。");
  panel.append(clock,select,buttons,status,tip);
  aside.prepend(panel);
- let remaining=60,interval=null,endAt=0;
+ let remaining=defaultSeconds,interval=null,endAt=0;
  function paint(){clock.textContent=String(Math.floor(remaining/60)).padStart(2,"0")+":"+String(remaining%60).padStart(2,"0");}
  function halt(){if(interval!==null){clearInterval(interval);interval=null;}}
  function tick(){
@@ -145,6 +150,7 @@ function timerPanel(aside){
  });
  reset.addEventListener("click",function(){halt();remaining=Number(select.value);paint();start.textContent="开始";status.textContent="";});
  select.addEventListener("change",function(){halt();remaining=Number(select.value);paint();start.textContent="开始";status.textContent="";});
+ paint();
 }
 function reviewPanel(aside){
  const panel=card("SELF-CHECK · 个人复盘",mode==="am"?"完成录音后自评":"静默练习后自评");
@@ -191,9 +197,23 @@ function transformMorning(lesson,main,aside){
  const completion=main.querySelector(".course-completion[data-completion-id]");
  if(!completion||!reference)return false;
  main.replaceChildren(taskPart,practice,reference,completion);
- timerPanel(aside);
+ timerPanel(aside,(task?task.textContent:parsed.head)||"");
  reviewPanel(aside);
  return true;
+}
+function normalizeLooseParagraphs(section){
+ const head=Array.from(section.childNodes).slice(0,2);
+ const tail=Array.from(section.childNodes).slice(2);
+ const fragment=document.createDocumentFragment();
+ let paragraph=null;
+ for(const node of tail){
+  const block=node.nodeType===1&&/^(P|DIV|SECTION|OL|UL|TABLE|PRE|BLOCKQUOTE|DETAILS|ARTICLE)$/.test(node.nodeName);
+  if(block){paragraph=null;fragment.appendChild(node);continue;}
+  if(node.nodeType===3&&!node.textContent.trim()&&!paragraph)continue;
+  if(!paragraph){paragraph=element("p","dual-paragraph");fragment.appendChild(paragraph);}
+  paragraph.appendChild(node);
+ }
+ section.replaceChildren(...head,fragment);
 }
 function transformEvening(lesson,main,aside){
  const details=lesson.querySelector("details");
@@ -221,6 +241,8 @@ function transformEvening(lesson,main,aside){
   }
  }
  if(haveModules!==5)return false;
+ normalizeLooseParagraphs(intro);
+ sections.forEach(normalizeLooseParagraphs);
  const reference=prepareAnswer(details);
  if(!reference)return false;
  main.replaceChildren(intro,...sections,reference,completion);
