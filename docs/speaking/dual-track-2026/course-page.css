@@ -36,3 +36,25 @@
 .lesson hr{border:0;border-top:1px solid #e5e7f0;margin:23px 0}
 .footer a{color:#51449e}.method-note{font-size:13px;color:#66748c}
 @media(max-width:790px){.layout{grid-template-columns:1fr}.sidebar{display:block}}
+
+@import url('../lesson-progress.css');
+
+/* Matching the legacy learning page's 295px right rail, cards and subdued task treatment. */
+:root{--accent:#5744a1}
+body{background:#f8f9fc;line-height:1.7}
+.wrap{max-width:1120px;padding:0 25px 45px}
+.top{padding:18px 2px;font-size:13px}
+.hero{background:linear-gradient(115deg,#332b75 0%,#5744a1 73%,#b36f9e 160%);border-radius:26px;padding:38px 45px}
+.hero h1{font-size:clamp(26px,3.8vw,38px)}
+.layout{grid-template-columns:minmax(0,1fr) 295px;gap:19px;margin-top:20px}
+.paper{border-radius:20px;padding:25px 27px;box-shadow:0 5px 20px #33365409}
+.kicker{font-weight:500;color:#6b8095}
+.lesson>h2{font-size:20px;font-weight:500;color:#344861}
+.lesson-task-card{background:#f4f7fb;border:1px solid #dfe7f0;border-left:3px solid #9eb6c9;border-radius:12px;padding:17px 20px;margin:14px 0 20px;color:#344860;line-height:1.9;font-size:15px;font-weight:400;white-space:pre-line}
+.lesson-task-card strong,.lesson-task-card b{font-weight:400}
+.lesson-task-card .task-kicker{color:#6b7e91;font-size:12px;font-weight:400;letter-spacing:.03em;margin:0 0 6px}
+.lesson h3{font-size:16px;font-weight:500;color:#344f6b;border-top:1px solid #e6ebf2;padding-top:17px;margin-top:23px}
+.lesson details summary{font-size:14px;font-weight:500;color:#465c78}
+.lesson .depth-analysis{background:#f7f9fd!important;border-left-color:#9eb6c9!important}
+.sidebar .paper h2{font-weight:500;color:#374e67;font-size:18px}
+@media(max-width:880px){.layout{grid-template-columns:1fr}.wrap{padding:0 12px 25px}.hero{padding:27px 22px;border-radius:18px}.paper{padding:20px 17px;border-radius:14px}.lesson-task-card{padding:15px 16px}}
