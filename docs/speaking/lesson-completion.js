@@ -65,3 +65,16 @@ function setupLesson(){
 function init(){setupLesson();updateDirectory();window.addEventListener("storage",updateDirectory);window.addEventListener("pageshow",updateDirectory);}
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init,{once:true});else init();
 })();
+
+/* Load the canonical legacy-style body layout only for 2026 AM/PM lesson pages.
+   The directory and 18-week archive retain their own existing components. */
+(function(){
+"use strict";
+if(!/\/speaking\/dual-track-2026\/(?:am|pm)\/day-\d{2}\.html$/.test(location.pathname))return;
+const origin=document.currentScript;
+if(!origin||!origin.src)return;
+const node=document.createElement("script");
+node.src=new URL("./dual-track-2026/dual-layout.js",origin.src).href;
+node.async=true;
+document.head.appendChild(node);
+})();
