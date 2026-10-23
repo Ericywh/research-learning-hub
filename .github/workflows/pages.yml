@@ -631,8 +631,10 @@ jobs:
           const first=html.match(/<div class="course-grid" id="course-grid">\s*<a[^>]*href="([^"]+)"/);
           if(!first||!/(?:^|\/)speaking\/$/.test(first[1]))throw Error('Speaking is not the first course in '+process.env.PAGE);
           const count=(html.match(/class="course-card(?: course-card-featured)?"/g)||[]).length;
-          if(count!==7)throw Error('Expected seven course cards, found '+count);
-          console.log('PASS public speaking first on '+process.env.PAGE);
+          if(count!==8)throw Error('Expected eight course cards, found '+count);
+          const cards=[...html.matchAll(/<a class="course-card(?: course-card-featured)?" href="([^"]+)"/g)].map(m=>m[1]);
+          if(!cards[1]||!/(?:^|\/)english\/$/.test(cards[1]))throw Error('English is not the second course in '+process.env.PAGE);
+          console.log('PASS speaking first and English second, eight course cards: '+process.env.PAGE);
           NODE
           done
           status=$(curl -L -sS --connect-timeout 10 --max-time 30 -o /tmp/speaking-first.html -w '%{http_code}' "$BASE/speaking/lessons/01-01.html?design=$DEPLOY_SHA" || true)
