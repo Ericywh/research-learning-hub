@@ -1,6 +1,6 @@
 @import url("./lesson-legacy-standard.css");
 @import url("./dual-track-2026/dual-layout.css?v=20261023-afterpractice-v4");
-@import url("./dual-track-2026/soft-texture.css?v=20261023-soft-v1");
+@import url("./dual-track-2026/soft-texture.css?v=20261023-soft-v2");
 @import url("./dual-track-2026/practice-timeline.css?v=20261023-practice-v1");
 /* Reversible, browser-local lesson completion. No timetable or progress sidebar. */
 .course-completion{background:#fff;border:1px solid #dde6ef;border-radius:17px;padding:19px 22px;margin:17px 0 20px;box-shadow:0 5px 16px #263b5a08;color:#33465f;font-family:inherit;line-height:1.7}
