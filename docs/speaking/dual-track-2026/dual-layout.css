@@ -131,3 +131,48 @@ html.speaking-legacy-standard body.dual-layout-ready .sidebar>.paper{margin:0!im
 }
 @media(max-width:390px){html.speaking-legacy-standard body.dual-layout-ready .steps .step{grid-template-columns:minmax(0,1fr)!important}}
 @media print{html.speaking-legacy-standard body.dual-layout-ready .dual-timer-panel{display:none!important}}
+
+/* Persistent, clearly labeled AM-to-PM navigation; the original page-top link remains. */
+html.speaking-legacy-standard body.dual-layout-ready.dual-am .dual-evening-nav{
+ display:block!important;background:linear-gradient(110deg,#f0f2ff,#f1f8ff,#eef9f6)!important;
+ border:1px solid #dbe1f0!important;border-left:5px solid #6553a9!important;
+ box-shadow:0 5px 18px #343e6510!important;border-radius:17px!important;
+ padding:20px 24px!important;margin:0!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready.dual-am .dual-evening-nav .kicker{
+ color:#6553a9!important;font-size:11px!important;font-weight:850!important;letter-spacing:.12em!important
+}
+html.speaking-legacy-standard body.dual-layout-ready.dual-am .dual-evening-nav h2{
+ color:#29334b!important;font-size:19px!important;font-weight:750!important;margin:6px 0 7px!important
+}
+html.speaking-legacy-standard body.dual-layout-ready.dual-am .dual-evening-nav .dual-evening-explanation{
+ font-size:13px!important;color:#53647b!important;line-height:1.75!important;margin:7px 0 14px!important
+}
+html.speaking-legacy-standard body.dual-layout-ready.dual-am .dual-evening-nav .dual-evening-action{
+ display:inline-flex!important;align-items:center!important;justify-content:center!important;
+ background:#5e50a6!important;color:white!important;border:1px solid #5e50a6!important;
+ border-radius:10px!important;padding:10px 17px!important;min-height:42px!important;
+ font-size:14px!important;font-weight:750!important;line-height:1.5!important;
+ text-decoration:none!important;transition:background .15s,border-color .15s!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready.dual-am .dual-evening-nav .dual-evening-action:hover{
+ background:#463c84!important;border-color:#463c84!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready.dual-am .dual-evening-nav .dual-evening-action:focus-visible{
+ outline:3px solid #ae9ce9!important;outline-offset:3px!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready.dual-am .course-mode-link{
+ border-left:4px solid #6553a9!important;
+ background:linear-gradient(105deg,#f1f1ff,#edf6fb)!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready.dual-am .course-mode-link a{
+ text-underline-offset:3px!important;font-weight:850!important;
+}
+@media(max-width:580px){
+ html.speaking-legacy-standard body.dual-layout-ready.dual-am .dual-evening-nav{
+  padding:17px 16px!important;border-radius:14px!important;
+ }
+ html.speaking-legacy-standard body.dual-layout-ready.dual-am .dual-evening-nav .dual-evening-action{
+  display:flex!important;width:100%!important;text-align:center!important;
+ }
+}
