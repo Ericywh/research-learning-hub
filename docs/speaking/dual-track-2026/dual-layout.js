@@ -335,7 +335,10 @@ function learningMaterialCard(lesson,task,prelude){
   const info=paragraph?paragraph.textContent:"";
   // First paragraph of the existing deep analysis states “情境是……”；“实际问题是……”.
   const match=info.match(/情境是[“"]([\s\S]*?)[”"]\s*[；;,，]?\s*实际问题是[“"]([\s\S]*?)[”"]/);
-  if(match){
+  if(lesson.dataset.caseScene && lesson.dataset.caseQuestion){
+   box.appendChild(materialLine("本课原创练习情境",lesson.dataset.caseScene,""));
+   box.appendChild(materialLine("今天需要回答的问题",lesson.dataset.caseQuestion,"alt"));
+  }else if(match){
    box.appendChild(materialLine("同题情境（原课材料）",match[1].trim(),""));
    box.appendChild(materialLine("本课需要分析的问题",match[2].trim(),"alt"));
   }else{
@@ -346,7 +349,8 @@ function learningMaterialCard(lesson,task,prelude){
  }
  return box;
 }
-function keyReminderCard(material){
+function keyReminderCard(material,lesson){
+ if(mode==="pm" && lesson?.dataset.pmRevision==="case-coach-2026-v2") return null; // Measurement warning is already explicitly embedded in the revised PM body.
  // Important Reminders are deliberately NOT a compulsory card on every lesson.
  // The basic recording, privacy and practice rules are already explained in the
  // actual training steps and course overview; avoid repeating them 126 times.
@@ -421,7 +425,7 @@ function transformMorning(lesson,main,aside){
  });
  const completion=main.querySelector(".course-completion[data-completion-id]");
  if(!completion||!reference)return false;
- const note=keyReminderCard(material);
+ const note=keyReminderCard(material,lesson);
  main.replaceChildren(taskPart,material,...(note?[note]:[]),practice,todaysOutcomesCard(),reference,completion);
  timerPanel(aside,(task?task.textContent:parsed.head)||"");
  reviewPanel(aside);
@@ -478,7 +482,7 @@ function transformEvening(lesson,main,aside){
   transfer:transferMatch?transferMatch[1]:""
  });
  if(!reference)return false;
- const note=keyReminderCard(material);
+ const note=keyReminderCard(material,lesson);
  main.replaceChildren(intro,material,...(note?[note]:[]),...sections,todaysOutcomesCard(),reference,completion);
  reviewPanel(aside);
  return true;
