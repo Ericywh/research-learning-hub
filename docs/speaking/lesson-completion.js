@@ -74,7 +74,7 @@ if(!/\/speaking\/dual-track-2026\/(?:am|pm)\/day-\d{2}\.html$/.test(location.pat
 const origin=document.currentScript;
 if(!origin||!origin.src)return;
 const node=document.createElement("script");
-node.src=new URL("./dual-track-2026/dual-layout.js?v=20261023-pastel-c1",origin.src).href;
+node.src=new URL("./dual-track-2026/dual-layout.js?v=20261023-pm-v2",origin.src).href;
 node.async=true;
 document.head.appendChild(node);
 })();
