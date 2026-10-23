@@ -26,7 +26,7 @@ function start(){
  let holder=main.querySelector(":scope > .layout"),article;
  if(holder){article=holder.querySelector(":scope > div:last-child");if(article)article.classList.add("econ-article")}
  else{
-   holder=document.createElement("div");holder.className="econ-layout";
+   holder=document.createElement("div");holder.className="econ-layout layout";
    article=document.createElement("div");article.className="econ-article";
    const children=[...main.children].filter(n=>n!==hero);
    let section=null,sectionNo=0;
@@ -44,10 +44,19 @@ function start(){
  const nav=holder.querySelector(":scope > nav")||document.createElement("nav");if(!nav.parentElement){nav.className="econ-aside";nav.setAttribute("aria-label","课内导航");holder.prepend(nav)}
  if(!nav.querySelector("a")){const heading=document.createElement("div");heading.className="econ-aside-title";heading.textContent="本课阅读目录";nav.append(heading);
  sections.forEach((section,i)=>{const h=section.querySelector("h2,h3");if(!section.id)section.id="section-"+(i+1);const a=document.createElement("a");a.href="#"+section.id;a.textContent=h.textContent.trim().slice(0,31);nav.append(a)})}
- for(const pre of article.querySelectorAll("pre")){if(pre.previousElementSibling&&pre.previousElementSibling.classList.contains("econ-code-top"))continue;
+ // The build-level lesson reader handles all code blocks; avoid duplicate toolbars.
+ // Without the build-level reader (static HTML previews), use native closed disclosures.
+ if (!b.hasAttribute("data-course-lesson")) {
+ for(const pre of article.querySelectorAll("pre")){if(pre.closest("details.econ-code-preview"))continue;
  const code=pre.querySelector("code"),cls=code?.className||"",language=/python/i.test(cls)?"Python":/stata/i.test(cls)?"Stata":"代码";
  const head=document.createElement("div");head.className="econ-code-top";const label=document.createElement("span");label.textContent="⌘ "+language;head.append(label);
- const copy=document.createElement("button");copy.type="button";copy.textContent="复制代码";copy.addEventListener("click",async()=>{try{await navigator.clipboard.writeText(code?.innerText||pre.innerText);copy.textContent="已复制";setTimeout(()=>copy.textContent="复制代码",1800)}catch(e){copy.textContent="请手动复制"}});head.append(copy);pre.before(head)}
+ const copy=document.createElement("button");copy.type="button";copy.textContent="复制代码";copy.addEventListener("click",async()=>{try{await navigator.clipboard.writeText(code?.innerText||pre.innerText);copy.textContent="已复制";setTimeout(()=>copy.textContent="复制代码",1800)}catch(e){copy.textContent="请手动复制"}});head.append(copy);
+ const disclosure=document.createElement("details");
+ disclosure.className="econ-code-preview";
+ const summary=document.createElement("summary");summary.textContent="点击展开 · "+language+"代码";
+ pre.before(disclosure);disclosure.append(summary,head,pre);
+ }
+ }
 }
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start,{once:true});else start();
 })();

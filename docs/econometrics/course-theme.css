@@ -80,3 +80,40 @@ body.econ-theme[data-econ-dark="true"] a{color:#73d8d6}
 @media(max-width:530px){body.econ-theme .facts{grid-template-columns:1fr}body.econ-theme .facts .fact:last-child{grid-column:auto}body.econ-theme .outline{padding:17px}body.econ-theme .lesson .num{width:49px}body.econ-theme .chapter summary{padding:15px}body.econ-theme .top .top-inner{gap:5px}body.econ-theme pre{font-size:11px;padding:14px}}
 @media(prefers-reduced-motion:reduce){body.econ-theme *{scroll-behavior:auto!important;transition:none!important}}
 @media print{body.econ-theme{background:#fff}body.econ-theme .side,body.econ-theme .econ-aside,body.econ-theme .econ-toggle,body.econ-theme .econ-readingbar,body.econ-theme .econ-code-top button{display:none!important}body.econ-theme .layout,body.econ-theme .econ-layout{display:block}body.econ-theme .paper,body.econ-theme .econ-section{break-inside:avoid;box-shadow:none}body.econ-theme pre{white-space:pre-wrap}}
+
+
+/* 2026-10-23 richer chapter colours; original curriculum unaffected */
+body.econ-theme[data-course-theme="econometrics"] .chapter:nth-of-type(7n+1){--econ-ch:#405cc0;--econ-pale:#eaf0ff}
+body.econ-theme[data-course-theme="econometrics"] .chapter:nth-of-type(7n+2){--econ-ch:#137e89;--econ-pale:#e6f7f7}
+body.econ-theme[data-course-theme="econometrics"] .chapter:nth-of-type(7n+3){--econ-ch:#8261b9;--econ-pale:#f2ecff}
+body.econ-theme[data-course-theme="econometrics"] .chapter:nth-of-type(7n+4){--econ-ch:#b67d30;--econ-pale:#fff2d9}
+body.econ-theme[data-course-theme="econometrics"] .chapter:nth-of-type(7n+5){--econ-ch:#3178b4;--econ-pale:#e8f4ff}
+body.econ-theme[data-course-theme="econometrics"] .chapter:nth-of-type(7n+6){--econ-ch:#b85180;--econ-pale:#fff0f5}
+body.econ-theme[data-course-theme="econometrics"] .chapter:nth-of-type(7n+7){--econ-ch:#4b8d69;--econ-pale:#e8f6ea}
+body.econ-theme[data-course-theme="econometrics"] .chapter{border-left:5px solid var(--econ-ch,#405cc0)}
+body.econ-theme[data-course-theme="econometrics"] .chapter summary{
+  background:linear-gradient(90deg,var(--econ-pale,#eaf0ff),var(--surface) 85%);
+}
+body.econ-theme[data-course-theme="econometrics"] .chapter summary strong{color:var(--econ-ch,#405cc0)}
+body.econ-theme[data-course-theme="econometrics"] .fact:nth-child(1){background:linear-gradient(140deg,#fff,#eaf0ff)}
+body.econ-theme[data-course-theme="econometrics"] .fact:nth-child(2){background:linear-gradient(140deg,#fff,#f2ecff)}
+body.econ-theme[data-course-theme="econometrics"] .fact:nth-child(3){background:linear-gradient(140deg,#fff,#fff2d9)}
+body.econ-theme[data-course-theme="econometrics"] .tag:nth-of-type(4n+1){background:#eaf0ff;color:#405cc0}
+body.econ-theme[data-course-theme="econometrics"] .tag:nth-of-type(4n+2){background:#e6f7f7;color:#137e89}
+body.econ-theme[data-course-theme="econometrics"] .tag:nth-of-type(4n+3){background:#f2ecff;color:#8261b9}
+body.econ-theme[data-course-theme="econometrics"] .tag:nth-of-type(4n+4){background:#fff2d9;color:#a8762d}
+body.econ-theme[data-course-theme="econometrics"] .hero,
+body.econ-theme[data-course-theme="econometrics"] .econ-hero{
+  background:radial-gradient(circle at 90% 12%,#a76ec058,transparent 34%),
+    radial-gradient(circle at 75% 92%,#d9a34f40,transparent 40%),
+    linear-gradient(125deg,#192f60,#22577d 65%,#167a83);
+}
+body.econ-theme details.econ-code-preview{border:1px solid #dbe3ed;border-radius:12px;margin:18px 0;overflow:hidden}
+body.econ-theme details.econ-code-preview>summary{cursor:pointer;padding:13px 17px;font-weight:800;color:#405cc0;background:#eaf0ff}
+body.econ-theme details.econ-code-preview .econ-code-top{margin:0}
+body.econ-theme details.econ-code-preview pre{margin:0}
+body.econ-theme[data-econ-dark="true"] .chapter summary{
+ background:linear-gradient(90deg,color-mix(in srgb,var(--econ-ch,#405cc0) 22%,#1b3040),#1b3040);
+}
+body.econ-theme[data-econ-dark="true"] .fact:nth-child(n){background:var(--surface)}
+body.econ-theme[data-econ-dark="true"] .tag:nth-of-type(n){background:#29475a;color:#edf4f7}
