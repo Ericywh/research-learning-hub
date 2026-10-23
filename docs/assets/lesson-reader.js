@@ -65,11 +65,14 @@
         el.tagName === "SECTION" && el.querySelector("h2, h3"));
     }
 
-    const themes = [
-      ["#5266d3", "#edf0ff"],
-      ["#118e87", "#ebfaf6"],
-      ["#c08a38", "#fff7e8"],
-      ["#b85486", "#fff0f7"],
+    const themes = body.getAttribute("data-course-theme") === "econometrics" ? [
+      ["#405cc0", "#eaf0ff"], ["#137e89", "#e6f7f7"],
+      ["#8261b9", "#f2ecff"], ["#b67d30", "#fff2d9"],
+      ["#3178b4", "#e8f4ff"], ["#b85180", "#fff0f5"],
+      ["#4b8d69", "#e8f6ea"]
+    ] : [
+      ["#5266d3", "#edf0ff"], ["#118e87", "#ebfaf6"],
+      ["#c08a38", "#fff7e8"], ["#b85486", "#fff0f7"],
       ["#7652b7", "#f4efff"]
     ];
     const toc = [];
@@ -197,10 +200,14 @@
     let collapsedExamples = 0;
     for (let i=0;i<codeAreas.length;i++) {
       const pre = codeAreas[i];
-      if (pre.previousElementSibling?.classList?.contains("cr-reader-codebar")) continue;
+      if (pre.closest("details.cr-reader-codefold") || pre.previousElementSibling?.classList?.contains("cr-reader-codebar")) continue;
       const code = pre.querySelector("code");
       const foldLang = findCodeLanguage(pre,code);
+      // Econometrics: default-close ALL preformatted code, even unlabeled examples.
+      // Other courses retain the original Stata/Python-only rule.
+      const foldAll = body.getAttribute("data-course-theme") === "econometrics";
       const lang = foldLang || code?.className?.match(/language-(stata|python|r|javascript|bash|text)\b/i)?.[1];
+      const shouldFold = Boolean(foldLang || foldAll);
       const bar = document.createElement("div");
       bar.className = "cr-reader-codebar";
       const caption = document.createElement("span");
@@ -222,15 +229,17 @@
       bar.append(caption,copy);
       pre.parentNode.insertBefore(bar,pre);
 
-      if (foldLang) {
+      if (shouldFold) {
         const disclosure = document.createElement("details");
         disclosure.className = "cr-reader-codefold";
-        disclosure.setAttribute("data-code-language",foldLang);
+        disclosure.setAttribute("data-code-language",foldLang || lang || "code");
         disclosure.open = false;
         const summary = document.createElement("summary");
         const name = document.createElement("span");
         name.className = "cr-reader-fold-label";
-        name.textContent = foldLang === "stata" ? "Stata 代码" : "Python 代码";
+        name.textContent = foldLang === "stata" ? "Stata 代码" :
+                           foldLang === "python" ? "Python 代码" :
+                           lang ? lang.toUpperCase() + " 代码" : "代码示例";
         const hint = document.createElement("span");
         hint.className = "cr-reader-fold-hint";
         hint.textContent = "点击展开 · 查看完整代码";
@@ -241,6 +250,10 @@
         summary.append(name,hint,chevron);
         bar.parentNode.insertBefore(disclosure,bar);
         disclosure.append(summary,bar,pre);
+        // Legacy lesson tabs sometimes hide the underlying <pre> element.
+        const syncTab = () => { disclosure.hidden = pre.hidden; };
+        new MutationObserver(syncTab).observe(pre,{attributes:true,attributeFilter:["hidden"]});
+        syncTab();
         disclosure.addEventListener("toggle",() => {
           hint.textContent = disclosure.open ? "点击收起 · 已展开完整代码" : "点击展开 · 查看完整代码";
         });
