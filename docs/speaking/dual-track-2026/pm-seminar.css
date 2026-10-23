@@ -1,0 +1,47 @@
+/* PM-only independent case seminar: morning course remains unchanged */
+body.pm-independent{background:#f8f8fb}
+.pm-independent .layout{grid-template-columns:minmax(0,1fr) 255px;gap:22px;align-items:start}
+.pm-independent .main{gap:13px}
+.pm-independent .main>.paper{padding:0;overflow:hidden}
+.pm-seminar{padding:29px 31px 25px;color:#303c50;font-size:15px;line-height:1.85}
+.pm-seminar p{margin:9px 0 15px}
+.pm-seminar .pm-main-title{font-size:25px;line-height:1.35;margin:6px 0 7px;color:#2e3556}
+.pm-seminar .pm-lead{font-size:15px;color:#59657a;margin:0 0 16px}
+.pm-seminar .pm-metadata{display:flex;gap:9px;flex-wrap:wrap;margin:0 0 18px}
+.pm-seminar .pm-metadata span{font-size:12px;color:#6c6095;background:#f4f1fa;border-radius:7px;padding:3px 9px}
+.pm-seminar .pm-section{padding:22px 0 19px;border-top:1px solid #e8e6ed}
+.pm-seminar .pm-section h2{font-size:18px;font-weight:750;line-height:1.5;margin:0 0 12px;color:#383a61}
+.pm-seminar .pm-scene{display:flex;gap:11px;margin:6px 0;font-size:14px}
+.pm-seminar .pm-scene b{flex:0 0 58px;color:#74668f}
+.pm-seminar .pm-contrast{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin:14px 0}
+.pm-seminar .pm-sample{padding:14px 16px;border:1px solid #e7e7eb;border-radius:12px;min-width:0}
+.pm-seminar .pm-sample span{display:block;font-size:12px;font-weight:800;color:#74677a;margin-bottom:8px}
+.pm-seminar .pm-sample p{font-size:14px;line-height:1.85;margin:0}
+.pm-seminar .pm-sample.pm-miss{background:#fcf8f6;border-color:#eee1d9}
+.pm-seminar .pm-sample.pm-hit{background:#f6faf9;border-color:#dce8e5}
+.pm-seminar .pm-case-diagnosis{font-size:14px;color:#425166}
+.pm-seminar .pm-move{padding:12px 16px;border-left:3px solid #b6a9d0;background:#f8f7fb;margin:12px 0;border-radius:0 9px 9px 0}
+.pm-seminar .pm-move span{display:block;font-weight:750;font-size:12px;color:#655385}
+.pm-seminar .pm-move p{font-size:15px;margin:4px 0}
+.pm-seminar .pm-move small{color:#718092;font-size:12px;line-height:1.7}
+.pm-seminar .pm-theory{margin:16px 0 18px;padding:18px 21px;border:1px solid #e1def0;border-radius:13px;background:#fbfaff}
+.pm-seminar .pm-theory-kicker{letter-spacing:.08em;color:#745f9b;font-size:11px;font-weight:800}
+.pm-seminar .pm-theory h3{font-size:16px;line-height:1.55;color:#3f3567;margin:5px 0 8px}
+.pm-seminar .pm-theory p{font-size:14px;margin:7px 0}
+.pm-seminar .pm-theory a{font-size:12px}
+.pm-seminar .pm-task{padding:13px 16px;background:#f4f6fb;border-radius:10px;font-size:14px}
+.pm-seminar .pm-task b{display:block;color:#6e5e9f}
+.pm-seminar details.pm-references,.pm-seminar details.pm-source-extra{border:1px solid #e2e0ea;border-radius:11px;margin:12px 0 15px;overflow:hidden}
+.pm-seminar details summary{cursor:pointer;font-weight:750;font-size:14px;padding:13px 17px;background:#f9f8fc;color:#50477d}
+.pm-seminar .pm-reference-body,.pm-seminar .pm-source-extra>p,.pm-seminar .pm-source-extra>small{display:block;padding:0 18px}
+.pm-seminar .pm-reference-body{padding-top:8px;padding-bottom:12px}
+.pm-seminar .pm-reference-body p{font-size:14px;margin:7px 0 11px}
+.pm-seminar .pm-key{color:#5c5584}
+.pm-seminar .pm-compare{color:#6c7284}
+.pm-seminar .pm-next{font-size:14px;padding:12px 15px;border-top:1px solid #e6e9ef;margin-top:20px;color:#445069}
+.pm-independent .pm-sidebox{padding:20px 18px}
+.pm-independent .pm-sidebox h2{font-size:16px}
+.pm-independent .pm-sidebox p{font-size:13px;color:#546176;line-height:1.8}
+.pm-independent .pm-side-small{border-top:1px solid #ebecf1;padding-top:10px}
+@media(max-width:850px){.pm-independent .layout{grid-template-columns:1fr}.pm-independent .sidebar{position:static}.pm-independent .pm-sidebox{padding:14px 18px}.pm-seminar{padding:22px 21px}}
+@media(max-width:540px){.pm-seminar .pm-contrast{grid-template-columns:1fr}.pm-seminar .pm-main-title{font-size:21px}.pm-seminar .pm-scene{display:block}.pm-seminar .pm-scene b{display:inline-block;margin-right:8px}.pm-seminar{padding:19px 16px}}
