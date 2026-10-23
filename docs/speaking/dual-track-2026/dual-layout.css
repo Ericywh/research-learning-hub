@@ -241,7 +241,7 @@ html.speaking-legacy-standard body.dual-layout-ready .dual-reminder-list>li:befo
  content:"!"!important;background:#b98444!important
 }
 html.speaking-legacy-standard body.dual-layout-ready .dual-outcome-list>li:before{
- content:"✓"!important;background:#399a86!important
+ content:"○"!important;background:#399a86!important
 }
 html.speaking-legacy-standard body.dual-layout-ready .dual-outcome-card>.small{
  margin:11px 0 0!important;font-size:12px!important;color:#748098!important;line-height:1.7!important
