@@ -2,6 +2,100 @@
    完整私人精读报告未经授权不得上传，切勿包含付费PDF或私有数据。 */
 window.CSSCI_CATALOG = [
   {
+    "id": "2026-10-21-04-01-public-rental-fuzzy-rd",
+    "date": "2026-10-21",
+    "title": "从流动到安居：住房保障制度与城乡融合发展——基于农民工群体城市融入视角",
+    "authors": "王诗勇、刘丹丹、孙伟增、王洪卫",
+    "journal": "上海财经大学学报",
+    "year": 2025,
+    "volume": "27",
+    "issue": "2",
+    "pages": "94—107",
+    "doi": "10.16538/j.cnki.jsufe.2025.02.007",
+    "field": "住房保障、农民工城市融入",
+    "methods": [
+      "模糊断点回归",
+      "局部Wald估计",
+      "CCT带宽",
+      "安慰剂"
+    ],
+    "data_types": [
+      "CMDS微观调查",
+      "城市政策阈值"
+    ],
+    "sample": "2016—2017年CMDS，14个城市，2542人，公租房获得者411人",
+    "status": "published",
+    "data_access": "CMDS及各城市政策阈值须依授权取得",
+    "code_access": "教学自写Stata代码未运行；作者原码未取得",
+    "replication_status": "官方全文及表1—9已核对；无原始数据、代码和数值复现",
+    "article_url": "lessons/04-01-2026-10-21.html",
+    "journal_url": "https://qks.sufe.edu.cn/J/CDXB/Article/Details/A0gaoDXcNO-Tlfc-Tu24-9N2N-4Wx0hZBgoVc4/CN",
+    "fulltext_url": "https://qks.sufe.edu.cn/mv_html/j00003/202502/gaoDXcNO-Tlfc-Tu24-9N2N-4Wx0hZBgoVc4_WEB.htm"
+  },
+  {
+    "id": "2026-10-20-03-04-ai-asset-mismatch",
+    "date": "2026-10-20",
+    "title": "人工智能与企业资产结构配置",
+    "authors": "许志勇、甘敏、陈家威、张呈、杨成宇",
+    "journal": "财经研究",
+    "year": 2026,
+    "volume": "52",
+    "issue": "8",
+    "pages": "79—94",
+    "doi": "10.16538/j.cnki.jfe.20260414.101",
+    "field": "人工智能、资产配置错配",
+    "methods": [
+      "企业固定效应",
+      "工具变量",
+      "leave-one-out同行均值"
+    ],
+    "data_types": [
+      "A股企业面板",
+      "年报文本",
+      "企业财务"
+    ],
+    "sample": "2009—2024年，32453个企业—年度观测",
+    "status": "published",
+    "data_access": "CSMAR、Wind、EPS按授权取得",
+    "code_access": "自写Stata教学代码未运行，作者原码未取得",
+    "replication_status": "官方全文、表1—4和公开稳健性已核对；IV详细附表与数值复现未完成",
+    "article_url": "lessons/03-04-2026-10-20.html",
+    "journal_url": "https://qks.sufe.edu.cn/J/CJYJ/Article/2026/08/CN",
+    "fulltext_url": "https://qks.sufe.edu.cn/mv_html/j00001/202608/E3RrbI5U-wHlN-GG6S-KP2c-TtYJe80MMzSm_WEB.htm"
+  },
+  {
+    "id": "2026-10-19-03-03-ai-task-labor-share",
+    "date": "2026-10-19",
+    "title": "人工智能、任务重构与技术红利的分配",
+    "authors": "刘东升、王永中",
+    "journal": "财经研究",
+    "year": 2026,
+    "volume": "52",
+    "issue": "8",
+    "pages": "49—63",
+    "doi": "10.16538/j.cnki.jfe.20260720.401",
+    "field": "人工智能、任务重构、劳动收入份额",
+    "methods": [
+      "行业与年份固定效应",
+      "工具变量",
+      "2SLS",
+      "任务文本分析"
+    ],
+    "data_types": [
+      "上市公司年报",
+      "招聘岗位文本",
+      "城市政策"
+    ],
+    "sample": "2017—2023年A股企业面板；岗位有效样本215245条",
+    "status": "published",
+    "data_access": "CSMAR及招聘平台数据须按授权取得",
+    "code_access": "自行推导Stata示例未运行，作者原码未取得",
+    "replication_status": "官方完整HTML、表1—8与公开稳健性已核对；未执行数值复现",
+    "article_url": "lessons/03-03-2026-10-19.html",
+    "journal_url": "https://qks.sufe.edu.cn/J/CJYJ/Article/2026/08/CN",
+    "fulltext_url": "https://qks.sufe.edu.cn/mv_html/j00001/202608/qidEfPM4-Vnng-E1Pa-AYZg-JnITbJD6pRLb_WEB.htm"
+  },
+  {
     "id": "2026-10-18-03-02-credit-space-gvc",
     "date": "2026-10-18",
     "title": "信贷空间配置效率、技术创新与全球价值链攀升",
@@ -301,8 +395,17 @@ window.CSSCI_CATALOG = [
     "pages": "132—152",
     "doi": "10.16538/j.cnki.fem.20260416.401",
     "field": "企业技术创新、数字技术",
-    "methods": ["企业固定效应", "双向固定效应", "Bartik工具变量", "倾向得分匹配"],
-    "data_types": ["企业面板", "专利IPC", "年报文本"],
+    "methods": [
+      "企业固定效应",
+      "双向固定效应",
+      "Bartik工具变量",
+      "倾向得分匹配"
+    ],
+    "data_types": [
+      "企业面板",
+      "专利IPC",
+      "年报文本"
+    ],
     "sample": "2010—2023年2372家A股企业、15623个企业—年度观测",
     "status": "published",
     "data_access": "incoPat、CSMAR等数据按机构授权获取",
@@ -313,26 +416,36 @@ window.CSSCI_CATALOG = [
     "fulltext_url": "https://qks.sufe.edu.cn/mv_html/j00002/202609/vCKsOWj4-KoAU-geQP-cDGh-qLK8kTu4iCND_WEB.htm"
   },
   {
-    "id":"2026-10-09-ipr-knowledge-flow",
-    "date":"2026-10-09",
-    "title":"“闭门造车”还是“同舟共济”：知识产权保护与创新知识流动",
-    "authors":"解子恒、何祺、张振堃",
-    "journal":"财经研究",
-    "year":2026,
-    "volume":"52",
-    "issue":"7",
-    "pages":"154—168",
-    "doi":"10.16538/j.cnki.jfe.20260414.301",
-    "field":"创新经济学",
-    "methods":["交错DID","双向固定效应","事件研究","BJS插补估计","PPML"],
-    "data_types":["企业面板","专利引用网络","城市政策"],
-    "sample":"2009—2021年沪深A股上市公司",
-    "status":"metadata",
-    "data_access":"部分期刊附件；部分机构授权",
-    "code_access":"期刊有附件入口，尚未检查",
-    "replication_status":"文献及方法核验；未执行数值复现",
-    "article_url":null,
-    "journal_url":"https://qks.sufe.edu.cn/J/CJYJ/Article/Details/A0s8nSWb20-82vx-qbpG-Db8D-LntaYJ03fZGm/CN",
-    "fulltext_url":"https://qks.sufe.edu.cn/mv_html/j00001/202607/s8nSWb20-82vx-qbpG-Db8D-LntaYJ03fZGm_WEB.htm"
+    "id": "2026-10-09-ipr-knowledge-flow",
+    "date": "2026-10-09",
+    "title": "“闭门造车”还是“同舟共济”：知识产权保护与创新知识流动",
+    "authors": "解子恒、何祺、张振堃",
+    "journal": "财经研究",
+    "year": 2026,
+    "volume": "52",
+    "issue": "7",
+    "pages": "154—168",
+    "doi": "10.16538/j.cnki.jfe.20260414.301",
+    "field": "创新经济学",
+    "methods": [
+      "交错DID",
+      "双向固定效应",
+      "事件研究",
+      "BJS插补估计",
+      "PPML"
+    ],
+    "data_types": [
+      "企业面板",
+      "专利引用网络",
+      "城市政策"
+    ],
+    "sample": "2009—2021年沪深A股上市公司",
+    "status": "metadata",
+    "data_access": "部分期刊附件；部分机构授权",
+    "code_access": "期刊有附件入口，尚未检查",
+    "replication_status": "文献及方法核验；未执行数值复现",
+    "article_url": null,
+    "journal_url": "https://qks.sufe.edu.cn/J/CJYJ/Article/Details/A0s8nSWb20-82vx-qbpG-Db8D-LntaYJ03fZGm/CN",
+    "fulltext_url": "https://qks.sufe.edu.cn/mv_html/j00001/202607/s8nSWb20-82vx-qbpG-Db8D-LntaYJ03fZGm_WEB.htm"
   }
 ];
