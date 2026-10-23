@@ -264,6 +264,23 @@ function transformEvening(lesson,main,aside){
  reviewPanel(aside);
  return true;
 }
+function ensureMorningEveningLink(main){
+ if(mode!=="am"||!main||main.querySelector("[data-evening-next]"))return;
+ const eveningHref="../pm/day-"+day+".html";
+ const nav=element("nav","card dual-evening-nav");
+ nav.setAttribute("aria-label","同日晚间课程跳转");
+ nav.setAttribute("data-evening-next",day);
+ nav.appendChild(element("div","kicker","NEXT LESSON · 同日晚间课"));
+ nav.appendChild(element("h2","","继续第"+Number(day)+"天的晚间技巧课"));
+ nav.appendChild(element("p","dual-evening-explanation","完成早间真实开口和自评后，可直接进入对应晚间课，学习技巧分析和静默练习；两课的完成状态分别记录。"));
+ const link=element("a","dual-evening-action","🌙 点击进入第"+Number(day)+"天晚间课 →");
+ link.setAttribute("href",eveningHref);
+ link.setAttribute("aria-label","进入第"+Number(day)+"天晚间技巧精讲与静默练习");
+ nav.appendChild(link);
+ const completion=main.querySelector(".course-completion[data-completion-id]");
+ if(completion)completion.insertAdjacentElement("beforebegin",nav);
+ else main.appendChild(nav);
+}
 function initialize(){
  const main=document.querySelector(".layout > main.main");
  const aside=document.querySelector(".layout > aside.sidebar");
@@ -271,6 +288,7 @@ function initialize(){
  if(!main||!aside||!lesson||main.dataset.layoutStandardized)return;
  // Build only for the known 63+63 dual-track pages, never the legacy 18-week archive.
  const ok=mode==="am"?transformMorning(lesson,main,aside):transformEvening(lesson,main,aside);
+ ensureMorningEveningLink(main);
  if(!ok)return;
  main.dataset.layoutStandardized="022-standard";
  document.documentElement.classList.remove("speaking-layout-v2");
