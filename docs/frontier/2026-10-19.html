@@ -1,0 +1,108 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>第011期｜统计与实证研究前沿日报</title><style>
+:root{--bg:#f9f7f3;--paper:#fffefa;--ink:#334248;--muted:#71817f;--line:#e6e8e1;--side:#eff4f0}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 85% 0%,#f0ecf7,transparent 42%),var(--bg);font:15px/1.92 system-ui,-apple-system,"Noto Sans CJK SC","PingFang SC",sans-serif;color:var(--ink)}a{color:#497b73;text-underline-offset:4px}.layout{display:grid;grid-template-columns:250px minmax(0,1fr);max-width:1480px;margin:auto}.side{background:var(--side);border-right:1px solid var(--line);padding:35px 25px;position:sticky;top:0;height:100vh}.side h1{font:700 24px/1.4 Georgia,serif}.side a{display:block;text-decoration:none;color:#56766c;font-size:13px;padding:10px 8px}.side a:hover{background:#e0ebe3;border-radius:9px}.brand{font-size:11px;letter-spacing:.16em;color:#76978a;font-weight:800}.main{min-width:0;padding:30px 38px}.article{max-width:920px;margin:auto}.hero{background:linear-gradient(115deg,#eff5ec,#f9f1ee 55%,#f2eef8);border:1px solid var(--line);border-radius:24px;padding:40px 45px;margin-bottom:25px}.hero h1{font:700 clamp(27px,3.2vw,40px)/1.4 Georgia,"Noto Serif CJK SC",serif}.hero p{color:#687f77}.chip{display:inline-block;background:#fff9;border-radius:40px;padding:4px 13px;font-size:12px;margin:7px 8px 0 0}.callout{padding:16px 22px;border-radius:13px;background:#eef5ee;border:1px solid #e2e9e1}.paper,.section{background:var(--paper);border:1px solid var(--line);border-left:6px solid #b0cfbc;border-radius:20px;padding:29px 34px;margin:22px 0;box-shadow:0 12px 30px #34413a0a;scroll-margin-top:20px}.paper.p2{border-left-color:#c4b0df}.paper.p3{border-left-color:#edbca6}.paper h2,.section h2{font:700 23px/1.5 Georgia,"Noto Serif CJK SC",serif;margin:0 0 15px}.prose{white-space:pre-line;overflow-wrap:anywhere}.prose b{color:#50776b}.prose p{margin:13px 0}.intro{margin:0 0 20px}.section{border-left:1px solid var(--line)}table{border-collapse:collapse;width:100%;font-size:13px}td{border-bottom:1px solid var(--line);padding:10px;vertical-align:top}tr:first-child{background:#eaf1eb;font-weight:700}.toolbar{display:flex;justify-content:space-between;gap:12px;margin:0 0 20px}.toolbar input{width:70%;border:1px solid var(--line);background:var(--paper);padding:12px 16px;border-radius:12px;color:var(--ink)}button{border:1px solid var(--line);border-radius:30px;background:var(--paper);padding:10px 14px;color:var(--ink);cursor:pointer}body.dark{--bg:#1e292a;--paper:#293739;--ink:#e3ebe8;--muted:#a8bbb3;--line:#405151;--side:#233333;background:var(--bg)}body.dark .hero{background:linear-gradient(115deg,#30483c,#3c374b)}body.dark .callout{background:#354940}body.dark .prose b{color:#b7d6c6}body.dark tr:first-child{background:#3a4e48}@media(max-width:900px){.layout{display:block}.side{height:auto;position:static}.side a{display:inline-block}.main{padding:18px}.hero{padding:28px}.paper,.section{padding:23px}}@media print{.side,.toolbar{display:none}.layout{display:block}.main{padding:0}.paper{box-shadow:none}}
+</style></head><body><div class="layout"><aside class="side"><div class="brand">RESEARCH FRONTIER</div><h1>统计与实证研究前沿日报</h1><p>第011期 · 2026-10-19</p><a href="#top">本期总览</a><a href="#paper-1">论文一</a><a href="#paper-2">论文二</a><a href="#paper-3">论文三</a></aside><main class="main"><div class="article"><div class="toolbar"><input id="search" type="search" placeholder="检索本期论文…" aria-label="搜索论文"><button id="theme">◐ 夜间</button><button onclick="window.print()">⎙ 打印</button></div><header class="hero" id="top"><div class="brand">ISSUE 011 · 2026-10-19</div><h1>第011期｜今日研究前沿</h1><p>统计、计量经济学与因果推断方法精读</p><span class="chip">3篇真实论文</span><span class="chip">原Notion正文归档</span><span class="chip">不增加课程课次</span></header><div class="intro">> 2026-10-19｜第011期｜第2章·第4节｜全课程第11课。第二章专题：识别、研究设计与统计推断的稳健性。三篇均为近期首次公开的arXiv v1预印本，已核查书目和公开正文，未独立复现。原课已在聊天交付，本页为补档，不增加课次。
+
+</div><article class="paper p1" id="paper-1"><h2>一｜面板数据动态因果中介：DML–GMM</h2><div class="prose">
+
+<b>Causal Mediation Analysis for Panel Data with Double/Debiased Machine Learning</b>。Peikai Wu、Zhiguo Xiao；arXiv:2610.21339v1；首次公开2026-10-15；预印本，未核实期刊发表；<a href="https://arxiv.org/abs/2610.21339" target="_blank" rel="noopener noreferrer">官方原文</a>。<br />研究问题是个体、时期固定效应与非线性混杂存在时，如何分解动态处理的自然直接和间接效应。作者结合一阶差分、三组样本分割、交叉拟合与Neyman正交GMM，利用滞后残差工具变量联合估计中介和结果方程，并保留跨方程协方差。识别要求给定历史信息及固定效应的序贯独立、一致性、无干扰和无预期效应；固定效应本身不保证机制因果识别。<br />应用美国3,058个县2000—2019年面板。加入处理与协变量交互后，总效应较稳定，工资中介占比由65.19%降至41.03%（作者报告）。机制分解对规格敏感。对企业绿色创新中介分析有迁移价值，但企业非平衡面板与内生工具有效性须重新审查。<b>精读：本期首推。</b> 原始县级数据来源可追查，作者完整复现仓库未核实。
+
+</div><article class="paper p2" id="paper-2"><h2>二｜机器学习预测因变量后的局部稳健推断</h2><div class="prose">
+
+<b>Locally Robust Inference with Outcomes Predicted by Machine Learning</b>。Juan Carlos Escanciano、Alejandro Puerta-Cuartas；arXiv:2610.21756v1；首次公开2026-10-15；预印本；<a href="https://arxiv.org/abs/2610.21756" target="_blank" rel="noopener noreferrer">官方原文</a>。<br />文本、图像或代理指标经机器学习预测生成因变量后，第二阶段回归可能低估第一阶段正则化误差。作者构建三阶段局部稳健GMM，通过影响函数修正前两阶段干扰函数估计误差，要求收敛速率、交叉拟合和有效矩条件。模拟中校正方法的95%区间覆盖率约0.934—0.956（作者报告），朴素代入推断可能失准。<br />实证使用美国NSMO公开使用数据43,070笔抵押贷款，研究预测违约风险与实际严重逾期的条件群体差异，属于描述性而非因果分析。对用NLP生成专利质量、ESG因变量后的计量推断有参考价值。<b>精读：值得。</b> 独立代码仓库未核实。
+
+</div><article class="paper p3" id="paper-3"><h2>三｜极端尾部厚度是否随协变量改变？</h2><div class="prose">
+
+<b>Testing Tail-Index Homogeneity via Exceedance-Covariate Independence</b>。Thomas T. Yang；arXiv:2610.21019v1；首次公开2026-10-14；预印本；<a href="https://arxiv.org/abs/2610.21019" target="_blank" rel="noopener noreferrer">官方原文</a>。<br />在正则变差及尾指数齐性条件下，归一化对数超阈值与协变量渐近独立。作者以距离协方差构造置换检验并提出局部平衡增强方法。理论有效性依赖尾阈值选择、二阶尾部条件和相应渐近近似；不能将有限样本的置换检验无条件理解为精确有效。<br />应用24,944条法国机动车保险正额理赔数据，未拒绝共同尾指数假设。未拒绝不能证明齐性成立。可迁移至金融风险及创新产出极端分布。<b>精读：值得。</b> <a href="https://github.com/youngtigers/Tail_index_test" target="_blank" rel="noopener noreferrer">作者公开代码</a>已定位但未运行。
+
+</div></article><section class="section"><h2>四｜方法横向对照</h2><div class="prose">
+
+<table>
+<tr>
+<td>
+维度
+</td>
+<td>
+面板DML中介
+</td>
+<td>
+生成因变量稳健GMM
+</td>
+<td>
+尾指数齐性
+</td>
+</tr>
+<tr>
+<td>
+目标
+</td>
+<td>
+动态直接/间接效应
+</td>
+<td>
+预测结果的有效推断
+</td>
+<td>
+条件尾厚度差异
+</td>
+</tr>
+<tr>
+<td>
+方法
+</td>
+<td>
+交叉拟合、滞后工具、正交GMM
+</td>
+<td>
+双层影响函数校正
+</td>
+<td>
+距离协方差、置换检验
+</td>
+</tr>
+<tr>
+<td>
+关键条件
+</td>
+<td>
+序贯无混杂、无干扰
+</td>
+<td>
+收敛速率、矩条件
+</td>
+<td>
+正则变差、阈值条件
+</td>
+</tr>
+<tr>
+<td>
+风险
+</td>
+<td>
+时变未测混杂
+</td>
+<td>
+第一阶段误差传递
+</td>
+<td>
+尾部样本不足
+</td>
+</tr>
+<tr>
+<td>
+复现
+</td>
+<td>
+代码未核实
+</td>
+<td>
+代码未核实
+</td>
+<td>
+公开代码已核实，未运行
+</td>
+</tr>
+</table>
+
+</div></article><section class="section"><h2>五｜今日首推及核查问题</h2><div class="prose">
+
+首推Wu与Xiao。需核查：序贯独立是否可信；滞后工具变量排除限制；县级空间干扰；理论是否可推广到企业非平衡面板。第二篇应核查机器学习生成结果的目标参数及误差校正；第三篇应核查尾阈值敏感性和置换近似。三篇均未独立复现。</div><p style="font-size:12px;color:#899a92;text-align:center">第011期原文归档 · GitHub Pages阅读版</p></div></main></div><script>const s=document.getElementById('search');s.addEventListener('input',()=>document.querySelectorAll('article.paper').forEach(x=>x.hidden=!x.textContent.toLowerCase().includes(s.value.trim().toLowerCase())));const t=document.getElementById('theme');t.addEventListener('click',()=>{document.body.classList.toggle('dark');t.textContent=document.body.classList.contains('dark')?'☀ 日间':'◐ 夜间'});</script></body></html>
