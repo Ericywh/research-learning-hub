@@ -45,8 +45,21 @@ function splitTimeSteps(text){
  }
  return {head,items};
 }
-function prepareAnswer(original){
+function firstPhrase(text){
+ const s=String(text||"").replace(/\s+/g," ").trim();
+ return s.split(/[。；]/)[0].replace(/[，、]\s*$/,"").trim();
+}
+function shortQuoted(text,max){
+ const s=String(text||"").replace(/\s+/g," ").trim();
+ return s.length>max?s.slice(0,max-1)+"…":s;
+}
+function referenceKeyTerms(text){
+ const first=firstPhrase(text);
+ return first.split(/[—–→]/).map(x=>x.trim()).filter(Boolean).slice(0,5);
+}
+function prepareAnswer(original,ctx){
  if(!original)return null;
+ const context=ctx||{};
  original.open=false;
  original.removeAttribute("open");
  original.classList.add("answer");
@@ -70,31 +83,78 @@ function prepareAnswer(original){
    }else{
     if(current)current.appendChild(n);
     else if((n.textContent||"").trim()){
-      const note=element("p","small");
-      note.appendChild(n);
-      frag.appendChild(note);
+     const note=element("p","small");
+     note.appendChild(n);
+     frag.appendChild(note);
     }
    }
   }
   body.replaceChildren(frag);
-  // The two demonstrations, their own keywords and three reflection criteria
-  // stay together behind the same closed disclosure.
-  const reviewTitle=element("h3","","练后对照要点");
-  const reviewList=element("ol","check");
-  const checks=mode==="am"?[
-   "是否先准确回答本题，且理由或情境细节紧扣对方的具体问题？",
-   "是否避免编造个人经历或将缺乏证据的推测说成确定结论？",
-   "首次录音、自评与修改后练习是否分别保存，迁移题是否独立完成？"
-  ]:[
-   "两条参考路径能否分别提炼出真正对应的具体关键词？",
-   "是否辨清已知事实、合理假设与证据边界，没有将静默练习当成晨间录音？",
-   "能否不看范例，针对另一种情境调整表达结构与关键词？"
-  ];
-  checks.forEach(x=>reviewList.appendChild(element("li","",x)));
-  body.append(reviewTitle,reviewList);
+
+  // All comparison material is appended INSIDE the same initially closed details.
+  // Derive contrasting emphases from this lesson's own two samples and keyword sets.
+  const demos=Array.from(body.querySelectorAll(".utter"));
+  const hints=Array.from(body.querySelectorAll(".hint"));
+  const keys=hints.slice(0,2).map(h=>referenceKeyTerms(h.querySelector("p")?.textContent));
+  if(demos.length>=2&&keys.length===2&&keys.every(arr=>arr.length>=2)){
+   const a=keys[0],b=keys[1];
+   const compare=element("section","reference-contrast");
+   compare.appendChild(element("h3","","两种路径的重点在哪里"));
+   const grid=element("div","reference-path-grid");
+   const paths=[
+    {start:a[0],end:a[a.length-1],name:"第一份示范"},
+    {start:b[0],end:b[b.length-1],name:"第二份示范"}
+   ];
+   paths.forEach((route,i)=>{
+    const item=element("div","reference-path");
+    item.appendChild(element("h4","",route.name+"｜起点不同"));
+    item.appendChild(element("p","",
+     "提纲先抓「"+route.start+"」，再逐步推进到「"+route.end+"」。核对示范中的中间论据是否真正支持这一收束，而不是只记住关键词。"));
+    grid.appendChild(item);
+   });
+   compare.appendChild(grid);
+   if(context.question){
+    compare.appendChild(element("p","reference-specific-question",
+     "回到本课问题「"+shortQuoted(context.question,70)+"」：两份示范并非简单换词。请判断自己的回答采用了哪种切入点，是否具备支撑它的具体信息。"));
+   }
+   body.appendChild(compare);
+
+   const practice=element("section","reference-transfer");
+   practice.appendChild(element("h3","","针对性改写｜只改一句"));
+   practice.appendChild(element("p","",
+    mode==="am"?
+     "从第一次录音中找一句含糊或跳跃的表达，将它修改成可顺接「"+a[0]+"」或「"+b[0]+"」的具体理由；再确认修改后没有声称题目未给出的事实。":
+     "从自己的两组三词方案中选一组，把一句抽象判断改成有明确依据或适用条件的表达；重点检查「"+a[a.length-1]+"」与「"+b[b.length-1]+"」这两种收束是否各自成立。"));
+   if(context.transfer){
+    practice.appendChild(element("p","reference-transfer-question",
+     "换到原课的迁移情境「"+shortQuoted(context.transfer,92)+"」，哪一条路径还能沿用？应替换哪个关键词？只写下一个具体调整，不增加新的训练时长。"));
+   }
+   body.appendChild(practice);
+
+   const reviewTitle=element("h3","","练后自评｜三项判断");
+   const reviewList=element("ol","check");
+   const checks=[
+    "能否说明第一份以「"+a[0]+"」切入、第二份以「"+b[0]+"」切入的差别，而不是把两段示范拼起来？",
+    "你的理由或例子是否支撑了「"+a[a.length-1]+"」或「"+b[b.length-1]+"」这样的结尾？哪里仍需要条件或证据？",
+    mode==="am"?
+      "改写后重新听一次：是否比首次录音更贴合这道题，且不以重录成绩覆盖初测？":
+      "关掉示范后，能否不照抄三词提纲，自行说清其中一条路径的逻辑和边界？"
+   ];
+   checks.forEach(x=>reviewList.appendChild(element("li","",x)));
+   body.append(reviewTitle,reviewList);
+  }else{
+   // Preserve the full original demonstrations. Never invent missing keywords.
+   const fallback=element("p","reference-fallback",
+    "两份示范及其关键词请按原文比较：核查判断是否贴题、理由是否足够、结尾是否保留必要条件。");
+   body.appendChild(fallback);
+  }
  }
  const reveal=element("section","reveal");
  reveal.appendChild(element("div","kicker","AFTER PRACTICE · 练后对照"));
+ const summary=original.querySelector("summary");
+ if(summary&&!summary.querySelector(".reference-subtitle")){
+  summary.appendChild(element("small","reference-subtitle","两份示范 · 路径比较 · 只改一句 · 自评三项"));
+ }
  reveal.appendChild(original);
  return reveal;
 }
@@ -298,7 +358,10 @@ function transformMorning(lesson,main,aside){
  const steps=element("div","steps");
  parsed.items.forEach((x,i)=>steps.appendChild(coloredStep(x.when,x.title,x.text,i)));
  practice.appendChild(steps);
- const reference=prepareAnswer(details);
+ const reference=prepareAnswer(details,{
+  question:(task&&task.textContent)||parsed.head,
+  transfer:parsed.items[4].text
+ });
  const completion=main.querySelector(".course-completion[data-completion-id]");
  if(!completion||!reference)return false;
  main.replaceChildren(taskPart,material,keyReminderCard(),practice,todaysOutcomesCard(),reference,completion);
@@ -349,7 +412,13 @@ function transformEvening(lesson,main,aside){
  if(haveModules!==5)return false;
  normalizeLooseParagraphs(intro);
  sections.forEach(normalizeLooseParagraphs);
- const reference=prepareAnswer(details);
+ const sourceForTransfer=lesson.textContent||"";
+ const transferMatch=sourceForTransfer.match(/(?:换题|进阶迁移|迁移升级)[：:]\s*([^\n]{8,160})/);
+ const questionFromMaterial=material.querySelector(".material.alt p")?.textContent||"";
+ const reference=prepareAnswer(details,{
+  question:questionFromMaterial,
+  transfer:transferMatch?transferMatch[1]:""
+ });
  if(!reference)return false;
  main.replaceChildren(intro,material,keyReminderCard(),...sections,todaysOutcomesCard(),reference,completion);
  reviewPanel(aside);
