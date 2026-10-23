@@ -6,6 +6,9 @@ const state=(path)=>{try{return localStorage.getItem(PREFIX+path)==="yes";}catch
 const put=(path,done)=>{try{if(done)localStorage.setItem(PREFIX+path,"yes");else localStorage.removeItem(PREFIX+path);return true;}catch{return false;}};
 const lessonPath=location.pathname;
 const onLesson=LESSON_RE.test(lessonPath);
+/* SPEAKING LAYOUT V2: applied to published legacy lessons only */
+const unifiedLesson=/\/speaking\/lessons\/(?:01|02)-\d{2}\.html$/.test(lessonPath);
+if(unifiedLesson)document.documentElement.classList.add("speaking-layout-v2");
 function make(tag,cls,text){const e=document.createElement(tag);if(cls)e.className=cls;if(text)e.textContent=text;return e;}
 function refreshLinks(){
  let links=[...document.querySelectorAll("a[href]")].filter(a=>LESSON_RE.test(fullPath(a.getAttribute("href"))));
@@ -80,7 +83,39 @@ function progressSummary(){
  }
  refreshLinks();
 }
-function run(){if(onLesson)lessonControl();else progressSummary();}
+function normalizeLessonLayout(){
+ if(!unifiedLesson)return;
+ // Apply the same body-section visual language without rewriting teaching text.
+ document.querySelectorAll("main > section[style]").forEach(section=>{
+   if(!section.classList.contains("deep-training"))section.classList.add("lesson-outline");
+ });
+ // Existing plain-text 【labels】 become distinct, readable task paragraphs.
+ // Baseline conditions and words are retained verbatim, with no answers exposed.
+ document.querySelectorAll(".task-panel .topic,.task-panel .question").forEach(node=>{
+   if(node.children.length || node.querySelector(".task-line"))return;
+   const original=node.textContent||"";
+   const re=/【[^】\n]{1,48}】/g;
+   const matches=[...original.matchAll(re)];
+   if(!matches.length)return;
+   const fragment=document.createDocumentFragment();
+   function para(label,body){
+     const p=document.createElement("p");p.className="task-line";
+     if(label){const strong=document.createElement("strong");strong.textContent=label;p.appendChild(strong);}
+     if(body)p.appendChild(document.createTextNode(body));
+     fragment.appendChild(p);
+   }
+   const prefix=original.slice(0,matches[0].index).trim();
+   if(prefix)para("",prefix);
+   for(let i=0;i<matches.length;i++){
+     const label=matches[i][0];
+     const from=matches[i].index+label.length;
+     const to=i+1<matches.length?matches[i+1].index:original.length;
+     para(label,original.slice(from,to).trim());
+   }
+   node.replaceChildren(fragment);
+ });
+}
+function run(){if(onLesson){normalizeLessonLayout();lessonControl();}else progressSummary();}
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",run,{once:true});else run();
 window.addEventListener("storage",event=>{if(event.key&&event.key.startsWith(PREFIX)){if(onLesson){const b=document.querySelector("[data-course-finish-button]");if(b){const done=state(lessonPath);b.textContent=done?"✓ 已完成 · 点击撤销":"标记已完成";b.setAttribute("aria-pressed",String(done));b.classList.toggle("is-complete",done);}}refreshLinks();}});
 })();
