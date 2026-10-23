@@ -25,9 +25,22 @@ function refreshLinks(){
 function lessonControl(){
  const main=document.querySelector("main");
  if(!main)return;
- // The legacy lesson-completion.js renders the existing completion card.
- // Do not insert a second card when that canonical control is present.
- if(main.querySelector(".course-completion[data-completion-id]"))return;
+ // Existing legacy completion cards are canonical. Do not insert a duplicate.
+ const canonical=main.querySelector(".course-completion[data-completion-id]");
+ if(canonical){
+   // One-time migration of marks saved with the retired duplicate button.
+   try{
+     const oldKey=PREFIX+lessonPath;
+     const newKey="speaking:lesson-complete:v1:"+canonical.dataset.completionId;
+     if(localStorage.getItem(oldKey)==="yes"&&localStorage.getItem(newKey)!=="1"){
+       localStorage.setItem(newKey,"1");
+     }
+     if(localStorage.getItem(oldKey)==="yes"&&localStorage.getItem(newKey)==="1"){
+       localStorage.removeItem(oldKey);
+     }
+   }catch(e){}
+   return;
+ }
  let panel=main.querySelector("[data-lesson-completion]");
  if(!panel){panel=make("section","course-finish-panel");panel.setAttribute("data-lesson-completion","");
    const label=make("div","course-finish-label","本课完成状态 · 学完后手动标记");
