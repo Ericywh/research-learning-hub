@@ -1,0 +1,128 @@
+/* CASE COACHING v2 — 63 different PM masterclasses, fully compatible with theme C.
+ * First-load behavior is unchanged. The examples remain inside the native
+ * <details> disclosure, closed until the learner asks to open it. */
+html.speaking-legacy-standard body.dual-layout-ready.dual-pm .layout>main.main>.dual-intro .pm-lesson-aim{
+ margin:7px 0 1px!important;
+ padding:13px 16px!important;
+ border:1px solid #e9e0f4!important;border-left:4px solid #b7a5dd!important;
+ border-radius:12px!important;
+ background:linear-gradient(114deg,#f4efff,#fffafc)!important;
+ color:#514569!important;font-size:14px!important;line-height:1.8!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready.dual-pm .dual-intro .pm-lesson-aim strong{
+ color:#6b589a!important;font-weight:800!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready.dual-pm .dual-intro .pm-assessment-notice{
+ padding:11px 14px!important;
+ border:1px solid #f1dec6!important;border-left:3px solid #d7a86d!important;
+ border-radius:11px!important;background:#fff9f2!important;
+ color:#806b53!important;font-size:13px!important;line-height:1.76!important;
+ margin:12px 0 0!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready.dual-pm .dual-module:nth-of-type(5n+1){
+ background:linear-gradient(108deg,#f6f1ff,#fff 78%)!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready.dual-pm .dual-module>.kicker{
+ letter-spacing:.11em!important;font-weight:850!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready.dual-pm .dual-module>h2{
+ font-size:18px!important;color:#4b406d!important;font-weight:850!important;
+ line-height:1.52!important;margin-bottom:12px!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready.dual-pm .dual-module>p{
+ font-size:14px!important;line-height:1.83!important;color:#5c5472!important;
+ padding:0!important;overflow-wrap:anywhere!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready.dual-pm .dual-module>p>strong{
+ color:#655292!important;font-weight:800!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready.dual-pm .dual-module .pm-core-case{
+ border:1px solid #e8dff5!important;border-left:4px solid #b6a4da!important;
+ background:linear-gradient(115deg,#f4effd,#fff9fd 82%)!important;
+ border-radius:15px!important;
+ padding:17px 19px!important;
+ margin:13px 0 16px!important;
+ box-shadow:inset 0 1px 0 #ffffffd8!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready.dual-pm .dual-module .pm-core-case>h4{
+ font-size:14px!important;line-height:1.55!important;color:#655291!important;
+ font-weight:850!important;margin:0 0 9px!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready.dual-pm .dual-module .pm-core-case>p{
+ margin:8px 0!important;font-size:13.5px!important;line-height:1.85!important;
+ color:#584f70!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready.dual-pm .dual-module .pm-source-reference{
+ font-size:12px!important;
+ color:#7c7489!important;
+ border-top:1px dashed #dfd7ec!important;
+ padding-top:11px!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready.dual-pm .dual-module .pm-source-reference>a{
+ color:#7159aa!important;text-decoration:underline!important;
+ font-weight:700!important;overflow-wrap:anywhere!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready.dual-pm .dual-module .pm-revised-example{
+ border:1px solid #daede4!important;border-left:4px solid #8fcab3!important;
+ background:linear-gradient(110deg,#effaf4,#fff 87%)!important;
+ border-radius:15px!important;padding:17px 19px!important;
+ margin:13px 0!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready.dual-pm .dual-module .pm-revised-example>h4{
+ color:#548772!important;font-size:14px!important;font-weight:850!important;
+ margin:0 0 9px!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready.dual-pm .dual-module .pm-revised-example>p{
+ color:#476758!important;font-size:13.5px!important;line-height:1.85!important;
+ margin:8px 0!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready.dual-pm .dual-module .pm-outcome-compact{
+ border-top:1px solid #e7e0ee!important;
+ margin:15px 0 0!important;
+ padding-top:13px!important;
+ font-size:12.5px!important;
+ color:#746b88!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready.dual-pm .dual-module>p:has(+.answer){
+ margin-bottom:14px!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready.dual-pm .reveal>details.answer{
+ border-radius:15px!important;
+ border-color:#e3dbf0!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready.dual-pm .reveal>details.answer>summary{
+ padding:17px 18px!important;
+ background:linear-gradient(110deg,#f6f1ff,#fff9fd)!important;
+ color:#69569a!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready.dual-pm .reveal .reference-subtitle{
+ color:#9689ab!important;font-size:12px!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready.dual-pm .reveal .answer-body .utter{
+ background:#f9f6ff!important;border-left-color:#ac9bdd!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready.dual-pm .reveal .answer-body .hint{
+ background:#f7f2ff!important;border-color:#eae0f5!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready.dual-pm .reveal .answer-body .notice{
+ background:#eff9f4!important;border-color:#daede4!important;
+}
+/* The old course-completion storage button and existing sidebar checks remain interactive. */
+@media(max-width:680px){
+ html.speaking-legacy-standard body.dual-layout-ready.dual-pm .dual-module .pm-core-case,
+ html.speaking-legacy-standard body.dual-layout-ready.dual-pm .dual-module .pm-revised-example{
+  padding:13px 14px!important;border-radius:12px!important;
+ }
+ html.speaking-legacy-standard body.dual-layout-ready.dual-pm .layout>main.main>.dual-intro .pm-lesson-aim{
+  padding:12px 13px!important;
+ }
+ html.speaking-legacy-standard body.dual-layout-ready.dual-pm .dual-module>h2{
+  font-size:16px!important;
+ }
+}
+@media print{
+ html.speaking-legacy-standard body.dual-layout-ready.dual-pm .pm-core-case,
+ html.speaking-legacy-standard body.dual-layout-ready.dual-pm .pm-revised-example{
+  background:white!important;break-inside:avoid!important;
+ }
+}
