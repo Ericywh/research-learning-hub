@@ -77,6 +77,21 @@ function prepareAnswer(original){
    }
   }
   body.replaceChildren(frag);
+  // The two demonstrations, their own keywords and three reflection criteria
+  // stay together behind the same closed disclosure.
+  const reviewTitle=element("h3","","练后对照要点");
+  const reviewList=element("ol","check");
+  const checks=mode==="am"?[
+   "是否先准确回答本题，且理由或情境细节紧扣对方的具体问题？",
+   "是否避免编造个人经历或将缺乏证据的推测说成确定结论？",
+   "首次录音、自评与修改后练习是否分别保存，迁移题是否独立完成？"
+  ]:[
+   "两条参考路径能否分别提炼出真正对应的具体关键词？",
+   "是否辨清已知事实、合理假设与证据边界，没有将静默练习当成晨间录音？",
+   "能否不看范例，针对另一种情境调整表达结构与关键词？"
+  ];
+  checks.forEach(x=>reviewList.appendChild(element("li","",x)));
+  body.append(reviewTitle,reviewList);
  }
  const reveal=element("section","reveal");
  reveal.appendChild(element("div","kicker","AFTER PRACTICE · 练后对照"));
