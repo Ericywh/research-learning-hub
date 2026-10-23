@@ -6,11 +6,11 @@
 
 <b>Causal Mediation Analysis for Panel Data with Double/Debiased Machine Learning</b>。Peikai Wu、Zhiguo Xiao；arXiv:2610.21339v1；首次公开2026-10-15；预印本，未核实期刊发表；<a href="https://arxiv.org/abs/2610.21339" target="_blank" rel="noopener noreferrer">官方原文</a>。<br />研究问题是个体、时期固定效应与非线性混杂存在时，如何分解动态处理的自然直接和间接效应。作者结合一阶差分、三组样本分割、交叉拟合与Neyman正交GMM，利用滞后残差工具变量联合估计中介和结果方程，并保留跨方程协方差。识别要求给定历史信息及固定效应的序贯独立、一致性、无干扰和无预期效应；固定效应本身不保证机制因果识别。<br />应用美国3,058个县2000—2019年面板。加入处理与协变量交互后，总效应较稳定，工资中介占比由65.19%降至41.03%（作者报告）。机制分解对规格敏感。对企业绿色创新中介分析有迁移价值，但企业非平衡面板与内生工具有效性须重新审查。<b>精读：本期首推。</b> 原始县级数据来源可追查，作者完整复现仓库未核实。
 
-</div><article class="paper p2" id="paper-2"><h2>二｜机器学习预测因变量后的局部稳健推断</h2><div class="prose">
+</div></article><article class="paper p2" id="paper-2"><h2>二｜机器学习预测因变量后的局部稳健推断</h2><div class="prose">
 
 <b>Locally Robust Inference with Outcomes Predicted by Machine Learning</b>。Juan Carlos Escanciano、Alejandro Puerta-Cuartas；arXiv:2610.21756v1；首次公开2026-10-15；预印本；<a href="https://arxiv.org/abs/2610.21756" target="_blank" rel="noopener noreferrer">官方原文</a>。<br />文本、图像或代理指标经机器学习预测生成因变量后，第二阶段回归可能低估第一阶段正则化误差。作者构建三阶段局部稳健GMM，通过影响函数修正前两阶段干扰函数估计误差，要求收敛速率、交叉拟合和有效矩条件。模拟中校正方法的95%区间覆盖率约0.934—0.956（作者报告），朴素代入推断可能失准。<br />实证使用美国NSMO公开使用数据43,070笔抵押贷款，研究预测违约风险与实际严重逾期的条件群体差异，属于描述性而非因果分析。对用NLP生成专利质量、ESG因变量后的计量推断有参考价值。<b>精读：值得。</b> 独立代码仓库未核实。
 
-</div><article class="paper p3" id="paper-3"><h2>三｜极端尾部厚度是否随协变量改变？</h2><div class="prose">
+</div></article><article class="paper p3" id="paper-3"><h2>三｜极端尾部厚度是否随协变量改变？</h2><div class="prose">
 
 <b>Testing Tail-Index Homogeneity via Exceedance-Covariate Independence</b>。Thomas T. Yang；arXiv:2610.21019v1；首次公开2026-10-14；预印本；<a href="https://arxiv.org/abs/2610.21019" target="_blank" rel="noopener noreferrer">官方原文</a>。<br />在正则变差及尾指数齐性条件下，归一化对数超阈值与协变量渐近独立。作者以距离协方差构造置换检验并提出局部平衡增强方法。理论有效性依赖尾阈值选择、二阶尾部条件和相应渐近近似；不能将有限样本的置换检验无条件理解为精确有效。<br />应用24,944条法国机动车保险正额理赔数据，未拒绝共同尾指数假设。未拒绝不能证明齐性成立。可迁移至金融风险及创新产出极端分布。<b>精读：值得。</b> <a href="https://github.com/youngtigers/Tail_index_test" target="_blank" rel="noopener noreferrer">作者公开代码</a>已定位但未运行。
 
@@ -103,6 +103,6 @@
 </tr>
 </table>
 
-</div></article><section class="section"><h2>五｜今日首推及核查问题</h2><div class="prose">
+</div></section><section class="section"><h2>五｜今日首推及核查问题</h2><div class="prose">
 
-首推Wu与Xiao。需核查：序贯独立是否可信；滞后工具变量排除限制；县级空间干扰；理论是否可推广到企业非平衡面板。第二篇应核查机器学习生成结果的目标参数及误差校正；第三篇应核查尾阈值敏感性和置换近似。三篇均未独立复现。</div><p style="font-size:12px;color:#899a92;text-align:center">第011期原文归档 · GitHub Pages阅读版</p></div></main></div><script>const s=document.getElementById('search');s.addEventListener('input',()=>document.querySelectorAll('article.paper').forEach(x=>x.hidden=!x.textContent.toLowerCase().includes(s.value.trim().toLowerCase())));const t=document.getElementById('theme');t.addEventListener('click',()=>{document.body.classList.toggle('dark');t.textContent=document.body.classList.contains('dark')?'☀ 日间':'◐ 夜间'});</script></body></html>
+首推Wu与Xiao。需核查：序贯独立是否可信；滞后工具变量排除限制；县级空间干扰；理论是否可推广到企业非平衡面板。第二篇应核查机器学习生成结果的目标参数及误差校正；第三篇应核查尾阈值敏感性和置换近似。三篇均未独立复现。</div></div></section><p style="font-size:12px;color:#899a92;text-align:center">第011期原文归档 · GitHub Pages阅读版</p></div></main></div><script>const s=document.getElementById('search');s.addEventListener('input',()=>document.querySelectorAll('article.paper').forEach(x=>x.hidden=!x.textContent.toLowerCase().includes(s.value.trim().toLowerCase())));const t=document.getElementById('theme');t.addEventListener('click',()=>{document.body.classList.toggle('dark');t.textContent=document.body.classList.contains('dark')?'☀ 日间':'◐ 夜间'});</script></body></html>
