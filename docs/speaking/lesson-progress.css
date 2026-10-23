@@ -1,0 +1,19 @@
+
+/* 课程完成记录：页面内单一按钮，目录内显示已完成提示。 */
+.course-finish-panel{background:#fff;border:1px solid #dce4ee;border-radius:18px;padding:21px 24px;margin:18px 0 6px;box-shadow:0 5px 18px #2a426008;}
+.course-finish-label{font-size:15px;font-weight:500;color:#31465d;margin:0 0 11px;}
+.course-finish-row{display:flex;align-items:center;flex-wrap:wrap;gap:13px;}
+.course-finish-button{font:inherit;font-size:14px;min-height:43px;padding:9px 18px;border:1px solid #657fa0;background:#f5f8fc;color:#354e6b;border-radius:10px;font-weight:500;cursor:pointer;}
+.course-finish-button.is-complete{background:#eaf3ef;border-color:#a9cbc0;color:#245d4c;}
+.course-finish-button:hover{background:#e8eef7;}
+.course-finish-button.is-complete:hover{background:#dcebe3;}
+.course-finish-button:focus-visible{outline:3px solid #a0b9d1;outline-offset:2px;}
+.course-finish-state{font-size:13px;color:#586a7e;}
+.course-finish-note{color:#718093;font-size:12px;line-height:1.7;margin:11px 0 0;}
+.course-link-completion{font-size:11px;font-weight:400;white-space:nowrap;color:#376e5b;}
+.course-link-completion.is-complete{margin-left:5px;}
+a[data-course-done="yes"]{text-decoration-color:#9eb8aa;}
+.course-progress-summary{max-width:1120px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:13px auto;padding:11px 17px;border:1px solid #e1e8f1;border-radius:12px;background:#f5f8fc;color:#405670;font-size:13px;}
+.course-progress-text{font-weight:500;}
+.course-progress-hint{font-size:12px;color:#758295;}
+@media(max-width:640px){.course-finish-panel{padding:17px 15px;margin:13px 0;}.course-progress-summary{margin:10px 12px;padding:10px 12px;}}
