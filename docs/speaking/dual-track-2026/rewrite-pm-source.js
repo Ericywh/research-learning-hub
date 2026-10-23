@@ -13,10 +13,10 @@ function rewritePM(html, n, nextTitle) {
   const lead=plain(article.match(/<h3>0[—–-]4分钟[^<]*<\/h3>([\s\S]*?)<section class="depth-analysis"/)?.[1]||"").split(/[。！？]/)[0]+"。";
   const method=plain(article.match(/<strong>组织机制[：:]<\/strong>([\s\S]*?)<\/p>/)?.[1]||"").replace(/\s*写一条不超过25字[\s\S]*$/,"");
   const wrongSection=article.match(/<h3>4[—–-]8分钟[^<]*<\/h3>([\s\S]*?)<h3>8[—–-]13分钟/)?.[1]||"";
-  const wrong=take(wrongSection,"有问题的做法|典型失误|反面表达|错误做法").split(/。(?=\s)/)[0]||"";
+  const wrong=plain(wrongSection.match(/<(?:strong|b)>(?:有问题的做法|典型失误|反面表达|错误做法)[：:]<\/(?:strong|b)>\s*([^\n<]+)/)?.[1]||"");
   if(!wrong)throw Error("missing error "+n);
   const part=article.match(/<h3>8[—–-]13分钟[^<]*<\/h3>([\s\S]*?)<h3>13[—–-]16分钟/)?.[1]||"";
-  const transfer=take(part,"换题|进阶迁移|迁移升级").split(/(?:先尝试|先在心中|可以默写|最后辨认)/)[0]||"请把今天的技能放进一个不同听众的情境，重新选择信息。";
+  const transfer=plain(part.match(/<(?:strong|b)>(?:换题|进阶迁移|迁移升级)[：:]<\/(?:strong|b)>\s*([^\n<]+)/)?.[1]||"").split(/(?:先尝试|先在心中|可以默写|最后辨认)/)[0]||"请把今天的技能放进一个不同听众的情境，重新选择信息。";
   const a=k1.split(/[—–\-、，]/).map(s=>s.trim()).filter(Boolean);
   const b=k2.split(/[—–\-、，]/).map(s=>s.trim()).filter(Boolean);
   const sentences=r1.split(/(?<=[。！？；])/u).map(s=>s.trim()).filter(Boolean);
