@@ -1,0 +1,303 @@
+/* Speaking soft texture design, approved sample adaptation, 2026-10-23.
+   Subtle tonal gradients and sparse right-side dots. Text and controls remain legible.
+   The legacy 18-week course is deliberately not styled by this file. */
+
+/* ALL 126 DUAL-TRACK LESSON PAGES */
+html.speaking-legacy-standard body.dual-layout-ready{
+ background:
+   radial-gradient(ellipse at 11% 0%,rgba(98,80,173,.046),transparent 48%),
+   radial-gradient(ellipse at 93% 41%,rgba(57,154,134,.035),transparent 42%),
+   #f7f9fc!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready .hero{
+ background:linear-gradient(112deg,#263c79,#5c5db6 60%,#4c9b9a)!important;
+ isolation:isolate!important;overflow:hidden!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready .hero:after{
+ content:""!important;display:block!important;position:absolute!important;z-index:-1!important;
+ pointer-events:none!important;width:270px!important;height:270px!important;
+ border:1px solid #ffffff32!important;border-radius:50%!important;right:-90px!important;top:-105px!important;
+ box-shadow:0 0 0 48px #ffffff08!important;background:none!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready .course-mode-link{
+ background:linear-gradient(115deg,#f1f2ff,#f2f9fb)!important;
+ border:1px solid #dfe5f2!important;border-left:4px solid #7366b8!important;
+ border-radius:12px!important;color:#4c6080!important;
+}
+
+/* The wide gaps in TODAY'S QUESTION came from preserved blank lines + label margins.
+   Retain separate, clearly labeled fields but collapse extra newlines and whitespace. */
+html.speaking-legacy-standard body.dual-layout-ready .task-panel .question{
+ white-space:normal!important;
+ line-height:1.62!important;
+ padding:13px 17px!important;
+ font-size:15px!important;
+ background:linear-gradient(108deg,#f3f7fb,#fff 78%)!important;
+ border:1px solid #dee7f0!important;
+ border-left:3px solid #9eb6c9!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready .task-panel .question>strong{
+ display:block!important;
+ margin:6px 0 1px!important;
+ padding:0!important;
+ font-size:13px!important;line-height:1.45!important;
+ font-weight:800!important;color:#304b78!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready .task-panel .question>strong:first-child{
+ margin-top:0!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready .task-panel .question>p{
+ margin:5px 0 0!important;
+ padding:0!important;
+ line-height:1.68!important;
+ white-space:normal!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready .task-panel .question>.task-extra{
+ margin:5px 0 0!important;
+ font-size:13px!important;
+ line-height:1.6!important;
+ color:#53657b!important;
+ white-space:normal!important;
+}
+
+/* One text-friendly background system for all lesson content panels. */
+html.speaking-legacy-standard body.dual-layout-ready :is(
+ .layout>main.main>.card,
+ .layout>main.main>.reveal,
+ .layout>aside.sidebar>.card,
+ .layout>aside.sidebar>.paper,
+ .layout>main.main>.course-completion
+){
+ position:relative!important;isolation:isolate!important;
+ overflow:hidden!important;
+ background:linear-gradient(114deg,#fcfdff 0%,#fff 66%,#fafbff 100%)!important;
+ border-color:#e0e6f1!important;
+ box-shadow:0 4px 19px #343e6510!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready :is(
+ .layout>main.main>.card,
+ .layout>main.main>.reveal,
+ .layout>aside.sidebar>.card,
+ .layout>aside.sidebar>.paper
+)::before{
+ content:"";position:absolute;z-index:-1;inset:0 0 0 auto;width:43%;
+ background-image:radial-gradient(circle,rgba(77,77,114,.14) .72px,transparent 1.15px);
+ background-size:20px 20px;
+ -webkit-mask-image:linear-gradient(to left,#000 0%,transparent 96%);
+ mask-image:linear-gradient(to left,#000 0%,transparent 96%);
+ opacity:.18;pointer-events:none;
+}
+/* Individual function cards get quiet role-based color, without noise behind body text. */
+html.speaking-legacy-standard body.dual-layout-ready .layout>main.main>.dual-material-card{
+ background:linear-gradient(108deg,#f3f8ff 0%,#fff 64%)!important;
+ border-top:4px solid #528bc8!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready .layout>main.main>.dual-reminder-card{
+ background:linear-gradient(108deg,#fffaf2 0%,#fff 64%)!important;
+ border-top:4px solid #b98444!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready .layout>main.main>.dual-outcome-card{
+ background:linear-gradient(108deg,#f1faf6 0%,#fff 64%)!important;
+ border-top:4px solid #399a86!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready .layout>main.main>.task-panel{
+ background:linear-gradient(108deg,#f8faff 0%,#fff 64%)!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready .layout>main.main>.dual-intro{
+ background:linear-gradient(108deg,#f7f4ff 0%,#fff 64%)!important;
+}
+
+/* PM time blocks: precisely the sample's five soft hues + right-hand dot texture. */
+html.speaking-legacy-standard body.dual-layout-ready .layout>main.main>.dual-module{
+ --tint:var(--module-wash,#f4f0ff);
+ position:relative!important;isolation:isolate!important;overflow:hidden!important;
+ background:linear-gradient(108deg,var(--tint) 0%,#fff 66%)!important;
+ border:1px solid #e2e7f0!important;
+ border-left:5px solid var(--module-accent,#8069bd)!important;
+ border-radius:16px!important;
+ padding:19px 22px!important;
+ box-shadow:0 3px 16px #343e650d!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready .layout>main.main>.dual-module::before{
+ content:"";position:absolute;z-index:-1;inset:0 0 0 auto;width:53%;
+ background-image:radial-gradient(circle,rgba(77,77,114,.15) .72px,transparent 1.1px);
+ background-size:19px 19px;opacity:.36;
+ -webkit-mask-image:linear-gradient(to left,#000,transparent 96%);
+ mask-image:linear-gradient(to left,#000,transparent 96%);
+ pointer-events:none;
+}
+html.speaking-legacy-standard body.dual-layout-ready .layout>main.main>.dual-module::after{
+ content:"";position:absolute;z-index:-1;right:-95px;top:-110px;
+ width:215px;height:215px;border-radius:50%;
+ border:1px solid #b1a7cf2b;pointer-events:none;
+}
+html.speaking-legacy-standard body.dual-layout-ready .dual-module>.kicker{
+ display:inline-flex!important;align-items:center!important;
+ padding:5px 10px!important;margin:0 0 10px!important;
+ font-size:11px!important;letter-spacing:.06em!important;
+ color:var(--module-accent,#8069bd)!important;
+ background:#ffffffb8!important;
+ border:1px solid #e8e5eeaa!important;border-radius:8px!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready .dual-module>h2{
+ font-size:18px!important;margin:0 0 9px!important;line-height:1.48!important;color:#34415a!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready .dual-module .depth-analysis{
+ position:relative!important;z-index:0!important;
+ background:linear-gradient(108deg,#f3f0fd,#fff 88%)!important;
+}
+
+/* AM time blocks: same five-tone, understated pattern and aligned label/content. */
+html.speaking-legacy-standard body.dual-layout-ready .steps>.step{
+ position:relative!important;isolation:isolate!important;overflow:hidden!important;
+ background:linear-gradient(112deg,var(--wash,#f4f7fc),#fff 71%)!important;
+ border:1px solid #e3e7f0!important;border-left:3px solid var(--accent,#6553a9)!important;
+ border-radius:13px!important;
+ padding:14px 15px!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready .steps>.step::before{
+ content:"";position:absolute;z-index:-1;inset:0 0 0 auto;width:44%;
+ background-image:radial-gradient(circle,rgba(77,77,114,.12) .67px,transparent 1.1px);
+ background-size:19px 19px;
+ -webkit-mask-image:linear-gradient(to left,#000,transparent 94%);
+ mask-image:linear-gradient(to left,#000,transparent 94%);
+ opacity:.25;pointer-events:none;
+}
+
+/* Disclosures retain their default CLOSED state and clear text background. */
+html.speaking-legacy-standard body.dual-layout-ready .reveal details{
+ background:#fff!important;border-color:#dfe3ee!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready .reveal summary{
+ background:linear-gradient(100deg,#f7f5ff,#fff 90%)!important;
+ color:#5d4ca4!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready .reveal .answer-body{
+ background:white!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready .dual-evening-nav{
+ background:linear-gradient(115deg,#f2f1ff,#f7faff 66%,#f1faf8)!important;
+ border-left-color:#7366b8!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready .checks label{
+ border-radius:9px!important;padding:5px 3px!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready .course-completion{
+ background:linear-gradient(116deg,#f9fbff,#fff 70%)!important;
+}
+
+/* SOFT-TEXTURE NEW COURSE DIRECTORY AND SIX CHAPTER DIRECTORY PAGES */
+html.speaking-soft-texture{
+ --soft-ink:#29334b;--soft-line:#e1e7f1;
+}
+html.speaking-soft-texture body{
+ background:
+ radial-gradient(ellipse at 8% 0%,rgba(98,80,173,.06),transparent 42%),
+ radial-gradient(ellipse at 96% 35%,rgba(57,154,134,.05),transparent 47%),
+ #f7f9fc!important;
+ color:#29334b!important;
+}
+html.speaking-soft-texture .wrap{
+ max-width:1130px!important;
+}
+html.speaking-soft-texture .wrap>.hero,
+html.speaking-soft-texture .wrap>header{
+ position:relative!important;isolation:isolate!important;overflow:hidden!important;
+ background:linear-gradient(112deg,#263c79,#5c5db6 60%,#4c9b9a)!important;
+ border-radius:22px!important;
+ box-shadow:0 12px 34px #3b478b22!important;
+}
+html.speaking-soft-texture .wrap>.hero::after,
+html.speaking-soft-texture .wrap>header::after{
+ content:"";position:absolute;z-index:-1;pointer-events:none;
+ top:-103px;right:-82px;width:255px;height:255px;
+ border:1px solid #ffffff44;border-radius:50%;
+ box-shadow:0 0 0 44px #ffffff09;
+}
+html.speaking-soft-texture .wrap>.hero :is(h1,p),
+html.speaking-soft-texture .wrap>header :is(h1,p){
+ color:#fff!important;
+}
+html.speaking-soft-texture .wrap>.hero a,
+html.speaking-soft-texture .wrap>header a{color:#fff!important}
+html.speaking-soft-texture :is(.mode,.policy,.chapter,.day,.pairday){
+ position:relative!important;isolation:isolate!important;overflow:hidden!important;
+ border:1px solid #dfe5f0!important;
+ border-radius:16px!important;
+ box-shadow:0 4px 17px #343e6510!important;
+ background:linear-gradient(110deg,#f7f9ff 0%,#fff 62%)!important;
+}
+html.speaking-soft-texture :is(.mode,.policy,.chapter,.day,.pairday)::before{
+ content:"";position:absolute;z-index:-1;right:0;top:0;bottom:0;width:44%;
+ background-image:radial-gradient(circle,rgba(77,77,114,.14) .72px,transparent 1.15px);
+ background-size:20px 20px;opacity:.23;pointer-events:none;
+ -webkit-mask-image:linear-gradient(to left,#000,transparent 95%);
+ mask-image:linear-gradient(to left,#000,transparent 95%);
+}
+html.speaking-soft-texture .mode.am{
+ border-top:4px solid #528bc8!important;
+ background:linear-gradient(110deg,#f2f8ff 0%,#fff 65%)!important;
+}
+html.speaking-soft-texture .mode.pm{
+ border-top:4px solid #8069bd!important;
+ background:linear-gradient(110deg,#f6f2ff 0%,#fff 65%)!important;
+}
+html.speaking-soft-texture .policy{
+ border-left:4px solid #399a86!important;
+ background:linear-gradient(110deg,#f3faf7 0%,#fff 65%)!important;
+}
+html.speaking-soft-texture .chapter,
+html.speaking-soft-texture .day{
+ border-left:4px solid #6553a9!important;
+ background:linear-gradient(108deg,#f4f1fe 0%,#fff 65%)!important;
+}
+html.speaking-soft-texture .pairday{
+ border-left:3px solid #528bc8!important;
+ background:linear-gradient(108deg,#f0f7ff 0%,#fff 70%)!important;
+}
+html.speaking-soft-texture .course-completion-directory-note{
+ background:linear-gradient(100deg,#f1f5ff,#fff 85%)!important;
+ border-left:3px solid #a1acd7!important;
+ border-radius:9px!important;
+}
+html.speaking-soft-texture :is(.mode,.policy,.chapter,.day,.pairday) a{
+ position:relative;z-index:1;
+ color:#5143a2!important;font-weight:700!important;
+}
+html.speaking-soft-texture nav a:focus-visible,
+html.speaking-soft-texture :is(.chapter,.day,.pairday) a:focus-visible{
+ outline:3px solid #ad9edf;outline-offset:3px;
+}
+html.speaking-soft-texture .wrap>nav>a{
+ background:linear-gradient(110deg,#f0f2fc,#fff)!important;
+ border:1px solid #dfe5f1!important;border-radius:10px!important;
+ color:#5143a2!important;
+}
+
+/* Smaller screens keep the content legible; the decorations never force width. */
+@media(max-width:580px){
+ html.speaking-legacy-standard body.dual-layout-ready .task-panel .question{
+  padding:12px 13px!important;font-size:14px!important;line-height:1.62!important;
+ }
+ html.speaking-legacy-standard body.dual-layout-ready .task-panel .question>strong{
+  margin:5px 0 1px!important;font-size:12px!important;
+ }
+ html.speaking-legacy-standard body.dual-layout-ready .layout>main.main>.dual-module{
+  padding:16px 15px!important;
+ }
+ html.speaking-legacy-standard body.dual-layout-ready .steps>.step{
+  padding:12px 11px!important;
+ }
+ html.speaking-soft-texture .wrap>.hero,html.speaking-soft-texture .wrap>header{
+  border-radius:16px!important;
+ }
+ html.speaking-soft-texture :is(.mode,.policy,.chapter,.day,.pairday){
+  border-radius:13px!important;
+ }
+}
+@media print{
+ html.speaking-legacy-standard body.dual-layout-ready :is(.dual-module,.steps>.step)::before,
+ html.speaking-soft-texture :is(.mode,.policy,.chapter,.day,.pairday)::before{display:none!important}
+ html.speaking-legacy-standard body.dual-layout-ready .layout>main.main>.dual-module,
+ html.speaking-soft-texture :is(.mode,.policy,.chapter,.day,.pairday){background:#fff!important;box-shadow:none!important}
+}
