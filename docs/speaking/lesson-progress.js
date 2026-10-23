@@ -1,14 +1,14 @@
 (()=>{"use strict";
 const PREFIX="speaking-course-complete:v1:";
-const LESSON_RE=/\/speaking\/(?:lessons\/(?:01|02)-\d{2}|dual-track-2026\/(?:am|pm)\/day-\d{2})\.html$/;
+const LESSON_RE=/\/speaking\/(?:lessons\/(?:0[1-6])-\d{2}|dual-track-2026\/(?:am|pm)\/day-\d{2})\.html$/;
 const fullPath=(value)=>{try{return new URL(value,location.href).pathname;}catch{return "";}};
 const state=(path)=>{try{return localStorage.getItem(PREFIX+path)==="yes";}catch{return false;}};
 const put=(path,done)=>{try{if(done)localStorage.setItem(PREFIX+path,"yes");else localStorage.removeItem(PREFIX+path);return true;}catch{return false;}};
 const lessonPath=location.pathname;
 const onLesson=LESSON_RE.test(lessonPath);
 /* SPEAKING LAYOUT V2: applied to published legacy lessons only */
-const unifiedLesson=/\/speaking\/lessons\/(?:01|02)-\d{2}\.html$/.test(lessonPath);
-if(unifiedLesson)document.documentElement.classList.add("speaking-layout-v2");
+const unifiedLesson=/\/speaking\/lessons\/(?:0[1-6])-\d{2}\.html$/.test(lessonPath);
+if(unifiedLesson){document.documentElement.classList.remove("speaking-layout-v2");document.documentElement.classList.add("speaking-legacy-standard");}
 function make(tag,cls,text){const e=document.createElement(tag);if(cls)e.className=cls;if(text)e.textContent=text;return e;}
 function refreshLinks(){
  let links=[...document.querySelectorAll("a[href]")].filter(a=>LESSON_RE.test(fullPath(a.getAttribute("href"))));
@@ -85,6 +85,24 @@ function progressSummary(){
 }
 function normalizeLessonLayout(){
  if(!unifiedLesson)return;
+ // Normalize semantic roles to the original lesson-022 components.
+ // Keep all original classes so audio tools, local status and specialized drills work.
+ const map=[
+   [".crumb,.site-nav","top"],[".chips,.tags","pills"],
+   [".page-grid","layout"],["main.col","main"],
+   ["aside.sidebar,aside.col","side"],
+   [".panel,.paper","card"],[".stepstack","steps"],
+   [".step-when","when"],[".topic","question"],
+   [".matblock","material"],[".ref-shell,.refcard,.reveal-block","reveal"],
+   [".ref-kicker,.refcard-label","kicker"],[".ref-body","answer-body"],
+   [".ref-arrow","arrow"],[".navend,.between,.next","navbottom"],
+   [".logic-card,.box-note","hint"],[".outcome","notice"],
+   [".hero-label","eyebrow"]
+ ];
+ for(const [selector,cls] of map){
+   document.querySelectorAll(selector).forEach(el=>el.classList.add(cls));
+ }
+ document.querySelectorAll(".reveal > details").forEach(el=>el.classList.add("answer"));
  // Apply the same body-section visual language without rewriting teaching text.
  document.querySelectorAll("main > section[style]").forEach(section=>{
    if(!section.classList.contains("deep-training"))section.classList.add("lesson-outline");
