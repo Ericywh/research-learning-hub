@@ -296,7 +296,6 @@ function learningMaterialCard(lesson,task,prelude){
    const original=String(prelude||"").trim()||((task&&task.textContent)||"").trim();
    box.appendChild(materialLine("本课提供的练习题目",original||"按原题所列情境完成开口训练。",""));
   }
-  box.appendChild(element("p","small","只需阅读本页给出的材料，无需另外查找新闻或案例。若为无提示测评，请先按原题完成首次录音，再进行分析。"));
  }else{
   const paragraph=lesson.querySelector(".depth-analysis p");
   const info=paragraph?paragraph.textContent:"";
@@ -310,17 +309,40 @@ function learningMaterialCard(lesson,task,prelude){
    const quoted=info.replace(/^\s*信息分层[：:]\s*/,"").trim();
    box.appendChild(materialLine("本课已有案例与研究问题",quoted||"请依据下面的本题信息—机制—边界分析材料独立辨析。",""));
   }
-  box.appendChild(element("p","small","素材来自本课原有案例描述，用于无声辨析；请区分已知条件与未经核实的推断，不把模拟情境写成真实新闻。"));
  }
  return box;
 }
-function keyReminderCard(){
- const box=card("IMPORTANT · TRAINING NOTES","重要提醒","dual-reminder-card");
- const points=mode==="am"?
-  (assessmentDays.has(day)?
-    ["本日为无提示基线或阶段复测：首次录音前只阅读原题与必要情境，不打开参考区，也不提前使用示范关键词或结构提示。","严格执行原题规定的准备与发言时长，单独保留首次录音和原始评分；测后重录不能替代测评成绩。","本课模拟情境只用于训练；不编造个人经历、数据、政策效果或未经证实的因果结论。"]:
-    ["先独立开口并保存首次录音，之后再回听、修订；练习前不要展开参考示范。","优先修正一个具体问题，并将同一表达方法迁移到陌生情境，不照读范文。","依据给出的事实表达；模拟情境不是实际新闻或个人经历。"]) :
-  ["晚间为独立的静默技巧课：可以思考或书写，不以默读替代早晨的真实录音与评分。","先完成同题推演、反例诊断与关键词整理，再打开练后参考，避免预先看到标准表达。","分析时区分情境已知信息、作者假设与待核实事实，不凭空补充案例数据。"];
+function keyReminderCard(material){
+ // Important Reminders are deliberately NOT a compulsory card on every lesson.
+ // The basic recording, privacy and practice rules are already explained in the
+ // actual training steps and course overview; avoid repeating them 126 times.
+ const prompt=(material?.textContent||"").replace(/\s+/g," ").trim();
+ let points=[];
+ if(assessmentDays.has(day)){
+  points=mode==="am"?[
+   "无提示测评：首次录音前只看原题和必要情境，不看参考答案、示范关键词或测后结构提示。",
+   "按本题指定时长保存第一次录音和原始评分。之后的改述不能替换或回填原始成绩。"
+  ]:[
+   "今天是测评日的晚课：分析应基于已封存的早间首次录音；练后改写和新评分不得回填为初测。"
+  ];
+ }else if(mode==="am"){
+  // A single prompt-specific caveat only when the source creates a real risk.
+  if(/正相关|统计关联|因果|必然促进|必然导致/.test(prompt)){
+   points=["若题目仅给出统计关联，就不能断言“必然导致”或“已经证明”。先指出需要检验的其他解释。"];
+  }else if(/数据缺失|分组方法|样本选取|变量测量|统计数字/.test(prompt)){
+   points=["材料没有交代的缺失原因、分组条件或样本信息不得自行补全；提出疑问而非编造处理结果。"];
+  }else if(/推断动机|不负责任|不配合|故意|传闻|隐私|私人信息/.test(prompt)){
+   points=["只陈述情境已知的行为或影响，不推断他人的动机与责任；建议先核实具体情况。"];
+  }else if(/预算有限|折中方案|预算分配|资源冲突/.test(prompt)){
+   points=["折中不是各退一半；必须交代共同目标、取舍依据及尚未确定的条件。"];
+  }else if(/截止时间|提前一天|更改期限|临时改变/.test(prompt)){
+   points=["时间安排的建议应考虑原有预期与过渡条件，不默认每个人都能立即调整。"];
+  }else if(/指出错误|具体反馈|给出点评|评价学生/.test(prompt)){
+   points=["建议针对可观察的具体表现，不将一次表达失误泛化为对个人能力的判断。"];
+  }
+ }
+ if(points.length===0)return null;
+ const box=card("IMPORTANT · CASE-SPECIFIC","重要提醒","dual-reminder-card");
  const list=element("ul","dual-reminder-list");
  points.forEach(v=>list.appendChild(element("li","",v)));
  box.appendChild(list);
@@ -340,7 +362,6 @@ function todaysOutcomesCard(){
  const list=element("ol","dual-outcome-list");
  outputs.forEach(v=>list.appendChild(element("li","",v)));
  box.appendChild(list);
- box.appendChild(element("p","small","这是本课18分钟内的学习产出核对清单，不另增训练时长；完成状态仍由下方原有按钮记录。"));
  return box;
 }
 function transformMorning(lesson,main,aside){
@@ -364,7 +385,8 @@ function transformMorning(lesson,main,aside){
  });
  const completion=main.querySelector(".course-completion[data-completion-id]");
  if(!completion||!reference)return false;
- main.replaceChildren(taskPart,material,keyReminderCard(),practice,todaysOutcomesCard(),reference,completion);
+ const note=keyReminderCard(material);
+ main.replaceChildren(taskPart,material,...(note?[note]:[]),practice,todaysOutcomesCard(),reference,completion);
  timerPanel(aside,(task?task.textContent:parsed.head)||"");
  reviewPanel(aside);
  return true;
@@ -420,7 +442,8 @@ function transformEvening(lesson,main,aside){
   transfer:transferMatch?transferMatch[1]:""
  });
  if(!reference)return false;
- main.replaceChildren(intro,material,keyReminderCard(),...sections,todaysOutcomesCard(),reference,completion);
+ const note=keyReminderCard(material);
+ main.replaceChildren(intro,material,...(note?[note]:[]),...sections,todaysOutcomesCard(),reference,completion);
  reviewPanel(aside);
  return true;
 }
