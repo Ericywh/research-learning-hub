@@ -225,7 +225,7 @@ function materialLine(title,value,tone){
  return wrap;
 }
 function learningMaterialCard(lesson,task,prelude){
- const box=card("READY-TO-USE MATERIAL · 今日素材",mode==="am"?"今天要回应的情境":"今天要分析的同题案例","dual-material-card");
+ const box=card("READY-TO-USE MATERIAL · 无需另找","今日素材","dual-material-card");
  if(mode==="am"){
   const supplied=((task&&task.textContent)||"")+"\n"+String(prelude||"");
   const situation=labeledPart(supplied,["完整模拟材料","原创模拟情境","情境材料","模拟情境","模拟场景","场景","情境"]);
@@ -255,7 +255,7 @@ function learningMaterialCard(lesson,task,prelude){
  return box;
 }
 function keyReminderCard(){
- const box=card("IMPORTANT · 重要提醒","开始前必须注意的要求","dual-reminder-card");
+ const box=card("IMPORTANT · TRAINING NOTES","重要提醒","dual-reminder-card");
  const points=mode==="am"?
   (assessmentDays.has(day)?
     ["本日为无提示基线或阶段复测：首次录音前只阅读原题与必要情境，不打开参考区，也不提前使用示范关键词或结构提示。","严格执行原题规定的准备与发言时长，单独保留首次录音和原始评分；测后重录不能替代测评成绩。","本课模拟情境只用于训练；不编造个人经历、数据、政策效果或未经证实的因果结论。"]:
@@ -267,7 +267,7 @@ function keyReminderCard(){
  return box;
 }
 function todaysOutcomesCard(){
- const box=card("TODAY'S OUTPUT · 今日成果",mode==="am"?"完成本课后应保留什么":"完成晚间学习后应留下什么","dual-outcome-card");
+ const box=card("TODAY'S OUTPUT · LEARNING RECORD","今日成果","dual-outcome-card");
  const outputs=mode==="am"?
   ["首次录音：按原题时长保存音频，复测课同时记录原始准备时间和评分。",
    "回听记录：明确指出一处贴题、结构、理由、准确性或表达自然度问题。",
