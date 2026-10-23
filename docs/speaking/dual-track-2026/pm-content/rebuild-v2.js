@@ -62,7 +62,7 @@ ${caseText}
 <p><strong>可以立即执行的动作：</strong>${esc(lesson.move)}</p>
 <p><strong>起作用的原因：</strong>${esc(lesson.why)}</p>
 <section class="depth-analysis pm-revised-example"><h4>课程改写范例 · 为本题原创，非经典原作引文</h4>
-<p>${esc(lesson.good)}</p>
+<p>${isClassic?esc(lesson.good):"上方原创微案例已经给出改进后的表达；此处不重复全文，请直接用自己的话标出其功能。"}</p>
 <p><strong>请做一处定位：</strong>划出范例中真正回应问题的短句，再指出哪一句承担理由、条件、细节或行动建议；如果两句都删不掉，应说明各自独立的作用。</p></section>
 <h3>6—10分钟｜③ 错误诊断：找到缺口并修复</h3>
 <p><strong>需要纠正的原课错误：</strong>${esc(error)}</p>
@@ -82,5 +82,5 @@ ${tomorrow}
  if(updated===page)throw Error("No replacement "+n);
  const addLead=updated.replace(/(<header class="hero">[\s\S]*?<h1>[\s\S]*?<\/h1>)<p>[^<]*<\/p>/,
   '$1<p>案例观察、专项纠错、独立改写与次日可检验的技能目标；每晚聚焦一个表达动作。</p>');
- return {html:addLead,kind:isClassic?"sourced":"simulation",source:isClassic?external[0]:null,title,scene,question,referenceCount:2};
+ return {html:addLead.replace(/([。！？])。/g,"$1"),kind:isClassic?"sourced":"simulation",source:isClassic?external[0]:null,title,scene,question,referenceCount:2};
 }
