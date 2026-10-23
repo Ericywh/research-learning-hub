@@ -11,7 +11,7 @@ function pmRedesign(html,n,nextTitle){
  const bad=g(/<strong>需要纠正的原课错误[：:]<\/strong>([\s\S]*?)<\/p>/);
  const badwhy=g(/<strong>为什么有问题[：:]<\/strong>([\s\S]*?)<\/p>/);
  const good=g(/<section class="depth-analysis pm-revised-example">[\s\S]*?<h4>[^<]*<\/h4>\s*<p>([\s\S]*?)<\/p>/);
- const original=g(/<p>本课原创模拟表达[：:]([\s\S]*?)这是为本课题目创作/);
+ const original=g(/<p><strong>本课原创模拟表达[：:]<\/strong>([\s\S]*?)<\/p>/);
  const goodcase=/上方原创微案例已经给出/.test(good)?original:good;
  const originalCaseParagraph=g(/<p><strong>真实资料（分析性转述，不是演讲原话）[：:]<\/strong>([\s\S]*?)<\/p>/);
  const oldHref=art.match(/<p class="pm-source-reference">[\s\S]*?<a href="([^"]+)"/)?.[1]||"";
