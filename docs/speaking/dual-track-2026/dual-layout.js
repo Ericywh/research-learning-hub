@@ -298,8 +298,6 @@ function transformMorning(lesson,main,aside){
  const steps=element("div","steps");
  parsed.items.forEach((x,i)=>steps.appendChild(coloredStep(x.when,x.title,x.text,i)));
  practice.appendChild(steps);
- const note=element("div","notice","请按原题要求保存首次录音，回听、自评后再展开下面的示范。无提示测评不得提前查看关键词。");
- practice.appendChild(note);
  const reference=prepareAnswer(details);
  const completion=main.querySelector(".course-completion[data-completion-id]");
  if(!completion||!reference)return false;
