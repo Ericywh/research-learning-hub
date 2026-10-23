@@ -6,8 +6,8 @@ const found=location.pathname.match(/\/speaking\/dual-track-2026\/(am|pm)\/day-(
 if(!found)return;
 const mode=found[1],day=found[2];
 const palette=[
- ["#528bc8","#edf5ff"],["#b98444","#fff7ed"],["#399a86","#eefaf4"],
- ["#8069bd","#f4f0ff"],["#ba658d","#fff2f7"]
+ ["#7964b8","#f7f2ff"],["#bb8558","#fff7ee"],["#4b9e8a","#f1fcf6"],
+ ["#6f8fc8","#f0f4ff"],["#b97d9f","#fef0f6"]
 ];
 function element(tag,cls,text){
  const e=document.createElement(tag);
