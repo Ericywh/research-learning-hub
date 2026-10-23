@@ -642,5 +642,16 @@ jobs:
             echo "::error::Speaking first lesson not accessible"; exit 1
           fi
           echo "PASS speaking featured as first course and lesson page accessible."
+          status=$(curl -L -sS --connect-timeout 10 --max-time 30 -o /tmp/english-week01.html -w '%{http_code}' "$BASE/english/?design=$DEPLOY_SHA" || true)
+          [[ "$status" == "200" ]] || { echo "::error::English course not reachable over HTTPS"; exit 1; }
+          grep -Fq 'ENGLISH EXPRESSION · WEEK 01' /tmp/english-week01.html || { echo "::error::English week one content missing"; exit 1; }
+          PAGE=/tmp/english-week01.html node <<'NODE'
+          const fs=require('node:fs'),html=fs.readFileSync(process.env.PAGE,'utf8');
+          const match=html.match(/const data=(\[.*?\]);\s*const E=/s);
+          if(!match)throw Error('Missing English week-one lesson dataset');
+          const days=JSON.parse(match[1]);
+          if(days.length!==7||days.some(d=>!d.amQ||d.amQ.length!==3||!d.pmQ||d.pmQ.length!==3))throw Error('English seven-day AM/PM lesson content incomplete');
+          console.log('PASS English course public HTTP 200; seven days and fourteen lessons present');
+          NODE
 
 
