@@ -1,0 +1,82 @@
+
+/* ECONOMETRICS 120 | Academic Studio | common theme, 2026-10-23 */
+body.econ-theme{--navy:#18374c;--teal:#147d82;--gold:#c38c35;--violet:#7769bd;--ink:#24394d;--mute:#63778a;--bg:#f2f5f8;--surface:#fff;--stroke:#dbe5ed;--code:#142a3d;background:var(--bg);color:var(--ink);font:16px/1.88 system-ui,-apple-system,"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif}
+body.econ-theme *{box-sizing:border-box}body.econ-theme a{color:var(--teal);text-underline-offset:3px}body.econ-theme :focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+body.econ-theme .top,body.econ-theme>header{max-width:none;width:100%;margin:0;padding:15px max(18px,calc((100vw - 1240px)/2));background:var(--surface);border:0;border-bottom:1px solid var(--stroke);display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap;box-shadow:0 5px 20px #142f4408;font-size:13px}
+body.econ-theme .top .top-inner{width:100%;max-width:1240px;padding:0;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+body.econ-theme .econ-brand{font-weight:850;text-decoration:none;color:var(--navy);letter-spacing:.02em}
+body.econ-theme .econ-toggle,body.econ-theme .econ-copy{cursor:pointer;font:600 12px/1.6 inherit;border:1px solid var(--stroke);border-radius:9px;background:var(--surface);color:var(--ink);padding:7px 12px}
+body.econ-theme main,body.econ-theme main.wrap{background:transparent;border:0;border-radius:0;max-width:1240px;width:min(1240px,calc(100% - 36px));margin:28px auto 48px;padding:0}
+body.econ-theme .hero,body.econ-theme .econ-hero{position:relative;isolation:isolate;overflow:hidden;background:linear-gradient(122deg,#15344a 0%,#225465 63%,#187c80 100%);color:#fff;border:0;border-radius:24px;padding:42px 45px;margin:0 0 24px;box-shadow:0 20px 48px #16374d23}
+body.econ-theme .hero:after,body.econ-theme .econ-hero:after{content:"";pointer-events:none;position:absolute;z-index:-1;right:-70px;top:-110px;border:56px solid #ffffff13;border-radius:50%;height:340px;width:340px;box-shadow:0 0 0 50px #ffffff09,0 0 0 100px #ffffff05}
+body.econ-theme .hero h1,body.econ-theme .econ-hero h1{color:#fff!important;border:0;font:750 clamp(29px,4vw,48px)/1.35 Georgia,"Noto Serif SC","Songti SC",serif;letter-spacing:-.025em;margin:12px 0 20px}
+body.econ-theme .hero p,body.econ-theme .hero a,body.econ-theme .hero .muted,body.econ-theme .econ-hero .meta,body.econ-theme .econ-hero a{color:#e1f0f4!important}
+body.econ-theme .eyebrow,body.econ-theme .econ-hero-label{color:#f5ca83!important;font:800 12px/1.8 system-ui,sans-serif;letter-spacing:.16em}
+body.econ-theme .hero-box{background:#ffffff16;color:#fff;border:1px solid #ffffff35;backdrop-filter:blur(4px);box-shadow:none}
+body.econ-theme .econ-pills{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}
+body.econ-theme .econ-pills span{background:#ffffff14;color:#fff;border:1px solid #ffffff43;border-radius:25px;padding:4px 11px;font-size:12px}
+body.econ-theme .econ-meter{height:7px;width:min(400px,100%);border-radius:20px;background:#ffffff43;overflow:hidden;margin-top:20px}
+body.econ-theme .econ-meter i{display:block;height:100%;background:linear-gradient(90deg,#ffda94,#e8ab55)}
+body.econ-theme .facts{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+body.econ-theme .fact,body.econ-theme .card,body.econ-theme .outline,body.econ-theme .paper,body.econ-theme .econ-section,body.econ-theme main>section:not(.hero):not(.econ-hero):not(.outline),body.econ-theme main>.layout section,body.econ-theme .econ-aside{background:var(--surface);border:1px solid var(--stroke);border-radius:17px;box-shadow:0 9px 27px #1835490a}
+body.econ-theme .fact{position:relative;overflow:hidden;border-top:4px solid var(--teal);padding:24px}
+body.econ-theme .fact:nth-child(2){border-top-color:var(--violet)}
+body.econ-theme .fact:nth-child(3){border-top-color:var(--gold)}
+body.econ-theme .fact strong{color:var(--navy);font-size:clamp(27px,3vw,35px)}
+body.econ-theme .card{padding:26px}
+body.econ-theme .card:first-child{background:linear-gradient(148deg,var(--surface),#eaf6f4)}
+body.econ-theme .cta,body.econ-theme .button-link{background:var(--teal);color:white!important;border-radius:9px;font-weight:700;padding:11px 17px;text-decoration:none}
+body.econ-theme .tag,body.econ-theme .tags span{color:#176b71;background:#e4f2f0;border-radius:20px;font-weight:650;padding:5px 10px}
+body.econ-theme .outline{padding:27px}
+body.econ-theme .toolbar input{background:var(--surface);border-color:var(--stroke)}
+body.econ-theme .filters button[aria-pressed=true]{background:var(--navy);color:white}
+body.econ-theme .chapter{border:1px solid var(--stroke);border-radius:13px;padding:0;margin:11px 0;background:var(--surface);overflow:hidden}
+body.econ-theme .chapter summary{padding:16px 20px;background:linear-gradient(90deg,#f2f7fa,#fff);align-items:center}
+body.econ-theme .chapter[open] summary{border-bottom:1px solid var(--stroke);background:#ecf4f6}
+body.econ-theme .chapter summary strong{color:var(--navy)}
+body.econ-theme .chapter .lesson{padding:11px 18px;transition:background .18s}
+body.econ-theme .chapter .lesson:hover{background:#f1f8fa}
+body.econ-theme .status.published{color:#087c69}
+body.econ-theme .notice{background:#fff7e8;color:#786039;border-color:var(--gold)}
+body.econ-theme .layout,body.econ-theme .econ-layout{display:grid;grid-template-columns:235px minmax(0,1fr);gap:22px;align-items:start}
+body.econ-theme .side,body.econ-theme .econ-aside{position:sticky;top:24px;padding:17px;border-radius:16px}
+body.econ-theme .econ-aside-title{margin:0 0 12px;color:var(--navy);font-size:14px;font-weight:800}
+body.econ-theme .side a,body.econ-theme .econ-aside a{display:block;text-decoration:none;font-size:13px;line-height:1.6;padding:9px 10px;border-radius:8px;color:var(--mute);border-left:3px solid transparent}
+body.econ-theme .side a:hover,body.econ-theme .econ-aside a:hover{background:#eaf5f5;color:var(--teal);border-left-color:var(--teal)}
+body.econ-theme .econ-article{min-width:0}
+body.econ-theme .paper,body.econ-theme .econ-section,body.econ-theme .econ-article>section{padding:29px 32px;margin:0 0 18px;scroll-margin-top:23px;min-width:0}
+body.econ-theme .paper h2,body.econ-theme .econ-section h2,body.econ-theme .econ-section h3:first-child,body.econ-theme .econ-article>section>h2{color:var(--navy);border:0;margin:0 0 19px;padding:0 0 13px;border-bottom:1px solid var(--stroke);font-size:clamp(20px,2.5vw,24px);line-height:1.5}
+body.econ-theme .paper h2:before,body.econ-theme .econ-section>h2:before,body.econ-theme .econ-section>h3:first-child:before{content:"";display:inline-block;width:6px;height:24px;vertical-align:-5px;margin-right:12px;background:var(--teal);border-radius:6px}
+body.econ-theme .econ-article>section:nth-child(3n+2){border-top:3px solid var(--violet)}
+body.econ-theme .econ-article>section:nth-child(3n){border-top:3px solid var(--gold)}
+body.econ-theme .econ-article>section:nth-child(3n+1){border-top:3px solid var(--teal)}
+body.econ-theme .paper p,body.econ-theme .econ-section p{max-width:82ch}
+body.econ-theme .formula,body.econ-theme .equation{padding:20px;border-radius:12px;background:linear-gradient(110deg,#f3f0fc,#f7f9fc);border:1px solid #e0d9f3;color:#534594;overflow:auto}
+body.econ-theme .quote{background:#ebf5f3;border-left:4px solid var(--teal);border-radius:7px;padding:17px}
+body.econ-theme .stats{gap:10px}
+body.econ-theme .stats div{background:#eef5f7;border:1px solid var(--stroke)}
+body.econ-theme pre{margin:0 0 18px;background:var(--code);color:#e7eef8;border-radius:0 0 12px 12px;padding:21px;font:13px/1.75 ui-monospace,SFMono-Regular,Consolas,monospace;overflow:auto;white-space:pre}
+body.econ-theme pre code{white-space:pre;color:inherit;background:none;padding:0}
+body.econ-theme .econ-code-top{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-top:17px;background:#203c51;color:#fff;padding:9px 14px;border-radius:12px 12px 0 0;font:700 12px/1.4 system-ui,sans-serif}
+body.econ-theme .econ-code-top button{background:#335970;color:#fff;border:1px solid #6a8391;border-radius:7px;padding:5px 11px;cursor:pointer}
+body.econ-theme table{background:var(--surface);border-radius:10px;overflow:hidden}
+body.econ-theme th{background:#ecf3f6;color:var(--navy)}
+body.econ-theme td,body.econ-theme th{border-color:var(--stroke)}
+body.econ-theme details{border:1px solid var(--stroke);border-radius:11px;overflow:hidden;margin:12px 0}
+body.econ-theme details summary{background:#edf4f7;color:var(--navy);padding:13px;cursor:pointer}
+body.econ-theme details .answer{padding:15px}
+body.econ-theme .alert{background:#fff4e5;border-color:var(--gold)}
+body.econ-theme .econ-readingbar{position:fixed;top:0;left:0;z-index:1500;height:4px;width:0;background:linear-gradient(90deg,var(--teal),var(--gold))}
+body.econ-theme footer,body.econ-theme>footer{max-width:1240px;width:calc(100% - 36px);margin:auto;padding:28px 0;color:var(--mute)}
+body.econ-theme[data-econ-dark="true"]{--navy:#d6eaf4;--ink:#e4eef5;--mute:#aec1cb;--bg:#10202e;--surface:#1b3040;--stroke:#385062;--code:#091924;color-scheme:dark}
+body.econ-theme[data-econ-dark="true"] .card:first-child,body.econ-theme[data-econ-dark="true"] .chapter summary,body.econ-theme[data-econ-dark="true"] .chapter[open] summary{background:#213b4b}
+body.econ-theme[data-econ-dark="true"] .chapter .lesson:hover,body.econ-theme[data-econ-dark="true"] .side a:hover,body.econ-theme[data-econ-dark="true"] .econ-aside a:hover{background:#284558}
+body.econ-theme[data-econ-dark="true"] .formula,body.econ-theme[data-econ-dark="true"] .equation{background:#312c49;color:#e7dafa;border-color:#55476e}
+body.econ-theme[data-econ-dark="true"] .tag,body.econ-theme[data-econ-dark="true"] .tags span{background:#254d52;color:#c8eceb}
+body.econ-theme[data-econ-dark="true"] th{background:#284558;color:#e4f3f7}
+body.econ-theme[data-econ-dark="true"] details summary{background:#284558;color:#e4eef5}
+body.econ-theme[data-econ-dark="true"] a{color:#73d8d6}
+@media(max-width:850px){body.econ-theme .hero,body.econ-theme .econ-hero{padding:31px 24px}body.econ-theme .layout,body.econ-theme .econ-layout{grid-template-columns:1fr}body.econ-theme .side,body.econ-theme .econ-aside{position:static}body.econ-theme .side a,body.econ-theme .econ-aside a{display:inline-block}body.econ-theme .feature{grid-template-columns:1fr}body.econ-theme .paper,body.econ-theme .econ-section{padding:21px 19px}}
+@media(max-width:530px){body.econ-theme .facts{grid-template-columns:1fr}body.econ-theme .facts .fact:last-child{grid-column:auto}body.econ-theme .outline{padding:17px}body.econ-theme .lesson .num{width:49px}body.econ-theme .chapter summary{padding:15px}body.econ-theme .top .top-inner{gap:5px}body.econ-theme pre{font-size:11px;padding:14px}}
+@media(prefers-reduced-motion:reduce){body.econ-theme *{scroll-behavior:auto!important;transition:none!important}}
+@media print{body.econ-theme{background:#fff}body.econ-theme .side,body.econ-theme .econ-aside,body.econ-theme .econ-toggle,body.econ-theme .econ-readingbar,body.econ-theme .econ-code-top button{display:none!important}body.econ-theme .layout,body.econ-theme .econ-layout{display:block}body.econ-theme .paper,body.econ-theme .econ-section{break-inside:avoid;box-shadow:none}body.econ-theme pre{white-space:pre-wrap}}
