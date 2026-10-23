@@ -12,3 +12,5 @@
 a .course-completion-mark{pointer-events:none}
 @media(max-width:600px){.course-completion{padding:16px 17px;margin:14px 0 17px}.course-completion-title{font-size:15px}.course-completion-button{width:100%}.course-completion-head{align-items:stretch}.course-completion-mark{margin-left:4px;font-size:10px}}
 @media print{.course-completion-button{display:none}.course-completion{box-shadow:none}}
+
+.course-completion-directory-note{color:#617186;font-size:13px;line-height:1.75;margin:14px 4px 18px;padding:10px 14px;border-left:3px solid #9db3ca;background:rgba(241,245,250,.84);border-radius:0 8px 8px 0}
