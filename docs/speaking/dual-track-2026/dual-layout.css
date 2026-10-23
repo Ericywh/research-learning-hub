@@ -255,3 +255,89 @@ html.speaking-legacy-standard body.dual-layout-ready .dual-outcome-card>.small{
  }
  html.speaking-legacy-standard body.dual-layout-ready .dual-material-card>.material{padding:12px 13px!important}
 }
+
+
+/* Expanded AFTER PRACTICE: useful comparison within the one closed disclosure. */
+html.speaking-legacy-standard body.dual-layout-ready .answer-body .reference-contrast{
+ margin:18px 0 12px!important;
+ padding:16px 17px!important;
+ border:1px solid #e0e6f2!important;border-radius:13px!important;
+ background:linear-gradient(115deg,#f5f3ff 0%,#f9fbff 65%,#fff 100%)!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready .answer-body :is(.reference-contrast,.reference-transfer)>h3{
+ font-size:15px!important;color:#564c9d!important;font-weight:800!important;
+ line-height:1.5!important;margin:0 0 11px!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready .answer-body .reference-path-grid{
+ display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
+ gap:10px!important;margin:0!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready .answer-body .reference-path{
+ min-width:0!important;overflow-wrap:anywhere!important;
+ padding:12px 13px!important;border:1px solid #e2e8f4!important;
+ border-radius:11px!important;background:linear-gradient(110deg,#f6f9ff,#fff)!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready .answer-body .reference-path:nth-child(2){
+ background:linear-gradient(110deg,#f2faf6,#fff)!important;
+ border-color:#dbece4!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready .answer-body .reference-path>h4{
+ font-size:13px!important;line-height:1.5!important;color:#455f93!important;
+ font-weight:800!important;margin:0 0 6px!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready .answer-body .reference-path:nth-child(2)>h4{
+ color:#3d826e!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready .answer-body .reference-path>p,
+html.speaking-legacy-standard body.dual-layout-ready .answer-body .reference-specific-question{
+ font-size:13px!important;line-height:1.78!important;
+ color:#4a5670!important;margin:0!important;overflow-wrap:anywhere!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready .answer-body .reference-specific-question{
+ margin:12px 0 0!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready .answer-body .reference-transfer{
+ background:linear-gradient(110deg,#f1f9f6,#fff 85%)!important;
+ border:1px solid #dcefe5!important;border-left:4px solid #48a389!important;
+ border-radius:12px!important;padding:14px 16px!important;margin:12px 0 17px!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready .answer-body .reference-transfer>h3{
+ color:#3d806d!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready .answer-body .reference-transfer>p{
+ font-size:13px!important;line-height:1.82!important;
+ margin:7px 0!important;color:#435e55!important;overflow-wrap:anywhere!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready .answer-body .reference-transfer-question{
+ border-top:1px solid #dcefe5!important;padding-top:9px!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready .reference-subtitle{
+ display:block!important;font-size:12px!important;line-height:1.6!important;
+ color:#7986a0!important;font-weight:400!important;margin-top:3px!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready .answer-body>h3{
+ margin:18px 0 7px!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready .answer-body>ol.check{
+ display:grid!important;gap:6px!important;
+ padding-left:21px!important;margin:7px 0 0!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready .answer-body>ol.check li{
+ font-size:13px!important;line-height:1.74!important;color:#48536a!important;
+ margin:0!important;
+}
+/* A necessary reminder appears only for genuinely specific risks; keep it compact. */
+html.speaking-legacy-standard body.dual-layout-ready .dual-reminder-card .dual-reminder-list{
+ gap:8px!important;
+}
+html.speaking-legacy-standard body.dual-layout-ready .dual-reminder-card .dual-reminder-list>li{
+ padding-top:9px!important;padding-bottom:9px!important;line-height:1.7!important;
+}
+@media(max-width:640px){
+ html.speaking-legacy-standard body.dual-layout-ready .answer-body .reference-path-grid{
+  grid-template-columns:minmax(0,1fr)!important;gap:8px!important;
+ }
+ html.speaking-legacy-standard body.dual-layout-ready .answer-body :is(.reference-contrast,.reference-transfer){
+  padding:13px 12px!important;
+ }
+}
