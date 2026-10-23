@@ -12,7 +12,7 @@ function pmRedesign(html,n,nextTitle){
  const badwhy=g(/<strong>为什么有问题[：:]<\/strong>([\s\S]*?)<\/p>/);
  const good=g(/<section class="depth-analysis pm-revised-example">[\s\S]*?<h4>[^<]*<\/h4>\s*<p>([\s\S]*?)<\/p>/);
  const original=g(/<p>本课原创模拟表达[：:]([\s\S]*?)这是为本课题目创作/);
- const goodcase=/上方原创微案例已经给出/.test(good)?(original||r1):good;
+ const goodcase=/上方原创微案例已经给出/.test(good)?original:good;
  const originalCaseParagraph=g(/<p><strong>真实资料（分析性转述，不是演讲原话）[：:]<\/strong>([\s\S]*?)<\/p>/);
  const oldHref=art.match(/<p class="pm-source-reference">[\s\S]*?<a href="([^"]+)"/)?.[1]||"";
  const oldSourceName=g(/<p class="pm-source-reference">[\s\S]*?<a[^>]+>([\s\S]*?)<\/a>/);
@@ -21,7 +21,7 @@ function pmRedesign(html,n,nextTitle){
  const getAnswer=label=>g(new RegExp("<strong>"+label+"[：:]<\\/strong>\\s*([^\\n<]+)"));
  const r1=getAnswer("参考一"),r2=getAnswer("参考二"),k1=getAnswer("关键词一").split("。")[0],k2=getAnswer("关键词二").split("。")[0];
  const target=g(/<strong>核查标准[：:]<\/strong>([\s\S]*?)\n/).split("。")[0]||"能否把核心意思说完整";
- if([title,scene,question,action,why,bad,goodcase,r1,r2].some(x=>x.length<4))throw Error("Missing content day "+n+" "+JSON.stringify({title,scene,question,action,why,bad,goodcase,r1,r2}));
+ if([title,scene,question,action,why,bad,r1,r2].some(x=>x.length<4))throw Error("Missing content day "+n+" "+JSON.stringify({title,scene,question,action,why,bad,goodcase,r1,r2}));
  const assess=new Set([1,7,14,21,28,35,42,49,56,63]);
  const type=assess.has(n)?"review":(n>=8&&n<=21||n>=50&&n<=56)?"dialogue":(n>=29&&n<=36||n>=57&&n<=62)?"story":(n>=37&&n<=49)?"expert":"argument";
  const topics={
@@ -41,7 +41,7 @@ function pmRedesign(html,n,nextTitle){
  const theory=topics[key];
  const time={review:"10—14分钟",argument:"12—15分钟",dialogue:"12—16分钟",story:"13—17分钟",expert:"15—18分钟"}[type];
  const problem=type==="review"?"如何从原始表现中辨认一个可靠、可改进的表达问题？":type==="dialogue"?"这句话怎样接住对方，又不模糊自己的意思？":type==="story"?"听众应该记住什么转折、画面或中心判断？":type==="expert"?"哪些结论有依据，哪些只是从事实跳出的推断？":"为什么同一件事，有的表达能迅速让听众听懂？";
- const spoken=(goodcase.includes("这是为本课题目创作")?goodcase.split("这是为本课题目")[0]:goodcase);
+ const spoken=((goodcase||r1).includes("这是为本课题目创作")?(goodcase||r1).split("这是为本课题目")[0]:(goodcase||r1));
  const chunks=spoken.split(/(?<=[。！？；])/).map(s=>s.trim()).filter(Boolean);
  const first=chunks[0]||spoken,rest=chunks.slice(1).join(" ")||"（本案例只有一句话，重点核对一句中的主张、依据和条件。）";
  let caseSection=`<section class="pm-section"><h2>案例｜先看两种说法的差距</h2><p class="pm-scene"><b>情境</b>${esc(scene)}</p><p class="pm-scene"><b>具体问题</b>${esc(question)}</p><div class="pm-contrast"><div class="pm-sample pm-miss"><span>表达缺陷</span><p>${esc(bad)}</p></div><div class="pm-sample pm-hit"><span>更好的说法 · 课程原创</span><p>${esc(spoken)}</p></div></div><p class="pm-case-diagnosis"><strong>差异不在“词藻”：</strong>${esc(badwhy||why)}</p></section>`;
