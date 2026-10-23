@@ -31,7 +31,7 @@ function rewritePMv2(page,n,lesson,nextTopic){
  function extract(tag){return strip(ans?.match(new RegExp('<strong>'+tag+'：</strong>\\s*([^<]+)'))?.[1]);}
  const a=extract("参考路径一"),b=extract("参考路径二"),ka=extract("关键词一"),kb=extract("关键词二");
  if(!scene||!question||!title||!error||!a||!b||!ka||!kb||!transfer)throw Error("Required original data missing day "+n+" "+JSON.stringify({scene,question,title,error,a,b,ka,kb,transfer}));
- for(const field of ["src","lens","move","why","good","diagnosis","task","measure"]){if(!lesson[field]||lesson[field].length<18)throw Error("Missing field "+field+" day "+n);}
+ for(const field of ["src","lens","move","why","good","diagnosis","task","measure"]){if(!lesson[field]||(field!=="src"&&lesson[field].length<18))throw Error("Missing field "+field+" day "+n);}
  const external=SOURCES[lesson.src];if(!external)throw Error("Unknown source "+lesson.src);
  const isClassic=classics.has(n);
  const kind=isClassic?"REAL CASE · 真实经典案例":"ORIGINAL CASE · 课程原创微案例";
