@@ -176,3 +176,82 @@ html.speaking-legacy-standard body.dual-layout-ready.dual-am .course-mode-link a
   display:flex!important;width:100%!important;text-align:center!important;
  }
 }
+
+/* Lesson 022-style reusable modules: 今日素材 / 重要提醒 / 今日成果.
+   The three cards are part of each existing 18-minute lesson, not extra assignments. */
+html.speaking-legacy-standard body.dual-layout-ready .dual-material-card,
+html.speaking-legacy-standard body.dual-layout-ready .dual-reminder-card,
+html.speaking-legacy-standard body.dual-layout-ready .dual-outcome-card{
+ background:#fff!important;border:1px solid #e2e7f1!important;border-radius:17px!important;
+ padding:22px 24px!important;box-shadow:0 4px 20px #343e6510!important;margin:0!important
+}
+html.speaking-legacy-standard body.dual-layout-ready .dual-material-card{border-top:4px solid #528bc8!important}
+html.speaking-legacy-standard body.dual-layout-ready .dual-reminder-card{border-top:4px solid #b98444!important}
+html.speaking-legacy-standard body.dual-layout-ready .dual-outcome-card{border-top:4px solid #399a86!important}
+html.speaking-legacy-standard body.dual-layout-ready :is(.dual-material-card,.dual-reminder-card,.dual-outcome-card)>.kicker{
+ font-size:11px!important;letter-spacing:.12em!important;font-weight:850!important;margin:0 0 6px!important
+}
+html.speaking-legacy-standard body.dual-layout-ready .dual-material-card>.kicker{color:#528bc8!important}
+html.speaking-legacy-standard body.dual-layout-ready .dual-reminder-card>.kicker{color:#ad7534!important}
+html.speaking-legacy-standard body.dual-layout-ready .dual-outcome-card>.kicker{color:#399a86!important}
+html.speaking-legacy-standard body.dual-layout-ready :is(.dual-material-card,.dual-reminder-card,.dual-outcome-card)>h2{
+ color:#29334b!important;font-size:20px!important;line-height:1.4!important;margin:0 0 13px!important
+}
+html.speaking-legacy-standard body.dual-layout-ready .dual-material-card>.material{
+ background:#edf5ff!important;border:1px solid #dce8f6!important;border-radius:12px!important;
+ padding:14px 16px!important;margin:10px 0!important;line-height:1.8!important
+}
+html.speaking-legacy-standard body.dual-layout-ready .dual-material-card>.material.alt{
+ background:#fff7ed!important;border-color:#f0e3d3!important
+}
+html.speaking-legacy-standard body.dual-layout-ready .dual-material-card>.material>b{
+ display:block!important;font-size:13px!important;color:#4678b0!important;font-weight:800!important;
+ margin-bottom:5px!important;line-height:1.5!important
+}
+html.speaking-legacy-standard body.dual-layout-ready .dual-material-card>.material.alt>b{color:#ad7534!important}
+html.speaking-legacy-standard body.dual-layout-ready .dual-material-card>.material>p{
+ font-size:14px!important;line-height:1.85!important;color:#344860!important;margin:0!important;
+ white-space:pre-line!important;overflow-wrap:anywhere!important
+}
+html.speaking-legacy-standard body.dual-layout-ready .dual-material-card>.small{
+ font-size:12px!important;line-height:1.7!important;color:#748098!important;margin:10px 0 0!important
+}
+html.speaking-legacy-standard body.dual-layout-ready :is(.dual-reminder-list,.dual-outcome-list){
+ display:grid!important;gap:9px!important;margin:0!important;padding:0!important;list-style:none!important
+}
+html.speaking-legacy-standard body.dual-layout-ready :is(.dual-reminder-list,.dual-outcome-list)>li{
+ position:relative!important;font-size:14px!important;line-height:1.8!important;color:#43536c!important;
+ margin:0!important;padding:11px 13px 11px 42px!important;border-radius:11px!important;
+ overflow-wrap:anywhere!important
+}
+html.speaking-legacy-standard body.dual-layout-ready .dual-reminder-list>li{
+ background:#fff7ed!important;border:1px solid #f0e3d3!important
+}
+html.speaking-legacy-standard body.dual-layout-ready .dual-outcome-list>li{
+ background:#eefaf4!important;border:1px solid #d9ede4!important
+}
+html.speaking-legacy-standard body.dual-layout-ready .dual-reminder-list>li:before,
+html.speaking-legacy-standard body.dual-layout-ready .dual-outcome-list>li:before{
+ display:flex!important;align-items:center!important;justify-content:center!important;
+ position:absolute!important;left:12px!important;top:12px!important;width:22px!important;height:22px!important;
+ border-radius:7px!important;color:#fff!important;font-size:12px!important;font-weight:850!important;
+ line-height:1!important
+}
+html.speaking-legacy-standard body.dual-layout-ready .dual-reminder-list>li:before{
+ content:"!"!important;background:#b98444!important
+}
+html.speaking-legacy-standard body.dual-layout-ready .dual-outcome-list>li:before{
+ content:"✓"!important;background:#399a86!important
+}
+html.speaking-legacy-standard body.dual-layout-ready .dual-outcome-card>.small{
+ margin:11px 0 0!important;font-size:12px!important;color:#748098!important;line-height:1.7!important
+}
+@media(max-width:580px){
+ html.speaking-legacy-standard body.dual-layout-ready :is(.dual-material-card,.dual-reminder-card,.dual-outcome-card){
+  padding:18px 16px!important;border-radius:14px!important
+ }
+ html.speaking-legacy-standard body.dual-layout-ready :is(.dual-reminder-list,.dual-outcome-list)>li{
+  font-size:13px!important;padding:10px 10px 10px 38px!important
+ }
+ html.speaking-legacy-standard body.dual-layout-ready .dual-material-card>.material{padding:12px 13px!important}
+}
