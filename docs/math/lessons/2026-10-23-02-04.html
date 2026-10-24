@@ -1,0 +1,26 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="每日10分钟数学微课程，第16课：第2章·第4节｜基与维数"><title>第2章·第4节｜基与维数</title><link rel="stylesheet" href="../site.css"><script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script><style>.article-wrap{max-width:830px;margin:0 auto;padding:36px 20px 80px}.article{font-size:17px;line-height:1.9;color:#263d3a}.article h3{margin-top:1.7em}.article p{margin:1em 0}.article .math{overflow:auto;padding:12px;background:#f4f8f5;border-radius:9px}.muted{font-size:14px;color:#61736e}</style></head><body><header><div class="wrap"><a href="../">← 数学课程目录</a><a href="../../">研究学习中心 ↗</a></div></header><main class="article-wrap"><div class="kicker">MATHEMATICS · PROBABILITY · ECONOMETRICS</div><h1>第2章·第4节｜基与维数</h1><p class="muted">全课程第16课 / 共73课 · 2026-10-23 · 预计学习8分钟</p><article class="article"><p>全课程第16课 / 共73课｜2026年10月23日｜预计学习时间：8分钟</p>
+<p><strong>核心问题：</strong> 为什么设计矩阵可能有许多列，却只需少数向量就能完整描述模型的拟合空间？</p>
+<h3>一、什么是基</h3>
+<p>上一课说明，设计矩阵的所有列向量张成OLS能够产生的拟合值空间。但描述同一个空间，不必保留每一列。设 \(X\) 为 \(n\times p\) 实矩阵，其列空间为 \(\mathcal C(X)\)。若一组向量既能张成 \(\mathcal C(X)\)，又线性独立，就称它为该空间的一组基。</p>
+<div class="math">\[\mathcal C(X)=\operatorname{span}\{\mathbf b_1,\ldots,\mathbf b_r\},\quad \sum_{j=1}^r a_j\mathbf b_j=\mathbf0\Rightarrow a_j=0,\quad r=\dim\mathcal C(X)=\operatorname{rank}(X)\]</div>
+<p>这里每个基向量属于 \(\mathbb R^n\)，\(r\) 不超过 \(\min(n,p)\)。基可以有不同选择，但同一有限维空间的所有基都含有相同数量的向量；这个数量就是维数。</p>
+<h3>二、为什么基坐标唯一</h3>
+<p>对于列空间内任意向量 \(\mathbf z\)，一组基既保证它能被表示，也保证表示系数唯一：</p>
+<div class="math">\[\mathbf z=\sum_{j=1}^{r}\theta_j\mathbf b_j,\qquad \mathbf z\in\mathcal C(X)\]</div>
+<p>存在性来自“张成”，唯一性来自“线性独立”：若有两组系数表示同一个 \(\mathbf z\)，相减便得到基向量的零线性组合，因此两组系数逐项相同。注意，唯一的是给定基下的坐标；换一组基，坐标可以改变。</p>
+<h3>三、可手算的三列矩阵</h3>
+<p>取三个长度为3的样本列向量 \(\mathbf u_1=(1,1,1)^{\mathsf T}\)、\(\mathbf u_2=(0,1,2)^{\mathsf T}\)、\(\mathbf u_3=(1,2,3)^{\mathsf T}\)。因为 \(\mathbf u_3=\mathbf u_1+\mathbf u_2\)，而 \(\mathbf u_1\)、\(\mathbf u_2\) 不成比例，所以 \(X=[\mathbf u_1\ \mathbf u_2\ \mathbf u_3]\) 的秩为2。\(\{\mathbf u_1,\mathbf u_2\}\) 是一组基，\(\{\mathbf u_1,\mathbf u_3\}\) 也是一组基。</p>
+<p>目标向量 \(\mathbf z=(2,3,4)^{\mathsf T}\) 可以写为 \(2\mathbf u_1+\mathbf u_2\)，也可以写为 \(\mathbf u_1+\mathbf u_3\)。两种表示使用不同的基，并不违反“给定基下坐标唯一”。</p>
+<div class="math">\[X\boldsymbol\beta=(\beta_1+\beta_3)\mathbf u_1+(\beta_2+\beta_3)\mathbf u_2\]</div>
+<p>若坚持使用含冗余列的原矩阵 \(X\)，系数 \((2,1,0)^{\mathsf T}\) 和 \((1,0,1)^{\mathsf T}\) 都生成同一个 \(\mathbf z\)。相反，向量 \((1,0,1)^{\mathsf T}\) 不属于该列空间：其中任一向量的中间分量必须等于首尾分量的平均值，而此向量不满足。</p>
+<h3>四、统计与计量经济学应用</h3>
+<p>在回归设计中，识别出一组基，相当于找到了张成相同拟合空间的独立列。删除严格冗余的解释变量列，不改变OLS能够达到的拟合值集合，但会改变系数的参数化与解释。数值计算常借助带列主元的QR分解判断独立方向；近似共线性还涉及数值容差，不能仅凭精确秩判断估计稳定性。满列秩保证的是给定设计矩阵下系数解的代数唯一性，不保证外生性或因果识别。</p>
+<h3>五、两分钟自测</h3>
+<p><strong>第1题｜概念题：</strong> 同一个有限维子空间能否有两组不同的基？两组基的向量个数可以不同吗？</p>
+<p><strong>第2题｜计算/应用题：</strong> 沿用上面的 \(X\)，求 \(\operatorname{rank}(X)\)，并给出两组不同的系数向量，使 \(X\boldsymbol\beta=(2,3,4)^{\mathsf T}\)。</p>
+<h4>参考答案</h4>
+<p><strong>第1题：</strong> 可以有不同的基，但每组基的向量个数都等于空间维数，因此不能不同。</p>
+<p><strong>第2题：</strong> \(\operatorname{rank}(X)=2\)；例如 \(\boldsymbol\beta=(2,1,0)^{\mathsf T}\) 与 \(\boldsymbol\beta=(1,0,1)^{\mathsf T}\)，均给出 \((2,3,4)^{\mathsf T}\)。</p>
+<h3>六、前后课衔接与简短复习</h3>
+<p>第13课从冗余列发现系数不唯一，第14课用秩测量独立方向，第15课界定可拟合的列空间，本课用基给出最精简的空间表示。下一课讨论内积与向量长度，为理解正交和投影奠定基础。</p>
+<p><strong>下一课：第2章·第5节｜内积与向量长度（全课程第17课）。</strong></p></article><footer class="muted"><p><a href="https://app.notion.com/p/402b54823a1281adaf24c86353878dc3?pvs=204">Notion私人完整讲义（需权限）</a> · <a href="../">课程目录</a></p></footer></main></body></html>
