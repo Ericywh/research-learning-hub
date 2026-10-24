@@ -80,3 +80,82 @@ body.econ-theme[data-econ-dark="true"] .lesson.econ-lesson-completed{background:
 @media print{
   body[data-course-theme="econometrics"] :is(.econ-complete-panel,.econ-my-learning){display:none!important}
 }
+
+
+/* Quiet reading companion and accessible, default-closed answers. */
+body[data-course-theme="econometrics"] .econ-reading-guide{
+  position:relative;overflow:hidden;padding:19px 22px;margin:0 0 22px;
+  background:linear-gradient(105deg,#f1f5f1,#faf9f2 68%,#f0f4f9);
+  border:1px solid #dce5df;border-radius:14px;box-shadow:0 7px 25px #213c3008;
+}
+body[data-course-theme="econometrics"] .econ-reading-guide:before{
+  content:"";position:absolute;left:0;top:0;bottom:0;width:4px;
+  background:linear-gradient(#7a9b8a,#9a9ec0,#c5a579);
+}
+body[data-course-theme="econometrics"] .econ-reading-guide-label{
+  display:block;color:#667b70;font-size:11px;font-weight:800;letter-spacing:.11em;
+}
+body[data-course-theme="econometrics"] .econ-reading-guide p{
+  font-size:15px;line-height:1.8;color:#344b42;margin:7px 0 12px;
+}
+body[data-course-theme="econometrics"] .econ-reading-guide-chips{
+  display:flex;flex-wrap:wrap;gap:7px;
+}
+body[data-course-theme="econometrics"] .econ-reading-guide-chips span{
+  font-size:11px;font-weight:650;line-height:1.5;padding:5px 10px;
+  background:#fffdf9;border:1px solid #dce5df;border-radius:99px;color:#526a5e;
+}
+body[data-course-theme="econometrics"] .econ-reading-guide-chips span:nth-child(2){border-color:#cddde7;color:#587990}
+body[data-course-theme="econometrics"] .econ-reading-guide-chips span:nth-child(3){border-color:#ddd5e9;color:#766990}
+body[data-course-theme="econometrics"] .econ-reading-guide-chips span:nth-child(4){border-color:#e5d9bd;color:#917346}
+body[data-course-theme="econometrics"] details.econ-answer-fold{
+  border:1px solid #dcded8;border-radius:11px;margin:11px 0 17px;
+  background:#fbfcf8;overflow:hidden;box-shadow:0 5px 18px #30453808;
+}
+body[data-course-theme="econometrics"] details.econ-answer-fold>summary{
+  list-style:none;cursor:pointer;padding:13px 17px;font-size:14px;font-weight:750;
+  color:#426b55;background:linear-gradient(100deg,#ebf4ec,#f9faf4);
+  display:flex;align-items:center;gap:10px;
+}
+body[data-course-theme="econometrics"] details.econ-answer-fold>summary::before{
+  content:"✦";font-size:13px;color:#70917e;
+}
+body[data-course-theme="econometrics"] details.econ-answer-fold>summary::after{
+  content:"＋";font-size:18px;font-weight:500;margin-left:auto;color:#678672;
+}
+body[data-course-theme="econometrics"] details.econ-answer-fold[open]>summary::after{content:"−"}
+body[data-course-theme="econometrics"] details.econ-answer-fold>summary::-webkit-details-marker{display:none}
+body[data-course-theme="econometrics"] details.econ-answer-fold .econ-answer-content{
+  padding:9px 16px 17px;border-top:1px solid #e0e9e2;
+}
+body[data-course-theme="econometrics"] details.econ-answer-fold .econ-answer-content p{
+  margin:7px 0;line-height:1.86;
+}
+body[data-course-theme="econometrics"] details.econ-answer-fold:focus-within,
+body[data-course-theme="econometrics"] details.econ-existing-answer:focus-within{
+  outline:2px solid #88ad98;outline-offset:2px;
+}
+body[data-course-theme="econometrics"] details.econ-existing-answer:not(.cr-reader-codefold)>summary{
+  background:linear-gradient(100deg,#ecf4ed,#f8faf6);
+  color:#456d56;font-weight:700;
+}
+body.econ-theme[data-econ-dark="true"] :is(.econ-reading-guide,details.econ-answer-fold){
+  background:#243b36;border-color:#3c5b4d;color:#e4efe6;
+}
+body.econ-theme[data-econ-dark="true"] :is(.econ-reading-guide p,.econ-reading-guide-label,
+.econ-answer-fold>summary){color:#dcecdf}
+body.econ-theme[data-econ-dark="true"] .econ-reading-guide-chips span{
+  background:#2b4741;color:#e6f4e9;border-color:#547564;
+}
+body.econ-theme[data-econ-dark="true"] details.econ-answer-fold>summary{
+  background:#2b4c3d;color:#dcefe0;
+}
+@media(max-width:580px){
+ body[data-course-theme="econometrics"] .econ-reading-guide{padding:16px;margin-bottom:16px}
+ body[data-course-theme="econometrics"] .econ-reading-guide p{font-size:14px}
+ body[data-course-theme="econometrics"] .econ-reading-guide-chips span{font-size:10px}
+}
+@media print{
+ body[data-course-theme="econometrics"] .econ-reading-guide{display:none}
+ body[data-course-theme="econometrics"] details.econ-answer-fold{break-inside:avoid}
+}

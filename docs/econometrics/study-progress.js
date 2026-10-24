@@ -153,7 +153,156 @@
     window.addEventListener("storage", (event) => { if (event.key === KEY) refresh(); });
   }
 
-  function ready() { if (id) lesson(); else catalog(); }
+
+  // Render-only enhancements of the lesson body. The canonical progress tracker
+  // below remains independent of the former "七、学习进度" lesson section.
+  function polishLesson() {
+    const root = document.querySelector("main");
+    if (!root || root.dataset.econPolished === "true") return;
+    root.dataset.econPolished = "true";
+
+    // Future lessons imported at build time can still contain this obsolete
+    // editorial progress section: remove that single section, not other material.
+    const oldProgress = /^(?:(?:[一二三四五六七八九十]+|\d+)[、.．]\s*)?(?:学习进度|知识卡片与(?:学习)?进度|知识与进度)$/;
+    for (const h of Array.from(root.querySelectorAll("h2,h3"))) {
+      if (!oldProgress.test((h.textContent || "").replace(/\s+/g,"").trim())) continue;
+      const section = h.closest("section");
+      if (section && section !== root) section.remove();
+      else {
+        // Fallback for a lecture without section wrappers: remove this heading
+        // and its siblings up to the next heading or navigation, not the footer.
+        let next = h.nextSibling;
+        while (next && !(next.nodeType === 1 && /^(H2|H3|NAV|FOOTER|SECTION)$/.test(next.nodeName))) {
+          const after = next.nextSibling;
+          next.remove();
+          next = after;
+        }
+        h.remove();
+      }
+    }
+    for (const a of root.querySelectorAll('a[href="#progress"]')) {
+      const nav = a.closest("nav");
+      if (nav) a.remove();
+    }
+
+    // A compact, low-contrast reading companion replaces visual repetition.
+    const guide = document.createElement("aside");
+    guide.className = "econ-reading-guide";
+    guide.setAttribute("aria-label","本节阅读提示");
+    const label = document.createElement("span");
+    label.className = "econ-reading-guide-label";
+    label.textContent = "READING COMPANION · 阅读指引";
+    const line = document.createElement("p");
+    line.textContent = "先建立直觉，再核对公式与数据，最后运行代码并独立作答。";
+    const chips = document.createElement("div");
+    chips.className = "econ-reading-guide-chips";
+    for (const t of ["01 理解问题","02 核对模型","03 动手复现","04 自测后查看答案"]) {
+      const chip = document.createElement("span");
+      chip.textContent = t;
+      chips.append(chip);
+    }
+    guide.append(label,line,chips);
+    const first = root.querySelector(".cr-lesson-unit,section.paper,.econ-section");
+    if (first && first.parentNode) first.parentNode.insertBefore(guide,first);
+    else root.prepend(guide);
+
+    // Exercise material is often stored in one <p> containing two questions
+    // and two answers separated only by <br>. Split by explicit strong labels,
+    // keeping each question visible and each answer behind its own <details>.
+    const answerLabels = /^(?:参考答案|正确答案|答案|参考解答|答案解析|解析)\s*[：:]?$/;
+    const questionLabels = /^(?:概念题|理论题|计算题|实操题|应用题|思考题|实操[／/]解释题|分析题)\s*[：:]?$/;
+    function kind(node) {
+      if (node.nodeType !== 1 || !/^(STRONG|B)$/.test(node.tagName)) return null;
+      const t = (node.textContent || "").replace(/\s+/g,"").trim();
+      if (answerLabels.test(t)) return "answer";
+      if (questionLabels.test(t)) return "question";
+      return null;
+    }
+    function makeAnswer(nodes, template) {
+      const disclosure = document.createElement("details");
+      disclosure.className = "econ-answer-fold";
+      disclosure.open = false;
+      const summary = document.createElement("summary");
+      summary.textContent = "查看参考答案";
+      const answerBody = document.createElement("div");
+      answerBody.className = "econ-answer-content";
+      const p = template.cloneNode(false);
+      nodes.forEach(n => p.append(n));
+      answerBody.append(p);
+      disclosure.append(summary,answerBody);
+      return disclosure;
+    }
+    for (const heading of root.querySelectorAll("h2,h3")) {
+      if (!/练习|自测|习题|课后题|考核/.test(heading.textContent || "")) continue;
+      const section = heading.closest("section");
+      if (!section || !root.contains(section)) continue;
+      for (const existing of section.querySelectorAll("details")) {
+        if (!existing.classList.contains("cr-reader-codefold") &&
+            !existing.classList.contains("code") &&
+            !existing.classList.contains("econ-code-preview")) {
+          existing.open = false;
+          existing.classList.add("econ-existing-answer");
+        }
+      }
+      for (const p of Array.from(section.querySelectorAll("p"))) {
+        if (p.closest("details")) continue;
+        const items = [...p.childNodes];
+        if (!items.some(node => kind(node) === "answer")) continue;
+        const parts = [];
+        let current = {type:"question",nodes:[]};
+        for (const node of items) {
+          const label = kind(node);
+          if (label && current.nodes.length) {
+            parts.push(current);
+            current = {type:label,nodes:[]};
+          } else if (label) {
+            current.type = label;
+          }
+          current.nodes.push(node);
+        }
+        if (current.nodes.length) parts.push(current);
+        const fragment = document.createDocumentFragment();
+        let finalAnswer = null;
+        for (const part of parts) {
+          if (part.type === "answer") {
+            const disclosure = makeAnswer(part.nodes,p);
+            fragment.append(disclosure);
+            finalAnswer = disclosure;
+          } else {
+            const visible = p.cloneNode(false);
+            part.nodes.forEach(n => visible.append(n));
+            fragment.append(visible);
+            finalAnswer = null;
+          }
+        }
+        const following = p.nextElementSibling;
+        p.replaceWith(fragment);
+        // Some lessons put a list or Stata/Python code immediately after
+        // a short "参考答案：" paragraph. Keep that continuation hidden too.
+        if (finalAnswer) {
+          let next = following;
+          let movedCode = false;
+          while (next && (
+            /^(OL|UL|PRE)$/.test(next.tagName) ||
+            (next.tagName === "DETAILS" && /^(cr-reader-codefold|econ-code-preview)$/.test(next.className)) ||
+            (next.classList && next.classList.contains("cr-reader-codebar"))
+          )) {
+            const after = next.nextElementSibling;
+            finalAnswer.querySelector(".econ-answer-content").append(next);
+            movedCode = true;
+            next = after;
+          }
+          if (movedCode && next?.tagName === "P" &&
+              !Array.from(next.querySelectorAll("strong,b")).some(x =>
+                /题\s*[：:]/.test(x.textContent || ""))) {
+            finalAnswer.querySelector(".econ-answer-content").append(next);
+          }
+        }
+      }
+    }
+  }
+
+  function ready() { if (id) { polishLesson(); lesson(); } else catalog(); }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", ready, {once:true});
   else ready();
 })();

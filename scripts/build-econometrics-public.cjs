@@ -63,7 +63,7 @@ for (const lesson of lessons) {
   }
   for (const heading of ['一、通俗理解','二、核心理论与公式',
     '三、实证案例与数据','四、Stata与Python实现',
-    '五、初学者避坑','六、今日练习','七、学习进度']) {
+    '五、初学者避坑','六、今日练习']) {
     if (!html.includes(heading)) {
       throw Error('Incomplete teaching module ' + heading + ' in ' + sourceFile);
     }
