@@ -1,0 +1,79 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>第2章·第10节｜交互项与条件效应｜计量经济学120天系统课程</title><meta name="description" content="计量经济学120天系统课程，第17课：交互项与条件效应。含公式、真实数据、Stata和Python代码、练习答案。"><style>:root{color-scheme:light;--bg:#f5f4ed;--paper:#fffef9;--ink:#25332f;--muted:#61716b;--line:#e3e5dc;--accent:#496b5e}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.9 system-ui,-apple-system,"Noto Sans CJK SC","Microsoft YaHei",sans-serif}header{background:#e8eee7;border-bottom:1px solid #d9e1d7;padding:16px max(24px,calc((100vw - 1000px)/2));color:#3d5e52;font-size:14px;letter-spacing:.08em}.wrap{max-width:950px;margin:36px auto 90px;padding:0 22px}main{background:var(--paper);padding:44px clamp(24px,5vw,70px);border:1px solid var(--line);border-radius:12px;box-shadow:0 12px 50px #2a453008}h1{font-family:serif;font-size:clamp(27px,4vw,38px);line-height:1.4;margin:0 0 24px}h2{font-size:22px;margin:44px 0 18px;padding-bottom:9px;border-bottom:1px solid var(--line)}h3{font-size:17px;margin:25px 0 12px;color:var(--accent)}p{margin:14px 0;text-align:justify}a{color:#416a5a}strong{font-weight:650}aside.meta{background:#f0f5ef;padding:13px 17px;border-left:3px solid #87a494;border-radius:4px;font-size:14px;color:#53675e}.equation{padding:18px 12px;background:#f7f8f4;border-radius:8px;overflow-x:auto;text-align:center}code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:.86em;background:#eff1ed;border-radius:3px;padding:2px 4px}details.code{margin:16px 0;border:1px solid var(--line);border-radius:8px;overflow:hidden}summary{cursor:pointer;padding:13px 18px;background:#edf3ee;color:#365a4a;font-weight:600}pre{margin:0;overflow:auto;background:#f8f9f6;padding:22px;line-height:1.65}pre code{padding:0;background:none;white-space:pre;font-size:13px}footer{font-size:13px;text-align:center;color:var(--muted);margin:26px 0}@media(max-width:600px){body{font-size:16px}.wrap{margin:14px auto;padding:0 9px}main{padding:26px 18px;border-radius:8px}p{text-align:left}}</style><script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]},svg:{fontCache:'global'}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script></head><body><header>RESEARCH LEARNING HUB · ECONOMETRICS / 017 OF 120</header><div class="wrap"><main><h1>第2章·第10节｜交互项与条件效应</h1><aside class="meta">全课程第17课 / 共120课｜授课日期：2026-10-24（Asia/Taipei）｜建议学习：10—15分钟。代码为可复现示例，未在本次授课中实际运行；练习数值均为教学构造值。</aside>
+<h2>一、通俗理解</h2>
+<p>上一课的虚拟变量允许进口车与国产车的预测价格有不同截距，却默认两组的“重量—价格”斜率相同。这个限制可能过强：重量每增加100磅，对不同类型汽车的价格关联未必相同。<strong>交互项</strong>就是允许某个解释变量的系数随另一变量而变化。</p>
+<p>例如，若仅回归价格对重量和进口身份，模型中“进口车”的系数是固定价差；加入“进口身份×重量”后，价差成为重量的函数。两条回归线可以不平行。因此不能再单独读出进口虚拟变量系数，就断言进口车普遍贵或便宜多少。</p>
+<h2>二、核心理论与公式</h2>
+<p>设 \(D_i\) 为进口车指示变量（进口=1，国产=0），\(W_i\) 为重量（单位：100磅），\(L_i\) 为车长（英寸），\(P_i\) 为价格（美元）。包含两个主效应与交互项的条件均值模型为：</p>
+<div class="equation">\[E(P_i\mid D_i,W_i,L_i)=\beta_0+\beta_1D_i+\beta_2W_i+\beta_3(D_iW_i)+\beta_4L_i.\]</div>
+<p>固定重量与车长，进口车相对国产车的<strong>条件预测价差</strong>，以及两组重量斜率分别是：</p>
+<div class="equation">\[\Delta(W)=\beta_1+\beta_3W;\quad
+s_{D=0}=\beta_2,\qquad s_{D=1}=\beta_2+\beta_3.\]</div>
+<p>所以 \(\beta_3\) 是两组重量斜率之差，而非“进口车总体溢价”。\(\beta_1\) 对应 \(W=0\) 的组间差异，零重量汽车不具现实意义。解释模型需有满列秩、组内重量变异及合理的函数形式；在两组重量共同支持区间外外推尤其应谨慎。OLS系数是样本条件关联；若缺少进口身份可视为外生的识别依据，不得作因果解释。</p>
+<h2>三、实证案例与数据</h2>
+<p>使用 <a href="https://www.stata-press.com/data/r18/auto.dta" target="_blank" rel="noopener">Stata Press公开的1978汽车数据 auto.dta</a>。原始数据记录74辆汽车，包含价格、重量、长度和进口身份。本课只使用 &lt;code&gt;price&lt;/code&gt;、&lt;code&gt;foreign&lt;/code&gt;、&lt;code&gt;weight&lt;/code&gt;、&lt;code&gt;length&lt;/code&gt; 均非缺失的完整案例，并定义 &lt;code&gt;weight100=weight/100&lt;/code&gt;。实际有效样本量由程序统计，不预先假定。</p>
+<p>两套软件估计相同的带截距OLS模型：&lt;code&gt;price ~ foreign + weight100 + foreign×weight100 + length&lt;/code&gt;，并使用HC1异方差稳健协方差估计。阅读结果时先看交互项是否支持斜率差异，再计算特定重量下的组间条件价差。可以想象在横轴“重量”、纵轴“预测价格”的图上，两组各有一条斜率不同的直线；同一重量处的垂直距离就是 \(\Delta(W)\)，而非因果效应。</p>
+<h2>四、Stata与Python实现</h2>
+<p>两段代码统一数据来源、变量筛选、样本与模型。Stata的 &lt;code&gt;vce(robust)&lt;/code&gt; 在此与Python &lt;code&gt;cov_type=&quot;HC1&quot;&lt;/code&gt; 的有限样本校正相对应；Python设置 &lt;code&gt;use_t=True&lt;/code&gt; 以采用t参考分布。即使点估计一致，输出格式及检验的自由度处理也应逐项核对。</p>
+<h3>Stata（可复制运行）</h3>
+<details class="code"><summary>展开 Python 代码</summary><pre><code>* 使用官方1978汽车数据
+use &quot;https://www.stata-press.com/data/r18/auto.dta&quot;, clear
+keep if !missing(price, foreign, weight, length)
+generate double weight100 = weight / 100
+count
+tabulate foreign
+
+* 保留两个主效应与交互项；HC1稳健标准误
+regress price i.foreign##c.weight100 c.length, vce(robust)
+
+* 3000磅对应weight100=30，估计两组条件价差
+lincom 1.foreign + 30*1.foreign#c.weight100
+
+* 固定长度为180英寸，观察不同重量下的预测价格
+margins foreign, at(weight100=(20 30 40) length=(180))</code></pre></details>
+<h3>Python（可复制运行）</h3>
+<details class="code"><summary>展开 Python 代码</summary><pre><code>import numpy as np
+import pandas as pd
+import statsmodels.formula.api as smf
+
+# 与Stata读取同一数据，按相同变量删除缺失值
+url = &quot;https://www.stata-press.com/data/r18/auto.dta&quot;
+df = pd.read_stata(url, convert_categoricals=False)
+df = df[[&quot;price&quot;, &quot;foreign&quot;, &quot;weight&quot;, &quot;length&quot;]].dropna().copy()
+df[&quot;weight100&quot;] = df[&quot;weight&quot;] / 100
+print(&quot;有效样本量：&quot;, len(df))
+print(df[&quot;foreign&quot;].value_counts().sort_index())
+
+# * 表示两个主效应及其交互项；HC1稳健协方差
+res = smf.ols(
+    &quot;price ~ foreign * weight100 + length&quot;, data=df
+).fit(cov_type=&quot;HC1&quot;, use_t=True)
+print(res.summary())
+
+# 线性组合：3000磅时的进口车-国产车条件价差
+names = res.model.exog_names
+R = np.zeros(len(names))
+R[names.index(&quot;foreign&quot;)] = 1
+R[names.index(&quot;foreign:weight100&quot;)] = 30
+print(res.t_test(R))
+
+# 固定长度与重量，分别预测两组汽车的价格
+grid = pd.DataFrame(
+    [(d, w, 180) for w in (20, 30, 40) for d in (0, 1)],
+    columns=[&quot;foreign&quot;, &quot;weight100&quot;, &quot;length&quot;]
+)
+grid[&quot;predicted_price&quot;] = res.predict(grid)
+print(grid)</code></pre></details>
+<p>核对三件事：交互项系数与HC1标准误是否对应；3000磅时 &lt;code&gt;lincom&lt;/code&gt; 与 &lt;code&gt;t_test&lt;/code&gt; 是否一致；预测组合是否落在数据的合理支持范围。这里不填写未经运行的系数、显著性或样本量。</p>
+<h2>五、初学者避坑</h2>
+<p><strong>误区一：只放交互项，不放主效应。</strong> 删除 \(D\) 或 \(W\) 通常施加额外限制，除非理论明确要求，否则应使用包含主效应的完整模型。</p>
+<p><strong>误区二：把 </strong><strong>\(\beta_1\)</strong><strong> 当作平均组间差异。</strong> 交互模型的差异随 \(W\) 变化。若把重量中心化为 \(W-30\)，虚拟变量主效应就可解释为3000磅处的条件价差，但不会改变拟合值。</p>
+<p><strong>误区三：交互项不显著就认定任何重量下都无组间差异。</strong> \(\beta_3=0\) 检验的是斜率相同；\(\Delta(W)=0\) 检验的是指定重量下的组间价差，后者必须把两个系数的协方差纳入标准误。</p>
+<h2>六、今日练习</h2>
+<p><strong>概念题：</strong> 为什么在含“进口身份×重量”交互项的模型中，不能把进口车虚拟变量的主效应称为“进口车平均贵多少”？</p>
+<p><strong>答案：</strong> 组间条件价差为 \(\beta_1+\beta_3W\)，随重量而变；主效应 \(\beta_1\) 只代表重量为零时的差异，通常既不是样本平均重量处的差异，也不是平均因果效应。</p>
+<p><strong>计算题：</strong> 某教学模型设 \(\hat\beta_1=-600\)、\(\hat\beta_3=80\)，重量单位为100磅。求2000磅、3000磅时进口车相对国产车的条件预测价差。</p>
+<p><strong>答案：</strong> 2000磅时 \(W=20\)，\(-600+80\times20=1000\) 美元；3000磅时 \(W=30\)，\(-600+80\times30=1800\) 美元。两者相差800美元，表示组间条件价差随重量增加而变化。数值仅为构造例题，不是汽车数据的估计结果。</p>
+<h2>七、学习进度</h2>
+<p>本课：第2章·第10节｜交互项与条件效应（全课程第17课 / 共120课）。第16课《虚拟变量》已在2026-10-22聊天完整交付，尚待补齐私人Notion和GitHub归档；本课按聊天交付后累计17/120。</p>
+<p>原纲下一课：<strong>第2章·第11节｜对数模型与二次项</strong>（全课程第18课）。</p>
+</main><footer>2026-10-24 · 课程原纲不变 · 数据与估计结果请以实际运行核对</footer></div></body></html>
