@@ -2,6 +2,38 @@
    完整私人精读报告未经授权不得上传，切勿包含付费PDF或私有数据。 */
 window.CSSCI_CATALOG = [
   {
+    "id": "2026-10-25-04-02-dual-credit-fuzzy-rd",
+    "date": "2026-10-25",
+    "title": "强制性制度压力对颠覆性创新的影响机理——以中国新能源汽车产业“双积分”政策为例",
+    "authors": "何郁冰、林婷",
+    "journal": "科技进步与对策",
+    "year": 2024,
+    "volume": "41",
+    "issue": "23",
+    "pages": "29—40",
+    "doi": "10.6049/kjjbydc.2023060748",
+    "field": "新能源汽车、强制性制度压力、颠覆性创新",
+    "methods": [
+      "模糊断点回归",
+      "局部Wald估计",
+      "2SLS",
+      "带宽与伪断点检验"
+    ],
+    "data_types": [
+      "工信部企业NEV/CAFC积分",
+      "Patsnap专利引用",
+      "企业年度资料"
+    ],
+    "sample": "2016—2021年187家乘用车企业，805个企业—年度观测；19,729条相关专利",
+    "status": "published",
+    "data_access": "工信部公开积分信息与Patsnap、CNKI等按授权取得；匹配数据未获取",
+    "code_access": "课程自写Stata参考代码未运行，作者原码未取得",
+    "replication_status": "官方完整HTML、表1—11及稳健性已阅读；第一阶段、聚类与表5/表6尺度需复核；未数值复现",
+    "article_url": "lessons/04-02-2026-10-25.html",
+    "journal_url": "https://www.kjjb.org/CN/10.6049/kjjbydc.2023060748",
+    "fulltext_url": "https://www.kjjb.org/article/2024/1001-7348/2024-41-23-004.htm"
+  },
+  {
     "id": "2026-10-21-04-01-public-rental-fuzzy-rd",
     "date": "2026-10-21",
     "title": "从流动到安居：住房保障制度与城乡融合发展——基于农民工群体城市融入视角",
