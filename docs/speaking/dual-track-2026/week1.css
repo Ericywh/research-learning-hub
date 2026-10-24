@@ -1,15 +1,149 @@
-.week1-page .lesson{white-space:normal;line-height:1.9;font-size:16px}
-.week1-page .lesson h2{font-size:21px;line-height:1.5;margin:30px 0 14px;color:#354c69}
-.week1-page .lesson h2:first-child{margin-top:0}
-.week1-page .lesson h3{font-size:18px;line-height:1.5;margin:24px 0 10px;color:#5b4f83}
-.week1-page .lesson p{margin:12px 0}
-.week1-page .lesson blockquote{margin:18px 0;padding:8px 20px;border-left:4px solid #9b8bbe;background:#f6f3fb;color:#344359;border-radius:0 10px 10px 0}
-.week1-page .lesson ul{padding-left:23px}
-.week1-page .lesson li{margin:10px 0}
-.week1-page .lesson details{white-space:normal;margin:23px 0;border:1px solid #dcd6e8;background:#fdfcfe;border-radius:12px;padding:0 19px 12px}
-.week1-page .lesson summary{cursor:pointer;padding:16px 0 5px;color:#5b4e7d;font-weight:650;line-height:1.7}
-.week1-page .lesson details[open]>summary{border-bottom:1px solid #e4dfed;padding-bottom:13px;margin-bottom:18px}
-.week1-page .course-mode-link{padding:10px 3px}
-.week1-bottom{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}
-.week1-page .footer{line-height:1.8}
-@media(max-width:650px){.week1-page .lesson{font-size:16px}.week1-page .lesson h2{font-size:20px}.week1-page .lesson details{padding:0 13px 9px}.week1-page .lesson blockquote{padding:7px 14px}}
+/* First-week editorial layout. All selectors stay within the 14 lessons/catalog. */
+.week1-page,.week1-catalog{--w-ink:#35304f;--w-muted:#79728d;--w-purple:#7760b2;--w-line:#e8e1ef;--w-shadow:0 8px 28px #6950910b;color:var(--w-ink);background:radial-gradient(ellipse at 0 0,#e9dff980,transparent 38%),radial-gradient(ellipse at 100% 35%,#f9e9ed8c,transparent 35%),#f8f5fc;font-family:system-ui,-apple-system,"PingFang SC","Noto Sans SC","Microsoft YaHei",sans-serif}
+.week1-page *,.week1-catalog *{box-sizing:border-box}
+.week1-page .wrap,.week1-catalog .wrap{max-width:1240px;padding:0 28px 48px;margin:auto}
+.week1-page a,.week1-catalog a{color:#7056a1;text-underline-offset:4px}
+.week1-page a:focus-visible,.week1-page button:focus-visible,.week1-page summary:focus-visible,.week1-page select:focus-visible,.week1-catalog a:focus-visible,.week1-catalog summary:focus-visible{outline:3px solid #b4a0dc;outline-offset:5px}
+.week1-page .top,.week1-catalog .top{min-height:65px;padding:17px 3px;display:flex;justify-content:space-between;align-items:center;gap:18px;font-size:12px;color:#847893}
+.week1-page .top a,.week1-catalog .top a{text-decoration:none;font-weight:600}
+.week1-page .course-mode-link{margin:0 0 18px;padding:11px 19px;border:1px solid #e5dcef;border-left:4px solid #b09bd8;background:linear-gradient(100deg,#f1ebfc,#fffafc 68%,#f1f9f6);border-radius:13px;box-shadow:0 3px 12px #66508205;font-size:13px}
+.week1-page .course-mode-link a{font-weight:600;text-decoration:none}
+.week1-page .hero,.week1-catalog .catalog-hero{position:relative;isolation:isolate;overflow:hidden;display:flex;align-items:center;justify-content:space-between;gap:35px;min-height:300px;border:1px solid #e7dcf1;border-radius:28px;padding:43px 48px;background:radial-gradient(ellipse at 96% 5%,#ffe6d5,transparent 42%),radial-gradient(ellipse at 76% 100%,#def3ec,transparent 43%),linear-gradient(110deg,#eae3fc,#f7ebf7 65%,#faf0e7);box-shadow:0 15px 38px #68558a0c;color:#4b3c70}
+.week1-page.week1-pm .hero{background:radial-gradient(ellipse at 96% 3%,#f6ddd9,transparent 42%),radial-gradient(ellipse at 80% 100%,#e0eaf8,transparent 45%),linear-gradient(110deg,#e9e2f8,#f3e9f7 65%,#f9ede8)}
+.week1-page .hero:after,.week1-catalog .catalog-hero:after{content:"";position:absolute;z-index:-1;right:-40px;top:-115px;width:360px;height:360px;border:1px solid #ffffffaa;border-radius:50%;box-shadow:0 0 0 54px #ffffff16;pointer-events:none}
+.week1-page .hero:before,.week1-catalog .catalog-hero:before{content:"";position:absolute;right:240px;bottom:-100px;width:200px;height:200px;border:1px solid #ffffff9c;border-radius:50%;pointer-events:none;z-index:-1}
+.week1-page .hero-copy{position:relative;max-width:790px;min-width:0}
+.week1-page .eyebrow,.week1-catalog .eyebrow{font-size:11px;font-weight:650;letter-spacing:.15em;color:#8b7ba5;line-height:1.6}
+.week1-page .hero h1,.week1-catalog .catalog-hero h1{font-size:clamp(30px,3.4vw,43px);line-height:1.4;letter-spacing:-.025em;font-weight:760;margin:14px 0 13px;color:#4b3b71;text-wrap:balance}
+.week1-page .hero p,.week1-catalog .catalog-hero p{font-size:14px;line-height:1.9;margin:0;color:#81728f;max-width:700px}
+.week1-page .pills,.week1-catalog .pills{display:flex;flex-wrap:wrap;gap:9px;margin:24px 0 0}
+.week1-page .pills span,.week1-catalog .pills span{font-size:11px;line-height:1.65;font-weight:550;color:#7e6b9b;padding:6px 13px;border-radius:50px;background:#ffffffba;border:1px solid #ffffffb3}
+.week1-page .hero-day,.week1-catalog .hero-day{flex:none;display:flex;flex-direction:column;align-items:center;justify-content:center;width:145px;padding:12px 0;color:#9c83b1;text-align:center;opacity:.8}
+.week1-page .hero-day>span,.week1-catalog .hero-day>span{font-size:10px;letter-spacing:.35em;padding-left:.35em}
+.week1-page .hero-day strong,.week1-catalog .hero-day strong{font-weight:250;font-size:94px;letter-spacing:-.08em;line-height:1.3;color:#a38bb5;font-variant-numeric:tabular-nums}
+.week1-page .hero-day small,.week1-catalog .hero-day small{font-size:12px;letter-spacing:.16em}
+.week1-page .layout{display:grid;grid-template-columns:minmax(0,1fr) 258px;gap:25px;align-items:start;margin-top:25px}
+.week1-page .main{display:grid;gap:21px;min-width:0}
+.week1-page .sidebar{display:grid;grid-template-columns:1fr;gap:20px;position:sticky;top:20px;align-content:start;min-width:0}
+.week1-page .paper{background:#ffffffed;border:1px solid var(--w-line);box-shadow:var(--w-shadow);border-radius:21px;padding:24px}
+.week1-page .sidebar .paper{margin:0;padding:25px 24px}
+.week1-page .kicker{display:inline-flex;font-size:10px;letter-spacing:.08em;color:#947bae;font-weight:650;line-height:1.6;border-radius:30px;background:#f0e9fa;padding:4px 11px;margin:0 0 12px}
+.week1-page .sidebar h2{font-size:17px;font-weight:650;line-height:1.65;color:#57466f;margin:0 0 13px}
+.week1-page .sidebar p{font-size:12px;color:#8a8096;line-height:1.9;margin:10px 0}
+.week1-page .sidebar .study-note{background:linear-gradient(130deg,#fff,#faf7ff)}
+.week1-page .lesson{white-space:normal;display:grid;gap:21px;line-height:1.95;font-size:15px;color:#5e566d;min-width:0;counter-reset:lesson-section}
+.week1-page .lesson-panel{--panel:#9a85c2;--panel-wash:#f3eefb;background:#fffffff5;border:1px solid var(--w-line);border-top:3px solid var(--panel);box-shadow:var(--w-shadow);border-radius:21px;padding:27px 30px;min-width:0;scroll-margin-top:24px}
+.week1-page .lesson-panel.tone-blue{--panel:#91a8cc;--panel-wash:#eef3fb}
+.week1-page .lesson-panel.tone-mint{--panel:#88b5a4;--panel-wash:#eef8f2}
+.week1-page .lesson-panel.tone-peach{--panel:#d5af8e;--panel-wash:#fff5eb}
+.week1-page .lesson-panel>h2{display:flex;align-items:flex-start;gap:12px;font-size:20px;line-height:1.6;font-weight:680;color:#514766;margin:0 0 20px;padding:0;letter-spacing:.005em}
+.week1-page .lesson-panel>h2:before{counter-increment:lesson-section;content:counter(lesson-section,decimal-leading-zero);display:inline-flex;align-items:center;justify-content:center;flex:0 0 30px;height:30px;margin-top:2px;border-radius:9px;background:var(--panel-wash);color:var(--panel);font:600 11px/1.5 system-ui,sans-serif;letter-spacing:.02em}
+.week1-page .lesson p{margin:13px 0;overflow-wrap:anywhere}
+.week1-page .lesson-panel>p:first-of-type{margin-top:0}
+.week1-page .lesson-panel>p:last-child{margin-bottom:0}
+.week1-page .lesson>p{background:#fff8ed;border:1px solid #eee2ce;border-left:4px solid #cdb28b;border-radius:14px;padding:17px 22px;margin:0;font-size:14px;color:#8c7656}
+.week1-page .lesson strong{font-weight:650;color:#5f4b80}
+.week1-page .lesson blockquote{position:relative;margin:22px 0;padding:20px 24px;background:linear-gradient(115deg,#f1ecfa,#f9f6fd);border:1px solid #e8dff3;border-left:4px solid #b4a1d0;border-radius:4px 15px 15px 4px;color:#716083;line-height:2.05}
+.week1-page .lesson blockquote>p{margin:0;font-size:15px}
+.week1-page .tone-peach blockquote{background:#fff8f0;border-color:#f0e2d0;border-left-color:#d4ac80;color:#9c7a51}
+.week1-page .lesson-subsection{position:relative;border-top:1px solid #ece6f1;padding:22px 0 0;margin:23px 0 0}
+.week1-page .lesson-subsection:first-child{border-top:0;padding-top:0;margin-top:0}
+.week1-page .lesson h3{font-size:17px;font-weight:650;line-height:1.7;color:#67517f;border:0;padding:0;margin:0 0 13px}
+.week1-page .lesson ul{padding-left:20px;margin:14px 0}
+.week1-page .lesson li{padding-left:4px;margin:13px 0;font-size:14px;line-height:1.95}
+.week1-page .lesson li::marker{color:#b5a0cb}
+.week1-page .lesson details{margin:0;border:1px solid #e1d7ed;border-radius:18px;background:linear-gradient(120deg,#f4eefc,#faf8ff 70%,#f4faf7);white-space:normal;overflow:hidden;box-shadow:0 5px 20px #72608c06}
+.week1-page .lesson-panel>.lesson-disclosure,.week1-page .lesson-subsection>.lesson-disclosure{margin-top:24px}
+.week1-page .lesson summary{display:flex;align-items:center;justify-content:space-between;gap:20px;list-style:none;cursor:pointer;padding:22px 25px;font-size:14px;font-weight:650;line-height:1.8;color:#796095;transition:background .2s}
+.week1-page .lesson summary::-webkit-details-marker{display:none}
+.week1-page .lesson summary:after{content:"+";flex:0 0 27px;display:inline-flex;align-items:center;justify-content:center;height:27px;border:1px solid #dfd4ec;background:#fff9;color:#9a81b8;border-radius:50%;font:300 21px/1 system-ui}
+.week1-page .lesson summary:hover{background:#eae1f642}
+.week1-page .lesson details[open]>summary{border-bottom:1px solid #e7dfef;background:#f2ebf9}
+.week1-page .lesson details[open]>summary:after{content:"−"}
+.week1-page .disclosure-body{display:grid;gap:0;padding:25px;background:#fffdfef5;counter-reset:lesson-section}
+.week1-page .disclosure-body>.lesson-panel{margin:0 0 20px;padding:23px;border-radius:15px;box-shadow:none}
+.week1-page .disclosure-body>.lesson-panel:last-child{margin-bottom:0}
+.week1-page .disclosure-body>.lesson-subsection{margin-top:22px}
+.week1-page .disclosure-body>.lesson-subsection:first-child{margin-top:0}
+.week1-page .lesson .model-answer{border:1px solid #e8def3;border-radius:16px;background:#fcf9ff;padding:22px 24px;margin:22px 0 0;overflow:hidden}
+.week1-page .lesson .model-answer.model-b{background:#f6fbf9;border-color:#dcebe4}
+.week1-page .model-answer>h3{display:flex;align-items:flex-start;gap:11px}
+.week1-page .model-answer>h3:before{content:"A";display:inline-flex;align-items:center;justify-content:center;flex:0 0 27px;height:27px;margin-top:1px;border-radius:8px;background:#eae0f7;color:#9474b4;font-size:11px}
+.week1-page .model-b>h3{color:#578273}
+.week1-page .model-b>h3:before{content:"B";background:#deefe6;color:#719f8c}
+.week1-page .lesson .keyword-note{border:1px solid #e7ddf2;border-radius:12px;background:#f0e9f8;padding:13px 16px;font-size:13px;line-height:1.9;color:#84669e;margin:18px 0}
+.week1-page .model-b .keyword-note{background:#eaf4ee;border-color:#d7e8dd;color:#668c79}
+.week1-page .lesson .transfer-answer{padding:17px 20px;background:#edf7f0;border:1px solid #d9e9df;border-radius:13px;font-size:14px;color:#648572}
+.week1-page .lesson .source-note{padding-top:15px;border-top:1px dashed #e7e0ed;font-size:12px;line-height:1.95;color:#95899e;margin-top:22px}
+.week1-page .lesson .completion-note{padding:15px 18px;background:#f4f7fb;border:1px solid #e0e7ef;border-radius:13px;font-size:13px;color:#7b899b}
+.week1-page .timer-display{font-size:49px;font-weight:650;letter-spacing:-.05em;color:#9277bc;line-height:1.2;font-variant-numeric:tabular-nums;margin:14px 0 18px}
+.week1-page .timer-preset{display:block;font-size:11px;color:#9a8ba8}
+.week1-page .timer-preset select{display:block;width:100%;margin-top:7px;border:1px solid #e5dcf0;border-radius:10px;background:#f9f6fd;color:#89739f;padding:9px 10px;font-size:12px;font-family:inherit;min-height:39px}
+.week1-page .timer-controls{display:flex;gap:8px;margin:15px 0 10px}
+.week1-page .timer-controls button{min-height:39px;padding:9px 13px;border:1px solid transparent;background:#9b80c2;color:white;font:550 12px/1.5 inherit;border-radius:10px;cursor:pointer;box-shadow:0 4px 10px #a792c11a}
+.week1-page .timer-controls [data-timer-reset]{background:#f3edf9;color:#9580ac;border-color:#e5dbee;box-shadow:none}
+.week1-page .sidebar .timer-status{font-size:11px;margin-top:14px;line-height:1.8}
+.week1-page .timer-fixed{padding:9px 11px;background:#f7f3fc;border:1px solid #e9e1f2;border-radius:9px}
+.week1-page .reading-duration{font-size:59px;font-weight:400;letter-spacing:-.05em;color:#a08ab8;line-height:1.3;margin:9px 0 11px}
+.week1-page .reading-duration span{font-size:12px;letter-spacing:0;margin-left:10px;color:#a08eae}
+.week1-page .lesson-contents a{position:relative;display:block;padding:10px 0 10px 14px;border-bottom:1px solid #f0eaf5;font-size:11px;line-height:1.8;text-decoration:none;color:#9989a7}
+.week1-page .lesson-contents a:before{content:"";position:absolute;width:4px;height:4px;border-radius:50%;left:1px;top:18px;background:#c3aed8}
+.week1-page .lesson-contents a:last-child{border-bottom:0}
+.week1-page .lesson-contents a:hover{color:#7a5a9f}
+.week1-page .course-completion{margin:0;border-color:#e7dfef;box-shadow:var(--w-shadow);border-radius:18px;background:#fff;padding:23px 28px}
+.week1-page .course-completion-title{color:#77648b;font-size:15px}
+.week1-page .course-completion-status{font-size:12px;color:#9b8fa4}
+.week1-page .course-completion-button{font-size:12px;border-color:#ddcfe9;color:#8d739f;background:#f6f0fb;border-radius:10px}
+.week1-page .week1-bottom{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;padding:17px 25px;font-size:12px;background:#faf7fe;box-shadow:none}
+.week1-page .week1-bottom a{text-decoration:none;font-weight:550;color:#9b80b3}
+.week1-page .footer{line-height:2.1;padding:35px 20px 0;font-size:11px;color:#a99bad}
+.week1-page .footer a{color:#a18bb1}
+
+/* The first-week directory uses the same quiet cover and paired course cards. */
+html body.week1-catalog{margin:0;line-height:1.8;background:radial-gradient(ellipse at 0 0,#e9dff980,transparent 38%),radial-gradient(ellipse at 100% 35%,#f9e9ed8c,transparent 35%),#f8f5fc!important;color:#514364!important}
+.week1-catalog .catalog-hero{margin:0 0 25px;min-height:290px}
+.week1-catalog .catalog-hero h1{font-size:clamp(29px,3.5vw,43px)}
+.week1-catalog .catalog-hero a{color:#8d739f}
+.week1-catalog .catalog-hero .hero-day strong{font-size:90px}
+.week1-catalog .directory-head{display:flex;justify-content:space-between;align-items:baseline;gap:20px;margin:35px 2px 15px}
+.week1-catalog .directory-head h2{font-size:21px;color:#665277;margin:0;font-weight:650}
+.week1-catalog .directory-head p{font-size:12px;color:#a28dad;margin:0}
+.week1-catalog nav.day-nav{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 20px;padding:15px 19px;background:#ffffffa6;border:1px solid #e9e1f0;border-radius:16px}
+.week1-catalog nav.day-nav a{padding:6px 14px;min-height:35px;border-radius:9px;background:#f5effb;color:#a088b4;font-size:11px;text-decoration:none}
+.week1-catalog .days-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.week1-catalog .day{position:relative;margin:0;padding:25px 29px 26px;background:#fff;border:1px solid #e7dfef;border-radius:21px;box-shadow:var(--w-shadow);border-top:3px solid #b8a2d4;scroll-margin-top:25px;overflow:hidden}
+.week1-catalog .day:nth-child(3n+2){border-top-color:#dbb897}
+.week1-catalog .day:nth-child(3n){border-top-color:#9bbfb0}
+.week1-catalog .day h2{border:0;padding:0;margin:0 0 14px;font-size:20px;font-weight:650;line-height:1.65;color:#705b84}
+.week1-catalog .day>p{font-size:12px;line-height:1.95;color:#a290ac;margin:10px 0}
+.week1-catalog .day .link{margin:11px 0 0}
+.week1-catalog .day .link a{display:block;background:linear-gradient(100deg,#f1ebfa,#faf7fe);border:1px solid #e8ddf2;border-radius:11px;padding:12px 16px;font-size:12px;text-decoration:none;line-height:1.7;color:#a088b6;transition:background .2s,transform .2s}
+.week1-catalog .day .link:last-child a{background:linear-gradient(100deg,#edf6f1,#f7fbf9);border-color:#deebe4;color:#82a08f}
+.week1-catalog .day .link a:hover{transform:translateX(3px);background:#eee6f9}
+.week1-catalog .day .link b{font-weight:550}
+.week1-catalog .day:last-child{grid-column:1/-1;background:linear-gradient(105deg,#fff,#f8f3fc 68%,#f3faf6);border-color:#dfd4ea;border-top-color:#ae93c7}
+.week1-catalog .catalog-rules{margin:25px 0;background:#fdfbff;border:1px solid #e7deee;border-radius:18px;overflow:hidden}
+.week1-catalog .catalog-rules>summary{padding:20px 25px;cursor:pointer;color:#9a80ad;font-size:13px;font-weight:550}
+.week1-catalog .catalog-rules .week1-revision-note{margin:0;border:0;border-radius:0;box-shadow:none;background:#fff;padding:24px 29px}
+.week1-catalog .catalog-rules .week1-revision-note h2{font-size:18px}
+.week1-catalog .course-completion-directory-note{margin:20px 0;color:#a393ae;background:#f4effa;border:1px solid #e6dcee;border-left:3px solid #bea8d5;font-size:11px;padding:13px 18px;border-radius:10px}
+.week1-catalog .catalog-footer{font-size:11px;color:#ae9bb7;text-align:center;margin-top:27px}
+@media(max-width:1000px){.week1-page .layout{grid-template-columns:minmax(0,1fr) 225px;gap:20px}.week1-page .hero,.week1-catalog .catalog-hero{padding:35px;gap:20px}.week1-page .hero-day,.week1-catalog .hero-day{width:110px}.week1-page .lesson-panel{padding:24px}.week1-page .sidebar .paper{padding:22px 19px}.week1-page .hero h1{font-size:34px}}
+@media(max-width:800px){.week1-page .layout{display:flex;flex-direction:column;gap:22px}.week1-page .main{width:100%}.week1-page .sidebar{position:static;width:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.week1-page .sidebar .study-note{grid-column:1/-1}.week1-page .hero-day{display:none}.week1-page .hero,.week1-catalog .catalog-hero{min-height:270px}.week1-catalog .days-grid{gap:16px}.week1-catalog .day{padding:22px}.week1-page .hero-copy{max-width:none}}
+@media(max-width:560px){.week1-page .wrap,.week1-catalog .wrap{padding:0 15px 30px}.week1-page .top,.week1-catalog .top{min-height:59px;align-items:flex-start;font-size:10px;gap:15px;padding-top:17px}.week1-page .top span{max-width:150px;text-align:right}.week1-page .course-mode-link{padding:10px 14px;font-size:12px;margin-bottom:14px;border-radius:11px}.week1-page .hero,.week1-catalog .catalog-hero{min-height:0;padding:28px 24px;border-radius:22px}.week1-page .hero h1,.week1-catalog .catalog-hero h1{font-size:28px;line-height:1.55;margin:13px 0}.week1-page .eyebrow,.week1-catalog .eyebrow{font-size:9px}.week1-page .hero p,.week1-catalog .catalog-hero p{font-size:12px;line-height:1.95}.week1-page .pills,.week1-catalog .pills{gap:7px;margin-top:20px}.week1-page .pills span,.week1-catalog .pills span{font-size:10px;padding:5px 10px}.week1-page .layout{margin-top:17px}.week1-page .lesson,.week1-page .main{gap:16px}.week1-page .lesson-panel{border-radius:17px;padding:22px 19px}.week1-page .lesson-panel>h2{font-size:18px;gap:10px;margin-bottom:17px}.week1-page .lesson-panel>h2:before{flex-basis:26px;height:26px;font-size:10px}.week1-page .lesson{font-size:15px;line-height:1.95}.week1-page .lesson blockquote{padding:17px 18px;margin:18px 0}.week1-page .lesson blockquote>p{font-size:14px}.week1-page .lesson h3{font-size:16px}.week1-page .lesson summary{padding:18px;font-size:13px;gap:14px}.week1-page .disclosure-body{padding:18px 14px}.week1-page .disclosure-body>.lesson-panel{padding:20px 16px}.week1-page .lesson .model-answer{padding:19px 17px}.week1-page .lesson .keyword-note{padding:12px 14px}.week1-page .lesson>p{font-size:13px;padding:15px 18px}.week1-page .sidebar{grid-template-columns:1fr}.week1-page .sidebar .study-note{grid-column:auto}.week1-page .course-completion{padding:21px}.week1-page .course-completion-button{width:100%}.week1-page .week1-bottom{padding:18px 20px}.week1-page .footer{padding:24px 4px 0;font-size:10px}.week1-catalog .hero-day{display:none}.week1-catalog .directory-head{display:block;margin-top:28px}.week1-catalog .directory-head h2{font-size:20px}.week1-catalog .directory-head p{margin-top:6px;font-size:11px}.week1-catalog nav.day-nav{gap:7px;padding:12px}.week1-catalog nav.day-nav a{padding:5px 10px;font-size:10px}.week1-catalog .days-grid{grid-template-columns:1fr;gap:16px}.week1-catalog .day:last-child{grid-column:auto}.week1-catalog .day{padding:22px}.week1-catalog .day h2{font-size:19px}.week1-catalog .day .link a{font-size:12px;padding:12px}.week1-catalog .catalog-rules .week1-revision-note{padding:21px}}
+@media(prefers-reduced-motion:reduce){.week1-page *,.week1-catalog *{scroll-behavior:auto!important;transition:none!important}}
+/* Secondary text stays quiet without sacrificing small-text readability. */
+.week1-page .sidebar p,.week1-page .sidebar .timer-status,.week1-page .lesson-contents a{color:#7e6e8c}
+.week1-page .timer-preset,.week1-page .timer-preset select,.week1-page .course-completion-status{color:#806b91}
+.week1-page .timer-controls button{background:#8564ae;font-family:inherit;font-size:12px;line-height:1.5;font-weight:550}
+.week1-page .timer-controls [data-timer-reset]{color:#7e6196;background:#f3edf9}
+.week1-page .lesson .source-note{color:#83718e}
+.week1-catalog .day>p,.week1-catalog .directory-head p,.week1-catalog .course-completion-directory-note{color:#80708e}
+.week1-catalog .day .link a,.week1-catalog nav.day-nav a,.week1-catalog .catalog-rules>summary{color:#7e6098}
+.week1-catalog .day .link:last-child a{color:#537e68}
+.week1-page .lesson-panel>h2:before{content:counter(lesson-section,decimal-leading-zero) / ""}
+.week1-page .lesson summary:after{content:"+" / ""}
+.week1-page .lesson details[open]>summary:after{content:"−" / ""}
+.week1-page .model-answer>h3:before{content:"A" / ""}
+.week1-page .model-b>h3:before{content:"B" / ""}
+@media print{.week1-page,.week1-catalog{background:#fff!important}.week1-page .wrap{max-width:none}.week1-page .layout{display:block}.week1-page .sidebar,.week1-page .course-mode-link,.week1-page .week1-bottom{display:none}.week1-page .hero,.week1-page .lesson-panel{box-shadow:none;break-inside:avoid}.week1-page .lesson-panel{border-color:#ddd}.week1-page .lesson{display:block}.week1-page .lesson-panel{margin:15px 0}}

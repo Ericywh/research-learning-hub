@@ -4,7 +4,7 @@ No lesson numbers or completion keys are created or reset. The PM V6 builder
 calls this file with --mode pm to retain the newer first-week content.
 """
 from pathlib import Path
-import argparse,html,json,re
+import argparse,html,json,re,xml.etree.ElementTree as ET
 
 ROOT=Path(__file__).resolve().parent
 REVISION='continuous-speaking-week1-v1'
@@ -58,6 +58,61 @@ def notion(text):
  assert depth==0
  return '\n'.join(out)
 
+def editorial(text):
+ """Group the unchanged lesson blocks into cards without moving across gates."""
+ root=ET.fromstring('<div>'+render(text)+'</div>')
+ serial=0
+ def tone(title):
+  if '错误' in title:return 'peach'
+  if '迁移' in title or '完成' in title or '后续' in title:return 'mint'
+  if '任务' in title or '主案例' in title:return 'blue'
+  return 'lilac'
+ def group(nodes,level=2):
+  nonlocal serial
+  result=[];panel=None;sub=None
+  for node in nodes:
+   title=''.join(node.itertext())
+   if node.tag=='details':
+    children=list(node);summary=children[0]
+    node.set('class','lesson-disclosure')
+    content=ET.Element('div',{'class':'disclosure-body'})
+    content.extend(group(children[1:],level))
+    node[:]=[summary,content]
+   elif node.tag=='p':
+    if title.startswith('对应关键词：'):node.set('class','keyword-note')
+    elif title.startswith('迁移题参考：') or title.startswith('迁移核查示例：'):node.set('class','transfer-answer')
+    elif title.startswith('可选') or '可选出处：' in title:node.set('class','source-note')
+    elif title.startswith('完成依据：'):node.set('class','completion-note')
+   if node.tag=='h2':
+    serial+=1;panel=ET.Element('section',{'class':'lesson-panel tone-'+tone(title),'id':'section-'+str(serial)})
+    panel.append(node);result.append(panel);sub=None
+   elif node.tag=='h3':
+    sub=ET.Element('section',{'class':'lesson-subsection'})
+    if title.startswith(('参考一','修订一')):sub.set('class','lesson-subsection model-answer model-a')
+    elif title.startswith(('参考二','修订二')):sub.set('class','lesson-subsection model-answer model-b')
+    sub.append(node)
+    if panel is not None:panel.append(sub)
+    else:result.append(sub)
+   elif sub is not None:sub.append(node)
+   elif panel is not None:panel.append(node)
+   else:result.append(node)
+  return result
+ root[:]=group(list(root))
+ return ''.join(ET.tostring(x,encoding='unicode',method='html') for x in root)
+
+def lesson_contents(rendered):
+ root=ET.fromstring('<div>'+rendered+'</div>')
+ entries=[]
+ for node in list(root):
+  if node.tag=='section' and node.get('id'):
+   heading=node.find('h2')
+   if heading is not None:entries.append((node.get('id'),''.join(heading.itertext())))
+ if len(entries)<2:return ''
+ links=''.join('<a href="#'+key+'">'+esc(label)+'</a>' for key,label in entries)
+ return '<nav class="paper lesson-contents" aria-label="本课内容"><div class="kicker">阅读导航</div><h2>本课内容</h2>'+links+'</nav>'
+
+def esc(text):return html.escape(str(text),quote=True)
+
 def page(d,mode):
  n=d['day'];dd=f'{n:02}';am=mode=='am';title=d[mode+'_title'];minutes=d[mode+'_minutes']
  label='早晨开口实训' if am else '晚间案例精讲'
@@ -66,11 +121,19 @@ def page(d,mode):
  desc='以真实录音、回听和针对性重说训练连续表达。' if am else '从完整发言理解信息组织、依据和表达取舍，可静默完成。'
  side='首次表达、自评与修改分别保留；正常停顿不等于卡壳。' if am else '用时包含练习与答案阅读；不要求重复抄写关键词。'
  if n in (1,7):side='先完成早课首录并封存独立评分，再展开教学与示范。'
+ rendered=editorial(d[mode]);contents=lesson_contents(rendered)
+ if am:
+  seconds=60 if n==1 else 90
+  options=''.join(f'<option value="{s}"'+(' selected' if s==seconds else '')+f'>{s}秒</option>' for s in [45,60,90])
+  preset=f'<p class="timer-fixed">本题首次发言：{seconds}秒</p>' if n in (1,7) else '<label class="timer-preset">选择本轮时长<select data-timer-preset>'+options+'</select></label>'
+  tool=f'''<section class="paper practice-timer" data-timer-seconds="{seconds}"><div class="kicker">晨间练习</div><h2>独立发言计时</h2><div class="timer-display" data-timer-display aria-label="剩余时间">{seconds//60:02}:{seconds%60:02}</div>{preset}<div class="timer-controls"><button type="button" data-timer-toggle>开始计时</button><button type="button" data-timer-reset>重置</button></div><p class="timer-status" data-timer-status aria-live="polite">计时器不录音，请自行保存录音。</p></section>'''
+ else:
+  tool=f'''<section class="paper reading-guide"><div class="kicker">晚间阅读</div><h2>今晚的学习节奏</h2><div class="reading-duration">{minutes}<span>分钟</span></div><p>包含练习与答案阅读<br>最长18分钟 · 可静默完成</p></section>'''
  completion=f'''<section class="course-completion" data-completion-id="{mode}:day-{dd}" aria-label="课程完成标记"><div class="course-completion-head"><h2 class="course-completion-title">本课学习状态</h2><button class="course-completion-button" type="button" aria-pressed="false">○ 标记本课已完成</button></div><p class="course-completion-status" aria-live="polite">既往完成状态保留；本次修订不代表你已经复练。</p></section>'''
  return f'''<!doctype html>
-<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="第{dd}天{label}：{title}。第一周连续表达修订，{duration}。"><title>第{dd}天{label}｜{title}</title><link rel="stylesheet" href="../course-page.css"><link rel="stylesheet" href="../week1.css"><link rel="stylesheet" href="../../lesson-completion.css"><script defer src="../../lesson-completion.js?v=week1-20261024"></script></head>
-<body class="week1-page"><div class="wrap"><nav class="top"><a href="../chapter-01.html">← 第一周课程目录</a><span>第{n}天 · {mode.upper()} · 全课程第{2*n-1 if am else 2*n:03}课</span></nav><div class="course-mode-link"><a href="../{other}/day-{dd}.html">{otherlabel} →</a></div><header class="hero"><div class="eyebrow">WEEK 1 · {mode.upper()} · DAY {dd} / 63</div><h1>{title}</h1><p>{desc}</p><div class="pills"><span>{duration}</span><span>演讲 · 汇报 · 临时发言</span><span>既有课次修订</span></div></header>
-<div class="layout"><main class="main"><section class="paper"><article class="lesson week1-lesson" data-revision="{REVISION}" data-day="{dd}" data-mode="{mode}" data-minutes="{minutes}">{render(d[mode])}</article></section>{completion}<nav class="paper week1-bottom"><a href="../{other}/day-{dd}.html">{otherlabel} →</a><a href="../chapter-01.html">第一周目录 →</a></nav></main><aside class="sidebar"><section class="paper"><div class="kicker">本课学习</div><h2>{'真实表达' if am else '理解与判断'}</h2><p>{side}</p><p>个人录音和评分自行保管。页面更新不新增课次，不自动勾选完成。</p><p><a href="../index.html">63天总目录 →</a></p></section></aside></div><footer class="footer">公众表达与脱稿演讲｜第一周既有14课修订 · 早18分钟，晚最长18分钟 · <a href="https://github.com/Ericywh/research-learning-hub/blob/65a936db86d8c7b9826d1a2075148417eef38c89/docs/speaking/dual-track-2026/{mode}/day-{dd}.html">修订前课文</a></footer></div></body></html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="第{dd}天{label}：{title}。第一周连续表达修订，{duration}。"><title>第{dd}天{label}｜{title}</title><link rel="stylesheet" href="../course-page.css"><link rel="stylesheet" href="../../lesson-completion.css"><link rel="stylesheet" href="../week1.css?v=20261024-editorial"><script defer src="../../lesson-completion.js?v=week1-20261024"></script><script defer src="../week1-ui.js?v=20261024-editorial"></script></head>
+<body class="week1-page week1-{mode}"><div class="wrap"><nav class="top"><a href="../chapter-01.html">← 第一周课程目录</a><span>第{n}天 · {mode.upper()} · 全课程第{2*n-1 if am else 2*n:03}课</span></nav><div class="course-mode-link"><a href="../{other}/day-{dd}.html">{otherlabel} →</a></div><header class="hero"><div class="hero-copy"><div class="eyebrow">WEEK 1 · {mode.upper()} · DAY {dd} / 63</div><h1>{title}</h1><p>{desc}</p><div class="pills"><span>{duration}</span><span>演讲 · 汇报 · 临时发言</span><span>既有课次修订</span></div></div><div class="hero-day" aria-hidden="true"><span>DAY</span><strong>{dd}</strong><small>{'晨间实训' if am else '晚间精讲'}</small></div></header>
+<div class="layout"><main class="main"><article class="lesson week1-lesson" data-revision="{REVISION}" data-day="{dd}" data-mode="{mode}" data-minutes="{minutes}">{rendered}</article>{completion}<nav class="paper week1-bottom"><a href="../{other}/day-{dd}.html">{otherlabel} →</a><a href="../chapter-01.html">第一周目录 →</a></nav></main><aside class="sidebar">{tool}{contents}<section class="paper study-note"><div class="kicker">本课学习</div><h2>{'真实表达' if am else '理解与判断'}</h2><p>{side}</p><p>个人录音和评分自行保管。页面更新不新增课次，不自动勾选完成。</p><p><a href="../index.html">63天总目录 →</a></p></section></aside></div><footer class="footer">公众表达与脱稿演讲｜第一周既有14课修订 · 早18分钟，晚最长18分钟 · <a href="https://github.com/Ericywh/research-learning-hub/blob/65a936db86d8c7b9826d1a2075148417eef38c89/docs/speaking/dual-track-2026/{mode}/day-{dd}.html">修订前课文</a></footer></div></body></html>
 '''
 
 def build(mode='both'):
