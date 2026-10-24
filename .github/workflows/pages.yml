@@ -248,6 +248,9 @@ jobs:
         run: |
           set -euo pipefail
           node --check docs/assets/lesson-reader.js
+          node --check docs/econometrics/study-progress.js
+          grep -Fq 'econ-answer-fold' docs/econometrics/study-progress.js
+          grep -Fq 'econ-reading-guide' docs/econometrics/study-progress.css
           grep -Fq 'disclosure.open = false' docs/assets/lesson-reader.js
           grep -Fq 'cr-reader-codefold' docs/assets/lesson-reader.css
           grep -Fq 'findCodeLanguage' docs/assets/lesson-reader.js

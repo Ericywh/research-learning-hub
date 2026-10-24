@@ -159,3 +159,21 @@ body.econ-theme[data-econ-dark="true"] details.econ-answer-fold>summary{
  body[data-course-theme="econometrics"] .econ-reading-guide{display:none}
  body[data-course-theme="econometrics"] details.econ-answer-fold{break-inside:avoid}
 }
+
+
+/* Reference links retained when removing older lessons' progress footers. */
+body[data-course-theme="econometrics"] .econ-reference-note{
+  padding:15px 19px;margin:14px 0 24px;
+  background:#f7f9f6;border:1px solid #dfe6dc;border-left:4px solid #8eab98;
+  border-radius:9px;color:#526b5b;font-size:12px;line-height:1.8;
+}
+body[data-course-theme="econometrics"] .econ-reference-note>strong{
+  display:block;font-size:12px;letter-spacing:.04em;color:#436451;margin-bottom:4px;
+}
+body[data-course-theme="econometrics"] .econ-reference-note p{margin:0;font-size:12px}
+body[data-course-theme="econometrics"] .econ-reference-note a{
+  color:#326c5a;text-decoration:underline;text-underline-offset:3px;
+}
+body.econ-theme[data-econ-dark="true"] .econ-reference-note{
+  background:#243a33;border-color:#40634c;color:#d6e9db;
+}
