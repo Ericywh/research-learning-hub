@@ -46,3 +46,22 @@ body.pm-independent{background:#f8f8fb}
 .pm-independent .pm-side-small{border-top:1px solid #ebecf1;padding-top:10px}
 @media(max-width:850px){.pm-independent .layout{grid-template-columns:1fr}.pm-independent .sidebar{position:static}.pm-independent .pm-sidebox{padding:14px 18px}.pm-seminar{padding:22px 21px}}
 @media(max-width:540px){.pm-seminar .pm-contrast{grid-template-columns:1fr}.pm-seminar .pm-main-title{font-size:21px}.pm-seminar .pm-scene{display:block}.pm-seminar .pm-scene b{display:inline-block;margin-right:8px}.pm-seminar{padding:19px 16px}}
+/* PM v5: legible in-depth case, speech-theory bridge and annotated answers */
+.pm-seminar .pm-case-deep{background:#f7f8fc;border:1px solid #e7eaf3;border-radius:13px;padding:18px 21px;margin-top:15px}
+.pm-seminar .pm-deep-kicker{font-size:11px;font-weight:800;letter-spacing:.12em;color:#6d63a5}
+.pm-seminar .pm-case-deep h3{font-size:16px;color:#3e4264;margin:7px 0}
+.pm-seminar .pm-case-deep p{margin:8px 0;font-size:14px;line-height:1.85}
+.pm-seminar .pm-dialogue{border-left:3px solid #c1abd0;padding:4px 15px;background:#fff;border-radius:0 9px 9px 0;margin:13px 0}
+.pm-seminar .pm-dialogue p{font-size:14px}.pm-seminar .pm-dialogue strong{color:#6b5983}
+.pm-seminar .pm-guiding-question{border-top:1px solid #e2e5ee;padding-top:12px;color:#55627a}
+.pm-seminar .pm-theory-bridge{margin-top:12px;padding-top:5px;border-top:1px solid #e9e2f2}
+.pm-seminar .pm-theory-bridge h4{font-size:14px;color:#4d4274;margin:14px 0 4px}
+.pm-seminar .pm-theory-bridge p{line-height:1.94}
+.pm-seminar .pm-transfer-challenge{margin-top:13px;padding:13px 16px;background:#f8f6fc;border-left:4px solid #9483bb;border-radius:0 10px 10px 0;font-size:14px}
+.pm-seminar .pm-answer-analysis{margin-top:14px;border-top:1px solid #e7e3ee;padding:12px 0 2px}
+.pm-seminar .pm-answer-analysis h4{font-size:15px;color:#4d4275;margin:3px 0 8px}
+.pm-seminar .pm-answer-analysis p{font-size:14px;line-height:1.92;margin:6px 0 12px}
+.pm-seminar .pm-answer-takeaway{color:#68748b;border-top:1px dotted #dedde7;padding-top:10px}
+.pm-seminar .pm-references summary::after{content:"＋";margin-left:auto;float:right;font-size:17px;line-height:1}
+.pm-seminar .pm-references[open] summary::after{content:"－"}
+@media(max-width:540px){.pm-seminar .pm-case-deep{padding:15px}.pm-seminar .pm-dialogue{padding:4px 10px}}
