@@ -160,9 +160,9 @@ window.MATH_COURSE={
           "section": 5,
           "number": 17,
           "title": "内积与向量长度",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-24",
+          "url": "lessons/2026-10-24-02-05.html"
         },
         {
           "chapter": 2,
