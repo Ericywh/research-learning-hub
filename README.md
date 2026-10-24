@@ -16,6 +16,10 @@
 | 每日经济学经典精读 | `docs/economic-classics/` | 以《国富论》重新开始的新序列 |
 | PSM-DID系统精讲课程 | `docs/psm-did/` | 四章十节；现已交付第1章第1节；Stata与Python |
 
+## 公众表达课程归档
+
+《公众表达与脱稿演讲系统训练｜18周126课》的[六章目录](docs/speaking/legacy-18week.html)与[课程说明](docs/speaking/README.md)独立保留。真实已交付第001—023课，下一课为第024课；第024—126课仅列目录规划。旧课的课时、参考区及排版修订不计为新课，学员个人练习进度由本人在浏览器中标记。现行9周早晚双轨版仍使用原入口。
+
 ## 网站结构
 
 - `docs/index.html`：公开学习中心首页
@@ -32,3 +36,4 @@ GitHub Pages：`Settings → Pages → Deploy from a branch → main → /docs`�
 ## 仓库名称与发布目标
 
 本公开仓库现名为 `Ericywh/research-learning-hub`，正式站点为 https://ericywh.github.io/research-learning-hub/ 。后续六门课程的公开课文均在此仓库 `main` 分支的 `docs/` 中按既有目录发布、维护对应索引和导航；保留独立私人备份仓库 `Ericywh/research-learning-archive`，不将私人笔记、受限论文或数据公开上传。项目网址更名后，旧的 `/math-microcourse/` GitHub Pages 地址不应再被当成正式发布入口。
+
