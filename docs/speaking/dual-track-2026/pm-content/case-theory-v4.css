@@ -1,0 +1,95 @@
+/* PM case + theory deep-reading design v4.
+ * The 63 day-specific case narratives bridge actual teaching examples with
+ * appropriately scoped theory. No JavaScript or user progress data changes. */
+body.pm-independent .pm-seminar .pm-case-deep{
+  margin:16px 0 7px;
+  padding:18px 20px;
+  border:1px solid #e6def2;
+  border-left:4px solid #bda7dc;
+  border-radius:15px;
+  background:linear-gradient(115deg,#f8f3ff 0%,#fff 72%,#f4faf8 100%);
+  color:#494261;
+}
+body.pm-independent .pm-seminar .pm-deep-kicker{
+  color:#9176b5;font-size:10px;letter-spacing:.13em;
+  font-weight:800;line-height:1.5;margin-bottom:5px;
+}
+body.pm-independent .pm-seminar .pm-case-deep h3{
+  margin:0 0 11px;color:#584b80;
+  font-size:16px;font-weight:800;line-height:1.5;
+}
+body.pm-independent .pm-seminar .pm-case-deep p{
+  font-size:14px;line-height:1.95;
+  margin:8px 0;color:#4b4863;
+}
+body.pm-independent .pm-seminar .pm-case-deep .pm-guiding-question{
+  background:rgba(255,255,255,.8);border:1px solid #eae3f4;
+  border-radius:11px;padding:10px 13px;margin-top:15px;
+  font-size:13px;color:#605373;
+}
+body.pm-independent .pm-seminar .pm-theory{
+  padding:20px 23px 18px;border-radius:16px;
+  background:linear-gradient(115deg,#f5f0ff,#fff9fc 82%);
+  border:1px solid #e6dcf4;box-shadow:0 4px 14px rgba(107,83,160,.05);
+}
+body.pm-independent .pm-seminar .pm-theory h3{
+  color:#54447d;font-size:18px;
+}
+body.pm-independent .pm-seminar .pm-theory-bridge{
+  border-top:1px solid #e8e0f4;
+  margin-top:13px;padding-top:10px;
+}
+body.pm-independent .pm-seminar .pm-theory-bridge h4{
+  font-size:14px;line-height:1.6;font-weight:800;
+  color:#675492;margin:12px 0 6px;
+}
+body.pm-independent .pm-seminar .pm-theory-bridge p{
+  font-size:14px;line-height:1.95;color:#4f4867;
+  margin:7px 0 12px;
+}
+body.pm-independent .pm-seminar .pm-theory-bridge h4:nth-of-type(2){
+  color:#648d78;
+}
+body.pm-independent .pm-seminar .pm-theory-bridge h4:nth-of-type(2)+p{
+  padding:10px 13px;background:linear-gradient(105deg,#f1faf5,#fff);
+  border:1px solid #dfeee5;border-radius:10px;color:#506b5d;
+}
+body.pm-independent .pm-seminar .pm-insight-verify{
+  margin:13px 0 16px;padding:12px 15px;
+  border-radius:12px;
+  border:1px solid #dceee4;border-left:4px solid #9bcdb7;
+  background:linear-gradient(112deg,#effaf4,#fff 84%);
+  color:#456e60;font-size:13px;line-height:1.88;
+}
+body.pm-independent .pm-seminar .pm-insight-verify strong{
+  color:#3d806a;font-weight:800;
+}
+body.pm-independent .pm-seminar .pm-metadata span:first-child{
+  background:#f1eafb;color:#6c5a98;font-weight:750;
+}
+body.pm-independent .pm-seminar details.pm-references>summary{
+  background:linear-gradient(110deg,#f6f0ff,#fff9fc);
+  color:#66548e;
+}
+@media(max-width:600px){
+ body.pm-independent .pm-seminar .pm-case-deep{
+  padding:15px 14px;border-radius:12px;
+ }
+ body.pm-independent .pm-seminar .pm-theory{
+  padding:17px 15px;border-radius:13px;
+ }
+ body.pm-independent .pm-seminar .pm-case-deep p,
+ body.pm-independent .pm-seminar .pm-theory-bridge p{
+  line-height:1.85;
+ }
+ body.pm-independent .pm-seminar .pm-insight-verify{
+  padding:11px 12px;
+ }
+}
+@media print{
+ body.pm-independent .pm-seminar .pm-case-deep,
+ body.pm-independent .pm-seminar .pm-theory,
+ body.pm-independent .pm-seminar .pm-insight-verify{
+  background:#fff!important;box-shadow:none!important;break-inside:avoid;
+ }
+}
