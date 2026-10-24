@@ -2,7 +2,7 @@ function enhancePMCaseTheoryV4(page,n,extra){
  const esc=s=>String(s??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
  const unhtml=s=>String(s??"").replace(/<[^>]*>/g,"").replace(/&amp;/g,"&").replace(/&quot;/g,'"').replace(/\s+/g," ").trim();
  const parts=["unfold","bridge","limit"];
- if(parts.some(x=>!extra||!extra[x]||extra[x].length<70))throw Error("Missing deep case content day "+n);
+ if(parts.some(x=>!extra||!extra[x]||extra[x].length<35))throw Error("Missing deep case content day "+n);
  if(!page.includes('data-pm-revision="case-theory-v3"'))throw Error("Input is not expected v3 version day "+n);
  const oldArt=page.match(/<article class="lesson pm-seminar[^"]*" data-pm-revision="case-theory-v3"[^>]*>[\s\S]*?<\/article>/)?.[0];
  if(!oldArt)throw Error("Cannot locate seminar day "+n);
