@@ -1,0 +1,41 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="每日10分钟数学微课程，第14课：第2章·第2节｜矩阵秩与列独立"><title>第2章·第2节｜矩阵秩与列独立</title><link rel="stylesheet" href="../site.css"><script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script><style>.article-wrap{max-width:830px;margin:0 auto;padding:36px 20px 80px}.article{font-size:17px;line-height:1.9;color:#263d3a}.article h3{margin-top:1.7em}.article p{margin:1em 0}.article .math{overflow:auto;padding:12px;background:#f4f8f5;border-radius:9px}.muted{font-size:14px;color:#61736e}</style></head><body><header><div class="wrap"><a href="../">← 数学课程目录</a><a href="../../">研究学习中心 ↗</a></div></header><main class="article-wrap"><div class="kicker">MATHEMATICS · PROBABILITY · ECONOMETRICS</div><h1>第2章·第2节｜矩阵秩与列独立</h1><p class="muted">全课程第14课 / 共73课 · 2026-10-21 · 预计学习8分钟</p><article class="article"><p>全课程第14课 / 共73课｜2026年10月21日｜预计学习时间：8分钟</p>
+<p><strong>核心问题：</strong> 怎样准确判断设计矩阵中有多少个彼此独立的列方向？</p>
+<h3>一、秩衡量的是独立方向，而非列数</h3>
+<p>上一课看到：多个解释变量可能包含完全重复的信息，使回归系数不唯一。本课用矩阵秩精确描述这种现象。</p>
+<p>设设计矩阵 \(`X\in\mathbb R^{n\times p}`\)，其列向量为 \(`\mathbf x_1,\ldots,\mathbf x_p`\)。如果只有所有系数均为零时，线性组合 \(`a_1\mathbf x_1+\cdots+a_p\mathbf x_p=\mathbf0`\) 才成立，就称这 \(`p`\) 列线性独立。矩阵的列秩定义为：</p>
+<div class="math">\[\boxed{\operatorname{rank}(X)=\dim\operatorname{span}\{\mathbf x_1,\ldots,\mathbf x_p\}\leq\min(n,p)}\]</div>
+<p>列数是矩阵的形状，秩是列空间的维数。即使有100列，也不代表存在100个独立方向。</p>
+<h3>二、秩与零空间为什么相连</h3>
+<p>把 \(`X`\) 看作从 \(`\mathbb R^p`\) 到 \(`\mathbb R^n`\) 的线性映射。零空间 \(`\ker(X)`\) 包含所有满足 \(`X\mathbf v=\mathbf0`\) 的系数方向。秩—零度定理给出：</p>
+<div class="math">\[\boxed{\operatorname{rank}(X)+\dim\ker(X)=p}\]</div>
+<p>因此，满列秩等价于零空间只含零向量。对实矩阵还有：</p>
+<div class="math">\[\boxed{\mathbf v^{\mathsf T}X^{\mathsf T}X\mathbf v=\|X\mathbf v\|_2^2}\]</div>
+<p>于是 \(`X^{\mathsf T}X`\) 可逆，当且仅当 \(`X`\) 满列秩。这是普通最小二乘系数唯一性的代数条件；不要求误差服从正态分布。</p>
+<h3>三、可手算案例</h3>
+<p>考虑四个观测、三个解释变量列（第一列为截距）：</p>
+<div class="math">\[X=\begin{pmatrix}
+1&0&1\\
+1&1&3\\
+1&2&5\\
+1&3&7
+\end{pmatrix}.\]</div>
+<p>第三列恰好等于第一列加上第二列的两倍。前两列线性独立，故 \(`\operatorname{rank}(X)=2`\)，而不是3。对该矩阵作初等行变换，可得：</p>
+<div class="math">\[\begin{pmatrix}
+1&0&1\\
+0&1&2\\
+0&0&0\\
+0&0&0
+\end{pmatrix}.\]</div>
+<p>非零行有两行，秩为2；零空间维数为 \(`3-2=1`\)。例如 \(`\mathbf v=(-1,-2,1)^{\mathsf T}`\) 满足 \(`X\mathbf v=\mathbf0`\)。不同系数向量可以给出相同拟合值，但最小二乘投影得到的拟合值仍唯一。</p>
+<h3>四、计量经济学中的意义</h3>
+<p>企业固定效应模型中，若某解释变量在企业内部完全不变，它可由企业虚拟变量的线性组合表示，不能与完整企业固定效应同时单独估计。软件剔除该变量，反映的是给定设计矩阵的秩不足，而不是证明变量没有经济影响。</p>
+<p>需要区分精确共线性与高度但不完全的共线性：后者可能造成估计不稳定，却不必然降低精确矩阵秩。矩阵满秩只保证系数的代数唯一性，不能替代外生性或因果识别条件。</p>
+<h3>五、两分钟自测</h3>
+<p><strong>第1题｜概念题：</strong> 若设计矩阵有3行、5列，能否满列秩？为什么？</p>
+<p><strong>第2题｜计算题：</strong> 对矩阵 \(`B=\begin{pmatrix}1&0&1\\0&1&1\\1&1&2\end{pmatrix}`\)，求秩并给出一个非零的零空间向量。</p>
+<h4>参考答案</h4>
+<p><strong>第1题：</strong> 不能。秩至多为 \(`\min(3,5)=3`\)，小于列数5。</p>
+<p><strong>第2题：</strong> 第三列等于前两列之和，而前两列独立，所以秩为2；\(`(-1,-1,1)^{\mathsf T}`\) 是一个非零零空间向量。</p>
+<h3>六、前后课衔接</h3>
+<p>第13课说明冗余变量为何使系数不唯一，本课用秩和零空间给出严格判据。下一课将研究由独立列张成的列空间，以及OLS究竟能拟合哪些向量。</p>
+<p><strong>下一课：第2章·第3节｜列空间和模型可拟合的向量（全课程第15课）。</strong></p></article><footer class="muted"><p><a href="https://app.notion.com/p/400b54823a12819493cfe88613f4538a?pvs=204">Notion私人完整讲义（需权限）</a> · <a href="../">课程目录</a></p></footer></main></body></html>
