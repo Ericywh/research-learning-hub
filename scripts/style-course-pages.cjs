@@ -18,6 +18,11 @@ const themes={
 const asset=path.join(root,'assets','course-themes.css');
 const readerCss=path.join(root,'assets','lesson-reader.css');
 const readerJs=path.join(root,'assets','lesson-reader.js');
+const progressJs=path.join(root,'econometrics','study-progress.js');
+const progressCss=path.join(root,'econometrics','study-progress.css');
+for(const p of [progressJs,progressCss]) {
+  if(!fs.existsSync(p))throw Error('Missing econometrics completion asset: '+p);
+}
 for(const file of [readerCss,readerJs]){
   if(!fs.existsSync(file) || fs.statSync(file).size<4000)
     throw Error('Missing or unexpectedly short lesson reader asset: '+file);
@@ -74,7 +79,11 @@ for(const [directory,theme] of Object.entries(themes)){
       '<link rel="stylesheet" href="'+path.relative(path.dirname(file),readerCss).split(path.sep).join('/')+(sha?'?v='+sha:'')+'">'+
       '<script defer src="'+path.relative(path.dirname(file),readerJs).split(path.sep).join('/')+(sha?'?v='+sha:'')+'"><\\/script>'.replace('\\/','/'):
       '';
-    let html=original.replace(/<\/head\s*>/i,link+'\\n'+extra+'\\n</head>');
+    const progress=directory==='econometrics'?
+      '<link rel="stylesheet" href="'+path.relative(path.dirname(file),progressCss).split(path.sep).join('/')+(sha?'?v='+sha:'')+'">'+
+      '<script defer src="'+path.relative(path.dirname(file),progressJs).split(path.sep).join('/')+(sha?'?v='+sha:'')+'"></script>':
+      '';
+    let html=original.replace(/<\/head\s*>/i,link+'\\n'+extra+'\\n'+progress+'\\n</head>');
     html=html.replace(/<body(\s[^>]*?)?>/i,(_,attrs='')=>'<body'+attrs+' data-course-theme="'+theme+'">');
     if(isLesson){
       const home=path.relative(path.dirname(file),path.join(courseRoot,'index.html')).split(path.sep).join('/');

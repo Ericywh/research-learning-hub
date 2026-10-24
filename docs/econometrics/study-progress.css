@@ -1,0 +1,82 @@
+/* Econometrics 120 · eye-friendly personal completion state */
+body[data-course-theme="econometrics"] :is(.econ-complete-panel,.econ-my-learning){
+  box-sizing:border-box;max-width:100%;margin:26px 0 16px;padding:26px 28px;
+  border:1px solid #cfddd3;border-radius:16px;
+  background:linear-gradient(120deg,#f0f7f1,#fbfcf7 78%);
+  color:#263f34;box-shadow:0 9px 25px rgba(42,77,57,.055);
+}
+body[data-course-theme="econometrics"] .econ-complete-eyebrow{
+  display:block;font-size:11px;font-weight:800;letter-spacing:.12em;color:#567c64;margin-bottom:9px;
+}
+body[data-course-theme="econometrics"] .econ-complete-panel h2{
+  color:#244c39;font-size:clamp(21px,2.2vw,26px);margin:0 0 9px;
+  padding:0;border:none;
+}
+body[data-course-theme="econometrics"] .econ-complete-panel h2:before{display:none}
+body[data-course-theme="econometrics"] .econ-complete-panel p{
+  color:#556b5f;font-size:14px;line-height:1.85;margin:8px 0 16px;
+}
+body[data-course-theme="econometrics"] .econ-complete-actions{
+  display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:19px 0 16px;
+}
+body[data-course-theme="econometrics"] .econ-complete-button{
+  background:#476f55;color:#fff;border:1px solid #476f55;border-radius:10px;
+  padding:12px 19px;font-weight:800;font-size:15px;line-height:1.4;
+  cursor:pointer;min-height:46px;transition:background .18s;
+}
+body[data-course-theme="econometrics"] .econ-complete-button:hover{background:#31563e}
+body[data-course-theme="econometrics"] .econ-complete-button:focus-visible{
+  outline:3px solid #b78638;outline-offset:3px;
+}
+body[data-course-theme="econometrics"] .econ-complete-panel[data-completed="true"]{
+  border-color:#87b497;background:linear-gradient(120deg,#e5f3e9,#f7fbf7);
+}
+body[data-course-theme="econometrics"] .econ-complete-panel[data-completed="true"] .econ-complete-button{
+  background:#ecf5ed;border-color:#80ab8c;color:#27643e;
+}
+body[data-course-theme="econometrics"] .econ-complete-panel[data-completed="true"] .econ-complete-button:hover{
+  background:#d8eade;
+}
+body[data-course-theme="econometrics"] .econ-complete-message{color:#406b4c;font-weight:700;font-size:13px}
+body[data-course-theme="econometrics"] .econ-complete-back{
+  display:inline-flex;color:#315f45;text-decoration:none;font-weight:700;font-size:14px;
+  margin:4px 0 8px;
+}
+body[data-course-theme="econometrics"] .econ-complete-back:hover{text-decoration:underline}
+body[data-course-theme="econometrics"] .econ-complete-panel p.econ-complete-footnote{
+  margin:11px 0 0;font-size:12px;color:#687d6e;
+}
+body[data-course-theme="econometrics"] .econ-my-learning{
+  margin:10px 0 19px;padding:20px 22px;
+}
+body[data-course-theme="econometrics"] .econ-my-learning strong{
+  display:block;font-size:20px;line-height:1.5;color:#315640;
+}
+body[data-course-theme="econometrics"] .econ-my-learning p{margin:8px 0;font-size:14px;color:#4c6655}
+body[data-course-theme="econometrics"] .econ-my-learning-links{display:flex;flex-wrap:wrap;gap:9px 19px;margin:12px 0}
+body[data-course-theme="econometrics"] .econ-my-learning-links a{
+  color:#275c44;text-decoration:underline;font-weight:700;font-size:13px;
+}
+body[data-course-theme="econometrics"] .econ-my-learning small{font-size:11px;color:#6d806f;line-height:1.6}
+body[data-course-theme="econometrics"] .lesson.econ-lesson-completed{
+  background:linear-gradient(90deg,#edf6ee,transparent);
+}
+body[data-course-theme="econometrics"] .econ-learned-mark{
+  flex-shrink:0;font-size:11px;font-weight:800;border:1px solid #b2d2b8;
+  color:#2f7447;background:#e4f4e7;padding:2px 7px;border-radius:99px;
+}
+body.econ-theme[data-econ-dark="true"] :is(.econ-my-learning,.econ-complete-panel){
+  background:#243f35;color:#e1efe5;border-color:#456b54;
+}
+body.econ-theme[data-econ-dark="true"] :is(.econ-my-learning,.econ-complete-panel) :is(h2,strong,p,small,span){
+  color:#d6e9d8;
+}
+body.econ-theme[data-econ-dark="true"] :is(.econ-complete-back,.econ-my-learning-links a){color:#b5e6bd}
+body.econ-theme[data-econ-dark="true"] .lesson.econ-lesson-completed{background:#264438}
+@media(max-width:580px){
+  body[data-course-theme="econometrics"] :is(.econ-complete-panel,.econ-my-learning){padding:19px 16px;border-radius:12px}
+  body[data-course-theme="econometrics"] .econ-complete-button{width:100%}
+}
+@media print{
+  body[data-course-theme="econometrics"] :is(.econ-complete-panel,.econ-my-learning){display:none!important}
+}
