@@ -139,3 +139,9 @@ if guard not in s:
  write(js,s)
 print('Built '+str(len(manifest))+' independent PM lessons; minutes '+str(min(x['minutes'] for x in manifest))+'-'+str(max(x['minutes'] for x in manifest))+'.')
 
+# First-week continuous-speaking revision takes precedence over the V6 sources.
+# Keep this command PM-only: rebuilding PM never writes any AM page.
+if (ROOT/'week1-content.json').exists() and (ROOT/'rebuild-week1.py').exists():
+ import subprocess,sys
+ subprocess.run([sys.executable,str(ROOT/'rebuild-week1.py'),'--mode','pm'],check=True)
+

@@ -1,0 +1,15 @@
+.week1-page .lesson{white-space:normal;line-height:1.9;font-size:16px}
+.week1-page .lesson h2{font-size:21px;line-height:1.5;margin:30px 0 14px;color:#354c69}
+.week1-page .lesson h2:first-child{margin-top:0}
+.week1-page .lesson h3{font-size:18px;line-height:1.5;margin:24px 0 10px;color:#5b4f83}
+.week1-page .lesson p{margin:12px 0}
+.week1-page .lesson blockquote{margin:18px 0;padding:8px 20px;border-left:4px solid #9b8bbe;background:#f6f3fb;color:#344359;border-radius:0 10px 10px 0}
+.week1-page .lesson ul{padding-left:23px}
+.week1-page .lesson li{margin:10px 0}
+.week1-page .lesson details{white-space:normal;margin:23px 0;border:1px solid #dcd6e8;background:#fdfcfe;border-radius:12px;padding:0 19px 12px}
+.week1-page .lesson summary{cursor:pointer;padding:16px 0 5px;color:#5b4e7d;font-weight:650;line-height:1.7}
+.week1-page .lesson details[open]>summary{border-bottom:1px solid #e4dfed;padding-bottom:13px;margin-bottom:18px}
+.week1-page .course-mode-link{padding:10px 3px}
+.week1-bottom{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.week1-page .footer{line-height:1.8}
+@media(max-width:650px){.week1-page .lesson{font-size:16px}.week1-page .lesson h2{font-size:20px}.week1-page .lesson details{padding:0 13px 9px}.week1-page .lesson blockquote{padding:7px 14px}}

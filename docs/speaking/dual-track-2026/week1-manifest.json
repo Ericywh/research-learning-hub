@@ -1,0 +1,162 @@
+{
+  "revision": "continuous-speaking-week1-v1",
+  "days": 7,
+  "lessons": 14,
+  "new_lessons": 0,
+  "entries": [
+    {
+      "day": 1,
+      "mode": "am",
+      "lesson_number": 1,
+      "title": "先留下真实的一分钟",
+      "minutes": 18,
+      "reference_default": "closed",
+      "revision": "continuous-speaking-week1-v1",
+      "path": "am/day-01.html",
+      "characters": 1751
+    },
+    {
+      "day": 1,
+      "mode": "pm",
+      "lesson_number": 2,
+      "title": "一句主旨怎样带动整段发言",
+      "minutes": 15,
+      "reference_default": "closed",
+      "revision": "continuous-speaking-week1-v1",
+      "path": "pm/day-01.html",
+      "characters": 1787
+    },
+    {
+      "day": 2,
+      "mode": "am",
+      "lesson_number": 3,
+      "title": "开头给出判断，再把意思讲完整",
+      "minutes": 18,
+      "reference_default": "closed",
+      "revision": "continuous-speaking-week1-v1",
+      "path": "am/day-02.html",
+      "characters": 1248
+    },
+    {
+      "day": 2,
+      "mode": "pm",
+      "lesson_number": 4,
+      "title": "结论先说，怎样避免草率和空泛",
+      "minutes": 14,
+      "reference_default": "closed",
+      "revision": "continuous-speaking-week1-v1",
+      "path": "pm/day-02.html",
+      "characters": 1577
+    },
+    {
+      "day": 3,
+      "mode": "am",
+      "lesson_number": 5,
+      "title": "把一条理由讲到听众能够理解",
+      "minutes": 18,
+      "reference_default": "closed",
+      "revision": "continuous-speaking-week1-v1",
+      "path": "am/day-03.html",
+      "characters": 1295
+    },
+    {
+      "day": 3,
+      "mode": "pm",
+      "lesson_number": 6,
+      "title": "从判断到依据，中间缺了哪一步",
+      "minutes": 15,
+      "reference_default": "closed",
+      "revision": "continuous-speaking-week1-v1",
+      "path": "pm/day-03.html",
+      "characters": 1553
+    },
+    {
+      "day": 4,
+      "mode": "am",
+      "lesson_number": 7,
+      "title": "用具体过程把一个判断讲清楚",
+      "minutes": 18,
+      "reference_default": "closed",
+      "revision": "continuous-speaking-week1-v1",
+      "path": "am/day-04.html",
+      "characters": 1240
+    },
+    {
+      "day": 4,
+      "mode": "pm",
+      "lesson_number": 8,
+      "title": "细节怎样帮助听众理解，而不冲淡主旨",
+      "minutes": 15,
+      "reference_default": "closed",
+      "revision": "continuous-speaking-week1-v1",
+      "path": "pm/day-04.html",
+      "characters": 1478
+    },
+    {
+      "day": 5,
+      "mode": "am",
+      "lesson_number": 9,
+      "title": "只凭三词完成有依据的点评",
+      "minutes": 18,
+      "reference_default": "closed",
+      "revision": "continuous-speaking-week1-v1",
+      "path": "am/day-05.html",
+      "characters": 1280
+    },
+    {
+      "day": 5,
+      "mode": "pm",
+      "lesson_number": 10,
+      "title": "关键词怎样提示意思，而不是触发背稿",
+      "minutes": 14,
+      "reference_default": "closed",
+      "revision": "continuous-speaking-week1-v1",
+      "path": "pm/day-05.html",
+      "characters": 1484
+    },
+    {
+      "day": 6,
+      "mode": "am",
+      "lesson_number": 11,
+      "title": "中断以后，从当前意思接回去",
+      "minutes": 18,
+      "reference_default": "closed",
+      "revision": "continuous-speaking-week1-v1",
+      "path": "am/day-06.html",
+      "characters": 1230
+    },
+    {
+      "day": 6,
+      "mode": "pm",
+      "lesson_number": 12,
+      "title": "区分忘词、思路丢失与事实纠正",
+      "minutes": 15,
+      "reference_default": "closed",
+      "revision": "continuous-speaking-week1-v1",
+      "path": "pm/day-06.html",
+      "characters": 1429
+    },
+    {
+      "day": 7,
+      "mode": "am",
+      "lesson_number": 13,
+      "title": "先独立完成周测，再分析与修订",
+      "minutes": 18,
+      "reference_default": "closed",
+      "revision": "continuous-speaking-week1-v1",
+      "path": "am/day-07.html",
+      "characters": 1566
+    },
+    {
+      "day": 7,
+      "mode": "pm",
+      "lesson_number": 14,
+      "title": "用录音证据确定下一步练什么",
+      "minutes": 16,
+      "reference_default": "closed",
+      "revision": "continuous-speaking-week1-v1",
+      "path": "pm/day-07.html",
+      "characters": 1680
+    }
+  ]
+}
