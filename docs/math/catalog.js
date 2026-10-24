@@ -109,9 +109,9 @@ window.MATH_COURSE={
           "section": 12,
           "number": 12,
           "title": "线性变换如何改变协方差",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-19",
+          "url": "lessons/2026-10-19-01-12.html"
         }
       ]
     },
