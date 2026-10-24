@@ -1,0 +1,85 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>第4章·第2节｜新能源汽车“双积分”政策的模糊断点识别（全课程第14课）</title><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script><style>:root{font-family:system-ui,"Noto Sans SC","Microsoft YaHei",sans-serif;background:#f6f8f6;color:#233746;line-height:1.85}body{margin:0}header,main,footer{max-width:960px;margin:auto;padding:24px}header{background:#eaf2ee;border-radius:16px;margin-top:25px}h1{font-size:29px}h2{font-size:20px;color:#176b61;border-bottom:1px solid #dce8e3;margin-top:30px;padding-bottom:8px}main{background:white;border:1px solid #dce8e3;border-radius:14px;margin-top:16px}p{margin:12px 0}a{color:#176b61}pre{background:#172d35;color:#e7f4ef;padding:18px;border-radius:9px;overflow-x:auto;white-space:pre;font-size:13px}.math{background:#f2f7f5;overflow-x:auto;padding:15px}.tablewrap{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:13px}th,td{padding:8px;border:1px solid #dce8e3;text-align:left}th{background:#eaf2ee}.notice{border-left:3px solid #176b61;background:#f2f7f5;padding:12px}nav{display:flex;gap:16px;flex-wrap:wrap;font-size:14px}@media(max-width:650px){header,main,footer{padding:18px;margin:8px}h1{font-size:23px}h2{font-size:18px}}</style></head><body><header><nav><a href="../index.html">CSSCI课程目录</a><a href="04-01-2026-10-21.html">上一课</a></nav><h1>第4章·第2节｜新能源汽车“双积分”政策的模糊断点识别（全课程第14课）</h1><p>2026-10-25正式聊天课程归档｜2024年CSSCI论文（三年内回溯）｜原创研究方法解读；非作者原码、未运行。</p></header><main><p class="notice">2026年10月25日正式授课｜RDD专题｜2024年CSSCI论文（三年内回溯）。2025—2026年候选尚未通过全文关键表核验。本讲义为原创教学解读；作者原始数据和代码未取得，数值复现未运行。</p>
+<h2 id="s1">一、书目、问题与贡献</h2>
+<p>何郁冰、林婷：《强制性制度压力对颠覆性创新的影响机理——以中国新能源汽车产业“双积分”政策为例》，《科技进步与对策》2024，41(23)：29—40。DOI：10.6049/kjjbydc.2023060748。<a href="https://www.kjjb.org/article/2024/1001-7348/2024-41-23-004.htm" target="_blank" rel="noopener">期刊官方完整HTML</a>&lt;br /&gt;文章考察新能源乘用车企业“双积分”考核与颠覆性专利创新的关系，核心是以NEV积分零值作为断点。已阅读官方完整HTML、模型、表1—11及稳健性，2024年文章符合最多回溯三年的选文规则。</p>
+<h2 id="s2">二、估计量、识别变异与因果假设</h2>
+<p>运行变量为企业NEV积分X，阈值c=0；资格工具Z=1(X&gt;0)，实际“双积分”达标T未必等于Z，故为模糊RDD。目标是阈值附近因NEV资格变化而改变实际达标状态企业的局部平均处理效应，而不是全部车企平均政策效应。&lt;br /&gt;需要检验潜在结果连续、积分不可精确操纵、单调性及第一阶段跳跃，并排除CAFC考核、积分交易与处罚规则在同一阈值的其他通道。积分由企业产销结构及交易决策形成，密度检验不显著也不能证明企业完全没有操纵。</p>
+<h2 id="s3">三、公式、固定效应与推断</h2>
+<div class="math">\[\tau_{FRD}=\frac{\lim_{x\downarrow0}E[Y\mid X=x]-\lim_{x\uparrow0}E[Y\mid X=x]}{\lim_{x\downarrow0}E[T\mid X=x]-\lim_{x\uparrow0}E[T\mid X=x]}\]</div>
+<p>Y为企业当年是否出现高颠覆性专利。原文表2全样本2SLS控制年份效应，未报告企业固定效应；P项系数0.140（稳健标准误0.031），N=805。表3局部带宽0.047时P系数0.066（0.026），N=508。原文未完整列示第一阶段系数、弱工具诊断及企业聚类口径。全样本2SLS与局部RDD一般不是同一加权估计量。</p>
+<h2 id="s4">四、真实数据、样本、变量与缺失</h2>
+<p>工信部2016—2021年187家乘用车企业积分核算资料，与Patsnap中19,729条新能源汽车技术专利及企业信息匹配，清洗后805个企业—年度观测。专利引用网络DI指标前10%界定高颠覆性专利；结果变量Disdum、LnDis、Disrate、LnDisq。协变量为所有权、企业类型、年龄、媒体关注、城市创新力、人口和GDP。逐项删失数及专利引用截断处理未核实。</p>
+<div class="tablewrap"><table fit-page-width="true" header-row="true">
+<tr>
+<td>
+项目
+</td>
+<td>
+核验信息
+</td>
+</tr>
+<tr>
+<td>
+政策及样本期
+</td>
+<td>
+2017年出台“双积分”办法；样本2016—2021年
+</td>
+</tr>
+<tr>
+<td>
+积分数据
+</td>
+<td>
+工信部187家乘用车企业积分核算
+</td>
+</tr>
+<tr>
+<td>
+专利数据
+</td>
+<td>
+Patsnap新能源汽车相关专利19,729条
+</td>
+</tr>
+<tr>
+<td>
+分析样本
+</td>
+<td>
+805个企业—年度；表5 Disdum局部样本502
+</td>
+</tr>
+<tr>
+<td>
+核心变量
+</td>
+<td>
+NEV积分X、资格Z、实际达标T、Disdum/LnDis/Disrate/LnDisq
+</td>
+</tr>
+<tr>
+<td>
+缺失与限制
+</td>
+<td>
+逐步匹配剔除量、数据字典、作者原始代码未取得
+</td>
+</tr>
+</table></div>
+<h2 id="s5">五、Stata教学参考代码（自行推导、非作者原码、未运行）</h2>
+<pre><code>* 教学自写代码；非作者原码，未运行
+* 使用合法取得的企业—年度积分与专利数据
+use &quot;authorized_nev_firm_year.dta&quot;, clear
+gen double x = nev_credit
+gen byte z = (x &gt; 0) if !missing(x)
+* 实际“双积分”达标须按原始政策核算，不等同于z
+* dual_compliant为真实达标指示变量
+* 需预先安装 rdrobust 与 rddensity
+rdrobust dual_compliant x, c(0) kernel(triangular) vce(cluster firm_id)
+rdrobust disdum x, c(0) fuzzy(dual_compliant) ///
+    kernel(triangular) vce(cluster firm_id)
+rddensity x, c(0)</code></pre>
+<h2 id="s6">六、原文数值、稳健性与解释边界</h2>
+<p>表5三角核局部线性结果：Disdum常规0.177（0.034）、偏差修正0.184（0.034）、稳健推断0.184（0.032），带宽0.045，N=502；其余三项结果亦为正。表4协变量连续性检验均不显著，另报告McCrary密度检验、表6带宽敏感性及表7六个伪断点。表6同一二元结果最优带宽估计0.867（0.223），与表5的0.184明显不同，须核对尺度和估计方法。表8机制交互项与表9—10异质性是辅助证据，不能替代严格中介识别；不能仅凭组内显著性差异判断组间效应不同。</p>
+<h2 id="s7">七、复现障碍、审稿与验证状态</h2>
+<p>首要问题是NEV积分过零是否同时改变处罚、积分交易和生产行为等多条路径。应公开T与Z定义、第一阶段图表、阈值附近企业数、积分操纵检验，并按企业聚类、变更带宽及多项式阶数重估。还需核对表3/表5带宽差异及表6系数远大于表5的原因。表11传统燃油车专利出现概率常规估计−0.207（0.073），创新质量不显著。已核实官方书目、完整HTML、表1—11及稳健性；未取得原始数据与作者程序，未运行Stata，未完成数值复现。</p></main><footer>CSSCI实证论文复现精读库 · 仅发布自行撰写的教学内容，不含受限PDF或私人数据。</footer></body></html>
