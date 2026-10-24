@@ -463,6 +463,11 @@ jobs:
           check "$SITE/" /tmp/econometrics-index.html "计量经济学120天"
           check "$SITE/catalog.js" /tmp/econometrics-catalog.js "\"url\": \"lessons/$LATEST_ID.html\""
           check "$SITE/lessons/$LATEST_ID.html" /tmp/econometrics-lesson.html "$LATEST_TITLE"
+          # Confirm the personal completion feature is present in the deployed HTML and assets.
+          check "$SITE/study-progress.js" /tmp/econometrics-progress.js "research-learning-hub:econometrics:completed:v1"
+          check "$SITE/study-progress.css" /tmp/econometrics-progress.css "econ-complete-panel"
+          grep -Fq 'study-progress.js' /tmp/econometrics-index.html
+          grep -Fq 'study-progress.js' /tmp/econometrics-lesson.html
           grep -Fq "href=\"lessons/$LATEST_ID.html\"" /tmp/econometrics-index.html
           grep -Fq '<pre' /tmp/econometrics-lesson.html
           echo "Verified newest econometrics course $LATEST_ID on public GitHub Pages."
