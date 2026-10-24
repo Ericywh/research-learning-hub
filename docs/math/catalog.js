@@ -124,36 +124,36 @@ window.MATH_COURSE={
           "section": 1,
           "number": 13,
           "title": "线性相关与冗余解释变量",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-20",
+          "url": "lessons/2026-10-20-02-01.html"
         },
         {
           "chapter": 2,
           "section": 2,
           "number": 14,
           "title": "矩阵秩与列独立",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-21",
+          "url": "lessons/2026-10-21-02-02.html"
         },
         {
           "chapter": 2,
           "section": 3,
           "number": 15,
           "title": "列空间和模型可拟合的向量",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-22",
+          "url": "lessons/2026-10-22-02-03.html"
         },
         {
           "chapter": 2,
           "section": 4,
           "number": 16,
           "title": "基与维数",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-23",
+          "url": "lessons/2026-10-23-02-04.html"
         },
         {
           "chapter": 2,
