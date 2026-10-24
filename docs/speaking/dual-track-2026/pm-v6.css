@@ -1,0 +1,25 @@
+/* Independent PM reading layout; no AM selectors or runtime reshaping. */
+.pm-independent article.pm-seminar{white-space:normal;line-height:1.9;overflow-wrap:anywhere}
+.pm-independent .pm-v6-case p,.pm-independent .pm-v6-analysis p{max-width:74ch}
+.pm-independent .pm-case-origin,.pm-independent .pm-v6-source{font-size:12px;color:#68748a}
+.pm-independent .pm-v6-dialogue{padding:10px 18px;background:#f5f8fc;border:1px solid #dde6ef;border-left:3px solid #9a8abd;border-radius:0 12px 12px 0}
+.pm-independent .pm-v6-dialogue p{margin:9px 0 15px;font-size:15px}
+.pm-independent .pm-v6-dialogue strong{color:#564575}
+.pm-independent .pm-v6-move{margin:18px 0;padding:0 0 15px;border-bottom:1px solid #eceaf2}
+.pm-independent .pm-v6-move h3{font-size:15px;color:#4f476f;margin:4px 0 9px}
+.pm-independent .pm-v6-move blockquote,.pm-independent .pm-v6-error blockquote{margin:7px 0 10px;padding:11px 15px;border-left:3px solid #a99ac9;background:#f8f6fb;border-radius:0 8px 8px 0;color:#46516b}
+.pm-independent .pm-v6-move p{font-size:15px;margin:10px 0}
+.pm-independent .pm-v6-error blockquote{background:#fff7f0;border-color:#cead87}
+.pm-independent .pm-v6-reaction{font-size:14px;color:#687083}
+.pm-independent .pm-v6-task{padding:16px 19px;background:#f0f6f9;border:1px solid #dbe8ed;border-radius:11px}
+.pm-independent .pm-v6-answer{margin:12px 0 20px;padding-bottom:18px;border-bottom:1px solid #e7e3ee}
+.pm-independent .pm-v6-answer h3{font-size:16px;color:#554478;margin:8px 0 10px}
+.pm-independent .pm-v6-answer-text{padding:13px 15px;background:#f6f8fc;border-radius:8px}
+.pm-independent .pm-v6-annotations{padding-left:23px;font-size:14px;line-height:1.95}
+.pm-independent .pm-v6-annotations li{margin:9px 0}
+.pm-independent .pm-v6-boundary{font-size:13px;color:#59647a}
+.pm-independent .pm-v6-assessment-note{padding:13px 16px;background:#fff8ed;border:1px solid #eadcc6;border-radius:10px;color:#705b3b}
+.pm-independent .pm-review-gate{margin:16px 0;border:1px solid #ddd8ec;border-radius:12px;overflow:hidden}
+.pm-independent .pm-review-body{padding:4px 18px 18px}
+.pm-independent details:not([open])>summary{border-bottom:0}
+@media(max-width:540px){.pm-independent .pm-v6-dialogue{padding:7px 12px}.pm-independent .pm-review-body{padding:3px 11px 12px}.pm-independent .pm-v6-task{padding:13px}.pm-independent .pm-v6-dialogue p{font-size:14px}}

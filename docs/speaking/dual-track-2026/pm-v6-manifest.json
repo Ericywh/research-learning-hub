@@ -1,0 +1,1189 @@
+[
+  {
+    "day": 1,
+    "title": "无提示表达基线",
+    "kind": "review",
+    "minutes": 12,
+    "minute_budget": {
+      "案例与理论": 5,
+      "定位回听与一处修订": 4,
+      "参考解析": 3
+    },
+    "characters": 1481,
+    "theory": [
+      "toulmin"
+    ],
+    "exercise": "recording-review",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 2,
+    "title": "十秒明确立场",
+    "kind": "argument",
+    "minutes": 13,
+    "minute_budget": {
+      "完整案例": 2,
+      "融合剖析": 5,
+      "错误对照": 1,
+      "迁移与答案解析": 5
+    },
+    "characters": 1528,
+    "theory": [
+      "toulmin"
+    ],
+    "exercise": "changed-scenario",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 3,
+    "title": "让理由真正支持观点",
+    "kind": "argument",
+    "minutes": 13,
+    "minute_budget": {
+      "完整案例": 2,
+      "融合剖析": 5,
+      "错误对照": 1,
+      "迁移与答案解析": 5
+    },
+    "characters": 1519,
+    "theory": [
+      "toulmin"
+    ],
+    "exercise": "changed-scenario",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 4,
+    "title": "一个例子胜过空话",
+    "kind": "argument",
+    "minutes": 13,
+    "minute_budget": {
+      "完整案例": 2,
+      "融合剖析": 5,
+      "错误对照": 1,
+      "迁移与答案解析": 5
+    },
+    "characters": 1521,
+    "theory": [
+      "toulmin"
+    ],
+    "exercise": "changed-scenario",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 5,
+    "title": "用关键词脱离逐字稿",
+    "kind": "argument",
+    "minutes": 13,
+    "minute_budget": {
+      "完整案例": 2,
+      "融合剖析": 5,
+      "错误对照": 1,
+      "迁移与答案解析": 5
+    },
+    "characters": 1566,
+    "theory": [
+      "throughline"
+    ],
+    "exercise": "changed-scenario",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 6,
+    "title": "卡住后继续而不重讲",
+    "kind": "argument",
+    "minutes": 13,
+    "minute_budget": {
+      "完整案例": 2,
+      "融合剖析": 5,
+      "错误对照": 1,
+      "迁移与答案解析": 5
+    },
+    "characters": 1499,
+    "theory": [
+      "repair"
+    ],
+    "exercise": "changed-scenario",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 7,
+    "title": "第1周陌生题测评",
+    "kind": "review",
+    "minutes": 12,
+    "minute_budget": {
+      "案例与理论": 5,
+      "定位回听与一处修订": 4,
+      "参考解析": 3
+    },
+    "characters": 1528,
+    "theory": [
+      "toulmin"
+    ],
+    "exercise": "recording-review",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 8,
+    "title": "自然开场依靠共同场景",
+    "kind": "dialogue",
+    "minutes": 13,
+    "minute_budget": {
+      "完整案例": 2,
+      "融合剖析": 5,
+      "错误对照": 1,
+      "迁移与答案解析": 5
+    },
+    "characters": 1413,
+    "theory": [
+      "grice"
+    ],
+    "exercise": "changed-scenario",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 9,
+    "title": "认真接住对方原话",
+    "kind": "dialogue",
+    "minutes": 13,
+    "minute_budget": {
+      "完整案例": 2,
+      "融合剖析": 5,
+      "错误对照": 1,
+      "迁移与答案解析": 5
+    },
+    "characters": 1437,
+    "theory": [
+      "turn"
+    ],
+    "exercise": "changed-scenario",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 10,
+    "title": "追问让聊天继续",
+    "kind": "dialogue",
+    "minutes": 13,
+    "minute_budget": {
+      "完整案例": 2,
+      "融合剖析": 5,
+      "错误对照": 1,
+      "迁移与答案解析": 5
+    },
+    "characters": 1435,
+    "theory": [
+      "turn"
+    ],
+    "exercise": "changed-scenario",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 11,
+    "title": "复述理解而非抢答",
+    "kind": "dialogue",
+    "minutes": 13,
+    "minute_budget": {
+      "完整案例": 2,
+      "融合剖析": 5,
+      "错误对照": 1,
+      "迁移与答案解析": 5
+    },
+    "characters": 1432,
+    "theory": [
+      "turn"
+    ],
+    "exercise": "changed-scenario",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 12,
+    "title": "介绍自己不过度堆砌",
+    "kind": "dialogue",
+    "minutes": 13,
+    "minute_budget": {
+      "完整案例": 2,
+      "融合剖析": 5,
+      "错误对照": 1,
+      "迁移与答案解析": 5
+    },
+    "characters": 1508,
+    "theory": [
+      "grice"
+    ],
+    "exercise": "changed-scenario",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 13,
+    "title": "分享近况有重点",
+    "kind": "dialogue",
+    "minutes": 13,
+    "minute_budget": {
+      "完整案例": 2,
+      "融合剖析": 5,
+      "错误对照": 1,
+      "迁移与答案解析": 5
+    },
+    "characters": 1507,
+    "theory": [
+      "throughline"
+    ],
+    "exercise": "changed-scenario",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 14,
+    "title": "对话综合迁移测评",
+    "kind": "review",
+    "minutes": 12,
+    "minute_budget": {
+      "案例与理论": 5,
+      "定位回听与一处修订": 4,
+      "参考解析": 3
+    },
+    "characters": 1448,
+    "theory": [
+      "turn"
+    ],
+    "exercise": "recording-review",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 15,
+    "title": "不同意但先明确分歧",
+    "kind": "dialogue",
+    "minutes": 13,
+    "minute_budget": {
+      "完整案例": 2,
+      "融合剖析": 5,
+      "错误对照": 1,
+      "迁移与答案解析": 5
+    },
+    "characters": 1459,
+    "theory": [
+      "negotiation"
+    ],
+    "exercise": "changed-scenario",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 16,
+    "title": "先认同合理处再补充",
+    "kind": "dialogue",
+    "minutes": 13,
+    "minute_budget": {
+      "完整案例": 2,
+      "融合剖析": 5,
+      "错误对照": 1,
+      "迁移与答案解析": 5
+    },
+    "characters": 1496,
+    "theory": [
+      "toulmin"
+    ],
+    "exercise": "changed-scenario",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 17,
+    "title": "清楚表达不确定性",
+    "kind": "dialogue",
+    "minutes": 13,
+    "minute_budget": {
+      "完整案例": 2,
+      "融合剖析": 5,
+      "错误对照": 1,
+      "迁移与答案解析": 5
+    },
+    "characters": 1516,
+    "theory": [
+      "toulmin"
+    ],
+    "exercise": "changed-scenario",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 18,
+    "title": "请求应让对方容易行动",
+    "kind": "dialogue",
+    "minutes": 13,
+    "minute_budget": {
+      "完整案例": 2,
+      "融合剖析": 5,
+      "错误对照": 1,
+      "迁移与答案解析": 5
+    },
+    "characters": 1380,
+    "theory": [
+      "grice"
+    ],
+    "exercise": "changed-scenario",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 19,
+    "title": "拒绝请求保留关系",
+    "kind": "dialogue",
+    "minutes": 15,
+    "minute_budget": {
+      "完整案例": 3,
+      "融合剖析": 5,
+      "错误对照": 2,
+      "迁移与答案解析": 5
+    },
+    "characters": 1684,
+    "theory": [
+      "negotiation",
+      "grice"
+    ],
+    "exercise": "changed-scenario",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 20,
+    "title": "澄清误会先辨认事实",
+    "kind": "dialogue",
+    "minutes": 13,
+    "minute_budget": {
+      "完整案例": 2,
+      "融合剖析": 5,
+      "错误对照": 1,
+      "迁移与答案解析": 5
+    },
+    "characters": 1487,
+    "theory": [
+      "grice"
+    ],
+    "exercise": "changed-scenario",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 21,
+    "title": "第3周协商迁移测评",
+    "kind": "review",
+    "minutes": 12,
+    "minute_budget": {
+      "案例与理论": 5,
+      "定位回听与一处修订": 4,
+      "参考解析": 3
+    },
+    "characters": 1434,
+    "theory": [
+      "negotiation"
+    ],
+    "exercise": "recording-review",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 22,
+    "title": "陌生话题十秒形成判断",
+    "kind": "argument",
+    "minutes": 13,
+    "minute_budget": {
+      "完整案例": 2,
+      "融合剖析": 5,
+      "错误对照": 1,
+      "迁移与答案解析": 5
+    },
+    "characters": 1456,
+    "theory": [
+      "toulmin"
+    ],
+    "exercise": "changed-scenario",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 23,
+    "title": "一条理由讲透",
+    "kind": "argument",
+    "minutes": 13,
+    "minute_budget": {
+      "完整案例": 2,
+      "融合剖析": 5,
+      "错误对照": 1,
+      "迁移与答案解析": 5
+    },
+    "characters": 1452,
+    "theory": [
+      "toulmin"
+    ],
+    "exercise": "changed-scenario",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 24,
+    "title": "两个理由怎样不重复",
+    "kind": "argument",
+    "minutes": 13,
+    "minute_budget": {
+      "完整案例": 2,
+      "融合剖析": 5,
+      "错误对照": 1,
+      "迁移与答案解析": 5
+    },
+    "characters": 1470,
+    "theory": [
+      "toulmin"
+    ],
+    "exercise": "changed-scenario",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 25,
+    "title": "反例与条件不是自我否定",
+    "kind": "argument",
+    "minutes": 13,
+    "minute_budget": {
+      "完整案例": 2,
+      "融合剖析": 5,
+      "错误对照": 1,
+      "迁移与答案解析": 5
+    },
+    "characters": 1525,
+    "theory": [
+      "toulmin"
+    ],
+    "exercise": "changed-scenario",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 26,
+    "title": "类比解释不能越界",
+    "kind": "argument",
+    "minutes": 13,
+    "minute_budget": {
+      "完整案例": 2,
+      "融合剖析": 5,
+      "错误对照": 1,
+      "迁移与答案解析": 5
+    },
+    "characters": 1540,
+    "theory": [
+      "toulmin"
+    ],
+    "exercise": "changed-scenario",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 27,
+    "title": "用数字让论证可理解",
+    "kind": "argument",
+    "minutes": 13,
+    "minute_budget": {
+      "完整案例": 2,
+      "融合剖析": 5,
+      "错误对照": 1,
+      "迁移与答案解析": 5
+    },
+    "characters": 1432,
+    "theory": [
+      "grice"
+    ],
+    "exercise": "changed-scenario",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 28,
+    "title": "第4周陌生立场测评",
+    "kind": "review",
+    "minutes": 12,
+    "minute_budget": {
+      "案例与理论": 5,
+      "定位回听与一处修订": 4,
+      "参考解析": 3
+    },
+    "characters": 1452,
+    "theory": [
+      "toulmin"
+    ],
+    "exercise": "recording-review",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 29,
+    "title": "讲一件小事先选重点",
+    "kind": "story",
+    "minutes": 13,
+    "minute_budget": {
+      "完整案例": 2,
+      "融合剖析": 5,
+      "错误对照": 1,
+      "迁移与答案解析": 5
+    },
+    "characters": 1554,
+    "theory": [
+      "throughline"
+    ],
+    "exercise": "changed-scenario",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 30,
+    "title": "用人事时地帮助听众定位",
+    "kind": "story",
+    "minutes": 13,
+    "minute_budget": {
+      "完整案例": 2,
+      "融合剖析": 5,
+      "错误对照": 1,
+      "迁移与答案解析": 5
+    },
+    "characters": 1499,
+    "theory": [
+      "grice"
+    ],
+    "exercise": "changed-scenario",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 31,
+    "title": "故事从关键转折切入",
+    "kind": "story",
+    "minutes": 13,
+    "minute_budget": {
+      "完整案例": 2,
+      "融合剖析": 5,
+      "错误对照": 1,
+      "迁移与答案解析": 5
+    },
+    "characters": 1506,
+    "theory": [
+      "throughline"
+    ],
+    "exercise": "changed-scenario",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 32,
+    "title": "时间顺序与因果顺序分开",
+    "kind": "story",
+    "minutes": 13,
+    "minute_budget": {
+      "完整案例": 2,
+      "融合剖析": 5,
+      "错误对照": 1,
+      "迁移与答案解析": 5
+    },
+    "characters": 1491,
+    "theory": [
+      "toulmin"
+    ],
+    "exercise": "changed-scenario",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 33,
+    "title": "让抽象故事有一个画面",
+    "kind": "story",
+    "minutes": 13,
+    "minute_budget": {
+      "完整案例": 2,
+      "融合剖析": 5,
+      "错误对照": 1,
+      "迁移与答案解析": 5
+    },
+    "characters": 1558,
+    "theory": [
+      "throughline"
+    ],
+    "exercise": "changed-scenario",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 34,
+    "title": "故事细节要服务中心",
+    "kind": "story",
+    "minutes": 13,
+    "minute_budget": {
+      "完整案例": 2,
+      "融合剖析": 5,
+      "错误对照": 1,
+      "迁移与答案解析": 5
+    },
+    "characters": 1486,
+    "theory": [
+      "throughline"
+    ],
+    "exercise": "changed-scenario",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 35,
+    "title": "叙事与评价区分",
+    "kind": "review",
+    "minutes": 12,
+    "minute_budget": {
+      "案例与理论": 5,
+      "定位回听与一处修订": 4,
+      "参考解析": 3
+    },
+    "characters": 1397,
+    "theory": [
+      "grice"
+    ],
+    "exercise": "recording-review",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 36,
+    "title": "第5周两分钟故事测评",
+    "kind": "review",
+    "minutes": 12,
+    "minute_budget": {
+      "案例与理论": 5,
+      "定位回听与一处修订": 4,
+      "参考解析": 3
+    },
+    "characters": 1586,
+    "theory": [
+      "throughline"
+    ],
+    "exercise": "recording-review",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 37,
+    "title": "抽象概念用生活语言解释",
+    "kind": "expert",
+    "minutes": 17,
+    "minute_budget": {
+      "完整案例": 3,
+      "融合剖析": 7,
+      "错误对照": 2,
+      "迁移与答案解析": 5
+    },
+    "characters": 1473,
+    "theory": [
+      "grice"
+    ],
+    "exercise": "changed-scenario",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 38,
+    "title": "复杂问题先整体后分层",
+    "kind": "expert",
+    "minutes": 17,
+    "minute_budget": {
+      "完整案例": 3,
+      "融合剖析": 7,
+      "错误对照": 2,
+      "迁移与答案解析": 5
+    },
+    "characters": 1467,
+    "theory": [
+      "throughline"
+    ],
+    "exercise": "changed-scenario",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 39,
+    "title": "类比的相似处与限制",
+    "kind": "expert",
+    "minutes": 17,
+    "minute_budget": {
+      "完整案例": 3,
+      "融合剖析": 7,
+      "错误对照": 2,
+      "迁移与答案解析": 5
+    },
+    "characters": 1558,
+    "theory": [
+      "toulmin"
+    ],
+    "exercise": "changed-scenario",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 40,
+    "title": "把百分数讲对",
+    "kind": "expert",
+    "minutes": 17,
+    "minute_budget": {
+      "完整案例": 3,
+      "融合剖析": 7,
+      "错误对照": 2,
+      "迁移与答案解析": 5
+    },
+    "characters": 1513,
+    "theory": [
+      "grice"
+    ],
+    "exercise": "changed-scenario",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 41,
+    "title": "向非专业者解释回归结果",
+    "kind": "expert",
+    "minutes": 17,
+    "minute_budget": {
+      "完整案例": 3,
+      "融合剖析": 7,
+      "错误对照": 2,
+      "迁移与答案解析": 5
+    },
+    "characters": 1542,
+    "theory": [
+      "asa"
+    ],
+    "exercise": "changed-scenario",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 42,
+    "title": "先说已知再说未知",
+    "kind": "review",
+    "minutes": 12,
+    "minute_budget": {
+      "案例与理论": 5,
+      "定位回听与一处修订": 4,
+      "参考解析": 3
+    },
+    "characters": 1408,
+    "theory": [
+      "toulmin"
+    ],
+    "exercise": "recording-review",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 43,
+    "title": "点评先肯定可核查的亮点",
+    "kind": "expert",
+    "minutes": 17,
+    "minute_budget": {
+      "完整案例": 3,
+      "融合剖析": 7,
+      "错误对照": 2,
+      "迁移与答案解析": 5
+    },
+    "characters": 1532,
+    "theory": [
+      "toulmin"
+    ],
+    "exercise": "changed-scenario",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 44,
+    "title": "找出最影响解释的一个问题",
+    "kind": "expert",
+    "minutes": 17,
+    "minute_budget": {
+      "完整案例": 3,
+      "融合剖析": 7,
+      "错误对照": 2,
+      "迁移与答案解析": 5
+    },
+    "characters": 1447,
+    "theory": [
+      "toulmin"
+    ],
+    "exercise": "changed-scenario",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 45,
+    "title": "将问题变成可执行建议",
+    "kind": "expert",
+    "minutes": 17,
+    "minute_budget": {
+      "完整案例": 3,
+      "融合剖析": 7,
+      "错误对照": 2,
+      "迁移与答案解析": 5
+    },
+    "characters": 1487,
+    "theory": [
+      "toulmin"
+    ],
+    "exercise": "changed-scenario",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 46,
+    "title": "学术表达中清楚分辨相关与因果",
+    "kind": "expert",
+    "minutes": 17,
+    "minute_budget": {
+      "完整案例": 3,
+      "融合剖析": 7,
+      "错误对照": 2,
+      "迁移与答案解析": 5
+    },
+    "characters": 1534,
+    "theory": [
+      "toulmin"
+    ],
+    "exercise": "changed-scenario",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 47,
+    "title": "尊重表达者但指出问题",
+    "kind": "expert",
+    "minutes": 17,
+    "minute_budget": {
+      "完整案例": 3,
+      "融合剖析": 7,
+      "错误对照": 2,
+      "迁移与答案解析": 5
+    },
+    "characters": 1461,
+    "theory": [
+      "aristotle"
+    ],
+    "exercise": "changed-scenario",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 48,
+    "title": "九十秒完整评委点评",
+    "kind": "expert",
+    "minutes": 17,
+    "minute_budget": {
+      "完整案例": 3,
+      "融合剖析": 7,
+      "错误对照": 2,
+      "迁移与答案解析": 5
+    },
+    "characters": 1530,
+    "theory": [
+      "toulmin"
+    ],
+    "exercise": "changed-scenario",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 49,
+    "title": "第7周学术点评陌生测评",
+    "kind": "review",
+    "minutes": 12,
+    "minute_budget": {
+      "案例与理论": 5,
+      "定位回听与一处修订": 4,
+      "参考解析": 3
+    },
+    "characters": 1489,
+    "theory": [
+      "toulmin"
+    ],
+    "exercise": "recording-review",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 50,
+    "title": "会议汇报先报告需要决策的事",
+    "kind": "dialogue",
+    "minutes": 13,
+    "minute_budget": {
+      "完整案例": 2,
+      "融合剖析": 5,
+      "错误对照": 1,
+      "迁移与答案解析": 5
+    },
+    "characters": 1483,
+    "theory": [
+      "grice"
+    ],
+    "exercise": "changed-scenario",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 51,
+    "title": "一分钟向上级请求决策",
+    "kind": "dialogue",
+    "minutes": 13,
+    "minute_budget": {
+      "完整案例": 2,
+      "融合剖析": 5,
+      "错误对照": 1,
+      "迁移与答案解析": 5
+    },
+    "characters": 1461,
+    "theory": [
+      "negotiation"
+    ],
+    "exercise": "changed-scenario",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 52,
+    "title": "面对质疑先回答主问题",
+    "kind": "dialogue",
+    "minutes": 13,
+    "minute_budget": {
+      "完整案例": 2,
+      "融合剖析": 5,
+      "错误对照": 1,
+      "迁移与答案解析": 5
+    },
+    "characters": 1434,
+    "theory": [
+      "grice"
+    ],
+    "exercise": "changed-scenario",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 53,
+    "title": "对批评做事实核查和回应",
+    "kind": "dialogue",
+    "minutes": 13,
+    "minute_budget": {
+      "完整案例": 2,
+      "融合剖析": 5,
+      "错误对照": 1,
+      "迁移与答案解析": 5
+    },
+    "characters": 1485,
+    "theory": [
+      "turn"
+    ],
+    "exercise": "changed-scenario",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 54,
+    "title": "协调分歧先找共同目标",
+    "kind": "dialogue",
+    "minutes": 13,
+    "minute_budget": {
+      "完整案例": 2,
+      "融合剖析": 5,
+      "错误对照": 1,
+      "迁移与答案解析": 5
+    },
+    "characters": 1414,
+    "theory": [
+      "negotiation"
+    ],
+    "exercise": "changed-scenario",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 55,
+    "title": "用两分钟回应多轮追问",
+    "kind": "dialogue",
+    "minutes": 13,
+    "minute_budget": {
+      "完整案例": 2,
+      "融合剖析": 5,
+      "错误对照": 1,
+      "迁移与答案解析": 5
+    },
+    "characters": 1502,
+    "theory": [
+      "grice"
+    ],
+    "exercise": "changed-scenario",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 56,
+    "title": "第8周压力情境测评",
+    "kind": "review",
+    "minutes": 12,
+    "minute_budget": {
+      "案例与理论": 5,
+      "定位回听与一处修订": 4,
+      "参考解析": 3
+    },
+    "characters": 1460,
+    "theory": [
+      "grice"
+    ],
+    "exercise": "recording-review",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 57,
+    "title": "演讲开场抓住真实问题",
+    "kind": "story",
+    "minutes": 16,
+    "minute_budget": {
+      "完整案例": 3,
+      "融合剖析": 6,
+      "错误对照": 2,
+      "迁移与答案解析": 5
+    },
+    "characters": 1620,
+    "theory": [
+      "aristotle"
+    ],
+    "exercise": "changed-scenario",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 58,
+    "title": "三段式演讲结构有主线",
+    "kind": "story",
+    "minutes": 17,
+    "minute_budget": {
+      "完整案例": 3,
+      "融合剖析": 7,
+      "错误对照": 2,
+      "迁移与答案解析": 5
+    },
+    "characters": 1700,
+    "theory": [
+      "throughline"
+    ],
+    "exercise": "changed-scenario",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 59,
+    "title": "过渡句让听众跟得上",
+    "kind": "story",
+    "minutes": 16,
+    "minute_budget": {
+      "完整案例": 3,
+      "融合剖析": 6,
+      "错误对照": 2,
+      "迁移与答案解析": 5
+    },
+    "characters": 1414,
+    "theory": [
+      "toulmin"
+    ],
+    "exercise": "changed-scenario",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 60,
+    "title": "例证和数据应为同一论点服务",
+    "kind": "story",
+    "minutes": 16,
+    "minute_budget": {
+      "完整案例": 3,
+      "融合剖析": 6,
+      "错误对照": 2,
+      "迁移与答案解析": 5
+    },
+    "characters": 1478,
+    "theory": [
+      "toulmin"
+    ],
+    "exercise": "changed-scenario",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 61,
+    "title": "结尾形成可行动的记忆点",
+    "kind": "story",
+    "minutes": 16,
+    "minute_budget": {
+      "完整案例": 3,
+      "融合剖析": 6,
+      "错误对照": 2,
+      "迁移与答案解析": 5
+    },
+    "characters": 1461,
+    "theory": [
+      "throughline"
+    ],
+    "exercise": "changed-scenario",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 62,
+    "title": "完整演讲排练与替代情境",
+    "kind": "story",
+    "minutes": 17,
+    "minute_budget": {
+      "完整案例": 3,
+      "融合剖析": 7,
+      "错误对照": 2,
+      "迁移与答案解析": 5
+    },
+    "characters": 1653,
+    "theory": [
+      "throughline"
+    ],
+    "exercise": "changed-scenario",
+    "answers": 2,
+    "reference_default": "closed"
+  },
+  {
+    "day": 63,
+    "title": "第63天终测与下一轮计划",
+    "kind": "review",
+    "minutes": 12,
+    "minute_budget": {
+      "案例与理论": 5,
+      "定位回听与一处修订": 4,
+      "参考解析": 3
+    },
+    "characters": 1517,
+    "theory": [
+      "toulmin"
+    ],
+    "exercise": "recording-review",
+    "answers": 2,
+    "reference_default": "closed"
+  }
+]

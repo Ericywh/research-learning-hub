@@ -508,6 +508,7 @@ function initialize(){
  const main=document.querySelector(".layout > main.main");
  const aside=document.querySelector(".layout > aside.sidebar");
  const lesson=main&&main.querySelector("article.lesson");
+ if(mode==="pm"&&lesson?.classList.contains("pm-seminar"))return; // Independent PM seminars own their structure.
  if(!main||!aside||!lesson||main.dataset.layoutStandardized)return;
  // Build only for the known 63+63 dual-track pages, never the legacy 18-week archive.
  const ok=mode==="am"?transformMorning(lesson,main,aside):transformEvening(lesson,main,aside);
