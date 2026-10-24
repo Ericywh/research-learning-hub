@@ -178,9 +178,9 @@ window.ECON_COURSE={
           "chapter": 2,
           "section": 10,
           "title": "交互项与条件效应",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-24",
+          "url": "lessons/02-10.html"
         },
         {
           "id": "02-11",
