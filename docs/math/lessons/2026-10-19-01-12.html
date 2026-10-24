@@ -1,0 +1,30 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="每日10分钟数学微课程，第12课：线性变换如何改变协方差"><title>第1章·第12节｜线性变换如何改变协方差</title><link rel="stylesheet" href="../site.css"><script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script><style>.article-wrap{max-width:830px;margin:0 auto;padding:36px 20px 80px}.article{font-size:17px;line-height:1.9;color:#263d3a}.article h3{margin-top:1.7em}.article p{margin:1em 0}.article .math{overflow:auto;padding:12px;background:#f4f8f5;border-radius:9px}.muted{font-size:14px;color:#61736e}</style></head><body><header><div class="wrap"><a href="../">← 数学课程目录</a><a href="../../">研究学习中心 ↗</a></div></header><main class="article-wrap"><div class="kicker">MATHEMATICS · PROBABILITY · ECONOMETRICS</div><h1>第1章·第12节｜线性变换如何改变协方差</h1><p class="muted">全课程第12课 / 共73课 · 2026-10-19 · 预计学习8分钟</p><article class="article"><p>全课程第12课 / 共73课｜2026年10月19日｜预计学习时间：8分钟</p>
+<p><strong>核心问题：</strong> 已知随机向量的协方差矩阵，怎样直接计算其线性变换后的协方差，而不重新求联合分布？</p>
+<h3>一、从均值变换走向波动变换</h3>
+<p>上一课得到固定矩阵变换的均值关系。现在设随机列向量 \(\mathbf Z\in\mathbb R^p\) 具有有限二阶矩，\(A\in\mathbb R^{q\times p}\) 是固定矩阵，\(\mathbf b\in\mathbb R^q\) 是固定向量，令 \(\mathbf Y=A\mathbf Z+\mathbf b\)。我们关心的是新向量各分量的方差及两两协方差。</p>
+<h3>二、核心公式及其推导</h3>
+<p>记 \(\boldsymbol\Sigma_Z=\operatorname{Cov}(\mathbf Z)\)，则</p>
+<div class="math">\[\boxed{\boldsymbol\Sigma_Y=A\boldsymbol\Sigma_Z A^{\mathsf T}\in\mathbb R^{q\times q}}\]</div>
+<p>由上一课的均值线性性，\(E(\mathbf Y)=AE(\mathbf Z)+\mathbf b\)，所以中心化后的随机向量为 \(\mathbf Y-E(\mathbf Y)=A[\mathbf Z-E(\mathbf Z)]\)。将它代入协方差矩阵的定义，固定矩阵可移到期望外，便得到上述公式。</p>
+<p>对两个固定权重向量 \(\mathbf a,\mathbf c\in\mathbb R^p\)，特别有</p>
+<div class="math">\[\boxed{\operatorname{Cov}(\mathbf a^{\mathsf T}\mathbf Z,\mathbf c^{\mathsf T}\mathbf Z)=\mathbf a^{\mathsf T}\boldsymbol\Sigma_Z\mathbf c}\]</div>
+<p>因此，平移项 \(\mathbf b\) 不影响协方差；变换后的维度由 \(A\) 的行数决定，但矩阵的维度不等于它的秩。这里不要求分量独立，也不要求原协方差矩阵可逆；若 \(A\) 本身随机，则不能直接套用。</p>
+<h3>三、手算案例：沿用第9—11课的数据</h3>
+<p>三个等概率状态下，\(X=(1,2,3)\)、\(Y=(1,3,2)\)。前面算得两者方差均为 \(2/3\)、协方差为 \(1/3\)。沿用上一课的新指标 \(U=X+Y+1\)、\(V=2X-Y-2\)，即</p>
+<div class="math">\[\boldsymbol\Sigma_Z=
+\begin{pmatrix}2/3&1/3\\1/3&2/3\end{pmatrix},
+\quad A=\begin{pmatrix}1&1\\2&-1\end{pmatrix},
+\quad A\boldsymbol\Sigma_ZA^{\mathsf T}
+=\begin{pmatrix}2&1\\1&2\end{pmatrix}.\]</div>
+<p>直接核对也成立：三个状态下 \(U=(3,6,6)\)、\(V=(-1,-1,2)\)，均值分别为5和0；中心化偏差乘积依次为2、−1、2，平均得 \(\operatorname{Cov}(U,V)=1\)。这些都是构造的总体分布，不是抽样估计。</p>
+<h3>四、统计与计量经济学应用</h3>
+<p>若回归估计量 \(\widehat{\boldsymbol\beta}\) 的条件协方差矩阵为 \(V\)，研究者用固定矩阵 \(L\) 构造线性参数组合，则其条件协方差为 \(LVL^{\mathsf T}\)。这正是线性对比、联合检验及标准误计算的重要基础。不过，协方差传播公式只描述估计量的不确定性，并不替代外生性假设或因果识别。</p>
+<h3>五、两分钟自测</h3>
+<p><strong>第1题｜概念题：</strong> 固定常数向量的平移为什么不改变协方差？若变换矩阵列满秩，是否就能断言变换后的协方差矩阵一定可逆？</p>
+<p><strong>第2题｜计算题：</strong> 沿用案例，计算 \(\operatorname{Var}(X-Y)\)。</p>
+<h4>参考答案</h4>
+<p><strong>第1题：</strong> 中心化时平移项相互抵消。不能仅凭列满秩断言可逆：还需考虑原矩阵是否正定、输出维度以及变换矩阵的行秩；当输出维度大于输入维度时尤其可能奇异。</p>
+<p><strong>第2题：</strong> \(\operatorname{Var}(X-Y)=2/3+2/3-2\times(1/3)=\boxed{2/3}\)。</p>
+<h3>六、第一章阶段回顾</h3>
+<p>第1—5课建立向量、矩阵与线性映射；第6课区分随机对象和实现值；第7—9课依次引入期望、方差与协方差；第10课将共同波动组织成协方差矩阵；第11—12课说明固定线性变换如何传播均值与协方差。计算公式的成立不自动保证样本估计精确，更不等于因果识别完成。</p>
+<p><strong>下一课：第2章·第1节｜线性相关与冗余解释变量（全课程第13课）。</strong></p></article><footer class="muted"><p><a href="https://app.notion.com/p/3feb54823a12814287c4cce25d56f83d?pvs=204">Notion私人完整讲义（需权限）</a> · <a href="../">课程目录</a></p></footer></main></body></html>
