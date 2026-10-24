@@ -1,0 +1,30 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="每日10分钟数学微课程，第13课：第2章·第1节｜线性相关与冗余解释变量"><title>第2章·第1节｜线性相关与冗余解释变量</title><link rel="stylesheet" href="../site.css"><script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script><style>.article-wrap{max-width:830px;margin:0 auto;padding:36px 20px 80px}.article{font-size:17px;line-height:1.9;color:#263d3a}.article h3{margin-top:1.7em}.article p{margin:1em 0}.article .math{overflow:auto;padding:12px;background:#f4f8f5;border-radius:9px}.muted{font-size:14px;color:#61736e}</style></head><body><header><div class="wrap"><a href="../">← 数学课程目录</a><a href="../../">研究学习中心 ↗</a></div></header><main class="article-wrap"><div class="kicker">MATHEMATICS · PROBABILITY · ECONOMETRICS</div><h1>第2章·第1节｜线性相关与冗余解释变量</h1><p class="muted">全课程第13课 / 共73课 · 2026-10-20 · 预计学习8分钟</p><article class="article"><p>全课程第13课 / 共73课｜2026年10月20日｜预计学习时间：8分钟</p>
+<p><strong>核心问题：</strong> 回归模型为什么可能包含多个解释变量，却无法唯一确定每个变量的系数？</p>
+<h3>一、从线性变换进入OLS</h3>
+<p>第一章讨论随机向量的均值和协方差。第二章转向样本数据构成的向量空间，研究OLS为何能够求解，以及何时无法唯一求解。</p>
+<p>设样本量为 \(\!n\!\)，含截距和两个解释变量的设计矩阵 \(\!X\in\mathbb R^{n\times3}\!\)，其三列分别为常数列 \(\!\mathbf1\!\)、\(\!\mathbf x_1\!\)、\(\!\mathbf x_2\!\)。线性预测写作：</p>
+<div class="math">\[\boxed{X\boldsymbol\beta=\beta_0\mathbf1+\beta_1\mathbf x_1+\beta_2\mathbf x_2}\]</div>
+<p>这里的“线性相关”指向量之间存在<strong>精确线性依赖</strong>，不是简单指皮尔逊相关系数较高。</p>
+<h3>二、冗余列如何造成不唯一</h3>
+<p>如果 \(\mathbf x_2=2\mathbf x_1\)，第二个解释变量列没有提供新的线性方向。于是：</p>
+<div class="math">\[\boxed{X\begin{pmatrix}0\\-2\\1\end{pmatrix}=\mathbf0,\quad\operatorname{rank}(X)<3}\]</div>
+<p>非零向量 \(\mathbf v=(0,-2,1)^{\mathsf T}\) 被 \(X\) 映射为零。对任何系数向量 \(\boldsymbol\beta\) 和实数 \(t\)，都有：</p>
+<div class="math">\[\boxed{X(\boldsymbol\beta+t\mathbf v)=X\boldsymbol\beta}\]</div>
+<p>这说明不同系数组合可以产生完全相同的拟合值。只要不施加额外约束，单个系数便无法由该设计矩阵唯一确定；但OLS在列空间中的<strong>拟合值仍然唯一</strong>。</p>
+<h3>三、可手算案例</h3>
+<p>考虑三个观测：</p>
+<p>| 观测 | x1 | x2 | y | | --- | --- | --- | --- | | 1 | 1 | 2 | 2 | | 2 | 2 | 4 | 3 | | 3 | 3 | 6 | 4 |</p>
+<p>取系数 \(\!(\beta_0,\beta_1,\beta_2)=(1,1,0)\!\)，三个预测值为2、3、4。改取 \(\!(1,-1,1)\!\)，预测值仍为2、3、4。两组系数都使残差平方和为零，都是OLS解，却无法判断应把预测贡献分配给哪个冗余变量。</p>
+<p>此例中设计矩阵有3列，但秩只有2。<strong>列数是维度信息，秩才反映独立方向的数量。</strong></p>
+<h3>四、计量应用与边界</h3>
+<p>企业面板回归中，若同时加入某指标及其严格两倍的变换项，就会出现完全共线性。软件可能自动剔除其中一列；这不是“该变量没有经济作用”的证据，而是给定模型中系数无法分别估计。</p>
+<p>高度相关但不完全线性依赖的解释变量，则可能造成估计不稳定、标准误较大，却不必然使OLS系数失去唯一性。这里讨论的是<strong>代数可估性</strong>，并不能据此判定因果效应是否得到识别。</p>
+<h3>五、两分钟自测</h3>
+<p><strong>第1题｜概念题：</strong> 两列解释变量相关系数为0.98，是否足以断言设计矩阵不满列秩？为什么？</p>
+<p><strong>第2题｜计算题：</strong> 若 \(\mathbf x_2=3\mathbf x_1\)，证明系数 \(\!(1,2,0)\!\) 与 \(\!(1,-1,1)\!\) 对任意观测给出相同预测值。</p>
+<h4>参考答案</h4>
+<p><strong>第1题：</strong> 不能。0.98不是完全线性相关；还须检验是否存在非零系数向量使设计矩阵乘积为零。</p>
+<p><strong>第2题：</strong> 两组预测分别为 \(1+2x_1\) 和 \(1-x_1+x_2\)。代入 \(x_2=3x_1\) 后，均为 \(1+2x_1\)。</p>
+<h3>六、前后课衔接</h3>
+<p>本课从线性变换进入设计矩阵的列依赖。下一课将正式定义矩阵秩，并说明如何判断列向量是否独立。</p>
+<p><strong>下一课：第2章·第2节｜矩阵秩与列独立（全课程第14课）。</strong></p></article><footer class="muted"><p><a href="https://app.notion.com/p/401b54823a1281da97c9c54d41cc1d94?pvs=204">Notion私人完整讲义（需权限）</a> · <a href="../">课程目录</a></p></footer></main></body></html>
