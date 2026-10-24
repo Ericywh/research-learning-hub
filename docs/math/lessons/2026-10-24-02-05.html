@@ -1,0 +1,26 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="每日10分钟数学微课程，第17课：第2章·第5节｜内积与向量长度"><title>第2章·第5节｜内积与向量长度</title><link rel="stylesheet" href="../site.css"><script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script><style>.article-wrap{max-width:830px;margin:0 auto;padding:36px 20px 80px}.article{font-size:17px;line-height:1.9;color:#263d3a}.article h3{margin-top:1.7em}.article p{margin:1em 0}.article .math{overflow:auto;padding:12px;background:#f4f8f5;border-radius:9px}.muted{font-size:14px;color:#61736e}</style></head><body><header><div class="wrap"><a href="../">← 数学课程目录</a><a href="../../">研究学习中心 ↗</a></div></header><main class="article-wrap"><div class="kicker">MATHEMATICS · PROBABILITY · ECONOMETRICS</div><h1>第2章·第5节｜内积与向量长度</h1><p class="muted">全课程第17课 / 共73课 · 2026-10-24 · 预计学习8分钟</p><article class="article"><p>全课程第17课 / 共73课｜2026年10月24日｜预计学习时间：8分钟</p>
+<p><strong>核心问题：</strong> 为什么回归中两个向量的“相似程度”和预测误差的“大小”，可以用同一套数学运算刻画？</p>
+<h3>一、从基与维数走向几何</h3>
+<p>上一课说明，基给出向量空间的独立坐标方向，但仅知道空间有几个维度，还不能比较两个样本向量的方向或距离。为此需要内积与长度。设 \(\mathbf u,\mathbf v\in\mathbb R^n\)，即二者都有 \(n\) 个实数分量。标准欧氏内积定义为</p>
+<div class="math">\[\langle\mathbf u,\mathbf v\rangle=\mathbf u^{\mathsf T}\mathbf v=\sum_{i=1}^{n}u_iv_i.\]</div>
+<p>内积是一个实数，可以为正、负或零；交换两个向量的顺序，结果不变。若维度不一致，上述内积不能直接计算。它把逐项乘积汇总为一个量，而不是把两个向量拼接起来。</p>
+<h3>二、长度来自向量与自身的内积</h3>
+<p>令两个输入向量相同，得到非负的平方和。欧氏长度（\(2\)-范数）定义为</p>
+<div class="math">\[\|\mathbf u\|_2=\sqrt{\langle\mathbf u,\mathbf u\rangle}=\sqrt{\sum_{i=1}^{n}u_i^2}.\]</div>
+<p>由于每个平方项非负，长度不可能为负，且只有零向量的长度为零。长度反映相对于原点的距离；两个向量之间的距离则是差向量的长度 \(\|\mathbf u-\mathbf v\|_2\)。这里的长度是几何量，并不自动具有概率分布或统计显著性含义。</p>
+<h3>三、可手算的例子</h3>
+<p>取 \(\mathbf u=(1,2,2)^{\mathsf T}\)、\(\mathbf v=(2,0,1)^{\mathsf T}\)。两者都在 \(\mathbb R^3\) 中。内积为 \(1\times2+2\times0+2\times1=4\)；\(\mathbf u\) 的长度为 \(\sqrt{1+4+4}=3\)，\(\mathbf v\) 的长度为 \(\sqrt{4+0+1}=\sqrt5\)。可见内积与长度不是同一个概念：前者比较两个向量，后者度量一个向量自身。</p>
+<h3>四、OLS为什么最小化平方长度</h3>
+<p>设 \(n\) 条观测的结果列向量为 \(\mathbf y\in\mathbb R^n\)，设计矩阵 \(X\in\mathbb R^{n\times p}\)，系数向量 \(\boldsymbol\beta\in\mathbb R^p\)。预测值 \(X\boldsymbol\beta\) 与 \(\mathbf y\) 维度一致，残差向量为 \(\mathbf e=\mathbf y-X\boldsymbol\beta\)。普通最小二乘选择使残差平方长度最小的系数：</p>
+<div class="math">\[\min_{\boldsymbol\beta\in\mathbb R^p}\|\mathbf y-X\boldsymbol\beta\|_2^2
+=\min_{\boldsymbol\beta}\sum_{i=1}^{n}(y_i-\mathbf x_i^{\mathsf T}\boldsymbol\beta)^2.\]</div>
+<p>例如观测结果 \((3,1,4)^{\mathsf T}\)、某组预测值 \((2,2,4)^{\mathsf T}\)，残差为 \((1,-1,0)^{\mathsf T}\)。虽然残差之和为零，平方长度却为 \(1+1+0=2\)；正负误差不能相互抵消。这只是给定预测值的损失计算，不表示该预测来自已估计的OLS模型。OLS目标函数是代数定义；能否进行统计推断或因果解释，还需要额外假设。</p>
+<h3>五、两道自测</h3>
+<p><strong>第1题｜概念题：</strong> 为什么不能直接用残差分量之和代替残差向量的平方长度衡量拟合误差？</p>
+<p><strong>第2题｜计算题：</strong> 令 \(\mathbf a=(2,-1)^{\mathsf T}\)、\(\mathbf b=(1,3)^{\mathsf T}\)，计算 \(\mathbf a^{\mathsf T}\mathbf b\) 和 \(\|\mathbf a\|_2\)。</p>
+<h4>参考答案</h4>
+<p><strong>第1题：</strong> 正负残差可能抵消，即使每条观测都存在误差，其总和也可能为零；平方长度逐项非负，能反映整体误差大小。</p>
+<p><strong>第2题：</strong> 内积为 \(2\times1+(-1)\times3=-1\)；长度为 \(\sqrt{2^2+(-1)^2}=\sqrt5\)。</p>
+<h3>六、前后课衔接</h3>
+<p>第13—16课依次讨论冗余、秩、列空间、基与维数；本课为该空间加入内积和距离。下一课将利用“内积为零”严格定义正交，再进入投影与OLS的几何推导。</p>
+<p><strong>下一课：第2章·第6节｜正交及其含义（全课程第18课）。</strong></p></article><footer class="muted"><p><a href="https://app.notion.com/p/403b54823a1281a2beecfe152a98b83f?pvs=204">Notion私人完整讲义（需权限）</a> · <a href="../">课程目录</a></p></footer></main></body></html>
