@@ -22,7 +22,7 @@
 <div class="meter" aria-label="学习进度1/120"><i></i></div><div class="muted">已交付第1课 / 共120课</div>
 </section>
 <div class="layout">
-<nav class="side" aria-label="课程内导航"><a href="#intuition">一、通俗理解</a><a href="#theory">二、核心理论</a><a href="#data">三、实证案例</a><a href="#software">四、双软件实操</a><a href="#pitfalls">五、避坑指南</a><a href="#quiz">六、今日练习</a><a href="#progress">七、知识与进度</a></nav>
+<nav class="side" aria-label="课程内导航"><a href="#intuition">一、通俗理解</a><a href="#theory">二、核心理论</a><a href="#data">三、实证案例</a><a href="#software">四、双软件实操</a><a href="#pitfalls">五、避坑指南</a><a href="#quiz">六、今日练习</a></nav>
 <div>
 <section class="paper" id="intuition">
 <h2>一、通俗理解</h2>
@@ -128,13 +128,7 @@ X2 = sm.add_constant(cars[["weight"]])
 result2 = sm.OLS(cars["mpg"], X2).fit()
 print(result2.summary())</code></pre><p><strong>预期：</strong>重量与mpg呈负向关系，具体系数与显著性请以代码输出核验。它仍然不直接构成因果证据。</p></div></details>
 </section>
-<section class="paper" id="progress">
-<h2>七、知识卡片与进度</h2><div class="tags"><span>计量经济学</span><span>线性回归</span><span>截距与斜率</span><span>误差项</span><span>相关 ≠ 因果</span></div>
-<p>今天应掌握：计量经济学不只是计算回归，而是组织<strong>研究问题 → 数据 → 统计模型 → 假设 → 经济解释</strong>的完整证据链。</p>
-<p><strong>当前进度：</strong>第1章第1节，全课程第1天／120天。<br><strong>下一讲：</strong><a href="01-02.html">第1章·第2节《相关关系与因果关系》 →</a>。<br><strong>本课数据：</strong>Stata官方1978 Automobile Data，74条记录。<br><strong>本课交付：</strong>2026-10-09。</p>
-<p><strong>来源：</strong><a href="https://www.stata-press.com/data/r19/auto.dta">Stata官方auto.dta</a>；<a href="https://www.stata.com/links/stata-basics/example-datasets/">Stata示例数据说明</a>；<a href="https://repec.sowi.unibe.ch/stata/estout/estout.html">Stata公开回归展示资料</a>。</p>
-<p><a class="button-link" href="../">返回120节课程目录 →</a></p>
-</section>
+<aside class="econ-reference-note" aria-label="资料来源"><strong>资料来源</strong><p><strong>来源：</strong><a href="https://www.stata-press.com/data/r19/auto.dta">Stata官方auto.dta</a>；<a href="https://www.stata.com/links/stata-basics/example-datasets/">Stata示例数据说明</a>；<a href="https://repec.sowi.unibe.ch/stata/estout/estout.html">Stata公开回归展示资料</a>。</p></aside>
 </div></div>
 <footer>《计量经济学120天系统课程》 · 第1课正式全文存档。未交付节次不提前标记完成。</footer>
 </main>

@@ -22,7 +22,7 @@
 <div class="meter" aria-label="课程进度3/120"><i></i></div><div class="muted">已交付第3课 / 120课；未授课内容不提前标记</div>
 </section>
 <div class="layout">
-<nav class="side" aria-label="课程内导航"><a href="#intuition">一、从问题出发</a><a href="#types">二、三种数据结构</a><a href="#formula">三、两个核心公式</a><a href="#data">四、真实数据</a><a href="#example">五、结构图与手算</a><a href="#software">六、双软件实操</a><a href="#pitfalls">七、常见误区</a><a href="#quiz">八、练习与答案</a><a href="#progress">九、知识卡片</a></nav>
+<nav class="side" aria-label="课程内导航"><a href="#intuition">一、从问题出发</a><a href="#types">二、三种数据结构</a><a href="#formula">三、两个核心公式</a><a href="#data">四、真实数据</a><a href="#example">五、结构图与手算</a><a href="#software">六、双软件实操</a><a href="#pitfalls">七、常见误区</a><a href="#quiz">八、练习与答案</a></nav>
 <div>
 <section class="paper" id="intuition">
 <h2>一、通俗理解：观察的是谁，在什么时候？</h2>
@@ -171,14 +171,7 @@ print(a.sort_values("year")["invest"].diff())</code></pre>
 <p>应得到1940年10条截面记录。Stata早期官方公开演示中的公司1投资，1935年为317.6、1936年为391.8，因此其变化为74.2（数据原始单位）。正式运行时以所读r19文件的输出核实，避免其他Grunfeld版本的差异。</p>
 </div></details>
 </section>
-<section class="paper" id="progress">
-<h2>九、知识卡片与学习进度</h2>
-<div class="tags"><span>截面</span><span>时间序列</span><span>面板</span><span>联合主键</span><span>平衡面板</span><span>时间依赖</span></div>
-<p><strong>今日结论：</strong>先确定观测单位与时间维度，再谈模型。相同变量在三种结构中的统计含义不同，推断与因果识别假设也不同。</p>
-<p><strong>完成进度：</strong>第1章·第3节，全课程3/120。<br><strong>下一讲：</strong><a href="01-04.html">第1章·第4节《期望、方差、协方差、标准误、假设检验和p值》 →</a>。<br><strong>本课日期：</strong>2026年10月9日。</p>
-<p><strong>核查资料：</strong><a href="https://www.stata-press.com/data/r19/grunfeld.dta">Stata Release 19 Grunfeld原始数据</a>；<a href="https://www.stata-press.com/data/r19/d.html">Stata Press官方数据目录</a>；<a href="https://www.stata.com/manuals17/xt.pdf">Stata面板数据官方手册</a>。<br>版本提醒：<a href="https://www.statsmodels.org/stable/datasets/generated/grunfeld.html">statsmodels自带的Grunfeld数据</a>为11家企业、220条记录，并不等同于此Stata 10家企业版本。</p>
-<p><a class="button-link" href="01-02.html">← 复习第2课</a>　<a class="button-link" href="../">返回120节课程目录 →</a></p>
-</section>
+<aside class="econ-reference-note" aria-label="资料来源"><strong>资料来源</strong><p><strong>核查资料：</strong><a href="https://www.stata-press.com/data/r19/grunfeld.dta">Stata Release 19 Grunfeld原始数据</a>；<a href="https://www.stata-press.com/data/r19/d.html">Stata Press官方数据目录</a>；<a href="https://www.stata.com/manuals17/xt.pdf">Stata面板数据官方手册</a>。<br>版本提醒：<a href="https://www.statsmodels.org/stable/datasets/generated/grunfeld.html">statsmodels自带的Grunfeld数据</a>为11家企业、220条记录，并不等同于此Stata 10家企业版本。</p></aside>
 </div></div>
 <footer>计量经济学120天系统课程 · 第3课正式全文 · 已归档课程按真实交付记录更新。</footer>
 </main>

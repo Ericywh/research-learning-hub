@@ -41,7 +41,7 @@ footer{margin-top:30px;font-size:13px;color:#71828a}
 <div class="meter" aria-label="学习进度2/120"><i></i></div><div class="muted">本课程已交付第2课 / 共120课</div>
 </section>
 <div class="layout">
-<nav class="side" aria-label="课程内导航"><a href="#intuition">一、通俗理解</a><a href="#theory">二、核心公式</a><a href="#confounding">三、混杂因素</a><a href="#data">四、真实数据</a><a href="#software">五、双软件实操</a><a href="#pitfalls">六、避坑指南</a><a href="#quiz">七、练习与答案</a><a href="#progress">八、知识与进度</a></nav>
+<nav class="side" aria-label="课程内导航"><a href="#intuition">一、通俗理解</a><a href="#theory">二、核心公式</a><a href="#confounding">三、混杂因素</a><a href="#data">四、真实数据</a><a href="#software">五、双软件实操</a><a href="#pitfalls">六、避坑指南</a><a href="#quiz">七、练习与答案</a></nav>
 <div>
 <section class="paper" id="intuition">
 <h2>一、通俗理解：一起变化，不等于因果</h2>
@@ -168,14 +168,7 @@ plt.show()</code></pre></div>
 <details><summary>实操题：比较 regress price weight 和 regress price weight length，为什么结果仍不能称为因果效应？（点击查看）</summary><div class="answer"><p>运行：</p><pre><code>regress price weight
 regress price weight length</code></pre><p>系数即使发生改变，也不能证明所有混杂已消除；品牌、发动机性能和车型定位等未观测因素可能影响两者。需要依赖研究设计、因果假设和可辨认的干预来支持因果解释。具体系数差异以软件实际输出为准。</p></div></details>
 </section>
-<section class="paper" id="progress">
-<h2>八、知识卡片与进度</h2>
-<div class="tags"><span>相关系数</span><span>反事实</span><span>潜在结果</span><span>混杂因素</span><span>因果识别</span></div>
-<p><strong>三句话记住：</strong>相关回答“是否一起变化”，因果回答“干预是否改变结果”；混杂可能制造或扭曲相关；回归控制变量不是因果识别的充分条件。</p>
-<p><strong>当前进度：</strong>第1章第2节，全课程第2天／120天。<br><strong>交付日期：</strong>2026-10-09。<br><strong>下一讲：</strong><a href="01-03.html">第1章·第3节《截面数据、时间序列数据与面板数据》 →</a>。</p>
-<p><strong>数据与证据来源：</strong> <a href="https://www.stata.com/links/stata-basics/example-datasets/">Stata官方示例数据说明</a> · <a href="https://www.stata-press.com/data/r19/auto.dta">Stata官方auto.dta</a> · <a href="https://www.statalist.org/forums/forum/general-stata-discussion/general/1430799-highly-significant-regression-coefficients-and-low-correlations">公开Stata相关矩阵记录</a>。</p>
-<p><a class="button-link" href="01-01.html">← 回顾第1课</a>　<a class="button-link" href="../">返回120节课程目录 →</a></p>
-</section>
+<aside class="econ-reference-note" aria-label="资料来源"><strong>资料来源</strong><p><strong>数据与证据来源：</strong> <a href="https://www.stata.com/links/stata-basics/example-datasets/">Stata官方示例数据说明</a> · <a href="https://www.stata-press.com/data/r19/auto.dta">Stata官方auto.dta</a> · <a href="https://www.statalist.org/forums/forum/general-stata-discussion/general/1430799-highly-significant-regression-coefficients-and-low-correlations">公开Stata相关矩阵记录</a>。</p></aside>
 </div></div>
 <footer>计量经济学120天系统课程 · 第2课正式全文存档 · 按实际交付更新，未讲授课程不标记为已完成。</footer>
 </main>

@@ -65,7 +65,5 @@ plt.show()</code></pre>
 <h3>六、今日练习</h3>
 <p><strong>概念题：</strong> 一元回归中$<code>\hat\beta_1=150</code>$，解释变量是$<code>weight100</code>$。应如何解释？可以直接说“加重汽车使价格上涨150美元”吗？<br><strong>实操题：</strong> 把Python代码中的<code>print(m.params)</code>改成只打印重量系数，并计算“重量相差200磅时的预测价格差”的表达式。<br><strong>参考答案：</strong></p>
 <ol><li>斜率150表示重量相差100磅的车型，其线性预测价格相差150美元；不能直接作因果解释，因为零条件均值假设未获证明。此处150仅为练习假设值，不是本数据的估计结果。</li><li><code>print(m.params[&quot;weight100&quot;])</code>；预测价格差为<code>2 * m.params[&quot;weight100&quot;]</code>美元，因为200磅对应$<code>weight100</code>$相差2。</li></ol>
-<h3>七、学习进度</h3>
-<p>当前：第2章·第1节 / 全课程第8课；核心：一元线性回归的斜率、截距、拟合值、残差与因果解释边界；数据：Stata官方1978汽车数据；下一节：<strong>第2章·第2节｜OLS最小二乘法（全课程第9课）</strong>。</p>
 <nav><a href="01-07.html">← 上一课</a><a href="02-02.html">下一课 →</a><a href="../">课程总目录</a></nav>
 </main><footer>计量经济学120天系统课程｜按已完成授课讲义归档；相关性与因果解释须严格区分。</footer></body></html>
