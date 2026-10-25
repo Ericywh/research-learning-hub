@@ -117,3 +117,8 @@ body.econ-theme[data-econ-dark="true"] .chapter summary{
 }
 body.econ-theme[data-econ-dark="true"] .fact:nth-child(n){background:var(--surface)}
 body.econ-theme[data-econ-dark="true"] .tag:nth-of-type(n){background:#29475a;color:#edf4f7}
+
+/* Accessibility repair: lesson metadata on dark hero panels */
+body.econ-theme .econ-hero .meta,body.econ-theme .hero .meta,body.econ-theme .econ-hero aside.meta{background:#203e50!important;color:#f4f8fa!important;border:1px solid #7895a4!important}
+body.econ-theme .econ-hero .meta *,body.econ-theme .hero .meta *,body.econ-theme .econ-hero aside.meta *{color:#f4f8fa!important}
+body.econ-theme[data-econ-dark="true"] .econ-hero .meta,body.econ-theme[data-econ-dark="true"] .hero .meta{background:#203e50!important;color:#f4f8fa!important}
