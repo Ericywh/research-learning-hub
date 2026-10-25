@@ -80,6 +80,7 @@
 .studio-page .route-nodes a{z-index:1;position:relative;display:flex;align-items:center;justify-content:center;text-decoration:none;width:26px;height:26px;flex:none;background:#f7f2fc;border:1px solid #e6dcee;border-radius:9px;font-size:9px;color:#b09abc}
 .studio-page .route-nodes a[aria-current]{color:white;background:#a288c1;border-color:#a288c1;box-shadow:0 3px 8px #9b78b72b}
 .studio-page .route-nodes a:hover{border-color:#bfa5d4;color:#88639f}
+.studio-page .route-mini .course-completion-mark,.studio-page .mode-switch .course-completion-mark,.studio-page .sequential-nav .course-completion-mark{display:none}
 .studio-page .study-flow{background:#fffdf9;border:1px solid #eee0d0;border-radius:17px;padding:21px 23px}
 .studio-page .study-flow>div{display:flex;gap:8px;align-items:center;font-size:12px;color:#a48a6c}
 .studio-page .study-flow b{font-weight:550}
