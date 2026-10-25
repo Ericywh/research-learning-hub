@@ -1,0 +1,70 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>第2章·第11节｜对数模型与二次项｜计量经济学120天系统课程</title><meta name="description" content="计量经济学120天系统课程，第18课：对数模型与二次项。含核心公式、Stata与Python实操、练习答案。"><style>:root{color-scheme:light;--bg:#f5f4ed;--paper:#fffef9;--ink:#25332f;--muted:#61716b;--line:#e3e5dc;--accent:#496b5e}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.9 system-ui,-apple-system,"Noto Sans CJK SC","Microsoft YaHei",sans-serif}header{background:#e8eee7;border-bottom:1px solid #d9e1d7;padding:16px max(24px,calc((100vw - 1000px)/2));color:#3d5e52;font-size:14px;letter-spacing:.08em}.wrap{max-width:950px;margin:36px auto 90px;padding:0 22px}main{background:var(--paper);padding:44px clamp(24px,5vw,70px);border:1px solid var(--line);border-radius:12px;box-shadow:0 12px 50px #2a453008}h1{font-family:serif;font-size:clamp(27px,4vw,38px);line-height:1.4;margin:0 0 24px}h2{font-size:22px;margin:44px 0 18px;padding-bottom:9px;border-bottom:1px solid var(--line)}h3{font-size:17px;margin:25px 0 12px;color:var(--accent)}p{margin:14px 0;text-align:justify}a{color:#416a5a}strong{font-weight:650}aside.meta{background:#f0f5ef;padding:13px 17px;border-left:3px solid #87a494;border-radius:4px;font-size:14px;color:#53675e}.equation{padding:18px 12px;background:#f7f8f4;border-radius:8px;overflow-x:auto;text-align:center}code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:.86em;background:#eff1ed;border-radius:3px;padding:2px 4px}details.code{margin:16px 0;border:1px solid var(--line);border-radius:8px;overflow:hidden}summary{cursor:pointer;padding:13px 18px;background:#edf3ee;color:#365a4a;font-weight:600}pre{margin:0;overflow:auto;background:#f8f9f6;padding:22px;line-height:1.65}pre code{padding:0;background:none;white-space:pre;font-size:13px}footer{font-size:13px;text-align:center;color:var(--muted);margin:26px 0}@media(max-width:600px){body{font-size:16px}.wrap{margin:14px auto;padding:0 9px}main{padding:26px 18px;border-radius:8px}p{text-align:left}}</style><script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]},svg:{fontCache:'global'}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script></head><body><header>RESEARCH LEARNING HUB · ECONOMETRICS / 018 OF 120</header><div class="wrap"><main><h1>第2章·第11节｜对数模型与二次项</h1><aside class="meta">全课程第18课 / 共120课｜授课日期：2026-10-25（Asia/Taipei）｜建议学习：10—15分钟。实证代码为可复现示例，本次未执行；练习中的系数均为教学构造值。</aside>
+<h2>一、通俗理解</h2>
+<p>上一课的交互项允许不同群体拥有不同斜率，但回归关系仍可能受到函数形式的限制。例如，汽车重量增加100磅，与价格的关系可能取决于原来的重量；燃油经济性每提高1英里/加仑，与价格的关联也可能随原有油耗水平变化。<strong>对数变换</strong>适合描述相对变化，<strong>二次项</strong>适合描述边际关联随变量水平改变的情形。</p>
+<p>假设价格从5000美元增加到5500美元，与从10000美元增加到10500美元，绝对增量都是500美元，但相对增幅分别为10%和5%。如果研究的是比例变化，直接用价格水平作因变量未必最便于解释。另一方面，若每提高1单位燃油经济性所对应的预测价格增量并不固定，单一线性项可能过于僵硬。对数和二次项解决的是不同问题，可以在同一个模型中使用。</p>
+<h2>二、核心理论与公式</h2>
+<p>设 (P_i) 为汽车价格（美元），(W_i) 为重量（磅），(M_i) 为每加仑行驶英里数（mpg），(D_i) 为进口车指示变量（进口=1）。考虑：</p>
+<div class="equation">\[\ln P_i=\beta_0+\beta_1\ln W_i+\beta_2M_i+\beta_3M_i^2+\beta_4D_i+u_i.\]</div>
+<p>固定其他解释变量，(\\beta_1) 是重量与价格的<strong>条件弹性</strong>：重量增加1%，预测价格约变化 (\\beta_1%)；准确地说，重量乘以1.01时，模型预测价格乘以 (1.01^{\\beta_1})。二次项使燃油经济性的局部边际关联不再固定：</p>
+<div class="equation">\[\frac{\partial E(\ln P_i\mid W_i,M_i,D_i)}{\partial M_i}
+=\beta_2+2\beta_3M_i,\qquad M^*=-\frac{\beta_2}{2\beta_3}\ (\beta_3\ne0).\]</div>
+<p>边际关联以对数价格为单位；乘以100可近似理解为mpg提高一个微小单位对应的价格百分比变化率。(M^*) 是条件拟合曲线的驻点，不自动意味着经济意义上的最优值；须看 (\\beta_3) 的符号、估计不确定性及驻点是否落在样本范围内。对数要求价格和重量严格为正。OLS估计还需要合理的条件均值设定、满列秩；稳健标准误并不能消除遗漏变量或反向因果。</p>
+<h2>三、实证案例与数据</h2>
+<p>沿用 <a href="https://www.stata-press.com/data/r18/auto.dta" rel="noopener noreferrer">Stata Press官方1978年汽车示例数据 auto.dta</a>。原始数据有74辆汽车，使用 &lt;code&gt;price&lt;/code&gt;、&lt;code&gt;weight&lt;/code&gt;、&lt;code&gt;mpg&lt;/code&gt;、&lt;code&gt;foreign&lt;/code&gt; 四列。两种软件统一保留这四列均非缺失、且价格与重量为正的记录；实际回归样本量由代码打印，不事先宣称为74。构造 &lt;code&gt;lnprice=ln(price)&lt;/code&gt; 和 &lt;code&gt;lnweight=ln(weight)&lt;/code&gt;，估计含截距的相同OLS模型，并采用HC1异方差稳健协方差估计。该历史性教学数据不代表当代汽车市场，模型结果仅说明样本中的条件统计关联。</p>
+<h2>四、Stata与Python实现</h2>
+<p>Stata 的 &lt;code&gt;vce(robust)&lt;/code&gt; 与 Python 的 &lt;code&gt;cov_type="HC1"&lt;/code&gt; 在本例采用对应的有限样本修正；Python 显式指定 &lt;code&gt;use_t=True&lt;/code&gt;，便于比较基于残差自由度的t检验。变量筛选、函数形式与基准组完全一致。下面的 &lt;code&gt;margins&lt;/code&gt; 和线性组合展示如何计算特定mpg水平的局部斜率及其标准误。</p>
+<h3>Stata（可复制运行）</h3>
+<details class="code" open><summary>Stata代码</summary><pre><code>* 读取Stata Press公开汽车数据
+use "https://www.stata-press.com/data/r18/auto.dta", clear
+keep if !missing(price, weight, mpg, foreign) &amp; price&gt;0 &amp; weight&gt;0
+generate double lnprice  = ln(price)
+generate double lnweight = ln(weight)
+count
+summarize price weight mpg foreign
+
+* c.mpg##c.mpg同时包含mpg及其平方项
+regress lnprice lnweight c.mpg##c.mpg i.foreign, vce(robust)
+
+* mpg在不同水平下的局部边际关联（对数价格单位）
+margins, dydx(mpg) at(mpg=(15 20 25 30))</code></pre></details>
+<h3>Python（可复制运行）</h3>
+<details class="code" open><summary>Python代码</summary><pre><code>import numpy as np
+import pandas as pd
+import statsmodels.formula.api as smf
+
+# 与Stata读取同一官方文件；保留foreign的0/1编码
+url = "https://www.stata-press.com/data/r18/auto.dta"
+df = pd.read_stata(url, convert_categoricals=False)
+df = df[["price", "weight", "mpg", "foreign"]].dropna().copy()
+df = df[(df["price"] &gt; 0) &amp; (df["weight"] &gt; 0)].copy()
+df["lnprice"] = np.log(df["price"])
+df["lnweight"] = np.log(df["weight"])
+print("回归有效样本量：", len(df))
+
+# C(foreign)以0为基准组；与Stata的i.foreign一致
+res = smf.ols(
+    "lnprice ~ lnweight + mpg + I(mpg ** 2) + C(foreign)",
+    data=df
+).fit(cov_type="HC1", use_t=True)
+print(res.summary())
+
+# 线性组合 beta_mpg + 2*m*beta_mpg2；自动使用HC1协方差
+for m in [15, 20, 25, 30]:
+    R = np.zeros(len(res.params))
+    names = list(res.params.index)
+    R[names.index("mpg")] = 1.0
+    R[names.index("I(mpg ** 2)")] = 2.0 * m
+    print(f"mpg={m}的局部斜率及推断：", res.t_test(R))</code></pre></details>
+<p>比较两种输出时，应核对系数、HC1标准误及特定mpg水平的线性组合。若结果不同，优先检查缺失值、&lt;code&gt;foreign&lt;/code&gt; 的编码、平方项及协方差类型，而不是直接比较四舍五入后的显著性星号。上述代码未经本次运行，不报告虚构的回归系数或p值。</p>
+<h2>五、初学者避坑</h2>
+<p><strong>误区一：将对数系数一律解释为“增加1单位导致变化若干%”。</strong> 只有对数—对数模型中的 (\\beta_1) 才直接是弹性；本课mpg以水平值进入，因此其边际关联为 (\\beta_2+2\\beta_3M)，而不是常数弹性。</p>
+<p><strong>误区二：看到平方项就认定存在U形或倒U形。</strong> 必须同时检查二次项符号、驻点区间、估计精度以及实际数据支持。驻点落在观测范围之外时，样本内关系可能始终单调。</p>
+<p><strong>误区三：对数变换或HC1稳健标准误可以解决内生性。</strong> 变换改变函数形式和系数含义，HC1调整推断中的协方差估计；两者都不能替代识别策略。并且对数模型的 (\\exp(\\widehat{\\ln P})) 通常不是原价格的条件均值，直接反变换会涉及重转换偏差。</p>
+<h2>六、今日练习</h2>
+<p><strong>概念题：</strong> 为什么模型同时放入mpg和mpg平方后，不能只根据mpg一次项的系数判断燃油经济性与价格的关联方向？</p>
+<p><strong>答案：</strong> 局部斜率是 (\\beta_2+2\\beta_3M)，取决于mpg水平；一次项系数仅表示 (M=0) 处的局部斜率，可能位于样本支持范围之外。需要在有数据支持的具体mpg水平计算斜率及其不确定性。</p>
+<p><strong>计算题：</strong> 某教学模型设 (\\beta_1=0.8)、(\\beta_2=0.06)、(\\beta_3=-0.001)。求重量增加1%时预测价格的近似百分比变化、mpg为20时的局部斜率，以及曲线驻点。</p>
+<p><strong>答案：</strong> 重量增加1%，预测价格近似增加0.8%（精确变化为 (100(1.01^{0.8}-1)%)）；mpg为20时局部斜率为 (0.06-2\\times0.001\\times20=0.02)，即局部约2%/mpg；驻点为 (M^*=-0.06/(2\\times-0.001)=30)。这些数字均为教学设定，不是auto.dta的估计结果。</p>
+<h2>七、学习进度</h2>
+<p>本课：第2章·第11节｜对数模型与二次项（全课程第18课 / 共120课）；按真实聊天授课累计18/120。第16课《虚拟变量》已讲授但私人Notion仍待补档，公开归档进度不得替代授课进度。</p>
+<p>原纲下一课：<strong>第2章·第12节｜回归结果的规范解释</strong>（全课程第19课）。</p></main><footer>计量经济学120天系统课程 · 第18课 / 共120课</footer></div></body></html>
