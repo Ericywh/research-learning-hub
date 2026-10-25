@@ -661,5 +661,17 @@ jobs:
           if(days.length!==7||days.some(d=>!d.amQ||d.amQ.length!==3||!d.pmQ||d.pmQ.length!==3))throw Error('English seven-day AM/PM lesson content incomplete');
           console.log('PASS English course public HTTP 200; seven days and fourteen lessons present');
           NODE
+          status=$(curl -L -sS --connect-timeout 10 --max-time 30 -o /tmp/english-week02.html -w '%{http_code}' "$BASE/english/week-02.html?design=$DEPLOY_SHA" || true)
+          [[ "$status" == "200" ]] || { echo "::error::English week two not reachable over HTTPS"; exit 1; }
+          grep -Fq 'ENGLISH EXPRESSION · WEEK 02' /tmp/english-week02.html || { echo "::error::English week 2 marker missing"; exit 1; }
+          PAGE=/tmp/english-week02.html node <<'NODE'
+          const fs=require('node:fs'),html=fs.readFileSync(process.env.PAGE,'utf8');
+          const match=html.match(/const data=(\[.*?\]);\s*const E=/s);
+          if(!match)throw Error('Missing English week-two dataset');
+          const days=JSON.parse(match[1]);
+          if(days.length!==7||days[0].day!==8||days[6].day!==14||days[0].amId!=='015'||days[6].pmId!=='028')throw Error('English week-two lesson numbering incomplete');
+          if(days.some(d=>d.words.length!==3||d.amQ.length!==3||d.pmQ.length!==3||!d.pmAudio||!d.write))throw Error('English week-two teaching components incomplete');
+          console.log('PASS English week two public HTTP 200; lessons 015–028 and exercises complete');
+          NODE
 
 
