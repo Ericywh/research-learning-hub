@@ -188,9 +188,9 @@ window.ECON_COURSE={
           "chapter": 2,
           "section": 11,
           "title": "对数模型与二次项",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-25",
+          "url": "lessons/02-11.html"
         },
         {
           "id": "02-12",
