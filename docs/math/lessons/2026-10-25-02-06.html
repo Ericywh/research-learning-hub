@@ -1,0 +1,28 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="每日10分钟数学微课程，第18课：正交及其含义"><title>第2章·第6节｜正交及其含义</title><link rel="stylesheet" href="../site.css"><script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script><style>.article-wrap{max-width:830px;margin:0 auto;padding:36px 20px 80px}.article{font-size:17px;line-height:1.9;color:#263d3a}.article h2{margin-top:1.8em;font-size:1.24em}.article h3{margin-top:1.5em}.article p{margin:1em 0}.article .math{overflow:auto;padding:12px;background:#f4f8f5;border-radius:9px}.article .lead{border-left:4px solid #5b998a;padding:12px 20px;background:#edf7f2;border-radius:8px}.muted{font-size:14px;color:#61736e}</style></head><body><header><div class="wrap"><a href="../">← 数学课程目录</a><a href="../../">研究学习中心 ↗</a></div></header><main class="article-wrap"><div class="kicker">MATHEMATICS · PROBABILITY · ECONOMETRICS</div><h1>第2章·第6节｜正交及其含义</h1><p class="muted">全课程第18课 / 共73课 · 2026-10-25 · 预计学习8分钟</p><article class="article"><aside class="lead">
+<p>全课程第18课 / 共73课｜2026年10月25日｜预计学习时间：8分钟</p>
+<p><strong>核心问题：</strong> 两个向量的内积为零，究竟意味着什么？为什么普通最小二乘回归的残差必须与解释变量正交？</p>
+</aside>
+<h2>一、正交是关于内积的条件</h2>
+<p>上一课定义了内积与向量长度。对同属实数空间 \( \mathbb R^n \) 的两个向量 \(\mathbf u\)、\(\mathbf v\)，若其标准欧氏内积为零，就称二者正交：</p>
+<div class="math">\[\mathbf u^{\mathsf T}\mathbf v=\sum_{i=1}^{n}u_iv_i=0.\]</div>
+<p>当 \(\mathbf u\)、\(\mathbf v\) 均非零时，正交意味着夹角为90°；零向量与任何向量的内积也为零，但零向量没有确定方向，不能据此谈它与其他向量的夹角。正交不是“没有关系”的笼统说法，而是依赖所选内积的精确定义。</p>
+<h2>二、为什么正交会带来平方长度的可加性</h2>
+<p>对同维向量，有 \((\mathbf u+\mathbf v)^{\mathsf T}(\mathbf u+\mathbf v)=\mathbf u^{\mathsf T}\mathbf u+2\mathbf u^{\mathsf T}\mathbf v+\mathbf v^{\mathsf T}\mathbf v\)。若内积为零，中间的交叉项消失，便得到勾股关系：</p>
+<div class="math">\[\|\mathbf u+\mathbf v\|_2^2=\|\mathbf u\|_2^2+\|\mathbf v\|_2^2.\]</div>
+<p>例如 \(\mathbf u=(1,2)^{\mathsf T}\)、\(\mathbf v=(2,-1)^{\mathsf T}\)，内积为 \(1\times2+2\times(-1)=0\)。两者的平方长度均为5，和向量 \((3,1)^{\mathsf T}\) 的平方长度为10，恰好等于5+5。这是可以直接手算验证的几何性质。</p>
+<h2>三、OLS残差为何与设计矩阵的列正交</h2>
+<p>考虑 \(n\) 条观测、\(p\) 个待估系数的线性最小二乘问题：\(X\in\mathbb R^{n\times p}\)、\(\mathbf y\in\mathbb R^n\)，残差 \(\mathbf e=\mathbf y-X\boldsymbol\beta\)。最小化残差平方和时，对 \(\boldsymbol\beta\) 求导并令梯度为零，可得必要条件：</p>
+<div class="math">\[X^{\mathsf T}\mathbf e=\mathbf 0_p.\]</div>
+<p>左边是 \(p\times1\) 向量，意味着残差与 \(X\) 的每一列都正交。由于平方和是凸二次函数，这个条件也足以保证最小值；即使 \(X\) 不满列秩、系数解不唯一，拟合值与残差仍然唯一。若 \(X\) 含截距列，便有残差之和为零。这些是样本内代数性质，不等于总体误差满足条件均值为零，更不能单凭它们作因果解释。</p>
+<h2>四、三条观测的手算核验</h2>
+<p>令解释变量 \(\mathbf x=(-1,0,1)^{\mathsf T}\)，结果 \(\mathbf y=(1,4,1)^{\mathsf T}\)。以常数列和 \(\mathbf x\) 为设计矩阵的两列，最小二乘拟合值为 \(\hat{\mathbf y}=(2,2,2)^{\mathsf T}\)，对应截距2、斜率0；残差 \(\mathbf e=(-1,2,-1)^{\mathsf T}\)。</p>
+<p>与常数列的内积为 \(-1+2-1=0\)；与 \(\mathbf x\) 的内积为 \((-1)\times(-1)+0\times2+1\times(-1)=0\)。两个条件都成立。请注意，残差并非逐项为零，正交也不意味着拟合完全准确。</p>
+<h2>五、两道自测</h2>
+<p><strong>第1题｜概念题：</strong> 为什么“OLS样本残差与解释变量正交”不能推出“解释变量与总体扰动项独立”？</p>
+<p><strong>第2题｜计算题：</strong> 给定 \(\mathbf a=(2,1)^{\mathsf T}\)、\(\mathbf b=(1,-2)^{\mathsf T}\)，判断是否正交，并计算 \(\|\mathbf a+\mathbf b\|_2^2\)。</p>
+<h3>参考答案</h3>
+<p><strong>第1题：</strong> 前者是对已估计样本残差成立的优化条件；后者是关于随机变量联合分布的概率假设，二者对象与逻辑层次不同。</p>
+<p><strong>第2题：</strong> \(\mathbf a^{\mathsf T}\mathbf b=2\times1+1\times(-2)=0\)，故正交；\(\mathbf a+\mathbf b=(3,-1)^{\mathsf T}\)，平方长度为 \(3^2+(-1)^2=10\)。</p>
+<h2>六、衔接与阶段复习</h2>
+<p>第13—18课已依次建立冗余、秩、列空间、基、内积和正交的联系：列空间规定可拟合方向，内积定义距离，正交刻画剩余误差与拟合方向的关系。下一课将严格解释为什么正交投影使距离最小。</p>
+<p><strong>下一课：第2章·第7节｜正交投影如何最小化距离（全课程第19课）。</strong></p></article><footer class="muted"><p><a href="https://app.notion.com/p/404b54823a128136a3a4f7c7afb319d9?pvs=204">Notion私人完整讲义（需权限）</a> · <a href="../">课程目录</a></p></footer></main></body></html>
