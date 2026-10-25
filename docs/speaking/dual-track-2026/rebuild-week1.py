@@ -176,6 +176,9 @@ def build(mode='both'):
     row.update(title=d['pm_title'],kind='recording-review' if n==7 else 'continuous-speech',minutes=d['pm_minutes'],minute_budget=budget,revision=REVISION,generator='rebuild-week1.py',exercise='首录封存后复盘' if n==7 else '静默结构重建与情境迁移',answers=2,reference_default='closed',characters=len(d['pm']))
   write(p,json.dumps(old,ensure_ascii=False,indent=2)+'\n')
  print('Rendered',len(DATA)*len(modes),'first-week lessons; completion IDs retained')
+ if (ROOT/'refine-lesson-pages.py').exists():
+  import subprocess
+  subprocess.run([sys.executable,str(ROOT/'refine-lesson-pages.py'),'--mode',mode,'--end','7'],check=True)
 
 if __name__=='__main__':
  parser=argparse.ArgumentParser();parser.add_argument('--mode',choices=['am','pm','both'],default='both')

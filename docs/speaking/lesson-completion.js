@@ -71,6 +71,7 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
 (function(){
 "use strict";
 if(!/\/speaking\/dual-track-2026\/(?:am|pm)\/day-\d{2}\.html$/.test(location.pathname))return;
+if(document.body.classList.contains("speaking-refined"))return; // Static AM/PM layouts already preserve their content and gates.
 if(document.querySelector("article.week1-lesson"))return; // First-week pages already own their full static layout.
 const origin=document.currentScript;
 if(!origin||!origin.src)return;

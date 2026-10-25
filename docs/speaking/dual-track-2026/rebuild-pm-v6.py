@@ -63,7 +63,7 @@ for day,d in sorted(DATA.items()):
  title=re.search(r'<h1>(.*?)</h1>',page,re.S).group(1)
  kind='review' if day in REVIEWS else 'expert' if 37<=day<=49 else 'story' if 29<=day<=34 or 57<=day<=62 else 'dialogue' if 8<=day<=20 or 50<=day<=55 else 'argument'
  minutes=12 if day in REVIEWS else 17 if kind=='expert' or day in {58,62} else 16 if day in {57,59,60,61} else 15 if day==19 else 13
- oldarticle=re.search(r'<article class="lesson\b[\s\S]*?</article>',page).group(0)
+ oldarticle=re.search(r'<article\b(?=[^>]*\bclass="[^"]*\blesson\b)[\s\S]*?</article>',page).group(0)
  why=CONTEXT[day]['errorAnalysis']
  # Main case is fully specified and labelled as a teaching simulation.
  setup=d.get('setup',n['setup'])
@@ -106,7 +106,7 @@ for day,d in sorted(DATA.items()):
   nextnote='下次真实开口后，可检查本课讨论的一项表达选择是否用得合适。它属于后续自主验证，不增加今晚必做时长，也不替代晨课录音。'
  body=case+analysis+error+task+ref+'<p class="pm-next">'+esc(nextnote)+'</p>'
  if day in REVIEWS:
-  body='<p class="pm-v6-assessment-note">本课只在早课原始录音与独立自评封存后阅读。已看提示的重录需另存，不算无提示首测。</p><details class="pm-review-gate"><summary>已封存早课首录与自评，再展开本课案例剖析</summary><div class="pm-review-body">'+body+'</div></details>'
+  body='<p class="pm-v6-assessment-note">本课只在早课原始录音与独立自评封存后阅读。已看提示的重录需另存，不算无提示首测。</p><div class="pm-review-body">'+body+'</div>'
  metadata='<div class="pm-metadata"><span>建议'+str(minutes)+'分钟，含练习与答案阅读</span><span>最长18分钟 · 可完全静默完成</span></div>'
  art='<article class="lesson pm-seminar pm-kind-'+kind+'" data-pm-revision="case-theory-v6-integrated" data-day="'+str(day).zfill(2)+'" data-minutes="'+str(minutes)+'">'+metadata+'<h2 class="pm-main-title">'+esc(d['focus'])+'</h2>'+body+'</article>'
  page=page.replace(oldarticle,art)
@@ -144,4 +144,9 @@ print('Built '+str(len(manifest))+' independent PM lessons; minutes '+str(min(x[
 if (ROOT/'week1-content.json').exists() and (ROOT/'rebuild-week1.py').exists():
  import subprocess,sys
  subprocess.run([sys.executable,str(ROOT/'rebuild-week1.py'),'--mode','pm'],check=True)
+
+# All evening prose stays open; only model-answer disclosures remain closed.
+if (ROOT/'refine-lesson-pages.py').exists():
+ import subprocess,sys
+ subprocess.run([sys.executable,str(ROOT/'refine-lesson-pages.py'),'--mode','pm'],check=True)
 
