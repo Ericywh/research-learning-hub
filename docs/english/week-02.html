@@ -37,7 +37,7 @@ const a=$('dailylisten'),b=$('acadlisten');if(a)a.onclick=()=>speak(d.daily.join
 const x=$('audioplay'),y=$('audioslow');if(x)x.onclick=()=>speak(d.pmAudio,.96);if(y)y.onclick=()=>speak(d.pmAudio,.72);
 $('daynav').innerHTML=data.map(x=>'<button type="button" class="day-btn '+(x.day===day?'active':'')+'" data-day="'+x.day+'"><strong>DAY '+String(x.day).padStart(2,'0')+' · '+E(x.theme)+'</strong><small>晨课 '+x.amId+' · 晚课 '+x.pmId+'</small></button>').join('');
 $('daynav').querySelectorAll('button').forEach(b=>b.onclick=()=>navigate(Number(b.dataset.day),mode));
-$('prev').disabled=lessonNum()===28;$('next').disabled=lessonNum()===144;
+$('prev').disabled=false;$('next').disabled=lessonNum()===28;
 $('done').textContent=localStorage.getItem('english-week02-'+num)==='1'?'✓ 已完成（点击撤销）':'标记本课完成';
 let completed=0;for(let i=15;i<=28;i++)completed+=(localStorage.getItem('english-week02-'+String(i).padStart(3,'0'))==='1'?1:0);
 $('progress').textContent='第2周完成 '+completed+' / 14课';
