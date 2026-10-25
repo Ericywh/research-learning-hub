@@ -7,7 +7,7 @@ from pathlib import Path
 from html.parser import HTMLParser
 import argparse,html,re,json
 ROOT=Path(__file__).resolve().parent
-VERSION='20261025-am-pm-v2'
+VERSION='20261025-clear-flow-v3'
 VOID={'area','base','br','col','embed','hr','img','input','link','meta','param','source','track','wbr'}
 
 class Node:
@@ -24,6 +24,10 @@ class Node:
 class Tree(HTMLParser):
  def __init__(self):super().__init__(convert_charrefs=True);self.root=Node();self.stack=[self.root]
  def handle_starttag(self,tag,attrs):
+  # Match browser paragraph boundaries in older source with omitted </p> tags.
+  if tag in {'p','div','section','article','details','h1','h2','h3','h4','ol','ul','blockquote','hr','table'}:
+   for i in range(len(self.stack)-1,0,-1):
+    if self.stack[i].tag=='p':self.stack=self.stack[:i];break
   n=Node(tag,attrs);self.stack[-1].children.append(n)
   if tag not in VOID:self.stack.append(n)
  def handle_startendtag(self,tag,attrs):self.stack[-1].children.append(Node(tag,attrs))
@@ -124,6 +128,66 @@ def block_kinds(article,mode):
    node.attrs['data-reading-block']=kind
   if mode=='pm' and node.has('pm-dialogue'):node.addclass('evening-transcript')
 
+def repair_nested_steps(article):
+ # Six earlier AM pages contain later timed paragraphs inside the first card.
+ # Promote those existing steps without changing their text or timing.
+ expanded=[]
+ for node in article.children:
+  if isinstance(node,Node) and node.has('morning-material'):
+   first=next((i for i,x in enumerate(node.children) if isinstance(x,Node) and x.tag=='p' and x.has('step')),None)
+   if first is not None:
+    following=node.children[first:];node.children=node.children[:first]
+    expanded.append(node);expanded.extend(following);continue
+  expanded.append(node)
+ article.children=expanded
+ result=[]
+ for node in article.children:
+  if isinstance(node,Node) and node.tag=='p' and node.has('step'):
+   heading=next((x for x in node.children if isinstance(x,Node) and x.tag in ('strong','b') and re.match(r'\d+\s*[—–-]\s*\d+\s*分钟',x.text())),None)
+   if heading is not None:
+    body=Node('p',{'class':'training-instruction'},[x for x in node.children if x is not heading])
+    tone=str(len([x for x in result if isinstance(x,Node) and x.has('training-step')])%5+1)
+    node=Node('section',{'class':'training-step step-tone-'+tone},[Node('div',{'class':'training-step-content'},[Node('h3',children=[heading]),body])])
+  result.append(node)
+  if not isinstance(node,Node) or not node.has('training-step'):continue
+  content=next((x for x in node.children if isinstance(x,Node) and x.has('training-step-content')),None)
+  if content is None:continue
+  retained=[]
+  for child in content.children:
+   heading=next((x for x in child.children if isinstance(x,Node) and x.tag in ('strong','b') and re.match(r'\d+\s*[—–-]\s*\d+\s*分钟',x.text())),None) if isinstance(child,Node) and child.tag=='p' else None
+   if heading is None:retained.append(child);continue
+   body=Node('p',{'class':'training-instruction'},[x for x in child.children if x is not heading])
+   new=Node('section',{'class':'training-step step-tone-'+str(len([x for x in result if isinstance(x,Node) and x.has('training-step')])%5+1)},[Node('div',{'class':'training-step-content'},[Node('h3',children=[heading]),body])])
+   result.append(new)
+  content.children=retained
+ article.children=result
+ for node in walk(article):
+  node.children=[x for x in node.children if not (isinstance(x,Node) and x.tag=='p' and x.has('step') and not x.text().strip())]
+
+def flow_cards(article,mode):
+ # Use only the prescribed times already printed in the lesson. Untimed
+ # first-week tasks keep their existing conditions inside the task itself.
+ number=0
+ for node in list(walk(article)):
+  if node.has('training-step'):
+   number+=1
+   if node.has('flow-card'):continue
+   content=next(x for x in node.children if isinstance(x,Node) and x.has('training-step-content'))
+   heading=next(x for x in content.children if isinstance(x,Node) and x.tag=='h3')
+   match=re.match(r'\s*(\d+)\s*([—–-])\s*(\d+)\s*分钟\s*[｜|]?\s*(.*)',heading.text(),re.S)
+   if not match:raise ValueError('Unrecognised printed training time: '+heading.text())
+   start,separator,end,title=match.groups()
+   time=Node('div',{'class':'flow-time'},[
+    Node('span',{'class':'flow-range'},[start+separator+end+'分钟']),
+    Node('span',{'class':'flow-duration','aria-hidden':'true','data-decoration':'true'},[str(int(end)-int(start))+'分钟'])])
+   heading.children=[Node('span',{'class':'flow-index','aria-hidden':'true','data-decoration':'true'},[str(number)+' · ']),title]
+   node.children=[time,content];node.addclass('flow-card');node.attrs['data-flow-minutes']=str(int(end)-int(start))
+  elif mode=='am' and node.has('morning-module') and not node.has('flow-card'):
+   number+=1
+   time=Node('div',{'class':'flow-time flow-untimed','aria-hidden':'true','data-decoration':'true'},[Node('span',{'class':'flow-range'},[str(number).zfill(2)])])
+   node.children=[time,Node('div',{'class':'flow-panel-content'},node.children)]
+   node.addclass('flow-card step-tone-'+str((number-1)%5+1))
+
 def timer(article,day):
  plain=article.text();stem=re.split(r'\d+\s*[—–-]\s*\d+\s*分钟',plain,maxsplit=1)[0]
  found=re.search(r'首次(?:无提示)?录音\s*(\d+)\s*秒|无提示\s*(\d+)\s*秒|(?:录音|发言|讲)\s*(\d+)\s*秒',stem)
@@ -142,7 +206,8 @@ def reflow(path,mode,day):
  root=parse(match[0]);article=next(x for x in root.children if isinstance(x,Node));removed=[]
  if mode=='pm':pm_open(article,removed)
  else:am_cards(article);am_answers(article);task_fields(article)
- block_kinds(article,mode);article.addclass('refined-lesson');article.attrs['data-layout-version']=VERSION
+ if mode=='am':repair_nested_steps(article)
+ block_kinds(article,mode);flow_cards(article,mode);article.addclass('refined-lesson');article.attrs['data-layout-version']=VERSION
  if 'id' not in article.attrs:article.attrs['id']='lesson-content'
  s=s[:match.start()]+article.serialize()+s[match.end():]
  # Remove only the empty presentation shell around the article.
@@ -157,7 +222,8 @@ def reflow(path,mode,day):
  s=re.sub(r'<body([^>]*)>',bodytag,s,count=1)
  s=re.sub(r'<script\b[^>]*src="\.\./(?:week1-ui|refined-reader)\.js[^\"]*"[^>]*></script>','',s)
  s=re.sub(r'<link\b[^>]*href="\.\./refined-lessons\.css[^\"]*"[^>]*>','',s)
- assets='<link rel="stylesheet" href="../refined-lessons.css?v='+VERSION+'"><script defer src="../refined-reader.js?v='+VERSION+'"></script>'
+ s=re.sub(r'<link\b[^>]*href="\.\./clear-reading\.css[^\"]*"[^>]*>','',s)
+ assets='<link rel="stylesheet" href="../refined-lessons.css?v='+VERSION+'"><link rel="stylesheet" href="../clear-reading.css?v='+VERSION+'"><script defer src="../refined-reader.js?v='+VERSION+'"></script>'
  s=s.replace('</head>',assets+'</head>',1)
  if mode=='am' and 'data-timer-seconds=' not in s:
   s=s.replace('<aside class="sidebar">','<aside class="sidebar">'+timer(article,day),1)

@@ -1,0 +1,108 @@
+/* Reference-style flow cards; all times come from the existing lesson text. */
+.speaking-refined .flow-card{--flow-wash:#edf3ff;--flow-accent:#537ebf;--flow-ink:#315a91;display:grid;grid-template-columns:112px minmax(0,1fr)!important;gap:22px!important;align-items:start;border:1px solid #dce3ed!important;border-left-width:1px!important;border-radius:17px;background:var(--flow-wash)!important;padding:24px!important;box-shadow:none!important;min-width:0}
+.speaking-refined .flow-card.step-tone-2{--flow-wash:#fff5e9;--flow-accent:#d7a04e;--flow-ink:#84591d}
+.speaking-refined .flow-card.step-tone-3{--flow-wash:#eaf8f3;--flow-accent:#389d88;--flow-ink:#216c5b}
+.speaking-refined .flow-card.step-tone-4{--flow-wash:#f3efff;--flow-accent:#8974c4;--flow-ink:#645092}
+.speaking-refined .flow-card.step-tone-5{--flow-wash:#fff0f5;--flow-accent:#cc6e94;--flow-ink:#99466b}
+.speaking-refined .flow-card:before,.speaking-refined .flow-panel-content>h2:before{display:none!important}
+.speaking-refined .flow-time{border-left:4px solid var(--flow-accent);padding:3px 0 3px 13px;display:grid;gap:7px;min-width:0;align-self:start;font-variant-numeric:tabular-nums}
+.speaking-refined .flow-range{font-size:14px;font-weight:700;line-height:1.65;color:var(--flow-ink);white-space:nowrap}
+.speaking-refined .flow-duration{font-size:13px;line-height:1.7;color:#536176;font-weight:600}
+.speaking-refined .flow-untimed .flow-range{font-size:24px;letter-spacing:.02em}
+.speaking-refined .flow-panel-content,.speaking-refined .training-step-content{min-width:0}
+.speaking-refined .flow-panel-content>.panel-badge{display:none}
+.speaking-refined .flow-card h3,.speaking-refined .flow-panel-content>h2{margin:0 0 12px!important;padding:0!important;border:0!important;font-size:18px!important;line-height:1.6!important;font-weight:700!important;color:#27364c!important;display:block!important}
+.speaking-refined .flow-card p,.speaking-refined .flow-card li{font-size:16px!important;line-height:1.9!important;font-weight:400;color:#405067!important;white-space:normal}
+.speaking-refined .flow-card p{margin:0 0 12px!important}
+.speaking-refined .flow-card p:last-child{margin-bottom:0!important}
+.speaking-refined .flow-card strong{font-weight:700;color:inherit}
+.speaking-refined .flow-index{font-weight:700;color:inherit}
+.speaking-refined .study-flow{border:1px solid #dce3ed;background:#fff;border-radius:15px;padding:18px;box-shadow:none}
+.speaking-refined .study-flow>div{color:#354357;font-size:13px;font-weight:700;margin-bottom:12px}
+.speaking-refined .study-flow ol{display:grid;gap:9px;padding:0;margin:0;list-style:none}
+.speaking-refined .study-flow li{display:grid;grid-template-columns:30px minmax(0,1fr);align-items:center;gap:9px;padding:11px 10px;border:1px solid #dce3ed;border-radius:10px;background:#edf3ff;color:#31445f;font-size:13px;line-height:1.7}
+.speaking-refined .study-flow li:nth-child(2){background:#fff5e9}
+.speaking-refined .study-flow li:nth-child(3){background:#eaf8f3}
+.speaking-refined .study-flow li:before,.speaking-refined .study-flow li:after{display:none}
+.speaking-refined .study-flow li i{width:auto;height:auto;background:transparent;border:0;border-left:3px solid #537ebf;border-radius:0;font:700 13px/1.7 system-ui;color:#315a91;padding:2px 0 2px 9px}
+.speaking-refined .study-flow li:nth-child(2) i{color:#84591d;border-left-color:#d7a04e}
+.speaking-refined .study-flow li:nth-child(3) i{color:#216c5b;border-left-color:#389d88}
+
+/* Opaque reading surfaces and dark, normally rendered type for all PM pages. */
+.speaking-refined.speaking-pm{--w-ink:#263a36;--w-muted:#4d635b;--night:#204d45;--night-muted:#4d635b;--night-line:#cbd9d2;color:#263a36;background:#f4f7f5;font-family:system-ui,-apple-system,"Segoe UI","Microsoft YaHei","PingFang SC","Noto Sans CJK SC",sans-serif;font-size:16px;font-weight:400;line-height:1.9}
+.speaking-refined.speaking-pm :is(.hero,.main,.sidebar,.refined-lesson,.pm-section,.lesson-panel,.paper,.evening-transcript,.pm-reference-body,.disclosure-body){filter:none;backdrop-filter:none;-webkit-backdrop-filter:none;text-shadow:none;opacity:1}
+.speaking-refined.speaking-pm .hero{background:linear-gradient(115deg,#173e47,#2b605d 72%,#376e61);border-color:#285651;box-shadow:none}
+.speaking-refined.speaking-pm .hero h1{color:#fff;font-weight:700;letter-spacing:0}
+.speaking-refined.speaking-pm .hero p{color:#eff8f4;font-size:16px}
+.speaking-refined.speaking-pm .eyebrow{color:#e0f1e9;font-size:12px;font-weight:600}
+.speaking-refined.speaking-pm .pills span{color:#fff;background:#235348;border-color:#6b9685;font-size:12px;font-weight:500}
+.speaking-refined.speaking-pm a{color:#175d4c;text-decoration-thickness:1px;text-underline-offset:3px}
+.speaking-refined.speaking-pm .top,.speaking-refined.speaking-pm .top a{color:#3c5e52;font-size:13px}
+.speaking-refined.speaking-pm .course-mode-link{background:#edf5ef;border-color:#cbdccf;border-left-color:#4c8a71;color:#314e42;font-size:14px}
+.speaking-refined.speaking-pm .refined-lesson{font-size:16px;font-weight:400;line-height:1.9;color:#263a36}
+.speaking-refined.speaking-pm :is(.pm-section,.lesson-panel){background:#fff;border-color:#cbd9d2;border-left-color:#6c9b84;box-shadow:none}
+.speaking-refined.speaking-pm :is(.pm-section,.lesson-panel)>h2,.speaking-refined.speaking-pm .refined-lesson>h2{color:#204d40;font-weight:700;letter-spacing:0}
+.speaking-refined.speaking-pm .refined-lesson>h2{background:#eaf2ed;border-color:#cbd9d2}
+.speaking-refined.speaking-pm .refined-lesson :is(p,li){color:#263a36;font-size:16px;font-weight:400;line-height:1.95}
+.speaking-refined.speaking-pm .refined-lesson :is(strong,b){color:#204b3d;font-weight:700}
+.speaking-refined.speaking-pm .refined-lesson h3{color:#275642;font-size:18px;font-weight:700}
+.speaking-refined.speaking-pm .refined-lesson :is(.pm-case-origin,.pm-v6-source,.source-note,.pm-v6-boundary){color:#4c6154!important;font-size:13px!important;line-height:1.85!important}
+.speaking-refined.speaking-pm .pm-case-origin{background:#f1f5ed;border-color:#cfdac5}
+.speaking-refined.speaking-pm .panel-badge{color:#4c6356;font-size:11px;font-weight:600}
+.speaking-refined.speaking-pm .pm-metadata,.speaking-refined.speaking-pm .pm-metadata span{color:#3f5c4b;font-size:12px;font-weight:600}
+.speaking-refined.speaking-pm .pm-metadata span{background:#edf4ed;border-color:#c9d9cb}
+.speaking-refined.speaking-pm .evening-reading-note{background:#eef4e8;border-color:#cbd9bc;border-left-color:#7d9a52;color:#455d36;font-size:14px;line-height:1.85}
+.speaking-refined.speaking-pm .evening-transcript p,.speaking-refined.speaking-pm .evening-transcript p:nth-child(2n){background:#f0f7f3;border-color:#c7d9cd;color:#263f32;font-size:16px;line-height:1.9}
+.speaking-refined.speaking-pm .evening-transcript p:nth-child(2n){background:#fcf6ec;border-color:#decfb7;color:#4f3f26}
+.speaking-refined.speaking-pm .evening-transcript strong,.speaking-refined.speaking-pm .evening-transcript p:nth-child(2n) strong{color:inherit;font-size:14px;font-weight:700}
+.speaking-refined.speaking-pm .refined-lesson blockquote,.speaking-refined.speaking-pm .refined-lesson blockquote>p{color:#354e2e;background:#f1f5ea;border-color:#cdd9bc;font-size:16px;line-height:1.95}
+.speaking-refined.speaking-pm .pm-v6-error blockquote,.speaking-refined.speaking-pm .pm-v6-error blockquote>p{color:#654b22;background:#fff5e5;border-color:#ddc8a3}
+.speaking-refined.speaking-pm .pm-v6-move{border-top-color:#d6e0d7}
+.speaking-refined.speaking-pm .pm-v6-error{border-left-color:#b68840}
+.speaking-refined.speaking-pm .pm-v6-error>h2{color:#75521b}
+.speaking-refined.speaking-pm .pm-v6-transfer,.speaking-refined.speaking-pm .pm-v6-review{border-left-color:#688d9e}
+.speaking-refined.speaking-pm .refined-lesson details{background:#edf4ec;border-color:#bfd2c0;box-shadow:none}
+.speaking-refined.speaking-pm .refined-lesson details>summary,.speaking-refined.speaking-pm .refined-lesson details[open]>summary{background:#e7f0e4;color:#31582e;font-size:16px;font-weight:700;border-color:#c4d6bf}
+.speaking-refined.speaking-pm .refined-lesson details>summary:after{color:#31582e;font-weight:600}
+.speaking-refined.speaking-pm :is(.pm-reference-body,.disclosure-body){background:#fff}
+.speaking-refined.speaking-pm :is(.pm-v6-answer,.model-answer){background:#f3f8ee;border-color:#cbd9be}
+.speaking-refined.speaking-pm :is(.pm-v6-answer[data-answer-path="B"],.model-b){background:#f2f6fa;border-color:#c9d6df}
+.speaking-refined.speaking-pm :is(.pm-v6-answer,.model-answer) h3{color:#3b6130;font-weight:700}
+.speaking-refined.speaking-pm :is(.pm-key,.keyword-note){background:#eaf2e0;border-color:#c8d7b6;color:#435d30!important;font-size:14px!important}
+.speaking-refined.speaking-pm :is(.keyword-chip,.keyword-caption,.keyword-explanation){color:#435d30;border-color:#bdcfa9}
+.speaking-refined.speaking-pm .refined-lesson .pm-v6-annotations{color:#3e5734;font-size:15px}
+.speaking-refined.speaking-pm .sidebar :is(.paper,.week-route),.speaking-refined.speaking-pm .paper{background:#fff;border-color:#cbd9d2;box-shadow:none}
+.speaking-refined.speaking-pm .sidebar h2{color:#27543f;font-size:18px;font-weight:700}
+.speaking-refined.speaking-pm .sidebar p{color:#435b4b;font-size:14px;line-height:1.85}
+.speaking-refined.speaking-pm .kicker{color:#3f5c32;background:#eaf2e2;font-size:12px;font-weight:600}
+.speaking-refined.speaking-pm .reading-duration{color:#315b3a;font-weight:600}
+.speaking-refined.speaking-pm .reading-duration span{color:#4b6350}
+.speaking-refined.speaking-pm :is(.reader-tools,.refined-reading-tools){color:#445d4d;border-color:#cbd9ce}
+.speaking-refined.speaking-pm :is(.reader-actions button,.reader-actions a,.reader-caption){color:#3c5b47;font-size:13px}
+.speaking-refined.speaking-pm .reader-actions button[aria-pressed="true"]{background:#dfecd8;border-color:#9fb78d;color:#2f5129}
+.speaking-refined.speaking-pm :is(.mode-switch,.lesson-facts>div){background:#fff;border-color:#c7d8c8}
+.speaking-refined.speaking-pm :is(.lesson-facts b,.lesson-facts small,.mode-switch b,.mode-switch small){color:#365a40;font-size:13px}
+.speaking-refined.speaking-pm :is(.route-caption,.route-nodes a){color:#3c5d3c;font-size:12px}
+.speaking-refined.speaking-pm .route-nodes a[aria-current]{background:#3d6d42;border-color:#3d6d42;color:#fff}
+.speaking-refined.speaking-pm :is(.course-completion,.sequential-nav a,.week1-bottom){background:#fff;border-color:#c9d8c8}
+.speaking-refined.speaking-pm :is(.course-completion-title,.course-completion-button){color:#35572d}
+.speaking-refined.speaking-pm .course-completion-button{background:#eaf2e3;border-color:#b9cdb0;font-size:14px}
+.speaking-refined.speaking-pm :is(.sequential-nav b,.sequential-nav small,.week1-bottom a,.footer){color:#435f48}
+.speaking-refined.speaking-pm.large-type .refined-lesson :is(p,li){font-size:18px;line-height:2}
+@media(max-width:600px){
+ .speaking-refined .flow-card{grid-template-columns:84px minmax(0,1fr)!important;gap:14px!important;padding:19px 16px!important;border-radius:14px}
+ .speaking-refined .flow-time{padding-left:10px;border-left-width:3px}
+ .speaking-refined .flow-range{font-size:12px;white-space:normal}
+ .speaking-refined .flow-duration{font-size:12px}
+ .speaking-refined .flow-card h3,.speaking-refined .flow-panel-content>h2{font-size:17px!important}
+ .speaking-refined .flow-card p,.speaking-refined .flow-card li{font-size:15px!important;line-height:1.9!important}
+ .speaking-refined.speaking-pm .hero p{font-size:15px}
+ .speaking-refined.speaking-pm .refined-lesson :is(p,li),.speaking-refined.speaking-pm .evening-transcript p{font-size:16px}
+ .speaking-refined.speaking-pm :is(.pm-section,.lesson-panel){padding:22px 18px}
+ .speaking-refined.speaking-pm .refined-lesson h3{font-size:17px}
+ .speaking-refined.speaking-pm :is(.reader-actions button,.reader-actions a){padding:8px 6px;font-size:12px}
+ .speaking-refined.speaking-pm .evening-reading-note{font-size:13px}
+ .speaking-refined.speaking-pm .refined-lesson details>summary{font-size:15px}
+}
+@media(max-width:360px){.speaking-refined .flow-card{grid-template-columns:1fr!important;gap:12px!important}.speaking-refined .flow-time{display:flex;gap:12px;align-items:baseline}.speaking-refined .flow-untimed .flow-range{font-size:16px}}
+@media print{.speaking-refined .flow-card{break-inside:avoid}.speaking-refined.speaking-pm{background:white}.speaking-refined.speaking-pm .refined-lesson{color:#000}}
