@@ -1,14 +1,22 @@
 <!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="PSM-DID第8课：Python完整实证操作，中国宽带中国示范城市案例；Stata和Python双软件教学及习题。"><title>第3章·第3节｜Python完整实证操作 · PSM-DID系统精讲课程</title>
-<link rel="stylesheet" href="../../assets/speaking-layout.css?v=20261021t"
-<link rel="stylesheet" href="../../assets/academic-eye-care.css?v=20261023a">></head>
+<link rel="stylesheet" href="../../assets/speaking-layout.css?v=20261021t">
+<link rel="stylesheet" href="../../assets/academic-eye-care.css?v=20261023a"><link rel="stylesheet" href="../../assets/academic-rich.css?v=20261025a">
+</head>
 <body class="speaking-study"><div class="sp-wrap">
 <nav class="sp-top" aria-label="课程路径"><a href="../../">← 返回课程总目录</a><span>第3章 · 第3节 · 全课程第8课</span></nav>
+<nav class="sp-pathway" aria-label="四章学习路径"><span class="sp-pathway-label">COURSE PATH · 学习路径</span><a href="../../#chapter-1">01 DID与PSM基础</a><a href="../../#chapter-2">02 倾向得分与匹配</a><a href="../../#chapter-3" aria-current="step">03 匹配后估计与实操</a><a href="../../#chapter-4">04 推断与论文复现</a></nav>
 <header class="sp-hero"><div class="sp-kicker">PSM-DID TRAINING · LESSON 008 / 010</div><h1>第3章·第3节｜Python完整实证操作</h1>
 <p>中国“宽带中国”示范城市政策 · 因果识别、匹配诊断与Stata / Python双软件方法训练</p>
-<div class="sp-pills"><span>第8课 / 共10课</span><span>识别条件与研究边界</span><span>Stata + Python</span><span>分节阅读</span></div></header>
+<div class="sp-pills"><span>第8课 / 共10课</span><span>识别条件与研究边界</span><span>Stata + Python</span><span>分节阅读</span></div><div class="sp-hero-meter"><span class="label">学习进度</span><div class="track" aria-label="课程进度 80%"><span style="width:80%"></span></div><span class="percent">08 / 10</span></div></header>
+<nav class="sp-dashboard" aria-label="本课快捷导航">
+<a href="#lesson-introduction"><span class="symbol" aria-hidden="true">◎</span><span><strong>课程导读</strong><small>学习目标与知识结构</small></span></a>
+<a href="#section-02"><span class="symbol" aria-hidden="true">∑</span><span><strong>理论与公式</strong><small>概念、估计量与假设</small></span></a>
+<a href="#section-09"><span class="symbol" aria-hidden="true">⌘</span><span><strong>Stata / Python</strong><small>双软件代码默认折叠</small></span></a>
+<a href="#section-08"><span class="symbol" aria-hidden="true">✓</span><span><strong>自测与巩固</strong><small>练习与复盘</small></span></a>
+</nav>
 <div class="study-layout"><main class="study-content" id="course-main">
-<section class="sp-paper sp-intro"><div class="sp-overline">LESSON OVERVIEW · 本节导读</div><nav class="nav"><a href="https://ericywh.github.io/research-learning-hub/psm-did/">← 课程目录</a><a href="https://ericywh.github.io/research-learning-hub/psm-did/chapter-03/lesson-02/">← 第7课</a><a href="https://ericywh.github.io/research-learning-hub/psm-did/chapter-04/lesson-01/">第9课 →</a></nav><aside class="aside"><strong>实证边界：</strong>2014年10月公布的首批政策名单含复杂行政层级；当前教学映射与政策暴露时间尚不支持工资因果效应声明。上一课发现匹配后多项SMD超过0.1。本课代码所输出的配对DID数值只用来展示计算。</aside>
+<section id="lesson-introduction" class="sp-paper sp-intro"><div class="sp-overline">LESSON OVERVIEW · 本节导读</div><nav class="nav"><a href="https://ericywh.github.io/research-learning-hub/psm-did/">← 课程目录</a><a href="https://ericywh.github.io/research-learning-hub/psm-did/chapter-03/lesson-02/">← 第7课</a><a href="https://ericywh.github.io/research-learning-hub/psm-did/chapter-04/lesson-01/">第9课 →</a></nav><aside class="aside"><strong>实证边界：</strong>2014年10月公布的首批政策名单含复杂行政层级；当前教学映射与政策暴露时间尚不支持工资因果效应声明。上一课发现匹配后多项SMD超过0.1。本课代码所输出的配对DID数值只用来展示计算。</aside>
 <p><strong>全课程第8课 / 共10课｜2026年10月20日单独生成</strong></p>
 <p>本节使用Python复现与第7课同一套城市匹配与DID流程。目标不只是得到一个数字，更重要的是让数据处理、匹配细节、样本损失和算法输出都可以被检查。</p>
 </section>
@@ -255,4 +263,9 @@ if __name__ == '__main__':
 <section class="sp-paper sp-sidebar-panel"><div class="sp-sidebar-label">LESSON MAP · 章节导航</div><h2>本节内容目录</h2><ol class="sp-toc"><li><a href="#section-01"><span class="num">01</span>一、Python使用哪些软件包？</a></li><li><a href="#section-02"><span class="num">02</span>二、不要先匹配，再决定使用哪些年份</a></li><li><a href="#section-03"><span class="num">03</span>三、从Logit到匹配对</a></li><li><a href="#section-04"><span class="num">04</span>四、Python中的核对技巧</a></li><li><a href="#section-05"><span class="num">05</span>五、输出怎样形成可复现的证据？</a></li><li><a href="#section-06"><span class="num">06</span>六、与本课中国案例有关的限制</a></li><li><a href="#section-07"><span class="num">07</span>七、三个易错之处</a></li><li><a href="#section-08"><span class="num">08</span>八、两道自测题与答案</a></li><li><a href="#section-09"><span class="num">09</span>附录｜同一中国数据的Stata与Python完整示例</a></li><li><a href="#section-10"><span class="num">10</span>主要数据与方法来源</a></li></ol></section>
 <section class="sp-paper sp-sidebar-panel"><div class="sp-sidebar-label">COURSE PROGRESS · 学习进度</div><div class="sp-stats"><strong>08</strong><span>/ 10 节</span></div><p>当前为第3章第3节；课程十节全文均已归档。</p><p><a href="../../">查看完整四章课程目录 →</a></p></section>
 <section class="sp-paper sp-sidebar-panel"><div class="sp-sidebar-label">METHOD NOTES · 方法提醒</div><p class="sp-guard">课程示例用于理解PSM-DID的研究设计。政策名单映射、条件平行趋势与协变量平衡仍需正式核验，不能将演示数值直接解释为政策因果效应。</p></section>
-</aside></div><footer class="sp-site-footer"><a href="../../">返回PSM-DID课程目录</a> · 课程原始正文及双软件代码完整保留</footer></div></body></html>
+<section class="sp-paper sp-sidebar-panel sp-study-tools" aria-label="阅读工具">
+<div class="sp-sidebar-label">STUDY TOOLS · 学习工具</div><h2>快捷学习入口</h2>
+<a class="tool-link" href="#section-09"><span class="mini" aria-hidden="true">⌘</span>双软件实证代码</a>
+<a class="tool-link" href="#section-08"><span class="mini" aria-hidden="true">✓</span>自测与复盘</a>
+<a class="tool-link" href="../../"><span class="mini" aria-hidden="true">⌂</span>四章十节课程目录</a>
+<p>公式在网站发布时预渲染，Stata与Python代码保持默认收起。</p></section></aside></div><footer class="sp-site-footer"><a href="../../">返回PSM-DID课程目录</a> · 课程原始正文及双软件代码完整保留</footer></div></body></html>
