@@ -46,9 +46,9 @@ function start(){
  while(mathWalker.nextNode()){const n=mathWalker.currentNode;if(!n.parentElement?.closest('pre,code,script,style,textarea,.MathJax,mjx-container'))mathText.push(n)}
  for(const n of mathText){let v=n.nodeValue;
    // Convert raw dollar-delimited inline math into MathJax's standard inline syntax.
-   v=v.replace(/\$([^$\\n]+)\$/g,(_,m)=>'\\\\('+m+'\\\\)');
+   v=v.replace(/\$([^$\\n]+)\$/g,(_,m)=>String.fromCharCode(92)+'('+m+String.fromCharCode(92)+')');
    // Restore double-escaped TeX commands exported by legacy editors.
-   v=v.replace(/\\\\\\\\(?=[A-Za-z])/g,'\\\\');
+   v=v.replace(/\\\\\\\\(?=[A-Za-z])/g,String.fromCharCode(92));
    n.nodeValue=v;
  }
  if(window.MathJax?.typesetPromise)window.MathJax.typesetPromise([article]).catch(()=>{});
