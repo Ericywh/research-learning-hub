@@ -29,7 +29,299 @@ footer{margin-top:30px;font-size:13px;color:#71828a}
 
 
 
-<link rel="stylesheet" href="../course-theme.css?v=20261025-3"><script defer src="../course-theme.js?v=20261025-3"></script></head><body>
+<link rel="stylesheet" href="../course-theme.css?v=20261025-3"><script defer src="../course-theme.js?v=20261025-3"></script><script>window.MathJax={tex:{inlineMath:[['\\(','\\)'],['<body>
+<header class="top"><a href="../../study/#courses">← 统一学习门户</a><a href="../">计量经济学120天 · 完整课程目录 →</a></header>
+<main class="wrap">
+<section class="hero">
+<div class="eyebrow">CHAPTER 01 · LESSON 02 / 120</div>
+<h1>相关关系与因果关系</h1>
+<p>第一章·第2节 ｜ 全课程第2天 ｜ 2026年10月9日 ｜ 预计10—15分钟</p>
+<p><strong>核心问题：</strong>为什么两个变量明显相关，仍不足以断言一个变量导致另一个变量发生变化？</p>
+<p class="muted"><a href="01-01.html">上一讲：计量经济学究竟是什么？</a> ｜ 下一讲：<a href="01-03.html">截面、时间序列和面板数据 →</a></p>
+<div class="meter" aria-label="学习进度2/120"><i></i></div><div class="muted">本课程已交付第2课 / 共120课</div>
+</section>
+<div class="layout">
+<nav class="side" aria-label="课程内导航"><a href="#intuition">一、通俗理解</a><a href="#theory">二、核心公式</a><a href="#confounding">三、混杂因素</a><a href="#data">四、真实数据</a><a href="#software">五、双软件实操</a><a href="#pitfalls">六、避坑指南</a><a href="#quiz">七、练习与答案</a></nav>
+<div>
+<section class="paper" id="intuition">
+<h2>一、通俗理解：一起变化，不等于因果</h2>
+<p><strong>上一节发现重量较大的汽车通常价格更高。那么，把汽车加重100磅，能提高售价吗？</strong></p>
+<p>不能直接这样判断。不同汽车之间的价格差异，不等于同一辆汽车改变重量之后的价格变化。较重的汽车可能本来就属于更高级别，具有更大尺寸、更丰富配置与不同品牌定位。它们与价格共同变化，可能形成重量和价格之间的正相关。</p>
+<div class="grid2"><div class="concept"><strong>相关关系（Correlation）</strong><p>观察到一个变量较大时，另一个变量通常也较大或较小。</p></div><div class="concept"><strong>因果关系（Causation）</strong><p>在明确定义干预之后，改变一个因素是否造成结果变化。</p></div></div>
+<p>相关衡量观测分布中的关系，因果衡量干预后的潜在结果。描述和预测可以利用相关关系；因果结论则需要额外的识别条件。</p>
+</section>
+<section class="paper" id="theory">
+<h2>二、核心理论与公式</h2>
+<h3>2.1 相关系数</h3>
+<div class="formula">ρ<sub>XY</sub> = Cov(X,Y) / [σ<sub>X</sub>σ<sub>Y</sub>]</div>
+<p>皮尔逊相关系数描述两个随机变量之间的线性关联，需要两个变量有有限且非零的方差。系数的范围是−1至1；正值代表正向线性关联，负值代表负向线性关联，接近零表示线性关联较弱，但并不排除非线性关系。相关系数不能确定因果方向。</p>
+<h3>2.2 反事实与潜在结果</h3>
+<div class="formula">τ<sub>100</sub> = E[P<sub>i</sub>(w+100) − P<sub>i</sub>(w)]</div>
+<p>如果能够清楚定义“仅以某种方式将汽车重量从w磅增加100磅”的干预，P<sub>i</sub>(w)与P<sub>i</sub>(w+100)分别表示两种干预状态下的潜在价格。两者之差是单位层面的因果效应，对适当总体取平均得到平均效应。</p>
+<p>这一表达还依赖干预的一致性与潜在结果可比较性。对于同一辆汽车，我们通常只能观察到其中一个实际状态下的价格，无法同时观察两种状态。这就是<strong>反事实问题</strong>。此外，添加配重与升级动力系统造成的增重，可能是不同干预，不能简单认为100磅是唯一要素。</p>
+</section>
+<section class="paper" id="confounding">
+<h2>三、为什么相关不等于因果？</h2>
+<h3>3.1 一个假设性的因果结构</h3>
+<svg class="diagram" width="550" height="232" viewBox="0 0 550 232" role="img" aria-label="车型定位和尺寸同时可能影响汽车重量与价格，重量与价格之间存在观测相关，但因果效应未被证实">
+<rect x="175" y="15" width="200" height="55" rx="12" fill="#dfece7" stroke="#66958a"/>
+<text x="275" y="36" text-anchor="middle" font-size="16" fill="#234d44">车型定位与尺寸</text><text x="275" y="56" text-anchor="middle" font-size="12" fill="#3f7569">潜在混杂因素</text>
+<rect x="22" y="157" width="175" height="58" rx="12" fill="#eaf1f7" stroke="#8daabf"/>
+<text x="109" y="191" text-anchor="middle" font-size="17" fill="#2e4d66">汽车重量</text>
+<rect x="353" y="157" width="175" height="58" rx="12" fill="#eaf1f7" stroke="#8daabf"/>
+<text x="441" y="191" text-anchor="middle" font-size="17" fill="#2e4d66">汽车价格</text>
+<g stroke="#659285" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M224 70 L117 151"/><path d="M326 70 L434 151"/><path d="M117 151 l1 -12 l10 8"/><path d="M434 151 l-11 -4 l3 -11"/></g>
+<path d="M199 186 H351" fill="none" stroke="#bd9064" stroke-width="2.5" stroke-dasharray="7 6"/>
+<text x="275" y="177" font-size="13" fill="#a2774b" text-anchor="middle">观测相关</text>
+</svg>
+<p class="muted">教学性因果图，表示一种需要检验和论证的可能机制，不是现有数据已经证实的因果图。</p>
+<p>即使重量本身不改变价格，只要更高级别车型同时更重、更贵，也可能出现正相关。</p>
+<h3>3.2 可手算的四辆车</h3>
+<p>假设两辆小型车分别重2000磅与2200磅，售价均4000美元；两辆大型车分别重3500磅与3700磅，售价均8000美元。合并四辆车，重量与价格明显正相关；在每个车型组内部，重量变化却没有对应价格变化。</p>
+<p><strong>注意：</strong>这四条记录只是用于理解混杂的虚构教学例子，并非真实汽车数据；它不能用于证明实际汽车市场中重量无因果效应。</p>
+</section>
+<section class="paper" id="data">
+<h2>四、真实数据实证：1978 Automobile Data</h2>
+<p>本节继续使用 Stata 官方公开的 <a href="https://www.stata-press.com/data/r19/auto.dta">auto.dta</a>，包含74条车型记录和12个原始变量，属于单期截面教学数据；不需要注册即可读取。</p>
+<div class="stats"><div><strong>74</strong><small>车型记录</small></div><div><strong>12</strong><small>原始变量</small></div><div><strong>1978</strong><small>数据年份</small></div></div>
+<p>本节变量：<code class="small-code">price</code>（美元价格），<code class="small-code">weight</code>（磅），<code class="small-code">mpg</code>（燃油效率，每加仑英里数），<code class="small-code">length</code>（英寸）与 <code class="small-code">foreign</code>（国产/进口分类）。</p>
+<p>已有公开Stata演示显示：<strong>price与weight的样本相关系数约0.5386；weight与mpg约−0.8072。</strong> 这两组数字来自公开Stata记录，<strong>不是本次在软件中重新运行得到的日志</strong>。</p>
+<p>这说明该样本中重量与价格存在中等强度的正向线性关联，重量与燃油效率存在较强的负向线性关联。它们都不能自动被解释为因果效应。</p>
+</section>
+<section class="paper" id="software">
+<h2>五、软件实现：相关与控制变量</h2>
+<p>使用同一份数据，先计算相关系数，再比较简单回归与控制车身长度的多元回归。下方可以切换Stata与Python代码。</p>
+<div class="code-toolbar" role="group" aria-label="软件切换"><button id="choose-stata" aria-pressed="true" type="button">Stata</button><button id="choose-python" aria-pressed="false" type="button">Python</button></div>
+<div id="stata-code"><h3>5.1 Stata</h3><pre><code>clear all
+use "https://www.stata-press.com/data/r19/auto.dta", clear
+
+* 查看变量和样本
+describe price weight mpg length foreign
+summarize price weight mpg length
+
+* 相关矩阵
+correlate price weight mpg
+
+* 简单线性回归
+regress price weight
+
+* 控制车身长度
+regress price weight length
+
+* 按来源分组画出真实散点
+twoway (scatter price weight if foreign == 0) ///
+       (scatter price weight if foreign == 1) ///
+       (lfit price weight), ///
+       legend(order(1 "Domestic" 2 "Foreign" ///
+                    3 "Pooled fit")) ///
+       xtitle("Weight (lbs)") ///
+       ytitle("Price (USD)")</code></pre></div>
+<div id="python-code" hidden><h3>5.2 Python</h3><p>如有需要，安装：<code class="small-code">pip install pandas matplotlib statsmodels</code></p><pre><code>import pandas as pd
+import matplotlib.pyplot as plt
+import statsmodels.api as sm
+
+url = "https://www.stata-press.com/data/r19/auto.dta"
+df = pd.read_stata(url, convert_categoricals=False)
+data = df[
+    ["price", "weight", "mpg", "length", "foreign"]
+].dropna()
+
+# 样本相关系数
+print(data[["price", "weight", "mpg"]].corr())
+
+# 简单回归
+X1 = sm.add_constant(data[["weight"]])
+m1 = sm.OLS(data["price"], X1).fit()
+
+# 额外控制车身长度
+X2 = sm.add_constant(data[["weight", "length"]])
+m2 = sm.OLS(data["price"], X2).fit()
+
+print("Simple model:")
+print(m1.summary())
+print("With length controlled:")
+print(m2.summary())
+
+# 真实车型散点，按国产/进口分组
+for group, subset in data.groupby("foreign"):
+    label = "Foreign" if group == 1 else "Domestic"
+    plt.scatter(subset["weight"], subset["price"],
+                label=label, alpha=0.7)
+
+plt.xlabel("Weight (lbs)")
+plt.ylabel("Price (USD)")
+plt.title("Car weight and price by origin")
+plt.legend()
+plt.show()</code></pre></div>
+<h3>5.3 怎样解释控制变量后的结果？</h3>
+<p>比较两次回归中的 <code class="small-code">weight</code> 系数。如果加入 <code class="small-code">length</code> 后系数改变，表示控制长度后得到的条件线性关联与原先的简单关联不同。但是，这并不说明所有混杂因素已经被排除。</p>
+<p>品牌、车型定位、发动机性能等其他变量仍可能影响重量和价格；甚至某些变量是否应该控制，也必须根据因果结构判断。<strong>“多加一个控制变量”不是“获得因果效应”的充分条件。</strong></p>
+<p class="alert"><strong>结果审慎说明：</strong>除公开资料已核实的相关系数外，本节不把未实际执行的多元回归系数与图形冒充软件运行结果。按上述代码可生成真实样本散点图和输出。</p>
+</section>
+<section class="paper" id="pitfalls">
+<h2>六、初学者避坑指南</h2>
+<ul><li><strong>相关系数高不等于因果效应大：</strong>相关是标准化的线性关联指标，而因果依赖具体干预。</li><li><strong>相关系数接近零不代表完全无关系：</strong>可能存在非线性联系。</li><li><strong>控制变量并非越多越好：</strong>合适的控制需要理论支持，错误控制也可能产生偏差。</li></ul>
+</section>
+<section class="paper" id="quiz">
+<h2>七、今日练习与参考答案</h2>
+<details><summary>理论题：冰淇淋销量和溺水事故同时增加，能否断言冰淇淋导致溺水？（点击查看）</summary><div class="answer"><p>不能。炎热天气可能同时促进冰淇淋销售和游泳活动，并使溺水风险增加。气温、季节和活动人口可能是混杂因素。相关性不能单独确立因果方向。</p></div></details>
+<details><summary>实操题：比较 regress price weight 和 regress price weight length，为什么结果仍不能称为因果效应？（点击查看）</summary><div class="answer"><p>运行：</p><pre><code>regress price weight
+regress price weight length</code></pre><p>系数即使发生改变，也不能证明所有混杂已消除；品牌、发动机性能和车型定位等未观测因素可能影响两者。需要依赖研究设计、因果假设和可辨认的干预来支持因果解释。具体系数差异以软件实际输出为准。</p></div></details>
+</section>
+<aside class="econ-reference-note" aria-label="资料来源"><strong>资料来源</strong><p><strong>数据与证据来源：</strong> <a href="https://www.stata.com/links/stata-basics/example-datasets/">Stata官方示例数据说明</a> · <a href="https://www.stata-press.com/data/r19/auto.dta">Stata官方auto.dta</a> · <a href="https://www.statalist.org/forums/forum/general-stata-discussion/general/1430799-highly-significant-regression-coefficients-and-low-correlations">公开Stata相关矩阵记录</a>。</p></aside>
+</div></div>
+<footer>计量经济学120天系统课程 · 第2课正式全文存档 · 按实际交付更新，未讲授课程不标记为已完成。</footer>
+</main>
+<script>
+(function(){const s=document.getElementById("stata-code"),p=document.getElementById("python-code");const a=document.getElementById("choose-stata"),b=document.getElementById("choose-python");function select(py){s.hidden=py;p.hidden=!py;a.setAttribute("aria-pressed",String(!py));b.setAttribute("aria-pressed",String(py));}a.addEventListener("click",()=>select(false));b.addEventListener("click",()=>select(true));})();
+</script>
+</body></html>,'<body>
+<header class="top"><a href="../../study/#courses">← 统一学习门户</a><a href="../">计量经济学120天 · 完整课程目录 →</a></header>
+<main class="wrap">
+<section class="hero">
+<div class="eyebrow">CHAPTER 01 · LESSON 02 / 120</div>
+<h1>相关关系与因果关系</h1>
+<p>第一章·第2节 ｜ 全课程第2天 ｜ 2026年10月9日 ｜ 预计10—15分钟</p>
+<p><strong>核心问题：</strong>为什么两个变量明显相关，仍不足以断言一个变量导致另一个变量发生变化？</p>
+<p class="muted"><a href="01-01.html">上一讲：计量经济学究竟是什么？</a> ｜ 下一讲：<a href="01-03.html">截面、时间序列和面板数据 →</a></p>
+<div class="meter" aria-label="学习进度2/120"><i></i></div><div class="muted">本课程已交付第2课 / 共120课</div>
+</section>
+<div class="layout">
+<nav class="side" aria-label="课程内导航"><a href="#intuition">一、通俗理解</a><a href="#theory">二、核心公式</a><a href="#confounding">三、混杂因素</a><a href="#data">四、真实数据</a><a href="#software">五、双软件实操</a><a href="#pitfalls">六、避坑指南</a><a href="#quiz">七、练习与答案</a></nav>
+<div>
+<section class="paper" id="intuition">
+<h2>一、通俗理解：一起变化，不等于因果</h2>
+<p><strong>上一节发现重量较大的汽车通常价格更高。那么，把汽车加重100磅，能提高售价吗？</strong></p>
+<p>不能直接这样判断。不同汽车之间的价格差异，不等于同一辆汽车改变重量之后的价格变化。较重的汽车可能本来就属于更高级别，具有更大尺寸、更丰富配置与不同品牌定位。它们与价格共同变化，可能形成重量和价格之间的正相关。</p>
+<div class="grid2"><div class="concept"><strong>相关关系（Correlation）</strong><p>观察到一个变量较大时，另一个变量通常也较大或较小。</p></div><div class="concept"><strong>因果关系（Causation）</strong><p>在明确定义干预之后，改变一个因素是否造成结果变化。</p></div></div>
+<p>相关衡量观测分布中的关系，因果衡量干预后的潜在结果。描述和预测可以利用相关关系；因果结论则需要额外的识别条件。</p>
+</section>
+<section class="paper" id="theory">
+<h2>二、核心理论与公式</h2>
+<h3>2.1 相关系数</h3>
+<div class="formula">ρ<sub>XY</sub> = Cov(X,Y) / [σ<sub>X</sub>σ<sub>Y</sub>]</div>
+<p>皮尔逊相关系数描述两个随机变量之间的线性关联，需要两个变量有有限且非零的方差。系数的范围是−1至1；正值代表正向线性关联，负值代表负向线性关联，接近零表示线性关联较弱，但并不排除非线性关系。相关系数不能确定因果方向。</p>
+<h3>2.2 反事实与潜在结果</h3>
+<div class="formula">τ<sub>100</sub> = E[P<sub>i</sub>(w+100) − P<sub>i</sub>(w)]</div>
+<p>如果能够清楚定义“仅以某种方式将汽车重量从w磅增加100磅”的干预，P<sub>i</sub>(w)与P<sub>i</sub>(w+100)分别表示两种干预状态下的潜在价格。两者之差是单位层面的因果效应，对适当总体取平均得到平均效应。</p>
+<p>这一表达还依赖干预的一致性与潜在结果可比较性。对于同一辆汽车，我们通常只能观察到其中一个实际状态下的价格，无法同时观察两种状态。这就是<strong>反事实问题</strong>。此外，添加配重与升级动力系统造成的增重，可能是不同干预，不能简单认为100磅是唯一要素。</p>
+</section>
+<section class="paper" id="confounding">
+<h2>三、为什么相关不等于因果？</h2>
+<h3>3.1 一个假设性的因果结构</h3>
+<svg class="diagram" width="550" height="232" viewBox="0 0 550 232" role="img" aria-label="车型定位和尺寸同时可能影响汽车重量与价格，重量与价格之间存在观测相关，但因果效应未被证实">
+<rect x="175" y="15" width="200" height="55" rx="12" fill="#dfece7" stroke="#66958a"/>
+<text x="275" y="36" text-anchor="middle" font-size="16" fill="#234d44">车型定位与尺寸</text><text x="275" y="56" text-anchor="middle" font-size="12" fill="#3f7569">潜在混杂因素</text>
+<rect x="22" y="157" width="175" height="58" rx="12" fill="#eaf1f7" stroke="#8daabf"/>
+<text x="109" y="191" text-anchor="middle" font-size="17" fill="#2e4d66">汽车重量</text>
+<rect x="353" y="157" width="175" height="58" rx="12" fill="#eaf1f7" stroke="#8daabf"/>
+<text x="441" y="191" text-anchor="middle" font-size="17" fill="#2e4d66">汽车价格</text>
+<g stroke="#659285" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M224 70 L117 151"/><path d="M326 70 L434 151"/><path d="M117 151 l1 -12 l10 8"/><path d="M434 151 l-11 -4 l3 -11"/></g>
+<path d="M199 186 H351" fill="none" stroke="#bd9064" stroke-width="2.5" stroke-dasharray="7 6"/>
+<text x="275" y="177" font-size="13" fill="#a2774b" text-anchor="middle">观测相关</text>
+</svg>
+<p class="muted">教学性因果图，表示一种需要检验和论证的可能机制，不是现有数据已经证实的因果图。</p>
+<p>即使重量本身不改变价格，只要更高级别车型同时更重、更贵，也可能出现正相关。</p>
+<h3>3.2 可手算的四辆车</h3>
+<p>假设两辆小型车分别重2000磅与2200磅，售价均4000美元；两辆大型车分别重3500磅与3700磅，售价均8000美元。合并四辆车，重量与价格明显正相关；在每个车型组内部，重量变化却没有对应价格变化。</p>
+<p><strong>注意：</strong>这四条记录只是用于理解混杂的虚构教学例子，并非真实汽车数据；它不能用于证明实际汽车市场中重量无因果效应。</p>
+</section>
+<section class="paper" id="data">
+<h2>四、真实数据实证：1978 Automobile Data</h2>
+<p>本节继续使用 Stata 官方公开的 <a href="https://www.stata-press.com/data/r19/auto.dta">auto.dta</a>，包含74条车型记录和12个原始变量，属于单期截面教学数据；不需要注册即可读取。</p>
+<div class="stats"><div><strong>74</strong><small>车型记录</small></div><div><strong>12</strong><small>原始变量</small></div><div><strong>1978</strong><small>数据年份</small></div></div>
+<p>本节变量：<code class="small-code">price</code>（美元价格），<code class="small-code">weight</code>（磅），<code class="small-code">mpg</code>（燃油效率，每加仑英里数），<code class="small-code">length</code>（英寸）与 <code class="small-code">foreign</code>（国产/进口分类）。</p>
+<p>已有公开Stata演示显示：<strong>price与weight的样本相关系数约0.5386；weight与mpg约−0.8072。</strong> 这两组数字来自公开Stata记录，<strong>不是本次在软件中重新运行得到的日志</strong>。</p>
+<p>这说明该样本中重量与价格存在中等强度的正向线性关联，重量与燃油效率存在较强的负向线性关联。它们都不能自动被解释为因果效应。</p>
+</section>
+<section class="paper" id="software">
+<h2>五、软件实现：相关与控制变量</h2>
+<p>使用同一份数据，先计算相关系数，再比较简单回归与控制车身长度的多元回归。下方可以切换Stata与Python代码。</p>
+<div class="code-toolbar" role="group" aria-label="软件切换"><button id="choose-stata" aria-pressed="true" type="button">Stata</button><button id="choose-python" aria-pressed="false" type="button">Python</button></div>
+<div id="stata-code"><h3>5.1 Stata</h3><pre><code>clear all
+use "https://www.stata-press.com/data/r19/auto.dta", clear
+
+* 查看变量和样本
+describe price weight mpg length foreign
+summarize price weight mpg length
+
+* 相关矩阵
+correlate price weight mpg
+
+* 简单线性回归
+regress price weight
+
+* 控制车身长度
+regress price weight length
+
+* 按来源分组画出真实散点
+twoway (scatter price weight if foreign == 0) ///
+       (scatter price weight if foreign == 1) ///
+       (lfit price weight), ///
+       legend(order(1 "Domestic" 2 "Foreign" ///
+                    3 "Pooled fit")) ///
+       xtitle("Weight (lbs)") ///
+       ytitle("Price (USD)")</code></pre></div>
+<div id="python-code" hidden><h3>5.2 Python</h3><p>如有需要，安装：<code class="small-code">pip install pandas matplotlib statsmodels</code></p><pre><code>import pandas as pd
+import matplotlib.pyplot as plt
+import statsmodels.api as sm
+
+url = "https://www.stata-press.com/data/r19/auto.dta"
+df = pd.read_stata(url, convert_categoricals=False)
+data = df[
+    ["price", "weight", "mpg", "length", "foreign"]
+].dropna()
+
+# 样本相关系数
+print(data[["price", "weight", "mpg"]].corr())
+
+# 简单回归
+X1 = sm.add_constant(data[["weight"]])
+m1 = sm.OLS(data["price"], X1).fit()
+
+# 额外控制车身长度
+X2 = sm.add_constant(data[["weight", "length"]])
+m2 = sm.OLS(data["price"], X2).fit()
+
+print("Simple model:")
+print(m1.summary())
+print("With length controlled:")
+print(m2.summary())
+
+# 真实车型散点，按国产/进口分组
+for group, subset in data.groupby("foreign"):
+    label = "Foreign" if group == 1 else "Domestic"
+    plt.scatter(subset["weight"], subset["price"],
+                label=label, alpha=0.7)
+
+plt.xlabel("Weight (lbs)")
+plt.ylabel("Price (USD)")
+plt.title("Car weight and price by origin")
+plt.legend()
+plt.show()</code></pre></div>
+<h3>5.3 怎样解释控制变量后的结果？</h3>
+<p>比较两次回归中的 <code class="small-code">weight</code> 系数。如果加入 <code class="small-code">length</code> 后系数改变，表示控制长度后得到的条件线性关联与原先的简单关联不同。但是，这并不说明所有混杂因素已经被排除。</p>
+<p>品牌、车型定位、发动机性能等其他变量仍可能影响重量和价格；甚至某些变量是否应该控制，也必须根据因果结构判断。<strong>“多加一个控制变量”不是“获得因果效应”的充分条件。</strong></p>
+<p class="alert"><strong>结果审慎说明：</strong>除公开资料已核实的相关系数外，本节不把未实际执行的多元回归系数与图形冒充软件运行结果。按上述代码可生成真实样本散点图和输出。</p>
+</section>
+<section class="paper" id="pitfalls">
+<h2>六、初学者避坑指南</h2>
+<ul><li><strong>相关系数高不等于因果效应大：</strong>相关是标准化的线性关联指标，而因果依赖具体干预。</li><li><strong>相关系数接近零不代表完全无关系：</strong>可能存在非线性联系。</li><li><strong>控制变量并非越多越好：</strong>合适的控制需要理论支持，错误控制也可能产生偏差。</li></ul>
+</section>
+<section class="paper" id="quiz">
+<h2>七、今日练习与参考答案</h2>
+<details><summary>理论题：冰淇淋销量和溺水事故同时增加，能否断言冰淇淋导致溺水？（点击查看）</summary><div class="answer"><p>不能。炎热天气可能同时促进冰淇淋销售和游泳活动，并使溺水风险增加。气温、季节和活动人口可能是混杂因素。相关性不能单独确立因果方向。</p></div></details>
+<details><summary>实操题：比较 regress price weight 和 regress price weight length，为什么结果仍不能称为因果效应？（点击查看）</summary><div class="answer"><p>运行：</p><pre><code>regress price weight
+regress price weight length</code></pre><p>系数即使发生改变，也不能证明所有混杂已消除；品牌、发动机性能和车型定位等未观测因素可能影响两者。需要依赖研究设计、因果假设和可辨认的干预来支持因果解释。具体系数差异以软件实际输出为准。</p></div></details>
+</section>
+<aside class="econ-reference-note" aria-label="资料来源"><strong>资料来源</strong><p><strong>数据与证据来源：</strong> <a href="https://www.stata.com/links/stata-basics/example-datasets/">Stata官方示例数据说明</a> · <a href="https://www.stata-press.com/data/r19/auto.dta">Stata官方auto.dta</a> · <a href="https://www.statalist.org/forums/forum/general-stata-discussion/general/1430799-highly-significant-regression-coefficients-and-low-correlations">公开Stata相关矩阵记录</a>。</p></aside>
+</div></div>
+<footer>计量经济学120天系统课程 · 第2课正式全文存档 · 按实际交付更新，未讲授课程不标记为已完成。</footer>
+</main>
+<script>
+(function(){const s=document.getElementById("stata-code"),p=document.getElementById("python-code");const a=document.getElementById("choose-stata"),b=document.getElementById("choose-python");function select(py){s.hidden=py;p.hidden=!py;a.setAttribute("aria-pressed",String(!py));b.setAttribute("aria-pressed",String(py));}a.addEventListener("click",()=>select(false));b.addEventListener("click",()=>select(true));})();
+</script>
+</body></html>]],displayMath:[['\\[','\\]'],['$','$']]},svg:{fontCache:'global'}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script></head><body>
 <header class="top"><a href="../../study/#courses">← 统一学习门户</a><a href="../">计量经济学120天 · 完整课程目录 →</a></header>
 <main class="wrap">
 <section class="hero">
