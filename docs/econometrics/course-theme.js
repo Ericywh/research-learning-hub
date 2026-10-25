@@ -40,14 +40,16 @@ function start(){
    holder.append(article);main.append(holder);
  }
  if(!article)return;
- // Repair legacy math delimiters in lesson prose without touching executable code.
- const mathNodes=[];const walker=document.createTreeWalker(article,NodeFilter.SHOW_TEXT);
- while(walker.nextNode()){const node=walker.currentNode;if(node.parentElement?.closest('code,pre,script,style,textarea'))continue;mathNodes.push(node)}
- for(const node of mathNodes){let v=node.nodeValue;
-   v=v.replace(/\\\\\\\\(?=[A-Za-z([])/g,'\\\\');
-   v=v.replace(/\\\\\(([^]*?)\\\\\)/g,(m,x)=>'\\\\('+x+'\\\\)');
-   v=v.replace(/\(([^()]*\\\\(?:beta|alpha|theta|sigma|mu|gamma|hat|ln|frac|partial|times|widehat)[^()]*)\)/g,(m,x)=>'\\\\('+x+'\\\\)');
-   node.nodeValue=v;
+ // Legacy notation normalization: process only prose text, never code or existing MathJax markup.
+ const mathWalker=document.createTreeWalker(article,NodeFilter.SHOW_TEXT);
+ const mathText=[];
+ while(mathWalker.nextNode()){const n=mathWalker.currentNode;if(!n.parentElement?.closest('pre,code,script,style,textarea,.MathJax,mjx-container'))mathText.push(n)}
+ for(const n of mathText){let v=n.nodeValue;
+   // Convert raw dollar-delimited inline math into MathJax's standard inline syntax.
+   v=v.replace(/\$([^$\\n]+)\$/g,(_,m)=>'\\\\('+m+'\\\\)');
+   // Restore double-escaped TeX commands exported by legacy editors.
+   v=v.replace(/\\\\\\\\(?=[A-Za-z])/g,'\\\\');
+   n.nodeValue=v;
  }
  if(window.MathJax?.typesetPromise)window.MathJax.typesetPromise([article]).catch(()=>{});
 
