@@ -169,9 +169,9 @@ window.MATH_COURSE={
           "section": 6,
           "number": 18,
           "title": "正交及其含义",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-25",
+          "url": "lessons/2026-10-25-02-06.html"
         },
         {
           "chapter": 2,
