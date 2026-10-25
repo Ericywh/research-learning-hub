@@ -40,6 +40,17 @@ function start(){
    holder.append(article);main.append(holder);
  }
  if(!article)return;
+ // Repair legacy math delimiters in lesson prose without touching executable code.
+ const mathNodes=[];const walker=document.createTreeWalker(article,NodeFilter.SHOW_TEXT);
+ while(walker.nextNode()){const node=walker.currentNode;if(node.parentElement?.closest('code,pre,script,style,textarea'))continue;mathNodes.push(node)}
+ for(const node of mathNodes){let v=node.nodeValue;
+   v=v.replace(/\\\\\\\\(?=[A-Za-z([])/g,'\\\\');
+   v=v.replace(/\\\\\(([^]*?)\\\\\)/g,(m,x)=>'\\\\('+x+'\\\\)');
+   v=v.replace(/\(([^()]*\\\\(?:beta|alpha|theta|sigma|mu|gamma|hat|ln|frac|partial|times|widehat)[^()]*)\)/g,(m,x)=>'\\\\('+x+'\\\\)');
+   node.nodeValue=v;
+ }
+ if(window.MathJax?.typesetPromise)window.MathJax.typesetPromise([article]).catch(()=>{});
+
  const sections=[...article.querySelectorAll(":scope > section")].filter(x=>x.querySelector("h2,h3"));
  const nav=holder.querySelector(":scope > nav")||document.createElement("nav");if(!nav.parentElement){nav.className="econ-aside";nav.setAttribute("aria-label","课内导航");holder.prepend(nav)}
  if(!nav.querySelector("a")){const heading=document.createElement("div");heading.className="econ-aside-title";heading.textContent="本课阅读目录";nav.append(heading);
