@@ -9,7 +9,345 @@
 </style>
 
 
-<link rel="stylesheet" href="../course-theme.css?v=20261025-3"><script defer src="../course-theme.js?v=20261025-3"></script></head>
+<link rel="stylesheet" href="../course-theme.css?v=20261025-3"><script defer src="../course-theme.js?v=20261025-3"></script><script>window.MathJax={tex:{inlineMath:[['\\(','\\)'],['
+<body>
+<header class="top"><a href="../../study/#courses">← 统一学习门户</a><a href="../">计量经济学120天 · 完整课程目录 →</a></header>
+<main class="wrap">
+<section class="hero">
+<div class="eyebrow">CHAPTER 01 · LESSON 03 / 120</div>
+<h1>截面、时间序列和面板数据</h1>
+<p>第一章·第3节 ｜ 全课程第3课 ｜ 2026年10月9日 ｜ 预计10—15分钟</p>
+<p><strong>核心问题：</strong>研究10家企业的投资差异、1家企业的投资变化、以及10家企业连续20年的变化，为什么不能完全使用同一种分析思路？</p>
+<p class="muted"><a href="01-02.html">上一讲：相关关系与因果关系</a> ｜ <a href="01-04.html">下一讲：期望、方差、协方差、标准误、假设检验与p值 →</a></p>
+<div class="meter" aria-label="课程进度3/120"><i></i></div><div class="muted">已交付第3课 / 120课；未授课内容不提前标记</div>
+</section>
+<div class="layout">
+<nav class="side" aria-label="课程内导航"><a href="#intuition">一、从问题出发</a><a href="#types">二、三种数据结构</a><a href="#formula">三、两个核心公式</a><a href="#data">四、真实数据</a><a href="#example">五、结构图与手算</a><a href="#software">六、双软件实操</a><a href="#pitfalls">七、常见误区</a><a href="#quiz">八、练习与答案</a></nav>
+<div>
+<section class="paper" id="intuition">
+<h2>一、通俗理解：观察的是谁，在什么时候？</h2>
+<p>研究企业投资时，可以比较1935年不同企业的投资额，也可以追踪一家企业从1935年到1954年的投资变化，还可以同时观察多家企业在多年中的变化。这三种研究的变量名称或许相同，但<strong>每一行数据代表的对象和时间不同</strong>，所含信息及统计依赖也不同。</p>
+<div class="quote">识别数据结构，先问两句话：“一行数据记录哪个单位？”“它记录的是哪个时间点？”</div>
+<p>第1、2课的汽车数据，每个车型只出现一次，属于典型的截面数据。本节使用一份同时带有企业编号和年份的数据，亲手观察三种结构怎样相互联系。</p>
+</section>
+<section class="paper" id="types">
+<h2>二、三种最常用的数据结构</h2>
+<div class="table-scroll"><table><thead><tr><th>类型</th><th>一行数据代表</th><th>主要研究问题</th><th>本课例子</th></tr></thead><tbody>
+<tr><td><strong>截面数据</strong> Cross-section</td><td>某时期的一个单位</td><td>企业之间有何差异？</td><td>1935年的10家企业</td></tr>
+<tr><td><strong>时间序列</strong> Time series</td><td>同一对象的一个时间点</td><td>投资如何随时间变化？</td><td>第1家企业20年的投资</td></tr>
+<tr><td><strong>面板数据</strong> Panel</td><td>某单位在某时间点的一次观测</td><td>不同企业如何随时间共同或各自变化？</td><td>10家企业×20年</td></tr>
+</tbody></table></div>
+<p>横截面主要利用“单位之间”的变化；时间序列利用“同一对象随时间”的变化；面板数据兼有<strong>单位间差异</strong>和<strong>单位内随时间的变化</strong>。</p>
+<p>使用面板并不自动得到因果识别，但它允许研究者在满足相应假设时处理某些不随时间改变的单位特征。数据结构决定能做什么、不能直接做什么。</p>
+</section>
+<section class="paper" id="formula">
+<h2>三、核心理论与公式</h2>
+<h3>3.1 面板数据的双下标</h3>
+<div class="formula">y<sub>it</sub> &nbsp; (i=1,…,N; t=1,…,T)</div>
+<p><em>i</em> 表示企业，<em>t</em> 表示年份。例如，y<sub>1,1935</sub> 代表第1家企业在1935年的投资。若每家企业都有相同T期、单位—时间组合不重复、数据无缺口，就构成<strong>平衡面板</strong>，记录数为 <strong>N × T</strong>。若一些企业缺少年份，则属于非平衡面板，不能简单套用N×T。</p>
+<h3>3.2 企业内部的相邻期变化</h3>
+<div class="formula">Δy<sub>it</sub> = y<sub>it</sub> − y<sub>i,t−1</sub></div>
+<p>这个差值比较同一家企业相邻两个观察年份的投资。只有两个时期确实相邻、数值口径一致时，才能解释为“一年内变化”；在存在年份缺口时必须先核对年份。差分有时能去掉不随时间改变的企业特征，却不一定消除随时间变化的混杂因素。</p>
+</section>
+<section class="paper" id="data">
+<h2>四、真实数据：Grunfeld企业投资数据</h2>
+<p>我们采用Stata官方<a href="https://www.stata-press.com/data/r19/grunfeld.dta">grunfeld.dta</a>。这是经典的美国企业投资教学数据，含10家企业、1935—1954年连续20年的年度记录，共200条观测，属于强平衡面板。Stata官方文档使用它演示面板数据分析。这里的年份是<strong>历史资料年份，不是2026年的企业调查</strong>。</p>
+<div class="stats"><div><strong>10</strong><small>企业</small></div><div><strong>20</strong><small>年份</small></div><div><strong>200</strong><small>单位—年份观测</small></div></div>
+<p>主要字段：<code class="small-code">company</code> 企业编号、<code class="small-code">year</code> 年份、<code class="small-code">invest</code> 投资、<code class="small-code">mvalue</code> 企业市值、<code class="small-code">kstock</code> 资本存量；Stata版本还含<code class="small-code">time</code>。原始Grunfeld资料有多种流传版本，各软件内置副本也不一定相同，因此本节的Python和Stata<strong>都读取同一个Stata官方URL</strong>，避免样本差异。</p>
+</section>
+<section class="paper" id="example">
+<h2>五、结构示意与可手算例子</h2>
+<svg class="diagram" viewBox="0 0 690 270" width="690" height="270" role="img" aria-label="两家企业三个时期的示意性面板表，横向单行展示时间序列，竖向单列展示截面，整体展示面板">
+<rect x="15" y="22" width="650" height="221" rx="14" fill="#f7faf9" stroke="#d9e6e3"/>
+<g font-family="system-ui,sans-serif" font-size="17" fill="#304955" text-anchor="middle"><text x="82" y="60">企业</text><text x="221" y="60">1935</text><text x="373" y="60">1936</text><text x="530" y="60">1937</text><text x="80" y="120">A</text><text x="80" y="182">B</text><text x="221" y="120">100</text><text x="373" y="120">130</text><text x="530" y="120">160</text><text x="221" y="182">200</text><text x="373" y="182">180</text><text x="530" y="182">190</text></g>
+<rect x="150" y="83" width="142" height="132" rx="8" fill="#bedfd5" opacity=".3" stroke="#2c8c77" stroke-width="2"/>
+<rect x="148" y="88" width="456" height="62" rx="8" fill="#cbdff3" opacity=".28" stroke="#5587b0" stroke-width="2"/>
+<g font-size="12" fill="#547770"><text x="153" y="231">绿色：同一年截面</text><text x="371" y="231">蓝色：同一家企业的时间序列</text><text x="276" y="259">整张表：面板数据</text></g>
+</svg>
+<p class="muted">本图数据均为<strong>教学构造的示意数值</strong>，并非Grunfeld原始观测。横向看A公司的三个年份是时间序列；纵向看1935年两家公司是截面；全表即面板。</p>
+<p>假设A公司1935年投资100、1936年130，B公司分别为200、180，那么A公司的相邻期变化是130−100＝30，B公司为180−200＝−20；两者变化之差为50。这是描述性的变化差异，不应在没有处理组、对照组、平行趋势等设计的情况下称为政策因果效应。</p>
+</section>
+<section class="paper" id="software">
+<h2>六、Stata与Python动手做</h2>
+<p>本节先核对面板标识是否唯一，再从同一份源数据截取1935年截面、公司1的时间序列，以及全部公司的面板结构。图形命令会绘制<strong>真实数据</strong>，本页并未将未实际运行的图冒充真实结果。</p>
+<div class="code-toolbar" role="group" aria-label="选择软件"><button id="choose-stata" type="button" aria-pressed="true">Stata</button><button id="choose-python" type="button" aria-pressed="false">Python</button></div>
+<div id="stata-code"><h3>6.1 Stata</h3>
+<pre><code>clear all
+use "https://www.stata-press.com/data/r19/grunfeld.dta", clear
+
+* 先核实数据：企业×年份是否唯一
+describe
+isid company year
+xtset company year
+xtdescribe
+
+* 截面：1935年的企业比较
+count if year == 1935
+list company invest mvalue if year == 1935
+
+* 时间序列：公司1从1935至1954年
+preserve
+keep if company == 1
+tsset year
+tsline invest, title("Company 1 investment")
+restore
+
+* 面板：在同一张图比较公司1和2
+xtset company year
+xtline invest if inlist(company, 1, 2), overlay
+
+* 对相邻年份做同一企业内的差分
+generate dinvest = D.invest
+list company year invest dinvest if company == 1 in 1/20
+</code></pre>
+<p><code class="small-code">isid</code>检查联合主键；<code class="small-code">xtset</code>声明面板结构，<code class="small-code">tsset</code>声明单一时间序列，<code class="small-code">preserve/restore</code>临时截取子样本后恢复原数据。<code class="small-code">D.invest</code>在已设置的面板时间结构下计算滞后差分。</p>
+</div>
+<div id="python-code" hidden><h3>6.2 Python</h3><p>首次运行安装：<code class="small-code">pip install pandas matplotlib</code></p>
+<pre><code>import pandas as pd
+import matplotlib.pyplot as plt
+
+url = "https://www.stata-press.com/data/r19/grunfeld.dta"
+df = pd.read_stata(url)
+keep = ["company", "year", "invest", "mvalue", "kstock"]
+data = df[keep].dropna().copy()
+
+# 联合主键不能重复
+assert not data.duplicated(["company", "year"]).any()
+data = data.sort_values(["company", "year"])
+
+print("观测数:", len(data))
+print("企业数:", data["company"].nunique())
+print("年份数:", data["year"].nunique())
+print("每家企业记录数:")
+print(data.groupby("company")["year"].nunique())
+
+# 同一年多家企业：截面
+cross = data.loc[data["year"] == 1935]
+print(cross[["company", "invest", "mvalue"]])
+
+# 同一家企业跨年：时间序列
+series = data.loc[data["company"] == 1].copy()
+series["dinvest"] = series["invest"].diff()
+print(series[["year", "invest", "dinvest"]].head())
+
+# 全部公司、全部年份：面板
+panel = data.set_index(["company", "year"])
+print(panel.head())
+
+# 两家企业的真实投资时间变化
+for cid in [1, 2]:
+    a = data.loc[data["company"] == cid]
+    plt.plot(a["year"], a["invest"],
+             marker="o", label=f"Company {cid}")
+plt.xlabel("Year")
+plt.ylabel("Investment (dataset units)")
+plt.title("Grunfeld panel: two firms over time")
+plt.legend()
+plt.tight_layout()
+plt.show()
+</code></pre><p>Python用两个键 <code class="small-code">["company","year"]</code> 表示面板；<code class="small-code">groupby</code> 检查各公司年份覆盖情况；<code class="small-code">diff</code>计算按年份排序后的公司内投资变化。</p>
+</div>
+<h3>6.3 应该如何阅读输出？</h3>
+<p>Stata官方文档已经确认这份示例是<strong>10家企业、1935—1954年的强平衡面板</strong>。按逻辑，1935年的截面应有10条记录，单家企业的时间序列应有20条记录，完整面板应有200条记录。差分后每家企业的首年没有前一期，因此投资差分的有效记录为10×19＝190条（前提是原数据没有额外缺失且时间连续）。</p>
+<p>这里展示的是基于公开数据结构可核验的数量关系，<strong>不是本次环境重新运行Stata/Python的输出</strong>。软件运行后应检查实际结果。如果某年缺失、主键重复或其他条件不满足，以上数量不能机械套用。</p>
+</section>
+<section class="paper" id="pitfalls">
+<h2>七、初学者最常见的三个误区</h2>
+<ul><li><strong>观测数不等于独立样本量。</strong> 200条企业—年份记录来自10家企业，连续年份可能相关，不能在所有统计推断中当成200条独立抽样记录。</li>
+<li><strong>同一年多家公司不叫时间序列。</strong> 有“year”字段不代表就是时间序列，要看每条记录是否追踪同一个对象。</li>
+<li><strong>面板不会自动带来因果结论。</strong> 公司内部变化仍可能受到共同经济冲击及随时间改变的因素影响。</li></ul>
+</section>
+<section class="paper" id="quiz">
+<h2>八、练习与参考答案</h2>
+<details><summary>概念题：调查20家医院在2025年的床位数，以及调查同一家医院2015—2025年的床位数，分别是什么数据？</summary><div class="answer"><p>前者是在固定年份比较不同医院，是截面数据。后者是同一家医院随时间重复观测，是时间序列。如果同时追踪20家医院在2015—2025年的床位数，则是医院—年份面板。</p></div></details>
+<details><summary>实操题：用Grunfeld数据提取1940年的截面，核对观测数；再计算公司1在1936年相对1935年的投资变化。</summary><div class="answer"><p>Stata：</p><pre><code>count if year == 1940
+list company invest if year == 1940
+list company year invest if company == 1 &amp; inlist(year, 1935, 1936)</code></pre>
+<p>Python：</p><pre><code>print(data.loc[data["year"] == 1940].shape[0])
+a = data.loc[(data["company"] == 1) &amp;
+             data["year"].isin([1935, 1936])]
+print(a[["year", "invest"]])
+print(a.sort_values("year")["invest"].diff())</code></pre>
+<p>应得到1940年10条截面记录。Stata早期官方公开演示中的公司1投资，1935年为317.6、1936年为391.8，因此其变化为74.2（数据原始单位）。正式运行时以所读r19文件的输出核实，避免其他Grunfeld版本的差异。</p>
+</div></details>
+</section>
+<aside class="econ-reference-note" aria-label="资料来源"><strong>资料来源</strong><p><strong>核查资料：</strong><a href="https://www.stata-press.com/data/r19/grunfeld.dta">Stata Release 19 Grunfeld原始数据</a>；<a href="https://www.stata-press.com/data/r19/d.html">Stata Press官方数据目录</a>；<a href="https://www.stata.com/manuals17/xt.pdf">Stata面板数据官方手册</a>。<br>版本提醒：<a href="https://www.statsmodels.org/stable/datasets/generated/grunfeld.html">statsmodels自带的Grunfeld数据</a>为11家企业、220条记录，并不等同于此Stata 10家企业版本。</p></aside>
+</div></div>
+<footer>计量经济学120天系统课程 · 第3课正式全文 · 已归档课程按真实交付记录更新。</footer>
+</main>
+<script>
+(function(){const s=document.getElementById("stata-code"),p=document.getElementById("python-code"),a=document.getElementById("choose-stata"),b=document.getElementById("choose-python");function choice(py){s.hidden=py;p.hidden=!py;a.setAttribute("aria-pressed",String(!py));b.setAttribute("aria-pressed",String(py));}a.addEventListener("click",()=>choice(false));b.addEventListener("click",()=>choice(true));})();
+</script>
+</body></html>,'
+<body>
+<header class="top"><a href="../../study/#courses">← 统一学习门户</a><a href="../">计量经济学120天 · 完整课程目录 →</a></header>
+<main class="wrap">
+<section class="hero">
+<div class="eyebrow">CHAPTER 01 · LESSON 03 / 120</div>
+<h1>截面、时间序列和面板数据</h1>
+<p>第一章·第3节 ｜ 全课程第3课 ｜ 2026年10月9日 ｜ 预计10—15分钟</p>
+<p><strong>核心问题：</strong>研究10家企业的投资差异、1家企业的投资变化、以及10家企业连续20年的变化，为什么不能完全使用同一种分析思路？</p>
+<p class="muted"><a href="01-02.html">上一讲：相关关系与因果关系</a> ｜ <a href="01-04.html">下一讲：期望、方差、协方差、标准误、假设检验与p值 →</a></p>
+<div class="meter" aria-label="课程进度3/120"><i></i></div><div class="muted">已交付第3课 / 120课；未授课内容不提前标记</div>
+</section>
+<div class="layout">
+<nav class="side" aria-label="课程内导航"><a href="#intuition">一、从问题出发</a><a href="#types">二、三种数据结构</a><a href="#formula">三、两个核心公式</a><a href="#data">四、真实数据</a><a href="#example">五、结构图与手算</a><a href="#software">六、双软件实操</a><a href="#pitfalls">七、常见误区</a><a href="#quiz">八、练习与答案</a></nav>
+<div>
+<section class="paper" id="intuition">
+<h2>一、通俗理解：观察的是谁，在什么时候？</h2>
+<p>研究企业投资时，可以比较1935年不同企业的投资额，也可以追踪一家企业从1935年到1954年的投资变化，还可以同时观察多家企业在多年中的变化。这三种研究的变量名称或许相同，但<strong>每一行数据代表的对象和时间不同</strong>，所含信息及统计依赖也不同。</p>
+<div class="quote">识别数据结构，先问两句话：“一行数据记录哪个单位？”“它记录的是哪个时间点？”</div>
+<p>第1、2课的汽车数据，每个车型只出现一次，属于典型的截面数据。本节使用一份同时带有企业编号和年份的数据，亲手观察三种结构怎样相互联系。</p>
+</section>
+<section class="paper" id="types">
+<h2>二、三种最常用的数据结构</h2>
+<div class="table-scroll"><table><thead><tr><th>类型</th><th>一行数据代表</th><th>主要研究问题</th><th>本课例子</th></tr></thead><tbody>
+<tr><td><strong>截面数据</strong> Cross-section</td><td>某时期的一个单位</td><td>企业之间有何差异？</td><td>1935年的10家企业</td></tr>
+<tr><td><strong>时间序列</strong> Time series</td><td>同一对象的一个时间点</td><td>投资如何随时间变化？</td><td>第1家企业20年的投资</td></tr>
+<tr><td><strong>面板数据</strong> Panel</td><td>某单位在某时间点的一次观测</td><td>不同企业如何随时间共同或各自变化？</td><td>10家企业×20年</td></tr>
+</tbody></table></div>
+<p>横截面主要利用“单位之间”的变化；时间序列利用“同一对象随时间”的变化；面板数据兼有<strong>单位间差异</strong>和<strong>单位内随时间的变化</strong>。</p>
+<p>使用面板并不自动得到因果识别，但它允许研究者在满足相应假设时处理某些不随时间改变的单位特征。数据结构决定能做什么、不能直接做什么。</p>
+</section>
+<section class="paper" id="formula">
+<h2>三、核心理论与公式</h2>
+<h3>3.1 面板数据的双下标</h3>
+<div class="formula">y<sub>it</sub> &nbsp; (i=1,…,N; t=1,…,T)</div>
+<p><em>i</em> 表示企业，<em>t</em> 表示年份。例如，y<sub>1,1935</sub> 代表第1家企业在1935年的投资。若每家企业都有相同T期、单位—时间组合不重复、数据无缺口，就构成<strong>平衡面板</strong>，记录数为 <strong>N × T</strong>。若一些企业缺少年份，则属于非平衡面板，不能简单套用N×T。</p>
+<h3>3.2 企业内部的相邻期变化</h3>
+<div class="formula">Δy<sub>it</sub> = y<sub>it</sub> − y<sub>i,t−1</sub></div>
+<p>这个差值比较同一家企业相邻两个观察年份的投资。只有两个时期确实相邻、数值口径一致时，才能解释为“一年内变化”；在存在年份缺口时必须先核对年份。差分有时能去掉不随时间改变的企业特征，却不一定消除随时间变化的混杂因素。</p>
+</section>
+<section class="paper" id="data">
+<h2>四、真实数据：Grunfeld企业投资数据</h2>
+<p>我们采用Stata官方<a href="https://www.stata-press.com/data/r19/grunfeld.dta">grunfeld.dta</a>。这是经典的美国企业投资教学数据，含10家企业、1935—1954年连续20年的年度记录，共200条观测，属于强平衡面板。Stata官方文档使用它演示面板数据分析。这里的年份是<strong>历史资料年份，不是2026年的企业调查</strong>。</p>
+<div class="stats"><div><strong>10</strong><small>企业</small></div><div><strong>20</strong><small>年份</small></div><div><strong>200</strong><small>单位—年份观测</small></div></div>
+<p>主要字段：<code class="small-code">company</code> 企业编号、<code class="small-code">year</code> 年份、<code class="small-code">invest</code> 投资、<code class="small-code">mvalue</code> 企业市值、<code class="small-code">kstock</code> 资本存量；Stata版本还含<code class="small-code">time</code>。原始Grunfeld资料有多种流传版本，各软件内置副本也不一定相同，因此本节的Python和Stata<strong>都读取同一个Stata官方URL</strong>，避免样本差异。</p>
+</section>
+<section class="paper" id="example">
+<h2>五、结构示意与可手算例子</h2>
+<svg class="diagram" viewBox="0 0 690 270" width="690" height="270" role="img" aria-label="两家企业三个时期的示意性面板表，横向单行展示时间序列，竖向单列展示截面，整体展示面板">
+<rect x="15" y="22" width="650" height="221" rx="14" fill="#f7faf9" stroke="#d9e6e3"/>
+<g font-family="system-ui,sans-serif" font-size="17" fill="#304955" text-anchor="middle"><text x="82" y="60">企业</text><text x="221" y="60">1935</text><text x="373" y="60">1936</text><text x="530" y="60">1937</text><text x="80" y="120">A</text><text x="80" y="182">B</text><text x="221" y="120">100</text><text x="373" y="120">130</text><text x="530" y="120">160</text><text x="221" y="182">200</text><text x="373" y="182">180</text><text x="530" y="182">190</text></g>
+<rect x="150" y="83" width="142" height="132" rx="8" fill="#bedfd5" opacity=".3" stroke="#2c8c77" stroke-width="2"/>
+<rect x="148" y="88" width="456" height="62" rx="8" fill="#cbdff3" opacity=".28" stroke="#5587b0" stroke-width="2"/>
+<g font-size="12" fill="#547770"><text x="153" y="231">绿色：同一年截面</text><text x="371" y="231">蓝色：同一家企业的时间序列</text><text x="276" y="259">整张表：面板数据</text></g>
+</svg>
+<p class="muted">本图数据均为<strong>教学构造的示意数值</strong>，并非Grunfeld原始观测。横向看A公司的三个年份是时间序列；纵向看1935年两家公司是截面；全表即面板。</p>
+<p>假设A公司1935年投资100、1936年130，B公司分别为200、180，那么A公司的相邻期变化是130−100＝30，B公司为180−200＝−20；两者变化之差为50。这是描述性的变化差异，不应在没有处理组、对照组、平行趋势等设计的情况下称为政策因果效应。</p>
+</section>
+<section class="paper" id="software">
+<h2>六、Stata与Python动手做</h2>
+<p>本节先核对面板标识是否唯一，再从同一份源数据截取1935年截面、公司1的时间序列，以及全部公司的面板结构。图形命令会绘制<strong>真实数据</strong>，本页并未将未实际运行的图冒充真实结果。</p>
+<div class="code-toolbar" role="group" aria-label="选择软件"><button id="choose-stata" type="button" aria-pressed="true">Stata</button><button id="choose-python" type="button" aria-pressed="false">Python</button></div>
+<div id="stata-code"><h3>6.1 Stata</h3>
+<pre><code>clear all
+use "https://www.stata-press.com/data/r19/grunfeld.dta", clear
+
+* 先核实数据：企业×年份是否唯一
+describe
+isid company year
+xtset company year
+xtdescribe
+
+* 截面：1935年的企业比较
+count if year == 1935
+list company invest mvalue if year == 1935
+
+* 时间序列：公司1从1935至1954年
+preserve
+keep if company == 1
+tsset year
+tsline invest, title("Company 1 investment")
+restore
+
+* 面板：在同一张图比较公司1和2
+xtset company year
+xtline invest if inlist(company, 1, 2), overlay
+
+* 对相邻年份做同一企业内的差分
+generate dinvest = D.invest
+list company year invest dinvest if company == 1 in 1/20
+</code></pre>
+<p><code class="small-code">isid</code>检查联合主键；<code class="small-code">xtset</code>声明面板结构，<code class="small-code">tsset</code>声明单一时间序列，<code class="small-code">preserve/restore</code>临时截取子样本后恢复原数据。<code class="small-code">D.invest</code>在已设置的面板时间结构下计算滞后差分。</p>
+</div>
+<div id="python-code" hidden><h3>6.2 Python</h3><p>首次运行安装：<code class="small-code">pip install pandas matplotlib</code></p>
+<pre><code>import pandas as pd
+import matplotlib.pyplot as plt
+
+url = "https://www.stata-press.com/data/r19/grunfeld.dta"
+df = pd.read_stata(url)
+keep = ["company", "year", "invest", "mvalue", "kstock"]
+data = df[keep].dropna().copy()
+
+# 联合主键不能重复
+assert not data.duplicated(["company", "year"]).any()
+data = data.sort_values(["company", "year"])
+
+print("观测数:", len(data))
+print("企业数:", data["company"].nunique())
+print("年份数:", data["year"].nunique())
+print("每家企业记录数:")
+print(data.groupby("company")["year"].nunique())
+
+# 同一年多家企业：截面
+cross = data.loc[data["year"] == 1935]
+print(cross[["company", "invest", "mvalue"]])
+
+# 同一家企业跨年：时间序列
+series = data.loc[data["company"] == 1].copy()
+series["dinvest"] = series["invest"].diff()
+print(series[["year", "invest", "dinvest"]].head())
+
+# 全部公司、全部年份：面板
+panel = data.set_index(["company", "year"])
+print(panel.head())
+
+# 两家企业的真实投资时间变化
+for cid in [1, 2]:
+    a = data.loc[data["company"] == cid]
+    plt.plot(a["year"], a["invest"],
+             marker="o", label=f"Company {cid}")
+plt.xlabel("Year")
+plt.ylabel("Investment (dataset units)")
+plt.title("Grunfeld panel: two firms over time")
+plt.legend()
+plt.tight_layout()
+plt.show()
+</code></pre><p>Python用两个键 <code class="small-code">["company","year"]</code> 表示面板；<code class="small-code">groupby</code> 检查各公司年份覆盖情况；<code class="small-code">diff</code>计算按年份排序后的公司内投资变化。</p>
+</div>
+<h3>6.3 应该如何阅读输出？</h3>
+<p>Stata官方文档已经确认这份示例是<strong>10家企业、1935—1954年的强平衡面板</strong>。按逻辑，1935年的截面应有10条记录，单家企业的时间序列应有20条记录，完整面板应有200条记录。差分后每家企业的首年没有前一期，因此投资差分的有效记录为10×19＝190条（前提是原数据没有额外缺失且时间连续）。</p>
+<p>这里展示的是基于公开数据结构可核验的数量关系，<strong>不是本次环境重新运行Stata/Python的输出</strong>。软件运行后应检查实际结果。如果某年缺失、主键重复或其他条件不满足，以上数量不能机械套用。</p>
+</section>
+<section class="paper" id="pitfalls">
+<h2>七、初学者最常见的三个误区</h2>
+<ul><li><strong>观测数不等于独立样本量。</strong> 200条企业—年份记录来自10家企业，连续年份可能相关，不能在所有统计推断中当成200条独立抽样记录。</li>
+<li><strong>同一年多家公司不叫时间序列。</strong> 有“year”字段不代表就是时间序列，要看每条记录是否追踪同一个对象。</li>
+<li><strong>面板不会自动带来因果结论。</strong> 公司内部变化仍可能受到共同经济冲击及随时间改变的因素影响。</li></ul>
+</section>
+<section class="paper" id="quiz">
+<h2>八、练习与参考答案</h2>
+<details><summary>概念题：调查20家医院在2025年的床位数，以及调查同一家医院2015—2025年的床位数，分别是什么数据？</summary><div class="answer"><p>前者是在固定年份比较不同医院，是截面数据。后者是同一家医院随时间重复观测，是时间序列。如果同时追踪20家医院在2015—2025年的床位数，则是医院—年份面板。</p></div></details>
+<details><summary>实操题：用Grunfeld数据提取1940年的截面，核对观测数；再计算公司1在1936年相对1935年的投资变化。</summary><div class="answer"><p>Stata：</p><pre><code>count if year == 1940
+list company invest if year == 1940
+list company year invest if company == 1 &amp; inlist(year, 1935, 1936)</code></pre>
+<p>Python：</p><pre><code>print(data.loc[data["year"] == 1940].shape[0])
+a = data.loc[(data["company"] == 1) &amp;
+             data["year"].isin([1935, 1936])]
+print(a[["year", "invest"]])
+print(a.sort_values("year")["invest"].diff())</code></pre>
+<p>应得到1940年10条截面记录。Stata早期官方公开演示中的公司1投资，1935年为317.6、1936年为391.8，因此其变化为74.2（数据原始单位）。正式运行时以所读r19文件的输出核实，避免其他Grunfeld版本的差异。</p>
+</div></details>
+</section>
+<aside class="econ-reference-note" aria-label="资料来源"><strong>资料来源</strong><p><strong>核查资料：</strong><a href="https://www.stata-press.com/data/r19/grunfeld.dta">Stata Release 19 Grunfeld原始数据</a>；<a href="https://www.stata-press.com/data/r19/d.html">Stata Press官方数据目录</a>；<a href="https://www.stata.com/manuals17/xt.pdf">Stata面板数据官方手册</a>。<br>版本提醒：<a href="https://www.statsmodels.org/stable/datasets/generated/grunfeld.html">statsmodels自带的Grunfeld数据</a>为11家企业、220条记录，并不等同于此Stata 10家企业版本。</p></aside>
+</div></div>
+<footer>计量经济学120天系统课程 · 第3课正式全文 · 已归档课程按真实交付记录更新。</footer>
+</main>
+<script>
+(function(){const s=document.getElementById("stata-code"),p=document.getElementById("python-code"),a=document.getElementById("choose-stata"),b=document.getElementById("choose-python");function choice(py){s.hidden=py;p.hidden=!py;a.setAttribute("aria-pressed",String(!py));b.setAttribute("aria-pressed",String(py));}a.addEventListener("click",()=>choice(false));b.addEventListener("click",()=>choice(true));})();
+</script>
+</body></html>]],displayMath:[['\\[','\\]'],['$','$']]},svg:{fontCache:'global'}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script></head>
 <body>
 <header class="top"><a href="../../study/#courses">← 统一学习门户</a><a href="../">计量经济学120天 · 完整课程目录 →</a></header>
 <main class="wrap">
