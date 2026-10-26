@@ -1,0 +1,100 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="计量经济学第19课：回归结果的规范解释；Stata与Python HC1稳健OLS、数据口径和练习答案。"><title>第2章·第12节｜回归结果的规范解释</title><link rel="stylesheet" href="../course-theme.css?v=20261026"><script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]},svg:{fontCache:'global'}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script><script defer src="../course-theme.js?v=20261026"></script><style>body{margin:0;background:#f5f7f8;color:#243444;font:16px/1.85 system-ui,"Noto Sans SC",sans-serif}main{max-width:1020px;margin:auto;padding:30px 18px 80px}header,.paper{background:white;border:1px solid #dce4e7;border-radius:14px;padding:25px;margin-bottom:18px}header{background:#eaf4f1}h1{font-size:clamp(25px,4vw,36px);line-height:1.4}h2{font-size:21px}pre{white-space:pre;overflow:auto;background:#142b39;color:#e6f4f2;padding:18px;border-radius:10px;line-height:1.6;font-size:13px}code{font-family:ui-monospace,monospace}p{margin:13px 0}.equation{overflow:auto;padding:12px;background:#f6f9fa;border-radius:8px}details{background:#edf5f4;padding:12px 15px;border-radius:8px}summary{cursor:pointer;font-weight:650}a{color:#0a6c67}</style></head><body><main><header><div>计量经济学120天系统课程 · 全课程第19课 / 共120课</div><h1>第2章·第12节｜回归结果的规范解释</h1><p>授课日期：2026-10-26 · 预计学习10—15分钟</p><a href="../index.html">返回课程目录</a></header><article><p>授课日期：2026-10-26。预计学习时间：10—15分钟。数据：Stata官方1978年汽车样本 auto.dta。</p>
+</section><section class='paper'><h2>一、通俗理解</h2>
+<p>回归表不是“显著性排行榜”，而是一份关于样本、模型与不确定性的压缩报告。读一张表，至少要回答：研究对象是谁，因变量怎样度量，核心系数在控制哪些变量后代表什么，估计有多不精确，以及这种关联能否解释为因果效应。尤其要避免把“p值小于0.05”直接写成“政策产生了显著作用”。显著性只涉及特定原假设下的统计证据，不能代替经济意义、识别论证或外部有效性。</p>
+<p>例如，研究汽车价格时，重量更大的汽车可能更贵；但重量也可能与品牌、配置和质量相关。即使控制油耗和产地，回归系数仍可能混合遗漏因素。因此，规范表述是“在控制其他列示变量后，重量与价格呈某种条件相关关系”，而不是“增加重量导致涨价”。</p>
+</section><section class='paper'><h2>二、核心理论与公式</h2>
+<p>设价格以美元计，重量以磅计，油耗以英里/加仑计，进口车指标为0或1。估计以下含截距的线性模型：</p>
+<div class="equation">\[
+price_i=\beta_0+\beta_1 weight_i+\beta_2 mpg_i+\beta_3 foreign_i+u_i.
+\]</div>
+<p>这里 \(\beta_1\) 是在其他解释变量不变时，重量增加1磅对应的条件均值线性差异；\(\beta_3\) 是相同重量与油耗条件下进口车相对国产车的拟合价格差异。该解释依赖模型的线性条件均值设定；要将系数解释为因果效应，还需要额外的识别假设，OLS本身不能保证。</p>
+<p>在选定显著性水平下，系数的双侧置信区间可写为：</p>
+<div class="equation">\[
+\widehat\beta_j\pm t_{n-k,0.975}\,SE_{HC1}(\widehat\beta_j).
+\]</div>
+<p>\(k\) 为估计参数总数（含截距），\(n\) 为有效样本量。这里使用异方差稳健HC1协方差估计和有限样本\(t\)临界值；其推断仍依赖独立观测、合适的外生性与相应的大样本近似，不能自动修复内生性。区间是否包含0可辅助判断双侧5%检验，但区间宽度更能反映估计精度。</p>
+</section><section class='paper'><h2>三、实证案例与数据</h2>
+<p>采用Stata官方示例数据 auto.dta（1978年汽车截面数据），变量为 price、weight、mpg、foreign。数据来源：<a href="https://www.stata-press.com/data/r18/auto.dta" rel="noopener">Stata官方示例数据</a>。Stata内置 <code>sysuse auto</code>；Python读取同一官方DTA文件。样本统一为四个变量均非缺失的汽车，完整案例分析不应把缺失值填成0。foreign在原数据中为0/1分类变量，代码明确按数值读取。该样本并非随机抽取的当代汽车市场总体，不宜外推到今天的所有车型。</p>
+<p>本课重点不是追求某个系数显著，而是练习在结果表中逐一交代单位、控制变量、标准误类型、样本量、置信区间与解释边界。两种软件均采用同一OLS模型及HC1标准误；此处未实际运行代码，不报告虚构系数。</p>
+</section><section class='paper'><h2>四、Stata与Python实现</h2>
+<p><strong>Stata（完整案例、OLS与HC1稳健标准误）：</strong></p>
+<pre><code>
+* 官方内置汽车数据
+
+sysuse auto, clear
+
+* 明确完整案例样本，避免软件自动删样造成口径不明
+
+keep if !missing(price, weight, mpg, foreign)
+
+count
+
+* 进口车为0/1虚拟变量；i.标明其类别属性
+
+regress price weight mpg i.foreign, vce(robust)
+
+* 查看系数、稳健标准误、t、p和95%置信区间
+
+</code></pre>
+<p><strong>Python（同一数据与模型）：</strong></p>
+<pre><code>
+import pandas as pd
+
+import statsmodels.formula.api as smf
+
+
+
+# Stata官方DTA；关闭值标签转换，保留foreign的0/1编码
+
+url = &quot;https://www.stata-press.com/data/r18/auto.dta&quot;
+
+df = pd.read_stata(url, convert_categoricals=False)
+
+cols = [&quot;price&quot;, &quot;weight&quot;, &quot;mpg&quot;, &quot;foreign&quot;]
+
+sample = df[cols].dropna().copy()
+
+sample[&quot;foreign&quot;] = sample[&quot;foreign&quot;].astype(int)
+
+
+
+# HC1有限样本修正；use_t=True与Stata的t推断口径相近
+
+model = smf.ols(
+
+    &quot;price ~ weight + mpg + C(foreign)&quot;,
+
+    data=sample
+
+).fit(cov_type=&quot;HC1&quot;, use_t=True)
+
+
+
+print(&quot;有效样本量：&quot;, len(sample))
+
+print(model.summary())
+
+print(&quot;95%置信区间：&quot;)
+
+print(model.conf_int(alpha=0.05))
+
+</code></pre>
+<p>两者的参数编码、样本和协方差修正相同时，系数与稳健标准误应在数值精度内一致。若不一致，应先核对缺失值处理、分类变量基准组和软件版本，而不是随意选择更显著的结果。请在本地运行后再填写真实结果。</p>
+</section><section class='paper'><h2>五、初学者避坑</h2>
+<p><strong>误区一：</strong>“系数为200，所以自变量增加1%，价格增加200%。”错误。必须依据变量的原始计量单位及模型形式解释；本课weight增加1磅，对应价格单位是美元，不能自动转成百分比。</p>
+<p><strong>误区二：</strong>“不显著就证明没有影响。”错误。未拒绝零假设不等于证明系数为零；需要结合区间宽度、统计功效与研究设计。</p>
+<p><strong>误区三：</strong>“稳健标准误解决了所有模型问题。”错误。HC1针对异方差下的协方差估计，不能消除遗漏变量偏误、反向因果或样本选择问题。</p>
+</section><section class='paper'><h2>六、今日练习</h2>
+<p><strong>概念题：</strong> 一项回归显示核心变量的p值为0.03。能否直接写成“核心变量造成因变量变化”？为什么？</p>
+<details>
+<summary>参考答案（点击展开）</summary>
+<p>不能。p值是给定模型和原假设下的统计推断指标，不提供外生性或因果识别。应先报告条件相关及不确定性，再论证识别假设是否成立。</p>
+</details>
+<p><strong>计算与解释题：</strong> 假设某研究（纯练习数字，非本课运行结果）估计重量系数为2.00美元/磅，HC1稳健标准误为0.50。用1.96近似临界值，求95%置信区间，并解释重量增加100磅的拟合价格差异。</p>
+<details>
+<summary>参考答案（点击展开）</summary>
+<p>区间为2.00±1.96×0.50，即\[1.02,2.98\]美元/磅。重量增加100磅的拟合条件价格差异为200美元；若保持其他变量不变并采用线性设定，对应区间近似为\[102,298\]美元。这仍不是已识别的因果效应。</p>
+</details>
+</section><section class='paper'><h2>七、学习进度</h2>
+<p>本课：第2章·第12节｜回归结果的规范解释（全课程第19课 / 共120课）。</p>
+<p>下一课：第2章·第13节｜异方差初步（全课程第20课）。</p></section></article></main></body></html>
