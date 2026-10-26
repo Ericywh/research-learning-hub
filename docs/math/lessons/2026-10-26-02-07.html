@@ -1,0 +1,26 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="每日10分钟数学微课程，第19课：正交投影如何最小化距离"><title>第2章·第7节｜正交投影如何最小化距离</title><link rel="stylesheet" href="../site.css"><script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script><style>.article-wrap{max-width:830px;margin:0 auto;padding:36px 20px 80px}.article{font-size:17px;line-height:1.9;color:#263d3a}.article h2{margin-top:1.8em;font-size:1.24em}.article h3{margin-top:1.5em}.article p{margin:1em 0}.article .math{overflow:auto;padding:12px;background:#f4f8f5;border-radius:9px}.article .lead{border-left:4px solid #5b998a;padding:12px 20px;background:#edf7f2;border-radius:8px}.muted{font-size:14px;color:#61736e}</style></head><body><header><div class="wrap"><a href="../">← 数学课程目录</a><a href="../../">研究学习中心 ↗</a></div></header><main class="article-wrap"><div class="kicker">MATHEMATICS · PROBABILITY · ECONOMETRICS</div><h1>第2章·第7节｜正交投影如何最小化距离</h1><p class="muted">全课程第19课 / 共73课 · 2026-10-26 · 预计学习8分钟</p><article class="article"><aside class="lead"><p>全课程第19课 / 共73课｜2026年10月26日｜预计学习时间：8分钟</p>
+<p><b>核心问题：</b> 给定一个向量，为什么向某个子空间作正交投影，恰好得到距离它最近的点？</p></aside>
+<h2>一、投影不是随意靠近</h2>
+<p>上一课用内积为零定义正交。本课要解决的是：给定一个向量，怎样在允许的方向中找到离它最近的点？设目标向量 \(\mathbf y\in\mathbb R^n\)，非零方向向量 \(\mathbf u\in\mathbb R^n\)，允许选择的点都形如 \(t\mathbf u\)（\(t\) 为实数），它们构成一条经过原点的直线。</p>
+<p>若把 \(\mathbf y\) 分解为投影 \(\mathbf p\) 和剩余向量 \(\mathbf e=\mathbf y-\mathbf p\)，要求 \(\mathbf e\) 与 \(\mathbf u\) 正交，就有 \(\mathbf u^{\mathsf T}(\mathbf y-\alpha\mathbf u)=0\)。由于 \(\mathbf u^{\mathsf T}\mathbf u>0\)，可唯一解出投影系数 \(\alpha\)，并得到：</p>
+<div class="math">\[\alpha=\frac{\mathbf u^{\mathsf T}\mathbf y}{\mathbf u^{\mathsf T}\mathbf u},\qquad \mathbf p=\alpha\mathbf u.\]</div>
+<h2>二、正交为什么保证距离最小</h2>
+<p>任取直线上的另一点 \(t\mathbf u\)。因为 \(\mathbf y-t\mathbf u=(\mathbf y-\mathbf p)+(\alpha-t)\mathbf u\)，而 \(\mathbf y-\mathbf p\) 与 \(\mathbf u\) 正交，展开平方长度时交叉项为零：</p>
+<div class="math">\[\|\mathbf y-t\mathbf u\|_2^2=\|\mathbf y-\mathbf p\|_2^2+(t-\alpha)^2\|\mathbf u\|_2^2.\]</div>
+<p>右边第二项非负，仅当 \(t=\alpha\) 时等于零。因此 \(\mathbf p\) 不只是一个满足正交条件的点，而且是距离 \(\mathbf y\) 最近的点；其最短距离为 \(\|\mathbf y-\mathbf p\|_2\)。这个结论来自欧氏内积和平方长度的代数性质，不依赖概率假设。</p>
+<h2>三、从直线推广到回归的列空间</h2>
+<p>回归模型通常有不止一个解释变量。令 \(X\in\mathbb R^{n\times p}\)，所有可拟合向量组成列空间 \(S=\operatorname{col}(X)\)。在 \(S\) 中寻找离样本结果 \(\mathbf y\in\mathbb R^n\) 最近的向量，所得正交投影记为 \(\hat{\mathbf y}\)。它必须属于 \(S\)，同时残差与 \(S\) 中所有向量正交，等价于：</p>
+<div class="math">\[\hat{\mathbf y}\in\operatorname{col}(X),\qquad X^{\mathsf T}(\mathbf y-\hat{\mathbf y})=\mathbf0_p.\]</div>
+<p>这里 \(X\) 不必满列秩。即使不同系数向量产生相同的拟合值，最近的投影点 \(\hat{\mathbf y}\) 仍唯一。这解释了OLS为什么最小化残差平方和，以及为何“系数是否唯一”与“拟合值是否唯一”是两个不同问题。样本几何最优并不自动意味着总体外生性或因果识别。</p>
+<h2>四、两维向量的手算例子</h2>
+<p>取 \(\mathbf y=(2,1)^{\mathsf T}\)，\(\mathbf u=(1,1)^{\mathsf T}\)。投影系数 \(\alpha=(2+1)/(1+1)=3/2\)，因此 \(\mathbf p=(3/2,3/2)^{\mathsf T}\)，残差 \(\mathbf e=(1/2,-1/2)^{\mathsf T}\)。检查内积 \(\mathbf e^{\mathsf T}\mathbf u=1/2-1/2=0\)；最小平方距离为 \(1/4+1/4=1/2\)。</p>
+<p>若改选直线上的点 \(\mathbf u=(1,1)^{\mathsf T}\)，平方距离变为 \((2-1)^2+(1-1)^2=1\)，确实更大。图形上，残差就是从目标点向可选直线作出的垂线。</p>
+<h2>五、两道自测</h2>
+<p><b>第1题｜概念题：</b> 为什么设计矩阵 \(X\) 不满列秩时，OLS系数可能不唯一，而正交投影的拟合值仍唯一？</p>
+<p><b>第2题｜计算题：</b> 令 \(\mathbf y=(2,0)^{\mathsf T}\)、\(\mathbf u=(1,1)^{\mathsf T}\)，计算 \(\mathbf y\) 在 \(\operatorname{span}(\mathbf u)\) 上的投影、残差及最小平方距离。</p>
+<h3>参考答案</h3>
+<p><b>第1题：</b> \(X\) 的不同系数向量可能映射到同一列空间向量；但在给定子空间中，距离 \(\mathbf y\) 最近的投影点唯一。</p>
+<p><b>第2题：</b> \(\alpha=(2+0)/(1+1)=1\)，投影 \(\mathbf p=(1,1)^{\mathsf T}\)，残差 \(\mathbf e=(1,-1)^{\mathsf T}\)，最小平方距离为 \(1^2+(-1)^2=2\)。</p>
+<h2>六、前后课衔接</h2>
+<p>第17课给出长度，第18课说明正交，本课由正交推出最短距离。下一课将把这一几何结论完整应用于OLS拟合值、残差及其分解。</p>
+<p><b>下一课：第2章·第8节｜OLS的几何解释（全课程第20课）。</b></p></article><footer class="muted"><p><a href="https://app.notion.com/p/405b54823a1281c5b5beef7a812e7dc1?pvs=204">Notion私人完整讲义（需权限）</a> · <a href="../">课程目录</a></p></footer></main></body></html>
