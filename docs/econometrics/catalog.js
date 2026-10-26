@@ -198,9 +198,9 @@ window.ECON_COURSE={
           "chapter": 2,
           "section": 12,
           "title": "回归结果的规范解释",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-26",
+          "url": "lessons/02-12.html"
         },
         {
           "id": "02-13",
