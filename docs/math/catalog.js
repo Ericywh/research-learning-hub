@@ -178,9 +178,9 @@ window.MATH_COURSE={
           "section": 7,
           "number": 19,
           "title": "正交投影如何最小化距离",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-26",
+          "url": "lessons/2026-10-26-02-07.html"
         },
         {
           "chapter": 2,
