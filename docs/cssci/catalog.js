@@ -2,6 +2,38 @@
    完整私人精读报告未经授权不得上传，切勿包含付费PDF或私有数据。 */
 window.CSSCI_CATALOG = [
   {
+    "id": "2026-10-27-04-03-state-ownership-sharp-rd",
+    "date": "2026-10-27",
+    "title": "国有控股权变化能驱动企业创新吗——基于断点回归的实证检验",
+    "authors": "唐书香、陈其安",
+    "journal": "科技进步与对策",
+    "year": 2024,
+    "volume": "41",
+    "issue": "12",
+    "pages": "58—69",
+    "doi": "10.6049/kjjbydc.2023030068",
+    "field": "国有股权、企业创新、公司治理",
+    "methods": [
+      "精确断点回归",
+      "局部线性RDD",
+      "多项式与AIC",
+      "协变量连续性",
+      "伪断点检验"
+    ],
+    "data_types": [
+      "CSMAR上市公司股东持股与财务数据",
+      "CNRDS专利申请"
+    ],
+    "sample": "2009—2020年，2982家A股企业，14733个企业—年度观测",
+    "status": "published",
+    "data_access": "CSMAR/CNRDS需按机构授权取得；原始匹配数据未获取",
+    "code_access": "课程自行推导Stata参考代码未运行，作者原始代码未取得",
+    "replication_status": "官方全文、表1—10及稳健性已核对；50%阈值制度含义、密度与聚类需进一步验证；未数值复现",
+    "article_url": "lessons/04-03-2026-10-27.html",
+    "journal_url": "https://www.kjjb.org/CN/abstract/article/1001-7348/19713",
+    "fulltext_url": "https://www.kjjb.org/fileup/1001-7348/HTML/2024-41-12-006.htm"
+  },
+  {
     "id": "2026-10-25-04-02-dual-credit-fuzzy-rd",
     "date": "2026-10-25",
     "title": "强制性制度压力对颠覆性创新的影响机理——以中国新能源汽车产业“双积分”政策为例",
