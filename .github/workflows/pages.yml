@@ -7,6 +7,7 @@ on:
       - 'docs/**'
       - '.github/workflows/pages.yml'
       - 'scripts/build-econometrics-public.cjs'
+      - 'scripts/export-econometrics-word.py'
       - 'scripts/style-course-pages.cjs'
       - 'scripts/render-psmdid-math.cjs'
       - 'scripts/sync-econometrics-notion.cjs'
@@ -323,6 +324,34 @@ jobs:
           if(total<63)throw Error('Expected at least 63 existing lessons: '+total);
           console.log('PASS '+total+' lesson bodies preserved with valid lesson CSS / JS assets.');
           NODE
+
+      - name: Export ten complete econometrics chapters and full 120-lesson Word book
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m venv /tmp/econ-word-venv
+          /tmp/econ-word-venv/bin/python -m pip install -q beautifulsoup4 python-docx
+          if ! command -v pandoc >/dev/null; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq pandoc
+          fi
+          /tmp/econ-word-venv/bin/python scripts/export-econometrics-word.py \
+             --source docs/econometrics --output _site/econometrics/word
+          /tmp/econ-word-venv/bin/python - <<'PY'
+          from pathlib import Path
+          import json,zipfile
+          root=Path('_site/econometrics/word')
+          m=json.loads((root/'manifest.json').read_text())
+          assert (m['chapters'],m['lessons'],m['taught'],m['prewritten']) == (10,120,20,100)
+          assert len(m['documents'])==11
+          assert sum(x['lessons'] for x in m['documents'][:-1])==120
+          for item in m['documents']:
+            p=root/item['filename']
+            assert p.stat().st_size>8000 and zipfile.is_zipfile(p)
+            with zipfile.ZipFile(p) as z:
+              assert 'word/document.xml' in z.namelist()
+          print('Verified 10 chapter DOCX files plus the full 120-lesson DOCX')
+          PY
 
       - name: Upload complete site for Pages
         uses: actions/upload-pages-artifact@v3
@@ -887,3 +916,31 @@ jobs:
           }
           main().catch(e=>{console.error(e);process.exitCode=1;});
           NODE
+
+  verify-public-econometrics-word:
+    name: Verify all eleven Word files over HTTPS
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Confirm deployed chapter DOCX files are accessible and valid
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE="https://ericywh.github.io/research-learning-hub/econometrics/word"
+          mkdir -p /tmp/word-download-check
+          for n in $(seq -w 1 10); do
+            url="$BASE/econometrics-chapter-$n.docx"
+            curl -fLsS --connect-timeout 10 --max-time 60 "$url" -o "/tmp/word-download-check/chapter-$n.docx"
+            unzip -t "/tmp/word-download-check/chapter-$n.docx" | grep -Fq 'No errors detected'
+          done
+          curl -fLsS --connect-timeout 10 --max-time 90 "$BASE/econometrics-all-120-lessons.docx" -o /tmp/word-download-check/all.docx
+          unzip -t /tmp/word-download-check/all.docx | grep -Fq 'No errors detected'
+          curl -fLsS --connect-timeout 10 --max-time 30 "$BASE/manifest.json" -o /tmp/word-download-check/manifest.json
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          m=json.loads(Path('/tmp/word-download-check/manifest.json').read_text())
+          assert len(m['documents'])==11 and m['lessons']==120
+          assert m['documents'][-1]['lessons']==120
+          print('PASS 11 HTTPS Word documents, valid DOCX archives, 120 lesson manifest')
+          PY
