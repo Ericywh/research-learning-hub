@@ -208,9 +208,9 @@ window.ECON_COURSE={
           "chapter": 2,
           "section": 13,
           "title": "异方差初步",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-27",
+          "url": "lessons/02-13.html"
         },
         {
           "id": "02-14",
