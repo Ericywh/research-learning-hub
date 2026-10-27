@@ -138,9 +138,9 @@ window.ECON_COURSE={
           "chapter": 2,
           "section": 6,
           "title": "经典线性回归的主要假设",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-19",
+          "url": "lessons/02-06.html"
         },
         {
           "id": "02-07",
@@ -148,9 +148,9 @@ window.ECON_COURSE={
           "chapter": 2,
           "section": 7,
           "title": "t检验",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-20",
+          "url": "lessons/02-07.html"
         },
         {
           "id": "02-08",
@@ -158,9 +158,9 @@ window.ECON_COURSE={
           "chapter": 2,
           "section": 8,
           "title": "F检验与联合假设",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-21",
+          "url": "lessons/02-08.html"
         },
         {
           "id": "02-09",
@@ -168,9 +168,9 @@ window.ECON_COURSE={
           "chapter": 2,
           "section": 9,
           "title": "虚拟变量",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-22",
+          "url": "lessons/02-09.html"
         },
         {
           "id": "02-10",
