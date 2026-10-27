@@ -187,9 +187,9 @@ window.MATH_COURSE={
           "section": 8,
           "number": 20,
           "title": "OLS的几何解释",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-27",
+          "url": "lessons/2026-10-27-02-08.html"
         },
         {
           "chapter": 2,
