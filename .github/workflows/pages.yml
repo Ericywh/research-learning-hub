@@ -780,6 +780,8 @@ jobs:
     needs: deploy
     runs-on: ubuntu-latest
     steps:
+      - name: Check out source commit
+        uses: actions/checkout@v4
       - name: Read source and verify all publicly served day21-120 lesson bodies
         shell: bash
         env:
