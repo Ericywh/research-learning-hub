@@ -774,3 +774,77 @@ jobs:
           }
           main().catch(err => { console.error(err); process.exitCode=1; });
           NODE
+
+  verify-canonical-econometrics:
+    name: Verify DAY21-120 canonical econometrics lessons over HTTPS
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Read source and verify all publicly served day21-120 lesson bodies
+        shell: bash
+        env:
+          DEPLOY_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const fs=require('node:fs'), vm=require('node:vm'), path=require('node:path');
+          const ctx={window:{}};
+          vm.runInNewContext(fs.readFileSync('docs/econometrics/catalog.js','utf8'),ctx);
+          const courses=ctx.window.ECON_COURSE.chapters.flatMap(c=>c.lessons);
+          const drafted=courses.filter(l=>l.prepared===true);
+          if(courses.length!==120 || drafted.length!==100 ||
+             courses.filter(l=>l.published).length!==20)throw Error('Course count or status mismatch');
+          if(drafted.some(l=>l.number<21 || l.number>120 || l.published ||
+              l.preparedUrl!=='lessons/'+l.id+'.html'))
+              throw Error('Prepared metadata changed original teaching progress');
+          const base='https://ericywh.github.io/research-learning-hub/econometrics/';
+          const cache='?commit='+process.env.DEPLOY_SHA.slice(0,12);
+          const wait=ms=>new Promise(done=>setTimeout(done,ms));
+          async function check(l){
+            const file=path.join('docs/econometrics',l.preparedUrl);
+            const local=fs.readFileSync(file,'utf8');
+            const title='第'+l.chapter+'章·第'+l.section+'节｜'+l.title;
+            if(!local.includes(title) ||
+               (local.match(/<section class="paper"/g)||[]).length!==7 ||
+               (local.match(/<pre>/g)||[]).length!==2 ||
+               !local.includes('Stata') || !local.includes('Python') ||
+               !local.includes('答案') || !local.includes('正文提前公开'))
+               throw Error('Local lesson not fully authored: '+l.id);
+            let last='';
+            for(let attempt=0;attempt<6;attempt++){
+              try{
+                const response=await fetch(base+l.preparedUrl+cache,{
+                  signal:AbortSignal.timeout(18000),redirect:'follow'
+                });
+                if(response.status!==200)throw Error('HTTP '+response.status);
+                const html=await response.text();
+                if(!html.includes(title) || !html.includes('正文提前公开') ||
+                   !html.includes('Stata') || !html.includes('Python') ||
+                   !html.includes('答案') ||
+                   (html.match(/<section class="paper"/g)||[]).length!==7)
+                   throw Error('Unexpected or stale public lesson HTML');
+                return;
+              }catch(e){last=String(e);if(attempt<5)await wait(2000*(attempt+1));}
+            }
+            throw Error('Failed DAY '+l.number+': '+last);
+          }
+          async function main(){
+            const homepage=await fetch(base+cache);
+            const home=await homepage.text();
+            if(homepage.status!==200||!home.includes('l.preparedUrl'))
+              throw Error('Public original lesson catalogue lacks prepared-page links');
+            const response=await fetch(base+'catalog.js'+cache);
+            if(response.status!==200)throw Error('Deployed course catalogue not HTTP 200');
+            const latest=await response.text();
+            const out={window:{}};
+            vm.runInNewContext(latest,out);
+            if(out.window.ECON_COURSE.chapters.flatMap(c=>c.lessons).filter(l=>l.prepared).length!==100)
+              throw Error('Public course catalogue does not expose 100 prepared URLs');
+            for(let i=0;i<drafted.length;i+=8){
+              await Promise.all(drafted.slice(i,i+8).map(check));
+              console.log('Verified canonical lesson bodies:',Math.min(i+8,drafted.length),'/',drafted.length);
+            }
+            console.log('PASS: day21-120 100 canonical lesson bodies, HTTP 200, seven sections, code, answers');
+          }
+          main().catch(e=>{console.error(e);process.exitCode=1;});
+          NODE
