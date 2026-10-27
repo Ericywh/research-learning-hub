@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="每日10分钟数学微课程，第20课：OLS的几何解释"><title>第2章·第8节｜OLS的几何解释</title><link rel="stylesheet" href="../site.css"><script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script><style>.article-wrap{max-width:830px;margin:0 auto;padding:36px 20px 80px}.article{font-size:17px;line-height:1.9;color:#263d3a}.article h2{margin-top:1.8em;font-size:1.24em}.article h3{margin-top:1.5em}.article p{margin:1em 0}.article .math{overflow:auto;padding:12px;background:#f4f8f5;border-radius:9px}.article .lead{border-left:4px solid #5b998a;padding:12px 20px;background:#edf7f2;border-radius:8px}.muted{font-size:14px;color:#61736e}@media(max-width:650px){.article-wrap{padding:24px 16px 64px}.article{font-size:16px}}</style></head><body><header><div class="wrap"><a href="../">← 数学课程目录</a><a href="../../">研究学习中心</a></div></header><main class="article-wrap"><div class="kicker">MATHEMATICS · PROBABILITY · ECONOMETRICS</div><h1>第2章·第8节｜OLS的几何解释</h1><p class="muted">全课程第20课 / 共73课 · 2026-10-27 · 预计学习8分钟</p><article class="article"><aside class="lead">
+<p>全课程第20课 / 共73课｜2026年10月27日｜预计学习8分钟</p>
+<p><b>核心问题：</b> 为什么OLS拟合值是结果向量在设计矩阵列空间上的投影？这种几何关系又怎样解释回归平方和分解？</p>
+</aside>
+<h2>一、从最短距离到OLS</h2>
+<p>上一课证明，向子空间作正交投影可以取得最短欧氏距离。现在令样本结果向量为 \(\mathbf y\in\mathbb R^n\)，设计矩阵为 \(X\in\mathbb R^{n\times p}\)。每一组系数 \(\boldsymbol\beta\in\mathbb R^p\) 都对应列空间 \(\operatorname{col}(X)\) 中的一个候选拟合向量 \(X\boldsymbol\beta\)。OLS就是在这些候选向量中，寻找距离 \(\mathbf y\) 最近的点。</p>
+<p>记OLS拟合值为 \(\hat{\mathbf y}\)，残差为 \(\mathbf e\)。它们满足第一个核心关系：</p>
+<div class="math">\[\hat{\mathbf y}=X\hat{\boldsymbol\beta},\qquad
+\mathbf e=\mathbf y-\hat{\mathbf y},\qquad
+X^{\mathsf T}\mathbf e=\mathbf0_p.\]</div>
+<p>这表示拟合值处于列空间内，残差与列空间正交。即使 \(X\) 不满列秩、系数解不唯一，正交投影及残差仍然唯一。</p>
+<h2>二、平方长度为什么可以分解</h2>
+<p>由于 \(\mathbf y=\hat{\mathbf y}+\mathbf e\)，且拟合值与残差正交，勾股关系给出：</p>
+<div class="math">\[\|\mathbf y\|_2^2
+=\|\hat{\mathbf y}\|_2^2+\|\mathbf e\|_2^2.\]</div>
+<p>这是关于原点的未中心化平方长度分解，不要求模型包含截距。但通常回归报告的总平方和，是结果围绕样本均值的离差平方和，不能直接与上式混同。</p>
+<p>若设计矩阵包含常数列，OLS残差和为零，拟合值的样本均值等于结果均值。此时还有第三个核心公式：</p>
+<div class="math">\[\underbrace{\sum_{i=1}^{n}(y_i-\bar y)^2}_{\mathrm{TSS}}
+=
+\underbrace{\sum_{i=1}^{n}(\hat y_i-\bar y)^2}_{\mathrm{ESS}}
++
+\underbrace{\sum_{i=1}^{n}e_i^2}_{\mathrm{RSS}}.\]</div>
+<p>因此，带截距的样本内决定系数可由解释平方和占总平方和的比例计算；这只是拟合优度，不是因果解释的证据。</p>
+<h2>三、三条观测的手算</h2>
+<p>设解释变量 \(\mathbf x=(0,1,2)^{\mathsf T}\)，结果 \(\mathbf y=(1,2,2)^{\mathsf T}\)，拟合含截距的一元线性回归。样本均值分别为 \(\bar x=1\)、\(\bar y=5/3\)。利用离均差乘积和除以解释变量离均差平方和，得到斜率 \(1/2\)、截距 \(7/6\)。</p>
+<p>于是拟合值为 \((7/6,5/3,13/6)^{\mathsf T}\)，残差为 \((-1/6,1/3,-1/6)^{\mathsf T}\)。残差和为零，与解释变量的内积也为 \(0+1/3-2/6=0\)，正交条件得到核验。</p>
+<p>直接计算可得总平方和 \(\mathrm{TSS}=2/3\)，解释平方和 \(\mathrm{ESS}=1/2\)，残差平方和 \(\mathrm{RSS}=1/6\)，确有 \(2/3=1/2+1/6\)。相应样本内决定系数为 \(3/4\)。这里所有结果只描述这三条观测的线性拟合，不涉及总体关系的识别。</p>
+<h2>四、两道自测</h2>
+<p><b>第1题｜概念题：</b> 为什么OLS的未中心化平方长度分解不要求截距，而常用的中心化TSS分解通常要求包含截距？</p>
+<p><b>第2题｜计算题：</b> 已知某个带截距OLS模型的样本总平方和为 \(20\)，残差平方和为 \(5\)，求解释平方和与样本内决定系数。</p>
+<h3>参考答案</h3>
+<p><b>第1题：</b> 未中心化分解只依赖拟合向量与残差正交；中心化分解还需残差和为零、拟合均值等于结果均值，带截距OLS保证这些条件。</p>
+<p><b>第2题：</b> 解释平方和为 \(20-5=15\)；决定系数为 \(1-5/20=0.75\)。</p>
+<h2>五、衔接</h2>
+<p>第17—20课依次引入长度、正交、最短距离与OLS几何分解。下一课将从残差正交条件推导正规方程，并讨论其与系数解的关系。</p>
+<p><b>下一课：第2章·第9节｜OLS正规方程（全课程第21课）。</b></p></article><p class="muted">上一课：第2章·第7节｜正交投影如何最小化距离 · 下一课：第2章·第9节｜OLS正规方程</p><nav><a href="2026-10-26-02-07.html">← 上一课</a>　<a href="../">课程目录</a></nav></main></body></html>
