@@ -690,4 +690,67 @@ jobs:
           console.log('PASS English week two public HTTP 200; lessons 015–028 and exercises complete');
           NODE
 
-
+  verify-prepared-econometrics:
+    name: Verify all 100 econometrics prelecture pages over HTTPS
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out exact source commit
+        uses: actions/checkout@v4
+      - name: Verify 10 chapter guides and 100 prelecture pages (HTTP 200 and content)
+        shell: bash
+        env:
+          DEPLOY_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const fs = require('node:fs');
+          const path = require('node:path');
+          const root = 'docs/econometrics-prepared';
+          const lessons = fs.readdirSync(path.join(root, 'lessons'))
+            .filter(f => /^\d{2}-\d{2}\.html$/.test(f))
+            .map(f => 'lessons/' + f).sort();
+          const chapterGuides = fs.readdirSync(root)
+            .filter(f => /^chapter-\d{2}\.html$/.test(f)).sort();
+          if (lessons.length !== 100 || chapterGuides.length !== 10)
+            throw Error('Expected 100 prepared lesson pages and 10 chapter guides');
+          const files = ['index.html', ...chapterGuides, ...lessons];
+          const base = 'https://ericywh.github.io/research-learning-hub/econometrics-prepared/';
+          const dep = process.env.DEPLOY_SHA.slice(0, 12);
+          const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+          async function check(file) {
+            const local = fs.readFileSync(path.join(root, file), 'utf8');
+            const marker = local.match(/<title>([^<]+)<\/title>/)?.[1];
+            if (!marker || !local.includes('<body') || !local.includes('</body>'))
+              throw Error('Local HTML invalid: ' + file);
+            if (file.startsWith('lessons/')) {
+              if ((local.match(/<section class="paper"/g) || []).length !== 7 ||
+                  (local.match(/<pre>/g) || []).length !== 2 ||
+                  !local.includes('预编') || !local.includes('Stata') || !local.includes('Python'))
+                throw Error('Prepared lesson lacks required scaffolding: ' + file);
+            }
+            const url = base + file + '?deploy=' + dep;
+            let last = '';
+            for (let attempt=1; attempt<=5; attempt++) {
+              try {
+                const res = await fetch(url, {signal: AbortSignal.timeout(20000)});
+                if (res.status !== 200) throw Error('HTTP ' + res.status);
+                const html = await res.text();
+                if (!html.includes(marker) || !html.includes('<body'))
+                  throw Error('Expected title/body missing');
+                if (file.startsWith('lessons/') && !html.includes('参考答案'))
+                  throw Error('Practice answers missing');
+                return;
+              } catch (err) {
+                last = String(err);
+                if (attempt < 5) await sleep(1500 * attempt);
+              }
+            }
+            throw Error('Public page failed after retries: ' + file + ': ' + last);
+          }
+          for (let i=0;i<files.length;i+=8) {
+            await Promise.all(files.slice(i,i+8).map(check));
+            console.log('Verified',Math.min(i+8,files.length),'of',files.length,'HTTPS pages');
+          }
+          console.log('PASS: all 100 lesson preparations + 10 chapters + index are publicly readable');
+          NODE
