@@ -1,0 +1,86 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="course-date" content="2026-10-19"><meta name="description" content="第2章·第6节｜经典线性回归的主要假设｜全课程第13课历史授课原文归档，含双软件代码与练习答案"><title>第2章·第6节｜经典线性回归的主要假设</title><link rel="stylesheet" href="../course-theme.css?v=20261027"><script>window.MathJax={tex:{inlineMath:[['\\(','\\)'],['$','$']],displayMath:[['\\[','\\]'],['$$','$$']]},svg:{fontCache:'global'}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script><script defer src="../course-theme.js?v=20261027"></script><style>body{margin:0;background:#f5f8fa;color:#223443;font:16px/1.8 system-ui,"Noto Sans SC",sans-serif}main{max-width:1080px;margin:auto;padding:24px}a{color:#147d82}.hero{padding:32px;background:#17384a;color:#fff;border-radius:18px;margin-bottom:22px}.hero h1,.hero p{color:#fff!important}.paper{padding:25px;background:white;border-radius:13px;margin:17px 0;border:1px solid #dce5eb}.paper h2{color:#264456}.equation{overflow-x:auto;padding:15px;background:#f3f7f8}.codefold{margin:14px 0;border:1px solid #d0dde3;border-radius:9px;overflow:hidden}.codefold summary{padding:12px;background:#ecf3f4;cursor:pointer;color:#244c58}.codefold pre{padding:18px;margin:0;background:#152c3e;color:#f1f7fb;overflow:auto;font:13px/1.7 monospace}.codefold code{color:inherit}.archive-note{font-size:13px;color:#526a75}@media(max-width:650px){main{padding:12px}.paper{padding:19px}}</style></head><body><main><header><a href="../index.html">← 计量经济学120天课程目录</a></header><section class="hero"><h1>第2章·第6节｜经典线性回归的主要假设</h1><p>全课程第13课 / 共120课 · 原授课日期：2026-10-19 · 10—15分钟</p></section><p class="archive-note">本页根据已授课私人Notion原始讲义归档；代码为可复现示例，未经运行的数值不作实际回归输出。</p><article><p>&lt;callout icon=&quot;📘&quot; color=&quot;green_bg&quot;&gt; <strong>全课程第13课 / 共120课</strong></p>
+<p>授课日期：2026年10月19日（Asia/Taipei）</p>
+<p>预计学习时间：10—15分钟 &lt;/callout&gt;</p>
+<section class="paper" id="s1"><h2>一、通俗理解</h2>
+<p>上一课用偏回归系数解释“控制其他变量”后的教育与工资关联。但OLS能算出一个系数，并不意味着它一定无偏，也不意味着软件给出的标准误可靠。<strong>经典线性回归假设</strong>就是连接“如何计算系数”与“能够怎样解释、推断系数”的一组条件。</p>
+<p>以汽车价格为例，重量和车身长度都可能与价格相关。若汽车品牌、配置等未观测因素既影响价格又与重量有关，那么重量系数可能混入这些因素的作用。即使残差图看起来很规整，也不能据此认定不存在遗漏变量问题。相反，误差波动随汽车重量增加而扩大，主要影响传统标准误的有效性；在零条件均值等条件仍成立时，OLS点估计未必因此产生偏误。</p>
+<p>因此，要分别检查<strong>模型是否可估计、系数是否具有目标解释、标准误是否支持可靠推断</strong>，而不能笼统地问“OLS假设是否全部满足”。</p>
+</section>
+<section class="paper" id="s2"><h2>二、核心理论与公式</h2>
+<p>设含截距的多元线性模型为：</p>
+<div class="equation">\[price_i=\beta_0+\beta_1weight100_i+\beta_2length_i+u_i\]</div>
+<p>其中，price为美元价格，weight100为以100磅计量的重量，length为英寸长度，u为未纳入方程的因素。</p>
+<p>最关键的识别条件之一是<strong>零条件均值</strong>：</p>
+<div class="equation">\[E(u_i\mid X)=0\]</div>
+<p>这里X表示包含所有观测解释变量的设计矩阵。它要求在给定这些变量时，误差的条件期望为零；仅有样本OLS残差均值为零，并不能证明该假设成立。</p>
+<p>常见的其他条件包括：模型对参数线性且设定与研究对象相符；样本的抽取或依赖结构能够支持所采用的概率推断；解释变量不存在完全多重共线性（设计矩阵满列秩）；相关变量具有必要的有限矩。经典同方差条件要求给定X时各观测误差的方差相同，经典无误差相关条件还要求不同观测误差的条件协方差为零。</p>
+<p>在零条件均值、满秩、同方差且误差不相关等适当条件下，OLS具有高斯—马尔可夫意义下的最佳线性无偏性质（BLUE）。<strong>误差正态性并非BLUE所必需</strong>；它常用于小样本精确t、F推断的附加条件。采用HC1异方差稳健标准误可以放松同方差要求，但仍需要适当的独立性或弱依赖与大样本条件，不能修复内生性。</p>
+</section>
+<section class="paper" id="s3"><h2>三、实证案例与数据</h2>
+<p>继续使用Stata Press公开的1978年汽车教学数据 auto.dta（原始文件74条车型记录）。变量为price、weight、length，生成weight100=weight/100。只保留三个原变量均非缺失的观测；最终有效样本量由程序输出，不预先编造。</p>
+<p>数据文件：<a href="https://www.stata-press.com/data/r19/auto.dta" rel="noopener noreferrer">https://www.stata-press.com/data/r19/auto.dta</a></p>
+<p>本课比较传统标准误与HC1稳健标准误，并绘制残差—拟合值图。图形只用于发现可能的异方差或函数形式问题，不能验证零条件均值。该数据是教学示例，不能不加论证地视为某一明确汽车总体的随机样本。</p>
+</section>
+<section class="paper" id="s4"><h2>四、Stata与Python实现</h2>
+<h3>4.1 Stata</h3><details class="codefold"><summary>点击展开 Stata 完整代码</summary><pre><code class="language-stata">clear all
+use &quot;https://www.stata-press.com/data/r19/auto.dta&quot;, clear
+
+* 固定两个模型的共同样本
+keep if !missing(price, weight, length)
+generate double weight100 = weight/100
+count
+
+* 传统标准误：用于对照
+regress price weight100 length
+estimates store conventional
+
+* HC1异方差稳健标准误
+regress price weight100 length, vce(robust)
+estimates store hc1
+
+* 比较相同OLS系数及不同标准误
+estimates table conventional hc1, b(%9.3f) se(%9.3f) stats(N r2)
+
+* 残差与拟合值诊断图
+rvfplot, yline(0)</code></pre></details><h3>4.2 Python</h3><details class="codefold"><summary>点击展开 Python 完整代码</summary><pre><code class="language-python">import pandas as pd
+import statsmodels.api as sm
+import matplotlib.pyplot as plt
+
+url = &quot;https://www.stata-press.com/data/r19/auto.dta&quot;
+cols = [&quot;price&quot;, &quot;weight&quot;, &quot;length&quot;]
+df = pd.read_stata(url)[cols].dropna().copy()
+df[&quot;weight100&quot;] = df[&quot;weight&quot;] / 100
+
+y = df[&quot;price&quot;]
+X = sm.add_constant(df[[&quot;weight100&quot;, &quot;length&quot;]])
+
+# 同一样本、同一OLS点估计
+ordinary = sm.OLS(y, X).fit()
+robust = sm.OLS(y, X).fit(cov_type=&quot;HC1&quot;)
+
+print(&quot;有效样本量：&quot;, len(df))
+print(&quot;OLS系数：\n&quot;, robust.params)
+print(&quot;传统标准误：\n&quot;, ordinary.bse)
+print(&quot;HC1稳健标准误：\n&quot;, robust.bse)
+
+# 残差图仅作诊断，不证明外生性
+plt.scatter(robust.fittedvalues, robust.resid)
+plt.axhline(0, linestyle=&quot;--&quot;)
+plt.xlabel(&quot;拟合价格&quot;)
+plt.ylabel(&quot;OLS残差&quot;)
+plt.show()</code></pre></details><p>两种估计的系数和样本内R²应相同；标准误可能不同。Stata的vce(robust)与statsmodels的HC1采用相应的有限样本缩放，但软件默认的检验分布、p值处理未必完全相同。本次未运行代码，不报告具体系数、p值或诊断图结论。</p>
+</section>
+<section class="paper" id="s5"><h2>五、初学者避坑</h2>
+<p><strong>误区一：残差均值为零就证明外生性。</strong> 含截距OLS的样本残差和为零是计算恒等式，而零条件均值是关于未观测误差与解释变量关系的总体假设。</p>
+<p><strong>误区二：异方差使OLS系数必然有偏。</strong> 异方差主要破坏经典同方差标准误和BLUE效率结论；是否有偏取决于外生性等条件。</p>
+<p><strong>误区三：用了稳健标准误就能做因果推断。</strong> HC1只调整协方差估计，不能消除遗漏变量、反向因果或选择偏误。残差图也无法证明这些问题不存在。</p>
+</section>
+<section class="paper" id="s6"><h2>六、今日练习</h2>
+<p><strong>概念题：</strong> 为什么“样本OLS残差与重量的内积为零”不能证明零条件均值？HC1能否解决遗漏变量内生性？</p>
+<p><strong>参考答案：</strong> 前者是OLS正规方程产生的样本代数性质，后者是关于总体误差条件期望的假设。HC1改变标准误估计，不改变系数，也不能消除遗漏变量内生性。</p>
+<p><strong>计算与解释题：</strong> 假设某个教学样本的两个解释变量为x₁=(1,2,3)，x₂=(2,4,6)，模型还含截距。能否分别估计两者的OLS系数？如果误差存在异方差，改用HC1能否解决这个问题？</p>
+<p><strong>参考答案：</strong> 不能，因为x₂=2x₁，两列完全线性相关，设计矩阵不满列秩，两个斜率无法唯一确定。HC1只修改标准误，不会改变矩阵秩；应依据研究问题删除或重新定义一个冗余变量，而不是仅更换标准误。</p>
+</section>
+<section class="paper" id="s7"><h2>七、学习进度</h2>
+<p>本课为<strong>第2章·第6节｜经典线性回归的主要假设</strong>，全课程第13课 / 共120课。数据来源为Stata Press公开auto.dta。依GitHub main分支原纲，下一课是<strong>第2章·第7节｜t检验</strong>（全课程第14课）。已授课进度与GitHub公开归档状态分开核验，不依据日历或网页状态重复授课。</p>
+</section></article></main></body></html>
