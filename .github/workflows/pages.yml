@@ -748,9 +748,12 @@ jobs:
             }
             throw Error('Public page failed after retries: ' + file + ': ' + last);
           }
-          for (let i=0;i<files.length;i+=8) {
-            await Promise.all(files.slice(i,i+8).map(check));
-            console.log('Verified',Math.min(i+8,files.length),'of',files.length,'HTTPS pages');
+          async function main() {
+            for (let i=0;i<files.length;i+=8) {
+              await Promise.all(files.slice(i,i+8).map(check));
+              console.log('Verified',Math.min(i+8,files.length),'of',files.length,'HTTPS pages');
+            }
+            console.log('PASS: all 100 lesson preparations + 10 chapters + index are publicly readable');
           }
-          console.log('PASS: all 100 lesson preparations + 10 chapters + index are publicly readable');
+          main().catch(err => { console.error(err); process.exitCode=1; });
           NODE
