@@ -44,4 +44,4 @@ container.append(details);}
 summary.textContent="匹配 "+count+" 节 · 已公开归档 "+all.filter(x=>x.published).length+" 节。";if(!count){const p=document.createElement("p");p.textContent="没有找到匹配的课程。";container.append(p);}}
 query.addEventListener("input",render);document.querySelectorAll("[data-filter]").forEach(btn=>btn.addEventListener("click",()=>{filter=btn.dataset.filter;document.querySelectorAll("[data-filter]").forEach(b=>b.setAttribute("aria-pressed",String(b===btn)));render()}));render();
 });
-</script></body></html>
+</script><aside aria-label="预编讲义入口" style="max-width:1180px;margin:30px auto;padding:20px;background:#e9f3f4;border:1px solid #bcd7dc;border-radius:14px"><strong>第21—120课预编教学材料（尚未正式授课）</strong><p>十章学习脉络与100节预编提纲已单独整理；正式已授课进度仍为20/120。</p><a href="../econometrics-prepared/index.html">查看十章预编课程内容</a></aside></body></html>
