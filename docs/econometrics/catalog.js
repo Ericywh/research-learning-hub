@@ -220,7 +220,9 @@ window.ECON_COURSE={
           "title": "多重共线性",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/02-14.html"
         },
         {
           "id": "02-15",
@@ -230,7 +232,9 @@ window.ECON_COURSE={
           "title": "工资影响因素综合实操",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/02-15.html"
         }
       ]
     },
@@ -246,7 +250,9 @@ window.ECON_COURSE={
           "title": "内生性及其统计后果",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/03-01.html"
         },
         {
           "id": "03-02",
@@ -256,7 +262,9 @@ window.ECON_COURSE={
           "title": "遗漏变量偏差",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/03-02.html"
         },
         {
           "id": "03-03",
@@ -266,7 +274,9 @@ window.ECON_COURSE={
           "title": "测量误差",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/03-03.html"
         },
         {
           "id": "03-04",
@@ -276,7 +286,9 @@ window.ECON_COURSE={
           "title": "双向因果和同时性",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/03-04.html"
         },
         {
           "id": "03-05",
@@ -286,7 +298,9 @@ window.ECON_COURSE={
           "title": "异方差检验与稳健标准误",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/03-05.html"
         },
         {
           "id": "03-06",
@@ -296,7 +310,9 @@ window.ECON_COURSE={
           "title": "自相关",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/03-06.html"
         },
         {
           "id": "03-07",
@@ -306,7 +322,9 @@ window.ECON_COURSE={
           "title": "异常值与杠杆点",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/03-07.html"
         },
         {
           "id": "03-08",
@@ -316,7 +334,9 @@ window.ECON_COURSE={
           "title": "模型设定偏误",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/03-08.html"
         },
         {
           "id": "03-09",
@@ -326,7 +346,9 @@ window.ECON_COURSE={
           "title": "样本选择偏差",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/03-09.html"
         },
         {
           "id": "03-10",
@@ -336,7 +358,9 @@ window.ECON_COURSE={
           "title": "Stata模型诊断进阶",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/03-10.html"
         },
         {
           "id": "03-11",
@@ -346,7 +370,9 @@ window.ECON_COURSE={
           "title": "Python模型诊断进阶",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/03-11.html"
         },
         {
           "id": "03-12",
@@ -356,7 +382,9 @@ window.ECON_COURSE={
           "title": "教育回报案例中的内生性",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/03-12.html"
         },
         {
           "id": "03-13",
@@ -366,7 +394,9 @@ window.ECON_COURSE={
           "title": "遗漏变量偏差模拟",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/03-13.html"
         },
         {
           "id": "03-14",
@@ -376,7 +406,9 @@ window.ECON_COURSE={
           "title": "标准误与聚类推断",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/03-14.html"
         },
         {
           "id": "03-15",
@@ -386,7 +418,9 @@ window.ECON_COURSE={
           "title": "综合实操与阶段复习",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/03-15.html"
         }
       ]
     },
@@ -402,7 +436,9 @@ window.ECON_COURSE={
           "title": "反事实与潜在结果框架",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/04-01.html"
         },
         {
           "id": "04-02",
@@ -412,7 +448,9 @@ window.ECON_COURSE={
           "title": "随机对照试验（RCT）",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/04-02.html"
         },
         {
           "id": "04-03",
@@ -422,7 +460,9 @@ window.ECON_COURSE={
           "title": "工具变量法（IV）",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/04-03.html"
         },
         {
           "id": "04-04",
@@ -432,7 +472,9 @@ window.ECON_COURSE={
           "title": "两阶段最小二乘法（2SLS）",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/04-04.html"
         },
         {
           "id": "04-05",
@@ -442,7 +484,9 @@ window.ECON_COURSE={
           "title": "工具变量有效性与弱工具变量",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/04-05.html"
         },
         {
           "id": "04-06",
@@ -452,7 +496,9 @@ window.ECON_COURSE={
           "title": "双重差分法（DID）",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/04-06.html"
         },
         {
           "id": "04-07",
@@ -462,7 +508,9 @@ window.ECON_COURSE={
           "title": "平行趋势与事件研究",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/04-07.html"
         },
         {
           "id": "04-08",
@@ -472,7 +520,9 @@ window.ECON_COURSE={
           "title": "多期DID",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/04-08.html"
         },
         {
           "id": "04-09",
@@ -482,7 +532,9 @@ window.ECON_COURSE={
           "title": "断点回归（RDD）",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/04-09.html"
         },
         {
           "id": "04-10",
@@ -492,7 +544,9 @@ window.ECON_COURSE={
           "title": "精确断点与模糊断点",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/04-10.html"
         },
         {
           "id": "04-11",
@@ -502,7 +556,9 @@ window.ECON_COURSE={
           "title": "倾向得分匹配（PSM）",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/04-11.html"
         },
         {
           "id": "04-12",
@@ -512,7 +568,9 @@ window.ECON_COURSE={
           "title": "合成控制法",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/04-12.html"
         },
         {
           "id": "04-13",
@@ -522,7 +580,9 @@ window.ECON_COURSE={
           "title": "中介效应与机制分析",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/04-13.html"
         }
       ]
     },
@@ -538,7 +598,9 @@ window.ECON_COURSE={
           "title": "ATE、ATT与LATE",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/05-01.html"
         },
         {
           "id": "05-02",
@@ -548,7 +610,9 @@ window.ECON_COURSE={
           "title": "IV完整应用案例",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/05-02.html"
         },
         {
           "id": "05-03",
@@ -558,7 +622,9 @@ window.ECON_COURSE={
           "title": "弱工具变量诊断",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/05-03.html"
         },
         {
           "id": "05-04",
@@ -568,7 +634,9 @@ window.ECON_COURSE={
           "title": "DID政策评估案例",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/05-04.html"
         },
         {
           "id": "05-05",
@@ -578,7 +646,9 @@ window.ECON_COURSE={
           "title": "TWFE及其局限",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/05-05.html"
         },
         {
           "id": "05-06",
@@ -588,7 +658,9 @@ window.ECON_COURSE={
           "title": "现代多期DID估计方法",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/05-06.html"
         },
         {
           "id": "05-07",
@@ -598,7 +670,9 @@ window.ECON_COURSE={
           "title": "事件研究图与动态效应",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/05-07.html"
         },
         {
           "id": "05-08",
@@ -608,7 +682,9 @@ window.ECON_COURSE={
           "title": "RDD带宽选择与估计",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/05-08.html"
         },
         {
           "id": "05-09",
@@ -618,7 +694,9 @@ window.ECON_COURSE={
           "title": "RDD有效性检验",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/05-09.html"
         },
         {
           "id": "05-10",
@@ -628,7 +706,9 @@ window.ECON_COURSE={
           "title": "匹配方法与平衡性检验",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/05-10.html"
         },
         {
           "id": "05-11",
@@ -638,7 +718,9 @@ window.ECON_COURSE={
           "title": "合成控制法实操",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/05-11.html"
         },
         {
           "id": "05-12",
@@ -648,7 +730,9 @@ window.ECON_COURSE={
           "title": "因果机制识别的条件",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/05-12.html"
         },
         {
           "id": "05-13",
@@ -658,7 +742,9 @@ window.ECON_COURSE={
           "title": "异质性分析与多重检验",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/05-13.html"
         },
         {
           "id": "05-14",
@@ -668,7 +754,9 @@ window.ECON_COURSE={
           "title": "因果识别方法比较",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/05-14.html"
         },
         {
           "id": "05-15",
@@ -678,7 +766,9 @@ window.ECON_COURSE={
           "title": "政策评估论文综合分析",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/05-15.html"
         }
       ]
     },
@@ -694,7 +784,9 @@ window.ECON_COURSE={
           "title": "面板数据、固定效应和随机效应",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/06-01.html"
         },
         {
           "id": "06-02",
@@ -704,7 +796,9 @@ window.ECON_COURSE={
           "title": "双向固定效应模型",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/06-02.html"
         },
         {
           "id": "06-03",
@@ -714,7 +808,9 @@ window.ECON_COURSE={
           "title": "动态面板与GMM",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/06-03.html"
         },
         {
           "id": "06-04",
@@ -724,7 +820,9 @@ window.ECON_COURSE={
           "title": "平稳性与单位根",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/06-04.html"
         },
         {
           "id": "06-05",
@@ -734,7 +832,9 @@ window.ECON_COURSE={
           "title": "协整与误差修正",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/06-05.html"
         },
         {
           "id": "06-06",
@@ -744,7 +844,9 @@ window.ECON_COURSE={
           "title": "Logit与Probit",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/06-06.html"
         },
         {
           "id": "06-07",
@@ -754,7 +856,9 @@ window.ECON_COURSE={
           "title": "分位数回归",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/06-07.html"
         },
         {
           "id": "06-08",
@@ -764,7 +868,9 @@ window.ECON_COURSE={
           "title": "泊松回归与负二项回归",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/06-08.html"
         },
         {
           "id": "06-09",
@@ -774,7 +880,9 @@ window.ECON_COURSE={
           "title": "实证论文写作框架与结果呈现",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/06-09.html"
         }
       ]
     },
@@ -790,7 +898,9 @@ window.ECON_COURSE={
           "title": "面板数据整理",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/07-01.html"
         },
         {
           "id": "07-02",
@@ -800,7 +910,9 @@ window.ECON_COURSE={
           "title": "非平衡面板",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/07-02.html"
         },
         {
           "id": "07-03",
@@ -810,7 +922,9 @@ window.ECON_COURSE={
           "title": "固定效应中的识别变异",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/07-03.html"
         },
         {
           "id": "07-04",
@@ -820,7 +934,9 @@ window.ECON_COURSE={
           "title": "聚类标准误",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/07-04.html"
         },
         {
           "id": "07-05",
@@ -830,7 +946,9 @@ window.ECON_COURSE={
           "title": "面板模型结果报告",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/07-05.html"
         },
         {
           "id": "07-06",
@@ -840,7 +958,9 @@ window.ECON_COURSE={
           "title": "时间趋势与滞后项",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/07-06.html"
         },
         {
           "id": "07-07",
@@ -850,7 +970,9 @@ window.ECON_COURSE={
           "title": "时间序列预测与因果推断",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/07-07.html"
         },
         {
           "id": "07-08",
@@ -860,7 +982,9 @@ window.ECON_COURSE={
           "title": "离散选择模型的边际效应",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/07-08.html"
         },
         {
           "id": "07-09",
@@ -870,7 +994,9 @@ window.ECON_COURSE={
           "title": "计数模型的过度离散",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/07-09.html"
         },
         {
           "id": "07-10",
@@ -880,7 +1006,9 @@ window.ECON_COURSE={
           "title": "分位数回归实操",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/07-10.html"
         },
         {
           "id": "07-11",
@@ -890,7 +1018,9 @@ window.ECON_COURSE={
           "title": "模型选择与比较",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/07-11.html"
         },
         {
           "id": "07-12",
@@ -900,7 +1030,9 @@ window.ECON_COURSE={
           "title": "综合分析与方法复习",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/07-12.html"
         }
       ]
     },
@@ -916,7 +1048,9 @@ window.ECON_COURSE={
           "title": "抽样设计与样本权重",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/08-01.html"
         },
         {
           "id": "08-02",
@@ -926,7 +1060,9 @@ window.ECON_COURSE={
           "title": "复杂抽样与统计推断",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/08-02.html"
         },
         {
           "id": "08-03",
@@ -936,7 +1072,9 @@ window.ECON_COURSE={
           "title": "缺失数据机制",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/08-03.html"
         },
         {
           "id": "08-04",
@@ -946,7 +1084,9 @@ window.ECON_COURSE={
           "title": "多重插补",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/08-04.html"
         },
         {
           "id": "08-05",
@@ -956,7 +1096,9 @@ window.ECON_COURSE={
           "title": "测量误差与变量有效性",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/08-05.html"
         },
         {
           "id": "08-06",
@@ -966,7 +1108,9 @@ window.ECON_COURSE={
           "title": "因果图（DAG）",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/08-06.html"
         },
         {
           "id": "08-07",
@@ -976,7 +1120,9 @@ window.ECON_COURSE={
           "title": "Bad Controls与Collider Bias",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/08-07.html"
         },
         {
           "id": "08-08",
@@ -986,7 +1132,9 @@ window.ECON_COURSE={
           "title": "安慰剂检验与负向对照",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/08-08.html"
         },
         {
           "id": "08-09",
@@ -996,7 +1144,9 @@ window.ECON_COURSE={
           "title": "敏感性分析",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/08-09.html"
         },
         {
           "id": "08-10",
@@ -1006,7 +1156,9 @@ window.ECON_COURSE={
           "title": "多重检验与研究者自由度",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/08-10.html"
         },
         {
           "id": "08-11",
@@ -1016,7 +1168,9 @@ window.ECON_COURSE={
           "title": "效应量、置信区间与实际意义",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/08-11.html"
         },
         {
           "id": "08-12",
@@ -1026,7 +1180,9 @@ window.ECON_COURSE={
           "title": "统计可靠性综合审查",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/08-12.html"
         }
       ]
     },
@@ -1042,7 +1198,9 @@ window.ECON_COURSE={
           "title": "研究问题的选择",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/09-01.html"
         },
         {
           "id": "09-02",
@@ -1052,7 +1210,9 @@ window.ECON_COURSE={
           "title": "文献检索与研究缺口",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/09-02.html"
         },
         {
           "id": "09-03",
@@ -1062,7 +1222,9 @@ window.ECON_COURSE={
           "title": "Estimand与研究设计",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/09-03.html"
         },
         {
           "id": "09-04",
@@ -1072,7 +1234,9 @@ window.ECON_COURSE={
           "title": "数据获取与数据字典",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/09-04.html"
         },
         {
           "id": "09-05",
@@ -1082,7 +1246,9 @@ window.ECON_COURSE={
           "title": "数据清洗",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/09-05.html"
         },
         {
           "id": "09-06",
@@ -1092,7 +1258,9 @@ window.ECON_COURSE={
           "title": "描述统计与可视化",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/09-06.html"
         },
         {
           "id": "09-07",
@@ -1102,7 +1270,9 @@ window.ECON_COURSE={
           "title": "变量构造与模型设定",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/09-07.html"
         },
         {
           "id": "09-08",
@@ -1112,7 +1282,9 @@ window.ECON_COURSE={
           "title": "基准模型估计",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/09-08.html"
         },
         {
           "id": "09-09",
@@ -1122,7 +1294,9 @@ window.ECON_COURSE={
           "title": "识别假设与模型诊断",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/09-09.html"
         },
         {
           "id": "09-10",
@@ -1132,7 +1306,9 @@ window.ECON_COURSE={
           "title": "稳健性与敏感性分析",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/09-10.html"
         },
         {
           "id": "09-11",
@@ -1142,7 +1318,9 @@ window.ECON_COURSE={
           "title": "异质性与机制讨论",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/09-11.html"
         },
         {
           "id": "09-12",
@@ -1152,7 +1330,9 @@ window.ECON_COURSE={
           "title": "回归表、图形与结果报告",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/09-12.html"
         }
       ]
     },
@@ -1168,7 +1348,9 @@ window.ECON_COURSE={
           "title": "选择可复现的实证论文",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/10-01.html"
         },
         {
           "id": "10-02",
@@ -1178,7 +1360,9 @@ window.ECON_COURSE={
           "title": "阅读论文与核查数据来源",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/10-02.html"
         },
         {
           "id": "10-03",
@@ -1188,7 +1372,9 @@ window.ECON_COURSE={
           "title": "配置复现环境",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/10-03.html"
         },
         {
           "id": "10-04",
@@ -1198,7 +1384,9 @@ window.ECON_COURSE={
           "title": "复现基准模型",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/10-04.html"
         },
         {
           "id": "10-05",
@@ -1208,7 +1396,9 @@ window.ECON_COURSE={
           "title": "复现稳健性分析",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/10-05.html"
         },
         {
           "id": "10-06",
@@ -1218,7 +1408,9 @@ window.ECON_COURSE={
           "title": "分析复现差异",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/10-06.html"
         },
         {
           "id": "10-07",
@@ -1228,7 +1420,9 @@ window.ECON_COURSE={
           "title": "引言与文献综述写作",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/10-07.html"
         },
         {
           "id": "10-08",
@@ -1238,7 +1432,9 @@ window.ECON_COURSE={
           "title": "数据、方法和结果写作",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/10-08.html"
         },
         {
           "id": "10-09",
@@ -1248,7 +1444,9 @@ window.ECON_COURSE={
           "title": "Discussion与审稿式修改",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/10-09.html"
         },
         {
           "id": "10-10",
@@ -1258,7 +1456,9 @@ window.ECON_COURSE={
           "title": "综合考核与课程总结",
           "published": false,
           "date": null,
-          "url": null
+          "url": null,
+          "prepared": true,
+          "preparedUrl": "lessons/10-10.html"
         }
       ]
     }

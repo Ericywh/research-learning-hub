@@ -50,6 +50,8 @@ for (const lesson of lessons) {
   if (lesson.published && lesson.url !== url) {
     throw Error('Published catalog URL differs from actual lecture file: ' + lesson.id);
   }
+  // A prepared body is publicly readable but not yet a delivered daily lesson.
+  if (lesson.prepared === true && lesson.preparedUrl === url) continue;
   if (lesson.published) continue;
 
   const file = fs.existsSync(deployedFile) ? deployedFile : sourceFile;
