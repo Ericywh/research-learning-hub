@@ -1,0 +1,83 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="计量经济学第20课：异方差初步；OLS与HC1稳健标准误，Stata和Python可复现代码、练习与答案。"><title>第2章·第13节｜异方差初步</title><link rel="stylesheet" href="../course-theme.css?v=20261027"><script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]},svg:{fontCache:'global'}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script><script defer src="../course-theme.js?v=20261027"></script><style>body{margin:0;background:#f5f7f8;color:#243444;font:16px/1.85 system-ui,"Noto Sans SC",sans-serif}main{max-width:1020px;margin:auto;padding:30px 18px 80px}header,.paper{background:white;border:1px solid #dce4e7;border-radius:14px;padding:25px;margin-bottom:18px}header{background:#eaf4f1}h1{font-size:clamp(25px,4vw,36px);line-height:1.4}h2{font-size:21px}pre{white-space:pre;overflow:auto;background:#142b39;color:#e6f4f2;padding:18px;border-radius:10px;line-height:1.6;font-size:13px}code{font-family:ui-monospace,monospace}p{margin:13px 0}.equation{overflow:auto;padding:12px;background:#f6f9fa;border-radius:8px}</style></head><body><main><header><p><a href="../index.html">计量经济学120天系统课程</a></p><h1>第2章·第13节｜异方差初步</h1><p>全课程第20课 / 共120课 · 2026-10-27 · 10—15分钟</p></header><p>授课日期：2026-10-27。预计学习时间：10—15分钟。数据：Stata官方1978年汽车样本auto.dta。</p>
+<section class="paper"><h2>一、通俗理解</h2>
+<p>假设用汽车重量、油耗和产地解释价格。模型为每辆车给出预测价格，但实际价格与预测值之间总会有残差。如果轻型车残差集中在较窄范围，重型车残差却明显分散，误差波动程度可能随解释变量变化，这便是异方差的直观含义。</p>
+<p>同方差要求在不同解释变量取值下误差的条件方差相同；异方差意味着这一方差不恒定。它既不是“残差不为零”，也不是“变量之间存在相关性”。</p>
+<p>异方差主要影响常规OLS标准误的可靠性。在条件均值设定正确、解释变量满足适当外生性等条件下，OLS系数仍可一致；但按同方差公式计算的标准误可能错误，进而影响t检验、置信区间和显著性判断。异方差本身不能证明内生性，也不能单独否定OLS系数。</p>
+</section>
+<section class="paper"><h2>二、核心理论与公式</h2>
+<p>沿用含截距的汽车价格模型：</p>
+<div class="equation">\[price_i=\beta_0+\beta_1weight_i+\beta_2mpg_i+\beta_3foreign_i+u_i.\]</div>
+<p>其中price为美元价格，weight为磅，mpg为每加仑行驶英里数，foreign为进口车指标（1为进口、0为国产），u为未观测因素。关键区分在于：</p>
+<div class="equation">\[E(u_i\mid X_i)=0,\qquad Var(u_i\mid X_i)=\sigma_i^2.\]</div>
+<p>这里\(X_i\)包含模型全部解释变量；零条件均值约束误差的条件平均值，\(\sigma_i^2\)允许条件方差随个体改变。若所有观测均有\(\sigma_i^2=\sigma^2\)，才是同方差。零条件均值与同方差是不同假设，不能互相替代。</p>
+<p>在观测独立、适当矩条件、模型矩阵满秩等条件下，可采用HC1异方差稳健标准误进行渐近推断。HC1改变系数的协方差估计，不改变同一样本、同一OLS模型的点估计，也不能自动解决遗漏变量或函数形式错误。</p>
+</section>
+<section class="paper"><h2>三、实证案例与数据</h2>
+<p>采用Stata官方<a href="https://www.stata-press.com/data/r18/auto.dta" rel="noopener">1978年汽车数据auto.dta</a>。Stata使用内置sysuse auto；Python从同一官方DTA地址读取。两端均只保留price、weight、mpg、foreign非缺失的完整案例，并估计相同OLS模型。</p>
+<p>诊断顺序是：先画残差与拟合值散点图，观察波动幅度是否随拟合值改变；再比较常规与HC1稳健标准误；必要时使用Breusch–Pagan类检验辅助判断。图形只能提供线索，检验也依赖辅助回归与统计假设。未运行数据之前，不能声称本样本“已经存在显著异方差”。</p>
+</section>
+<section class="paper"><h2>四、Stata与Python实现</h2>
+<p><strong>Stata：</strong></p>
+<pre><code>* Stata官方1978年汽车数据
+sysuse auto, clear
+keep if !missing(price, weight, mpg, foreign)
+count
+
+* 同一OLS模型：先看常规标准误
+regress price weight mpg i.foreign
+* 残差—拟合值图，观察散布是否变化
+rvfplot, yline(0)
+* BP检验：以解释变量作为方差辅助回归变量
+estat hettest, rhs
+
+* 同一系数、HC1异方差稳健标准误
+regress price weight mpg i.foreign, vce(robust)</code></pre>
+<p><strong>Python：</strong></p>
+<pre><code>import pandas as pd
+import matplotlib.pyplot as plt
+import statsmodels.formula.api as smf
+from statsmodels.stats.diagnostic import het_breuschpagan
+
+# 与Stata相同的官方数据、完整案例和虚拟变量编码
+url = &quot;https://www.stata-press.com/data/r18/auto.dta&quot;
+df = pd.read_stata(url, convert_categoricals=False)
+sample = df[[&quot;price&quot;, &quot;weight&quot;, &quot;mpg&quot;, &quot;foreign&quot;]].dropna().copy()
+sample[&quot;foreign&quot;] = sample[&quot;foreign&quot;].astype(int)
+
+# 常规OLS与HC1：系数相同，标准误可能不同
+formula = &quot;price ~ weight + mpg + C(foreign)&quot;
+ols = smf.ols(formula, data=sample).fit()
+hc1 = smf.ols(formula, data=sample).fit(cov_type=&quot;HC1&quot;, use_t=True)
+print(&quot;有效样本量：&quot;, len(sample))
+print(&quot;常规OLS：\n&quot;, ols.summary())
+print(&quot;HC1稳健推断：\n&quot;, hc1.summary())
+
+# 残差—拟合值图
+plt.scatter(ols.fittedvalues, ols.resid, alpha=0.65)
+plt.axhline(0, color=&quot;black&quot;, linestyle=&quot;--&quot;)
+plt.xlabel(&quot;拟合价格（美元）&quot;)
+plt.ylabel(&quot;OLS残差（美元）&quot;)
+plt.show()
+
+# Koenker版本BP检验
+lm, lm_p, f_stat, f_p = het_breuschpagan(
+    ols.resid, ols.model.exog, robust=True
+)
+print(&quot;Koenker-BP LM及p值：&quot;, lm, lm_p)</code></pre>
+<p>Stata的estat hettest与Python此处的Koenker版本BP检验不保证相同的统计量或p值；跨软件核对时优先比较相同样本、OLS系数及HC1标准误。本课未实际运行代码，故不填入任何检验结果。</p>
+</section>
+<section class="paper"><h2>五、初学者避坑</h2>
+<p><strong>误区一：</strong> 发现异方差就认为OLS系数必然有偏。是否有偏取决于条件均值与外生性等条件；异方差主要使常规同方差标准误失去可靠性。</p>
+<p><strong>误区二：</strong> HC1可以修复所有模型缺陷。稳健标准误不能替代正确的变量设定、因果识别或处理观测相关性的聚类标准误。</p>
+<p><strong>误区三：</strong> 残差图看起来呈扇形就宣布检验显著。图形是诊断工具，不能替代统计检验；检验不显著也不证明严格同方差。</p>
+</section>
+<section class="paper"><h2>六、今日练习</h2>
+<p><strong>概念题：</strong> 若OLS模型存在异方差，是否必须改用另一种方法重新估计回归系数？为什么？</p>
+<p><strong>参考答案：</strong> 不一定。在零条件均值及其他适当条件下，OLS系数仍可一致。若目标是推断，可使用HC1稳健标准误；如果还存在模型设定错误、相关误差或内生性，则需针对相应问题调整方法。</p>
+<p><strong>计算／解释题：</strong> 假设某系数估计值为2.0，常规标准误为0.4，HC1标准误为0.8。用1.96作为近似临界值，分别计算两个95%区间，并说明点估计是否改变。以上数字仅为练习设定。</p>
+<p><strong>参考答案：</strong> 常规区间为\(2.0\pm1.96\times0.4=[1.216,2.784]\)；HC1区间为\(2.0\pm1.96\times0.8=[0.432,3.568]\)。点估计均为2.0，变化的是不确定性评估；这里使用1.96近似，实际有限样本推断可能使用t临界值。</p>
+</section>
+<section class="paper"><h2>七、学习进度</h2>
+<p>本课：第2章·第13节｜异方差初步（全课程第20课 / 共120课）。</p>
+<p>下一课：第2章·第14节｜多重共线性（全课程第21课）。</p>
+</section></main></body></html>
