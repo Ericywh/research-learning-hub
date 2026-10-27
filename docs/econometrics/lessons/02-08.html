@@ -1,0 +1,82 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="course-date" content="2026-10-21"><meta name="description" content="第2章·第8节｜F检验与联合假设｜全课程第15课历史授课原文归档，含双软件代码与练习答案"><title>第2章·第8节｜F检验与联合假设</title><link rel="stylesheet" href="../course-theme.css?v=20261027"><script>window.MathJax={tex:{inlineMath:[['\\(','\\)'],['$','$']],displayMath:[['\\[','\\]'],['$$','$$']]},svg:{fontCache:'global'}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script><script defer src="../course-theme.js?v=20261027"></script><style>body{margin:0;background:#f5f8fa;color:#223443;font:16px/1.8 system-ui,"Noto Sans SC",sans-serif}main{max-width:1080px;margin:auto;padding:24px}a{color:#147d82}.hero{padding:32px;background:#17384a;color:#fff;border-radius:18px;margin-bottom:22px}.hero h1,.hero p{color:#fff!important}.paper{padding:25px;background:white;border-radius:13px;margin:17px 0;border:1px solid #dce5eb}.paper h2{color:#264456}.equation{overflow-x:auto;padding:15px;background:#f3f7f8}.codefold{margin:14px 0;border:1px solid #d0dde3;border-radius:9px;overflow:hidden}.codefold summary{padding:12px;background:#ecf3f4;cursor:pointer;color:#244c58}.codefold pre{padding:18px;margin:0;background:#152c3e;color:#f1f7fb;overflow:auto;font:13px/1.7 monospace}.codefold code{color:inherit}.archive-note{font-size:13px;color:#526a75}@media(max-width:650px){main{padding:12px}.paper{padding:19px}}</style></head><body><main><header><a href="../index.html">← 计量经济学120天课程目录</a></header><section class="hero"><h1>第2章·第8节｜F检验与联合假设</h1><p>全课程第15课 / 共120课 · 原授课日期：2026-10-21 · 10—15分钟</p></section><p class="archive-note">本页根据已授课私人Notion原始讲义归档；代码为可复现示例，未经运行的数值不作实际回归输出。</p><article><p>&lt;callout icon=&quot;📘&quot; color=&quot;green_bg&quot;&gt; <strong>全课程第15课 / 共120课</strong></p>
+<p>授课日期：2026年10月21日（Asia/Taipei）预计学习时间：10—15分钟 &lt;/callout&gt;</p>
+<section class="paper" id="s1"><h2>一、通俗理解</h2>
+<p>上一课的t检验回答“某一个回归系数是否为零”。但研究问题常常涉及一组系数。例如，汽车重量和车身长度分别与价格有关，我们更想问：<strong>控制截距后，重量与长度这两个变量是否整体具有线性解释力？</strong></p>
+<p>不能简单地观察两个单独t检验的p值，再推断联合检验结果。重量和长度通常相关，两个系数估计量之间也可能存在协方差。即使单项检验都未达到5%显著性，联合检验仍可能拒绝原假设；反之亦然。</p>
+<p><strong>F检验</strong>用于检验多个线性约束是否同时成立。它检验的是指定回归模型中的统计假设，不自动说明这些变量具有因果作用。</p>
+</section>
+<section class="paper" id="s2"><h2>二、核心理论与公式</h2>
+<p>考虑含截距模型：汽车价格对重量（单位100磅）和车身长度进行OLS回归。我们提出两个同时成立的约束：</p>
+<div class="equation">\[H_0:\ \beta_{\mathrm{weight100}}=0,\quad\beta_{\mathrm{length}}=0;\qquad H_1:\ \text{至少一个系数不为零}.\]</div>
+<p>一般地，将需要同时检验的 $q$ 个线性约束写为 $R\beta=r$。使用HC1异方差稳健协方差矩阵，联合Wald检验的F型统计量为：</p>
+<div class="equation">\[F_W=\frac{(R\widehat\beta-r)^\top\left[R\widehat V_{\mathrm{HC1}}R^\top\right]^{-1}(R\widehat\beta-r)}{q}.\]</div>
+<p>其中，$\widehat\beta$ 是OLS系数向量，$R$ 为约束矩阵，$r$ 为约束值，$\widehat V_{\mathrm{HC1}}$ 为系数估计量的HC1稳健协方差矩阵。要求回归设计矩阵满列秩、约束独立且括号中的矩阵可逆。</p>
+<p>本例有 $q=2$ 个约束。若样本量为 $n$、解释变量数为 $k=2$，软件通常以 $F_{2,n-3}$ 作为参考分布计算p值。<strong>对HC1稳健Wald检验，这一般是依赖适当大样本条件的近似，而不是精确小样本F分布。</strong> 在单个约束且采用一致协方差估计时，F型Wald统计量等于相应t统计量的平方。</p>
+</section>
+<section class="paper" id="s3"><h2>三、实证案例与数据</h2>
+<p>继续使用Stata Press公开的1978年汽车教学数据 <code>auto.dta</code>，原始文件包含74条车型记录。变量为 <code>price</code>（美元）、<code>weight</code>（磅）和 <code>length</code>（英寸），构造 <code>weight100=weight/100</code>。只保留三个原变量均非缺失的观测；有效样本量由代码计算，不预设筛选结果。</p>
+<p>本课联合检验“在该线性模型中，重量和长度的总体斜率是否同时为零”。即使检验拒绝原假设，也只能说明模型层面的条件线性关联具有统计证据，不能将其直接解释为改变重量或长度的因果效应。</p>
+<p>数据来源：<a href="https://www.stata-press.com/data/r19/auto.dta" rel="noopener noreferrer">Stata Press auto.dta</a>。</p>
+</section>
+<section class="paper" id="s4"><h2>四、Stata与Python实现</h2>
+<p>两套代码使用相同数据、样本、含截距OLS模型、HC1稳健协方差，以及两个相同的线性约束。均未在本课实际运行，不报告未经核实的F值或p值。</p>
+<h3>4.1 Stata</h3><details class="codefold"><summary>点击展开 Stata 完整代码</summary><pre><code class="language-stata">clear all
+* 读取公开数据并统一完整案例样本
+use &quot;https://www.stata-press.com/data/r19/auto.dta&quot;, clear
+keep if !missing(price, weight, length)
+generate double weight100 = weight / 100
+count
+
+* HC1异方差稳健标准误的OLS
+regress price weight100 length, vce(robust)
+
+* 联合原假设：两个斜率同时等于零
+test weight100 = 0
+test length = 0, accumulate
+
+* 直接一次性联合检验，结果应与上面一致
+test weight100 length
+display &quot;联合F统计量：&quot; r(F)
+display &quot;联合检验p值：&quot; r(p)</code></pre></details><h3>4.2 Python</h3><details class="codefold"><summary>点击展开 Python 完整代码</summary><pre><code class="language-python">import pandas as pd
+import statsmodels.api as sm
+
+url = &quot;https://www.stata-press.com/data/r19/auto.dta&quot;
+cols = [&quot;price&quot;, &quot;weight&quot;, &quot;length&quot;]
+df = pd.read_stata(url)[cols].dropna().copy()
+df[&quot;weight100&quot;] = df[&quot;weight&quot;] / 100
+
+y = df[&quot;price&quot;]
+X = sm.add_constant(df[[&quot;weight100&quot;, &quot;length&quot;]])
+
+# 与Stata一致的HC1稳健协方差
+fit = sm.OLS(y, X).fit(cov_type=&quot;HC1&quot;, use_t=True)
+
+# 两个斜率同时为零的联合Wald F检验
+joint = fit.wald_test(
+    &quot;weight100 = 0, length = 0&quot;,
+    use_f=True,
+    scalar=True
+)
+
+print(&quot;有效样本量：&quot;, len(df))
+print(&quot;系数：&quot;, fit.params)
+print(&quot;联合F统计量：&quot;, joint.statistic)
+print(&quot;分子自由度：&quot;, joint.df_num)
+print(&quot;分母自由度：&quot;, joint.df_denom)
+print(&quot;联合检验p值：&quot;, joint.pvalue)</code></pre></details><p>比较时应核对样本量、F统计量、自由度及p值。Stata的 <code>vce(robust)</code> 和Python的 <code>cov_type=&quot;HC1&quot;</code> 采用相应的有限样本缩放。不要把经典同方差条件下基于残差平方和的F检验与这里的稳健Wald F检验混为一谈。</p>
+</section>
+<section class="paper" id="s5"><h2>五、初学者避坑</h2>
+<p><strong>误区一：两个单项t检验都不显著，联合F检验必然不显著。</strong> 错。联合检验利用了系数之间的协方差，不能只根据单项p值判断。</p>
+<p><strong>误区二：稳健F检验在任意小样本中都服从精确F分布。</strong> 错。HC1稳健推断通常依赖大样本近似；样本量较小或高杠杆点明显时尤其需要谨慎。</p>
+<p><strong>误区三：联合拒绝零系数就证明存在因果作用。</strong> 错。检验本身不验证外生性，也不能排除遗漏变量、反向因果和选择问题。</p>
+</section>
+<section class="paper" id="s6"><h2>六、今日练习</h2>
+<p><strong>概念题：</strong> 两个变量各自的双侧t检验p值均大于0.05，是否意味着检验“两个系数同时为零”的联合F检验一定不能拒绝？为什么？</p>
+<p><strong>参考答案：</strong> 不一定。联合统计量还取决于两个系数估计量的协方差；分别检验与联合检验的拒绝域不同。应直接对两个约束进行联合检验。</p>
+<p><strong>计算题：</strong> 一个纯教学例子中，两项系数估计为 $(2,1)^\top$，其稳健协方差矩阵为 $\operatorname{diag}(1,4)$。检验两个总体系数同时为零，计算F型Wald统计量。若题设5%临界值为3.2，应如何判断？</p>
+<p><strong>参考答案：</strong> 两个约束的二次型为 $2^2/1+1^2/4=4.25$；除以约束数 $q=2$，得到 $F_W=2.125$。因为 $2.125&lt;3.2$，在题设临界值下不拒绝联合原假设。该数字为构造案例，不是汽车数据的回归结果。</p>
+</section>
+<section class="paper" id="s7"><h2>七、学习进度</h2>
+<p>本课为<strong>第2章·第8节｜F检验与联合假设</strong>，全课程第15课 / 共120课，数据源为Stata Press <code>auto.dta</code>。原纲下一课为<strong>第2章·第9节｜虚拟变量</strong>（全课程第16课）。</p>
+<p>第13、14课已经在普通聊天及私人Notion完成，但GitHub源码归档仍待补齐；它们不应因此被重新计算为未授课。</p>
+</section></article></main></body></html>
