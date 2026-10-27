@@ -1,0 +1,218 @@
+{
+  "date": "2026-10-27",
+  "python": "3.13.16",
+  "packages": {
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "pandas": "3.1.0",
+    "statsmodels": "0.15.0"
+  },
+  "pythonPassed": 22,
+  "stata": "not_executed_no_runtime",
+  "rng": "seed 20261027; language streams differ",
+  "results": [
+    {
+      "lab": "asymptotics.py",
+      "exit": 0,
+      "seconds": 0.91,
+      "sha256": "7757b64e60bb458454cbb7bbb983f17b21e81138e51588ce77d116f2f193d12d",
+      "stdout": "{'n': 30, 'bias': 0.027363337690194278, 'sd': 0.4126966424380455, 'rmse': 0.4133968461545201, 'coverage': 0.899, 'mcse': 0.009528850927577784}\n{'n': 200, 'bias': 0.00251662545564324, 'sd': 0.15387547421720482, 'rmse': 0.1538191057953728, 'coverage': 0.945, 'mcse': 0.007209368904418752}\n{'n': 2000, 'bias': -0.001618726571443574, 'sd': 0.05071814332543823, 'rmse': 0.05071861599088064, 'coverage': 0.937, 'mcse': 0.007683163410991592}\n",
+      "stderr": ""
+    },
+    {
+      "lab": "cluster.py",
+      "exit": 0,
+      "seconds": 21.18,
+      "sha256": "e74c7ac7f734b1e2fd39e9f6cb8491a15f49dbbeeaad76ba068956c66f4143b7",
+      "stdout": "G= 80 HC1 SE [0.03560232 0.02480833] cluster SE [0.11681239 0.05938402]\n",
+      "stderr": ""
+    },
+    {
+      "lab": "dag.py",
+      "exit": 0,
+      "seconds": 6.77,
+      "sha256": "c38088624246429d0a3593e8cd4266bfbf37d0235968f58f884b9460e034989e",
+      "stdout": "D and Y generated independently; collider induces conditional association\nNo control 0.006016128285424053 controlling collider -0.49384549303511566\n",
+      "stderr": ""
+    },
+    {
+      "lab": "delta.py",
+      "exit": 0,
+      "seconds": 8.36,
+      "sha256": "e760199a31354681a7726be71cea2ff9b071d5d4a9d8993f38f03baad73ad760",
+      "stdout": "Stationary point, not inflection: 3.3425983901085914 Delta SE: 0.04926753648955777 support: (np.float64(0.0038062052497276344), np.float64(5.991854288117807))\n",
+      "stderr": ""
+    },
+    {
+      "lab": "diagnostics.py",
+      "exit": 0,
+      "seconds": 7.67,
+      "sha256": "3ed9a18bae921371c56aeefb1c96ea480c3fe142044dd0ea3e02fc801776e223",
+      "stdout": "VIF x 106.91922182665465\nMax leverage 0.023231395743400173\nHC1 [0.05240465 0.53805451 0.53626362]\nHAC lag4 [0.08569112 0.53388908 0.52977588]\n",
+      "stderr": ""
+    },
+    {
+      "lab": "did.py",
+      "exit": 0,
+      "seconds": 7.57,
+      "sha256": "95d0bb778e9cdd16d4282b2e41ddcaeb19cac30aeb0b35d74703620dfaba9339",
+      "stdout": "static DID 1.1832105741535603\nevent_m4 0.6739052878051208 0.25226872644646114\nevent_m3 0.03681836072566879 0.2374953309533114\nevent_m2 0.032896474775390316 0.23966551098356556\nevent_p0 0.7154618812832121 0.24689375190385845\nevent_p1 0.9595436267693231 0.23705011512084767\nevent_p2 1.4225550457560643 0.2488558779363134\nevent_p3 2.3789018661118138 0.22082873972511724\npre joint <Wald test (chi2): statistic=9.980905673300338, p-value=0.018729143506632573, df_denom=3>\n",
+      "stderr": ""
+    },
+    {
+      "lab": "dml.py",
+      "exit": 0,
+      "seconds": 0.75,
+      "sha256": "91a69254d06851c4b51f974761ae20a26be391115170f3792ba95a82abdfbdb4",
+      "stdout": "Cross-fit polynomial nuisance PLR 2.0295711193429704 SE 0.01797847195505175 true theta 2\n",
+      "stderr": ""
+    },
+    {
+      "lab": "dynamic.py",
+      "exit": 0,
+      "seconds": 1.83,
+      "sha256": "326ad0d26045425a33e630a17fb06c669aec6085d3e0523695654404276ffced",
+      "stdout": "Restricted difference GMM 0.47526216981479114 cluster sandwich SE 0.03996541780089877 true rho 0.6\nNo overidentification df, AR test or system moments supplied; see Stata xtabond lab\n",
+      "stderr": ""
+    },
+    {
+      "lab": "endogeneity.py",
+      "exit": 0,
+      "seconds": 7.25,
+      "sha256": "75e08e71afca35a50d9092379101e975194761ba61ffc42301d23ff2a3cf5fa6",
+      "stdout": "Education included in both equations\nshort,full, predicted OVB 0.2129260249326578 0.07906761195239796 0.13383184666557038\nMeasurement error slope 0.11889227909916376\n",
+      "stderr": ""
+    },
+    {
+      "lab": "foundation.py",
+      "exit": 0,
+      "seconds": 7.78,
+      "sha256": "1f963ebe0cece147f6e92d1608e4c8ed208f06ca13fe375fd80613ca9b5cce4d",
+      "stdout": "OLS [0.98403207 2.02315254 0.77239269] FWL 2.023152538758435 HC1 SE [0.0344539  0.03502422 0.03868269]\nJoint Wald <Wald test (chi2): statistic=6245.641483205335, p-value=0.0, df_denom=2>\n",
+      "stderr": ""
+    },
+    {
+      "lab": "ivgmm.py",
+      "exit": 0,
+      "seconds": 3.42,
+      "sha256": "8eb1d0e46f62e90a05c33543b72f41d30946078cac8361266a709bbfdc276bd1",
+      "stdout": "2SLS [0.96650591 1.44227562] two-step GMM [0.96610384 1.4429833 ] robust SE [0.02887833 0.03796686]\nJ 0.005077331278369615 df 1 p 0.943194494793447\n",
+      "stderr": ""
+    },
+    {
+      "lab": "mle.py",
+      "exit": 0,
+      "seconds": 7.84,
+      "sha256": "b09ffbcb406016f69db3ece14adfb227a644559220831f916727ba2da319573c",
+      "stdout": "MLE [-0.35152597  0.83977676 -0.45897326] score norm 7.204080754060164e-10\nsandwich HC0 SE [0.04429095 0.05078135 0.04470284]\nAME x1 fixed-X 0.17262963369785506 Delta SE 0.008211685028691343\n",
+      "stderr": ""
+    },
+    {
+      "lab": "multiple.py",
+      "exit": 0,
+      "seconds": 5.52,
+      "sha256": "8a8afcb8de20e7ac4c5f27ad566191a7f4849917cfd4bc6274dca52708981198",
+      "stdout": "BH reject [ True False False] adjusted p [0.03 0.06 0.2 ]\nAssume independent or suitable positive dependence; not posterior false probabilities\n",
+      "stderr": ""
+    },
+    {
+      "lab": "panel.py",
+      "exit": 0,
+      "seconds": 7.1,
+      "sha256": "6602b1509ff52a76b5f1a8d2c0e547d49b7838cb896d3f5be38c41510ca9e0f9",
+      "stdout": "FE slope 1.9814441129414666 cluster SE 0.025850469943477204\n",
+      "stderr": ""
+    },
+    {
+      "lab": "poisson.py",
+      "exit": 0,
+      "seconds": 6.59,
+      "sha256": "7662ba0354c27a13292e5d365ddec20d0600d4bca68765d80f02ebce38287c14",
+      "stdout": "Poisson QMLE under overdispersion [0.29247661 0.41597185] robust SE [0.01825349 0.01927277]\nTrue slope .4, conditional mean correctly specified; not empirical data\n",
+      "stderr": ""
+    },
+    {
+      "lab": "rdd.py",
+      "exit": 0,
+      "seconds": 6.22,
+      "sha256": "c970eaeb463b39f7014b125cf0a4877cdf0bc1f324510297fe8530cf0f1a5d20",
+      "stdout": "h 0.2 n 2417 outcome jump 0.9485347225280992 treatment jump 0.5144813376433461 fuzzy ratio 1.8436717780143308\nh 0.4 n 4850 outcome jump 1.028299665284758 treatment jump 0.5158197810690557 fuzzy ratio 1.9935250702359044\nh 0.6 n 7265 outcome jump 0.9999037070325176 treatment jump 0.5032761022810736 fuzzy ratio 1.986789562430055\nLocal-linear point estimates; not CCT robust bias-corrected intervals or density tests\n",
+      "stderr": ""
+    },
+    {
+      "lab": "scm.py",
+      "exit": 0,
+      "seconds": 2.66,
+      "sha256": "084a1820e54701d904b2c26c3124a818481454ad56c47948431152ecf2028cbf",
+      "stdout": "convex weights [2.00817276e-01 5.08241074e-01 2.86731755e-01 0.00000000e+00\n 0.00000000e+00 4.20989509e-03 3.21204592e-17 0.00000000e+00] post mean gap 2.0005797475773592 RMSPE ratio 67.47122447176034\nspatial placebo ratios [np.float64(1.1088415366366315), np.float64(1.0037939776395273), np.float64(1.6305384735745034), np.float64(1.47487972830369), np.float64(1.664540288482174), np.float64(1.7459490297805096), np.float64(1.6807771234672382), np.float64(0.8506055307145008)] rank fraction 0.1111111111111111\nSynthetic factor data; rank fraction is not a universally exact p-value\n",
+      "stderr": ""
+    },
+    {
+      "lab": "selection.py",
+      "exit": 0,
+      "seconds": 7.06,
+      "sha256": "fd86380055506611dae1964a75666630313de472db410ca2f617927af0103c55",
+      "stdout": "naive slope 1.950749915092897 Heckman two-step slope 2.0260331769507705\nPoint estimates only: second-step OLS default SE is not Heckman-corrected\nconditional quantile .25 [0.29237729 2.03666586]\n",
+      "stderr": "",
+      "repair": "Removed obsolete predict(linear=...) API; linear index computed explicitly"
+    },
+    {
+      "lab": "staggered.py",
+      "exit": 0,
+      "seconds": 0.78,
+      "sha256": "9d445cf2c00b4aecf6f3044b7987aa73c4809b8b6ce90fd24198b52d4321c415",
+      "stdout": "g,t,ATT,true (3, 3, np.float64(0.8318474078075759), 1.0)\ng,t,ATT,true (3, 4, np.float64(1.284807433293178), 1.4)\ng,t,ATT,true (3, 5, np.float64(1.792383996835608), 1.8)\ng,t,ATT,true (3, 6, np.float64(2.167463511217017), 2.2)\ng,t,ATT,true (3, 7, np.float64(2.645792008976187), 2.6)\ng,t,ATT,true (3, 8, np.float64(3.0312849247759406), 3.0)\ng,t,ATT,true (5, 5, np.float64(0.8964814085850832), 1.0)\ng,t,ATT,true (5, 6, np.float64(1.3772295928227354), 1.4)\ng,t,ATT,true (5, 7, np.float64(1.839702581571824), 1.8)\ng,t,ATT,true (5, 8, np.float64(2.2445566094445906), 2.2)\nNever-treated control, no covariates. Educational ATT(g,t), not full CS-DID inference.\n",
+      "stderr": ""
+    },
+    {
+      "lab": "timeseries.py",
+      "exit": 0,
+      "seconds": 6.43,
+      "sha256": "c1ab4548f63b6e294f64d8793cdd457f1096aad8bdfa505f500796f47857485a",
+      "stdout": "ADF x (-2.4437256155010587, 0.12977344303167115)\nEG cointegration (-16.653312860153935, 1.1820849472638788e-28)\nECM const, adjustment, short-run [ 1.74303136e-03 -5.15951284e-01  2.05168404e+00]\n",
+      "stderr": "C:\\Users\\13186\\Documents\\Codex\\2026-10-27\\referenced-chatgpt-conversation-this-is-an\\work\\full\\docs\\econometrics\\v2\\labs\\timeseries.py:9: FutureWarning: adfuller currently returns a plain tuple whose length depends on the store and autolag arguments. In release 0.16 or after July 2027, whichever is later, the default behavior will switch to always returning an ADFullerResult. Set result_object=True to switch now, or result_object=False to keep the current behavior and silence this warning.\n  print('ADF x',adfuller(x,regression='c',autolag='AIC')[:2])\n"
+    },
+    {
+      "lab": "weighting.py",
+      "exit": 0,
+      "seconds": 6.43,
+      "sha256": "1c308e1ce13290ae77b3e492596ca67946543f29f89481f1f4763e6eef006d8b",
+      "stdout": "IPW ATE 1.9827965678309507 AIPW ATE 1.9841084330101089 matched ATT 1.9558460716415147\nMatched 2161 of 2161 SMD before/after 0.595816172061288 0.0008242558844198447\nPoint estimates, not valid matching SE; no claim of unobserved-confounding correction\n",
+      "stderr": ""
+    },
+    {
+      "lab": "real_wages.py",
+      "exit": 0,
+      "sha256": "f4d64b03a5d93a6a756cf0721f97da1fa2f4b9130e353d8919f94d02c492a548",
+      "stdout": {
+        "source": "https://www.stata-press.com/data/r19/nlsw88.dta",
+        "sha256": "6c2249c12ec829af1b9c74fa2efb4dda0ce0fc093787939440a38fe3c75aa3c9",
+        "raw_n": 2246,
+        "analysis_n": 2229,
+        "excluded_n": 17,
+        "parameters": {
+          "const": 0.3644591255293862,
+          "grade": 0.0805063171679387,
+          "ttl_exp": 0.030377902555055854,
+          "tenure": 0.012114806347010657
+        },
+        "HC1_SE": {
+          "const": 0.05767338303317456,
+          "grade": 0.004223547306301317,
+          "ttl_exp": 0.002850667051203274,
+          "tenure": 0.002310065937606138
+        },
+        "interpretation": "Observed-data teaching association; not a causal education effect or representative NLS estimate."
+      },
+      "scope": "Official observed-data teaching extract; not causal or publication inference"
+    }
+  ],
+  "limitations": [
+    "Teaching core notes, not 120 independently rewritten lectures",
+    "Simplified group-time ATT not full CS-DID",
+    "Local WLS not CCT bias-corrected inference",
+    "Restricted difference moments not system GMM",
+    "Heckman Python second-step SE not corrected; point estimate only",
+    "No completed empirical paper replication"
+  ]
+}

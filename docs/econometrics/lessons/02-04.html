@@ -1,70 +1,40 @@
-<!doctype html>
-<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="course-date" content="2026-10-17">
-<title>第2章·第4节｜多元线性回归与控制变量</title><style>
-:root{font-family:system-ui,-apple-system,"Noto Sans SC","Microsoft YaHei",sans-serif;color:#223845;background:#f5f8f6}*{box-sizing:border-box}body{margin:0;line-height:1.85;font-size:16px}header,main,footer{max-width:940px;margin:auto;padding:18px 22px}header,nav{display:flex;gap:22px;flex-wrap:wrap}a{color:#166e65}h1{font-size:clamp(24px,4vw,34px);line-height:1.4}h2{font-size:23px;color:#185c53;border-bottom:1px solid #dce8e2;padding-bottom:10px;margin-top:36px}h3{font-size:18px;color:#2d665e}main{background:white;border:1px solid #dee9e3;border-radius:16px;padding:30px;margin:12px auto 30px}.meta{background:#eaf4ef;padding:17px;border-radius:9px;margin:14px 0 30px}p{margin:13px 0}pre{background:#172b38;color:#f0f5f9;border-radius:9px;padding:19px;overflow-x:auto;font:13px/1.75 ui-monospace,monospace}.code-label{margin-top:22px;font-weight:bold;color:#185c53}code{white-space:pre-wrap}p code{background:#f0f4f1;padding:2px 5px;border-radius:3px}.formula{background:#f1f6f3;padding:18px;margin:18px 0;overflow-x:auto;text-align:center}footer{color:#6a7b7b;font-size:12px}li{margin:8px 0}@media(max-width:650px){main{padding:17px;border-radius:0}pre{font-size:12px}}</style>
-<script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['$$','$$']]},svg:{fontCache:'global'}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
-
-
-<link rel="stylesheet" href="../course-theme.css?v=20261025-3"><script defer src="../course-theme.js?v=20261025-3"></script></head>
-<body><header><a href="../">← 计量经济学120天课程目录</a><a href="../../study/">学习中心</a></header><main>
-<h1>第2章·第4节｜多元线性回归与控制变量</h1><div class="meta">全课程第11课 / 共120课　·　授课日期：2026-10-17　·　学习时间：10—15分钟</div>
-<p>全课程第11课 / 共120课<br>授课日期：2026年10月17日（Asia/Taipei）｜预计10—15分钟</p>
-<h3>一、通俗理解</h3>
-<p>前几课用汽车重量预测价格，并以OLS估计斜率、用R²评价样本内拟合。但较重的汽车通常也更长、配置可能不同。若只回归价格与重量，重量系数可能同时反映车身长度等因素与价格的共同变化。<strong>多元线性回归</strong>是在同一个方程中纳入多个解释变量，考察某个变量在其他纳入变量给定时与结果的条件线性关联。<br>例如，在相同车身长度条件下比较不同重量汽车的预测价格，与不区分长度直接比较汽车价格，是两个不同的统计问题。“控制长度”是模型中的条件比较，不意味着研究者真的将汽车长度固定，也不自动实现因果识别。</p>
-<h3>二、核心理论与公式</h3>
-<p>以汽车价格为因变量、重量和长度为解释变量，设定：</p>
-<div class="formula">$$price_i=\beta_0+\beta_1weight100_i+\beta_2length_i+u_i.$$</div>
-<p>这里 weight100 是以100磅计量的重量，length 是英寸长度；β₁是长度保持不变时，重量每增加100磅对应的<strong>条件线性预测差异</strong>，β₂类似。OLS要求解释变量矩阵满列秩才能唯一估计系数；把β₁解释为因果效应还需要额外的外生性、干预定义等识别条件。<br>为什么控制变量后斜率可能变化？在总体线性投影中，若误差与两个解释变量均正交，且 Var(weight100)\&gt;0，则仅回归重量所得总体斜率满足：</p>
-<div class="formula">$$\beta_{1,\mathrm{simple}}=\beta_1+
-\beta_2\frac{\operatorname{Cov}(weight100,length)}
-{\operatorname{Var}(weight100)}.$$</div>
-<p>第二项反映遗漏长度带来的斜率差异。它是线性投影的代数关系；是否构成因果意义上的遗漏变量偏误，仍取决于模型与识别假设。</p>
-<h3>三、实证案例与数据</h3>
-<p>沿用Stata官方1978年汽车示例数据 auto.dta，原始文件有74条车型记录。使用 price（美元）、weight（磅）、length（英寸），生成 weight100=weight/100。先统一删除这三个变量的缺失值，再比较模型A（仅重量）与模型B（重量和长度）。两者均含截距，使用相同有效样本与HC1异方差稳健标准误。样本是教学示例，不应直接当作随机抽取的汽车总体样本。数据来源：<a href="https://www.stata-press.com/data/r19/auto.dta" target="_blank" rel="noopener noreferrer">Stata官方auto.dta</a>。</p>
-<h3>四、Stata与Python实现</h3>
-<p><strong>Stata（同一样本、HC1稳健标准误）：</strong></p>
-<div class="code-label">Stata</div><pre><code class="language-stata">clear all
-* 读取官方示例数据，统一完整案例样本
-use &quot;https://www.stata-press.com/data/r19/auto.dta&quot;, clear
-keep if !missing(price, weight, length)
-generate double weight100 = weight / 100
-count
-
-* 模型A：价格对重量的一元回归
-regress price weight100, vce(robust)
-estimates store A
-
-* 模型B：增加车身长度
-regress price weight100 length, vce(robust)
-estimates store B
-
-* 比较两组估计、稳健标准误与拟合优度
-estimates table A B, b(%9.3f) se(%9.3f) stats(N r2)</code></pre>
-<p><strong>Python（同一数据、同一HC1协方差设定）：</strong></p>
-<div class="code-label">Python</div><pre><code class="language-python">import pandas as pd
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="course-revision" content="2026-10-27-v2"><meta name="course-status" content="taught"><title>第2章·第4节｜多元线性回归与控制变量</title><link rel="stylesheet" href="../v2/course.css"><script defer src="../v2/course.js"></script></head><body><header><a href="../">← 计量经济学120天课程</a><a href="../v2/">36模块新主线</a></header><main><div class="hero"><span class="badge">已授课</span><h1>第2章·第4节｜多元线性回归与控制变量</h1><p class="meta">原全课程第11课 / 120 · 原日期：2026-10-17 · 本次实质修订2026-10-27</p><p>本页现采用M03 控制变量与FWL残差化核心讲义，保留原网址、编号及标题。<a href="../archive/2026-10-27/lessons/02-04.html">阅读修订前原稿</a>。</p></div><section class="paper" id="s1"><h2>1 · 核心问题与推导</h2><p>FWL定理把“保持控制变量不变”转成可核验的残差化操作。将x对控制矩阵Z回归得到rₓ，将y对同一Z回归得到rᵧ，rᵧ对rₓ的无截距回归系数等于完整模型中的x系数。两步必须使用相同样本和控制空间。系数相同不意味着直接读取残差回归的默认标准误也相同，完整模型的自由度和协方差应保留。FWL是代数定理，不保证控制集合有因果合理性；中介和碰撞点可能改变目标或制造偏差。</p></section><section class="paper" id="s2"><h2>2 · 公式与统计前提</h2><div class="formula">bₓ=(x′M_Zx)⁻¹x′M_Zy；M_Z=I−Z(Z′Z)⁻¹Z′</div><p>删失或缺失造成两步样本不同会破坏核验。控制变量清单不能替代识别设计。</p></section><section class="paper" id="s3"><h2>3 · 图示与研究含义</h2><div class="diagram"><svg viewBox="0 0 680 220" role="img" aria-label="投影与残差正交的示意图"><title>拟合值是投影，残差垂直于列空间</title><path d="M60 180H610M60 180L370 40M370 40V180" stroke="#176f70" stroke-width="3" fill="none"/><path d="M350 180V160H370" stroke="#b98c3b" fill="none"/><g fill="#173e49" font-size="19"><text x="380" y="45">y</text><text x="250" y="205">拟合值 Pₓy</text><text x="388" y="118">残差 Mₓy</text><text x="470" y="174">X的列空间</text></g></svg></div><p>图为概念示意；数值结论以运行代码和明确的数据来源为准。</p></section><section class="paper" id="s4"><h2>4 · 可复现实验：Stata与Python</h2><p>数据性质：固定种子的随机教学模拟，非真实研究数据。两种软件随机流不同，不要求逐行结果相同。Python已运行状态见<a href="../v2/validation.json">核验记录</a>；Stata尚未运行验证。</p><details><summary>Python · 展开代码</summary><p><a download href="../v2/labs/foundation.py">下载完整脚本</a></p><button type="button" data-copy>复制代码</button><pre><code># Teaching experiment, synthetic data unless explicitly stated. Seed 20261027.
+import numpy as np
 import statsmodels.api as sm
-
-# 与Stata相同的完整案例样本
-url = &quot;https://www.stata-press.com/data/r19/auto.dta&quot;
-df = pd.read_stata(url)[[&quot;price&quot;, &quot;weight&quot;, &quot;length&quot;]].dropna().copy()
-df[&quot;weight100&quot;] = df[&quot;weight&quot;] / 100
-y = df[&quot;price&quot;]
-
-# 显式加入截距，使用HC1异方差稳健标准误
-X_a = sm.add_constant(df[[&quot;weight100&quot;]])
-X_b = sm.add_constant(df[[&quot;weight100&quot;, &quot;length&quot;]])
-a = sm.OLS(y, X_a).fit(cov_type=&quot;HC1&quot;)
-b = sm.OLS(y, X_b).fit(cov_type=&quot;HC1&quot;)
-
-print(&quot;有效样本量：&quot;, len(df))
-for name, model in [(&quot;A&quot;, a), (&quot;B&quot;, b)]:
-    print(name, &quot;系数：\n&quot;, model.params)
-    print(name, &quot;HC1标准误：\n&quot;, model.bse)
-    print(name, &quot;R²：&quot;, model.rsquared)</code></pre>
-<p>观察加入length前后 weight100 系数的大小、方向及稳健标准误。样本内R²不会因新增解释变量而下降；HC1改变的是协方差估计与统计推断，不改变OLS点估计。上述代码未在本次执行，因此不虚构系数、p值或样本筛选后的观测数。</p>
-<h3>五、初学者避坑</h3>
-<p><strong>误区一：</strong>“控制越多越好。”不恰当控制中介变量、碰撞变量或处理后变量，可能改变研究目标甚至引入偏误；控制变量应由研究问题和因果结构决定。<br><strong>误区二：</strong>“加入控制变量后系数稳定就证明因果。”稳定性只是有限的模型诊断，不能排除未观测混杂、反向因果或测量误差。<br><strong>误区三：</strong>“控制后系数变化必然说明原模型错误。”系数变化也可能来自解释变量相关性、模型设定或样本改变。本课刻意固定样本，排除最后一种机械差异。</p>
-<h3>六、今日练习</h3>
-<p><strong>概念题：</strong> 多元回归中的“控制车身长度”是否等于把汽车长度真实固定？为何不能直接将重量系数解释为因果效应？<br><strong>参考答案：</strong> 不是。它表示在给定长度条件下进行模型中的线性比较；真实干预可能改变其他汽车特征，且未观测混杂等识别问题仍存在。<br><strong>实操／解释题：</strong> 假设某教学例子中，多元模型的重量系数β₁=80、长度系数β₂=400，而长度对重量的总体线性投影斜率为0.25。求只回归重量时的总体斜率，并说明能否据此断言重量的因果效应。<br><strong>参考答案：</strong> 简单回归斜率=80+400×0.25=180；与多元回归的差额为100。该计算描述线性投影系数差异，不能单凭它确认重量的因果效应。</p>
-<nav><a href="02-03.html">← 上一课</a><a href="02-05.html">下一课 →</a><a href="../">课程总目录</a></nav>
-</main><footer>计量经济学120天系统课程｜按已完成授课讲义归档；相关性与因果解释须严格区分。</footer></body></html>
+rng=np.random.default_rng(20261027)
+n=800
+z=rng.normal(size=n); x=.6*z+rng.normal(size=n)
+y=1+2*x+.8*z+rng.normal(size=n)
+X=np.column_stack([np.ones(n),x,z])
+b=np.linalg.lstsq(X,y,rcond=None)[0]
+Z=np.column_stack([np.ones(n),z])
+rx=x-Z@np.linalg.lstsq(Z,x,rcond=None)[0]
+ry=y-Z@np.linalg.lstsq(Z,y,rcond=None)[0]
+fwl=rx@ry/(rx@rx)
+P=X@np.linalg.solve(X.T@X,X.T)
+assert abs(fwl-b[1])&lt;1e-10
+assert np.max(np.abs(P@P-P))&lt;1e-10
+assert np.max(np.abs(X.T@(y-X@b)))&lt;1e-8
+fit=sm.OLS(y,X).fit(cov_type=&#x27;HC1&#x27;)
+print(&#x27;OLS&#x27;,b,&#x27;FWL&#x27;,fwl,&#x27;HC1 SE&#x27;,fit.bse)
+print(&#x27;Joint Wald&#x27;,fit.wald_test(np.array([[0,1,0],[0,0,1]]),scalar=True))
+</code></pre></details><details><summary>Stata · 展开代码</summary><p><a download href="../v2/labs/foundation.do">下载完整脚本</a></p><button type="button" data-copy>复制代码</button><pre><code>version 17.0
+clear all
+set more off
+set seed 20261027
+* Synthetic teaching data. Stata and NumPy RNG streams differ.
+set obs 800
+gen double z=rnormal()
+gen double x=.6*z+rnormal()
+gen double y=1+2*x+.8*z+rnormal()
+regress y x z, vce(robust)
+scalar full_b=_b[x]
+test x z
+regress x z
+predict double rx, residuals
+regress y z
+predict double ry, residuals
+regress ry rx, noconstant
+assert abs(_b[rx]-full_b)&lt;1e-8
+* Coefficient identity only: final default SE is not full-model HC1.
+</code></pre></details></section><section class="paper" id="s5"><h2>5 · 专属练习与参考答案</h2><p>只残差化y而保留原x，一般还能得到相同斜率吗？</p><details><summary>展开答案与依据</summary><p>一般不能。需同时对x残差化；x与Z列空间正交等特殊情形例外。</p></details></section><section class="paper" id="s6"><h2>6 · 学习验收</h2><p>独立解释本模块公式中的随机对象、目标量与关键条件；运行实验，改变一个前提并说明结果为何改变。只阅读或运行命令不等于掌握。</p><label><input type="checkbox" data-module-check="M03"> 已完成 M03 的推导、实验与练习</label></section><section class="paper" id="s7"><h2>7 · 原120课映射与资料</h2><p>原课编号、标题与历史授课日期保留。下列为主题映射，合并模块并不表示每节旧课均已独立重写。</p><a class="maplink" href="../v2/../lessons/02-04.html">原课 02-04</a><a class="maplink" href="../v2/../lessons/02-05.html">原课 02-05</a><a class="maplink" href="../v2/../lessons/02-12.html">原课 02-12</a><p><a href="../v2/review.html">评审回应与修订范围</a> · <a href="../v2/mapping.html">完整120课映射</a> · <a href="../v2/sources.html">原始文献与软件文档</a></p></section></main><script defer src="../study-progress.js"></script></body></html>

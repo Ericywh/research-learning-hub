@@ -1,69 +1,40 @@
-<!doctype html>
-<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="course-date" content="2026-10-14">
-<title>第2章·第1节｜一元线性回归</title><style>
-:root{font-family:system-ui,-apple-system,"Noto Sans SC","Microsoft YaHei",sans-serif;color:#223845;background:#f5f8f6}*{box-sizing:border-box}body{margin:0;line-height:1.85;font-size:16px}header,main,footer{max-width:940px;margin:auto;padding:18px 22px}header,nav{display:flex;gap:22px;flex-wrap:wrap}a{color:#166e65}h1{font-size:clamp(24px,4vw,34px);line-height:1.4}h2{font-size:23px;color:#185c53;border-bottom:1px solid #dce8e2;padding-bottom:10px;margin-top:36px}h3{font-size:18px;color:#2d665e}main{background:white;border:1px solid #dee9e3;border-radius:16px;padding:30px;margin:12px auto 30px}.meta{background:#eaf4ef;padding:17px;border-radius:9px;margin:14px 0 30px}p{margin:13px 0}pre{background:#172b38;color:#f0f5f9;border-radius:9px;padding:19px;overflow-x:auto;font:13px/1.75 ui-monospace,monospace}.code-label{margin-top:22px;font-weight:bold;color:#185c53}code{white-space:pre-wrap}p code{background:#f0f4f1;padding:2px 5px;border-radius:3px}.formula{background:#f1f6f3;padding:18px;margin:18px 0;overflow-x:auto;text-align:center}footer{color:#6a7b7b;font-size:12px}li{margin:8px 0}@media(max-width:650px){main{padding:17px;border-radius:0}pre{font-size:12px}}</style>
-<script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['$$','$$']]},svg:{fontCache:'global'}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
-
-
-<link rel="stylesheet" href="../course-theme.css?v=20261025-3"><script defer src="../course-theme.js?v=20261025-3"></script></head>
-<body><header><a href="../">← 计量经济学120天课程目录</a><a href="../../study/">学习中心</a></header><main>
-<h1>第2章·第1节｜一元线性回归</h1><div class="meta">全课程第8课 / 共120课　·　授课日期：2026-10-14　·　学习时间：10—15分钟</div>
-<p>全课程第8课 / 共120课<br>预计学习时间：10—15分钟<br>授课日期：2026年10月14日</p>
-<h3>一、通俗理解</h3>
-<p>为什么同样是汽车，有的价格高，有的价格低？我们先只研究一个因素：<strong>汽车重量与价格之间有什么关系</strong>。把每辆汽车画成一个点，横轴是重量，纵轴是价格，通常会看到一群并不完全排成直线的点。一元线性回归就是用一条直线概括两者的平均线性关系。<br>“一元”指模型只有一个解释变量；“线性”指预测价格随重量变化的斜率是常数；“回归”指用样本数据估计这种关系。它回答的是“重量多100磅，预测价格平均相差多少”，而不是“把汽车人为加重100磅，就一定涨价多少”。</p>
-<h3>二、核心理论与公式</h3>
-<p>总体模型写为：</p>
-<div class="formula">$$price_i=\beta_0+\beta_1 weight100_i+u_i$$</div>
-<p>其中，$<code>price_i</code>$是第$<code>i</code>$辆汽车的美元价格，$<code>weight100_i</code>$是重量除以100后的数值（单位：100磅），$<code>\beta_0</code>$是重量为零时直线的截距，通常没有现实经济解释；$<code>\beta_1</code>$是重量增加100磅时的<strong>线性预测价格差</strong>；$<code>u_i</code>$是没有被重量解释的其他价格因素，如品牌、性能和配置。<br>用样本估计后，得到预测式：</p>
-<div class="formula">$$\widehat{price}_i=\hat\beta_0+\hat\beta_1 weight100_i$$</div>
-<p>帽号表示由数据估计出来的数值；实际价格减去预测价格叫<strong>残差</strong>。本课先学会读斜率与画拟合线，下一课再解释普通最小二乘法（OLS）如何确定这条线。<br>要让斜率具有稳定的统计意义，需要观测之间的抽样机制适当、重量有变化、模型形式适合研究目的。若希望把斜率解释为因果效应，还需要更强的<strong>零条件均值假设</strong>：在给定重量后，误差项中影响价格的因素与重量不再系统相关，即$<code>E(u_i\mid weight100_i)=0</code>$。汽车品牌、发动机配置可能同时影响重量和价格，因此这一条件未必成立。异方差稳健标准误只能改善部分推断，不能修复这一识别问题。</p>
-<h3>三、实证案例与数据</h3>
-<p>使用Stata官方1978年汽车示例数据<code>auto.dta</code>，它是汽车车型的<strong>截面数据</strong>：每行是一款车型，不是同一车型跨年的记录。原始数据有74条记录；本课仅用<code>price</code>（美元）和<code>weight</code>（磅），并删除这两列的缺失值。数据地址：<a href="https://www.stata-press.com/data/r19/auto.dta" target="_blank" rel="noopener noreferrer">https://www.stata-press.com/data/r19/auto.dta</a> 。<br>问题：<strong>较重的汽车是否通常卖得更贵？</strong> 我们估计的是样本中的线性关联，不能仅凭这一个回归证明重量导致价格变化。</p>
-<h3>四、Stata与Python实现</h3>
-<h4>4.1 Stata</h4>
-<div class="code-label">Stata</div><pre><code class="language-stata">* 加载Stata官方汽车数据
-sysuse auto, clear
-keep if !missing(price, weight)
-generate weight100 = weight / 100
-
-* 一元线性回归，采用HC1型异方差稳健标准误
-regress price weight100, vce(robust)
-
-* 散点与样本拟合直线
-twoway (scatter price weight100) ///
-       (lfit price weight100), legend(off)</code></pre>
-<p>读输出时重点看<code>weight100</code>的系数：正数表示较重车型的<strong>预测价格较高</strong>；负数则相反。系数单位是“美元/100磅”。$<code>R^2</code>$表示这条样本拟合线解释了多少比例的样本价格离差平方和，并不表示因果解释力。</p>
-<h4>4.2 Python</h4>
-<p>先安装依赖：<code>pip install pandas matplotlib statsmodels</code></p>
-<div class="code-label">Python</div><pre><code class="language-python">import pandas as pd
-import matplotlib.pyplot as plt
-import statsmodels.formula.api as smf
-
-# 读取与Stata相同的数据，统一样本和变量
-url = &quot;https://www.stata-press.com/data/r19/auto.dta&quot;
-d = pd.read_stata(url, convert_categoricals=False)
-d = d[[&quot;price&quot;, &quot;weight&quot;]].dropna().copy()
-d[&quot;weight100&quot;] = d[&quot;weight&quot;] / 100
-
-# 相同的一元模型，HC1稳健标准误对应Stata的vce(robust)
-m = smf.ols(&quot;price ~ weight100&quot;, data=d).fit(cov_type=&quot;HC1&quot;)
-print(m.params)
-print(m.bse)
-print(&quot;R² =&quot;, m.rsquared, &quot;样本量 =&quot;, int(m.nobs))
-
-# 画散点与拟合线
-x = d[&quot;weight100&quot;].sort_values()
-plt.scatter(d[&quot;weight100&quot;], d[&quot;price&quot;], alpha=0.7)
-plt.plot(x, m.predict(pd.DataFrame({&quot;weight100&quot;: x})))
-plt.xlabel(&quot;重量（100磅）&quot;)
-plt.ylabel(&quot;价格（美元）&quot;)
-plt.tight_layout()
-plt.show()</code></pre>
-<p>两套代码使用相同的样本、变量和含截距模型；HC1的有限样本调整也与这里的Stata稳健标准误口径对应。<strong>本次没有实际执行回归</strong>，因此不提供未经核验的系数、标准误或显著性结论。你运行后应比较两套软件的斜率、样本量及标准误。</p>
-<h3>五、初学者避坑</h3>
-<ol><li><strong>单位不能忽略。</strong> $<code>weight100</code>$增加1，代表重量增加100磅，不是1磅；换单位会改变斜率的数值，不改变拟合结果。</li><li><strong>拟合线不经过每个点。</strong> 残差反映实际价格与拟合价格的差异；残差大不必然意味着数据错误。</li><li><strong>一元回归不能自动识别因果。</strong> 高价车型也可能因为更大、更豪华而更重，遗漏因素会影响斜率的因果解释。</li></ol>
-<h3>六、今日练习</h3>
-<p><strong>概念题：</strong> 一元回归中$<code>\hat\beta_1=150</code>$，解释变量是$<code>weight100</code>$。应如何解释？可以直接说“加重汽车使价格上涨150美元”吗？<br><strong>实操题：</strong> 把Python代码中的<code>print(m.params)</code>改成只打印重量系数，并计算“重量相差200磅时的预测价格差”的表达式。<br><strong>参考答案：</strong></p>
-<ol><li>斜率150表示重量相差100磅的车型，其线性预测价格相差150美元；不能直接作因果解释，因为零条件均值假设未获证明。此处150仅为练习假设值，不是本数据的估计结果。</li><li><code>print(m.params[&quot;weight100&quot;])</code>；预测价格差为<code>2 * m.params[&quot;weight100&quot;]</code>美元，因为200磅对应$<code>weight100</code>$相差2。</li></ol>
-<nav><a href="01-07.html">← 上一课</a><a href="02-02.html">下一课 →</a><a href="../">课程总目录</a></nav>
-</main><footer>计量经济学120天系统课程｜按已完成授课讲义归档；相关性与因果解释须严格区分。</footer></body></html>
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="course-revision" content="2026-10-27-v2"><meta name="course-status" content="taught"><title>第2章·第1节｜一元线性回归</title><link rel="stylesheet" href="../v2/course.css"><script defer src="../v2/course.js"></script></head><body><header><a href="../">← 计量经济学120天课程</a><a href="../v2/">36模块新主线</a></header><main><div class="hero"><span class="badge">已授课</span><h1>第2章·第1节｜一元线性回归</h1><p class="meta">原全课程第8课 / 120 · 原日期：2026-10-14 · 本次实质修订2026-10-27</p><p>本页现采用M02 OLS代数、残差正交性与R²核心讲义，保留原网址、编号及标题。<a href="../archive/2026-10-27/lessons/02-01.html">阅读修订前原稿</a>。</p></div><section class="paper" id="s1"><h2>1 · 核心问题与推导</h2><p>OLS使残差平方和最小。对截距和斜率求导，得到残差和为零以及解释变量与残差内积为零。中心化后，斜率是交叉离差和除以x的离差平方和。误差u属于总体模型，残差e是估计后构造的量；X′e=0是算法恒等式，E[Xu]=0是关于数据生成过程的限制，二者不能互证。R²衡量样本内拟合，增加变量不会降低普通R²，却可能恶化样本外预测。回归系数只有结合设计与外生性等条件才有因果解释。</p></section><section class="paper" id="s2"><h2>2 · 公式与统计前提</h2><div class="formula">b₁=Σ(xᵢ−x̄)(yᵢ−ȳ)/Σ(xᵢ−x̄)²；R²=1−SSE/SST</div><p>无截距时通常的R²分解可能失效；x无变异时斜率不能识别。</p></section><section class="paper" id="s3"><h2>3 · 图示与研究含义</h2><div class="diagram"><svg viewBox="0 0 680 220" role="img" aria-label="投影与残差正交的示意图"><title>拟合值是投影，残差垂直于列空间</title><path d="M60 180H610M60 180L370 40M370 40V180" stroke="#176f70" stroke-width="3" fill="none"/><path d="M350 180V160H370" stroke="#b98c3b" fill="none"/><g fill="#173e49" font-size="19"><text x="380" y="45">y</text><text x="250" y="205">拟合值 Pₓy</text><text x="388" y="118">残差 Mₓy</text><text x="470" y="174">X的列空间</text></g></svg></div><p>图为概念示意；数值结论以运行代码和明确的数据来源为准。</p></section><section class="paper" id="s4"><h2>4 · 可复现实验：Stata与Python</h2><p>数据性质：固定种子的随机教学模拟，非真实研究数据。两种软件随机流不同，不要求逐行结果相同。Python已运行状态见<a href="../v2/validation.json">核验记录</a>；Stata尚未运行验证。</p><details><summary>Python · 展开代码</summary><p><a download href="../v2/labs/foundation.py">下载完整脚本</a></p><button type="button" data-copy>复制代码</button><pre><code># Teaching experiment, synthetic data unless explicitly stated. Seed 20261027.
+import numpy as np
+import statsmodels.api as sm
+rng=np.random.default_rng(20261027)
+n=800
+z=rng.normal(size=n); x=.6*z+rng.normal(size=n)
+y=1+2*x+.8*z+rng.normal(size=n)
+X=np.column_stack([np.ones(n),x,z])
+b=np.linalg.lstsq(X,y,rcond=None)[0]
+Z=np.column_stack([np.ones(n),z])
+rx=x-Z@np.linalg.lstsq(Z,x,rcond=None)[0]
+ry=y-Z@np.linalg.lstsq(Z,y,rcond=None)[0]
+fwl=rx@ry/(rx@rx)
+P=X@np.linalg.solve(X.T@X,X.T)
+assert abs(fwl-b[1])&lt;1e-10
+assert np.max(np.abs(P@P-P))&lt;1e-10
+assert np.max(np.abs(X.T@(y-X@b)))&lt;1e-8
+fit=sm.OLS(y,X).fit(cov_type=&#x27;HC1&#x27;)
+print(&#x27;OLS&#x27;,b,&#x27;FWL&#x27;,fwl,&#x27;HC1 SE&#x27;,fit.bse)
+print(&#x27;Joint Wald&#x27;,fit.wald_test(np.array([[0,1,0],[0,0,1]]),scalar=True))
+</code></pre></details><details><summary>Stata · 展开代码</summary><p><a download href="../v2/labs/foundation.do">下载完整脚本</a></p><button type="button" data-copy>复制代码</button><pre><code>version 17.0
+clear all
+set more off
+set seed 20261027
+* Synthetic teaching data. Stata and NumPy RNG streams differ.
+set obs 800
+gen double z=rnormal()
+gen double x=.6*z+rnormal()
+gen double y=1+2*x+.8*z+rnormal()
+regress y x z, vce(robust)
+scalar full_b=_b[x]
+test x z
+regress x z
+predict double rx, residuals
+regress y z
+predict double ry, residuals
+regress ry rx, noconstant
+assert abs(_b[rx]-full_b)&lt;1e-8
+* Coefficient identity only: final default SE is not full-model HC1.
+</code></pre></details></section><section class="paper" id="s5"><h2>5 · 专属练习与参考答案</h2><p>x=(0,1,2)、y=(1,2,4)，求斜率、截距及残差和。</p><details><summary>展开答案与依据</summary><p>斜率1.5，截距5/6，残差为(1/6,−1/3,1/6)，残差和为零。</p></details></section><section class="paper" id="s6"><h2>6 · 学习验收</h2><p>独立解释本模块公式中的随机对象、目标量与关键条件；运行实验，改变一个前提并说明结果为何改变。只阅读或运行命令不等于掌握。</p><label><input type="checkbox" data-module-check="M02"> 已完成 M02 的推导、实验与练习</label></section><section class="paper" id="s7"><h2>7 · 原120课映射与资料</h2><p>原课编号、标题与历史授课日期保留。下列为主题映射，合并模块并不表示每节旧课均已独立重写。</p><a class="maplink" href="../v2/../lessons/02-01.html">原课 02-01</a><a class="maplink" href="../v2/../lessons/02-02.html">原课 02-02</a><a class="maplink" href="../v2/../lessons/02-03.html">原课 02-03</a><p><a href="../v2/review.html">评审回应与修订范围</a> · <a href="../v2/mapping.html">完整120课映射</a> · <a href="../v2/sources.html">原始文献与软件文档</a></p></section></main><script defer src="../study-progress.js"></script></body></html>

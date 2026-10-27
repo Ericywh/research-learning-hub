@@ -1,0 +1,24 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="course-revision" content="2026-10-27-v2"><title>M21 · Poisson QMLE与计数模型</title><link rel="stylesheet" href="../course.css"><script defer src="../course.js"></script></head><body><header><a href="../">← 36模块主线</a><a href="../mapping.html">原120课映射</a></header><main><div class="hero"><div class="eyebrow">WEEK 4 / M21</div><h1>M21 · Poisson QMLE与计数模型</h1><p class="meta">先修：M19 · 核心讲义v1 · 建议45分钟，实验及延伸另计</p></div><nav class="toc"><a href="#s1">推导</a><a href="#s2">前提</a><a href="#s3">图示</a><a href="#s4">代码</a><a href="#s5">练习</a><a href="#s6">验收</a><a href="#s7">映射</a></nav><section class="paper" id="s1"><h2>1 · 核心问题与推导</h2><p>Poisson得分为Σx(y−μ)，μ=exp(x′β)。得分只利用条件均值，因此即使条件方差不等于均值，在均值正确、外生、识别及正则条件下QMLE仍可一致。过度离散否定的是完整Poisson分布限制，不必否定条件均值模型，应采用与依赖结构相适配的夹心协方差。负二项引入额外分布结构，不能仅据离散度判断更优。PPML可用于非负连续结果，但此时是伪似然，不能称连续金额为Poisson计数。</p></section><section class="paper" id="s2"><h2>2 · 公式与统计前提</h2><div class="formula">E[Y|X]=exp(X′β)；sᵢ=xᵢ[Yᵢ−exp(xᵢ′β)]</div><p>稳健SE不修复均值误设；分离和高维固定效应可能影响估计存在性。零值无需加1取对数。</p></section><section class="paper" id="s3"><h2>3 · 图示与研究含义</h2><div class="diagram"><svg viewBox="0 0 680 100" role="img" aria-label="从识别到推断的学习路径"><title>识别先于估计，推断依赖统计条件</title><g fill="#173e49" font-size="20"><text x="20" y="55">目标量</text><text x="160" y="55">识别假设</text><text x="335" y="55">估计/优化</text><text x="520" y="55">方差与检验</text></g><path d="M95 50H145M255 50H320M445 50H505" stroke="#b98c3b" stroke-width="3"/></svg></div><p>图为概念示意；数值结论以运行代码和明确的数据来源为准。</p></section><section class="paper" id="s4"><h2>4 · 可复现实验：Stata与Python</h2><p>数据性质：固定种子的随机教学模拟，非真实研究数据。两种软件随机流不同，不要求逐行结果相同。Python已运行状态见<a href="../validation.json">核验记录</a>；Stata尚未运行验证。</p><details><summary>Python · 展开代码</summary><p><a download href="../labs/poisson.py">下载完整脚本</a></p><button type="button" data-copy>复制代码</button><pre><code># Teaching experiment, synthetic data unless explicitly stated. Seed 20261027.
+import numpy as np
+import statsmodels.api as sm
+rng=np.random.default_rng(20261027);n=4000
+x=rng.normal(size=n);X=sm.add_constant(x);mu=np.exp(.3+.4*x)
+mix=rng.gamma(shape=2,scale=.5,size=n) # mean 1, extra conditional variance
+y=rng.poisson(mu*mix)
+fit=sm.GLM(y,X,family=sm.families.Poisson()).fit(cov_type=&#x27;HC0&#x27;)
+print(&#x27;Poisson QMLE under overdispersion&#x27;,fit.params,&#x27;robust SE&#x27;,fit.bse)
+print(&#x27;True slope .4, conditional mean correctly specified; not empirical data&#x27;)
+</code></pre></details><details><summary>Stata · 展开代码</summary><p><a download href="../labs/poisson.do">下载完整脚本</a></p><button type="button" data-copy>复制代码</button><pre><code>version 17.0
+clear all
+set more off
+set seed 20261027
+* Synthetic teaching data. Stata and NumPy RNG streams differ.
+set obs 4000
+gen double x=rnormal()
+gen double mu=exp(.3+.4*x)
+gen double mix=rgamma(2,.5)
+gen long y=rpoisson(mu*mix)
+poisson y x, vce(robust)
+estat gof
+nbreg y x, vce(robust)
+</code></pre></details></section><section class="paper" id="s5"><h2>5 · 专属练习与参考答案</h2><p>真实Var(Y|X)=3μ，均值仍为exp(x′β)，QMLE能否一致？</p><details><summary>展开答案与依据</summary><p>在相应外生、识别及正则条件下可以，用稳健或聚类夹心协方差进行推断。</p></details></section><section class="paper" id="s6"><h2>6 · 学习验收</h2><p>独立解释本模块公式中的随机对象、目标量与关键条件；运行实验，改变一个前提并说明结果为何改变。只阅读或运行命令不等于掌握。</p><label><input type="checkbox" data-module-check="M21"> 已完成 M21 的推导、实验与练习</label></section><section class="paper" id="s7"><h2>7 · 原120课映射与资料</h2><p>原课编号、标题与历史授课日期保留。下列为主题映射，合并模块并不表示每节旧课均已独立重写。</p><a class="maplink" href="../../lessons/06-08.html">原课 06-08</a><a class="maplink" href="../../lessons/07-09.html">原课 07-09</a><p><a href="../review.html">评审回应与修订范围</a> · <a href="../mapping.html">完整120课映射</a> · <a href="../sources.html">原始文献与软件文档</a></p></section><nav class="nav"><a href="M20.html">← 前一模块</a><a href="M22.html">后一模块 →</a></nav></main><footer>统计条件与识别假设优先于显著性 · 2026-10-27修订</footer></body></html>

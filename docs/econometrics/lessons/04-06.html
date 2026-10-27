@@ -1,17 +1,46 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>第4章·第6节｜双重差分法（DID） · DAY 43</title><meta name="description" content="双重差分法（DID）：理论公式、数据、双软件代码和练习答案。"><script>window.MathJax={tex:{inlineMath:[["\\(","\\)"]],displayMath:[["\\[","\\]"]]},svg:{fontCache:"global"}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script><style>body{margin:0;background:#f6f9fa;color:#243a49;font:16px/1.9 system-ui,"Noto Sans SC",sans-serif}main{max-width:1050px;margin:0 auto;padding:25px}.hero{background:linear-gradient(120deg,#163c50,#236d72);border-radius:15px;padding:33px;color:#fff}.hero h1,.hero p{color:#fff}.hero h1{font-size:clamp(24px,4vw,38px)}.badge{background:#e7f1d5;color:#29484b;border-radius:13px;padding:5px 10px;font-size:12px}.paper{background:#fff;border:1px solid #d9e6e9;border-radius:12px;padding:26px;margin:17px 0}.paper h2{color:#264957;font-size:21px}.equation{padding:15px;background:#f0f6f6;overflow:auto}details{border:1px solid #d0dfe2;border-radius:9px;margin:12px 0;overflow:hidden}summary{cursor:pointer;background:#ebf3f4;padding:12px}pre{overflow:auto;background:#173044;color:#f1f9fc;margin:0;padding:17px;line-height:1.6}pre code{white-space:pre;font:12px/1.7 monospace}a{color:#14717b}@media(max-width:600px){main{padding:12px}.paper,.hero{padding:20px}}</style><meta name="course-status" content="taught"></head><body><main><p><a href="../index.html">← 返回计量经济学120天课程目录</a></p><div class="hero"><small>DAY 43 / 120 · CHAPTER 4</small><h1>第4章·第6节｜双重差分法（DID）</h1><span class="badge">已授课</span><p>七模块课程正文 · Stata + Python · 约10—15分钟</p></div><article><section class="paper" id="s1"><h2>一、通俗理解</h2><p>本课研究《双重差分法（DID）》的核心问题。DID比较处理组与对照组的政策前后变化差异，关键假设是未经处理时的反事实平行趋势。理解这一问题时，不应从软件命令倒推出研究设计，而应先确定研究对象、估计量和数据提供的变异。识别假设、比较对象和统计推断构成解释结果的共同基础。判断统计关联是否可以上升为因果解释，必须给出额外可辩护的识别条件。</p><p>直觉上先问“相对于哪个对照，改变了什么、未观测因素是否可比”，再写回归方程。即使数据非常多或结果显著，也不能省略这一步。对于方法不匹配的公开示例，宁可明确使用教学模拟，也不能伪装为可信的现实因果证据。</p></section>
-<section class="paper" id="s2"><h2>二、核心理论与公式</h2><p>本节重要的数学表达式如下。DID比较处理组与对照组的政策前后变化差异，关键假设是未经处理时的反事实平行趋势。式中的下标、参数和条件必须由数据结构与研究目的界定。涉及潜在结果时，要区分可观察结果和反事实；涉及协方差或条件均值时，应明确是总体假设还是样本估计。任何公式只有在相应外生性、满秩、时间结构或连续性条件下才具备预期的识别意义。</p><div class="equation">\[\tau_{DID}=(\overline Y_{T,post}-\overline Y_{T,pre})-(\overline Y_{C,post}-\overline Y_{C,pre})\]</div><p>检验与估计所需的矩条件、概率模型或识别假设要与这里的对象一致：完全共线性影响参数可识别性；异方差主要影响常规协方差估计；内生性则可能破坏OLS的一致性。不要以为使用HC1就能同时解决这些问题。</p></section>
-<section class="paper" id="s3"><h2>三、实证案例与数据</h2><p>使用Stata官方医院政策人工构造示例hospdd.dta。hospital、month、procedure、satis；医院与月份定义政策比较维度。官方教学数据的政策效应不应外推为现实医疗政策效应。教学时先检查观测单位、变量类型、缺失与筛选规则，确保Stata和Python的有效样本一致。公开数据由Stata Press提供，可以在链接下载，其中没有编造真实政策、论文或因果效应估计结果。 <a href="https://www.stata-press.com/data/r19/hospdd.dta">官方公开数据文件</a>。</p><p>按照预先确定的口径筛选样本。对处理变量，必须说明其赋值规则与时点；对连续自变量，必须说明量纲；对面板数据，必须说明主体、时间与缺失结构。分析没有实际运行，因此本页只给出计算流程，不填写未经验证的回归系数或p值。</p></section>
-<section class="paper" id="s4"><h2>四、Stata与Python实现</h2><p>以下Stata和Python采用相同数据文件或相同透明模拟公式，目的是让估计流程可以复核。不能将未实际执行的程序输出标记为“已运行”。</p><h3>Stata</h3><details><summary>展开 Stata 完整代码</summary><pre><code class="language-stata">use &quot;https://www.stata-press.com/data/r19/hospdd.dta&quot;, clear
-keep if !missing(satis,procedure,hospital,month)
-count
-* DID：医院分组、月份时间；默认医院聚类
-didregress (satis) (procedure), group(hospital) time(month)</code></pre></details><h3>Python</h3><details><summary>展开 Python 完整代码</summary><pre><code class="language-python">import pandas as pd
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="course-revision" content="2026-10-27-v2"><meta name="course-status" content="taught"><title>第4章·第6节｜双重差分法（DID）</title><link rel="stylesheet" href="../v2/course.css"><script defer src="../v2/course.js"></script></head><body><header><a href="../">← 计量经济学120天课程</a><a href="../v2/">36模块新主线</a></header><main><div class="hero"><span class="badge">已授课</span><h1>第4章·第6节｜双重差分法（DID）</h1><p class="meta">原全课程第43课 / 120 · 原日期：无可核实日期 · 本次实质修订2026-10-27</p><p>本页现采用M27 2×2 DID与平行趋势核心讲义，保留原网址、编号及标题。<a href="../archive/2026-10-27/lessons/04-06.html">阅读修订前原稿</a>。</p></div><section class="paper" id="s1"><h2>1 · 核心问题与推导</h2><p>DID计算处理组前后变化再减去对照组变化。识别要求无处理潜在结果的平均趋势相同，而非两组政策前水平相同。无预期、稳定组成、无溢出等条件下，对照变化可构造处理组无政策反事实。单位与时间固定效应不能自动让这一反事实可信。模拟应明确处理组、实施时点、真实效应与共同冲击；模拟估计与预设真值比较仅检验程序和机制，不是现实政策证据。</p></section><section class="paper" id="s2"><h2>2 · 公式与统计前提</h2><div class="formula">ATT=(Ȳ_T,post−Ȳ_T,pre)−(Ȳ_C,post−Ȳ_C,pre)</div><p>事前趋势不拒绝只能提供有限支持，尤其功效不足时不能作为平行趋势证明。</p></section><section class="paper" id="s3"><h2>3 · 图示与研究含义</h2><div class="diagram"><svg viewBox="0 0 680 100" role="img" aria-label="从识别到推断的学习路径"><title>识别先于估计，推断依赖统计条件</title><g fill="#173e49" font-size="20"><text x="20" y="55">目标量</text><text x="160" y="55">识别假设</text><text x="335" y="55">估计/优化</text><text x="520" y="55">方差与检验</text></g><path d="M95 50H145M255 50H320M445 50H505" stroke="#b98c3b" stroke-width="3"/></svg></div><p>图为概念示意；数值结论以运行代码和明确的数据来源为准。</p></section><section class="paper" id="s4"><h2>4 · 可复现实验：Stata与Python</h2><p>数据性质：固定种子的随机教学模拟，非真实研究数据。两种软件随机流不同，不要求逐行结果相同。Python已运行状态见<a href="../v2/validation.json">核验记录</a>；Stata尚未运行验证。</p><details><summary>Python · 展开代码</summary><p><a download href="../v2/labs/did.py">下载完整脚本</a></p><button type="button" data-copy>复制代码</button><pre><code># Teaching experiment, synthetic data unless explicitly stated. Seed 20261027.
+import numpy as np
+import pandas as pd
 import statsmodels.formula.api as smf
-df=pd.read_stata(&quot;https://www.stata-press.com/data/r19/hospdd.dta&quot;,convert_categoricals=False)
-df=df[[&quot;satis&quot;,&quot;procedure&quot;,&quot;hospital&quot;,&quot;month&quot;]].dropna()
-r=smf.ols(&quot;satis ~ procedure + C(hospital)+C(month)&quot;,df).fit(
- cov_type=&quot;cluster&quot;,cov_kwds={&quot;groups&quot;:df.hospital})
-print(len(df));print(r.summary())</code></pre></details><p>Python TWFE式线性投影与Stata didregress的权重和小样本修正可能不同；不要盲目要求完全相同的标准误。若两端自由度、小样本修正或处理变量定义不同，应先核对这些选择，再比较系数和标准误；不能为了获得更小p值而选择软件。</p></section>
-<section class="paper" id="s5"><h2>五、初学者避坑</h2><p>误区一：把“双重差分法（DID）”当成所有数据都适用的默认模型。DID比较处理组与对照组的政策前后变化差异，关键假设是未经处理时的反事实平行趋势。误区二：仅根据p值判断假设成立。研究设计的关键条件往往不能由一个显著性检验直接证明。误区三：忽略样本和标准误口径。Python TWFE式线性投影与Stata didregress的权重和小样本修正可能不同；不要盲目要求完全相同的标准误。应逐项记录样本量、变量单位、基准组、模型估计方法以及置信区间的计算约定。</p></section>
-<section class="paper" id="s6"><h2>六、今日练习</h2><p><strong>概念题：</strong>请说明本课《双重差分法（DID）》针对的核心统计对象，并指出一个不能只依靠显著性结果验证的条件。</p><details><summary>查看概念题答案</summary><p>DID比较处理组与对照组的政策前后变化差异，关键假设是未经处理时的反事实平行趋势。相应模型还需要关于数据生成机制、可比性或外生性的条件，显著性本身不会验证这些条件。</p></details><p><strong>计算或应用题：</strong>处理组均值由5增至9，对照组由4增至6，求DID。</p><details><summary>查看计算题答案</summary><p>DID=(9−5)−(6−4)=2；要解释为处理效应，还须支持平行趋势等识别假设。</p></details></section>
-<section class="paper" id="s7"><h2>七、学习进度</h2><p><strong>第4章·第6节｜双重差分法（DID）（全课程第43课 / 共120课）</strong>，课程网站状态：<strong>已授课</strong>。本课正文、公式、Stata与Python示例及练习答案已在GitHub归档。</p><p>下一课：<a href="04-07.html">第4章·第7节｜平行趋势与事件研究</a>（全课程第44课）。具体软件结果以实际运行核验为准，不补造未经执行的估计数值。</p></section></article></main></body></html>
+rng=np.random.default_rng(20261027);N=160;T=8
+id=np.repeat(np.arange(N),T);time=np.tile(np.arange(T),N)
+treated=(id&lt;N//2).astype(int);post=(time&gt;=4).astype(int)
+tau=np.maximum(time-3,0)*.5
+y=np.repeat(rng.normal(size=N),T)+.2*time+treated*tau+rng.normal(size=N*T)
+df=pd.DataFrame(dict(y=y,id=id,t=time,treated=treated,post=post))
+static=smf.ols(&#x27;y ~ treated:post+C(id)+C(t)&#x27;,df).fit(cov_type=&#x27;cluster&#x27;,cov_kwds={&#x27;groups&#x27;:id})
+names=[]
+for k in range(-4,4):
+    if k==-1:continue
+    name=&#x27;event_&#x27;+(&#x27;m&#x27;+str(-k) if k&lt;0 else &#x27;p&#x27;+str(k));names.append(name)
+    df[name]=((time-4==k)&amp;(treated==1)).astype(int)
+event=smf.ols(&#x27;y ~ C(id)+C(t)+&#x27;+&#x27;+&#x27;.join(names),df).fit(cov_type=&#x27;cluster&#x27;,cov_kwds={&#x27;groups&#x27;:id})
+print(&#x27;static DID&#x27;,static.params[&#x27;treated:post&#x27;])
+for name in names:print(name,event.params[name],event.bse[name])
+print(&#x27;pre joint&#x27;,event.wald_test(&#x27;event_m4=event_m3=event_m2=0&#x27;,scalar=True))
+</code></pre></details><details><summary>Stata · 展开代码</summary><p><a download href="../v2/labs/did.do">下载完整脚本</a></p><button type="button" data-copy>复制代码</button><pre><code>version 17.0
+clear all
+set more off
+set seed 20261027
+* Synthetic teaching data. Stata and NumPy RNG streams differ.
+set obs 160
+gen long id=_n
+gen double a=rnormal()
+gen byte treated=id&lt;=80
+expand 8
+bysort id: gen long t=_n-1
+gen byte post=t&gt;=4
+gen double y=a+.2*t+treated*max(t-3,0)*.5+rnormal()
+xtset id t
+xtreg y i.t c.treated#c.post, fe vce(cluster id)
+local events
+forvalues j=0/7 {
+    if `j&#x27;!=3 {
+        gen byte ev`j&#x27;=(t==`j&#x27;)*treated
+        local events `events&#x27; ev`j&#x27;
+    }
+}
+xtreg y i.t `events&#x27;, fe vce(cluster id)
+test ev0 ev1 ev2
+* ev3 omitted = relative time -1. Coefficients now form an actual dynamic path.
+</code></pre></details></section><section class="paper" id="s5"><h2>5 · 专属练习与参考答案</h2><p>处理组8到13，对照组6到8，DID多少？</p><details><summary>展开答案与依据</summary><p>为3。处理前水平不同不直接否定趋势条件，但应论证组间差异冲击不存在。</p></details></section><section class="paper" id="s6"><h2>6 · 学习验收</h2><p>独立解释本模块公式中的随机对象、目标量与关键条件；运行实验，改变一个前提并说明结果为何改变。只阅读或运行命令不等于掌握。</p><label><input type="checkbox" data-module-check="M27"> 已完成 M27 的推导、实验与练习</label></section><section class="paper" id="s7"><h2>7 · 原120课映射与资料</h2><p>原课编号、标题与历史授课日期保留。下列为主题映射，合并模块并不表示每节旧课均已独立重写。</p><a class="maplink" href="../v2/../lessons/04-06.html">原课 04-06</a><a class="maplink" href="../v2/../lessons/05-04.html">原课 05-04</a><p><a href="../v2/review.html">评审回应与修订范围</a> · <a href="../v2/mapping.html">完整120课映射</a> · <a href="../v2/sources.html">原始文献与软件文档</a></p></section></main><script defer src="../study-progress.js"></script></body></html>

@@ -1,0 +1,48 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="course-revision" content="2026-10-27-v2"><title>M19 · MLE、得分与信息矩阵</title><link rel="stylesheet" href="../course.css"><script defer src="../course.js"></script></head><body><header><a href="../">← 36模块主线</a><a href="../mapping.html">原120课映射</a></header><main><div class="hero"><div class="eyebrow">WEEK 4 / M19</div><h1>M19 · MLE、得分与信息矩阵</h1><p class="meta">先修：M08,M11 · 核心讲义v1 · 建议45分钟，实验及延伸另计</p></div><nav class="toc"><a href="#s1">推导</a><a href="#s2">前提</a><a href="#s3">图示</a><a href="#s4">代码</a><a href="#s5">练习</a><a href="#s6">验收</a><a href="#s7">映射</a></nav><section class="paper" id="s1"><h2>1 · 核心问题与推导</h2><p>似然固定已观察数据并比较不同参数。独立伯努利Logit的对数似然为Σ[yη−log(1+expη)]，η=x′β。得分为Σx(y−p)，负Hessian为Σxx′p(1−p)。数值计算使用logaddexp以避免溢出。正确设定且满足识别、内点、光滑性和非奇异信息等条件时，MLE有渐近正态性。令A为平均负Hessian、B为平均得分外积，则稳健系数协方差是A⁻¹BA⁻¹/n；信息等式仅在适当正确分布条件下成立。</p></section><section class="paper" id="s2"><h2>2 · 公式与统计前提</h2><div class="formula">ℓ(β)=Σ[yᵢxᵢ′β−log(1+exp(xᵢ′β))]；V̂=Â⁻¹B̂Â⁻¹/n</div><p>完全分离时有限MLE可能不存在。稳健方差不修复错误条件均值，也不保证误设参数仍有原真值解释。</p></section><section class="paper" id="s3"><h2>3 · 图示与研究含义</h2><div class="diagram"><svg viewBox="0 0 680 100" role="img" aria-label="从识别到推断的学习路径"><title>识别先于估计，推断依赖统计条件</title><g fill="#173e49" font-size="20"><text x="20" y="55">目标量</text><text x="160" y="55">识别假设</text><text x="335" y="55">估计/优化</text><text x="520" y="55">方差与检验</text></g><path d="M95 50H145M255 50H320M445 50H505" stroke="#b98c3b" stroke-width="3"/></svg></div><p>图为概念示意；数值结论以运行代码和明确的数据来源为准。</p></section><section class="paper" id="s4"><h2>4 · 可复现实验：Stata与Python</h2><p>数据性质：固定种子的随机教学模拟，非真实研究数据。两种软件随机流不同，不要求逐行结果相同。Python已运行状态见<a href="../validation.json">核验记录</a>；Stata尚未运行验证。</p><details><summary>Python · 展开代码</summary><p><a download href="../labs/mle.py">下载完整脚本</a></p><button type="button" data-copy>复制代码</button><pre><code># Teaching experiment, synthetic data unless explicitly stated. Seed 20261027.
+import numpy as np
+import statsmodels.api as sm
+from scipy.optimize import minimize
+from scipy.special import expit
+rng=np.random.default_rng(20261027);n=2500
+X=np.column_stack([np.ones(n),rng.normal(size=(n,2))])
+y=rng.binomial(1,expit(X@np.array([-.4,.8,-.5])))
+def loss(b):return np.sum(np.logaddexp(0,X@b)-y*(X@b))
+def grad(b):return X.T@(expit(X@b)-y)
+def hess(b):
+    p=expit(X@b);return (X.T*(p*(1-p)))@X
+opt=minimize(loss,np.zeros(3),jac=grad,hess=hess,method=&#x27;Newton-CG&#x27;,options={&#x27;xtol&#x27;:1e-10})
+assert np.max(abs(grad(opt.x)))/n&lt;1e-7
+fit=sm.Logit(y,X).fit(disp=False)
+assert np.allclose(opt.x,fit.params,atol=1e-6)
+p=expit(X@opt.x);A=hess(opt.x)/n;s=X*(y-p)[:,None];B=s.T@s/n
+V=np.linalg.solve(A,B)@np.linalg.inv(A)/n
+def ame(b):
+    p=expit(X@b);return np.mean(b[1]*p*(1-p))
+step=1e-5;G=np.array([(ame(opt.x+np.eye(3)[j]*step)-ame(opt.x-np.eye(3)[j]*step))/(2*step) for j in range(3)])
+print(&#x27;MLE&#x27;,opt.x,&#x27;score norm&#x27;,np.linalg.norm(grad(opt.x)))
+print(&#x27;sandwich HC0 SE&#x27;,np.sqrt(np.diag(V)))
+print(&#x27;AME x1 fixed-X&#x27;,ame(opt.x),&#x27;Delta SE&#x27;,np.sqrt(G@V@G))
+</code></pre></details><details><summary>Stata · 展开代码</summary><p><a download href="../labs/mle.do">下载完整脚本</a></p><button type="button" data-copy>复制代码</button><pre><code>version 17.0
+clear all
+set more off
+set seed 20261027
+* Synthetic teaching data. Stata and NumPy RNG streams differ.
+set obs 2500
+gen double x1=rnormal()
+gen double x2=rnormal()
+gen byte y=runiform()&lt;invlogit(-.4+.8*x1-.5*x2)
+capture program drop logistic_ll
+program define logistic_ll
+    args lnf xb
+    * Stable log(1+exp(xb)): max(xb,0)+ln(1+exp(-abs(xb)))
+    quietly replace `lnf&#x27;=$ML_y1*`xb&#x27;-(max(`xb&#x27;,0)+ln(1+exp(-abs(`xb&#x27;))))
+end
+ml model lf logistic_ll (y=x1 x2), vce(robust)
+ml maximize
+matrix handmade=e(b)
+logit y x1 x2, vce(robust)
+matrix builtin=e(b)
+matrix list handmade
+matrix list builtin
+margins, dydx(x1 x2)
+</code></pre></details></section><section class="paper" id="s5"><h2>5 · 专属练习与参考答案</h2><p>为什么QMLE不能总是只取Hessian逆作方差？</p><details><summary>展开答案与依据</summary><p>分布误设时曲率A与得分变异B可能不同，只取A逆会遗漏实际得分波动。</p></details></section><section class="paper" id="s6"><h2>6 · 学习验收</h2><p>独立解释本模块公式中的随机对象、目标量与关键条件；运行实验，改变一个前提并说明结果为何改变。只阅读或运行命令不等于掌握。</p><label><input type="checkbox" data-module-check="M19"> 已完成 M19 的推导、实验与练习</label></section><section class="paper" id="s7"><h2>7 · 原120课映射与资料</h2><p>原课编号、标题与历史授课日期保留。下列为主题映射，合并模块并不表示每节旧课均已独立重写。</p><a class="maplink" href="../../lessons/06-06.html">原课 06-06</a><p><a href="../review.html">评审回应与修订范围</a> · <a href="../mapping.html">完整120课映射</a> · <a href="../sources.html">原始文献与软件文档</a></p></section><nav class="nav"><a href="M18.html">← 前一模块</a><a href="M20.html">后一模块 →</a></nav></main><footer>统计条件与识别假设优先于显著性 · 2026-10-27修订</footer></body></html>

@@ -102,16 +102,16 @@ changeText('published-count', published.length + ' / ' + lessons.length);
 changeText('latest-meta', '已授课 · ' + (latest.date ? latest.date.replace(/-/g, '.') + ' · ' : '') +
   'DAY ' + String(latest.number).padStart(3, '0'));
 changeText('latest-title', '第' + latest.chapter + '章·第' + latest.section + '节｜' + latest.title);
-changeText('latest-description', '本节已归档完整正文、核心公式、同数据Stata/Python代码与练习答案。');
+changeText('latest-description', '原120课地址保留；36模块新主线与修订状态见上方入口。代码运行状态逐项披露。');
 changeText('latest-link', '阅读第' + latest.number + '课完整讲义 ↗');
 home = home.replace(/(id="latest-link" href=")[^"]+/, '$1' + latest.url);
 changeText('next-meta', next ? '下一讲 · DAY ' + String(next.number).padStart(3,'0') : '课程已全部归档');
-changeText('next-title', next ? next.title : '120节课程已全部完成');
+changeText('next-title', next ? next.title : '120课原址保留，36处正文实质修订');
 changeText('next-description', next ?
   '下一节主题：' + next.title + (next.prepared?'。正文已提前提供，可通过目录进入。':'。完成授课并归档后开放阅读。') :
-  '可通过课程目录回顾全部讲义。');
+  '其余84课保留历史原稿并增加新模块导读，不代表全部120课已经实质重写。');
 changeText('next-status', next ?
-  '第' + next.number + (next.prepared?'课正文已上线，尚待正式授课。':'课尚未公开归档。') : '已归档全部课程。');
+  '第' + next.number + (next.prepared?'课正文已上线，尚待正式授课。':'课尚未公开归档。') : '学习完成情况与网站历史展示状态分别记录。');
 fs.writeFileSync(path.join(out, 'index.html'), home);
 
 console.log('Econometrics public site: ' + published.length +

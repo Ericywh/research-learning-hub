@@ -1,0 +1,49 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="course-revision" content="2026-10-27-v2"><title>M35 · DML与交叉拟合残差化</title><link rel="stylesheet" href="../course.css"><script defer src="../course.js"></script></head><body><header><a href="../">← 36模块主线</a><a href="../mapping.html">原120课映射</a></header><main><div class="hero"><div class="eyebrow">WEEK 6 / M35</div><h1>M35 · DML与交叉拟合残差化</h1><p class="meta">先修：M03,M24 · 核心讲义v1 · 建议45分钟，实验及延伸另计</p></div><nav class="toc"><a href="#s1">推导</a><a href="#s2">前提</a><a href="#s3">图示</a><a href="#s4">代码</a><a href="#s5">练习</a><a href="#s6">验收</a><a href="#s7">映射</a></nav><section class="paper" id="s1"><h2>1 · 核心问题与推导</h2><p>部分线性模型中，令m(X)=E[D|X]、l(X)=E[Y|X]，在训练折学习这两个函数，在留出折计算残差并构造正交得分。其对干扰函数误差的一阶敏感性抵消，交叉拟合减弱过拟合依赖。有效根号n推断仍需识别、重叠、矩界与干扰误差乘积足够快趋零；并非随意换一个预测器即可。全样本训练后再切折属于信息泄漏，不能称交叉拟合。DML扩展FWL思想，但不会创造处理外生性。</p></section><section class="paper" id="s2"><h2>2 · 公式与统计前提</h2><div class="formula">E[(D−m(X)){Y−l(X)−θ(D−m(X))}]=0</div><p>未测混杂不会消失；聚类或面板分折与协方差要保留依赖。教学实验用多项式学习器示范，不冒称完整通用软件包。</p></section><section class="paper" id="s3"><h2>3 · 图示与研究含义</h2><div class="diagram"><svg viewBox="0 0 680 100" role="img" aria-label="从识别到推断的学习路径"><title>识别先于估计，推断依赖统计条件</title><g fill="#173e49" font-size="20"><text x="20" y="55">目标量</text><text x="160" y="55">识别假设</text><text x="335" y="55">估计/优化</text><text x="520" y="55">方差与检验</text></g><path d="M95 50H145M255 50H320M445 50H505" stroke="#b98c3b" stroke-width="3"/></svg></div><p>图为概念示意；数值结论以运行代码和明确的数据来源为准。</p></section><section class="paper" id="s4"><h2>4 · 可复现实验：Stata与Python</h2><p>数据性质：固定种子的随机教学模拟，非真实研究数据。两种软件随机流不同，不要求逐行结果相同。Python已运行状态见<a href="../validation.json">核验记录</a>；Stata尚未运行验证。</p><details><summary>Python · 展开代码</summary><p><a download href="../labs/dml.py">下载完整脚本</a></p><button type="button" data-copy>复制代码</button><pre><code># Teaching experiment, synthetic data unless explicitly stated. Seed 20261027.
+import numpy as np
+rng=np.random.default_rng(20261027);n=3000
+x=rng.normal(size=(n,3));B=np.column_stack([np.ones(n),x,x*x,x[:,0]*x[:,1]])
+d=.5*x[:,0]+x[:,1]**2+rng.normal(size=n)
+y=2*d+x[:,0]**2+.4*x[:,2]+rng.normal(size=n)
+fold=np.empty(n,int);fold[rng.permutation(n)]=np.arange(n)%5
+rd=np.zeros(n);ry=np.zeros(n)
+for k in range(5):
+    train=fold!=k;test=~train
+    bd=np.linalg.lstsq(B[train],d[train],rcond=None)[0]
+    by=np.linalg.lstsq(B[train],y[train],rcond=None)[0]
+    rd[test]=d[test]-B[test]@bd;ry[test]=y[test]-B[test]@by
+b=rd@ry/(rd@rd);psi=rd*(ry-b*rd)
+se=np.sqrt(np.mean(psi**2)/n)/np.mean(rd**2)
+print(&#x27;Cross-fit polynomial nuisance PLR&#x27;,b,&#x27;SE&#x27;,se,&#x27;true theta 2&#x27;)
+</code></pre></details><details><summary>Stata · 展开代码</summary><p><a download href="../labs/dml.do">下载完整脚本</a></p><button type="button" data-copy>复制代码</button><pre><code>version 17.0
+clear all
+set more off
+set seed 20261027
+* Synthetic teaching data. Stata and NumPy RNG streams differ.
+set obs 3000
+gen double x1=rnormal()
+gen double x2=rnormal()
+gen double x3=rnormal()
+gen double x1sq=x1*x1
+gen double x2sq=x2*x2
+gen double x3sq=x3*x3
+gen double cross=x1*x2
+gen double d=.5*x1+x2sq+rnormal()
+gen double y=2*d+x1sq+.4*x3+rnormal()
+gen double shuffle=runiform()
+sort shuffle
+gen byte fold=mod(_n,5)
+gen double rd=.
+gen double ry=.
+forvalues k=0/4 {
+    quietly regress d x1 x2 x3 x1sq x2sq x3sq cross if fold!=`k&#x27;
+    predict double pd, xb
+    replace rd=d-pd if fold==`k&#x27;
+    drop pd
+    quietly regress y x1 x2 x3 x1sq x2sq x3sq cross if fold!=`k&#x27;
+    predict double py, xb
+    replace ry=y-py if fold==`k&#x27;
+    drop py
+}
+regress ry rd, noconstant vce(robust)
+* Polynomial nuisance demonstration. Orthogonal-score inference needs regularity.
+</code></pre></details></section><section class="paper" id="s5"><h2>5 · 专属练习与参考答案</h2><p>交叉拟合能解决遗漏混杂吗？</p><details><summary>展开答案与依据</summary><p>不能。它处理统计过拟合与正则化误差，因果识别仍依赖条件外生性等实质假设。</p></details></section><section class="paper" id="s6"><h2>6 · 学习验收</h2><p>独立解释本模块公式中的随机对象、目标量与关键条件；运行实验，改变一个前提并说明结果为何改变。只阅读或运行命令不等于掌握。</p><label><input type="checkbox" data-module-check="M35"> 已完成 M35 的推导、实验与练习</label></section><section class="paper" id="s7"><h2>7 · 原120课映射与资料</h2><p>原课编号、标题与历史授课日期保留。下列为主题映射，合并模块并不表示每节旧课均已独立重写。</p><a class="maplink" href="../../lessons/05-14.html">原课 05-14</a><a class="maplink" href="../../lessons/07-11.html">原课 07-11</a><a class="maplink" href="../../lessons/07-12.html">原课 07-12</a><p><a href="../review.html">评审回应与修订范围</a> · <a href="../mapping.html">完整120课映射</a> · <a href="../sources.html">原始文献与软件文档</a></p></section><nav class="nav"><a href="M34.html">← 前一模块</a><a href="M36.html">后一模块 →</a></nav></main><footer>统计条件与识别假设优先于显著性 · 2026-10-27修订</footer></body></html>

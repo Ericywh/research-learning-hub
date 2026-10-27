@@ -1,0 +1,59 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="course-revision" content="2026-10-27-v2"><title>M09 · 异方差与夹心协方差</title><link rel="stylesheet" href="../course.css"><script defer src="../course.js"></script></head><body><header><a href="../">← 36模块主线</a><a href="../mapping.html">原120课映射</a></header><main><div class="hero"><div class="eyebrow">WEEK 2 / M09</div><h1>M09 · 异方差与夹心协方差</h1><p class="meta">先修：M08 · 核心讲义v1 · 建议45分钟，实验及延伸另计</p></div><nav class="toc"><a href="#s1">推导</a><a href="#s2">前提</a><a href="#s3">图示</a><a href="#s4">代码</a><a href="#s5">练习</a><a href="#s6">验收</a><a href="#s7">映射</a></nav><section class="paper" id="s1"><h2>1 · 核心问题与推导</h2><p>回归得分CLT产生中间的协方差S，两侧Q⁻¹将矩波动转换成系数波动，形成夹心方差。独立观测下S=E[xx′u²]，以残差平方替代误差平方获得HC0，再乘n/(n−k)得到HC1。自由度调整不意味着小样本精确。组内相关时必须加入组内交叉协方差，不能继续只取单个观测外积。异方差本身不必破坏均值正确时的OLS一致性；稳健协方差只改变推断，不改变平方和最小化的系数。</p></section><section class="paper" id="s2"><h2>2 · 公式与统计前提</h2><div class="formula">V̂_HC1=n/(n−k)·(X′X)⁻¹[Σxᵢxᵢ′eᵢ²](X′X)⁻¹</div><p>稳健方差不修复内生性、均值函数错误或错误的依赖结构。高杠杆下可比较HC2/HC3。</p></section><section class="paper" id="s3"><h2>3 · 图示与研究含义</h2><div class="diagram"><svg viewBox="0 0 680 100" role="img" aria-label="从识别到推断的学习路径"><title>识别先于估计，推断依赖统计条件</title><g fill="#173e49" font-size="20"><text x="20" y="55">目标量</text><text x="160" y="55">识别假设</text><text x="335" y="55">估计/优化</text><text x="520" y="55">方差与检验</text></g><path d="M95 50H145M255 50H320M445 50H505" stroke="#b98c3b" stroke-width="3"/></svg></div><p><a href="../labs/results/clt.svg">查看实际Monte Carlo直方图</a>及<a href="../labs/results/asymptotics.csv">数值结果</a>。比较的是重复抽样的统计量分布。</p></section><section class="paper" id="s4"><h2>4 · 可复现实验：Stata与Python</h2><p>数据性质：固定种子的随机教学模拟，非真实研究数据。两种软件随机流不同，不要求逐行结果相同。Python已运行状态见<a href="../validation.json">核验记录</a>；Stata尚未运行验证。</p><details><summary>Python · 展开代码</summary><p><a download href="../labs/asymptotics.py">下载完整脚本</a></p><button type="button" data-copy>复制代码</button><pre><code># Teaching experiment, synthetic data unless explicitly stated. Seed 20261027.
+import numpy as np
+import csv
+from pathlib import Path
+rng=np.random.default_rng(20261027)
+R=1000; rows=[]; hist=[]
+for n in [30,200,2000]:
+    bs=[]; ts=[]
+    for r in range(R):
+        x=rng.uniform(0,4,n)
+        u=x*(rng.exponential(size=n)-1) # E[u|x]=0; heteroskedastic, skewed
+        y=1+2*x+u
+        xc=x-x.mean(); den=xc@xc
+        b=xc@y/den; e=y-(y.mean()-b*x.mean())-b*x
+        se=np.sqrt(n/(n-2)*np.sum(xc**2*e**2))/den
+        bs.append(b);ts.append((b-2)/se)
+    bs=np.array(bs);ts=np.array(ts)
+    cover=np.mean(np.abs(ts)&lt;=1.96)
+    row=dict(n=n,bias=float(bs.mean()-2),sd=float(bs.std(ddof=1)),
+             rmse=float(np.sqrt(np.mean((bs-2)**2))),coverage=float(cover),
+             mcse=float(np.sqrt(cover*(1-cover)/R)))
+    rows.append(row);print(row)
+    counts,edges=np.histogram(ts,bins=np.linspace(-4,4,33))
+    hist.append((n,counts))
+out=Path(__file__).resolve().parent/&#x27;results&#x27;;out.mkdir(exist_ok=True)
+with (out/&#x27;asymptotics.csv&#x27;).open(&#x27;w&#x27;,newline=&#x27;&#x27;) as f:
+    w=csv.DictWriter(f,fieldnames=list(rows[0]));w.writeheader();w.writerows(rows)
+# Actual Monte Carlo histograms; no hand-drawn density presented as results.
+svg=[&#x27;&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 960 330&quot; role=&quot;img&quot; aria-label=&quot;Monte Carlo studentized statistics&quot;&gt;&#x27;,&#x27;&lt;rect width=&quot;960&quot; height=&quot;330&quot; fill=&quot;#f8fafb&quot;/&gt;&#x27;]
+for panel,(n,counts) in enumerate(hist):
+    for j,c in enumerate(counts):
+        h=220*c/max(counts)
+        svg.append(f&#x27;&lt;rect x=&quot;{panel*320+15+j*9}&quot; y=&quot;{270-h}&quot; width=&quot;8&quot; height=&quot;{h}&quot; fill=&quot;#247c80&quot;/&gt;&#x27;)
+    svg.append(f&#x27;&lt;text x=&quot;{panel*320+18}&quot; y=&quot;30&quot;&gt;n={n}, R={R}&lt;/text&gt;&lt;text x=&quot;{panel*320+18}&quot; y=&quot;302&quot;&gt;t scale: -4 to 4&lt;/text&gt;&#x27;)
+svg.append(&#x27;&lt;/svg&gt;&#x27;);(out/&#x27;clt.svg&#x27;).write_text(&#x27;&#x27;.join(svg),encoding=&#x27;utf-8&#x27;)
+</code></pre></details><details><summary>Stata · 展开代码</summary><p><a download href="../labs/asymptotics.do">下载完整脚本</a></p><button type="button" data-copy>复制代码</button><pre><code>version 17.0
+clear all
+set more off
+set seed 20261027
+* Synthetic teaching data. Stata and NumPy RNG streams differ.
+capture program drop experiment
+program define experiment, rclass
+    syntax, N(integer)
+    drop _all
+    quietly set obs `n&#x27;
+    gen double x=runiform(0,4)
+    gen double u=x*(rexponential(1)-1)
+    gen double y=1+2*x+u
+    quietly regress y x, vce(robust)
+    return scalar b=_b[x]
+    return scalar t=(_b[x]-2)/_se[x]
+end
+foreach n in 30 200 2000 {
+    simulate b=r(b) t=r(t), reps(1000) nodots: experiment, n(`n&#x27;)
+    gen double covered=abs(t)&lt;=1.96
+    summarize b t covered
+    histogram t, normal name(n`n&#x27;, replace) title(&quot;n=`n&#x27;, R=1000&quot;)
+}
+</code></pre></details></section><section class="paper" id="s5"><h2>5 · 专属练习与参考答案</h2><p>误差方差随x增加，点估计一定有偏吗？</p><details><summary>展开答案与依据</summary><p>不一定。在相应外生条件下OLS仍可无偏或一致，问题主要在默认同方差标准误。</p></details></section><section class="paper" id="s6"><h2>6 · 学习验收</h2><p>独立解释本模块公式中的随机对象、目标量与关键条件；运行实验，改变一个前提并说明结果为何改变。只阅读或运行命令不等于掌握。</p><label><input type="checkbox" data-module-check="M09"> 已完成 M09 的推导、实验与练习</label></section><section class="paper" id="s7"><h2>7 · 原120课映射与资料</h2><p>原课编号、标题与历史授课日期保留。下列为主题映射，合并模块并不表示每节旧课均已独立重写。</p><a class="maplink" href="../../lessons/02-13.html">原课 02-13</a><a class="maplink" href="../../lessons/03-05.html">原课 03-05</a><p><a href="../review.html">评审回应与修订范围</a> · <a href="../mapping.html">完整120课映射</a> · <a href="../sources.html">原始文献与软件文档</a></p></section><nav class="nav"><a href="M08.html">← 前一模块</a><a href="M10.html">后一模块 →</a></nav></main><footer>统计条件与识别假设优先于显著性 · 2026-10-27修订</footer></body></html>

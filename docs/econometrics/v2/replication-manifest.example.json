@@ -1,0 +1,10 @@
+{
+  "status": "assignment_not_completed",
+  "paper_doi": null,
+  "data_source": null,
+  "license": null,
+  "target_tables": [],
+  "sample_rules": [],
+  "software": {},
+  "required_evidence": ["data checksum", "sample flow", "baseline table comparison", "dynamic plot", "robustness differences", "identification audit"]
+}

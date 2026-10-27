@@ -1,0 +1,38 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="course-revision" content="2026-10-27-v2"><title>数据来源与原始文档</title><link rel="stylesheet" href="./course.css"><script defer src="./course.js"></script></head><body><header><a href="./">← 36模块主线</a><a href="mapping.html">120课映射</a></header><main><h1>真实工资教学案例</h1><p>数据来源为Stata Press的NLSW88观察数据教学摘录，原始2246条，删除工资/教育/经验/任职年限缺失与非正工资后2229条，排除17条。供应方提示部分示例数据可能为演示修改，不能作为发表研究证据。</p><p>本例解释log工资与教育grade、总经验ttl_exp和任职年限tenure的条件关联。教育确实进入方程，但未观察能力等混杂，不能称因果教育回报。</p><table><tr><th>变量</th><th>系数</th><th>HC1标准误</th></tr><tr><td>const</td><td>0.364459</td><td>0.057673</td></tr><tr><td>grade</td><td>0.080506</td><td>0.004224</td></tr><tr><td>ttl_exp</td><td>0.030378</td><td>0.002851</td></tr><tr><td>tenure</td><td>0.012115</td><td>0.002310</td></tr></table><p>完整SHA-256与结果：<a href="labs/results/real-wages.json">来源和输出记录</a>。两软件约定相同筛样与HC1，Stata尚未实际运行，不宣称数值交叉验证完成。</p><details><summary>Python完整代码</summary><a download href="labs/real_wages.py">下载脚本</a><pre><code>&quot;&quot;&quot;Observed-data teaching extract, not a causal education-return estimate.
+The provider warns example datasets can be altered; not publication evidence.
+Network required. Save checksum and complete-case exclusions for reproducibility.
+&quot;&quot;&quot;
+from io import BytesIO
+from urllib.request import Request,urlopen
+from pathlib import Path
+import hashlib,json
+import numpy as np
+import pandas as pd
+import statsmodels.api as sm
+URL=&#x27;https://www.stata-press.com/data/r19/nlsw88.dta&#x27;
+with urlopen(Request(URL,headers={&#x27;User-Agent&#x27;:&#x27;Mozilla/5.0&#x27;}),timeout=60) as response:raw=response.read()
+df=pd.read_stata(BytesIO(raw),convert_categoricals=False)
+cols=[&#x27;wage&#x27;,&#x27;grade&#x27;,&#x27;ttl_exp&#x27;,&#x27;tenure&#x27;];sample=df[cols].dropna()
+sample=sample.loc[sample.wage&gt;0].copy()
+sample[&#x27;lnwage&#x27;]=np.log(sample.wage)
+X=sm.add_constant(sample[[&#x27;grade&#x27;,&#x27;ttl_exp&#x27;,&#x27;tenure&#x27;]])
+fit=sm.OLS(sample.lnwage,X).fit(cov_type=&#x27;HC1&#x27;)
+result={&#x27;source&#x27;:URL,&#x27;sha256&#x27;:hashlib.sha256(raw).hexdigest(),
+        &#x27;raw_n&#x27;:len(df),&#x27;analysis_n&#x27;:len(sample),&#x27;excluded_n&#x27;:len(df)-len(sample),
+        &#x27;parameters&#x27;:fit.params.to_dict(),&#x27;HC1_SE&#x27;:fit.bse.to_dict(),
+        &#x27;interpretation&#x27;:&#x27;Observed-data teaching association; not a causal education effect or representative NLS estimate.&#x27;}
+print(json.dumps(result,indent=2))
+out=Path(__file__).resolve().parent/&#x27;results&#x27;;out.mkdir(exist_ok=True)
+(out/&#x27;real-wages.json&#x27;).write_text(json.dumps(result,indent=2),encoding=&#x27;utf-8&#x27;)
+</code></pre></details><details><summary>Stata完整代码</summary><a download href="labs/real_wages.do">下载脚本</a><pre><code>version 17.0
+clear all
+set more off
+* Observed-data teaching extract. Provider example data may be altered.
+* This is a conditional association, NOT an identified causal return to schooling.
+use &quot;https://www.stata-press.com/data/r19/nlsw88.dta&quot;, clear
+count
+keep if !missing(wage,grade,ttl_exp,tenure) &amp; wage&gt;0
+count
+generate double lnwage=ln(wage)
+regress lnwage grade ttl_exp tenure, vce(robust)
+</code></pre></details></main></body></html>

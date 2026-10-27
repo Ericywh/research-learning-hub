@@ -1,15 +1,48 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>第6章·第6节｜Logit与Probit · DAY 71</title><meta name="description" content="Logit与Probit：理论公式、数据、双软件代码和练习答案。"><script>window.MathJax={tex:{inlineMath:[["\\(","\\)"]],displayMath:[["\\[","\\]"]]},svg:{fontCache:"global"}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script><style>body{margin:0;background:#f6f9fa;color:#243a49;font:16px/1.9 system-ui,"Noto Sans SC",sans-serif}main{max-width:1050px;margin:0 auto;padding:25px}.hero{background:linear-gradient(120deg,#173c50,#226d72);border-radius:16px;padding:33px;color:#fff}.hero h1,.hero p{color:#fff}.hero h1{font-size:clamp(24px,4vw,38px)}.badge{background:#e7f1d5;color:#29484b;border-radius:13px;padding:5px 10px;font-size:12px}.paper{background:#fff;border:1px solid #d9e6e9;border-radius:12px;padding:26px;margin:17px 0}.paper h2{color:#264957;font-size:21px}.equation{padding:15px;background:#f0f6f6;overflow:auto}details{border:1px solid #d0dfe2;border-radius:9px;margin:12px 0;overflow:hidden}summary{cursor:pointer;background:#ebf3f4;padding:12px}pre{overflow:auto;background:#173044;color:#f1f9fc;margin:0;padding:17px;line-height:1.6}pre code{white-space:pre;font:12px/1.7 monospace}a{color:#14717b}@media(max-width:600px){main{padding:12px}.paper,.hero{padding:20px}}</style><meta name="course-status" content="taught"></head><body><main><p><a href="../index.html">← 返回计量经济学120天课程目录</a></p><div class="hero"><small>DAY 71 / 120 · CHAPTER 6</small><h1>第6章·第6节｜Logit与Probit</h1><span class="badge">已授课</span><p>七模块课程正文 · Stata + Python · 约10—15分钟</p></div><article><section class="paper" id="s1"><h2>一、通俗理解</h2><p>本节围绕<strong>Logit与Probit</strong>这一核心问题展开。Logit与Probit针对二元结果概率建模，系数尺度分别与对数胜算或潜在正态指数有关，不直接等于概率百分点变化。</p><p>面板与时间序列模型的统计对象不同，不能机械使用同一估计器。FE着重组内变异，非线性与分位数模型则改变了结果尺度。理解方法时首先要区分总体参数、样本估计量和软件结果；一个模型能够运行，不代表研究问题已经被正确识别。读回归表前先确认观测单位、变量单位、比较对象与可观察证据。</p><p>直觉上问：这次比较改变了什么，哪些其他条件被控制，以及剩余不确定性来自抽样、设定还是无法观测的反事实？这些问题有助于防止只看显著性星号就作出超出证据范围的解释。</p></section>
-<section class="paper" id="s2"><h2>二、核心理论与公式</h2><p>Logit与Probit针对二元结果概率建模，系数尺度分别与对数胜算或潜在正态指数有关，不直接等于概率百分点变化。 本课可用以下数学表达式把估计对象和条件写清：</p><div class="equation">\[P(Y_i=1\mid X_i)=\Lambda(X_i^\top\beta)\]</div><p>式中概率、期望、变换或估计系数的含义取决于具体变量与目标人群。模型是否可识别、估计器是否一致以及标准误是否正确，分别需要对应的秩条件、分布或误差结构假设。不能以更换HC1或增加样本量自动替代这些前提。</p><p>面板与时间序列模型的统计对象不同，不能机械使用同一估计器。FE着重组内变异，非线性与分位数模型则改变了结果尺度。如果研究问题对应预测，需报告样本外表现；如果对应因果干预，必须另外定义潜在结果与处理分配机制。统计量的显著性不能推导出不存在遗漏变量、选择偏误或错误测量。</p></section>
-<section class="paper" id="s3"><h2>三、实证案例与数据</h2><p>本课使用<strong>Stata官方1978年汽车数据auto.dta</strong>。数据来源：<a href="https://www.stata-press.com/data/r19/auto.dta">Stata Press公开文件</a>。核心变量为：进口标记foreign作为二元结果，重量weight、油耗mpg和长度length为协变量。</p><p>模型只描述样本中的条件概率关系，并非进口身份的因果决策模型。从原始数据到估计样本，应先检查缺失编码、变量量纲、重复观测和筛选标准；如果按主体或年份分组，还应检查键是否唯一。代码产生的结果只有在实际运行后才能引用。本次不报告没有经过计算核验的估计值、置信区间和检验p值。</p></section>
-<section class="paper" id="s4"><h2>四、Stata与Python实现</h2><p>下列示例使用相同数据源或确定性数据生成过程，显示本节可复核的准备、估计或诊断步骤。对于尚未实现的方法专属估计与方差合并，正文会明确保留其限制。</p><h3>Stata</h3><details><summary>展开 Stata 完整代码</summary><pre><code class="language-stata">use &quot;https://www.stata-press.com/data/r19/auto.dta&quot;, clear
-keep if !missing(foreign,weight,mpg,length)
-logit foreign weight mpg length
-margins, dydx(weight mpg length)</code></pre></details><h3>Python</h3><details><summary>展开 Python 完整代码</summary><pre><code class="language-python">import pandas as pd,statsmodels.api as sm
-df=pd.read_stata(&quot;https://www.stata-press.com/data/r19/auto.dta&quot;,convert_categoricals=False)
-df=df[[&quot;foreign&quot;,&quot;weight&quot;,&quot;mpg&quot;,&quot;length&quot;]].dropna()
-X=sm.add_constant(df[[&quot;weight&quot;,&quot;mpg&quot;,&quot;length&quot;]])
-r=sm.Logit(df.foreign.astype(int),X).fit(disp=False)
-print(r.summary());print(r.get_margeff(at=&quot;overall&quot;).summary())</code></pre></details><p>Logit原始斜率属于对数胜算，平均边际效应是另一尺度，不能把两个值直接混读。核对两端结果时要检查观察数、类别编码、误差修正和默认自由度，而不是为了更小的p值任意选取软件。</p></section>
-<section class="paper" id="s5"><h2>五、初学者避坑</h2><p><strong>误区一：</strong>忽视模型与数据类型是否匹配。Logit与Probit针对二元结果概率建模，系数尺度分别与对数胜算或潜在正态指数有关，不直接等于概率百分点变化。这会改变参数的经济意义或有效比较集合。</p><p><strong>误区二：</strong>把统计显著性误解为识别假设已经成立。面板与时间序列模型的统计对象不同，不能机械使用同一估计器。FE着重组内变异，非线性与分位数模型则改变了结果尺度。基于观察数据的OLS、FE与其他模型仍需额外论证条件。</p><p><strong>误区三：</strong>没有说明软件与样本的差别。Logit原始斜率属于对数胜算，平均边际效应是另一尺度，不能把两个值直接混读。发表或提交分析前必须保留代码版本、数据来源、筛选数量、标准误结构和不利结果。</p></section>
-<section class="paper" id="s6"><h2>六、今日练习</h2><p><strong>概念题：</strong>以《Logit与Probit》为研究主题，指出其核心统计对象、一个必要的模型或识别条件，以及为何仅有显著p值不能证明该条件成立。</p><details><summary>概念题参考答案</summary><p>Logit与Probit针对二元结果概率建模，系数尺度分别与对数胜算或潜在正态指数有关，不直接等于概率百分点变化。 其中关键条件必须结合采样、测量或处理分配机制另行论证，不能由一个系数检验自动保证。</p></details><p><strong>计算或实操解释题：</strong>若Logit系数为0.5，计算胜算比并说明它是否表示概率增加50%。</p><details><summary>计算或实操题参考答案</summary><p>胜算比exp(0.5)≈1.65，不是概率增加50%，概率变化依赖基准水平。</p></details></section>
-<section class="paper" id="s7"><h2>七、学习进度</h2><p><strong>第6章·第6节｜Logit与Probit（全课程第71课 / 共120课）</strong>，课程网站状态：<strong>已授课</strong>。本课正文、公式、Stata与Python示例及练习答案已在GitHub归档。</p><p>下一课：<a href="06-07.html">第6章·第7节｜分位数回归</a>（全课程第72课）。具体软件结果以实际运行核验为准，不补造未经执行的估计数值。</p></section></article></main></body></html>
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="course-revision" content="2026-10-27-v2"><meta name="course-status" content="taught"><title>第6章·第6节｜Logit与Probit</title><link rel="stylesheet" href="../v2/course.css"><script defer src="../v2/course.js"></script></head><body><header><a href="../">← 计量经济学120天课程</a><a href="../v2/">36模块新主线</a></header><main><div class="hero"><span class="badge">已授课</span><h1>第6章·第6节｜Logit与Probit</h1><p class="meta">原全课程第71课 / 120 · 原日期：无可核实日期 · 本次实质修订2026-10-27</p><p>本页现采用M19 MLE、得分与信息矩阵核心讲义，保留原网址、编号及标题。<a href="../archive/2026-10-27/lessons/06-06.html">阅读修订前原稿</a>。</p></div><section class="paper" id="s1"><h2>1 · 核心问题与推导</h2><p>似然固定已观察数据并比较不同参数。独立伯努利Logit的对数似然为Σ[yη−log(1+expη)]，η=x′β。得分为Σx(y−p)，负Hessian为Σxx′p(1−p)。数值计算使用logaddexp以避免溢出。正确设定且满足识别、内点、光滑性和非奇异信息等条件时，MLE有渐近正态性。令A为平均负Hessian、B为平均得分外积，则稳健系数协方差是A⁻¹BA⁻¹/n；信息等式仅在适当正确分布条件下成立。</p></section><section class="paper" id="s2"><h2>2 · 公式与统计前提</h2><div class="formula">ℓ(β)=Σ[yᵢxᵢ′β−log(1+exp(xᵢ′β))]；V̂=Â⁻¹B̂Â⁻¹/n</div><p>完全分离时有限MLE可能不存在。稳健方差不修复错误条件均值，也不保证误设参数仍有原真值解释。</p></section><section class="paper" id="s3"><h2>3 · 图示与研究含义</h2><div class="diagram"><svg viewBox="0 0 680 100" role="img" aria-label="从识别到推断的学习路径"><title>识别先于估计，推断依赖统计条件</title><g fill="#173e49" font-size="20"><text x="20" y="55">目标量</text><text x="160" y="55">识别假设</text><text x="335" y="55">估计/优化</text><text x="520" y="55">方差与检验</text></g><path d="M95 50H145M255 50H320M445 50H505" stroke="#b98c3b" stroke-width="3"/></svg></div><p>图为概念示意；数值结论以运行代码和明确的数据来源为准。</p></section><section class="paper" id="s4"><h2>4 · 可复现实验：Stata与Python</h2><p>数据性质：固定种子的随机教学模拟，非真实研究数据。两种软件随机流不同，不要求逐行结果相同。Python已运行状态见<a href="../v2/validation.json">核验记录</a>；Stata尚未运行验证。</p><details><summary>Python · 展开代码</summary><p><a download href="../v2/labs/mle.py">下载完整脚本</a></p><button type="button" data-copy>复制代码</button><pre><code># Teaching experiment, synthetic data unless explicitly stated. Seed 20261027.
+import numpy as np
+import statsmodels.api as sm
+from scipy.optimize import minimize
+from scipy.special import expit
+rng=np.random.default_rng(20261027);n=2500
+X=np.column_stack([np.ones(n),rng.normal(size=(n,2))])
+y=rng.binomial(1,expit(X@np.array([-.4,.8,-.5])))
+def loss(b):return np.sum(np.logaddexp(0,X@b)-y*(X@b))
+def grad(b):return X.T@(expit(X@b)-y)
+def hess(b):
+    p=expit(X@b);return (X.T*(p*(1-p)))@X
+opt=minimize(loss,np.zeros(3),jac=grad,hess=hess,method=&#x27;Newton-CG&#x27;,options={&#x27;xtol&#x27;:1e-10})
+assert np.max(abs(grad(opt.x)))/n&lt;1e-7
+fit=sm.Logit(y,X).fit(disp=False)
+assert np.allclose(opt.x,fit.params,atol=1e-6)
+p=expit(X@opt.x);A=hess(opt.x)/n;s=X*(y-p)[:,None];B=s.T@s/n
+V=np.linalg.solve(A,B)@np.linalg.inv(A)/n
+def ame(b):
+    p=expit(X@b);return np.mean(b[1]*p*(1-p))
+step=1e-5;G=np.array([(ame(opt.x+np.eye(3)[j]*step)-ame(opt.x-np.eye(3)[j]*step))/(2*step) for j in range(3)])
+print(&#x27;MLE&#x27;,opt.x,&#x27;score norm&#x27;,np.linalg.norm(grad(opt.x)))
+print(&#x27;sandwich HC0 SE&#x27;,np.sqrt(np.diag(V)))
+print(&#x27;AME x1 fixed-X&#x27;,ame(opt.x),&#x27;Delta SE&#x27;,np.sqrt(G@V@G))
+</code></pre></details><details><summary>Stata · 展开代码</summary><p><a download href="../v2/labs/mle.do">下载完整脚本</a></p><button type="button" data-copy>复制代码</button><pre><code>version 17.0
+clear all
+set more off
+set seed 20261027
+* Synthetic teaching data. Stata and NumPy RNG streams differ.
+set obs 2500
+gen double x1=rnormal()
+gen double x2=rnormal()
+gen byte y=runiform()&lt;invlogit(-.4+.8*x1-.5*x2)
+capture program drop logistic_ll
+program define logistic_ll
+    args lnf xb
+    * Stable log(1+exp(xb)): max(xb,0)+ln(1+exp(-abs(xb)))
+    quietly replace `lnf&#x27;=$ML_y1*`xb&#x27;-(max(`xb&#x27;,0)+ln(1+exp(-abs(`xb&#x27;))))
+end
+ml model lf logistic_ll (y=x1 x2), vce(robust)
+ml maximize
+matrix handmade=e(b)
+logit y x1 x2, vce(robust)
+matrix builtin=e(b)
+matrix list handmade
+matrix list builtin
+margins, dydx(x1 x2)
+</code></pre></details></section><section class="paper" id="s5"><h2>5 · 专属练习与参考答案</h2><p>为什么QMLE不能总是只取Hessian逆作方差？</p><details><summary>展开答案与依据</summary><p>分布误设时曲率A与得分变异B可能不同，只取A逆会遗漏实际得分波动。</p></details></section><section class="paper" id="s6"><h2>6 · 学习验收</h2><p>独立解释本模块公式中的随机对象、目标量与关键条件；运行实验，改变一个前提并说明结果为何改变。只阅读或运行命令不等于掌握。</p><label><input type="checkbox" data-module-check="M19"> 已完成 M19 的推导、实验与练习</label></section><section class="paper" id="s7"><h2>7 · 原120课映射与资料</h2><p>原课编号、标题与历史授课日期保留。下列为主题映射，合并模块并不表示每节旧课均已独立重写。</p><a class="maplink" href="../v2/../lessons/06-06.html">原课 06-06</a><p><a href="../v2/review.html">评审回应与修订范围</a> · <a href="../v2/mapping.html">完整120课映射</a> · <a href="../v2/sources.html">原始文献与软件文档</a></p></section></main><script defer src="../study-progress.js"></script></body></html>

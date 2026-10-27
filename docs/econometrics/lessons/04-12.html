@@ -1,17 +1,56 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>第4章·第12节｜合成控制法 · DAY 49</title><meta name="description" content="合成控制法：理论公式、数据、双软件代码和练习答案。"><script>window.MathJax={tex:{inlineMath:[["\\(","\\)"]],displayMath:[["\\[","\\]"]]},svg:{fontCache:"global"}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script><style>body{margin:0;background:#f6f9fa;color:#243a49;font:16px/1.9 system-ui,"Noto Sans SC",sans-serif}main{max-width:1050px;margin:0 auto;padding:25px}.hero{background:linear-gradient(120deg,#163c50,#236d72);border-radius:15px;padding:33px;color:#fff}.hero h1,.hero p{color:#fff}.hero h1{font-size:clamp(24px,4vw,38px)}.badge{background:#e7f1d5;color:#29484b;border-radius:13px;padding:5px 10px;font-size:12px}.paper{background:#fff;border:1px solid #d9e6e9;border-radius:12px;padding:26px;margin:17px 0}.paper h2{color:#264957;font-size:21px}.equation{padding:15px;background:#f0f6f6;overflow:auto}details{border:1px solid #d0dfe2;border-radius:9px;margin:12px 0;overflow:hidden}summary{cursor:pointer;background:#ebf3f4;padding:12px}pre{overflow:auto;background:#173044;color:#f1f9fc;margin:0;padding:17px;line-height:1.6}pre code{white-space:pre;font:12px/1.7 monospace}a{color:#14717b}@media(max-width:600px){main{padding:12px}.paper,.hero{padding:20px}}</style><meta name="course-status" content="taught"></head><body><main><p><a href="../index.html">← 返回计量经济学120天课程目录</a></p><div class="hero"><small>DAY 49 / 120 · CHAPTER 4</small><h1>第4章·第12节｜合成控制法</h1><span class="badge">已授课</span><p>七模块课程正文 · Stata + Python · 约10—15分钟</p></div><article><section class="paper" id="s1"><h2>一、通俗理解</h2><p>本课研究《合成控制法》的核心问题。合成控制通过多个未受处理单位的非负权重组合构造反事实，政策前拟合质量和供体库选择至关重要。理解这一问题时，不应从软件命令倒推出研究设计，而应先确定研究对象、估计量和数据提供的变异。识别假设、比较对象和统计推断构成解释结果的共同基础。判断统计关联是否可以上升为因果解释，必须给出额外可辩护的识别条件。</p><p>直觉上先问“相对于哪个对照，改变了什么、未观测因素是否可比”，再写回归方程。即使数据非常多或结果显著，也不能省略这一步。对于方法不匹配的公开示例，宁可明确使用教学模拟，也不能伪装为可信的现实因果证据。</p></section>
-<section class="paper" id="s2"><h2>二、核心理论与公式</h2><p>本节重要的数学表达式如下。合成控制通过多个未受处理单位的非负权重组合构造反事实，政策前拟合质量和供体库选择至关重要。式中的下标、参数和条件必须由数据结构与研究目的界定。涉及潜在结果时，要区分可观察结果和反事实；涉及协方差或条件均值时，应明确是总体假设还是样本估计。任何公式只有在相应外生性、满秩、时间结构或连续性条件下才具备预期的识别意义。</p><div class="equation">\[\widehat Y_{1t}(0)=\sum_{j=2}^{J+1}w_jY_{jt}\]</div><p>检验与估计所需的矩条件、概率模型或识别假设要与这里的对象一致：完全共线性影响参数可识别性；异方差主要影响常规协方差估计；内生性则可能破坏OLS的一致性。不要以为使用HC1就能同时解决这些问题。</p></section>
-<section class="paper" id="s3"><h2>三、实证案例与数据</h2><p>使用Stata官方医院政策人工构造示例hospdd.dta。hospital、month、procedure、satis；医院与月份定义政策比较维度。官方教学数据的政策效应不应外推为现实医疗政策效应。教学时先检查观测单位、变量类型、缺失与筛选规则，确保Stata和Python的有效样本一致。公开数据由Stata Press提供，可以在链接下载，其中没有编造真实政策、论文或因果效应估计结果。 <a href="https://www.stata-press.com/data/r19/hospdd.dta">官方公开数据文件</a>。</p><p>按照预先确定的口径筛选样本。对处理变量，必须说明其赋值规则与时点；对连续自变量，必须说明量纲；对面板数据，必须说明主体、时间与缺失结构。分析没有实际运行，因此本页只给出计算流程，不填写未经验证的回归系数或p值。</p></section>
-<section class="paper" id="s4"><h2>四、Stata与Python实现</h2><p>以下Stata和Python采用相同数据文件或相同透明模拟公式，目的是让估计流程可以复核。不能将未实际执行的程序输出标记为“已运行”。</p><h3>Stata</h3><details><summary>展开 Stata 完整代码</summary><pre><code class="language-stata">use &quot;https://www.stata-press.com/data/r19/hospdd.dta&quot;, clear
-keep if !missing(satis,procedure,hospital,month)
-collapse (mean) satis procedure, by(hospital month)
-xtset hospital month
-xtdescribe
-* 供体库与处理单位确认后才能真正求SCM权重</code></pre></details><h3>Python</h3><details><summary>展开 Python 完整代码</summary><pre><code class="language-python">import pandas as pd
-df=pd.read_stata(&quot;https://www.stata-press.com/data/r19/hospdd.dta&quot;,convert_categoricals=False)
-df=df[[&quot;satis&quot;,&quot;procedure&quot;,&quot;hospital&quot;,&quot;month&quot;]].dropna()
-g=df.groupby([&quot;hospital&quot;,&quot;month&quot;],as_index=False).mean()
-print(g.head());print(g.groupby(&quot;hospital&quot;).size().describe())
-# 尚需定义处理单位、供体库和权重优化准则</code></pre></details><p>这里只完成合成控制所需的单位—时间数据准备，没有求出SCM权重，不可将其称为政策效应估计。若两端自由度、小样本修正或处理变量定义不同，应先核对这些选择，再比较系数和标准误；不能为了获得更小p值而选择软件。</p></section>
-<section class="paper" id="s5"><h2>五、初学者避坑</h2><p>误区一：把“合成控制法”当成所有数据都适用的默认模型。合成控制通过多个未受处理单位的非负权重组合构造反事实，政策前拟合质量和供体库选择至关重要。误区二：仅根据p值判断假设成立。研究设计的关键条件往往不能由一个显著性检验直接证明。误区三：忽略样本和标准误口径。这里只完成合成控制所需的单位—时间数据准备，没有求出SCM权重，不可将其称为政策效应估计。应逐项记录样本量、变量单位、基准组、模型估计方法以及置信区间的计算约定。</p></section>
-<section class="paper" id="s6"><h2>六、今日练习</h2><p><strong>概念题：</strong>请说明本课《合成控制法》针对的核心统计对象，并指出一个不能只依靠显著性结果验证的条件。</p><details><summary>查看概念题答案</summary><p>合成控制通过多个未受处理单位的非负权重组合构造反事实，政策前拟合质量和供体库选择至关重要。相应模型还需要关于数据生成机制、可比性或外生性的条件，显著性本身不会验证这些条件。</p></details><p><strong>计算或应用题：</strong>某项教学示例中斜率估计为2、HC1标准误为0.5，求t值并解释局限。</p><details><summary>查看计算题答案</summary><p>t=4；在所用模型下给出零系数的统计检验证据，不证明遗漏变量不存在，也不意味着因果识别成功。</p></details></section>
-<section class="paper" id="s7"><h2>七、学习进度</h2><p><strong>第4章·第12节｜合成控制法（全课程第49课 / 共120课）</strong>，课程网站状态：<strong>已授课</strong>。本课正文、公式、Stata与Python示例及练习答案已在GitHub归档。</p><p>下一课：<a href="04-13.html">第4章·第13节｜中介效应与机制分析</a>（全课程第50课）。具体软件结果以实际运行核验为准，不补造未经执行的估计数值。</p></section></article></main></body></html>
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="course-revision" content="2026-10-27-v2"><meta name="course-status" content="taught"><title>第4章·第12节｜合成控制法</title><link rel="stylesheet" href="../v2/course.css"><script defer src="../v2/course.js"></script></head><body><header><a href="../">← 计量经济学120天课程</a><a href="../v2/">36模块新主线</a></header><main><div class="hero"><span class="badge">已授课</span><h1>第4章·第12节｜合成控制法</h1><p class="meta">原全课程第49课 / 120 · 原日期：无可核实日期 · 本次实质修订2026-10-27</p><p>本页现采用M30 合成控制凸权重与安慰剂核心讲义，保留原网址、编号及标题。<a href="../archive/2026-10-27/lessons/04-12.html">阅读修订前原稿</a>。</p></div><section class="paper" id="s1"><h2>1 · 核心问题与推导</h2><p>合成控制用非负且和为1的供体权重拟合处理单位政策前特征或轨迹。仅计算供体均值没有求解权重，等权只是特殊可行解。给定特征权重V，最小化政策前拟合误差的二次型，训练窗口与特征选择应先于政策后分析。效应为处理结果减合成结果。空间安慰剂轮流将其他单位视作处理者重估，并比较后期/前期RMSPE比值；任意小样本下不能自动将其看成精确检验。</p></section><section class="paper" id="s2"><h2>2 · 公式与统计前提</h2><div class="formula">min_w (X₁−X₀w)′V(X₁−X₀w)，w≥0，Σw=1</div><p>前期拟合差、供体受溢出或处理单位不在凸包中削弱识别；少量供体限制p值分辨率。</p></section><section class="paper" id="s3"><h2>3 · 图示与研究含义</h2><div class="diagram"><svg viewBox="0 0 680 100" role="img" aria-label="从识别到推断的学习路径"><title>识别先于估计，推断依赖统计条件</title><g fill="#173e49" font-size="20"><text x="20" y="55">目标量</text><text x="160" y="55">识别假设</text><text x="335" y="55">估计/优化</text><text x="520" y="55">方差与检验</text></g><path d="M95 50H145M255 50H320M445 50H505" stroke="#b98c3b" stroke-width="3"/></svg></div><p>图为概念示意；数值结论以运行代码和明确的数据来源为准。</p></section><section class="paper" id="s4"><h2>4 · 可复现实验：Stata与Python</h2><p>数据性质：固定种子的随机教学模拟，非真实研究数据。两种软件随机流不同，不要求逐行结果相同。Python已运行状态见<a href="../v2/validation.json">核验记录</a>；Stata尚未运行验证。</p><details><summary>Python · 展开代码</summary><p><a download href="../v2/labs/scm.py">下载完整脚本</a></p><button type="button" data-copy>复制代码</button><pre><code># Teaching experiment, synthetic data unless explicitly stated. Seed 20261027.
+import numpy as np
+from scipy.optimize import minimize
+rng=np.random.default_rng(20261027);T0=20;T=35;J=8
+f=rng.normal(size=(T,3)).cumsum(axis=0)
+donors=f@rng.normal(size=(3,J))+rng.normal(scale=.05,size=(T,J))
+truew=np.array([.2,.5,.3,0,0,0,0,0]);treated=donors@truew+rng.normal(scale=.03,size=T)
+treated[T0:]+=2
+def fit(target,pool):
+    A=pool[:T0];b=target[:T0];j=A.shape[1]
+    opt=minimize(lambda w:np.mean((b-A@w)**2),np.ones(j)/j,
+        bounds=[(0,1)]*j,constraints={&#x27;type&#x27;:&#x27;eq&#x27;,&#x27;fun&#x27;:lambda w:w.sum()-1},method=&#x27;SLSQP&#x27;,options={&#x27;ftol&#x27;:1e-12,&#x27;maxiter&#x27;:3000})
+    assert opt.success
+    assert abs(opt.x.sum()-1)&lt;1e-6 and opt.x.min()&gt;-1e-8
+    gap=target-pool@opt.x
+    ratio=np.sqrt(np.mean(gap[T0:]**2))/max(np.sqrt(np.mean(gap[:T0]**2)),1e-10)
+    return opt.x,gap,ratio
+w,gap,ratio=fit(treated,donors)
+placebos=[fit(donors[:,j],np.delete(donors,j,axis=1))[2] for j in range(J)]
+print(&#x27;convex weights&#x27;,w,&#x27;post mean gap&#x27;,gap[T0:].mean(),&#x27;RMSPE ratio&#x27;,ratio)
+print(&#x27;spatial placebo ratios&#x27;,placebos,&#x27;rank fraction&#x27;,(1+sum(p&gt;=ratio for p in placebos))/(J+1))
+print(&#x27;Synthetic factor data; rank fraction is not a universally exact p-value&#x27;)
+</code></pre></details><details><summary>Stata · 展开代码</summary><p><a download href="../v2/labs/scm.do">下载完整脚本</a></p><button type="button" data-copy>复制代码</button><pre><code>version 17.0
+clear all
+set more off
+set seed 20261027
+* Synthetic teaching data. Stata and NumPy RNG streams differ.
+set obs 35
+gen long t=_n
+gen double y0=0
+forvalues j=1/8 {
+    gen double d`j&#x27;=rnormal()
+    replace d`j&#x27;=d`j&#x27;[_n-1]+rnormal() if _n&gt;1
+}
+replace y0=.2*d1+.5*d2+.3*d3+rnormal(0,.03)+2*(t&gt;20)
+* Mata projected gradient solves the actual simplex-constrained pre-period fit.
+mata:
+A=st_data((1::20),tokens(&quot;d1 d2 d3 d4 d5 d6 d7 d8&quot;))
+b=st_data((1::20),&quot;y0&quot;)
+w=J(8,1,1/8)
+step=1/(2*trace(A&#x27;*A))
+for (iter=1;iter&lt;=30000;iter++) {
+    v=w-step*2*A&#x27;*(A*w-b)
+    u=sort(v,-1); css=run_sum(u)
+    rho=1
+    for (j=1;j&lt;=8;j++) if (u[j]-(css[j]-1)/j&gt;0) rho=j
+    theta=(css[rho]-1)/rho
+    w=rowmax((v:-theta,J(8,1,0)))
+}
+st_matrix(&quot;weights&quot;,w&#x27;)
+st_matrix(&quot;pre_rmse&quot;,sqrt(mean((b-A*w):^2)))
+end
+matrix list weights
+matrix list pre_rmse
+* Optimization demo only; Python companion also runs spatial placebo refits.
+</code></pre></details></section><section class="paper" id="s5"><h2>5 · 专属练习与参考答案</h2><p>(0.4,0.6,0)与(1.2,−0.2,0)哪些是经典可行权重？</p><details><summary>展开答案与依据</summary><p>前者可行，后者含负权重，需要其他方法与外推解释，不能称经典凸合成控制。</p></details></section><section class="paper" id="s6"><h2>6 · 学习验收</h2><p>独立解释本模块公式中的随机对象、目标量与关键条件；运行实验，改变一个前提并说明结果为何改变。只阅读或运行命令不等于掌握。</p><label><input type="checkbox" data-module-check="M30"> 已完成 M30 的推导、实验与练习</label></section><section class="paper" id="s7"><h2>7 · 原120课映射与资料</h2><p>原课编号、标题与历史授课日期保留。下列为主题映射，合并模块并不表示每节旧课均已独立重写。</p><a class="maplink" href="../v2/../lessons/04-12.html">原课 04-12</a><a class="maplink" href="../v2/../lessons/05-11.html">原课 05-11</a><a class="maplink" href="../v2/../lessons/07-06.html">原课 07-06</a><p><a href="../v2/review.html">评审回应与修订范围</a> · <a href="../v2/mapping.html">完整120课映射</a> · <a href="../v2/sources.html">原始文献与软件文档</a></p></section></main><script defer src="../study-progress.js"></script></body></html>

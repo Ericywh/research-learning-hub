@@ -1,0 +1,97 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>第1章·第5节｜完整计量研究流程</title><meta name="description" content="计量经济学120天第5课：研究设计、估计目标、数据质量、Stata及Python实操"><style>:root{background:#f7f8f6;color:#243c49;font:15px/1.9 system-ui,"Noto Sans SC",sans-serif}*{box-sizing:border-box}body{margin:0}header,main,footer{max-width:980px;margin:auto;padding:15px}header{display:flex;gap:22px}a{color:#176e68}h1{font-size:clamp(25px,4vw,36px)}h2{font-size:21px;color:#1b5550}.hero{background:#e8f3ee;border-radius:15px;padding:28px;margin:18px 0}section{background:#fff;border:1px solid #dde7e6;border-radius:13px;padding:24px;margin:16px 0}.formula{background:#f1f6f5;padding:17px;text-align:center;overflow-x:auto}pre{background:#192d3b;color:#e5f1f5;overflow-x:auto;padding:18px;border-radius:9px;font:12px/1.8 monospace}nav{display:flex;gap:24px;flex-wrap:wrap}footer{font-size:13px;color:#637982}@media(max-width:650px){section{padding:16px}.hero{padding:18px}main{padding:10px}}</style><script>window.MathJax={tex:{displayMath:[['$$','$$']]},svg:{fontCache:'global'}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+
+<link rel="stylesheet" href="../course-theme.css?v=20261025-3"><script defer src="../course-theme.js?v=20261025-3"></script></head><body><header><a href="../">← 120节课程目录</a><a href="../../study/#courses">学习中心</a></header><main><div class="hero"><small>CHAPTER 01 · LESSON 05 / 120</small><h1>第1章·第5节｜完整计量研究流程</h1><p>2026年10月11日 · 10—15分钟</p><p>从研究问题到估计目标、数据、模型与透明复现</p><small>上一讲：统计推断基础｜下一讲：Stata基础操作与数据分析</small></div><section><p><strong>第1章·第5节｜完整计量研究流程（全课程第5课 / 共120课）</strong></p>
+<p>2026年10月11日，预计10—15分钟。</p>
+<p><strong>今日研究问题：</strong> 汽车越重，价格是否越高？怎样把一句直觉判断变成可以复现、且不过度宣称因果关系的计量研究？</p>
+</section><section><h2>一、从一个疑问到研究设计</h2>
+<p>前四课讨论了计量经济学的任务、相关与因果、数据结构和统计推断。现在把这些知识连起来。汽车重量与价格的散点图可能呈上升趋势，但它只是研究起点。正式研究必须说明研究对象、目标参数、数据来源、模型设定、识别假设与结论边界。<strong>完整研究流程不是“找数据—跑回归—看p值”，而是先确定问题，再判断数据能够回答到什么程度。</strong></p>
+</section><section><h2>二、七步研究流程</h2>
+<p><strong>研究问题 → 估计目标 → 数据与样本 → 数据核查 → 描述分析 → 模型估计 → 报告与复现</strong></p>
+<p><strong>第一步，限定研究问题。</strong> 本课只研究1978年Stata教学样本中不同车型的重量和价格是否存在正向线性关联。74款车型并不是已证实的概率随机样本，不能自动推广至整个汽车市场。</p>
+<p><strong>第二步，明确估计目标。</strong> 描述性问题是“重量相差100磅的车型，模型预测价格相差多少”；因果问题则是“给同一辆车增加100磅重量，会改变多少售价”。这两种目标必须分开。</p>
+<p><strong>第三步，分析机制与识别条件。</strong> 较重车型可能同时具有更大的尺寸、更丰富的配置和不同的品牌定位。控制变量的选择应有经济学依据，不能为了让某个系数显著而反复修改模型。</p>
+<p><strong>第四步，确定数据与变量。</strong> 使用<a href="https://www.stata-press.com/data/r19/auto.dta">Stata官方1978 Automobile数据</a>，共有74条车型记录、12个原始变量。price是美元价格，weight是磅，length是英寸车身长度，foreign区分国产与进口。该数据属于单期截面，不能凭空设定面板固定效应。</p>
+<p><strong>第五步，核查样本并描述分布。</strong> 检查变量类型、缺失值、极端值、样本数量与散点图。如果使用完整案例样本，必须说明删除了哪些缺失记录及剩余样本数。</p>
+<p><strong>第六步，估计与诊断。</strong> 先做简单回归，再加入事先说明的车身长度和产地分类。比较系数、置信区间、样本数，并采用异方差稳健标准误。稳健标准误不等于消除了遗漏变量偏差。</p>
+<p><strong>第七步，透明报告。</strong> 记录数据URL、软件代码、变量单位、筛选规则、标准误类型和识别局限。不显著结果也应如实报告，避免只呈现支持原先判断的模型。</p>
+</section><section><h2>三、两个核心公式</h2>
+<p><strong>公式1：控制变量后的线性关联模型</strong></p>
+<div class="formula">$$ \mathrm{price}_i=\alpha+\beta\mathrm{weight}_i+\gamma\mathrm{length}_i+\delta\mathrm{foreign}_i+u_i $$</div>
+<p>β的单位是美元/磅；100β表示在其他模型变量不变时，重量相差100磅对应的线性预测价格差。OLS可以估计线性投影系数；要赋予β因果含义，还需要定义干预、论证混杂控制等更强的识别条件。</p>
+<p><strong>公式2：潜在结果框架中的因果目标</strong></p>
+<div class="formula">$$ \tau_{100}=E\left[Y_i(w+100)-Y_i(w)\right] $$</div>
+<p>Y_i(w)表示将同一辆车的重量通过明确方式设为w时的潜在价格。添加配重与升级发动机可能是不同干预，不能只凭“增加100磅”定义因果处理。观察性截面回归中的显著系数无法自动识别这个因果量。</p>
+</section><section><h2>四、可手算的数值示意</h2>
+<p>假设某个<strong>完全虚构的教学模型</strong>估计β=2.5美元/磅，那么重量差100磅对应的模型预测价格差为2.5×100=250美元。这个数字只说明单位换算，<strong>既不是本课真实汽车数据的估计值，也不是增重的因果效应</strong>。实际数值必须通过软件读取。</p>
+</section><section><h2>五、Stata实操</h2>
+<p>本节在同一份1978年汽车数据上比较简单回归和加入控制变量的回归。</p>
+<pre><code>summarize price weight
+regress price weight</code></pre>
+<pre><code>clear all
+sysuse auto, clear
+describe price weight length foreign
+misstable summarize price weight length foreign</code></pre>
+<pre><code>keep if !missing(price, weight, length, foreign)
+count
+correlate price weight
+twoway (scatter price weight) (lfit price weight)
+regress price c.weight, vce(robust)
+estimates store m1
+regress price c.weight c.length i.foreign, vce(robust)
+estimates store m2
+estimates table m1 m2, b(%9.3f) se(%9.3f) stats(N r2)
+generate weight100 = weight/100
+regress price c.weight100 c.length i.foreign, vce(robust)</code></pre>
+<p>把weight改为weight100只是单位变换：新系数应为原系数的100倍，t统计量和p值不变。</p>
+</section><section><h2>六、Python：同一数据复现</h2>
+<p>Python先从课程中提供的Stata官方数据链接下载auto.dta到工作目录，再执行下列代码。Stata的sysuse auto读取相同的官方教学数据；运行前应核对版本和观测数。</p>
+<pre><code>import pandas as pd
+import matplotlib.pyplot as plt
+import statsmodels.formula.api as smf
+
+df = pd.read_stata(&quot;auto.dta&quot;, convert_categoricals=False)
+data = df[[&quot;price&quot;, &quot;weight&quot;, &quot;length&quot;, &quot;foreign&quot;]].dropna().copy()
+data[&quot;weight100&quot;] = data[&quot;weight&quot;] / 100
+
+print(&quot;N:&quot;, len(data))
+print(data.describe())
+print(&quot;Correlation:&quot;, data[&quot;price&quot;].corr(data[&quot;weight&quot;]))
+
+m1 = smf.ols(&quot;price ~ weight&quot;, data=data).fit(cov_type=&quot;HC1&quot;)
+m2 = smf.ols(
+    &quot;price ~ weight + length + C(foreign)&quot;, data=data
+).fit(cov_type=&quot;HC1&quot;)
+m3 = smf.ols(
+    &quot;price ~ weight100 + length + C(foreign)&quot;, data=data
+).fit(cov_type=&quot;HC1&quot;)
+
+print(m1.summary())
+print(m2.summary())
+print(&quot;Weight100:&quot;, m3.params[&quot;weight100&quot;])
+print(&quot;95% CI:&quot;, m2.conf_int().loc[&quot;weight&quot;].tolist())
+
+plt.scatter(data[&quot;weight&quot;], data[&quot;price&quot;], alpha=0.7)
+plt.xlabel(&quot;Weight (lbs)&quot;)
+plt.ylabel(&quot;Price (USD)&quot;)
+plt.title(&quot;1978 automobile sample&quot;)
+plt.tight_layout()
+plt.show()</code></pre>
+<p>Stata的vce(robust)与Python的HC1通常可对照，但要核对虚拟变量编码、软件版本和完整案例样本。<strong>本次没有实际运行上述两套程序，不展示未经核实的回归系数或p值。</strong></p>
+</section><section><h2>七、怎样解释结果？</h2>
+<p>可以写：“在1978年汽车教学样本中，价格与重量呈正向线性关联；控制车身长度与产地分类后，报告重量系数、HC1稳健标准误及95%置信区间。”只有运行后才能补入具体估计值。不能写“增加重量提高售价”，因为品牌、配置与车型定位等因素可能同时影响重量和价格，控制length和foreign不能证明混杂已被消除。</p>
+</section><section><h2>八、三个常见误区</h2>
+<ul>
+<li><strong>先跑回归再找问题</strong>：容易产生选择性报告，应事先说明研究问题与主要模型。</li>
+<li><strong>控制变量越多越好</strong>：错误控制中介变量或碰撞变量也可能引入偏差。</li>
+<li><strong>p值小就是因果证据</strong>：统计显著性不能替代研究设计，也不等于经济重要性。</li>
+</ul>
+</section><section><h2>九、今日练习与参考答案</h2>
+<p><strong>概念题：</strong> 一篇论文只报告“weight系数显著为正”，没有说明样本、控制变量与识别假设，它缺少什么？</p>
+<p><strong>答案：</strong> 缺少研究对象、目标参数、数据口径、样本筛选、模型设定、标准误及识别论证。仅凭显著性无法推出因果关系。</p>
+<p><strong>实操题：</strong> 将weight改为weight100=weight/100，保持样本及其他控制变量不变，新系数和p值应如何变化？</p>
+<p><strong>答案：</strong> 新系数为原weight系数的100倍，表示每100磅对应的条件预测价格差异；t统计量绝对值和p值不变。用Stata与Python运行并核对。</p>
+</section><section><h2>十、知识卡片与下一课</h2>
+<p><strong>研究主线：</strong> 问题与估计目标决定数据和模型；数据质量决定分析基础；识别假设决定因果解释边界；透明报告与可运行代码保证研究可复核。</p>
+<p>数据来源：<a href="https://www.stata-press.com/data/r19/auto.dta">Stata官方auto.dta</a>；<a href="https://www.stata.com/links/stata-basics/example-datasets/">Stata示例数据说明</a>；<a href="https://www.statsmodels.org/stable/generated/statsmodels.regression.linear_model.OLS.html">statsmodels OLS文档</a>。</p>
+<p><strong>已完成第1章·第5节，全课程第5/120课。下一讲：第1章·第6节《Stata基础操作与数据分析》。</strong></p></section><nav><a href="01-04.html">← 第4课</a><a href="../">返回课程目录</a><a href="01-06.html">第6课 →</a></nav></main><footer>计量经济学120天系统课程 · 全课程第5课 · 公开课程完整讲义</footer></body></html>

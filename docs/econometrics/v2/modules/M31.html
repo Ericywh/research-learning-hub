@@ -1,0 +1,35 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="course-revision" content="2026-10-27-v2"><title>M31 · 精确与模糊RDD局部识别</title><link rel="stylesheet" href="../course.css"><script defer src="../course.js"></script></head><body><header><a href="../">← 36模块主线</a><a href="../mapping.html">原120课映射</a></header><main><div class="hero"><div class="eyebrow">WEEK 6 / M31</div><h1>M31 · 精确与模糊RDD局部识别</h1><p class="meta">先修：M15,M18 · 核心讲义v1 · 建议45分钟，实验及延伸另计</p></div><nav class="toc"><a href="#s1">推导</a><a href="#s2">前提</a><a href="#s3">图示</a><a href="#s4">代码</a><a href="#s5">练习</a><a href="#s6">验收</a><a href="#s7">映射</a></nav><section class="paper" id="s1"><h2>1 · 核心问题与推导</h2><p>精确RDD由运行变量越过阈值决定处理。潜在结果条件均值在阈值处连续，使结果左右极限跳跃可归于处理，不能用全样本左右均值差替代。局部线性回归允许两侧斜率不同，以带宽限定邻域并用三角核加权。模糊RDD把结果跳跃除以接受处理概率跳跃，除连续性还需排他、单调及非零第一阶段等限制。局部Wald解释对应阈值附近的依从者。</p></section><section class="paper" id="s2"><h2>2 · 公式与统计前提</h2><div class="formula">τ_FRD=Δ_c E(Y|R)/Δ_c E(D|R)</div><p>效应局部识别，不能自动推广全体；弱第一阶段与全局高次多项式都会造成不稳定。</p></section><section class="paper" id="s3"><h2>3 · 图示与研究含义</h2><div class="diagram"><svg viewBox="0 0 680 100" role="img" aria-label="从识别到推断的学习路径"><title>识别先于估计，推断依赖统计条件</title><g fill="#173e49" font-size="20"><text x="20" y="55">目标量</text><text x="160" y="55">识别假设</text><text x="335" y="55">估计/优化</text><text x="520" y="55">方差与检验</text></g><path d="M95 50H145M255 50H320M445 50H505" stroke="#b98c3b" stroke-width="3"/></svg></div><p>图为概念示意；数值结论以运行代码和明确的数据来源为准。</p></section><section class="paper" id="s4"><h2>4 · 可复现实验：Stata与Python</h2><p>数据性质：固定种子的随机教学模拟，非真实研究数据。两种软件随机流不同，不要求逐行结果相同。Python已运行状态见<a href="../validation.json">核验记录</a>；Stata尚未运行验证。</p><details><summary>Python · 展开代码</summary><p><a download href="../labs/rdd.py">下载完整脚本</a></p><button type="button" data-copy>复制代码</button><pre><code># Teaching experiment, synthetic data unless explicitly stated. Seed 20261027.
+import numpy as np
+import statsmodels.api as sm
+rng=np.random.default_rng(20261027);n=12000
+r=rng.uniform(-1,1,n);above=(r&gt;=0).astype(int)
+d=rng.binomial(1,.2+.5*above)
+y=1+2*d+.6*r+.3*above*r+rng.normal(size=n)
+for h in [.2,.4,.6]:
+    keep=abs(r)&lt;h;rr=r[keep];aa=above[keep]
+    X=np.column_stack([np.ones(keep.sum()),aa,rr,aa*rr]);w=1-abs(rr)/h
+    fy=sm.WLS(y[keep],X,weights=w).fit(cov_type=&#x27;HC1&#x27;)
+    fd=sm.WLS(d[keep],X,weights=w).fit(cov_type=&#x27;HC1&#x27;)
+    print(&#x27;h&#x27;,h,&#x27;n&#x27;,keep.sum(),&#x27;outcome jump&#x27;,fy.params[1],&#x27;treatment jump&#x27;,fd.params[1],&#x27;fuzzy ratio&#x27;,fy.params[1]/fd.params[1])
+print(&#x27;Local-linear point estimates; not CCT robust bias-corrected intervals or density tests&#x27;)
+</code></pre></details><details><summary>Stata · 展开代码</summary><p><a download href="../labs/rdd.do">下载完整脚本</a></p><button type="button" data-copy>复制代码</button><pre><code>version 17.0
+clear all
+set more off
+set seed 20261027
+* Synthetic teaching data. Stata and NumPy RNG streams differ.
+set obs 12000
+gen double r=runiform(-1,1)
+gen byte above=r&gt;=0
+gen byte d=runiform()&lt;(.2+.5*above)
+gen double y=1+2*d+.6*r+.3*above*r+rnormal()
+foreach h in .2 .4 .6 {
+    gen double w=1-abs(r)/`h&#x27; if abs(r)&lt;`h&#x27;
+    regress y i.above##c.r [aw=w] if abs(r)&lt;`h&#x27;, vce(robust)
+    scalar jump_y=_b[1.above]
+    regress d i.above##c.r [aw=w] if abs(r)&lt;`h&#x27;, vce(robust)
+    display &quot;Fuzzy local Wald = &quot; jump_y/_b[1.above]
+    drop w
+}
+* Point-estimate demonstration, not CCT intervals or density manipulation test.
+* For a separate formal analysis install rdrobust and rddensity, record versions.
+</code></pre></details></section><section class="paper" id="s5"><h2>5 · 专属练习与参考答案</h2><p>结果跳跃0.9、处理率跳跃0.3，效应多少？</p><details><summary>展开答案与依据</summary><p>比值3，在附加条件下是阈值附近依从者效应，不自动是总体ATE。</p></details></section><section class="paper" id="s6"><h2>6 · 学习验收</h2><p>独立解释本模块公式中的随机对象、目标量与关键条件；运行实验，改变一个前提并说明结果为何改变。只阅读或运行命令不等于掌握。</p><label><input type="checkbox" data-module-check="M31"> 已完成 M31 的推导、实验与练习</label></section><section class="paper" id="s7"><h2>7 · 原120课映射与资料</h2><p>原课编号、标题与历史授课日期保留。下列为主题映射，合并模块并不表示每节旧课均已独立重写。</p><a class="maplink" href="../../lessons/04-09.html">原课 04-09</a><a class="maplink" href="../../lessons/04-10.html">原课 04-10</a><a class="maplink" href="../../lessons/05-08.html">原课 05-08</a><p><a href="../review.html">评审回应与修订范围</a> · <a href="../mapping.html">完整120课映射</a> · <a href="../sources.html">原始文献与软件文档</a></p></section><nav class="nav"><a href="M30.html">← 前一模块</a><a href="M32.html">后一模块 →</a></nav></main><footer>统计条件与识别假设优先于显著性 · 2026-10-27修订</footer></body></html>

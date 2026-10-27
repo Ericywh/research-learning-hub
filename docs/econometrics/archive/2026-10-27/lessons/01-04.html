@@ -1,0 +1,133 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>第1章·第4节｜期望、方差、协方差、标准误、假设检验和p值</title><meta name="description" content="计量经济学120天第4课：统计推断六个核心概念、Stata和Python双软件实操及练习答案"><style>body{margin:0;background:#f7f8f6;color:#243c49;font:15px/1.85 system-ui,"Noto Sans SC",sans-serif}header,main,footer{max-width:980px;margin:auto;padding:16px}header{display:flex;gap:24px;flex-wrap:wrap}a{color:#176e68}h1{font-size:clamp(25px,4vw,36px);line-height:1.4}h2{font-size:21px;color:#1b5550}.hero{background:#e8f3ee;border-radius:15px;padding:28px;margin:15px 0 24px}section{background:white;border:1px solid #dde7e6;border-radius:13px;padding:22px;margin:16px 0}.muted,.note{font-size:13px;color:#667e85}.formula{background:#f1f6f5;border-radius:8px;padding:17px;text-align:center;font-size:19px;overflow-x:auto}pre{background:#192d3b;color:#e5f1f5;overflow-x:auto;padding:18px;border-radius:9px;font:12px/1.8 monospace}details{border:1px solid #dde7e6;border-radius:8px;padding:10px;margin:10px 0}summary{cursor:pointer;font-weight:650}svg{max-width:100%;height:auto}nav{display:flex;gap:10px;flex-wrap:wrap}nav a{font-size:12px}footer{font-size:13px;color:#637982}@media(max-width:650px){section{padding:16px}.hero{padding:18px}main{padding:10px}}</style>
+
+
+<link rel="stylesheet" href="../course-theme.css?v=20261025-3"><script defer src="../course-theme.js?v=20261025-3"></script><script>window.MathJax={tex:{inlineMath:[['\\(','\\)'],['<body><header><a href="../../study/#courses">← 学习中心</a><a href="../">120节课程目录</a></header><main><div class="hero"><small>CHAPTER 01 · LESSON 04 / 120</small><h1>期望、方差、协方差、标准误、假设检验和p值</h1><p>第一章·第4节｜全课程第4课｜2026年10月10日｜10—15分钟</p><p><strong>核心问题：</strong>样本均价约6165美元，能否认为总体均价显著不同于6000美元？</p><p class="muted">上一讲：截面、时间序列和面板数据；下一讲：完整计量研究流程</p></div><nav><a href="#intro">1</a><a href="#concepts">2</a><a href="#formula">3</a><a href="#data">4</a><a href="#visual">5</a><a href="#stata">6</a><a href="#python">7</a><a href="#pitfalls">8</a><a href="#quiz">9</a></nav><section id="intro"><h2>一、研究问题与统计直觉</h2><p>第1课我们观察到，1978年汽车数据中价格的样本均值约为6165美元。现在假设研究者想检验“相关汽车总体的平均价格是否为6000美元”。样本均值与6000之间相差约165美元，但单看差额无法判断证据强弱：如果价格本身差异很大，均值会有抽样波动；如果样本容量足够大，均值又可能估计得较精确。由此引出六个概念：期望描述理论中心，方差描述分散程度，协方差描述共同变化，标准误描述估计量的抽样波动，假设检验提出可检验的统计命题，p值则衡量数据在原假设下有多极端。</p><p>本节仍使用Stata官方1978 Automobile Data，重点不是背定义，而是把它们串成一次规范的统计分析。</p></section>
+<section id="concepts"><h2>二、六个概念的分工</h2><p><strong>期望 E(X)</strong> 是随机变量的理论平均水平；样本均值是利用观察值估计期望的统计量。<strong>方差 Var(X)</strong> 描述随机变量围绕期望的平方偏离，标准差是方差的平方根。<strong>协方差 Cov(X,Y)</strong> 描述两个变量相对于各自均值的共同变化方向：正值表示倾向同向变化，负值表示倾向反向变化，但不意味着因果关系。</p><p><strong>标准误（SE）</strong> 与标准差不同：标准差描述单个观测值的分散，标准误描述某个估计量在重复抽样时的变化。<strong>假设检验</strong> 从原假设H₀出发，依据统计量及其在H₀下的分布判断数据是否与之相容。<strong>p值</strong> 是在H₀和模型假设成立时，观察到当前或更极端检验统计量的概率；它不是H₀为真的概率。</p></section>
+<section id="formula"><h2>三、两个公式组与成立条件</h2><div class="formula">E(X)=μ；Var(X)=E[(X−μ)²]；<br>Cov(X,Y)=E[(X−μₓ)(Y−μᵧ)]</div><p>期望要求相应矩存在，方差与协方差通常要求有限二阶矩。样本方差、样本协方差常用n−1作分母，以在独立同分布抽样条件下估计总体量。</p><div class="formula">SE(x̄)=s/√n；t=(x̄−μ₀)/(s/√n)</div><p>其中s是样本标准差，n是有效观测数，μ₀是原假设给定的均值。简单标准误公式需要独立同分布与有限方差等条件。若总体正态，H₀下t统计量严格服从自由度n−1的t分布；非正态总体通常需要依赖大样本近似。存在聚类或时间依赖时，标准误不能直接照搬。</p></section>
+<section id="data"><h2>四、真实数据与可复核计算</h2><p>本课使用Stata官方 <a href="https://www.stata-press.com/data/r19/auto.dta">auto.dta</a>，为1978年74款汽车的教学截面数据，包含12个原始变量。价格price以美元计，重量weight以磅计。公开Stata输出显示价格样本均值为6165.257美元，样本标准差为2949.496美元，样本量74。由这些公开的四舍五入汇总统计可算出：均值标准误约342.872美元。</p><p>设H₀：μ=6000，H₁：μ≠6000，显著性水平α=0.05。手算t≈(6165.257−6000)/342.872≈0.482，自由度73，双侧p≈0.631。按t分布计算的95%置信区间约为[5482，6849]美元。由于p&gt;0.05且6000落在区间内，在上述统计模型下<strong>不能拒绝H₀</strong>，但不能据此证明总体均值恰好等于6000。</p><p class="note">来源：<a href="https://sscc.wisc.edu/sscc/pubs/stata_intro/statistics.html">威斯康星大学社会科学计算中心公开Stata输出</a>；<a href="https://www.stata.com/links/stata-basics/example-datasets/">Stata官方数据说明</a>。p值与区间是根据公开汇总统计计算的近似数值，并非本次实际运行Stata或Python所得的日志。</p></section>
+<section id="visual"><h2>五、95%区间的数值示意</h2><svg viewBox="0 0 700 190" width="700" role="img" aria-label="95% t置信区间从5482到6849，样本均值6165，原假设6000在区间内"><rect width="700" height="190" rx="12" fill="#f1f7f5"/><line x1="70" y1="135" x2="630" y2="135" stroke="#627d83" stroke-width="2"/><line x1="350" y1="48" x2="350" y2="137" stroke="#b68c54" stroke-dasharray="5 5" stroke-width="2"/><text x="350" y="40" font-size="13" text-anchor="middle" fill="#996e36">H₀: 6000</text><line x1="205" y1="93" x2="588" y2="93" stroke="#197d70" stroke-width="7" stroke-linecap="round"/><circle cx="396" cy="93" r="8" fill="#24536e"/><g fill="#2b6863" font-size="13" text-anchor="middle"><text x="205" y="76">5482</text><text x="588" y="76">6849</text><text x="396" y="76">6165</text><text x="70" y="155">5000</text><text x="350" y="155">6000</text><text x="630" y="155">7000</text></g></svg><p class="note">图中坐标与区间端点按比例绘制；这是由已公开汇总统计计算的教学图，不是软件运行截图。95%置信区间的含义是：在抽样模型与区间构造方法有效时，重复抽样形成的区间长期约有95%覆盖真实固定参数；不是本次参数有95%概率位于区间内。</p><p>必须强调，这74条车型记录未被证明是从某个明确总体随机抽取的概率样本。因此这里的显著性检验是<strong>在假定抽样模型成立时的教学示范</strong>，不能直接推广为1978年所有汽车的总体结论，也不能作因果解释。</p></section>
+<section id="stata"><h2>六、Stata代码：同一份数据</h2><pre><code>clear all
+use "https://www.stata-press.com/data/r19/auto.dta", clear
+describe price weight
+summarize price weight
+summarize price
+display "SE(mean) = " r(sd)/sqrt(r(N))
+correlate price weight, covariance
+ttest price == 6000
+ci means price
+histogram price, normal title("1978 automobile prices")</code></pre><p>summarize报告样本均值与标准差；协方差命令计算价格与重量共同变化；ttest对总体均值6000执行双侧单样本检验；ci means给出均值置信区间。histogram绘制真实样本价格分布，叠加的正态曲线只是参照，不证明价格服从正态分布。</p></section>
+<section id="python"><h2>七、Python代码：核对同一个检验</h2><p>安装依赖：<code>pip install pandas numpy scipy matplotlib</code></p><pre><code>import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from scipy import stats
+
+url = "https://www.stata-press.com/data/r19/auto.dta"
+df = pd.read_stata(url, convert_categoricals=False)
+data = df[["price", "weight"]].dropna()
+x = data["price"].to_numpy()
+n = len(x)
+mean = np.mean(x)
+sd = np.std(x, ddof=1)
+se = sd / np.sqrt(n)
+print("n, mean, SD, SE:", n, mean, sd, se)
+print("Sample covariance:", data.cov())
+result = stats.ttest_1samp(x, popmean=6000)
+print("t and p:", result.statistic, result.pvalue)
+ci = stats.t.interval(.95, df=n-1, loc=mean, scale=se)
+print("95% CI:", ci)
+plt.hist(x, bins=12, edgecolor="white")
+plt.axvline(mean, linestyle="--", label="Sample mean")
+plt.axvline(6000, linestyle=":", label="Null mean")
+plt.xlabel("Price (USD)")
+plt.ylabel("Count")
+plt.legend()
+plt.show()</code></pre><p>这里ddof=1确保Python使用与Stata相同的样本标准差约定。SciPy单样本t检验的默认备择假设为双侧；若源数据与缺失处理一致，两种软件应给出一致的t值、p值与置信区间。</p></section>
+<section id="pitfalls"><h2>八、常见误区</h2><p><strong>误区一：</strong>把标准差2949美元和均值标准误343美元当成同一个指标。前者描述车型价格差异，后者在特定抽样假设下描述均值估计的不确定性。</p><p><strong>误区二：</strong>把p≈0.631解释为“原假设有63.1%的概率正确”。p值条件于原假设，并非原假设的后验概率。</p><p><strong>误区三：</strong>把“不能拒绝H₀”解释为“已证明两者相等”。如果研究目的是论证差异足够小，需要预先设定实质性容许差异并采用适当的等效性分析。</p></section>
+<section id="quiz"><h2>九、今日两道练习与答案</h2><details><summary>概念题：标准差和标准误分别描述什么？为什么p值不是原假设为真的概率？</summary><p>标准差描述观测值的离散程度，标准误描述估计量在重复抽样中的变化。p值的定义是P(数据至少同样极端 | H₀及模型)，不是P(H₀ | 数据)；两种条件概率不能互换。</p></details><details><summary>计算题：给定n=74、均值6165.257、标准差2949.496，检验H₀: μ=6000，α=0.05。</summary><p>SE=2949.496/√74≈342.872；t≈0.482；自由度73，双侧p≈0.631。由于p&gt;0.05，不能拒绝H₀；不能说已证明总体均值等于6000。Stata可用ttest price == 6000，Python可用stats.ttest_1samp(x, 6000)复核。</p></details></section>
+</main><footer>计量经济学120天系统课程 · 第4课正式全文归档。统计推断结果均须结合抽样假设解释。</footer></body></html>,'<body><header><a href="../../study/#courses">← 学习中心</a><a href="../">120节课程目录</a></header><main><div class="hero"><small>CHAPTER 01 · LESSON 04 / 120</small><h1>期望、方差、协方差、标准误、假设检验和p值</h1><p>第一章·第4节｜全课程第4课｜2026年10月10日｜10—15分钟</p><p><strong>核心问题：</strong>样本均价约6165美元，能否认为总体均价显著不同于6000美元？</p><p class="muted">上一讲：截面、时间序列和面板数据；下一讲：完整计量研究流程</p></div><nav><a href="#intro">1</a><a href="#concepts">2</a><a href="#formula">3</a><a href="#data">4</a><a href="#visual">5</a><a href="#stata">6</a><a href="#python">7</a><a href="#pitfalls">8</a><a href="#quiz">9</a></nav><section id="intro"><h2>一、研究问题与统计直觉</h2><p>第1课我们观察到，1978年汽车数据中价格的样本均值约为6165美元。现在假设研究者想检验“相关汽车总体的平均价格是否为6000美元”。样本均值与6000之间相差约165美元，但单看差额无法判断证据强弱：如果价格本身差异很大，均值会有抽样波动；如果样本容量足够大，均值又可能估计得较精确。由此引出六个概念：期望描述理论中心，方差描述分散程度，协方差描述共同变化，标准误描述估计量的抽样波动，假设检验提出可检验的统计命题，p值则衡量数据在原假设下有多极端。</p><p>本节仍使用Stata官方1978 Automobile Data，重点不是背定义，而是把它们串成一次规范的统计分析。</p></section>
+<section id="concepts"><h2>二、六个概念的分工</h2><p><strong>期望 E(X)</strong> 是随机变量的理论平均水平；样本均值是利用观察值估计期望的统计量。<strong>方差 Var(X)</strong> 描述随机变量围绕期望的平方偏离，标准差是方差的平方根。<strong>协方差 Cov(X,Y)</strong> 描述两个变量相对于各自均值的共同变化方向：正值表示倾向同向变化，负值表示倾向反向变化，但不意味着因果关系。</p><p><strong>标准误（SE）</strong> 与标准差不同：标准差描述单个观测值的分散，标准误描述某个估计量在重复抽样时的变化。<strong>假设检验</strong> 从原假设H₀出发，依据统计量及其在H₀下的分布判断数据是否与之相容。<strong>p值</strong> 是在H₀和模型假设成立时，观察到当前或更极端检验统计量的概率；它不是H₀为真的概率。</p></section>
+<section id="formula"><h2>三、两个公式组与成立条件</h2><div class="formula">E(X)=μ；Var(X)=E[(X−μ)²]；<br>Cov(X,Y)=E[(X−μₓ)(Y−μᵧ)]</div><p>期望要求相应矩存在，方差与协方差通常要求有限二阶矩。样本方差、样本协方差常用n−1作分母，以在独立同分布抽样条件下估计总体量。</p><div class="formula">SE(x̄)=s/√n；t=(x̄−μ₀)/(s/√n)</div><p>其中s是样本标准差，n是有效观测数，μ₀是原假设给定的均值。简单标准误公式需要独立同分布与有限方差等条件。若总体正态，H₀下t统计量严格服从自由度n−1的t分布；非正态总体通常需要依赖大样本近似。存在聚类或时间依赖时，标准误不能直接照搬。</p></section>
+<section id="data"><h2>四、真实数据与可复核计算</h2><p>本课使用Stata官方 <a href="https://www.stata-press.com/data/r19/auto.dta">auto.dta</a>，为1978年74款汽车的教学截面数据，包含12个原始变量。价格price以美元计，重量weight以磅计。公开Stata输出显示价格样本均值为6165.257美元，样本标准差为2949.496美元，样本量74。由这些公开的四舍五入汇总统计可算出：均值标准误约342.872美元。</p><p>设H₀：μ=6000，H₁：μ≠6000，显著性水平α=0.05。手算t≈(6165.257−6000)/342.872≈0.482，自由度73，双侧p≈0.631。按t分布计算的95%置信区间约为[5482，6849]美元。由于p&gt;0.05且6000落在区间内，在上述统计模型下<strong>不能拒绝H₀</strong>，但不能据此证明总体均值恰好等于6000。</p><p class="note">来源：<a href="https://sscc.wisc.edu/sscc/pubs/stata_intro/statistics.html">威斯康星大学社会科学计算中心公开Stata输出</a>；<a href="https://www.stata.com/links/stata-basics/example-datasets/">Stata官方数据说明</a>。p值与区间是根据公开汇总统计计算的近似数值，并非本次实际运行Stata或Python所得的日志。</p></section>
+<section id="visual"><h2>五、95%区间的数值示意</h2><svg viewBox="0 0 700 190" width="700" role="img" aria-label="95% t置信区间从5482到6849，样本均值6165，原假设6000在区间内"><rect width="700" height="190" rx="12" fill="#f1f7f5"/><line x1="70" y1="135" x2="630" y2="135" stroke="#627d83" stroke-width="2"/><line x1="350" y1="48" x2="350" y2="137" stroke="#b68c54" stroke-dasharray="5 5" stroke-width="2"/><text x="350" y="40" font-size="13" text-anchor="middle" fill="#996e36">H₀: 6000</text><line x1="205" y1="93" x2="588" y2="93" stroke="#197d70" stroke-width="7" stroke-linecap="round"/><circle cx="396" cy="93" r="8" fill="#24536e"/><g fill="#2b6863" font-size="13" text-anchor="middle"><text x="205" y="76">5482</text><text x="588" y="76">6849</text><text x="396" y="76">6165</text><text x="70" y="155">5000</text><text x="350" y="155">6000</text><text x="630" y="155">7000</text></g></svg><p class="note">图中坐标与区间端点按比例绘制；这是由已公开汇总统计计算的教学图，不是软件运行截图。95%置信区间的含义是：在抽样模型与区间构造方法有效时，重复抽样形成的区间长期约有95%覆盖真实固定参数；不是本次参数有95%概率位于区间内。</p><p>必须强调，这74条车型记录未被证明是从某个明确总体随机抽取的概率样本。因此这里的显著性检验是<strong>在假定抽样模型成立时的教学示范</strong>，不能直接推广为1978年所有汽车的总体结论，也不能作因果解释。</p></section>
+<section id="stata"><h2>六、Stata代码：同一份数据</h2><pre><code>clear all
+use "https://www.stata-press.com/data/r19/auto.dta", clear
+describe price weight
+summarize price weight
+summarize price
+display "SE(mean) = " r(sd)/sqrt(r(N))
+correlate price weight, covariance
+ttest price == 6000
+ci means price
+histogram price, normal title("1978 automobile prices")</code></pre><p>summarize报告样本均值与标准差；协方差命令计算价格与重量共同变化；ttest对总体均值6000执行双侧单样本检验；ci means给出均值置信区间。histogram绘制真实样本价格分布，叠加的正态曲线只是参照，不证明价格服从正态分布。</p></section>
+<section id="python"><h2>七、Python代码：核对同一个检验</h2><p>安装依赖：<code>pip install pandas numpy scipy matplotlib</code></p><pre><code>import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from scipy import stats
+
+url = "https://www.stata-press.com/data/r19/auto.dta"
+df = pd.read_stata(url, convert_categoricals=False)
+data = df[["price", "weight"]].dropna()
+x = data["price"].to_numpy()
+n = len(x)
+mean = np.mean(x)
+sd = np.std(x, ddof=1)
+se = sd / np.sqrt(n)
+print("n, mean, SD, SE:", n, mean, sd, se)
+print("Sample covariance:", data.cov())
+result = stats.ttest_1samp(x, popmean=6000)
+print("t and p:", result.statistic, result.pvalue)
+ci = stats.t.interval(.95, df=n-1, loc=mean, scale=se)
+print("95% CI:", ci)
+plt.hist(x, bins=12, edgecolor="white")
+plt.axvline(mean, linestyle="--", label="Sample mean")
+plt.axvline(6000, linestyle=":", label="Null mean")
+plt.xlabel("Price (USD)")
+plt.ylabel("Count")
+plt.legend()
+plt.show()</code></pre><p>这里ddof=1确保Python使用与Stata相同的样本标准差约定。SciPy单样本t检验的默认备择假设为双侧；若源数据与缺失处理一致，两种软件应给出一致的t值、p值与置信区间。</p></section>
+<section id="pitfalls"><h2>八、常见误区</h2><p><strong>误区一：</strong>把标准差2949美元和均值标准误343美元当成同一个指标。前者描述车型价格差异，后者在特定抽样假设下描述均值估计的不确定性。</p><p><strong>误区二：</strong>把p≈0.631解释为“原假设有63.1%的概率正确”。p值条件于原假设，并非原假设的后验概率。</p><p><strong>误区三：</strong>把“不能拒绝H₀”解释为“已证明两者相等”。如果研究目的是论证差异足够小，需要预先设定实质性容许差异并采用适当的等效性分析。</p></section>
+<section id="quiz"><h2>九、今日两道练习与答案</h2><details><summary>概念题：标准差和标准误分别描述什么？为什么p值不是原假设为真的概率？</summary><p>标准差描述观测值的离散程度，标准误描述估计量在重复抽样中的变化。p值的定义是P(数据至少同样极端 | H₀及模型)，不是P(H₀ | 数据)；两种条件概率不能互换。</p></details><details><summary>计算题：给定n=74、均值6165.257、标准差2949.496，检验H₀: μ=6000，α=0.05。</summary><p>SE=2949.496/√74≈342.872；t≈0.482；自由度73，双侧p≈0.631。由于p&gt;0.05，不能拒绝H₀；不能说已证明总体均值等于6000。Stata可用ttest price == 6000，Python可用stats.ttest_1samp(x, 6000)复核。</p></details></section>
+</main><footer>计量经济学120天系统课程 · 第4课正式全文归档。统计推断结果均须结合抽样假设解释。</footer></body></html>]],displayMath:[['\\[','\\]'],['$','$']]},svg:{fontCache:'global'}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script></head><body><header><a href="../../study/#courses">← 学习中心</a><a href="../">120节课程目录</a></header><main><div class="hero"><small>CHAPTER 01 · LESSON 04 / 120</small><h1>期望、方差、协方差、标准误、假设检验和p值</h1><p>第一章·第4节｜全课程第4课｜2026年10月10日｜10—15分钟</p><p><strong>核心问题：</strong>样本均价约6165美元，能否认为总体均价显著不同于6000美元？</p><p class="muted">上一讲：截面、时间序列和面板数据；下一讲：完整计量研究流程</p></div><nav><a href="#intro">1</a><a href="#concepts">2</a><a href="#formula">3</a><a href="#data">4</a><a href="#visual">5</a><a href="#stata">6</a><a href="#python">7</a><a href="#pitfalls">8</a><a href="#quiz">9</a></nav><section id="intro"><h2>一、研究问题与统计直觉</h2><p>第1课我们观察到，1978年汽车数据中价格的样本均值约为6165美元。现在假设研究者想检验“相关汽车总体的平均价格是否为6000美元”。样本均值与6000之间相差约165美元，但单看差额无法判断证据强弱：如果价格本身差异很大，均值会有抽样波动；如果样本容量足够大，均值又可能估计得较精确。由此引出六个概念：期望描述理论中心，方差描述分散程度，协方差描述共同变化，标准误描述估计量的抽样波动，假设检验提出可检验的统计命题，p值则衡量数据在原假设下有多极端。</p><p>本节仍使用Stata官方1978 Automobile Data，重点不是背定义，而是把它们串成一次规范的统计分析。</p></section>
+<section id="concepts"><h2>二、六个概念的分工</h2><p><strong>期望 E(X)</strong> 是随机变量的理论平均水平；样本均值是利用观察值估计期望的统计量。<strong>方差 Var(X)</strong> 描述随机变量围绕期望的平方偏离，标准差是方差的平方根。<strong>协方差 Cov(X,Y)</strong> 描述两个变量相对于各自均值的共同变化方向：正值表示倾向同向变化，负值表示倾向反向变化，但不意味着因果关系。</p><p><strong>标准误（SE）</strong> 与标准差不同：标准差描述单个观测值的分散，标准误描述某个估计量在重复抽样时的变化。<strong>假设检验</strong> 从原假设H₀出发，依据统计量及其在H₀下的分布判断数据是否与之相容。<strong>p值</strong> 是在H₀和模型假设成立时，观察到当前或更极端检验统计量的概率；它不是H₀为真的概率。</p></section>
+<section id="formula"><h2>三、两个公式组与成立条件</h2><div class="formula">E(X)=μ；Var(X)=E[(X−μ)²]；<br>Cov(X,Y)=E[(X−μₓ)(Y−μᵧ)]</div><p>期望要求相应矩存在，方差与协方差通常要求有限二阶矩。样本方差、样本协方差常用n−1作分母，以在独立同分布抽样条件下估计总体量。</p><div class="formula">SE(x̄)=s/√n；t=(x̄−μ₀)/(s/√n)</div><p>其中s是样本标准差，n是有效观测数，μ₀是原假设给定的均值。简单标准误公式需要独立同分布与有限方差等条件。若总体正态，H₀下t统计量严格服从自由度n−1的t分布；非正态总体通常需要依赖大样本近似。存在聚类或时间依赖时，标准误不能直接照搬。</p></section>
+<section id="data"><h2>四、真实数据与可复核计算</h2><p>本课使用Stata官方 <a href="https://www.stata-press.com/data/r19/auto.dta">auto.dta</a>，为1978年74款汽车的教学截面数据，包含12个原始变量。价格price以美元计，重量weight以磅计。公开Stata输出显示价格样本均值为6165.257美元，样本标准差为2949.496美元，样本量74。由这些公开的四舍五入汇总统计可算出：均值标准误约342.872美元。</p><p>设H₀：μ=6000，H₁：μ≠6000，显著性水平α=0.05。手算t≈(6165.257−6000)/342.872≈0.482，自由度73，双侧p≈0.631。按t分布计算的95%置信区间约为[5482，6849]美元。由于p&gt;0.05且6000落在区间内，在上述统计模型下<strong>不能拒绝H₀</strong>，但不能据此证明总体均值恰好等于6000。</p><p class="note">来源：<a href="https://sscc.wisc.edu/sscc/pubs/stata_intro/statistics.html">威斯康星大学社会科学计算中心公开Stata输出</a>；<a href="https://www.stata.com/links/stata-basics/example-datasets/">Stata官方数据说明</a>。p值与区间是根据公开汇总统计计算的近似数值，并非本次实际运行Stata或Python所得的日志。</p></section>
+<section id="visual"><h2>五、95%区间的数值示意</h2><svg viewBox="0 0 700 190" width="700" role="img" aria-label="95% t置信区间从5482到6849，样本均值6165，原假设6000在区间内"><rect width="700" height="190" rx="12" fill="#f1f7f5"/><line x1="70" y1="135" x2="630" y2="135" stroke="#627d83" stroke-width="2"/><line x1="350" y1="48" x2="350" y2="137" stroke="#b68c54" stroke-dasharray="5 5" stroke-width="2"/><text x="350" y="40" font-size="13" text-anchor="middle" fill="#996e36">H₀: 6000</text><line x1="205" y1="93" x2="588" y2="93" stroke="#197d70" stroke-width="7" stroke-linecap="round"/><circle cx="396" cy="93" r="8" fill="#24536e"/><g fill="#2b6863" font-size="13" text-anchor="middle"><text x="205" y="76">5482</text><text x="588" y="76">6849</text><text x="396" y="76">6165</text><text x="70" y="155">5000</text><text x="350" y="155">6000</text><text x="630" y="155">7000</text></g></svg><p class="note">图中坐标与区间端点按比例绘制；这是由已公开汇总统计计算的教学图，不是软件运行截图。95%置信区间的含义是：在抽样模型与区间构造方法有效时，重复抽样形成的区间长期约有95%覆盖真实固定参数；不是本次参数有95%概率位于区间内。</p><p>必须强调，这74条车型记录未被证明是从某个明确总体随机抽取的概率样本。因此这里的显著性检验是<strong>在假定抽样模型成立时的教学示范</strong>，不能直接推广为1978年所有汽车的总体结论，也不能作因果解释。</p></section>
+<section id="stata"><h2>六、Stata代码：同一份数据</h2><pre><code>clear all
+use "https://www.stata-press.com/data/r19/auto.dta", clear
+describe price weight
+summarize price weight
+summarize price
+display "SE(mean) = " r(sd)/sqrt(r(N))
+correlate price weight, covariance
+ttest price == 6000
+ci means price
+histogram price, normal title("1978 automobile prices")</code></pre><p>summarize报告样本均值与标准差；协方差命令计算价格与重量共同变化；ttest对总体均值6000执行双侧单样本检验；ci means给出均值置信区间。histogram绘制真实样本价格分布，叠加的正态曲线只是参照，不证明价格服从正态分布。</p></section>
+<section id="python"><h2>七、Python代码：核对同一个检验</h2><p>安装依赖：<code>pip install pandas numpy scipy matplotlib</code></p><pre><code>import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from scipy import stats
+
+url = "https://www.stata-press.com/data/r19/auto.dta"
+df = pd.read_stata(url, convert_categoricals=False)
+data = df[["price", "weight"]].dropna()
+x = data["price"].to_numpy()
+n = len(x)
+mean = np.mean(x)
+sd = np.std(x, ddof=1)
+se = sd / np.sqrt(n)
+print("n, mean, SD, SE:", n, mean, sd, se)
+print("Sample covariance:", data.cov())
+result = stats.ttest_1samp(x, popmean=6000)
+print("t and p:", result.statistic, result.pvalue)
+ci = stats.t.interval(.95, df=n-1, loc=mean, scale=se)
+print("95% CI:", ci)
+plt.hist(x, bins=12, edgecolor="white")
+plt.axvline(mean, linestyle="--", label="Sample mean")
+plt.axvline(6000, linestyle=":", label="Null mean")
+plt.xlabel("Price (USD)")
+plt.ylabel("Count")
+plt.legend()
+plt.show()</code></pre><p>这里ddof=1确保Python使用与Stata相同的样本标准差约定。SciPy单样本t检验的默认备择假设为双侧；若源数据与缺失处理一致，两种软件应给出一致的t值、p值与置信区间。</p></section>
+<section id="pitfalls"><h2>八、常见误区</h2><p><strong>误区一：</strong>把标准差2949美元和均值标准误343美元当成同一个指标。前者描述车型价格差异，后者在特定抽样假设下描述均值估计的不确定性。</p><p><strong>误区二：</strong>把p≈0.631解释为“原假设有63.1%的概率正确”。p值条件于原假设，并非原假设的后验概率。</p><p><strong>误区三：</strong>把“不能拒绝H₀”解释为“已证明两者相等”。如果研究目的是论证差异足够小，需要预先设定实质性容许差异并采用适当的等效性分析。</p></section>
+<section id="quiz"><h2>九、今日两道练习与答案</h2><details><summary>概念题：标准差和标准误分别描述什么？为什么p值不是原假设为真的概率？</summary><p>标准差描述观测值的离散程度，标准误描述估计量在重复抽样中的变化。p值的定义是P(数据至少同样极端 | H₀及模型)，不是P(H₀ | 数据)；两种条件概率不能互换。</p></details><details><summary>计算题：给定n=74、均值6165.257、标准差2949.496，检验H₀: μ=6000，α=0.05。</summary><p>SE=2949.496/√74≈342.872；t≈0.482；自由度73，双侧p≈0.631。由于p&gt;0.05，不能拒绝H₀；不能说已证明总体均值等于6000。Stata可用ttest price == 6000，Python可用stats.ttest_1samp(x, 6000)复核。</p></details></section>
+</main><footer>计量经济学120天系统课程 · 第4课正式全文归档。统计推断结果均须结合抽样假设解释。</footer></body></html>

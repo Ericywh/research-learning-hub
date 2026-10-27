@@ -1,0 +1,20 @@
+{
+  "source": "https://www.stata-press.com/data/r19/nlsw88.dta",
+  "sha256": "6c2249c12ec829af1b9c74fa2efb4dda0ce0fc093787939440a38fe3c75aa3c9",
+  "raw_n": 2246,
+  "analysis_n": 2229,
+  "excluded_n": 17,
+  "parameters": {
+    "const": 0.3644591255293862,
+    "grade": 0.0805063171679387,
+    "ttl_exp": 0.030377902555055854,
+    "tenure": 0.012114806347010657
+  },
+  "HC1_SE": {
+    "const": 0.05767338303317456,
+    "grade": 0.004223547306301317,
+    "ttl_exp": 0.002850667051203274,
+    "tenure": 0.002310065937606138
+  },
+  "interpretation": "Observed-data teaching association; not a causal education effect or representative NLS estimate."
+}

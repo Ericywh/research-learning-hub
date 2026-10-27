@@ -1,0 +1,28 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="course-revision" content="2026-10-27-v2"><title>M05 · 交互项、对数与二次项</title><link rel="stylesheet" href="../course.css"><script defer src="../course.js"></script></head><body><header><a href="../">← 36模块主线</a><a href="../mapping.html">原120课映射</a></header><main><div class="hero"><div class="eyebrow">WEEK 1 / M05</div><h1>M05 · 交互项、对数与二次项</h1><p class="meta">先修：M03 · 核心讲义v1 · 建议45分钟，实验及延伸另计</p></div><nav class="toc"><a href="#s1">推导</a><a href="#s2">前提</a><a href="#s3">图示</a><a href="#s4">代码</a><a href="#s5">练习</a><a href="#s6">验收</a><a href="#s7">映射</a></nav><section class="paper" id="s1"><h2>1 · 核心问题与推导</h2><p>含交互项时主效应只表示另一变量取零时的条件斜率。E[y|x,z]=β₀+β₁x+β₂z+β₃xz的x边际效应为β₁+β₃z。二次项的驻点为−β₁/(2β₂)，只有β₂非零且驻点落在支持域内才值得解释。二次曲线没有曲率改变符号的拐点，不能把驻点称为拐点。半对数模型中的精确比例变化是exp(β)−1；将预测对数直接指数还原一般不是条件均值，仍需处理误差指数项。</p></section><section class="paper" id="s2"><h2>2 · 公式与统计前提</h2><div class="formula">∂E[y|x,z]/∂x=β₁+β₃z；x*=−β₁/(2β₂)</div><p>样本范围外的驻点属于外推；交互效应标准误须包含系数协方差。</p></section><section class="paper" id="s3"><h2>3 · 图示与研究含义</h2><div class="diagram"><svg viewBox="0 0 680 210" role="img" aria-label="非线性函数与局部切线示意"><title>Delta方法只在参数邻域进行线性近似</title><path d="M50 175H630M60 190V20M80 170Q390 170 590 30" fill="none" stroke="#176f70" stroke-width="3"/><path d="M240 173L570 82" stroke="#b98c3b" stroke-width="3"/><circle cx="420" cy="123" r="6" fill="#173e49"/><text x="80" y="40" fill="#173e49">曲线g与局部切线（概念示意，非模拟结果）</text></svg></div><p>图为概念示意；数值结论以运行代码和明确的数据来源为准。</p></section><section class="paper" id="s4"><h2>4 · 可复现实验：Stata与Python</h2><p>数据性质：固定种子的随机教学模拟，非真实研究数据。两种软件随机流不同，不要求逐行结果相同。Python已运行状态见<a href="../validation.json">核验记录</a>；Stata尚未运行验证。</p><details><summary>Python · 展开代码</summary><p><a download href="../labs/delta.py">下载完整脚本</a></p><button type="button" data-copy>复制代码</button><pre><code># Teaching experiment, synthetic data unless explicitly stated. Seed 20261027.
+import numpy as np
+import statsmodels.api as sm
+rng=np.random.default_rng(20261027);n=1600
+x=rng.uniform(0,6,n)
+y=1+2*x-.3*x*x+rng.normal(size=n)*(1+.2*x)
+X=np.column_stack([np.ones(n),x,x*x])
+fit=sm.OLS(y,X).fit(cov_type=&#x27;HC1&#x27;)
+b=fit.params;V=fit.cov_params()
+g=-b[1]/(2*b[2]);G=np.array([0,-1/(2*b[2]),b[1]/(2*b[2]**2)])
+se=np.sqrt(G@V@G)
+def target(b):return -b[1]/(2*b[2])
+h=1e-5
+fd=np.array([(target(b+np.eye(3)[j]*h)-target(b-np.eye(3)[j]*h))/(2*h) for j in range(3)])
+assert np.max(abs(G-fd))&lt;1e-5
+print(&#x27;Stationary point, not inflection:&#x27;,g,&#x27;Delta SE:&#x27;,se,&#x27;support:&#x27;,(x.min(),x.max()))
+</code></pre></details><details><summary>Stata · 展开代码</summary><p><a download href="../labs/delta.do">下载完整脚本</a></p><button type="button" data-copy>复制代码</button><pre><code>version 17.0
+clear all
+set more off
+set seed 20261027
+* Synthetic teaching data. Stata and NumPy RNG streams differ.
+set obs 1600
+gen double x=runiform(0,6)
+gen double y=1+2*x-.3*x*x+rnormal()*(1+.2*x)
+regress y c.x##c.x, vce(robust)
+nlcom (stationary: -_b[x]/(2*_b[c.x#c.x]))
+* Stationary point, not an inflection. Check x support and denominator.
+</code></pre></details></section><section class="paper" id="s5"><h2>5 · 专属练习与参考答案</h2><p>β₁=4、β₂=−0.5，x只在0到2之间，能否宣称x=4最优？</p><details><summary>展开答案与依据</summary><p>驻点为4，但在支持域外。可报告区间内斜率与预测，不能宣称观测证据支持该最优点。</p></details></section><section class="paper" id="s6"><h2>6 · 学习验收</h2><p>独立解释本模块公式中的随机对象、目标量与关键条件；运行实验，改变一个前提并说明结果为何改变。只阅读或运行命令不等于掌握。</p><label><input type="checkbox" data-module-check="M05"> 已完成 M05 的推导、实验与练习</label></section><section class="paper" id="s7"><h2>7 · 原120课映射与资料</h2><p>原课编号、标题与历史授课日期保留。下列为主题映射，合并模块并不表示每节旧课均已独立重写。</p><a class="maplink" href="../../lessons/02-09.html">原课 02-09</a><a class="maplink" href="../../lessons/02-10.html">原课 02-10</a><a class="maplink" href="../../lessons/02-11.html">原课 02-11</a><p><a href="../review.html">评审回应与修订范围</a> · <a href="../mapping.html">完整120课映射</a> · <a href="../sources.html">原始文献与软件文档</a></p></section><nav class="nav"><a href="M04.html">← 前一模块</a><a href="M06.html">后一模块 →</a></nav></main><footer>统计条件与识别假设优先于显著性 · 2026-10-27修订</footer></body></html>

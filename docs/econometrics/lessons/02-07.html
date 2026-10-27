@@ -1,81 +1,40 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="course-date" content="2026-10-20"><meta name="description" content="第2章·第7节｜t检验｜全课程第14课历史授课原文归档，含双软件代码与练习答案"><title>第2章·第7节｜t检验</title><link rel="stylesheet" href="../course-theme.css?v=20261027"><script>window.MathJax={tex:{inlineMath:[['\\(','\\)'],['$','$']],displayMath:[['\\[','\\]'],['$$','$$']]},svg:{fontCache:'global'}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script><script defer src="../course-theme.js?v=20261027"></script><style>body{margin:0;background:#f5f8fa;color:#223443;font:16px/1.8 system-ui,"Noto Sans SC",sans-serif}main{max-width:1080px;margin:auto;padding:24px}a{color:#147d82}.hero{padding:32px;background:#17384a;color:#fff;border-radius:18px;margin-bottom:22px}.hero h1,.hero p{color:#fff!important}.paper{padding:25px;background:white;border-radius:13px;margin:17px 0;border:1px solid #dce5eb}.paper h2{color:#264456}.equation{overflow-x:auto;padding:15px;background:#f3f7f8}.codefold{margin:14px 0;border:1px solid #d0dde3;border-radius:9px;overflow:hidden}.codefold summary{padding:12px;background:#ecf3f4;cursor:pointer;color:#244c58}.codefold pre{padding:18px;margin:0;background:#152c3e;color:#f1f7fb;overflow:auto;font:13px/1.7 monospace}.codefold code{color:inherit}.archive-note{font-size:13px;color:#526a75}@media(max-width:650px){main{padding:12px}.paper{padding:19px}}</style></head><body><main><header><a href="../index.html">← 计量经济学120天课程目录</a></header><section class="hero"><h1>第2章·第7节｜t检验</h1><p>全课程第14课 / 共120课 · 原授课日期：2026-10-20 · 10—15分钟</p></section><p class="archive-note">本页根据已授课私人Notion原始讲义归档；代码为可复现示例，未经运行的数值不作实际回归输出。</p><article><p>&lt;callout icon=&quot;📘&quot; color=&quot;green_bg&quot;&gt; <strong>全课程第14课 / 共120课</strong></p>
-<p> 授课日期：2026年10月20日（Asia/Taipei） </p>
-<p>预计学习时间：10—15分钟 &lt;/callout&gt;</p>
-<section class="paper" id="s1"><h2>一、通俗理解</h2>
-<p>上一课区分了OLS点估计、外生性假设和标准误。本课进一步回答：回归得到一个非零系数，究竟有多少证据表明总体中的相应系数不等于零？</p>
-<p>例如，汽车重量的估计系数为正，并不意味着总体重量系数一定为正。样本不同，估计值也会变化。<strong>t检验</strong>将估计值与其抽样不确定性放在一起衡量：相对于标准误，估计值离原假设规定的数值有多远？</p>
-<p>检验通常从<strong>原假设</strong>（null hypothesis，记为H₀）出发，例如“控制车身长度后，重量的总体线性回归系数为零”。<strong>备择假设</strong>（H₁）则可以是“不等于零”（双侧）或“高于/低于某值”（单侧）。本课只讨论事先确定的双侧检验。</p>
-</section>
-<section class="paper" id="s2"><h2>二、核心理论与公式</h2>
-<p>对含截距OLS模型中的第j个系数，检验H₀：βⱼ=βⱼ₀，t统计量为：</p>
-<div class="equation">\[t=\frac{\widehat\beta_j-\beta_{j0}}{\widehat{se}(\widehat\beta_j)}\]</div>
-<p>其中，β̂ⱼ是估计系数，βⱼ₀是原假设指定的数值，分母是该估计量的标准误。绝对值越大，样本估计与原假设相对于估计不确定性的偏离越明显。</p>
-<p><strong>p值</strong>是在原假设及检验所需概率模型成立时，得到至少同样极端检验统计量的概率；它不是“原假设为真的概率”。预先选定显著性水平α=0.05，若双侧p值小于0.05，则拒绝H₀；否则称“未拒绝”，而不是“证明H₀成立”。</p>
-<p>与检验对应的双侧置信区间为：</p>
-<div class="equation">\[\widehat\beta_j\ \pm\ t_{n-k-1,\,1-\alpha/2}\,\widehat{se}(\widehat\beta_j)\]</div>
-<p>这里n为有效样本量，k为不含截距的解释变量数；t分位数对应n−k−1个残差自由度。若区间不包含βⱼ₀，对应双侧检验通常拒绝该原假设。</p>
-<p>在经典同方差、条件正态等适当条件下，传统OLS t检验具有精确的小样本t分布。<strong>本课使用HC1异方差稳健标准误</strong>，其有效性通常依赖零条件均值、适当抽样/弱依赖和大样本条件；软件采用t分布计算p值与区间属于有限样本近似，不能宣称精确。</p>
-</section>
-<section class="paper" id="s3"><h2>三、实证案例与数据</h2>
-<p>继续使用Stata Press公开的1978年汽车教学数据 <code>auto.dta</code>，原始文件有74条车型记录。变量为价格 <code>price</code>（美元）、重量 <code>weight</code>（磅）及车身长度 <code>length</code>（英寸），并定义 <code>weight100=weight/100</code>。仅保留这三个变量均非缺失的观测，两套软件使用同一完整案例样本。</p>
-<p>研究问题是：在给定长度时，重量与价格的<strong>条件线性关联</strong>是否具有反对零系数的统计证据？这不是随机试验；即使拒绝零系数，也不能据此声称改变重量必然导致价格变化。</p>
-<p>公开数据：<a href="https://www.stata-press.com/data/r19/auto.dta" rel="noopener noreferrer">Stata Press auto.dta</a>。</p>
-</section>
-<section class="paper" id="s4"><h2>四、Stata与Python实现</h2>
-<p>两套代码均包含截距、使用OLS和HC1稳健标准误，并使用残差自由度的t分布计算双侧p值和95%区间。代码尚未实际运行，以下不报告回归系数或p值。</p>
-<h3>4.1 Stata</h3><details class="codefold"><summary>点击展开 Stata 完整代码</summary><pre><code class="language-stata">clear all
-
-* 读取官方数据，固定完整案例样本
-use &quot;https://www.stata-press.com/data/r19/auto.dta&quot;, clear
-keep if !missing(price, weight, length)
-generate double weight100 = weight / 100
-count
-
-* 含截距OLS，HC1异方差稳健标准误
-regress price weight100 length, vce(robust)
-
-* 检验：H0为重量系数等于零（双侧）
-display &quot;重量系数：&quot; _b[weight100]
-display &quot;HC1标准误：&quot; _se[weight100]
-display &quot;t统计量：&quot; _b[weight100] / _se[weight100]
-display &quot;双侧p值：&quot; 2*ttail(e(df_r), abs(_b[weight100]/_se[weight100]))
-
-* 回归表默认报告95%置信区间
-* 单参数的test给出F统计量，其值等于t统计量的平方
-test weight100 = 0</code></pre></details><h3>4.2 Python</h3><details class="codefold"><summary>点击展开 Python 完整代码</summary><pre><code class="language-python">import pandas as pd
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="course-revision" content="2026-10-27-v2"><meta name="course-status" content="taught"><title>第2章·第7节｜t检验</title><link rel="stylesheet" href="../v2/course.css"><script defer src="../v2/course.js"></script></head><body><header><a href="../">← 计量经济学120天课程</a><a href="../v2/">36模块新主线</a></header><main><div class="hero"><span class="badge">已授课</span><h1>第2章·第7节｜t检验</h1><p class="meta">原全课程第14课 / 120 · 原日期：2026-10-20 · 本次实质修订2026-10-27</p><p>本页现采用M06 精确t/F与渐近Wald检验核心讲义，保留原网址、编号及标题。<a href="../archive/2026-10-27/lessons/02-07.html">阅读修订前原稿</a>。</p></div><section class="paper" id="s1"><h2>1 · 核心问题与推导</h2><p>经典有限样本t和F分布依赖条件正态、同方差及设计矩阵满秩等条件。换成异方差稳健协方差后，常用检验通常成为渐近近似。Rβ=r包含q条独立约束，Wald统计量以约束偏差的协方差将其标准化，极限为χ²(q)。逐个t检验不能替代联合检验，因为估计系数通常相关。p值是零假设下观测到同样或更极端统计量的概率，不是零假设为真的概率，也不是效应重要程度。</p></section><section class="paper" id="s2"><h2>2 · 公式与统计前提</h2><div class="formula">W=(Rb−r)′[R V̂(b) R′]⁻¹(Rb−r)</div><p>少量聚类、弱识别和高杠杆会影响近似；HC1不是有限样本精确保证。</p></section><section class="paper" id="s3"><h2>3 · 图示与研究含义</h2><div class="diagram"><svg viewBox="0 0 680 220" role="img" aria-label="投影与残差正交的示意图"><title>拟合值是投影，残差垂直于列空间</title><path d="M60 180H610M60 180L370 40M370 40V180" stroke="#176f70" stroke-width="3" fill="none"/><path d="M350 180V160H370" stroke="#b98c3b" fill="none"/><g fill="#173e49" font-size="19"><text x="380" y="45">y</text><text x="250" y="205">拟合值 Pₓy</text><text x="388" y="118">残差 Mₓy</text><text x="470" y="174">X的列空间</text></g></svg></div><p>图为概念示意；数值结论以运行代码和明确的数据来源为准。</p></section><section class="paper" id="s4"><h2>4 · 可复现实验：Stata与Python</h2><p>数据性质：固定种子的随机教学模拟，非真实研究数据。两种软件随机流不同，不要求逐行结果相同。Python已运行状态见<a href="../v2/validation.json">核验记录</a>；Stata尚未运行验证。</p><details><summary>Python · 展开代码</summary><p><a download href="../v2/labs/foundation.py">下载完整脚本</a></p><button type="button" data-copy>复制代码</button><pre><code># Teaching experiment, synthetic data unless explicitly stated. Seed 20261027.
+import numpy as np
 import statsmodels.api as sm
-
-url = &quot;https://www.stata-press.com/data/r19/auto.dta&quot;
-cols = [&quot;price&quot;, &quot;weight&quot;, &quot;length&quot;]
-
-# 与Stata一致的完整案例样本
-df = pd.read_stata(url)[cols].dropna().copy()
-df[&quot;weight100&quot;] = df[&quot;weight&quot;] / 100
-
-y = df[&quot;price&quot;]
-X = sm.add_constant(df[[&quot;weight100&quot;, &quot;length&quot;]])
-
-# HC1稳健协方差；use_t=True使用残差自由度的t分布
-fit = sm.OLS(y, X).fit(cov_type=&quot;HC1&quot;, use_t=True)
-
-print(&quot;有效样本量：&quot;, len(df))
-print(&quot;重量系数：&quot;, fit.params[&quot;weight100&quot;])
-print(&quot;HC1标准误：&quot;, fit.bse[&quot;weight100&quot;])
-print(&quot;t统计量：&quot;, fit.tvalues[&quot;weight100&quot;])
-print(&quot;双侧p值：&quot;, fit.pvalues[&quot;weight100&quot;])
-print(&quot;95%置信区间：&quot;, fit.conf_int().loc[&quot;weight100&quot;].tolist())</code></pre></details><p>运行后核对两套软件的样本量、系数、HC1标准误、t值、p值及置信区间。仅比较软件默认输出时要留意：statsmodels未设置<code>use_t=True</code>可能采用正态近似，而Stata <code>regress, vce(robust)</code>使用残差自由度。</p>
-</section>
-<section class="paper" id="s5"><h2>五、初学者避坑</h2>
-<p><strong>误区一：p\&lt;0.05就说明因果效应存在。</strong> t检验检验的是指定模型中的总体系数，不能验证零条件均值、排除混杂或证明因果识别成立。</p>
-<p><strong>误区二：p&gt;0.05就说明没有关联。</strong> “未拒绝”可能源于估计不精确、样本量不足或真实效应较小；应同时检查估计值和区间宽度。</p>
-<p><strong>误区三：统计显著等于经济重要。</strong> 极小的系数在大样本中也可能显著。判断经济意义需要结合单位、效应大小和研究背景；事后反复更换模型寻找显著性还会破坏检验的名义错误率。</p>
-</section>
-<section class="paper" id="s6"><h2>六、今日练习</h2>
-<p><strong>概念题：</strong> 某研究得到双侧p值0.03，能否说“原假设有3%的概率是真的”？如果研究是观察性数据，能否直接称为因果效应？</p>
-<p><strong>参考答案：</strong> 都不能。p值是在原假设及模型条件成立时衡量数据极端程度的概率，不是原假设的后验概率；观察性回归的显著系数也不自动具备因果解释。</p>
-<p><strong>计算题：</strong> 纯教学例子中，重量系数估计值为120美元/100磅，HC1标准误为50，检验H₀：β=0。假设双侧5%临界值近似为2.0，计算t值和近似95%区间。</p>
-<p><strong>参考答案：</strong> t=120/50=2.4；近似区间为120±2.0×50，即\[20,220\]美元/100磅。由于\|t\|&gt;2.0且区间不含零，在题设近似临界值下拒绝H₀；这仍不是重量的因果效应证据。</p>
-</section>
-<section class="paper" id="s7"><h2>七、学习进度</h2>
-<p>本课为<strong>第2章·第7节｜t检验</strong>，全课程第14课 / 共120课，数据源为Stata Press <code>auto.dta</code>。依GitHub <code>main</code>分支原纲，下一课为<strong>第2章·第8节｜F检验与联合假设</strong>（全课程第15课）。第13课已在聊天与私人Notion完成，GitHub归档缺失不构成重复授课理由。</p>
-</section></article></main></body></html>
+rng=np.random.default_rng(20261027)
+n=800
+z=rng.normal(size=n); x=.6*z+rng.normal(size=n)
+y=1+2*x+.8*z+rng.normal(size=n)
+X=np.column_stack([np.ones(n),x,z])
+b=np.linalg.lstsq(X,y,rcond=None)[0]
+Z=np.column_stack([np.ones(n),z])
+rx=x-Z@np.linalg.lstsq(Z,x,rcond=None)[0]
+ry=y-Z@np.linalg.lstsq(Z,y,rcond=None)[0]
+fwl=rx@ry/(rx@rx)
+P=X@np.linalg.solve(X.T@X,X.T)
+assert abs(fwl-b[1])&lt;1e-10
+assert np.max(np.abs(P@P-P))&lt;1e-10
+assert np.max(np.abs(X.T@(y-X@b)))&lt;1e-8
+fit=sm.OLS(y,X).fit(cov_type=&#x27;HC1&#x27;)
+print(&#x27;OLS&#x27;,b,&#x27;FWL&#x27;,fwl,&#x27;HC1 SE&#x27;,fit.bse)
+print(&#x27;Joint Wald&#x27;,fit.wald_test(np.array([[0,1,0],[0,0,1]]),scalar=True))
+</code></pre></details><details><summary>Stata · 展开代码</summary><p><a download href="../v2/labs/foundation.do">下载完整脚本</a></p><button type="button" data-copy>复制代码</button><pre><code>version 17.0
+clear all
+set more off
+set seed 20261027
+* Synthetic teaching data. Stata and NumPy RNG streams differ.
+set obs 800
+gen double z=rnormal()
+gen double x=.6*z+rnormal()
+gen double y=1+2*x+.8*z+rnormal()
+regress y x z, vce(robust)
+scalar full_b=_b[x]
+test x z
+regress x z
+predict double rx, residuals
+regress y z
+predict double ry, residuals
+regress ry rx, noconstant
+assert abs(_b[rx]-full_b)&lt;1e-8
+* Coefficient identity only: final default SE is not full-model HC1.
+</code></pre></details></section><section class="paper" id="s5"><h2>5 · 专属练习与参考答案</h2><p>两个系数分别不显著，联合检验能显著吗？</p><details><summary>展开答案与依据</summary><p>可以。联合检验取决于完整协方差以及估计向量的方向，不能从单个p值直接推断。</p></details></section><section class="paper" id="s6"><h2>6 · 学习验收</h2><p>独立解释本模块公式中的随机对象、目标量与关键条件；运行实验，改变一个前提并说明结果为何改变。只阅读或运行命令不等于掌握。</p><label><input type="checkbox" data-module-check="M06"> 已完成 M06 的推导、实验与练习</label></section><section class="paper" id="s7"><h2>7 · 原120课映射与资料</h2><p>原课编号、标题与历史授课日期保留。下列为主题映射，合并模块并不表示每节旧课均已独立重写。</p><a class="maplink" href="../v2/../lessons/02-07.html">原课 02-07</a><a class="maplink" href="../v2/../lessons/02-08.html">原课 02-08</a><p><a href="../v2/review.html">评审回应与修订范围</a> · <a href="../v2/mapping.html">完整120课映射</a> · <a href="../v2/sources.html">原始文献与软件文档</a></p></section></main><script defer src="../study-progress.js"></script></body></html>

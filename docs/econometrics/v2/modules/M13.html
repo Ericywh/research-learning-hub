@@ -1,0 +1,27 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="course-revision" content="2026-10-27-v2"><title>M13 · 遗漏变量、测量误差与联立性</title><link rel="stylesheet" href="../course.css"><script defer src="../course.js"></script></head><body><header><a href="../">← 36模块主线</a><a href="../mapping.html">原120课映射</a></header><main><div class="hero"><div class="eyebrow">WEEK 3 / M13</div><h1>M13 · 遗漏变量、测量误差与联立性</h1><p class="meta">先修：M07 · 核心讲义v1 · 建议45分钟，实验及延伸另计</p></div><nav class="toc"><a href="#s1">推导</a><a href="#s2">前提</a><a href="#s3">图示</a><a href="#s4">代码</a><a href="#s5">练习</a><a href="#s6">验收</a><a href="#s7">映射</a></nav><section class="paper" id="s1"><h2>1 · 核心问题与推导</h2><p>省略能力a时，教育斜率混入能力与教育的共同变异。y=βx+γa+u中，遗漏偏差为γCov(x,a)/Var(x)。经典测量误差x*=x+v要求v与x、u不相关，简单回归斜率被乘以信度Var(x)/[Var(x)+Var(v)]，向零衰减。非经典误差、多个带误差变量或非线性模型不能套这一结论。联立性来自x与y共同决定，改标准误或增加n不能解决。教育回报示例必须实际把教育放入回归，不能仅在标题提及。</p></section><section class="paper" id="s2"><h2>2 · 公式与统计前提</h2><div class="formula">plim b_遗漏=β+γCov(x,a)/Var(x)</div><p>可能内生不等于已经证实内生，需要制度与测量过程证据。模拟只演示指定机制，不是经验事实。</p></section><section class="paper" id="s3"><h2>3 · 图示与研究含义</h2><div class="diagram"><svg viewBox="0 0 680 100" role="img" aria-label="从识别到推断的学习路径"><title>识别先于估计，推断依赖统计条件</title><g fill="#173e49" font-size="20"><text x="20" y="55">目标量</text><text x="160" y="55">识别假设</text><text x="335" y="55">估计/优化</text><text x="520" y="55">方差与检验</text></g><path d="M95 50H145M255 50H320M445 50H505" stroke="#b98c3b" stroke-width="3"/></svg></div><p>图为概念示意；数值结论以运行代码和明确的数据来源为准。</p></section><section class="paper" id="s4"><h2>4 · 可复现实验：Stata与Python</h2><p>数据性质：固定种子的随机教学模拟，非真实研究数据。两种软件随机流不同，不要求逐行结果相同。Python已运行状态见<a href="../validation.json">核验记录</a>；Stata尚未运行验证。</p><details><summary>Python · 展开代码</summary><p><a download href="../labs/endogeneity.py">下载完整脚本</a></p><button type="button" data-copy>复制代码</button><pre><code># Teaching experiment, synthetic data unless explicitly stated. Seed 20261027.
+import numpy as np
+import statsmodels.api as sm
+rng=np.random.default_rng(20261027);n=20000
+ability=rng.normal(size=n);education=12+.6*ability+rng.normal(size=n)
+logwage=1+.08*education+.3*ability+rng.normal(size=n)
+short=sm.OLS(logwage,sm.add_constant(education)).fit()
+full=sm.OLS(logwage,np.column_stack([np.ones(n),education,ability])).fit()
+predicted=.3*np.cov(education,ability,ddof=0)[0,1]/np.var(education)
+print(&#x27;Education included in both equations&#x27;)
+print(&#x27;short,full, predicted OVB&#x27;,short.params[1],full.params[1],predicted)
+measured=education+rng.normal(size=n)
+print(&#x27;Measurement error slope&#x27;,sm.OLS(logwage,sm.add_constant(measured)).fit().params[1])
+</code></pre></details><details><summary>Stata · 展开代码</summary><p><a download href="../labs/endogeneity.do">下载完整脚本</a></p><button type="button" data-copy>复制代码</button><pre><code>version 17.0
+clear all
+set more off
+set seed 20261027
+* Synthetic teaching data. Stata and NumPy RNG streams differ.
+set obs 20000
+gen double ability=rnormal()
+gen double education=12+.6*ability+rnormal()
+gen double logwage=1+.08*education+.3*ability+rnormal()
+regress logwage education, vce(robust)
+regress logwage education ability, vce(robust)
+gen double measured=education+rnormal()
+regress logwage measured, vce(robust)
+</code></pre></details></section><section class="paper" id="s5"><h2>5 · 专属练习与参考答案</h2><p>γ=2、Cov(x,a)=0.3、Var(x)=1.5，遗漏偏差多少？</p><details><summary>展开答案与依据</summary><p>0.4。若经典测量信度为0.8、真斜率1.5，带误差回归的极限为1.2。</p></details></section><p class="paper"><a href="../real-data.html">补充：已运行的真实工资教学数据案例、样本流转与结果表</a></p><section class="paper" id="s6"><h2>6 · 学习验收</h2><p>独立解释本模块公式中的随机对象、目标量与关键条件；运行实验，改变一个前提并说明结果为何改变。只阅读或运行命令不等于掌握。</p><label><input type="checkbox" data-module-check="M13"> 已完成 M13 的推导、实验与练习</label></section><section class="paper" id="s7"><h2>7 · 原120课映射与资料</h2><p>原课编号、标题与历史授课日期保留。下列为主题映射，合并模块并不表示每节旧课均已独立重写。</p><a class="maplink" href="../../lessons/02-15.html">原课 02-15</a><a class="maplink" href="../../lessons/03-02.html">原课 03-02</a><a class="maplink" href="../../lessons/03-03.html">原课 03-03</a><a class="maplink" href="../../lessons/03-04.html">原课 03-04</a><a class="maplink" href="../../lessons/03-12.html">原课 03-12</a><a class="maplink" href="../../lessons/03-13.html">原课 03-13</a><a class="maplink" href="../../lessons/08-05.html">原课 08-05</a><p><a href="../review.html">评审回应与修订范围</a> · <a href="../mapping.html">完整120课映射</a> · <a href="../sources.html">原始文献与软件文档</a></p></section><nav class="nav"><a href="M12.html">← 前一模块</a><a href="M14.html">后一模块 →</a></nav></main><footer>统计条件与识别假设优先于显著性 · 2026-10-27修订</footer></body></html>

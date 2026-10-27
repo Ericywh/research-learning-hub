@@ -1,0 +1,33 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="course-revision" content="2026-10-27-v2"><title>M33 · 单位根、协整与误差修正</title><link rel="stylesheet" href="../course.css"><script defer src="../course.js"></script></head><body><header><a href="../">← 36模块主线</a><a href="../mapping.html">原120课映射</a></header><main><div class="hero"><div class="eyebrow">WEEK 6 / M33</div><h1>M33 · 单位根、协整与误差修正</h1><p class="meta">先修：M08,M12 · 核心讲义v1 · 建议45分钟，实验及延伸另计</p></div><nav class="toc"><a href="#s1">推导</a><a href="#s2">前提</a><a href="#s3">图示</a><a href="#s4">代码</a><a href="#s5">练习</a><a href="#s6">验收</a><a href="#s7">映射</a></nav><section class="paper" id="s1"><h2>1 · 核心问题与推导</h2><p>随机游走冲击永久累积，两个独立随机游走也可能出现高R²和显著t值。ADF在适当确定项与滞后差分下检验单位根，常数、趋势设定影响临界值。协整要求多个非平稳序列存在平稳线性组合，单序列自回归不是协整检验。Engle–Granger残差检验使用专用分布，不能将估计残差直接套普通ADF临界值。协整下ECM将短期差分与滞后长期偏离连接起来。</p></section><section class="paper" id="s2"><h2>2 · 公式与统计前提</h2><div class="formula">Δy_t=α(y_t−1−θx_t−1)+Σφ_jΔy_t−j+Σψ_jΔx_t−j+ε_t</div><p>不拒绝单位根可能源于低功效，结构突变和滞后选择会影响结果。HAC不能修复伪回归。</p></section><section class="paper" id="s3"><h2>3 · 图示与研究含义</h2><div class="diagram"><svg viewBox="0 0 680 100" role="img" aria-label="从识别到推断的学习路径"><title>识别先于估计，推断依赖统计条件</title><g fill="#173e49" font-size="20"><text x="20" y="55">目标量</text><text x="160" y="55">识别假设</text><text x="335" y="55">估计/优化</text><text x="520" y="55">方差与检验</text></g><path d="M95 50H145M255 50H320M445 50H505" stroke="#b98c3b" stroke-width="3"/></svg></div><p>图为概念示意；数值结论以运行代码和明确的数据来源为准。</p></section><section class="paper" id="s4"><h2>4 · 可复现实验：Stata与Python</h2><p>数据性质：固定种子的随机教学模拟，非真实研究数据。两种软件随机流不同，不要求逐行结果相同。Python已运行状态见<a href="../validation.json">核验记录</a>；Stata尚未运行验证。</p><details><summary>Python · 展开代码</summary><p><a download href="../labs/timeseries.py">下载完整脚本</a></p><button type="button" data-copy>复制代码</button><pre><code># Teaching experiment, synthetic data unless explicitly stated. Seed 20261027.
+import numpy as np
+from statsmodels.tsa.stattools import adfuller,coint
+import statsmodels.api as sm
+rng=np.random.default_rng(20261027);n=800
+x=rng.normal(size=n).cumsum();e=np.zeros(n)
+for t in range(1,n):e[t]=.5*e[t-1]+rng.normal()
+y=2*x+e
+print(&#x27;ADF x&#x27;,adfuller(x,regression=&#x27;c&#x27;,autolag=&#x27;AIC&#x27;)[:2])
+print(&#x27;EG cointegration&#x27;,coint(y,x,trend=&#x27;c&#x27;,autolag=&#x27;aic&#x27;)[:2])
+long=sm.OLS(y,sm.add_constant(x)).fit();ec=long.resid[:-1]
+fit=sm.OLS(np.diff(y),np.column_stack([np.ones(n-1),ec,np.diff(x)])).fit(cov_type=&#x27;HAC&#x27;,cov_kwds={&#x27;maxlags&#x27;:4})
+print(&#x27;ECM const, adjustment, short-run&#x27;,fit.params)
+</code></pre></details><details><summary>Stata · 展开代码</summary><p><a download href="../labs/timeseries.do">下载完整脚本</a></p><button type="button" data-copy>复制代码</button><pre><code>version 17.0
+clear all
+set more off
+set seed 20261027
+* Synthetic teaching data. Stata and NumPy RNG streams differ.
+set obs 800
+gen long t=_n
+tsset t
+gen double x=rnormal()
+replace x=x[_n-1]+rnormal() if _n&gt;1
+gen double e=rnormal() in 1
+replace e=.5*e[_n-1]+rnormal() if _n&gt;1
+gen double y=2*x+e
+dfuller x, lags(4)
+regress y x
+predict double ec, residuals
+newey D.y L.ec D.x, lag(4)
+* Do NOT use ordinary dfuller ec critical values as an Engle-Granger test.
+* Python companion uses coint() with residual-based cointegration critical values.
+</code></pre></details></section><section class="paper" id="s5"><h2>5 · 专属练习与参考答案</h2><p>y、x均I(1)，y−2x为I(0)，说明什么？</p><details><summary>展开答案与依据</summary><p>以(1,−2)协整。ECM调整系数为负在适当稳定条件下表示长期偏离被向均衡修正。</p></details></section><section class="paper" id="s6"><h2>6 · 学习验收</h2><p>独立解释本模块公式中的随机对象、目标量与关键条件；运行实验，改变一个前提并说明结果为何改变。只阅读或运行命令不等于掌握。</p><label><input type="checkbox" data-module-check="M33"> 已完成 M33 的推导、实验与练习</label></section><section class="paper" id="s7"><h2>7 · 原120课映射与资料</h2><p>原课编号、标题与历史授课日期保留。下列为主题映射，合并模块并不表示每节旧课均已独立重写。</p><a class="maplink" href="../../lessons/06-04.html">原课 06-04</a><a class="maplink" href="../../lessons/06-05.html">原课 06-05</a><a class="maplink" href="../../lessons/07-07.html">原课 07-07</a><p><a href="../review.html">评审回应与修订范围</a> · <a href="../mapping.html">完整120课映射</a> · <a href="../sources.html">原始文献与软件文档</a></p></section><nav class="nav"><a href="M32.html">← 前一模块</a><a href="M34.html">后一模块 →</a></nav></main><footer>统计条件与识别假设优先于显著性 · 2026-10-27修订</footer></body></html>

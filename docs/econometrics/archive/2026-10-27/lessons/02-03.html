@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="course-date" content="2026-10-16">
+<title>第2章·第3节｜拟合优度R²</title><style>
+:root{font-family:system-ui,-apple-system,"Noto Sans SC","Microsoft YaHei",sans-serif;color:#223845;background:#f5f8f6}*{box-sizing:border-box}body{margin:0;line-height:1.85;font-size:16px}header,main,footer{max-width:940px;margin:auto;padding:18px 22px}header,nav{display:flex;gap:22px;flex-wrap:wrap}a{color:#166e65}h1{font-size:clamp(24px,4vw,34px);line-height:1.4}h2{font-size:23px;color:#185c53;border-bottom:1px solid #dce8e2;padding-bottom:10px;margin-top:36px}h3{font-size:18px;color:#2d665e}main{background:white;border:1px solid #dee9e3;border-radius:16px;padding:30px;margin:12px auto 30px}.meta{background:#eaf4ef;padding:17px;border-radius:9px;margin:14px 0 30px}p{margin:13px 0}pre{background:#172b38;color:#f0f5f9;border-radius:9px;padding:19px;overflow-x:auto;font:13px/1.75 ui-monospace,monospace}.code-label{margin-top:22px;font-weight:bold;color:#185c53}code{white-space:pre-wrap}p code{background:#f0f4f1;padding:2px 5px;border-radius:3px}.formula{background:#f1f6f3;padding:18px;margin:18px 0;overflow-x:auto;text-align:center}footer{color:#6a7b7b;font-size:12px}li{margin:8px 0}@media(max-width:650px){main{padding:17px;border-radius:0}pre{font-size:12px}}</style>
+<script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['$$','$$']]},svg:{fontCache:'global'}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+
+<link rel="stylesheet" href="../course-theme.css?v=20261025-3"><script defer src="../course-theme.js?v=20261025-3"></script></head>
+<body><header><a href="../">← 计量经济学120天课程目录</a><a href="../../study/">学习中心</a></header><main>
+<h1>第2章·第3节｜拟合优度R²</h1><div class="meta">全课程第10课 / 共120课　·　授课日期：2026-10-16　·　学习时间：10—15分钟</div>
+<p>全课程第10课 / 共120课<br>预计学习时间：10—15分钟<br>授课日期：2026年10月16日（Asia/Taipei）</p>
+<h3>一、通俗理解</h3>
+<p>上一课用普通最小二乘法（OLS）寻找一条使样本残差平方和最小的直线。本课回答一个不同的问题：<strong>这条直线究竟解释了价格差异的多少？</strong><br>假设两组汽车价格相差很大，而仅凭重量作出的预测仍与真实价格相距甚远，即使回归斜率显著，模型也未必能准确描述样本价格差异。拟合优度（goodness of fit）衡量模型预测值与样本观测值的贴合程度；最常用的指标是决定系数 R²。<br>理解 R² 可以从两个基准出发：完全不考虑重量时，用所有汽车的样本平均价格预测每辆车；加入重量后，改用回归模型预测。如果回归后的残差平方和明显小于“只预测均值”产生的平方误差，说明重量对样本内价格差异具有一定解释能力。注意，这里的“解释”是统计意义上的拟合，而不是因果识别。</p>
+<h3>二、核心理论与公式</h3>
+<p>对<strong>含截距项</strong>的OLS回归，定义总平方和 SST、残差平方和 SSE，则</p>
+<div class="formula">$$R^2=1-\frac{SSE}{SST}
+=1-\frac{\sum_{i=1}^{n}(y_i-\hat y_i)^2}{\sum_{i=1}^{n}(y_i-\bar y)^2}.$$</div>
+<p>其中，$<code>\hat y_i</code>$ 是模型预测值，$<code>\bar y</code>$ 是样本均值，n 为有效观测数。要求因变量不全相同，即 SST\&gt;0。含截距OLS的样本内 R² 介于0与1之间；越接近1，样本内平方误差相对于均值基准减少得越多。<br>普通 R² 有一个局限：在同一样本、同一因变量下，给OLS模型添加解释变量不会使 R² 下降，即使新变量没有实质价值。因此常同时报告<strong>调整后的决定系数</strong>：</p>
+<div class="formula">$$\bar R^2=1-(1-R^2)\frac{n-1}{n-k-1},$$</div>
+<p>k 为不含截距的解释变量个数，要求 n\&gt;k+1。调整后 R² 对增加变量施加自由度惩罚，可能为负，但仍不是预测性能或因果有效性的充分证据。</p>
+<h3>三、实证案例与数据</h3>
+<p>继续使用 Stata 官方1978年汽车示例数据 <code>auto.dta</code>，原始数据包含74条车型记录。被解释变量 <code>price</code> 为美元价格，<code>weight</code> 为磅重，<code>mpg</code> 为每加仑英里数。为了比较模型，统一保留这三个变量均非缺失的记录，并定义 <code>weight100=weight/100</code>。<br>比较模型A（价格对重量的一元回归）与模型B（在模型A基础上加入油耗指标 <code>mpg</code>）。两模型的因变量、估计样本与OLS方法保持一致，均使用HC1异方差稳健标准误。我们观察 R² 和调整后 R² 的变化，但不把新增变量带来的拟合改善解释为因果效应。数据来源：<a href="https://www.stata.com/links/stata-basics/example-datasets/" target="_blank" rel="noopener noreferrer">Stata官方示例数据说明</a>；<a href="https://www.stata-press.com/data/r19/auto.dta" target="_blank" rel="noopener noreferrer">Stata Press auto.dta</a>。</p>
+<h3>四、Stata与Python实现</h3>
+<p><strong>Stata：</strong></p>
+<div class="code-label">Stata</div><pre><code class="language-stata">clear all
+use &quot;https://www.stata-press.com/data/r19/auto.dta&quot;, clear
+* 两个模型使用同一完整样本
+keep if !missing(price, weight, mpg)
+generate double weight100 = weight / 100
+count
+
+* 模型A：一元OLS，HC1稳健标准误
+regress price weight100, vce(robust)
+display &quot;模型A R2 = &quot; %8.5f e(r2)
+display &quot;模型A 调整R2 = &quot; %8.5f e(r2_a)
+
+* 手动核对决定系数
+predict double ehat, resid
+egen double mean_price = mean(price)
+generate double sse_i = ehat^2
+generate double sst_i = (price - mean_price)^2
+quietly summarize sse_i, meanonly
+scalar SSE = r(sum)
+quietly summarize sst_i, meanonly
+scalar SST = r(sum)
+display &quot;手算 R2 = &quot; %8.5f (1 - SSE/SST)
+
+* 模型B：加入mpg，样本与稳健协方差设定不变
+regress price weight100 mpg, vce(robust)
+display &quot;模型B R2 = &quot; %8.5f e(r2)
+display &quot;模型B 调整R2 = &quot; %8.5f e(r2_a)</code></pre>
+<p><strong>Python：</strong></p>
+<div class="code-label">Python</div><pre><code class="language-python">import numpy as np
+import pandas as pd
+import statsmodels.api as sm
+
+url = &quot;https://www.stata-press.com/data/r19/auto.dta&quot;
+df = pd.read_stata(url)[[&quot;price&quot;, &quot;weight&quot;, &quot;mpg&quot;]].dropna().copy()
+df[&quot;weight100&quot;] = df[&quot;weight&quot;] / 100
+y = df[&quot;price&quot;]
+
+# 模型A：含截距OLS，HC1异方差稳健标准误
+XA = sm.add_constant(df[[&quot;weight100&quot;]])
+a = sm.OLS(y, XA).fit(cov_type=&quot;HC1&quot;)
+SSE = np.sum(a.resid ** 2)
+SST = np.sum((y - y.mean()) ** 2)
+print(&quot;有效样本量：&quot;, len(df))
+print(&quot;模型A：&quot;, a.rsquared, a.rsquared_adj)
+print(&quot;手算R2：&quot;, 1 - SSE / SST)
+print(&quot;模型A系数与稳健标准误：&quot;, a.params, a.bse)
+
+# 模型B：相同样本与HC1设定，新增mpg
+XB = sm.add_constant(df[[&quot;weight100&quot;, &quot;mpg&quot;]])
+b = sm.OLS(y, XB).fit(cov_type=&quot;HC1&quot;)
+print(&quot;模型B：&quot;, b.rsquared, b.rsquared_adj)
+print(&quot;模型B系数与稳健标准误：&quot;, b.params, b.bse)</code></pre>
+<p>运行后，应先核对两软件的有效样本量及变量定义，再比较系数、R²、调整后R²与HC1标准误。手算 R² 应与软件输出一致（允许浮点误差）。<strong>稳健标准误影响系数推断，不改变相同OLS估计的拟合值、残差或 R²。</strong> 本课未实际运行上述程序，因此不报告具体回归结果。</p>
+<h3>五、初学者避坑</h3>
+<p><strong>误区一：R²高说明存在因果关系。</strong> R²只刻画样本内拟合；遗漏变量、反向因果和共同趋势都可能使R²较高。要识别重量对价格的因果效应，仍需额外研究设计和识别假设。<br><strong>误区二：R²高就说明样本外预测好。</strong> 样本内拟合可能包含过拟合，评价预测能力需要留出测试集或交叉验证。不同因变量、不同样本的R²也不宜机械比较。<br><strong>误区三：R²越大，新增变量越有用。</strong> 在同样本含截距OLS中，新增解释变量使R²不下降是数学性质，不是新变量具有经济意义的证据。调整后R²可以下降，变量是否保留还取决于理论、模型目标和识别策略。</p>
+<h3>六、今日练习</h3>
+<p><strong>概念题：</strong> 为什么在相同样本的含截距OLS回归中，加入一个解释变量后R²不会下降？这能否证明新变量重要？<br><strong>参考答案：</strong> 新模型包含旧模型作为特例，OLS最小化的残差平方和不可能增加，而同一样本的SST不变，所以R²不下降。不能据此证明变量具有统计、经济或因果重要性。<br><strong>实操／解释题：</strong> 延续上一课三组数据 (x,y)=(1,2)、(2,3)、(3,5)，已知OLS预测式为 $<code>\hat y=1/3+1.5x</code>$。计算 SSE、SST 与 R²，并解释其含义。<br><strong>参考答案：</strong> 三个残差依次为 $<code>1/6,-1/3,1/6</code>$，故 SSE=1/6；样本均值 $<code>\bar y=10/3</code>$，SST=14/3；因此 $<code>R^2=1-(1/6)/(14/3)=27/28\approx0.9643</code>$。它表示相对于用样本均值预测，线性回归使这三个观测的样本内平方误差减少约96.43%，并不意味着x造成y的96.43%变化。</p>
+<nav><a href="02-02.html">← 上一课</a><a href="02-04.html">下一课 →</a><a href="../">课程总目录</a></nav>
+</main><footer>计量经济学120天系统课程｜按已完成授课讲义归档；相关性与因果解释须严格区分。</footer></body></html>

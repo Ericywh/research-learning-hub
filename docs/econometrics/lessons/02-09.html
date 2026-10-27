@@ -1,32 +1,28 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="course-date" content="2026-10-22"><meta name="description" content="第2章·第9节｜虚拟变量；历史课程补档整理，含公式、双软件代码和两题答案"><title>第2章·第9节｜虚拟变量</title><link rel="stylesheet" href="../course-theme.css?v=20261027"><script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]},svg:{fontCache:'global'}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script><script defer src="../course-theme.js?v=20261027"></script><style>body{margin:0;background:#f5f8fa;color:#223443;font:16px/1.8 system-ui,"Noto Sans SC",sans-serif}main{max-width:1080px;margin:auto;padding:24px}a{color:#147d82}.hero{padding:32px;background:#17384a;color:#fff;border-radius:18px;margin-bottom:22px}.hero h1,.hero p{color:#fff!important}.paper{padding:25px;background:#fff;border-radius:13px;margin:17px 0;border:1px solid #dce5eb}.paper h2{color:#264456}.equation{overflow-x:auto;padding:15px;background:#f3f7f8}.codefold{margin:14px 0;border:1px solid #d0dde3;border-radius:9px;overflow:hidden}.codefold summary{padding:12px;background:#ecf3f4;cursor:pointer;color:#244c58}.codefold pre{padding:18px;margin:0;background:#152c3e;color:#f1f7fb;overflow:auto;font:13px/1.7 monospace}.codefold code{color:inherit}.archive-note{font-size:13px;color:#526a75}@media(max-width:650px){main{padding:12px}.paper{padding:19px}}</style></head><body><main><header><a href="../index.html">← 课程目录</a></header><section class="hero"><h1>第2章·第9节｜虚拟变量</h1><p>全课程第16课 / 共120课 · 原授课日期：2026-10-22</p></section><p class="archive-note">历史授课内容整理版（非逐字原文）。未实际执行的软件结果不予虚构。</p><article><section class="paper" id="section-1"><h2>一、通俗理解</h2><p>回归模型既可以使用重量、长度这样的连续变量，也能纳入汽车是否进口、企业是否获得补贴、地区是否实施政策等二分类特征。把条件成立的观测编码为1、另一组编码为0，就得到虚拟变量（dummy variable）。例如在1978年汽车样本中，以foreign=0表示国产车，foreign=1表示进口车。与单纯比较两组均价不同，加入重量和长度后，回归中的进口车系数表示在控制这两个变量条件下的价格预测差异。这是模型中的条件关联，不自动表示进口身份使汽车价格提高。</p></section>
-<section class="paper" id="section-2"><h2>二、核心理论与公式</h2><p>以国产车为基准组，设重量按100磅计量，长度按英寸计量，考虑含截距的加性OLS模型：</p><div class="equation">\[price_i=\beta_0+\beta_1foreign_i+\beta_2weight100_i+\beta_3length_i+u_i.\]</div><p>如果条件均值函数满足上述线性加性形式，且保持重量与长度固定，则两组的条件预测差异为：</p><div class="equation">\[E(price\mid foreign=1,W,L)-E(price\mid foreign=0,W,L)=\beta_1.\]</div><p>模型把这一差异约束为固定值；若两组具有不同重量斜率，则应在下一课加入交互项。系数识别需要满列秩，统计关联并不自动满足因果所需的外生性条件。</p></section>
-<section class="paper" id="section-3"><h2>三、实证案例与数据</h2><p>使用Stata Press官方1978年汽车示例数据<a href="https://www.stata-press.com/data/r18/auto.dta" rel="noopener noreferrer">auto.dta</a>，原始数据为74条汽车记录。变量为price（美元）、foreign（二值：0国产、1进口）、weight（磅）和length（英寸）。两端程序均仅保留四列无缺失的观测，再构造weight100=weight/100；最终有效样本量以程序实际输出为准。样本为教学资料，不能代表今天整个汽车市场，也不是进口身份因果效应的识别设计。</p></section>
-<section class="paper" id="section-4"><h2>四、Stata与Python实现</h2><h3>Stata</h3><details class="codefold"><summary>点击展开 Stata 完整代码</summary><pre><code class="language-stata">* 官方汽车数据，统一完整案例样本
-use "https://www.stata-press.com/data/r18/auto.dta", clear
-keep if !missing(price, foreign, weight, length)
-generate double weight100 = weight/100
-count
-tabulate foreign
-* 国产车foreign=0作为基准组；HC1稳健标准误
-regress price i.foreign c.weight100 c.length, vce(robust)
-display "进口车条件差异：" _b[1.foreign]
-* 在样本协变量分布上平均的预测均值
-margins foreign</code></pre></details><h3>Python</h3><details class="codefold"><summary>点击展开 Python 完整代码</summary><pre><code class="language-python">import pandas as pd
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="course-revision" content="2026-10-27-v2"><meta name="course-status" content="taught"><title>第2章·第9节｜虚拟变量</title><link rel="stylesheet" href="../v2/course.css"><script defer src="../v2/course.js"></script></head><body><header><a href="../">← 计量经济学120天课程</a><a href="../v2/">36模块新主线</a></header><main><div class="hero"><span class="badge">已授课</span><h1>第2章·第9节｜虚拟变量</h1><p class="meta">原全课程第16课 / 120 · 原日期：2026-10-22 · 本次实质修订2026-10-27</p><p>本页现采用M05 交互项、对数与二次项核心讲义，保留原网址、编号及标题。<a href="../archive/2026-10-27/lessons/02-09.html">阅读修订前原稿</a>。</p></div><section class="paper" id="s1"><h2>1 · 核心问题与推导</h2><p>含交互项时主效应只表示另一变量取零时的条件斜率。E[y|x,z]=β₀+β₁x+β₂z+β₃xz的x边际效应为β₁+β₃z。二次项的驻点为−β₁/(2β₂)，只有β₂非零且驻点落在支持域内才值得解释。二次曲线没有曲率改变符号的拐点，不能把驻点称为拐点。半对数模型中的精确比例变化是exp(β)−1；将预测对数直接指数还原一般不是条件均值，仍需处理误差指数项。</p></section><section class="paper" id="s2"><h2>2 · 公式与统计前提</h2><div class="formula">∂E[y|x,z]/∂x=β₁+β₃z；x*=−β₁/(2β₂)</div><p>样本范围外的驻点属于外推；交互效应标准误须包含系数协方差。</p></section><section class="paper" id="s3"><h2>3 · 图示与研究含义</h2><div class="diagram"><svg viewBox="0 0 680 210" role="img" aria-label="非线性函数与局部切线示意"><title>Delta方法只在参数邻域进行线性近似</title><path d="M50 175H630M60 190V20M80 170Q390 170 590 30" fill="none" stroke="#176f70" stroke-width="3"/><path d="M240 173L570 82" stroke="#b98c3b" stroke-width="3"/><circle cx="420" cy="123" r="6" fill="#173e49"/><text x="80" y="40" fill="#173e49">曲线g与局部切线（概念示意，非模拟结果）</text></svg></div><p>图为概念示意；数值结论以运行代码和明确的数据来源为准。</p></section><section class="paper" id="s4"><h2>4 · 可复现实验：Stata与Python</h2><p>数据性质：固定种子的随机教学模拟，非真实研究数据。两种软件随机流不同，不要求逐行结果相同。Python已运行状态见<a href="../v2/validation.json">核验记录</a>；Stata尚未运行验证。</p><details><summary>Python · 展开代码</summary><p><a download href="../v2/labs/delta.py">下载完整脚本</a></p><button type="button" data-copy>复制代码</button><pre><code># Teaching experiment, synthetic data unless explicitly stated. Seed 20261027.
+import numpy as np
 import statsmodels.api as sm
-
-url = "https://www.stata-press.com/data/r18/auto.dta"
-df = pd.read_stata(url, convert_categoricals=False)
-cols = ["price", "foreign", "weight", "length"]
-df = df[cols].dropna().copy()
-df["foreign"] = df["foreign"].astype(int)
-df["weight100"] = df["weight"] / 100
-X = sm.add_constant(df[["foreign", "weight100", "length"]])
-fit = sm.OLS(df["price"], X).fit(cov_type="HC1", use_t=True)
-print("有效样本量：", len(df))
-print("两组观测：", df["foreign"].value_counts().sort_index())
-print(fit.summary())
-print("进口车系数及95%置信区间：",
-      fit.params["foreign"], fit.conf_int().loc["foreign"].tolist())</code></pre></details><p>两个软件采用相同样本、含截距OLS、基准组和HC1设定；未经实际运行，不填造回归系数或显著性结果。</p></section>
-<section class="paper" id="section-5"><h2>五、初学者避坑</h2><p><strong>误区一：</strong>把水平模型的进口车系数解释成百分比。本课因变量price的单位为美元，系数也以美元计量。</p><p><strong>误区二：</strong>在含截距模型里同时纳入互斥且完备的两组虚拟变量。由于两列之和为1，它们与截距列完全共线，应省去一个基准类别。</p><p><strong>误区三：</strong>把控制重量与长度后的组间差异解释成进口身份的因果作用。品牌、配置、质量等遗漏变量可能仍然构成混杂。</p></section>
-<section class="paper" id="section-6"><h2>六、今日练习</h2><p><strong>概念题：</strong>为什么含截距OLS不能同时估计国产车、进口车两个互斥且完备的虚拟变量系数？</p><details><summary>参考答案</summary><p>两个虚拟变量逐行相加等于截距列1，设计矩阵不满列秩；应保留一组作为基准类别。</p></details><p><strong>计算题：</strong>纯教学例子中，若进口车的估计系数为1800，该怎样解释？</p><details><summary>参考答案</summary><p>在线性加性规格中，重量、长度相同条件下，进口车拟合价格比国产车高1800美元。该数字为构造例子，并非运行结果，也不是因果效应。</p></details></section>
-<section class="paper" id="section-7"><h2>七、学习进度</h2><p>本课为全课程第16课，对应第2章第9节。下一课按原纲为第2章·第10节《交互项与条件效应》（全课程第17课）。本页按2026年10月22日正式授课的历史记录及课程设计资料整理，不是原聊天正文的逐字转录；此归档不增加授课进度。</p></section></article></main></body></html>
+rng=np.random.default_rng(20261027);n=1600
+x=rng.uniform(0,6,n)
+y=1+2*x-.3*x*x+rng.normal(size=n)*(1+.2*x)
+X=np.column_stack([np.ones(n),x,x*x])
+fit=sm.OLS(y,X).fit(cov_type=&#x27;HC1&#x27;)
+b=fit.params;V=fit.cov_params()
+g=-b[1]/(2*b[2]);G=np.array([0,-1/(2*b[2]),b[1]/(2*b[2]**2)])
+se=np.sqrt(G@V@G)
+def target(b):return -b[1]/(2*b[2])
+h=1e-5
+fd=np.array([(target(b+np.eye(3)[j]*h)-target(b-np.eye(3)[j]*h))/(2*h) for j in range(3)])
+assert np.max(abs(G-fd))&lt;1e-5
+print(&#x27;Stationary point, not inflection:&#x27;,g,&#x27;Delta SE:&#x27;,se,&#x27;support:&#x27;,(x.min(),x.max()))
+</code></pre></details><details><summary>Stata · 展开代码</summary><p><a download href="../v2/labs/delta.do">下载完整脚本</a></p><button type="button" data-copy>复制代码</button><pre><code>version 17.0
+clear all
+set more off
+set seed 20261027
+* Synthetic teaching data. Stata and NumPy RNG streams differ.
+set obs 1600
+gen double x=runiform(0,6)
+gen double y=1+2*x-.3*x*x+rnormal()*(1+.2*x)
+regress y c.x##c.x, vce(robust)
+nlcom (stationary: -_b[x]/(2*_b[c.x#c.x]))
+* Stationary point, not an inflection. Check x support and denominator.
+</code></pre></details></section><section class="paper" id="s5"><h2>5 · 专属练习与参考答案</h2><p>β₁=4、β₂=−0.5，x只在0到2之间，能否宣称x=4最优？</p><details><summary>展开答案与依据</summary><p>驻点为4，但在支持域外。可报告区间内斜率与预测，不能宣称观测证据支持该最优点。</p></details></section><section class="paper" id="s6"><h2>6 · 学习验收</h2><p>独立解释本模块公式中的随机对象、目标量与关键条件；运行实验，改变一个前提并说明结果为何改变。只阅读或运行命令不等于掌握。</p><label><input type="checkbox" data-module-check="M05"> 已完成 M05 的推导、实验与练习</label></section><section class="paper" id="s7"><h2>7 · 原120课映射与资料</h2><p>原课编号、标题与历史授课日期保留。下列为主题映射，合并模块并不表示每节旧课均已独立重写。</p><a class="maplink" href="../v2/../lessons/02-09.html">原课 02-09</a><a class="maplink" href="../v2/../lessons/02-10.html">原课 02-10</a><a class="maplink" href="../v2/../lessons/02-11.html">原课 02-11</a><p><a href="../v2/review.html">评审回应与修订范围</a> · <a href="../v2/mapping.html">完整120课映射</a> · <a href="../v2/sources.html">原始文献与软件文档</a></p></section></main><script defer src="../study-progress.js"></script></body></html>

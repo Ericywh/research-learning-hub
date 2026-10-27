@@ -1,0 +1,44 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="course-revision" content="2026-10-27-v2"><title>M16 · 从矩条件到两步最优GMM</title><link rel="stylesheet" href="../course.css"><script defer src="../course.js"></script></head><body><header><a href="../">← 36模块主线</a><a href="../mapping.html">原120课映射</a></header><main><div class="hero"><div class="eyebrow">WEEK 3 / M16</div><h1>M16 · 从矩条件到两步最优GMM</h1><p class="meta">先修：M08,M15 · 核心讲义v1 · 建议45分钟，实验及延伸另计</p></div><nav class="toc"><a href="#s1">推导</a><a href="#s2">前提</a><a href="#s3">图示</a><a href="#s4">代码</a><a href="#s5">练习</a><a href="#s6">验收</a><a href="#s7">映射</a></nav><section class="paper" id="s1"><h2>1 · 核心问题与推导</h2><p>L个矩条件与K个参数中，L≥K只是数量要求，不能替代识别；总体目标需在真值唯一最小，矩导数须满足相应秩条件。过度识别时样本矩通常不能全为零，GMM最小化ḡ′Wḡ。第一步以正定权重得到一致初值，再以残差构造Ŝ并取W=Ŝ⁻¹。在线性IV中，W=(Z′Z/n)⁻¹产生2SLS，异方差下它一般不是最有效权重。最优性指有效矩条件及正则估计类中的渐近效率，不能保证每个有限样本标准误更小。</p></section><section class="paper" id="s2"><h2>2 · 公式与统计前提</h2><div class="formula">θ̂=argmin ḡ(θ)′Wḡ(θ)；J=n ḡ′Ŝ⁻¹ḡ →d χ²(L−K)</div><p>J不拒绝不能证明工具有效；弱识别、工具过多和奇异Ŝ会损坏近似。含截距必须把常数矩计入。</p></section><section class="paper" id="s3"><h2>3 · 图示与研究含义</h2><div class="diagram"><svg viewBox="0 0 680 100" role="img" aria-label="从识别到推断的学习路径"><title>识别先于估计，推断依赖统计条件</title><g fill="#173e49" font-size="20"><text x="20" y="55">目标量</text><text x="160" y="55">识别假设</text><text x="335" y="55">估计/优化</text><text x="520" y="55">方差与检验</text></g><path d="M95 50H145M255 50H320M445 50H505" stroke="#b98c3b" stroke-width="3"/></svg></div><p>图为概念示意；数值结论以运行代码和明确的数据来源为准。</p></section><section class="paper" id="s4"><h2>4 · 可复现实验：Stata与Python</h2><p>数据性质：固定种子的随机教学模拟，非真实研究数据。两种软件随机流不同，不要求逐行结果相同。Python已运行状态见<a href="../validation.json">核验记录</a>；Stata尚未运行验证。</p><details><summary>Python · 展开代码</summary><p><a download href="../labs/ivgmm.py">下载完整脚本</a></p><button type="button" data-copy>复制代码</button><pre><code># Teaching experiment, synthetic data unless explicitly stated. Seed 20261027.
+import numpy as np
+from scipy.stats import chi2
+rng=np.random.default_rng(20261027);n=3000
+z1,z2,c=rng.normal(size=(3,n))
+x=.5+.6*z1+.4*z2+.7*c+rng.normal(scale=.5,size=n)
+u=(.7*c+rng.normal(scale=.5,size=n))*(1+.5*abs(z1))
+y=1+1.5*x+u
+X=np.column_stack([np.ones(n),x]);Z=np.column_stack([np.ones(n),z1,z2])
+D=Z.T@X/n;q=Z.T@y/n
+def estimate(W):return np.linalg.solve(D.T@W@D,D.T@W@q)
+W1=np.linalg.inv(Z.T@Z/n);b1=estimate(W1)
+mom1=Z*(y-X@b1)[:,None];S1=mom1.T@mom1/n
+W2=np.linalg.inv(S1);b2=estimate(W2)
+mom2=Z*(y-X@b2)[:,None];S2=mom2.T@mom2/n
+A=np.linalg.inv(D.T@W2@D)
+V=A@D.T@W2@S2@W2@D@A/n
+g=mom2.mean(axis=0);J=n*g@W2@g
+print(&#x27;2SLS&#x27;,b1,&#x27;two-step GMM&#x27;,b2,&#x27;robust SE&#x27;,np.sqrt(np.diag(V)))
+print(&#x27;J&#x27;,J,&#x27;df&#x27;,Z.shape[1]-X.shape[1],&#x27;p&#x27;,chi2.sf(J,1))
+assert Z.shape[1]-X.shape[1]==1
+# Independent projection formula confirms the 2SLS point estimate.
+Xp=Z@np.linalg.lstsq(Z,X,rcond=None)[0]
+check=np.linalg.solve(Xp.T@X,Xp.T@y)
+assert np.allclose(check,b1)
+</code></pre></details><details><summary>Stata · 展开代码</summary><p><a download href="../labs/ivgmm.do">下载完整脚本</a></p><button type="button" data-copy>复制代码</button><pre><code>version 17.0
+clear all
+set more off
+set seed 20261027
+* Synthetic teaching data. Stata and NumPy RNG streams differ.
+set obs 3000
+gen double z1=rnormal()
+gen double z2=rnormal()
+gen double c=rnormal()
+gen double x=.5+.6*z1+.4*z2+.7*c+rnormal(0,.5)
+gen double u=(.7*c+rnormal(0,.5))*(1+.5*abs(z1))
+gen double y=1+1.5*x+u
+ivregress 2sls y (x=z1 z2), vce(robust)
+estat firststage
+estat endogenous
+ivregress gmm y (x=z1 z2), wmatrix(robust) vce(robust)
+estat overid
+* J nonrejection is not proof of validity; constant included: L=3 K=2.
+</code></pre></details></section><section class="paper" id="s5"><h2>5 · 专属练习与参考答案</h2><p>含截距、1个内生变量和2个排除工具，L、K、J自由度各是多少？</p><details><summary>展开答案与依据</summary><p>完整工具为常数、z₁、z₂，L=3；结构参数为截距和斜率，K=2；J自由度1。</p></details></section><section class="paper" id="s6"><h2>6 · 学习验收</h2><p>独立解释本模块公式中的随机对象、目标量与关键条件；运行实验，改变一个前提并说明结果为何改变。只阅读或运行命令不等于掌握。</p><label><input type="checkbox" data-module-check="M16"> 已完成 M16 的推导、实验与练习</label></section><section class="paper" id="s7"><h2>7 · 原120课映射与资料</h2><p>原课编号、标题与历史授课日期保留。下列为主题映射，合并模块并不表示每节旧课均已独立重写。</p><a class="maplink" href="../../lessons/04-04.html">原课 04-04</a><p><a href="../review.html">评审回应与修订范围</a> · <a href="../mapping.html">完整120课映射</a> · <a href="../sources.html">原始文献与软件文档</a></p></section><nav class="nav"><a href="M15.html">← 前一模块</a><a href="M17.html">后一模块 →</a></nav></main><footer>统计条件与识别假设优先于显著性 · 2026-10-27修订</footer></body></html>

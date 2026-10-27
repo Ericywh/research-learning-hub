@@ -1,0 +1,56 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="course-revision" content="2026-10-27-v2"><title>M30 · 合成控制凸权重与安慰剂</title><link rel="stylesheet" href="../course.css"><script defer src="../course.js"></script></head><body><header><a href="../">← 36模块主线</a><a href="../mapping.html">原120课映射</a></header><main><div class="hero"><div class="eyebrow">WEEK 5 / M30</div><h1>M30 · 合成控制凸权重与安慰剂</h1><p class="meta">先修：M27 · 核心讲义v1 · 建议45分钟，实验及延伸另计</p></div><nav class="toc"><a href="#s1">推导</a><a href="#s2">前提</a><a href="#s3">图示</a><a href="#s4">代码</a><a href="#s5">练习</a><a href="#s6">验收</a><a href="#s7">映射</a></nav><section class="paper" id="s1"><h2>1 · 核心问题与推导</h2><p>合成控制用非负且和为1的供体权重拟合处理单位政策前特征或轨迹。仅计算供体均值没有求解权重，等权只是特殊可行解。给定特征权重V，最小化政策前拟合误差的二次型，训练窗口与特征选择应先于政策后分析。效应为处理结果减合成结果。空间安慰剂轮流将其他单位视作处理者重估，并比较后期/前期RMSPE比值；任意小样本下不能自动将其看成精确检验。</p></section><section class="paper" id="s2"><h2>2 · 公式与统计前提</h2><div class="formula">min_w (X₁−X₀w)′V(X₁−X₀w)，w≥0，Σw=1</div><p>前期拟合差、供体受溢出或处理单位不在凸包中削弱识别；少量供体限制p值分辨率。</p></section><section class="paper" id="s3"><h2>3 · 图示与研究含义</h2><div class="diagram"><svg viewBox="0 0 680 100" role="img" aria-label="从识别到推断的学习路径"><title>识别先于估计，推断依赖统计条件</title><g fill="#173e49" font-size="20"><text x="20" y="55">目标量</text><text x="160" y="55">识别假设</text><text x="335" y="55">估计/优化</text><text x="520" y="55">方差与检验</text></g><path d="M95 50H145M255 50H320M445 50H505" stroke="#b98c3b" stroke-width="3"/></svg></div><p>图为概念示意；数值结论以运行代码和明确的数据来源为准。</p></section><section class="paper" id="s4"><h2>4 · 可复现实验：Stata与Python</h2><p>数据性质：固定种子的随机教学模拟，非真实研究数据。两种软件随机流不同，不要求逐行结果相同。Python已运行状态见<a href="../validation.json">核验记录</a>；Stata尚未运行验证。</p><details><summary>Python · 展开代码</summary><p><a download href="../labs/scm.py">下载完整脚本</a></p><button type="button" data-copy>复制代码</button><pre><code># Teaching experiment, synthetic data unless explicitly stated. Seed 20261027.
+import numpy as np
+from scipy.optimize import minimize
+rng=np.random.default_rng(20261027);T0=20;T=35;J=8
+f=rng.normal(size=(T,3)).cumsum(axis=0)
+donors=f@rng.normal(size=(3,J))+rng.normal(scale=.05,size=(T,J))
+truew=np.array([.2,.5,.3,0,0,0,0,0]);treated=donors@truew+rng.normal(scale=.03,size=T)
+treated[T0:]+=2
+def fit(target,pool):
+    A=pool[:T0];b=target[:T0];j=A.shape[1]
+    opt=minimize(lambda w:np.mean((b-A@w)**2),np.ones(j)/j,
+        bounds=[(0,1)]*j,constraints={&#x27;type&#x27;:&#x27;eq&#x27;,&#x27;fun&#x27;:lambda w:w.sum()-1},method=&#x27;SLSQP&#x27;,options={&#x27;ftol&#x27;:1e-12,&#x27;maxiter&#x27;:3000})
+    assert opt.success
+    assert abs(opt.x.sum()-1)&lt;1e-6 and opt.x.min()&gt;-1e-8
+    gap=target-pool@opt.x
+    ratio=np.sqrt(np.mean(gap[T0:]**2))/max(np.sqrt(np.mean(gap[:T0]**2)),1e-10)
+    return opt.x,gap,ratio
+w,gap,ratio=fit(treated,donors)
+placebos=[fit(donors[:,j],np.delete(donors,j,axis=1))[2] for j in range(J)]
+print(&#x27;convex weights&#x27;,w,&#x27;post mean gap&#x27;,gap[T0:].mean(),&#x27;RMSPE ratio&#x27;,ratio)
+print(&#x27;spatial placebo ratios&#x27;,placebos,&#x27;rank fraction&#x27;,(1+sum(p&gt;=ratio for p in placebos))/(J+1))
+print(&#x27;Synthetic factor data; rank fraction is not a universally exact p-value&#x27;)
+</code></pre></details><details><summary>Stata · 展开代码</summary><p><a download href="../labs/scm.do">下载完整脚本</a></p><button type="button" data-copy>复制代码</button><pre><code>version 17.0
+clear all
+set more off
+set seed 20261027
+* Synthetic teaching data. Stata and NumPy RNG streams differ.
+set obs 35
+gen long t=_n
+gen double y0=0
+forvalues j=1/8 {
+    gen double d`j&#x27;=rnormal()
+    replace d`j&#x27;=d`j&#x27;[_n-1]+rnormal() if _n&gt;1
+}
+replace y0=.2*d1+.5*d2+.3*d3+rnormal(0,.03)+2*(t&gt;20)
+* Mata projected gradient solves the actual simplex-constrained pre-period fit.
+mata:
+A=st_data((1::20),tokens(&quot;d1 d2 d3 d4 d5 d6 d7 d8&quot;))
+b=st_data((1::20),&quot;y0&quot;)
+w=J(8,1,1/8)
+step=1/(2*trace(A&#x27;*A))
+for (iter=1;iter&lt;=30000;iter++) {
+    v=w-step*2*A&#x27;*(A*w-b)
+    u=sort(v,-1); css=run_sum(u)
+    rho=1
+    for (j=1;j&lt;=8;j++) if (u[j]-(css[j]-1)/j&gt;0) rho=j
+    theta=(css[rho]-1)/rho
+    w=rowmax((v:-theta,J(8,1,0)))
+}
+st_matrix(&quot;weights&quot;,w&#x27;)
+st_matrix(&quot;pre_rmse&quot;,sqrt(mean((b-A*w):^2)))
+end
+matrix list weights
+matrix list pre_rmse
+* Optimization demo only; Python companion also runs spatial placebo refits.
+</code></pre></details></section><section class="paper" id="s5"><h2>5 · 专属练习与参考答案</h2><p>(0.4,0.6,0)与(1.2,−0.2,0)哪些是经典可行权重？</p><details><summary>展开答案与依据</summary><p>前者可行，后者含负权重，需要其他方法与外推解释，不能称经典凸合成控制。</p></details></section><section class="paper" id="s6"><h2>6 · 学习验收</h2><p>独立解释本模块公式中的随机对象、目标量与关键条件；运行实验，改变一个前提并说明结果为何改变。只阅读或运行命令不等于掌握。</p><label><input type="checkbox" data-module-check="M30"> 已完成 M30 的推导、实验与练习</label></section><section class="paper" id="s7"><h2>7 · 原120课映射与资料</h2><p>原课编号、标题与历史授课日期保留。下列为主题映射，合并模块并不表示每节旧课均已独立重写。</p><a class="maplink" href="../../lessons/04-12.html">原课 04-12</a><a class="maplink" href="../../lessons/05-11.html">原课 05-11</a><a class="maplink" href="../../lessons/07-06.html">原课 07-06</a><p><a href="../review.html">评审回应与修订范围</a> · <a href="../mapping.html">完整120课映射</a> · <a href="../sources.html">原始文献与软件文档</a></p></section><nav class="nav"><a href="M29.html">← 前一模块</a><a href="M31.html">后一模块 →</a></nav></main><footer>统计条件与识别假设优先于显著性 · 2026-10-27修订</footer></body></html>

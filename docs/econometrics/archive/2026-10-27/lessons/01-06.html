@@ -1,0 +1,153 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>第1章·第6节｜Stata基础操作与数据分析</title><meta name="description" content="计量经济学120天系统课程第6课，官方汽车数据、Stata与Python复现、统计直觉和两道自测"><style>:root{background:#f7f8f6;color:#243c49;font:15px/1.9 system-ui,-apple-system,"Noto Sans SC",sans-serif}*{box-sizing:border-box}body{margin:0}header,main,footer{max-width:980px;margin:auto;padding:15px}header{display:flex;gap:22px;flex-wrap:wrap;font-size:13px}a{color:#176e68}h1{font-size:clamp(25px,4vw,36px);line-height:1.4}h2{font-size:21px;color:#1b5550}.hero{background:#e8f3ee;border-radius:15px;padding:28px;margin:18px 0}section{background:white;border:1px solid #dde7e6;border-radius:13px;padding:24px;margin:16px 0}.formula{background:#f1f6f5;border-radius:8px;padding:18px;overflow-x:auto;text-align:center}pre{background:#192d3b;color:#e5f1f5;overflow-x:auto;padding:18px;border-radius:9px;font:12px/1.8 monospace}p code{background:#edf2f1;padding:2px 4px;border-radius:3px}nav{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}footer{font-size:13px;color:#637982}@media(max-width:650px){section{padding:16px}.hero{padding:18px}main{padding:10px}}</style><script>window.MathJax={tex:{displayMath:[['$$','$$']]},svg:{fontCache:'global'}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+
+<link rel="stylesheet" href="../course-theme.css?v=20261025-3"><script defer src="../course-theme.js?v=20261025-3"></script></head><body><header><a href="../">← 120节课程目录</a><a href="../../study/#courses">学习中心</a></header><main><div class="hero"><small>CHAPTER 01 · LESSON 06 / 120</small><h1>第1章·第6节｜Stata基础操作与数据分析</h1><p>2026年10月12日 · 10—15分钟</p><p><strong>核心问题：</strong>如何在Stata中将原始数据转换为可复现的计量分析？</p><small>上一讲：完整计量研究流程；下一讲：Python基础操作与数据分析</small></div><section><p>2026年10月12日｜全课程第6课 / 共120课｜建议学习10—15分钟。</p>
+<p><strong>今日研究问题：如何使用Stata，将原始数据转化为可检查、可分析、可复现的计量研究结果？</strong></p>
+<p>上一课讨论完整计量研究流程。本课将该流程真正落实到软件操作中，继续使用Stata官方1978年汽车数据，研究车型重量与价格的统计关系。</p>
+</section><section><h2>一、理解Stata的基本工作逻辑</h2>
+<p>Stata不仅用于执行回归命令，也用于数据管理、统计分析、图形绘制和结果记录。初学者常见的工作区域包括Command（命令输入）、Results（结果显示）、Variables（变量列表）及Do-file Editor（程序编辑器）。可以在Command窗口逐条输入命令，但正式研究更建议把命令保存在 <code>.do</code> 文件内，以确保从数据读取、筛选到结果输出的顺序可以复现。</p>
+<p>数据工作链条是：<strong>原始数据 → 结构与缺失检查 → 变量处理 → 描述统计与可视化 → 模型估计 → 图表、日志与分析数据归档</strong>。Stata命令执行成功不意味着研究结论一定正确，变量定义与识别假设仍需独立判断。</p>
+</section><section><h2>二、真实公开数据与样本结构</h2>
+<p>使用Stata官方自带的1978年汽车数据，共74条车型记录、12个原始变量，属于单期截面数据，不是面板数据。<a href="https://www.stata.com/links/stata-basics/getting-started/" rel="noopener noreferrer">Stata官方入门示例</a>提供了数据读取命令和完整结构。</p>
+<ul>
+<li><code>price</code>：汽车价格，美元；</li>
+<li><code>weight</code>：汽车重量，磅；</li>
+<li><code>mpg</code>：每加仑燃油行驶里程，英里/加仑；</li>
+<li><code>foreign</code>：产地分类，0为国产、1为进口。</li>
+</ul>
+<p>Stata官方<a href="https://www.stata.com/teaching-undergraduates-with-stata/" rel="noopener noreferrer">公开教学输出</a>报告：74条记录的<code>price</code>均值6165.257美元，<code>weight</code>均值3019.459磅；价格与重量样本相关系数约0.5386。这里引用的是官方已公开真实数据描述统计，并非本次虚构的Stata执行日志。数据未被证明来自一个明确总体的概率随机样本，不能未经论证就推广到整个汽车市场。</p>
+</section><section><h2>三、数据检查、样本筛选与核心公式</h2>
+<p><code>describe</code>用于检查变量类型、标签与数据结构；<code>summarize</code>计算均值和标准差；<code>misstable summarize</code>核查缺失；<code>tabulate</code>对分类变量计数；<code>count</code>报告观测条数；<code>generate</code>创建新变量。官方示例里，维修记录<code>rep78</code>只有69个有效值，而<code>price</code>与<code>weight</code>都有74个有效值，说明控制变量改变时样本量可能变化。每一项筛选都应明确记录。</p>
+<p>基础模型为：</p>
+<div class="formula">$$
+price_i=\alpha+\beta weight_i+u_i
+$$</div>
+<p>其中β的单位为美元/磅，描述重量相差1磅时的模型线性预测价格差。OLS斜率需要重量存在样本内变异才能定义；要进行统计推断则还需关于误差、抽样与外生性等适当假设，不能将β直接称为因果效应。</p>
+<p>为便于解释，转换为每100磅：</p>
+<div class="formula">$$
+weight100_i=weight_i/100,\qquad \beta_{100}=100\beta
+$$</div>
+<p>如果纯教学假设β=2美元/磅，则β₁₀₀=200美元/百磅。该200只是单位换算示例，不是实际回归结果，更不能解释成把同一辆车增重100磅将使其售价提高200美元。</p>
+</section><section><h2>四、Stata可运行完整实操</h2>
+<p>在Do-file Editor新建 <code>lesson_06.do</code>，把以下所有命令放在同一程序内执行。<code>replace</code>会覆盖同名文件，建议先使用单独的练习目录。</p>
+<pre><code class="language-stata">* 第1章第6节：Stata基础操作
+clear all
+set more off
+
+* 查看当前工作目录
+pwd
+
+* 读取官方1978年汽车数据
+sysuse auto, clear
+
+* 记录可复现日志
+capture log close
+log using "lesson_06.log", text replace
+
+* 1. 核查变量类型及前5条数据
+describe
+codebook price weight foreign
+list make price weight in 1/5
+
+* 2. 检查缺失与描述分布
+misstable summarize price weight foreign
+summarize price weight, detail
+tabulate foreign
+
+* 3. 明确共同分析样本
+keep if !missing(price, weight, foreign)
+count
+
+* 4. 创建标准单位变量
+generate weight100 = weight / 100
+label variable weight100 "Weight (100 lbs)"
+
+* 5. 样本相关关系
+correlate price weight
+
+* 6. 绘制散点图与拟合直线
+twoway (scatter price weight) ///
+       (lfit price weight), ///
+       title("Car Price and Weight") ///
+       xtitle("Weight (lbs)") ///
+       ytitle("Price (USD)")
+graph export "price_weight.png", replace
+
+* 7. 简单线性回归
+regress price c.weight100, vce(robust)
+
+* 8. 在相同样本中加入产地分类
+regress price c.weight100 i.foreign, ///
+    vce(robust)
+
+* 9. 保存处理结果
+save "auto_analysis.dta", replace
+log close</code></pre>
+<p><code>clear all</code>清理会话；<code>set more off</code>使长结果不因分页而中断；<code>log using</code>保存结果日志；<code>save</code>保存Stata格式数据。图形可以由<code>graph export</code>导出，后续论文可以直接核对原始数据、do-file、日志和图形。</p>
+</section><section><h2>五、Python复现同一数据</h2>
+<p>安装：<code>pip install pandas matplotlib statsmodels</code>。Python必须与Stata读取相同版本的数据，并保持变量及缺失处理一致。</p>
+<pre><code class="language-python">import pandas as pd
+import matplotlib.pyplot as plt
+import statsmodels.formula.api as smf
+
+# 读取与Stata对应的官方数据
+url = "https://www.stata-press.com/data/r19/auto.dta"
+df = pd.read_stata(url, convert_categoricals=False)
+
+# 数据结构与缺失情况
+print(df.shape)
+print(df.dtypes)
+print(df[["price", "weight", "foreign"]].isna().sum())
+
+# 统一共同分析样本
+data = df[["price", "weight", "foreign"]].dropna().copy()
+data["weight100"] = data["weight"] / 100
+
+# 描述统计和相关性
+print(data.describe())
+print(data["price"].corr(data["weight"]))
+
+# 同一OLS模型，使用HC1稳健协方差
+m1 = smf.ols(
+    "price ~ weight100", data=data
+).fit(cov_type="HC1")
+m2 = smf.ols(
+    "price ~ weight100 + C(foreign)", data=data
+).fit(cov_type="HC1")
+print(m1.summary())
+print(m2.summary())
+
+# 真实数据散点与线性拟合
+plt.scatter(data["weight"], data["price"], alpha=0.7)
+data["fitted"] = m1.predict(data)
+ordered = data.sort_values("weight")
+plt.plot(ordered["weight"], ordered["fitted"])
+plt.xlabel("Weight (lbs)")
+plt.ylabel("Price (USD)")
+plt.title("1978 Automobile Data")
+plt.tight_layout()
+plt.savefig("price_weight_python.png", dpi=150)
+plt.show()
+
+# 保留可复核数据
+data.drop(columns="fitted").to_csv("auto_analysis.csv", index=False)</code></pre>
+<p>Stata的<code>vce(robust)</code>与Python中的<code>cov_type="HC1"</code>在同一样本及模型中通常可作对照，但也应核实虚拟变量编码与自由度调整。本次未实际在执行环境内运行全部命令，因此不把未经检验的系数、p值或输出图片冒充软件运行结果。</p>
+</section><section><h2>六、结果解释及相关与因果边界</h2>
+<p>官方样本中<code>price</code>与<code>weight</code>的相关系数0.5386显示正向线性关联，但相关系数不提供美元/磅意义下的斜率。运行OLS后，应报告回归系数、样本数、异方差稳健标准误和置信区间。较重车型可能同时具有更大的尺寸、不同配置和品牌定位；仅控制产地仍无法排除遗漏变量与选择性差异。因此，无论OLS显著与否，本课均不将其解释成“增重会使汽车升值”。</p>
+</section><section><h2>七、三个常见误区</h2>
+<p><strong>误区一：</strong>只查看电子表格而不核对变量类型。字符串、数值变量及分类值标签必须区分。</p>
+<p><strong>误区二：</strong>直接覆盖原始数据。研究需要独立保存原始文件、清洗后的分析文件及处理代码。</p>
+<p><strong>误区三：</strong>把软件输出当作研究结论。软件只能估计所指定的统计模型，经济解释与因果识别仍由研究设计决定。</p>
+</section><section><h2>八、两道自测题及答案</h2>
+<p><strong>概念题：</strong>为什么正式实证研究更推荐do-file，而不是依赖Command窗口的手动操作？</p>
+<p><strong>参考答案：</strong>do-file保存执行顺序、筛选条件、变量构造及模型设定，便于重跑、排错、合作与复现；只有零散命令很难追踪完整研究过程。</p>
+<p><strong>实操题：</strong>使用官方数据构造<code>weight100=weight/100</code>，绘制价格与重量散点图，并计算相关系数。该系数会因重量单位从磅改为100磅而改变吗？</p>
+<p><strong>参考答案：</strong>Stata执行：</p>
+<pre><code class="language-stata">sysuse auto, clear
+generate weight100 = weight/100
+correlate price weight100
+twoway (scatter price weight100) (lfit price weight100)</code></pre>
+<p>重量除以正数100只改变单位，不改变Pearson相关系数，仍约0.5386；但简单线性回归斜率按100倍缩放，图形形状不变而横轴数值变化。</p>
+</section><section><h2>九、本课回顾和下节预告</h2>
+<p>本课的最小复现流程为：读取 → 描述 → 缺失检查 → 样本筛选 → 变量生成 → 相关分析 → 图形 → 回归 → 日志与数据保存。<strong>第1章第6节、全课程第6/120课已授课。下一讲：第1章第7节《Python基础操作与数据分析》（全课程第7课）。</strong></p>
+<p>参考来源：<a href="https://www.stata.com/links/stata-basics/getting-started/" rel="noopener noreferrer">Stata官方入门教程</a>；<a href="https://www.stata.com/teaching-undergraduates-with-stata/" rel="noopener noreferrer">Stata公开示例数据及统计输出</a>；<a href="https://www.stata-press.com/data/r19/auto.dta" rel="noopener noreferrer">官方1978年汽车数据文件</a>。</p></section><nav><a href="01-05.html">← 第5课</a><a href="../">返回课程目录</a><a href="01-07.html">第7课 →</a></nav></main><footer>计量经济学120天系统课程 · 已授课第6/120课 · 完整正文、代码和自测答案</footer></body></html>

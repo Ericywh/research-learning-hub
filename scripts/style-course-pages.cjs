@@ -48,6 +48,13 @@ for(const [directory,theme] of Object.entries(themes)){
   let styled=0;let lessons=0;
   for(const file of pages){
     const original=fs.readFileSync(file,'utf8');
+    // Revised lectures own their responsive layout. Preserve exact archive HTML.
+    if(directory==='econometrics' &&
+       (path.relative(courseRoot,file).split(path.sep).some(s=>s==='v2'||s==='archive') ||
+        original.includes('name="course-revision"'))){
+      styled++;
+      continue;
+    }
     // PSM-DID uses its own static, speaking-inspired lesson layout. Do not
     // inject the shared reader: its runtime TOC/card wrappers overlap our
     // existing directory and can hide the published lesson body.

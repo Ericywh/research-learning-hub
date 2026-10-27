@@ -1,21 +1,35 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>第5章·第9节｜RDD有效性检验 · DAY 59</title><meta name="description" content="RDD有效性检验：理论公式、数据、双软件代码和练习答案。"><script>window.MathJax={tex:{inlineMath:[["\\(","\\)"]],displayMath:[["\\[","\\]"]]},svg:{fontCache:"global"}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script><style>body{margin:0;background:#f6f9fa;color:#243a49;font:16px/1.9 system-ui,"Noto Sans SC",sans-serif}main{max-width:1050px;margin:0 auto;padding:25px}.hero{background:linear-gradient(120deg,#163c50,#236d72);border-radius:15px;padding:33px;color:#fff}.hero h1,.hero p{color:#fff}.hero h1{font-size:clamp(24px,4vw,38px)}.badge{background:#e7f1d5;color:#29484b;border-radius:13px;padding:5px 10px;font-size:12px}.paper{background:#fff;border:1px solid #d9e6e9;border-radius:12px;padding:26px;margin:17px 0}.paper h2{color:#264957;font-size:21px}.equation{padding:15px;background:#f0f6f6;overflow:auto}details{border:1px solid #d0dfe2;border-radius:9px;margin:12px 0;overflow:hidden}summary{cursor:pointer;background:#ebf3f4;padding:12px}pre{overflow:auto;background:#173044;color:#f1f9fc;margin:0;padding:17px;line-height:1.6}pre code{white-space:pre;font:12px/1.7 monospace}a{color:#14717b}@media(max-width:600px){main{padding:12px}.paper,.hero{padding:20px}}</style><meta name="course-status" content="taught"></head><body><main><p><a href="../index.html">← 返回计量经济学120天课程目录</a></p><div class="hero"><small>DAY 59 / 120 · CHAPTER 5</small><h1>第5章·第9节｜RDD有效性检验</h1><span class="badge">已授课</span><p>七模块课程正文 · Stata + Python · 约10—15分钟</p></div><article><section class="paper" id="s1"><h2>一、通俗理解</h2><p>本课研究《RDD有效性检验》的核心问题。RDD有效性检查涉及阈值操纵、协变量连续性和密度变化，但诊断通过也不是识别假设的数学证明。理解这一问题时，不应从软件命令倒推出研究设计，而应先确定研究对象、估计量和数据提供的变异。识别假设、比较对象和统计推断构成解释结果的共同基础。判断统计关联是否可以上升为因果解释，必须给出额外可辩护的识别条件。</p><p>直觉上先问“相对于哪个对照，改变了什么、未观测因素是否可比”，再写回归方程。即使数据非常多或结果显著，也不能省略这一步。对于方法不匹配的公开示例，宁可明确使用教学模拟，也不能伪装为可信的现实因果证据。</p></section>
-<section class="paper" id="s2"><h2>二、核心理论与公式</h2><p>本节重要的数学表达式如下。RDD有效性检查涉及阈值操纵、协变量连续性和密度变化，但诊断通过也不是识别假设的数学证明。式中的下标、参数和条件必须由数据结构与研究目的界定。涉及潜在结果时，要区分可观察结果和反事实；涉及协方差或条件均值时，应明确是总体假设还是样本估计。任何公式只有在相应外生性、满秩、时间结构或连续性条件下才具备预期的识别意义。</p><div class="equation">\[\lim_{x\downarrow c}E[Z\mid R=x]=\lim_{x\uparrow c}E[Z\mid R=x]\]</div><p>检验与估计所需的矩条件、概率模型或识别假设要与这里的对象一致：完全共线性影响参数可识别性；异方差主要影响常规协方差估计；内生性则可能破坏OLS的一致性。不要以为使用HC1就能同时解决这些问题。</p></section>
-<section class="paper" id="s3"><h2>三、实证案例与数据</h2><p>使用按固定公式构造的透明数值教学模拟。确定性模拟观测，双方按相同公式生成解释变量、处理变量与结果。模拟用于算法和识别假设教学，不能冒充真实政策因果证据。教学时先检查观测单位、变量类型、缺失与筛选规则，确保Stata和Python的有效样本一致。模拟数据生成规则已直接写入下述代码，其中没有编造真实政策、论文或因果效应估计结果。</p><p>按照预先确定的口径筛选样本。对处理变量，必须说明其赋值规则与时点；对连续自变量，必须说明量纲；对面板数据，必须说明主体、时间与缺失结构。分析没有实际运行，因此本页只给出计算流程，不填写未经验证的回归系数或p值。</p></section>
-<section class="paper" id="s4"><h2>四、Stata与Python实现</h2><p>以下Stata和Python采用相同数据文件或相同透明模拟公式，目的是让估计流程可以复核。不能将未实际执行的程序输出标记为“已运行”。</p><h3>Stata</h3><details><summary>展开 Stata 完整代码</summary><pre><code class="language-stata">clear
-set obs 201
-gen double i=_n
-gen double running=(i-101)/25
-gen byte treat=running&gt;=0
-gen double y=1+.3*running+1.2*treat+.2*sin(i)
-keep if abs(running)&lt;=1
-regress y i.treat##c.running, vce(robust)</code></pre></details><h3>Python</h3><details><summary>展开 Python 完整代码</summary><pre><code class="language-python">import numpy as np,pandas as pd
-import statsmodels.formula.api as smf
-i=np.arange(1,202,dtype=float);r=(i-101)/25
-d=(r&gt;=0).astype(int);y=1+.3*r+1.2*d+.2*np.sin(i)
-df=pd.DataFrame({&quot;y&quot;:y,&quot;running&quot;:r,&quot;treat&quot;:d})
-df=df[df.running.abs()&lt;=1]
-fit=smf.ols(&quot;y ~ C(treat)*running&quot;,df).fit(cov_type=&quot;HC1&quot;)
-print(fit.summary())</code></pre></details><p>两端是相同确定性模拟数据上的局部线性示范，不能替代RDD稳健偏差校正和实际阈值不可操纵的论证。若两端自由度、小样本修正或处理变量定义不同，应先核对这些选择，再比较系数和标准误；不能为了获得更小p值而选择软件。</p></section>
-<section class="paper" id="s5"><h2>五、初学者避坑</h2><p>误区一：把“RDD有效性检验”当成所有数据都适用的默认模型。RDD有效性检查涉及阈值操纵、协变量连续性和密度变化，但诊断通过也不是识别假设的数学证明。误区二：仅根据p值判断假设成立。研究设计的关键条件往往不能由一个显著性检验直接证明。误区三：忽略样本和标准误口径。两端是相同确定性模拟数据上的局部线性示范，不能替代RDD稳健偏差校正和实际阈值不可操纵的论证。应逐项记录样本量、变量单位、基准组、模型估计方法以及置信区间的计算约定。</p></section>
-<section class="paper" id="s6"><h2>六、今日练习</h2><p><strong>概念题：</strong>请说明本课《RDD有效性检验》针对的核心统计对象，并指出一个不能只依靠显著性结果验证的条件。</p><details><summary>查看概念题答案</summary><p>RDD有效性检查涉及阈值操纵、协变量连续性和密度变化，但诊断通过也不是识别假设的数学证明。相应模型还需要关于数据生成机制、可比性或外生性的条件，显著性本身不会验证这些条件。</p></details><p><strong>计算或应用题：</strong>断点右侧局部均值为11，左侧为9，求跳跃并说明范围。</p><details><summary>查看计算题答案</summary><p>观察到的跳跃为2，只有在相应连续性条件下才可作为阈值附近局部因果效应。</p></details></section>
-<section class="paper" id="s7"><h2>七、学习进度</h2><p><strong>第5章·第9节｜RDD有效性检验（全课程第59课 / 共120课）</strong>，课程网站状态：<strong>已授课</strong>。本课正文、公式、Stata与Python示例及练习答案已在GitHub归档。</p><p>下一课：<a href="05-10.html">第5章·第10节｜匹配方法与平衡性检验</a>（全课程第60课）。具体软件结果以实际运行核验为准，不补造未经执行的估计数值。</p></section></article></main></body></html>
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="course-revision" content="2026-10-27-v2"><meta name="course-status" content="taught"><title>第5章·第9节｜RDD有效性检验</title><link rel="stylesheet" href="../v2/course.css"><script defer src="../v2/course.js"></script></head><body><header><a href="../">← 计量经济学120天课程</a><a href="../v2/">36模块新主线</a></header><main><div class="hero"><span class="badge">已授课</span><h1>第5章·第9节｜RDD有效性检验</h1><p class="meta">原全课程第59课 / 120 · 原日期：无可核实日期 · 本次实质修订2026-10-27</p><p>本页现采用M32 带宽、偏差修正与RDD有效性核心讲义，保留原网址、编号及标题。<a href="../archive/2026-10-27/lessons/05-09.html">阅读修订前原稿</a>。</p></div><section class="paper" id="s1"><h2>1 · 核心问题与推导</h2><p>缩小带宽降低平滑偏差却减少样本，MSE最优带宽常残留不可忽略偏差。稳健偏差修正不仅减去估计偏差，还把偏差估计变异计入区间。教学局部WLS可说明左右极限，但不是CCT推断；正式分析应采用rdrobust等相应实现。密度检验检查阈值处运行变量异常，预定协变量连续性检验检查其他跳跃，这些只能发现部分威胁，不证明完全无操纵。</p></section><section class="paper" id="s2"><h2>2 · 公式与统计前提</h2><div class="formula">τ̂_bc=τ̂−Biaŝ(τ̂)；区间需计入偏差估计变异</div><p>禁止按显著性挑带宽；离散运行变量和质量点需额外处理。应同时报告有效样本及带宽敏感性。</p></section><section class="paper" id="s3"><h2>3 · 图示与研究含义</h2><div class="diagram"><svg viewBox="0 0 680 100" role="img" aria-label="从识别到推断的学习路径"><title>识别先于估计，推断依赖统计条件</title><g fill="#173e49" font-size="20"><text x="20" y="55">目标量</text><text x="160" y="55">识别假设</text><text x="335" y="55">估计/优化</text><text x="520" y="55">方差与检验</text></g><path d="M95 50H145M255 50H320M445 50H505" stroke="#b98c3b" stroke-width="3"/></svg></div><p>图为概念示意；数值结论以运行代码和明确的数据来源为准。</p></section><section class="paper" id="s4"><h2>4 · 可复现实验：Stata与Python</h2><p>数据性质：固定种子的随机教学模拟，非真实研究数据。两种软件随机流不同，不要求逐行结果相同。Python已运行状态见<a href="../v2/validation.json">核验记录</a>；Stata尚未运行验证。</p><details><summary>Python · 展开代码</summary><p><a download href="../v2/labs/rdd.py">下载完整脚本</a></p><button type="button" data-copy>复制代码</button><pre><code># Teaching experiment, synthetic data unless explicitly stated. Seed 20261027.
+import numpy as np
+import statsmodels.api as sm
+rng=np.random.default_rng(20261027);n=12000
+r=rng.uniform(-1,1,n);above=(r&gt;=0).astype(int)
+d=rng.binomial(1,.2+.5*above)
+y=1+2*d+.6*r+.3*above*r+rng.normal(size=n)
+for h in [.2,.4,.6]:
+    keep=abs(r)&lt;h;rr=r[keep];aa=above[keep]
+    X=np.column_stack([np.ones(keep.sum()),aa,rr,aa*rr]);w=1-abs(rr)/h
+    fy=sm.WLS(y[keep],X,weights=w).fit(cov_type=&#x27;HC1&#x27;)
+    fd=sm.WLS(d[keep],X,weights=w).fit(cov_type=&#x27;HC1&#x27;)
+    print(&#x27;h&#x27;,h,&#x27;n&#x27;,keep.sum(),&#x27;outcome jump&#x27;,fy.params[1],&#x27;treatment jump&#x27;,fd.params[1],&#x27;fuzzy ratio&#x27;,fy.params[1]/fd.params[1])
+print(&#x27;Local-linear point estimates; not CCT robust bias-corrected intervals or density tests&#x27;)
+</code></pre></details><details><summary>Stata · 展开代码</summary><p><a download href="../v2/labs/rdd.do">下载完整脚本</a></p><button type="button" data-copy>复制代码</button><pre><code>version 17.0
+clear all
+set more off
+set seed 20261027
+* Synthetic teaching data. Stata and NumPy RNG streams differ.
+set obs 12000
+gen double r=runiform(-1,1)
+gen byte above=r&gt;=0
+gen byte d=runiform()&lt;(.2+.5*above)
+gen double y=1+2*d+.6*r+.3*above*r+rnormal()
+foreach h in .2 .4 .6 {
+    gen double w=1-abs(r)/`h&#x27; if abs(r)&lt;`h&#x27;
+    regress y i.above##c.r [aw=w] if abs(r)&lt;`h&#x27;, vce(robust)
+    scalar jump_y=_b[1.above]
+    regress d i.above##c.r [aw=w] if abs(r)&lt;`h&#x27;, vce(robust)
+    display &quot;Fuzzy local Wald = &quot; jump_y/_b[1.above]
+    drop w
+}
+* Point-estimate demonstration, not CCT intervals or density manipulation test.
+* For a separate formal analysis install rdrobust and rddensity, record versions.
+</code></pre></details></section><section class="paper" id="s5"><h2>5 · 专属练习与参考答案</h2><p>带宽0.5缩到0.1后不显著，是否证明效应不存在？</p><details><summary>展开答案与依据</summary><p>不能，精度可能大幅下降。应比较点估计、区间和有效样本，并采用与偏差处理一致的推断。</p></details></section><section class="paper" id="s6"><h2>6 · 学习验收</h2><p>独立解释本模块公式中的随机对象、目标量与关键条件；运行实验，改变一个前提并说明结果为何改变。只阅读或运行命令不等于掌握。</p><label><input type="checkbox" data-module-check="M32"> 已完成 M32 的推导、实验与练习</label></section><section class="paper" id="s7"><h2>7 · 原120课映射与资料</h2><p>原课编号、标题与历史授课日期保留。下列为主题映射，合并模块并不表示每节旧课均已独立重写。</p><a class="maplink" href="../v2/../lessons/05-09.html">原课 05-09</a><p><a href="../v2/review.html">评审回应与修订范围</a> · <a href="../v2/mapping.html">完整120课映射</a> · <a href="../v2/sources.html">原始文献与软件文档</a></p></section></main><script defer src="../study-progress.js"></script></body></html>

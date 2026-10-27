@@ -1,0 +1,722 @@
+{
+  "01-01": {
+    "number": 1,
+    "title": "计量经济学的本质与适用范围",
+    "url": "lessons/01-01.html",
+    "sha256": "4714ee48a185c5e79a03844e5cfc17eefd9677f21867a1538475d8e22aca2913"
+  },
+  "01-02": {
+    "number": 2,
+    "title": "相关关系与因果关系",
+    "url": "lessons/01-02.html",
+    "sha256": "3fcda734dcbe5624bf78b0bb55a31431672f2e19b1abd21092b8e120cd70df8c"
+  },
+  "01-03": {
+    "number": 3,
+    "title": "截面、时间序列和面板数据",
+    "url": "lessons/01-03.html",
+    "sha256": "d60476803e2dfe1d6cacf50f5861a774030ecf3a81f2681fccb894a01ac76aad"
+  },
+  "01-04": {
+    "number": 4,
+    "title": "期望、方差、协方差、标准误、假设检验和p值",
+    "url": "lessons/01-04.html",
+    "sha256": "b5b7288da851efff52315659e5ac8af857c562ce8070430d0ecc6bca908b3c08"
+  },
+  "01-05": {
+    "number": 5,
+    "title": "完整计量研究流程",
+    "url": "lessons/01-05.html",
+    "sha256": "d58df3d4abd6e8482efb9834457818c2c9dca26e6a3fcc768f2a2b7463f21471"
+  },
+  "01-06": {
+    "number": 6,
+    "title": "Stata基础操作与数据分析",
+    "url": "lessons/01-06.html",
+    "sha256": "f5205bf8477462d370a97a1a5a279f97e8900dd310fd8596a9f6a6edd9563616"
+  },
+  "01-07": {
+    "number": 7,
+    "title": "Python基础操作与数据分析",
+    "url": "lessons/01-07.html",
+    "sha256": "cfb3481e9a67e4aa6787cd689238612d251e49bccc06b05a8012d3f01b787ad8"
+  },
+  "02-01": {
+    "number": 8,
+    "title": "一元线性回归",
+    "url": "lessons/02-01.html",
+    "sha256": "100c581524ecb1389a4bd68d4e8862e8361bd1d0ad862675c281b3d80df5e9f3"
+  },
+  "02-02": {
+    "number": 9,
+    "title": "OLS最小二乘法",
+    "url": "lessons/02-02.html",
+    "sha256": "c7a1cf7b5bb58e77577d8263f97b8e8d72fafab802ef53c0b73dcf59ed3b4729"
+  },
+  "02-03": {
+    "number": 10,
+    "title": "拟合优度R²",
+    "url": "lessons/02-03.html",
+    "sha256": "91712ca19d7ad1ea9345c28faf3c55615aff082defa8a0473d90496fc1a1f4b5"
+  },
+  "02-04": {
+    "number": 11,
+    "title": "多元线性回归与控制变量",
+    "url": "lessons/02-04.html",
+    "sha256": "54ff023d1003cdf4f4a28995b140427ee1290ebedd2c4fcce877ad220b224661"
+  },
+  "02-05": {
+    "number": 12,
+    "title": "偏回归系数与教育回报",
+    "url": "lessons/02-05.html",
+    "sha256": "3c4084109662c2d17b0f911d67d40c61537f050f9ec577b70e3dfd214eb85456"
+  },
+  "02-06": {
+    "number": 13,
+    "title": "经典线性回归的主要假设",
+    "url": "lessons/02-06.html",
+    "sha256": "6c24ea8a122676210c165a4663d5e2abc46a5528c642580936b58e6ebb2d8966"
+  },
+  "02-07": {
+    "number": 14,
+    "title": "t检验",
+    "url": "lessons/02-07.html",
+    "sha256": "5d7619ab35eab8c691dd87ae0e7811375abfb84430af93a5072dd8facef44d69"
+  },
+  "02-08": {
+    "number": 15,
+    "title": "F检验与联合假设",
+    "url": "lessons/02-08.html",
+    "sha256": "f74fe2b96b517869f8a6b1dcaaf8392495880aa335527c08402f172ceb518954"
+  },
+  "02-09": {
+    "number": 16,
+    "title": "虚拟变量",
+    "url": "lessons/02-09.html",
+    "sha256": "6e36f73f67cc0ddb3d63ca2a90ee00315e7bb779900d07e5e4927a6a138d2b9b"
+  },
+  "02-10": {
+    "number": 17,
+    "title": "交互项与条件效应",
+    "url": "lessons/02-10.html",
+    "sha256": "09ddf21239480ee12fd4244796b44e0070dddbbf117d15008475e8d6b5e3b878"
+  },
+  "02-11": {
+    "number": 18,
+    "title": "对数模型与二次项",
+    "url": "lessons/02-11.html",
+    "sha256": "9676b2d2339e6718768ced2de369f37b3c2cb89c6d15c394fa8c0f4246791848"
+  },
+  "02-12": {
+    "number": 19,
+    "title": "回归结果的规范解释",
+    "url": "lessons/02-12.html",
+    "sha256": "8746ca9895012ae5e12d1f0b2cda8ec55b3e531be2796834977d7fb844d364cd"
+  },
+  "02-13": {
+    "number": 20,
+    "title": "异方差初步",
+    "url": "lessons/02-13.html",
+    "sha256": "fd56bf9d6f90babf2ac636859fc6671232e52a25521f384fb32c19eceb6db9e5"
+  },
+  "02-14": {
+    "number": 21,
+    "title": "多重共线性",
+    "url": "lessons/02-14.html",
+    "sha256": "a4b0e0d59cd3c1bb9047b6cb6014bf9745169ac9e3d8a8854939c18258b708eb"
+  },
+  "02-15": {
+    "number": 22,
+    "title": "工资影响因素综合实操",
+    "url": "lessons/02-15.html",
+    "sha256": "6fade7f5bbc16477e5d239855fa209685f419e4d02183e35ae34b9264558c39f"
+  },
+  "03-01": {
+    "number": 23,
+    "title": "内生性及其统计后果",
+    "url": "lessons/03-01.html",
+    "sha256": "7c8b3ec77d009d553f3f23830ee1caecb13cc818bb15d1023d134281ba1b7f54"
+  },
+  "03-02": {
+    "number": 24,
+    "title": "遗漏变量偏差",
+    "url": "lessons/03-02.html",
+    "sha256": "3e0b38cecfd864e5b2cebea67db3713fd56736be3253bc54f3981d438c9bbb8f"
+  },
+  "03-03": {
+    "number": 25,
+    "title": "测量误差",
+    "url": "lessons/03-03.html",
+    "sha256": "eaddf3c7a1a563399c67ca1dd34df7d28c9aa61ebc56e3858315b79eba732e0b"
+  },
+  "03-04": {
+    "number": 26,
+    "title": "双向因果和同时性",
+    "url": "lessons/03-04.html",
+    "sha256": "92860105c331631c72b81f25a868c49ab44f28391a97cd7b10f013366d25713a"
+  },
+  "03-05": {
+    "number": 27,
+    "title": "异方差检验与稳健标准误",
+    "url": "lessons/03-05.html",
+    "sha256": "eeba135e985884cb69217f4897de07081ead76c3108d0ecc0d9c9c6aa507eaf0"
+  },
+  "03-06": {
+    "number": 28,
+    "title": "自相关",
+    "url": "lessons/03-06.html",
+    "sha256": "68c572ffbf6fcbe18c4fbe5029df162774e6a2cc08d32a8f60d8cee79ec0355b"
+  },
+  "03-07": {
+    "number": 29,
+    "title": "异常值与杠杆点",
+    "url": "lessons/03-07.html",
+    "sha256": "69c6e72de610646b0787342b476be033ed1c92c7718bc0a8d2d1ab2c9f448569"
+  },
+  "03-08": {
+    "number": 30,
+    "title": "模型设定偏误",
+    "url": "lessons/03-08.html",
+    "sha256": "a37c0bad6bed9f686f61b8dd1fb77239c348c394a4e2703169c27075859933c8"
+  },
+  "03-09": {
+    "number": 31,
+    "title": "样本选择偏差",
+    "url": "lessons/03-09.html",
+    "sha256": "316ccdd36a1994535dae81de36461b57a02ffe5b6e6e1882bf02712e96030d77"
+  },
+  "03-10": {
+    "number": 32,
+    "title": "Stata模型诊断进阶",
+    "url": "lessons/03-10.html",
+    "sha256": "7c4eb33a3c7e508c43c53008547c00487182820864c24409b70d8bd75a3370af"
+  },
+  "03-11": {
+    "number": 33,
+    "title": "Python模型诊断进阶",
+    "url": "lessons/03-11.html",
+    "sha256": "ac3fe8be8ac13f9dc3720166c1a4d9553f722a511c459255fc54d1f7b45b7f98"
+  },
+  "03-12": {
+    "number": 34,
+    "title": "教育回报案例中的内生性",
+    "url": "lessons/03-12.html",
+    "sha256": "995657b549a712f844f7b3208a45225e25f810699ea48e67004156c9ab7dc91a"
+  },
+  "03-13": {
+    "number": 35,
+    "title": "遗漏变量偏差模拟",
+    "url": "lessons/03-13.html",
+    "sha256": "d7288060c91fddb29b16c321bd0985f348ef376d84bfb025907c3ac87f69f6e7"
+  },
+  "03-14": {
+    "number": 36,
+    "title": "标准误与聚类推断",
+    "url": "lessons/03-14.html",
+    "sha256": "50812b356ec590ed78c11924f771ef385848637fa84204ef54f50e7cff0ab9af"
+  },
+  "03-15": {
+    "number": 37,
+    "title": "综合实操与阶段复习",
+    "url": "lessons/03-15.html",
+    "sha256": "f4948c66f9a7501613c236d494a11b1a27fc01cdb012fb5a4eec2b5c7af26a70"
+  },
+  "04-01": {
+    "number": 38,
+    "title": "反事实与潜在结果框架",
+    "url": "lessons/04-01.html",
+    "sha256": "ab6030e6f8e1dfb8465da52eac1b003495fa69c40c6e56e5b14d67ae1cda16ba"
+  },
+  "04-02": {
+    "number": 39,
+    "title": "随机对照试验（RCT）",
+    "url": "lessons/04-02.html",
+    "sha256": "0a1dec19084e1ab8dae91ed4034dc9dbe4a3bc62a319ee2d459ec1dead81dcfe"
+  },
+  "04-03": {
+    "number": 40,
+    "title": "工具变量法（IV）",
+    "url": "lessons/04-03.html",
+    "sha256": "6e11aca3ea87c7f447227ec3881ac61298408b41032a0632a979a481dac6de1c"
+  },
+  "04-04": {
+    "number": 41,
+    "title": "两阶段最小二乘法（2SLS）",
+    "url": "lessons/04-04.html",
+    "sha256": "d7c45f2b3928b9c5a2e1c98e16cd6c2d17f05ba331102cc0398bda6dba1939c6"
+  },
+  "04-05": {
+    "number": 42,
+    "title": "工具变量有效性与弱工具变量",
+    "url": "lessons/04-05.html",
+    "sha256": "e9716f160286a3447cf891ab57714933b760880ba96ba00f9ff0e08d7dcbd1fe"
+  },
+  "04-06": {
+    "number": 43,
+    "title": "双重差分法（DID）",
+    "url": "lessons/04-06.html",
+    "sha256": "e02d3885aad8313633e2d17317297d41a780497a1b453c10c6d494dc503e4402"
+  },
+  "04-07": {
+    "number": 44,
+    "title": "平行趋势与事件研究",
+    "url": "lessons/04-07.html",
+    "sha256": "bf08f88d8d8e1c7460bc8bdcd65783c6480ab730d4dc5d70e9c47771e714e44f"
+  },
+  "04-08": {
+    "number": 45,
+    "title": "多期DID",
+    "url": "lessons/04-08.html",
+    "sha256": "cee32bc48aa6d7443453a07362ac18457bce12d2b3167a17efb533d77f1bf62f"
+  },
+  "04-09": {
+    "number": 46,
+    "title": "断点回归（RDD）",
+    "url": "lessons/04-09.html",
+    "sha256": "2fe1161dfe4de04d166e8a3fa90d8a5359da4fd674cf86196b6dc3960cc65a6d"
+  },
+  "04-10": {
+    "number": 47,
+    "title": "精确断点与模糊断点",
+    "url": "lessons/04-10.html",
+    "sha256": "3f710d020c054589f1740ded04f46a09fd39df04940bd7c9813d8c85b6d9eab2"
+  },
+  "04-11": {
+    "number": 48,
+    "title": "倾向得分匹配（PSM）",
+    "url": "lessons/04-11.html",
+    "sha256": "205c79c15f5ca91cdee061fe60687cb4b19623b03b82d25ed96fd0ac35a90bfc"
+  },
+  "04-12": {
+    "number": 49,
+    "title": "合成控制法",
+    "url": "lessons/04-12.html",
+    "sha256": "7540f724fb532bed3d8ff7d7eb1c40bcd6a08604df4219932f822f5444997a8f"
+  },
+  "04-13": {
+    "number": 50,
+    "title": "中介效应与机制分析",
+    "url": "lessons/04-13.html",
+    "sha256": "e567887ead7c5b61d1c191527eccc3446853d839ddd28d5c442872efbab84ad0"
+  },
+  "05-01": {
+    "number": 51,
+    "title": "ATE、ATT与LATE",
+    "url": "lessons/05-01.html",
+    "sha256": "d568c008d0cb65334e5cff07755d6b1b2763e894a9f66a1277a163e65d1fb4b8"
+  },
+  "05-02": {
+    "number": 52,
+    "title": "IV完整应用案例",
+    "url": "lessons/05-02.html",
+    "sha256": "95c7dcaddcb4cbe519e700f91d4168e2be42e1ee8fa439d4086a1d0499229c20"
+  },
+  "05-03": {
+    "number": 53,
+    "title": "弱工具变量诊断",
+    "url": "lessons/05-03.html",
+    "sha256": "451a21de5e73207eff41ab436fe4cd19c66d25363ec4d6ff601365c6a712ff1c"
+  },
+  "05-04": {
+    "number": 54,
+    "title": "DID政策评估案例",
+    "url": "lessons/05-04.html",
+    "sha256": "a4552c7a8f95271947ec7775af896270f5dcf3508e420755678c9bd79ac11b71"
+  },
+  "05-05": {
+    "number": 55,
+    "title": "TWFE及其局限",
+    "url": "lessons/05-05.html",
+    "sha256": "47eab8944579d3891039cd48e83a52400caca46cea0541d8b60ca2586e1b3c32"
+  },
+  "05-06": {
+    "number": 56,
+    "title": "现代多期DID估计方法",
+    "url": "lessons/05-06.html",
+    "sha256": "771c9b0188f805b8e0b5f62cc991f86785da0643fe368bc741fea55c8d6f1023"
+  },
+  "05-07": {
+    "number": 57,
+    "title": "事件研究图与动态效应",
+    "url": "lessons/05-07.html",
+    "sha256": "09f6adf32a6ab8286b6957b72a55fba058db16636c0fa67fd737bfd9649f27e2"
+  },
+  "05-08": {
+    "number": 58,
+    "title": "RDD带宽选择与估计",
+    "url": "lessons/05-08.html",
+    "sha256": "f9035c830b83997a6de3e8a7eb440aade7ca644df91b881dc2da73acc2d82e52"
+  },
+  "05-09": {
+    "number": 59,
+    "title": "RDD有效性检验",
+    "url": "lessons/05-09.html",
+    "sha256": "6800fb82ac19773865fe1cb9bd2c0f1be23fddae48bc19ddb3dfcec1c1f874c2"
+  },
+  "05-10": {
+    "number": 60,
+    "title": "匹配方法与平衡性检验",
+    "url": "lessons/05-10.html",
+    "sha256": "f3baf03ea5c63af55a601e61526772b3eda7504c7a16e9e70545c4532ed09ad5"
+  },
+  "05-11": {
+    "number": 61,
+    "title": "合成控制法实操",
+    "url": "lessons/05-11.html",
+    "sha256": "db07571287e1b51b6d69f84c0ffbe48e5a76bd0302487248abc253cc643be28f"
+  },
+  "05-12": {
+    "number": 62,
+    "title": "因果机制识别的条件",
+    "url": "lessons/05-12.html",
+    "sha256": "004ff9b24f6a9f8b50cc75641464c31e8fff72fe9d45c9a04af093b5d18aa1c6"
+  },
+  "05-13": {
+    "number": 63,
+    "title": "异质性分析与多重检验",
+    "url": "lessons/05-13.html",
+    "sha256": "52b4eb1e2a00fe7e7e5493c7463066cb341b9fc76e4553d040a79ece2efb35ae"
+  },
+  "05-14": {
+    "number": 64,
+    "title": "因果识别方法比较",
+    "url": "lessons/05-14.html",
+    "sha256": "41dd0b452c2b8a56215963c61941dbda8f64a6037774757253148a46d2656599"
+  },
+  "05-15": {
+    "number": 65,
+    "title": "政策评估论文综合分析",
+    "url": "lessons/05-15.html",
+    "sha256": "95fbccdfe0e3b033e2726ac933b67180793ff55253708dbe45377f9cfd4d5df9"
+  },
+  "06-01": {
+    "number": 66,
+    "title": "面板数据、固定效应和随机效应",
+    "url": "lessons/06-01.html",
+    "sha256": "5df7e5467f1bc42e3d7cacd89dd3d4f06137dcb3e6a3b0dc733eb5f9f7db0900"
+  },
+  "06-02": {
+    "number": 67,
+    "title": "双向固定效应模型",
+    "url": "lessons/06-02.html",
+    "sha256": "6fa33b8d0c9faaaea70a2a050912e9e02d0da7cdcdbf5b5f3fa5f85df1d26def"
+  },
+  "06-03": {
+    "number": 68,
+    "title": "动态面板与GMM",
+    "url": "lessons/06-03.html",
+    "sha256": "6677e43820bb454cec3791510ad41a5b45609c50e9b1f29a362e0ff2e1121570"
+  },
+  "06-04": {
+    "number": 69,
+    "title": "平稳性与单位根",
+    "url": "lessons/06-04.html",
+    "sha256": "37b8fd95ecca2e35a967259a1613065c2745db7ba95fbfed6da9afd59f7247bc"
+  },
+  "06-05": {
+    "number": 70,
+    "title": "协整与误差修正",
+    "url": "lessons/06-05.html",
+    "sha256": "83577cd78e692cc38ed6b3b6abaa197c00c6465557e7172a9f18c040ed5fc2d1"
+  },
+  "06-06": {
+    "number": 71,
+    "title": "Logit与Probit",
+    "url": "lessons/06-06.html",
+    "sha256": "ceb7d4c3bc0016be281de9322851729cdd9570e986c0aa0fdaf5cfe4c32d9226"
+  },
+  "06-07": {
+    "number": 72,
+    "title": "分位数回归",
+    "url": "lessons/06-07.html",
+    "sha256": "58c0891370e19370d28f1251df92813abd21f6822632f0085f3bccb0ccbcb295"
+  },
+  "06-08": {
+    "number": 73,
+    "title": "泊松回归与负二项回归",
+    "url": "lessons/06-08.html",
+    "sha256": "d49aa69d0bd2a242706ff4a662f093a308f04fc4cba43cef791d7759beabff43"
+  },
+  "06-09": {
+    "number": 74,
+    "title": "实证论文写作框架与结果呈现",
+    "url": "lessons/06-09.html",
+    "sha256": "7a9cae9f7bc86b338d853ca30b0aba09c01dd0d500a04a8dc38ef47d4ae007f0"
+  },
+  "07-01": {
+    "number": 75,
+    "title": "面板数据整理",
+    "url": "lessons/07-01.html",
+    "sha256": "231abef7e0fad850064f6ba95dab354b70bd8645f06a0574566daf28b77afc1c"
+  },
+  "07-02": {
+    "number": 76,
+    "title": "非平衡面板",
+    "url": "lessons/07-02.html",
+    "sha256": "7fd8deeaab4088f9cb1cd2abb6178dc0e1c0aff21b0291d1fc559c225ecae43b"
+  },
+  "07-03": {
+    "number": 77,
+    "title": "固定效应中的识别变异",
+    "url": "lessons/07-03.html",
+    "sha256": "5523734511080dfd58ab011a91efe4ffc23a9082946229862f578d9b4945945d"
+  },
+  "07-04": {
+    "number": 78,
+    "title": "聚类标准误",
+    "url": "lessons/07-04.html",
+    "sha256": "1b076624f0a6842d2134dac9f40ab46edbb5f87e4ca8a1f70e68e75ffed44f07"
+  },
+  "07-05": {
+    "number": 79,
+    "title": "面板模型结果报告",
+    "url": "lessons/07-05.html",
+    "sha256": "2f372df5fddda7d25acf62e24385b4b6c3a64e441acca100132e66ba5de57206"
+  },
+  "07-06": {
+    "number": 80,
+    "title": "时间趋势与滞后项",
+    "url": "lessons/07-06.html",
+    "sha256": "8caba452e9883287c809edb1e5b68385243d96b142923c4d1fc7747823cae710"
+  },
+  "07-07": {
+    "number": 81,
+    "title": "时间序列预测与因果推断",
+    "url": "lessons/07-07.html",
+    "sha256": "450ba85a2c0285102b5fc8c4c36fc84d35858b4059b46a258750d217ecf87477"
+  },
+  "07-08": {
+    "number": 82,
+    "title": "离散选择模型的边际效应",
+    "url": "lessons/07-08.html",
+    "sha256": "680bdcbed24430e943382d28fe3b5f4e2e0f10497bde8be2d8d8c0df0ec8a870"
+  },
+  "07-09": {
+    "number": 83,
+    "title": "计数模型的过度离散",
+    "url": "lessons/07-09.html",
+    "sha256": "8c1e50600b75fa696eb0c08bc3916fdee910df05229b6023c4a3bab0c68cde36"
+  },
+  "07-10": {
+    "number": 84,
+    "title": "分位数回归实操",
+    "url": "lessons/07-10.html",
+    "sha256": "ab2af9390230f9546bd5abb414416c02755a1bca3184c81f54d51389c69f9c21"
+  },
+  "07-11": {
+    "number": 85,
+    "title": "模型选择与比较",
+    "url": "lessons/07-11.html",
+    "sha256": "6172d7b59c6d5398f02904b2dc51c751273d311c22d4782f212896b9234bdbb9"
+  },
+  "07-12": {
+    "number": 86,
+    "title": "综合分析与方法复习",
+    "url": "lessons/07-12.html",
+    "sha256": "6bf8d1545a12922b6e015341a7240e3c39bf94dfe08821180ca85f111fddd000"
+  },
+  "08-01": {
+    "number": 87,
+    "title": "抽样设计与样本权重",
+    "url": "lessons/08-01.html",
+    "sha256": "242c3b484d5e7c2661444dacc27a29f8b415f64be4a5f3b9ca088e07e4d56ce4"
+  },
+  "08-02": {
+    "number": 88,
+    "title": "复杂抽样与统计推断",
+    "url": "lessons/08-02.html",
+    "sha256": "276de1b070147939fe6ab27c71bdd950fba4bceb2cfc82ff5faa711add69bbfa"
+  },
+  "08-03": {
+    "number": 89,
+    "title": "缺失数据机制",
+    "url": "lessons/08-03.html",
+    "sha256": "c68f5a7a9908e66879728b1fb593d7d0a4d4a543e0c8f7aa3d747ea4fb630a17"
+  },
+  "08-04": {
+    "number": 90,
+    "title": "多重插补",
+    "url": "lessons/08-04.html",
+    "sha256": "439bb0a983f127220715315c2f442ada93ff67f95931bba176673daff318d41e"
+  },
+  "08-05": {
+    "number": 91,
+    "title": "测量误差与变量有效性",
+    "url": "lessons/08-05.html",
+    "sha256": "a1e81781e0401a06424f24655c9588393be40a602c741c8f421e7c9c292ca111"
+  },
+  "08-06": {
+    "number": 92,
+    "title": "因果图（DAG）",
+    "url": "lessons/08-06.html",
+    "sha256": "fefef214eac93913138fc448187c9f0f95b2063032d4ae55ccad2950b26890cf"
+  },
+  "08-07": {
+    "number": 93,
+    "title": "Bad Controls与Collider Bias",
+    "url": "lessons/08-07.html",
+    "sha256": "6f9c0a10fdac525cc013d8b4af33efadac5ec546f650dc8eee9784ffec15982f"
+  },
+  "08-08": {
+    "number": 94,
+    "title": "安慰剂检验与负向对照",
+    "url": "lessons/08-08.html",
+    "sha256": "b05c661adbbcb53f5663cce34ccb91c795e8c0ee0c59c2f8a750c31eb7f470e3"
+  },
+  "08-09": {
+    "number": 95,
+    "title": "敏感性分析",
+    "url": "lessons/08-09.html",
+    "sha256": "ae45b4e1f7946b675edd957030cf0e074232c19a54bf2716007fa9d96b21d2b5"
+  },
+  "08-10": {
+    "number": 96,
+    "title": "多重检验与研究者自由度",
+    "url": "lessons/08-10.html",
+    "sha256": "e5e66642b85f55b37cd413ea08d9940ec500bf46e30f50c5cb40b71e6cb431fe"
+  },
+  "08-11": {
+    "number": 97,
+    "title": "效应量、置信区间与实际意义",
+    "url": "lessons/08-11.html",
+    "sha256": "a5771d9e9015254124cd434a027448ae71603e774d59291256513e0d89209dbd"
+  },
+  "08-12": {
+    "number": 98,
+    "title": "统计可靠性综合审查",
+    "url": "lessons/08-12.html",
+    "sha256": "f000f6340fe8dc37ca37c74ff35a3eec74b16a138357b485ef2685955f5492f4"
+  },
+  "09-01": {
+    "number": 99,
+    "title": "研究问题的选择",
+    "url": "lessons/09-01.html",
+    "sha256": "3a5ae15d67b3f5a41dd045a776d28a70e8d3e69438e7f06a34afac16790beb9b"
+  },
+  "09-02": {
+    "number": 100,
+    "title": "文献检索与研究缺口",
+    "url": "lessons/09-02.html",
+    "sha256": "0cd8bd8b0f509471ab945d8f17b50507e870e60a4b62deb65e443081f8c8b5b2"
+  },
+  "09-03": {
+    "number": 101,
+    "title": "Estimand与研究设计",
+    "url": "lessons/09-03.html",
+    "sha256": "a4e59aec6d87966596f25c1578e85929a64637ad0aa44850b09ea2c8287ac242"
+  },
+  "09-04": {
+    "number": 102,
+    "title": "数据获取与数据字典",
+    "url": "lessons/09-04.html",
+    "sha256": "d57f0ac4fd20c6d80cc2f31904d1639cad1bb6fd900f047ab4e9c63f54ddf47b"
+  },
+  "09-05": {
+    "number": 103,
+    "title": "数据清洗",
+    "url": "lessons/09-05.html",
+    "sha256": "3353ceae62c4a68ae46a1e40c9eafd809ac5bc21b7968b99900abc14f95a8462"
+  },
+  "09-06": {
+    "number": 104,
+    "title": "描述统计与可视化",
+    "url": "lessons/09-06.html",
+    "sha256": "4ee10bff07e2ae4aea3c2e2432276fa323a7c9d794f346a2460c6a2a52504f7c"
+  },
+  "09-07": {
+    "number": 105,
+    "title": "变量构造与模型设定",
+    "url": "lessons/09-07.html",
+    "sha256": "6bb3cc8e5801a28d60aaafb177eb0d158d2f6c0043648d72edcf9212a18da5e2"
+  },
+  "09-08": {
+    "number": 106,
+    "title": "基准模型估计",
+    "url": "lessons/09-08.html",
+    "sha256": "986ce64c73ad9ce406df8d1f266a3a66c0d9246b4266925270128c33687769df"
+  },
+  "09-09": {
+    "number": 107,
+    "title": "识别假设与模型诊断",
+    "url": "lessons/09-09.html",
+    "sha256": "1d89397520da32bc15a7d969f1760a9aa52d08cd75f3a1875961a898188b594d"
+  },
+  "09-10": {
+    "number": 108,
+    "title": "稳健性与敏感性分析",
+    "url": "lessons/09-10.html",
+    "sha256": "f67577519f4a24eae7011b06063bb27a4b9b79ae8584d8846918fa7cecd743c0"
+  },
+  "09-11": {
+    "number": 109,
+    "title": "异质性与机制讨论",
+    "url": "lessons/09-11.html",
+    "sha256": "717dde2c9ee0e1bd8f9d1297ab587d28d7400fdf0b14dc8fc5ad3a5557857251"
+  },
+  "09-12": {
+    "number": 110,
+    "title": "回归表、图形与结果报告",
+    "url": "lessons/09-12.html",
+    "sha256": "7fd1076170abc034c8cd5a8712315ee4462fbc419fcfdbd86cac635a749494cb"
+  },
+  "10-01": {
+    "number": 111,
+    "title": "选择可复现的实证论文",
+    "url": "lessons/10-01.html",
+    "sha256": "82eb95792ad166af67496c8df5fa26ee1c68133dc31284784532e9a07e335d6e"
+  },
+  "10-02": {
+    "number": 112,
+    "title": "阅读论文与核查数据来源",
+    "url": "lessons/10-02.html",
+    "sha256": "7957f068911576d1cf7b3c9673cfbabe66a8fd1a676e1b52c43e30dfa4695abd"
+  },
+  "10-03": {
+    "number": 113,
+    "title": "配置复现环境",
+    "url": "lessons/10-03.html",
+    "sha256": "edf81f836af5e47db74a0205304c2c3a509518cbdb9e7d53c1ac3b7bdaea2d21"
+  },
+  "10-04": {
+    "number": 114,
+    "title": "复现基准模型",
+    "url": "lessons/10-04.html",
+    "sha256": "709b13b88b78cc64de40a773d70000469436703d1e021be08adac3a91d80e0ba"
+  },
+  "10-05": {
+    "number": 115,
+    "title": "复现稳健性分析",
+    "url": "lessons/10-05.html",
+    "sha256": "a6924f13a4aafad3a1f122cd1af4c6701de3798afb725da97b27fef7ec04485e"
+  },
+  "10-06": {
+    "number": 116,
+    "title": "分析复现差异",
+    "url": "lessons/10-06.html",
+    "sha256": "0f88ed48a0ac115dddf9b2487a514d0c645efeb9971b7f538b0c88a6acbc0762"
+  },
+  "10-07": {
+    "number": 117,
+    "title": "引言与文献综述写作",
+    "url": "lessons/10-07.html",
+    "sha256": "b1f9b6cffbb360aff33826770d0c0e33b35ff77c0cef34adba5f57305488f45a"
+  },
+  "10-08": {
+    "number": 118,
+    "title": "数据、方法和结果写作",
+    "url": "lessons/10-08.html",
+    "sha256": "ab046321f895a1061e3eca9d65f24b8d5ce1ab28ab5b8fc319fce0c6ebaba7be"
+  },
+  "10-09": {
+    "number": 119,
+    "title": "Discussion与审稿式修改",
+    "url": "lessons/10-09.html",
+    "sha256": "b9105e89fe202e67a91ed17fc866ed2236192d3566aa73b839ad9c99a3ebd47c"
+  },
+  "10-10": {
+    "number": 120,
+    "title": "综合考核与课程总结",
+    "url": "lessons/10-10.html",
+    "sha256": "37915ab0cd33c3b805bf6160350d9c1880ee6acff275d4ee7c0ea3eea841cad4"
+  }
+}
