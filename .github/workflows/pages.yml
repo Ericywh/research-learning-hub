@@ -842,79 +842,77 @@ jobs:
           NODE
 
   verify-canonical-econometrics:
-    name: Verify DAY21-120 canonical econometrics lessons over HTTPS
+    name: Verify DAY21-120 taught-state lessons over HTTPS
     needs: deploy
     runs-on: ubuntu-latest
     steps:
       - name: Check out source commit
         uses: actions/checkout@v4
-      - name: Read source and verify all publicly served day21-120 lesson bodies
+      - name: Verify 120 catalogue records and 100 updated lesson pages
         shell: bash
         env:
           DEPLOY_SHA: ${{ github.sha }}
         run: |
           set -euo pipefail
           node <<'NODE'
-          const fs=require('node:fs'), vm=require('node:vm'), path=require('node:path');
-          const ctx={window:{}};
-          vm.runInNewContext(fs.readFileSync('docs/econometrics/catalog.js','utf8'),ctx);
-          const courses=ctx.window.ECON_COURSE.chapters.flatMap(c=>c.lessons);
-          const drafted=courses.filter(l=>l.prepared===true);
-          if(courses.length!==120 || drafted.length!==100 ||
-             courses.filter(l=>l.published).length!==20)throw Error('Course count or status mismatch');
-          if(drafted.some(l=>l.number<21 || l.number>120 || l.published ||
-              l.preparedUrl!=='lessons/'+l.id+'.html'))
-              throw Error('Prepared metadata changed original teaching progress');
+          const fs=require('node:fs'),vm=require('node:vm'),path=require('node:path');
+          const context={window:{}};
+          vm.runInNewContext(fs.readFileSync('docs/econometrics/catalog.js','utf8'),context);
+          const lessons=context.window.ECON_COURSE.chapters.flatMap(c=>c.lessons);
+          const expected=lessons.filter(l=>l.number>=21);
+          if(lessons.length!==120||expected.length!==100||
+             lessons.some(l=>!l.published||l.url!=='lessons/'+l.id+'.html'))
+             throw Error('All 120 canonical course records must be published with canonical links');
           const base='https://ericywh.github.io/research-learning-hub/econometrics/';
-          const cache='?commit='+process.env.DEPLOY_SHA.slice(0,12);
-          const wait=ms=>new Promise(done=>setTimeout(done,ms));
-          async function check(l){
-            const file=path.join('docs/econometrics',l.preparedUrl);
-            const local=fs.readFileSync(file,'utf8');
-            const title='第'+l.chapter+'章·第'+l.section+'节｜'+l.title;
-            if(!local.includes(title) ||
-               (local.match(/<section class="paper"/g)||[]).length!==7 ||
-               (local.match(/<pre>/g)||[]).length!==2 ||
-               !local.includes('Stata') || !local.includes('Python') ||
-               !local.includes('答案') || !local.includes('正文提前公开'))
-               throw Error('Local lesson not fully authored: '+l.id);
-            let last='';
+          const suffix='?commit='+process.env.DEPLOY_SHA.slice(0,12);
+          const wait=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+          async function check(lesson){
+            const file=path.join('docs/econometrics',lesson.url);
+            const html=fs.readFileSync(file,'utf8');
+            const heading='第'+lesson.chapter+'章·第'+lesson.section+'节｜'+lesson.title;
+            if(!html.includes(heading)||!html.includes('<span class="badge">已授课</span>')||
+               !html.includes('name="course-status" content="taught"')||
+               (html.match(/<section class="paper"/g)||[]).length!==7||
+               (html.match(/<pre>/g)||[]).length!==2||
+               !html.includes('Stata')||!html.includes('Python')||!html.includes('答案'))
+              throw Error('Canonical source incomplete or state mismatch: '+lesson.id);
+            let reason='';
             for(let attempt=0;attempt<6;attempt++){
               try{
-                const response=await fetch(base+l.preparedUrl+cache,{
-                  signal:AbortSignal.timeout(18000),redirect:'follow'
-                });
+                const response=await fetch(base+lesson.url+suffix,{signal:AbortSignal.timeout(20000)});
                 if(response.status!==200)throw Error('HTTP '+response.status);
-                const html=await response.text();
-                if(!html.includes(title) || !html.includes('正文提前公开') ||
-                   !html.includes('Stata') || !html.includes('Python') ||
-                   !html.includes('答案') ||
-                   (html.match(/<section class="paper"/g)||[]).length!==7)
-                   throw Error('Unexpected or stale public lesson HTML');
+                const deployed=await response.text();
+                if(!deployed.includes(heading)||!deployed.includes('<span class="badge">已授课</span>')||
+                   !deployed.includes('name="course-status" content="taught"')||
+                   !deployed.includes('Stata')||!deployed.includes('Python')||
+                   !deployed.includes('答案')||
+                   (deployed.match(/<section class="paper"/g)||[]).length!==7)
+                   throw Error('Public lesson stale or incomplete');
                 return;
-              }catch(e){last=String(e);if(attempt<5)await wait(2000*(attempt+1));}
+              }catch(err){reason=String(err);if(attempt<5)await wait(2000*(attempt+1));}
             }
-            throw Error('Failed DAY '+l.number+': '+last);
+            throw Error('DAY '+lesson.number+' failed: '+reason);
           }
           async function main(){
-            const homepage=await fetch(base+cache);
-            const home=await homepage.text();
-            if(homepage.status!==200||!home.includes('l.preparedUrl'))
-              throw Error('Public original lesson catalogue lacks prepared-page links');
-            const response=await fetch(base+'catalog.js'+cache);
-            if(response.status!==200)throw Error('Deployed course catalogue not HTTP 200');
-            const latest=await response.text();
-            const out={window:{}};
-            vm.runInNewContext(latest,out);
-            if(out.window.ECON_COURSE.chapters.flatMap(c=>c.lessons).filter(l=>l.prepared).length!==100)
-              throw Error('Public course catalogue does not expose 100 prepared URLs');
-            for(let i=0;i<drafted.length;i+=8){
-              await Promise.all(drafted.slice(i,i+8).map(check));
-              console.log('Verified canonical lesson bodies:',Math.min(i+8,drafted.length),'/',drafted.length);
+            const homepage=await fetch(base+suffix);
+            const homepageText=await homepage.text();
+            if(homepage.status!==200||!homepageText.includes('已授课')||
+               homepageText.includes('正文已上线·待正式授课'))
+              throw Error('Course homepage still shows planned status');
+            const served=await fetch(base+'catalog.js'+suffix);
+            if(served.status!==200)throw Error('Deployed catalogue HTTP '+served.status);
+            const ctx={window:{}};
+            vm.runInNewContext(await served.text(),ctx);
+            const entries=ctx.window.ECON_COURSE.chapters.flatMap(c=>c.lessons);
+            if(entries.length!==120||entries.filter(l=>l.published&&l.url==='lessons/'+l.id+'.html').length!==120)
+              throw Error('Deployed catalogue must contain 120 taught-state records');
+            for(let i=0;i<expected.length;i+=8){
+              await Promise.all(expected.slice(i,i+8).map(check));
+              console.log('Verified treated-as-taught canonical pages:',Math.min(i+8,100),'/100');
             }
-            console.log('PASS: day21-120 100 canonical lesson bodies, HTTP 200, seven sections, code, answers');
+            console.log('PASS 120/120 catalogue status and 100/100 canonical lesson HTML pages over HTTPS');
           }
-          main().catch(e=>{console.error(e);process.exitCode=1;});
+          main().catch(err=>{console.error(err);process.exitCode=1;});
           NODE
 
   verify-public-econometrics-word:

@@ -117,7 +117,7 @@ def produce(chapters,lessons,chosen,source,folder,reference,tmp):
            'econometrics-chapter-'+f'{chosen[0]:02d}'+'.docx')
  target=folder/filename
  parts=['---','title: '+json.dumps(title,ensure_ascii=False),'lang: zh-CN','---','','# '+title,'',
- '**资料说明**：本Word逐课提取当前GitHub课程HTML现有正文，保留公式、代码和练习答案。第1—20课为正式授课归档；第21—120课为提前编写的正文，尚未正式每日授课。源网页未经过真实计算的回归结果不在此虚构。','',
+ '**资料说明**：本Word逐课提取当前GitHub课程HTML现有正文，保留公式、代码和练习答案。所有120课在课程网站上统一显示为“已授课”。这是网站状态设置，不意味着此前100份预编讲义都已经在聊天中逐日正式讲授；未经过真实计算的回归结果不在此虚构。','',
  '**来源**：https://github.com/Ericywh/research-learning-hub/tree/main/docs/econometrics/lessons','',
  '**导出日期**：2026-10-27','']
  headings=[]
@@ -128,7 +128,7 @@ def produce(chapters,lessons,chosen,source,folder,reference,tmp):
    page=source/'lessons'/(l['id']+'.html')
    if not page.is_file():raise FileNotFoundError(str(page))
    heading=f"第{l['chapter']}章·第{l['section']}节｜{l['title']}"
-   label='已正式授课·归档' if l['number']<=20 else '提前编写·尚未正式授课'
+   label='网站状态：已授课'
    parts+=['','## '+heading,'',f"*全课程第{l['number']}课 / 共120课 · {label}*",'',body_from_html(page),'']
    headings.append(heading)
  md=tmp/(target.stem+'.md');md.write_text('\n'.join(parts),encoding='utf8')
@@ -155,7 +155,7 @@ def main():
  manifest={'chapters':10,'lessons':120,'taught':20,'prewritten':100,'documents':results}
  (folder/'manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2),encoding='utf8')
  links=''.join(f'<li><a href="{r["filename"]}">{("完整120课汇编" if r["lessons"]==120 else "分章讲义"+str(i+1))}（{r["lessons"]}课，Word）</a></li>' for i,r in enumerate(results))
- index='<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>计量经济学120天｜Word下载</title><style>body{font:16px/1.8 system-ui,"Noto Sans SC",sans-serif;max-width:900px;margin:35px auto;padding:20px;color:#264455}a{color:#13777d}li{margin:9px 0}</style><h1>计量经济学120天系统课程｜Word讲义</h1><p>从GitHub课程HTML导出。第1—20课正式授课，第21—120课为提前编写的正文；后者不计入授课完成数。</p><ol>'+links+'</ol><a href="../">返回课程</a></html>'
+ index='<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>计量经济学120天｜Word下载</title><style>body{font:16px/1.8 system-ui,"Noto Sans SC",sans-serif;max-width:900px;margin:35px auto;padding:20px;color:#264455}a{color:#13777d}li{margin:9px 0}</style><h1>计量经济学120天系统课程｜Word讲义</h1><p>从GitHub课程HTML导出。全部120课在网站上统一显示“已授课”。其中部分正文源自提前编写的教学资料，实际聊天授课历史另行核对。</p><ol>'+links+'</ol><a href="../">返回课程</a></html>'
  (folder/'index.html').write_text(index,encoding='utf8')
  print(json.dumps(manifest,ensure_ascii=False,indent=2))
  shutil.rmtree(tmp)

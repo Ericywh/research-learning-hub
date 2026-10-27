@@ -99,8 +99,8 @@ function changeText(id, newText) {
   home = home.replace(regexp, (_, opening) => opening + escapeHtml(newText));
 }
 changeText('published-count', published.length + ' / ' + lessons.length);
-changeText('latest-meta', '已归档 · ' + (latest.date || '日期待核对').replace(/-/g, '.') +
-  ' · DAY ' + String(latest.number).padStart(3, '0'));
+changeText('latest-meta', '已授课 · ' + (latest.date ? latest.date.replace(/-/g, '.') + ' · ' : '') +
+  'DAY ' + String(latest.number).padStart(3, '0'));
 changeText('latest-title', '第' + latest.chapter + '章·第' + latest.section + '节｜' + latest.title);
 changeText('latest-description', '本节已归档完整正文、核心公式、同数据Stata/Python代码与练习答案。');
 changeText('latest-link', '阅读第' + latest.number + '课完整讲义 ↗');
