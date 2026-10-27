@@ -689,6 +689,23 @@ jobs:
           if(days.some(d=>d.words.length!==3||d.amQ.length!==3||d.pmQ.length!==3||!d.pmAudio||!d.write))throw Error('English week-two teaching components incomplete');
           console.log('PASS English week two public HTTP 200; lessons 015–028 and exercises complete');
           NODE
+          status=$(curl -L -sS --connect-timeout 10 --max-time 30 -o /tmp/english-week03.html -w '%{http_code}' "$BASE/english/week-03.html?design=$DEPLOY_SHA" || true)
+          [[ "$status" == "200" ]] || { echo "::error::English week three unavailable over HTTPS"; exit 1; }
+          grep -Fq 'ENGLISH EXPRESSION · WEEK 03' /tmp/english-week03.html || { echo "::error::Week 3 course marker missing"; exit 1; }
+          PAGE=/tmp/english-week03.html node <<'NODE'
+          const fs=require('node:fs'),html=fs.readFileSync(process.env.PAGE,'utf8');
+          const m=html.match(/const data=(\[.*?\]);\s*const E=/s);
+          if(!m)throw Error('Missing English week 3 dataset');
+          const d=JSON.parse(m[1]);
+          if(d.length!==7||d[0].day!==15||d[6].day!==21||d[0].amId!=='029'||d[6].pmId!=='042')throw Error('Week 3 has incorrect lesson sequence');
+          if(d.some(x=>x.words.length!==3||x.amQ.length!==3||x.pmQ.length!==3||!x.pmAudio||!x.write))throw Error('Week 3 has incomplete learning tasks');
+          if((html.match(/<details class="week-fold">/g)||[]).length!==3)throw Error('Week nav is not collapsed in three groups');
+          if(!html.includes('week-02.html#lesson-028'))throw Error('Week 3 previous lesson link missing');
+          console.log('PASS English week three: public HTTP 200, fourteen lessons 029–042, all three week menus default collapsed');
+          NODE
+          status=$(curl -L -sS --connect-timeout 10 --max-time 30 -o /tmp/english-week02-updated.html -w '%{http_code}' "$BASE/english/week-02.html?design=$DEPLOY_SHA" || true)
+          [[ "$status" == "200" ]] && grep -Fq "week-03.html#lesson-029" /tmp/english-week02-updated.html || { echo "::error::Week 2 to week 3 transition missing"; exit 1; }
+          
 
   verify-prepared-econometrics:
     name: Verify all 100 econometrics prelecture pages over HTTPS
