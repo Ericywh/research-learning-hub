@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="每日10分钟数学微课程，第21课：OLS正规方程"><title>第2章·第9节｜OLS正规方程</title><link rel="stylesheet" href="../site.css"><script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script><style>.article-wrap{max-width:830px;margin:0 auto;padding:36px 20px 80px}.article{font-size:17px;line-height:1.9;color:#263d3a}.article h2{margin-top:1.8em;font-size:1.24em}.article h3{margin-top:1.5em}.article p{margin:1em 0}.article .math{overflow:auto;padding:12px;background:#f4f8f5;border-radius:9px}.article .lead{border-left:4px solid #5b998a;padding:12px 20px;background:#edf7f2;border-radius:8px}.muted{font-size:14px;color:#61736e}@media(max-width:650px){.article-wrap{padding:24px 16px 64px}.article{font-size:16px}}</style></head><body><header><div class="wrap"><a href="../">← 数学课程目录</a><a href="../../">研究学习中心</a></div></header><main class="article-wrap"><div class="kicker">MATHEMATICS · PROBABILITY · ECONOMETRICS</div><h1>第2章·第9节｜OLS正规方程</h1><p class="muted">全课程第21课 / 共73课 · 2026-10-28 · 预计学习8分钟</p><article class="article"><aside class="lead">
+<p>全课程第21课 / 共73课｜2026年10月28日｜预计学习8分钟</p>
+<p><b>核心问题：</b> 为什么最小化残差平方和会得到OLS正规方程？正规方程何时能够确定唯一的系数向量？</p>
+</aside>
+<h2>一、从几何投影转向代数求解</h2>
+<p>上一课把OLS拟合值解释为结果向量在设计矩阵列空间上的正交投影。现在需要把“残差与列空间正交”转化为可以计算的方程。</p>
+<p>设已有\(n\)条样本观测，结果向量\(\mathbf y\in\mathbb R^n\)，设计矩阵\(X\in\mathbb R^{n\times p}\)，待估系数\(\boldsymbol\beta\in\mathbb R^p\)。OLS最小化的目标函数是</p>
+<div class="math">\[Q(\boldsymbol\beta)=(\mathbf y-X\boldsymbol\beta)^{\mathsf T}(\mathbf y-X\boldsymbol\beta).\]</div>
+<p>这是\(n\)个残差的平方和。它对系数是一个连续、凸的二次函数，因而可以利用一阶条件寻找最小值。</p>
+<h2>二、正规方程怎样推导</h2>
+<p>展开目标函数，再对\(p\)维系数向量求梯度，得到\(\nabla_{\boldsymbol\beta}Q=-2X^{\mathsf T}(\mathbf y-X\boldsymbol\beta)\)。令梯度等于零并整理：</p>
+<div class="math">\[X^{\mathsf T}X\hat{\boldsymbol\beta}=X^{\mathsf T}\mathbf y.\]</div>
+<p>这就是<b>OLS正规方程</b>。左侧的\(X^{\mathsf T}X\)是\(p\times p\)矩阵，右侧的\(X^{\mathsf T}\mathbf y\)是\(p\times1\)向量，因此方程维度一致。它等价于\(X^{\mathsf T}(\mathbf y-X\hat{\boldsymbol\beta})=\mathbf0_p\)，即样本残差与设计矩阵各列正交。</p>
+<p>因为目标函数凸，任何满足正规方程的系数都是全局最小解；正规方程总有解，但系数解未必唯一。</p>
+<h2>三、何时可以直接求出系数</h2>
+<p>如果\(X\)满列秩，即\(\operatorname{rank}(X)=p\)（因而\(n\ge p\)），则\(X^{\mathsf T}X\)可逆，系数解唯一：</p>
+<div class="math">\[\hat{\boldsymbol\beta}=(X^{\mathsf T}X)^{-1}X^{\mathsf T}\mathbf y.\]</div>
+<p>若列之间存在线性依赖，不能使用这个逆矩阵表达式。此时仍可求得唯一的拟合向量，但可能存在多个产生相同拟合值的系数向量。满列秩的严格证明将在下一课展开。</p>
+<h2>四、三条观测的手算核验</h2>
+<p>沿用上一课的含截距回归：\(\mathbf x=(0,1,2)^{\mathsf T}\)，\(\mathbf y=(1,2,2)^{\mathsf T}\)。设计矩阵第一列全为1，第二列为\(\mathbf x\)。</p>
+<p>逐项相乘可得\(X^{\mathsf T}X=\begin{pmatrix}3&3\\3&5\end{pmatrix}\)，\(X^{\mathsf T}\mathbf y=\begin{pmatrix}5\\6\end{pmatrix}\)。正规方程于是变为\(3\hat\beta_0+3\hat\beta_1=5\)、\(3\hat\beta_0+5\hat\beta_1=6\)。</p>
+<p>两式相减得到\(2\hat\beta_1=1\)，故斜率为\(1/2\)，截距为\(7/6\)。残差\((-1/6,1/3,-1/6)^{\mathsf T}\)满足残差和为零、与\(\mathbf x\)的内积为零，核验了正规方程。</p>
+<p>这里求得的是给定样本的最小二乘解。正规方程本身不要求误差正态、随机抽样或外生性；这些假设是否需要，取决于后续的统计推断与识别目标。</p>
+<h2>五、两道自测</h2>
+<p><b>第1题｜概念题：</b> 如果设计矩阵不满列秩，是否意味着正规方程没有解？为什么？</p>
+<p><b>第2题｜计算题：</b> 已知\(X=\begin{pmatrix}1&0\\1&1\end{pmatrix}\)、\(\mathbf y=(2,5)^{\mathsf T}\)，写出正规方程并求系数。</p>
+<h3>参考答案</h3>
+<p><b>第1题：</b> 不是。OLS残差平方和仍有最小值，正规方程仍有解；只是系数可能不唯一，不能直接使用\((X^{\mathsf T}X)^{-1}\)。</p>
+<p><b>第2题：</b> \(X^{\mathsf T}X=\begin{pmatrix}2&1\\1&1\end{pmatrix}\)，\(X^{\mathsf T}\mathbf y=(7,5)^{\mathsf T}\)，解得截距\(2\)、斜率\(3\)，两条观测均被精确拟合。</p>
+<h2>六、衔接与简短复习</h2>
+<p>第17—21课从长度、正交、投影逐步走到正规方程。回顾这条链条：最小化平方距离产生正交残差；正交条件写成矩阵方程；矩阵的列秩决定能否唯一识别样本内系数解。这里的“唯一”是代数意义上的，不等于因果识别。</p>
+<p><b>下一课：第2章·第10节｜满列秩与有限样本系数解的唯一性（全课程第22课）。</b></p></article><p class="muted">上一课：第2章·第8节｜OLS的几何解释 · 下一课：第2章·第10节｜满列秩与有限样本系数解的唯一性</p><nav><a href="2026-10-27-02-08.html">← 上一课</a>　<a href="../">课程目录</a></nav></main></body></html>
