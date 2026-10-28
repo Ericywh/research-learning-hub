@@ -1,0 +1,49 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>第4章·第4节｜时间断点回归的识别边界：专精特新政策的实证检验（全课程第16课）</title><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script><style>:root{font-family:system-ui,"Noto Sans SC","Microsoft YaHei",sans-serif;background:#f6f8f6;color:#233746;line-height:1.85}body{margin:0}header,main,footer{max-width:960px;margin:auto;padding:24px}header{background:#eaf2ee;border-radius:16px;margin-top:25px}h1{font-size:29px}h2{font-size:20px;color:#176b61;border-bottom:1px solid #dce8e3;margin-top:30px;padding-bottom:8px}main{background:#fff;border:1px solid #dce8e3;border-radius:14px;margin-top:16px}p{margin:12px 0}a{color:#176b61}pre{background:#172d35;color:#e7f4ef;padding:18px;border-radius:9px;overflow-x:auto;font-size:13px;white-space:pre}.math{background:#f2f7f5;overflow-x:auto;padding:15px}.tablewrap{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:13px}th,td{padding:8px;border:1px solid #dce8e3;text-align:left}th{background:#eaf2ee}.notice{border-left:3px solid #176b61;background:#f2f7f5;padding:12px}nav{display:flex;gap:16px;flex-wrap:wrap;font-size:14px}@media(max-width:650px){header,main,footer{padding:18px;margin:8px}h1{font-size:23px}h2{font-size:18px}}</style></head><body><header><nav><a href="../index.html">CSSCI课程目录</a><a href="04-03-2026-10-27.html">上一课</a></nav><h1>第4章·第4节｜时间断点回归的识别边界：专精特新政策的实证检验（全课程第16课）</h1><p>2026-10-29正式聊天课程归档｜2025年CSSCI论文｜原创教学解读，Stata未运行。</p></header><main><div class="notice">
+<p>2026年10月29日正式聊天第16课｜2025年CSSCI论文。本文主估计为负二项回归，时间RDD仅用于内生性补充检验；本课重点审查离散时间断点的识别边界。所有Stata代码自行推导、非作者原码、未经运行。</p>
+</div>
+<h2 id="s1">一、书目、问题与贡献</h2>
+<p>王海花、孙倩如、李树杰、刘黎：《专精特新政策如何驱动企业创新绩效提升》，《科技进步与对策》2025，42(18)：118—127。DOI：10.6049/kjjbydc.2024050508。2025年9月25日正式刊出。<a href="https://www.kjjb.org/article/2025/1001-7348/2025-42-18-012.htm" target="_blank" rel="noopener">期刊官方完整HTML</a>；<a href="https://www.kjjb.org/CN/abstract/abstract20160.shtml" target="_blank" rel="noopener">期刊书目</a>。研究政策效力、数量、组合复杂度与企业专利创新的关系，并考察专精特新战略。基准为负二项回归，时间RDD属于辅助检验，不能误称全文以RDD为主要因果识别。</p>
+<h2 id="s2">二、估计量、识别变异与因果假设</h2>
+<p>作者以省份首次出台专精特新政策年份为断点，定义运行变量T=year−first\_policy\_year，处理D=1(T≥0)，比较政策前后创新绩效的局部截距变化。时间RDD需要未处理潜在结果在断点连续、无同期冲击、无提前响应且政策实施时点非内生选择。但T仅取整数年，支持点稀疏；企业样本多并不意味着有连续运行变量。各省首发政策时间可能与当地创新趋势和同期政策共同决定，因此政策时点的跳跃不能直接解释为因果效应。</p>
+<h2 id="s3">三、公式、固定效应与统计推断</h2>
+<div class="math">\[
+Y_{it}=\alpha+\tau D_{pt}+\beta_1T_{pt}+\beta_2D_{pt}T_{pt}+\gamma^{\prime}W_{it}+\varepsilon_{it}
+\]</div>
+<div class="math">\[
+\tau=\lim_{x\downarrow0}E[Y\mid T=x]-\lim_{x\uparrow0}E[Y\mid T=x]
+\]</div>
+<p>第一式是原文时间断点回归的教学同构重写，τ表示条件截距跳跃；第二式在连续运行变量下定义，但原文T是离散年份，不能无条件套用极限识别。原文基准负二项回归控制年份和行业效应；表4的企业固定效应与省级聚类口径未完整交代。政策实施省份层面的相关误差需处理。</p>
+<h2 id="s4">四、真实数据、样本、变量与缺失</h2>
+<p>2013—2023年541家沪深A股上市专精特新“小巨人”企业，最终3,016个企业—年度观测。Wind企业名单、智慧芽专利、北大法宝政策文本及CSMAR财务数据；政策效力、数量、组合复杂度采用三年滚动窗口。剔除ST、\*ST、异常或缺失值，连续变量1%缩尾。表3负二项基准N=2,279，比总样本少737；不能把差额全部归因于缺失，因为还涉及因变量滞后与模型筛选。表4无协变量N=3,016、加协变量N=2,929；逐步筛样日志未披露。</p>
+<div class="tablewrap"><table><tr><th>项目</th><th>已核验信息</th></tr><tr><td>总样本</td><td>541家企业、3,016个企业—年度，2013—2023</td></tr><tr><td>基准样本</td><td>表3负二项回归N=2,279</td></tr><tr><td>时间RDD样本</td><td>表4无协变量N=3,016；有协变量N=2,929</td></tr><tr><td>核心变量</td><td>专利申请量；政策效力、数量、组合复杂度；相对首发年T</td></tr><tr><td>数据来源</td><td>Wind、智慧芽、北大法宝、CSMAR</td></tr><tr><td>缺失限制</td><td>无逐步筛样日志、原始政策编码及作者原码</td></tr></table></div>
+<h2 id="s5">五、Stata教学参考代码：自行推导、非作者原码、未运行</h2>
+<pre><code>
+* 使用合法授权的企业-年度数据；字段名仅为教学假设
+
+use &quot;authorized_srui_firm_year.dta&quot;, clear
+
+gen int rel_year = year - first_policy_year if !missing(first_policy_year)
+
+gen byte post = (rel_year &gt;= 0) if !missing(rel_year)
+
+* 仅演示参数化时间断点，不宣称满足连续RDD条件
+
+keep if inrange(rel_year,-4,4)
+
+gen double post_rel = post * rel_year
+
+reg patent_count post rel_year post_rel size lev growth i.province_id, ///
+
+    vce(cluster province_id)
+
+* 检查离散运行变量的支持点
+
+tab rel_year
+
+* 进一步应构建省级政策事件研究或交错DID进行对照
+
+</code></pre>
+<h2 id="s6">六、原文数值、稳健性与证据边界</h2>
+<p>表3政策效力0.023（SE 0.007）、政策数量0.030（0.009）、组合复杂度0.052（0.020），N=2,279。表4时间RDD：无协变量21.756（6.606，N=3,016），有协变量17.963（6.942，N=2,929）；改变带宽至4和5年后系数仍为正。RDD结果是专利数量尺度，不能直接与负二项回归的对数链接系数比较。表5政策效力→战略0.018（0.005），表6该路径Bootstrap间接效应0.350（0.096）；表7东部政策数量0.033（0.014），表8非国有企业政策效力0.021（0.007）。替换发明专利申请量的稳健性结果只称“备索”，公开全文未列具体数值。原文文字称McCrary和协变量检验支持连续性，但未公开密度检验数值；且McCrary在整年离散T上的常规解释不适用。机制Bootstrap不等于严格的因果中介识别。</p>
+<h2 id="s7">七、复现障碍、审稿改进与核验状态</h2>
+<p>首要审稿意见是核对省份政策首发日期、政策实际生效日、企业政策暴露及同年其他创新扶持政策，报告各相对年份支持点与省份数量。推荐省级聚类、事件研究、前趋势与同期冲击检验，并考虑交错DID的处理效应异质性。已验证官方完整题名、四位作者、2025年卷期页码、DOI、全文模型、表1—8及公开稳健性说明；未取得原始数据、政策编码、作者程序、密度检验统计量、备索稳健性数值，也未运行任何Stata或数值复现。结论限于原文报告的统计关联，不能据此宣称严格的RDD因果效应。</p></main><footer>CSSCI实证论文复现精读库 · 不含受限PDF、授权数据或私人笔记。</footer></body></html>
