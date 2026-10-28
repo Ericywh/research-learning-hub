@@ -1,0 +1,18 @@
+name: PSM-DID methods reproducibility
+on:
+  push:
+    paths: ['docs/psm-did/**', '.github/workflows/psmdid-methods.yml']
+  workflow_dispatch:
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r docs/psm-did/analysis/requirements.txt
+      - run: python -m unittest test_estimators.py
+        working-directory: docs/psm-did/analysis
+      - run: python docs/psm-did/analysis/run.py --mode demo --out /tmp/psmdid-demo
+      - run: python docs/psm-did/analysis/run.py --mode real --out /tmp/psmdid-real

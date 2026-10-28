@@ -1,0 +1,81 @@
+{
+  "version": "2026-10-28-methods",
+  "chapters": [
+    "DID基石与多期动态识别",
+    "交错DID与组别—时间效应",
+    "条件平行趋势、匹配与双重稳健",
+    "稳健性与可复现研究"
+  ],
+  "lessons": [
+    {
+      "number": 1,
+      "chapter": 1,
+      "lesson": 1,
+      "title": "潜在结果、反事实与两期DID",
+      "path": "chapter-01/lesson-01/"
+    },
+    {
+      "number": 2,
+      "chapter": 1,
+      "lesson": 2,
+      "title": "多期面板、TWFE与聚类推断",
+      "path": "chapter-01/lesson-02/"
+    },
+    {
+      "number": 3,
+      "chapter": 1,
+      "lesson": 3,
+      "title": "事件研究与平行趋势诊断",
+      "path": "chapter-01/lesson-03/"
+    },
+    {
+      "number": 4,
+      "chapter": 2,
+      "lesson": 1,
+      "title": "交错实施为何改变TWFE的解释",
+      "path": "chapter-02/lesson-01/"
+    },
+    {
+      "number": 5,
+      "chapter": 2,
+      "lesson": 2,
+      "title": "ATT(g,t)识别、估计与聚合",
+      "path": "chapter-02/lesson-02/"
+    },
+    {
+      "number": 6,
+      "chapter": 3,
+      "lesson": 1,
+      "title": "条件平行趋势与均值回归风险",
+      "path": "chapter-03/lesson-01/"
+    },
+    {
+      "number": 7,
+      "chapter": 3,
+      "lesson": 2,
+      "title": "匹配、加权与平衡性调优",
+      "path": "chapter-03/lesson-02/"
+    },
+    {
+      "number": 8,
+      "chapter": 3,
+      "lesson": 3,
+      "title": "匹配推断与双重稳健DID",
+      "path": "chapter-03/lesson-03/"
+    },
+    {
+      "number": 9,
+      "chapter": 4,
+      "lesson": 1,
+      "title": "安慰剂、敏感性与识别威胁",
+      "path": "chapter-04/lesson-01/"
+    },
+    {
+      "number": 10,
+      "chapter": 4,
+      "lesson": 2,
+      "title": "宽带中国：数据审计与端到端复现",
+      "path": "chapter-04/lesson-02/"
+    }
+  ]
+}

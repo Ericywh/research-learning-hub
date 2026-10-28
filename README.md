@@ -1,11 +1,11 @@
 # 研究学习中心 · Research Learning Hub
 
-这是六门长期课程的**公开展示仓库**，所有公开课文均保留独立目录，并通过统一入口导航。
+这是八门长期课程的**公开展示仓库**，所有公开课文均保留独立目录，并通过统一入口导航。
 
 **网站首页**：https://ericywh.github.io/research-learning-hub/  
-**六门课程索引**：https://ericywh.github.io/research-learning-hub/study/#courses
+**八门课程索引**：https://ericywh.github.io/research-learning-hub/study/#courses
 
-## 六门公开课程
+## 八门公开课程
 
 | 课程 | 目录 | 说明 |
 |---|---|---|
@@ -14,7 +14,7 @@
 | 统计与实证研究前沿日报 | `docs/frontier/` | 研究前沿与文献分析 |
 | CSSCI实证论文复现精读库 | `docs/cssci/` | 公开书目与复现方法索引 |
 | 每日经济学经典精读 | `docs/economic-classics/` | 以《国富论》重新开始的新序列 |
-| PSM-DID系统精讲课程 | `docs/psm-did/` | 四章十节；现已交付第1章第1节；Stata与Python |
+| PSM-DID系统精讲课程 | `docs/psm-did/` | 四章十节已重构；TWFE、事件研究、交错DID、匹配与DR；Stata与Python |
 
 ## 公众表达课程归档
 
@@ -23,7 +23,7 @@
 ## 网站结构
 
 - `docs/index.html`：公开学习中心首页
-- `docs/study/index.html`：六门课程的卡片式分类与检索入口
+- `docs/study/index.html`：八门课程的卡片式分类与检索入口
 - `docs/assets/hub.css`、`hub.js`：共享的学习中心样式及进度展示逻辑
 - 各课程目录分别提供独立的课程主页、已交付全文、章节规划和检索功能
 
@@ -35,5 +35,9 @@ GitHub Pages：`Settings → Pages → Deploy from a branch → main → /docs`�
 
 ## 仓库名称与发布目标
 
-本公开仓库现名为 `Ericywh/research-learning-hub`，正式站点为 https://ericywh.github.io/research-learning-hub/ 。后续六门课程的公开课文均在此仓库 `main` 分支的 `docs/` 中按既有目录发布、维护对应索引和导航；保留独立私人备份仓库 `Ericywh/research-learning-archive`，不将私人笔记、受限论文或数据公开上传。项目网址更名后，旧的 `/math-microcourse/` GitHub Pages 地址不应再被当成正式发布入口。
+本公开仓库现名为 `Ericywh/research-learning-hub`，正式站点为 https://ericywh.github.io/research-learning-hub/ 。后续八门课程的公开课文均在此仓库 `main` 分支的 `docs/` 中按既有目录发布、维护对应索引和导航；保留独立私人备份仓库 `Ericywh/research-learning-archive`，不将私人笔记、受限论文或数据公开上传。项目网址更名后，旧的 `/math-microcourse/` GitHub Pages 地址不应再被当成正式发布入口。
 
+
+## DID课程复现
+
+[课程目录](docs/psm-did/index.html) · [运行说明](docs/psm-did/analysis/README.md) · [评审修正](docs/psm-did/REVIEW_RESPONSE.md) · [验证记录](docs/psm-did/VALIDATION.md)
