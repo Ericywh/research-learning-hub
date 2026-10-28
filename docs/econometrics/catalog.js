@@ -219,7 +219,7 @@ window.ECON_COURSE={
           "section": 14,
           "title": "多重共线性",
           "published": true,
-          "date": null,
+          "date": "2026-10-28",
           "url": "lessons/02-14.html"
         },
         {
