@@ -303,6 +303,7 @@ jobs:
                 if(!output.includes('speaking-layout.css') ||
                    !output.includes('academic-eye-care.css') ||
                    !output.includes('academic-rich.css') ||
+                   !output.includes('lesson-template.css') ||
                    !output.includes('class="sp-dashboard"') ||
                    !output.includes('class="sp-pathway"') ||
                    !output.includes('katex.min.css') ||
@@ -658,18 +659,22 @@ jobs:
             { echo "::error::KaTeX stylesheet missing in public lesson"; exit 1; }
           grep -Fq 'class="sp-code-fold"' /tmp/psm-math.html ||
             { echo "::error::Collapsible Stata/Python blocks missing"; exit 1; }
+          grep -Fq 'lesson-template.css' /tmp/psm-math.html ||
+            { echo "::error::Reference-inspired lesson card design missing"; exit 1; }
           grep -Fq 'academic-rich.css' /tmp/psm-math.html ||
             { echo "::error::New academic eye-care layout not linked in public lesson"; exit 1; }
           grep -Fq 'class="sp-dashboard"' /tmp/psm-math.html ||
             { echo "::error::PSM-DID learning dashboard is missing"; exit 1; }
           status=$(curl -L -sS --connect-timeout 10 --max-time 30 -o /tmp/katex.css -w '%{http_code}' "$BASE/psm-did/assets/katex.min.css?design=$DEPLOY_SHA" || true)
           [[ "$status" == "200" ]] || { echo "::error::Static KaTeX CSS unavailable"; exit 1; }
-          for file in academic-rich.css catalog-rich.css; do
+          for file in academic-rich.css catalog-rich.css lesson-template.css catalog-template.css; do
             status=$(curl -L -sS --connect-timeout 10 --max-time 30 -o "/tmp/$file" -w '%{http_code}' "$BASE/psm-did/assets/$file?design=$DEPLOY_SHA" || true)
             [[ "$status" == "200" ]] || { echo "::error::New gradient stylesheet unavailable: $file"; exit 1; }
           done
           grep -Fq 'catalog-rich.css' /tmp/psm-home.html ||
             { echo "::error::PSM-DID course catalog gradient design missing"; exit 1; }
+          grep -Fq 'catalog-template.css' /tmp/psm-home.html ||
+            { echo "::error::PSM-DID reference-inspired course card design missing"; exit 1; }
           status=$(curl -L -sS --connect-timeout 10 --max-time 30 -o /tmp/psm-speaking-layout.css -w '%{http_code}' "$BASE/psm-did/assets/speaking-layout.css?design=$DEPLOY_SHA" || true)
           [[ "$status" == "200" ]] || { echo "::error::PSM-DID speaking-layout CSS unavailable"; exit 1; }
           echo "Five shared-theme courses plus one independently styled PSM-DID course verified."
