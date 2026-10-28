@@ -196,9 +196,9 @@ window.MATH_COURSE={
           "section": 9,
           "number": 21,
           "title": "OLS正规方程",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-28",
+          "url": "lessons/2026-10-28-02-09.html"
         },
         {
           "chapter": 2,
