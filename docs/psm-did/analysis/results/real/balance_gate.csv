@@ -1,0 +1,9 @@
+model,method,all_abs_smd_le_0_1
+linear,ipw,False
+linear,kernel,False
+linear,nearest,False
+linear,raw,False
+rich,ipw,False
+rich,kernel,False
+rich,nearest,True
+rich,raw,False

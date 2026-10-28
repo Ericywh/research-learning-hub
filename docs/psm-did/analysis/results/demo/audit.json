@@ -1,0 +1,24 @@
+{
+  "mode": "demo",
+  "raw_rows": 2160,
+  "raw_cities": 240,
+  "analysis_rows": 2160,
+  "analysis_cities": 240,
+  "cohorts": {
+    "0": 96,
+    "2015": 64,
+    "2014": 44,
+    "2016": 36
+  },
+  "pretrend_chi2_p": 0.051280399134123196,
+  "permutation_reference_tail": 0.001996007984031936,
+  "time_placebo_2011_2013": -0.024079198956298557,
+  "seed": 20261028,
+  "permutations": 500,
+  "interpretation": "Teaching output, not validated causal evidence",
+  "python_dependencies": {
+    "numpy": "2.3.5",
+    "pandas": "3.0.1",
+    "statsmodels": "0.15.0"
+  }
+}
