@@ -2,6 +2,40 @@
    完整私人精读报告未经授权不得上传，切勿包含付费PDF或私有数据。 */
 window.CSSCI_CATALOG = [
   {
+    "id": "2026-10-29-04-04-srui-time-rd",
+    "date": "2026-10-29",
+    "title": "专精特新政策如何驱动企业创新绩效提升",
+    "authors": "王海花、孙倩如、李树杰、刘黎",
+    "journal": "科技进步与对策",
+    "year": 2025,
+    "volume": "42",
+    "issue": "18",
+    "pages": "118—127",
+    "doi": "10.6049/kjjbydc.2024050508",
+    "field": "专精特新政策、企业创新绩效、时间断点识别",
+    "methods": [
+      "负二项回归",
+      "时间断点回归（补充检验）",
+      "离散运行变量",
+      "Bootstrap中介效应",
+      "识别假设审查"
+    ],
+    "data_types": [
+      "上市公司非平衡面板",
+      "政策文本编码",
+      "专利申请"
+    ],
+    "sample": "2013—2023年541家上市小巨人企业，3016个企业—年度；基准负二项N=2279",
+    "status": "published",
+    "data_access": "Wind、智慧芽、北大法宝、CSMAR数据须按授权取得；未获取原始匹配数据",
+    "code_access": "课程自行推导的Stata教学代码，非作者原码且未运行",
+    "replication_status": "官方全文、表1—8及公开稳健性已核对；时间RDD仅为补充检验，离散年份识别存疑；未数值复现",
+    "article_url": "lessons/04-04-2026-10-29.html",
+    "journal_url": "https://www.kjjb.org/CN/abstract/abstract20160.shtml",
+    "fulltext_url": "https://www.kjjb.org/article/2025/1001-7348/2025-42-18-012.htm"
+  },
+
+  {
     "id": "2026-10-27-04-03-state-ownership-sharp-rd",
     "date": "2026-10-27",
     "title": "国有控股权变化能驱动企业创新吗——基于断点回归的实证检验",
