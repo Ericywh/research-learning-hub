@@ -1,33 +1,114 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="course-revision" content="2026-10-27-v2"><meta name="course-status" content="taught"><title>第2章·第14节｜多重共线性</title><link rel="stylesheet" href="../v2/course.css"><script defer src="../v2/course.js"></script></head><body><header><a href="../">← 计量经济学120天课程</a><a href="../v2/">36模块新主线</a></header><main><div class="hero"><span class="badge">已授课</span><h1>第2章·第14节｜多重共线性</h1><p class="meta">原全课程第21课 / 120 · 原日期：无可核实日期 · 本次实质修订2026-10-27</p><p>本页现采用M12 共线性、杠杆与HAC核心讲义，保留原网址、编号及标题。<a href="../archive/2026-10-27/lessons/02-14.html">阅读修订前原稿</a>。</p></div><section class="paper" id="s1"><h2>1 · 核心问题与推导</h2><p>VIF刻画一列变量被其他列线性预测的程度，不检验因果模型。高杠杆来自设计位置，大残差结合高杠杆才可能构成强影响，不能自动删除。时间序列得分相关时，HAC按核权重汇总滞后得分协方差，带宽反映偏差方差权衡；HC1无法替代这一处理。若过程存在单位根，单纯更换HAC标准误不会恢复平稳回归的渐近理论。诊断应围绕具体假设，而不是把检验清单当作模型正确性的证明。</p></section><section class="paper" id="s2"><h2>2 · 公式与统计前提</h2><div class="formula">VIFⱼ=1/(1−Rⱼ²)；hᵢᵢ=xᵢ′(X′X)⁻¹xᵢ</div><p>VIF阈值不是普适删变量准则；异常观测处理需基于质量核查与透明规则。</p></section><section class="paper" id="s3"><h2>3 · 图示与研究含义</h2><div class="diagram"><svg viewBox="0 0 680 100" role="img" aria-label="从识别到推断的学习路径"><title>识别先于估计，推断依赖统计条件</title><g fill="#173e49" font-size="20"><text x="20" y="55">目标量</text><text x="160" y="55">识别假设</text><text x="335" y="55">估计/优化</text><text x="520" y="55">方差与检验</text></g><path d="M95 50H145M255 50H320M445 50H505" stroke="#b98c3b" stroke-width="3"/></svg></div><p>图为概念示意；数值结论以运行代码和明确的数据来源为准。</p></section><section class="paper" id="s4"><h2>4 · 可复现实验：Stata与Python</h2><p>数据性质：固定种子的随机教学模拟，非真实研究数据。两种软件随机流不同，不要求逐行结果相同。Python已运行状态见<a href="../v2/validation.json">核验记录</a>；Stata尚未运行验证。</p><details><summary>Python · 展开代码</summary><p><a download href="../v2/labs/diagnostics.py">下载完整脚本</a></p><button type="button" data-copy>复制代码</button><pre><code># Teaching experiment, synthetic data unless explicitly stated. Seed 20261027.
-import numpy as np
-import statsmodels.api as sm
-from statsmodels.stats.outliers_influence import variance_inflation_factor
-rng=np.random.default_rng(20261027);n=600
-x=rng.normal(size=n);z=x+.1*rng.normal(size=n)
-u=np.zeros(n)
-for t in range(1,n):u[t]=.6*u[t-1]+rng.normal()
-X=np.column_stack([np.ones(n),x,z]);y=1+2*x+u
-fit=sm.OLS(y,X).fit()
-print(&#x27;VIF x&#x27;,variance_inflation_factor(X,1))
-print(&#x27;Max leverage&#x27;,fit.get_influence().hat_matrix_diag.max())
-print(&#x27;HC1&#x27;,fit.get_robustcov_results(cov_type=&#x27;HC1&#x27;).bse)
-print(&#x27;HAC lag4&#x27;,fit.get_robustcov_results(cov_type=&#x27;HAC&#x27;,maxlags=4).bse)
-</code></pre></details><details><summary>Stata · 展开代码</summary><p><a download href="../v2/labs/diagnostics.do">下载完整脚本</a></p><button type="button" data-copy>复制代码</button><pre><code>version 17.0
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="course-status" content="taught"><meta name="course-revision" content="2026-10-28-lesson21">
+<title>第2章·第14节｜多重共线性｜全课程第21课</title>
+<link rel="stylesheet" href="../v2/course.css"><script defer src="../v2/course.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+main{max-width:1060px;margin:auto;padding:1.3rem}.hero{padding:2.5rem 2rem}
+.lesson-nav{display:flex;flex-wrap:wrap;gap:.5rem;margin:1.2rem 0}.lesson-nav a{border:1px solid #bfd3d3;border-radius:999px;padding:.42rem .8rem;text-decoration:none;background:#f3f8f7;color:#173e49;font-size:.87rem}
+.paper{scroll-margin-top:1rem}.paper p{line-height:1.88}.paper details{margin:1rem 0}.paper pre{overflow:auto;white-space:pre;line-height:1.55;padding:1.2rem;background:#132a34;color:#e8f4f4;border-radius:.6rem}.paper code{font-size:.87rem}.formula{overflow-x:auto;font-size:1.1rem;padding:1.2rem;background:#f3f7f7;border-left:4px solid #a88240;margin:1rem 0}.meta{font-variant-numeric:tabular-nums}
+</style></head>
+<body><header><a href="../">← 计量经济学120天课程</a><a href="../v2/">36模块强化路径</a></header>
+<main><div class="hero"><span class="badge">已在聊天正式授课 · 2026-10-28</span>
+<h1>第2章·第14节｜多重共线性</h1><p class="meta">全课程第21课 / 共120课 · 10—15分钟 · 真实公开数据 / 双软件</p>
+<p>本页按原120课编号完整提供七模块讲义，保留新强化路径的独立导航。<a href="../archive/2026-10-27/lessons/02-14.html">查看本次更新前的网页档案</a>。</p></div>
+<nav class="lesson-nav" aria-label="本课七模块"><a href="#s1">1 · 通俗理解</a><a href="#s2">2 · 核心理论与公式</a><a href="#s3">3 · 实证案例与数据</a><a href="#s4">4 · Stata与Python实现</a><a href="#s5">5 · 初学者避坑</a><a href="#s6">6 · 今日练习</a><a href="#s7">7 · 学习进度</a></nav>
+<p>授课日期：2026-10-28｜全课程第21课 / 共120课｜建议用时10—15分钟</p>
+<section class="paper" id="s1"><h2>一、通俗理解</h2>
+<p>汽车价格与车重、车长、油耗之间有统计关联。但车重与车长也可能高度相关：只看一辆车更重，很难分清价格变化究竟与重量还是车身长度相关。多重共线性就是解释变量之间存在较强线性依赖，使我们难以精确区分各自的条件关联。它并不自动意味着模型有内生性，更不能据此宣称系数有偏。完全共线性导致设计矩阵不满列秩、系数不能唯一识别；不完全共线性则通常体现为估计精度下降。</p>
+</section>
+<section class="paper" id="s2"><h2>二、核心理论与公式</h2>
+<p>令价格为因变量，车重、车长、每加仑英里数为解释变量，含截距的模型为：</p>
+<div class="formula">\[price_i=\beta_0+\beta_1weight_i+\beta_2length_i+\beta_3mpg_i+u_i.\]</div>
+<p>对第 j 个非截距解释变量，先用其他解释变量（含截距）对它做辅助回归，得到决定系数 R²_j。其方差膨胀因子为：</p>
+<div class="formula">\[VIF_j=\frac{1}{1-R_j^2},\quad \operatorname{Var}(\hat\beta_j\mid X)=\frac{\sigma^2}{\sum_i(x_{ij}-\bar x_j)^2(1-R_j^2)}.\]</div>
+<p>右侧方差分解要求线性模型满列秩、给定X误差同方差且不相关；若采用异方差稳健标准误，该分解不再是稳健方差的精确表达式。VIF仍可作为设计矩阵的共线性诊断。固定其他量，R²_j越接近1，信息越少，系数标准误可能越大。共线性与外生性是两个不同问题。</p>
+</section>
+<section class="paper" id="s3"><h2>三、实证案例与数据</h2>
+<p>采用Stata官方1978年汽车数据 auto.dta（74辆汽车，12个原始变量），仅使用 price、weight、length、mpg 四列的完整观测。price为价格，weight为磅数，length为英寸，mpg为燃油经济性。比较车重和车长的VIF，并观察二者同时进入回归时的系数精度。样本规模较小，仅作教学演示；不是随机分配的因果实验。数据说明：<a href="https://www.stata.com/links/stata-basics/example-datasets/" rel="noopener noreferrer">https://www.stata.com/links/stata-basics/example-datasets/</a> 。</p>
+</section>
+<section class="paper" id="s4"><h2>四、Stata与Python实现</h2>
+<p>两份代码采用同一模型、同一变量与完整样本，并使用HC1类异方差稳健标准误。Stata和Python的数值输出需在实际运行后核对，本课不预设回归结果。VIF由辅助回归决定，与因变量price无关。</p>
+<details><summary>Stata · 展开可复制代码</summary><button type="button" data-copy>复制代码</button><pre><code>
+version 17.0
+
 clear all
+
 set more off
-set seed 20261027
-* Synthetic teaching data. Stata and NumPy RNG streams differ.
-set obs 600
-gen long t=_n
-tsset t
-gen double x=rnormal()
-gen double z=x+.1*rnormal()
-gen double u=rnormal() in 1
-replace u=.6*u[_n-1]+rnormal() if _n&gt;1
-gen double y=1+2*x+u
-regress y x z
+
+sysuse auto, clear
+
+* 与Python相同：只保留四个变量的完整观测
+
+keep if !missing(price, weight, length, mpg)
+
+count
+
+* 含截距OLS；vce(robust)采用HC1类有限样本修正
+
+regress price weight length mpg, vce(robust)
+
+* 每列自变量对其余自变量回归，计算VIF
+
 estat vif
-predict double leverage, hat
-summarize leverage
-newey y x z, lag(4)
-</code></pre></details></section><section class="paper" id="s5"><h2>5 · 专属练习与参考答案</h2><p>VIF=10时该变量被其余变量回归的R²是多少？</p><details><summary>展开答案与依据</summary><p>R²=0.9。高共线主要影响精度，不能单凭此认定估计有因果偏差。</p></details></section><section class="paper" id="s6"><h2>6 · 学习验收</h2><p>独立解释本模块公式中的随机对象、目标量与关键条件；运行实验，改变一个前提并说明结果为何改变。只阅读或运行命令不等于掌握。</p><label><input type="checkbox" data-module-check="M12"> 已完成 M12 的推导、实验与练习</label></section><section class="paper" id="s7"><h2>7 · 原120课映射与资料</h2><p>原课编号、标题与历史授课日期保留。下列为主题映射，合并模块并不表示每节旧课均已独立重写。</p><a class="maplink" href="../v2/../lessons/02-14.html">原课 02-14</a><a class="maplink" href="../v2/../lessons/03-06.html">原课 03-06</a><a class="maplink" href="../v2/../lessons/03-07.html">原课 03-07</a><a class="maplink" href="../v2/../lessons/03-10.html">原课 03-10</a><a class="maplink" href="../v2/../lessons/03-11.html">原课 03-11</a><p><a href="../v2/review.html">评审回应与修订范围</a> · <a href="../v2/mapping.html">完整120课映射</a> · <a href="../v2/sources.html">原始文献与软件文档</a></p></section></main><script defer src="../study-progress.js"></script></body></html>
+
+* 手工核验weight的VIF
+
+quietly regress weight length mpg
+
+display &quot;VIF(weight) = &quot; 1/(1-e(r2))
+
+</code></pre></details>
+<details><summary>Python · 展开可复制代码</summary><button type="button" data-copy>复制代码</button><pre><code>
+import pandas as pd
+
+import statsmodels.api as sm
+
+import statsmodels.formula.api as smf
+
+from statsmodels.stats.outliers_influence import variance_inflation_factor
+
+
+
+# Stata官方1978汽车数据；与Stata选择相同变量及完整观测
+
+url = &quot;https://www.stata-press.com/data/r19/auto.dta&quot;
+
+cols = [&quot;price&quot;, &quot;weight&quot;, &quot;length&quot;, &quot;mpg&quot;]
+
+df = pd.read_stata(url)[cols].dropna().copy()
+
+print(&quot;样本量:&quot;, len(df))
+
+# 与Stata regress, vce(robust)相对应的HC1协方差
+
+fit = smf.ols(&quot;price ~ weight + length + mpg&quot;, data=df).fit(cov_type=&quot;HC1&quot;)
+
+print(fit.summary())
+
+# VIF计算必须包含截距列，但不解释截距VIF
+
+X = sm.add_constant(df[[&quot;weight&quot;, &quot;length&quot;, &quot;mpg&quot;]], has_constant=&quot;add&quot;)
+
+for j, name in enumerate(X.columns):
+
+    if name != &quot;const&quot;:
+
+        print(name, variance_inflation_factor(X.to_numpy(), j))
+
+</code></pre></details>
+</section>
+<section class="paper" id="s5"><h2>五、初学者避坑</h2>
+<p>1. 不要把VIF大于5或10当作自动删除变量的硬性标准。删去理论上必要的控制变量可能引入遗漏变量偏误；应先判断变量是否有独立理论含义，再看估计目标与置信区间。</p>
+<p>2. 不能把高共线性解释成系数必然有偏。若外生性成立且设计矩阵满列秩，OLS仍可无偏；若外生性不成立，降低VIF也不能修复因果识别。</p>
+<p>3. 两两相关系数低不代表不存在多元线性依赖；VIF需将某一列对其余所有解释变量回归。VIF也不能替代异方差、异常值或模型设定诊断。</p>
+</section>
+<section class="paper" id="s6"><h2>六、今日练习</h2>
+<p><strong>概念题</strong>：两个解释变量VIF都很高，能否直接断定OLS估计有偏并删除其中一个？&lt;br /&gt;<strong>答案</strong>：不能。VIF衡量设计矩阵的线性依赖与潜在精度损失，不检验外生性；删变量必须有理论与识别依据。</p>
+<p><strong>计算题</strong>：某变量辅助回归R²=0.90，求VIF，并说明在同方差、固定该变量总离差平方和与误差方差的比较基准下，标准误相对无共线性基准扩大多少倍。&lt;br /&gt;<strong>答案</strong>：VIF=1/(1−0.90)=10；标准误的比例为√10≈3.16。该比例不应机械用于比较两个实际重估模型，因为残差方差和其他条件可能改变。</p>
+</section>
+<section class="paper" id="s7"><h2>七、学习进度</h2>
+<p>本课：第2章·第14节《多重共线性》，全课程第21课 / 共120课。已按普通聊天真实授课进度推进至21/120；GitHub网页是否显示published不构成授课证明。下一课：第2章·第15节《工资影响因素综合实操》，全课程第22课。</p>
+</section>
+</main><script defer src="../study-progress.js"></script></body></html>
