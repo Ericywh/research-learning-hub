@@ -257,3 +257,35 @@ body[data-econ-dark="true"] input[type="search"]::placeholder{color:#9eb2c7}
 body[data-econ-dark="true"] .module label{color:#bdcfe0;border-color:#344b61}
 body[data-econ-dark="true"] .concept-primer{border-color:#344b61}
 body[data-econ-dark="true"] .paper blockquote{background:linear-gradient(110deg,#20344a,#2a2b43);border-left-color:#7898d0;color:#d6e4f4}
+
+/* Reading accessibility: requested fonts, larger type and usable page width. */
+:root{font-family:"Times New Roman","Microsoft YaHei","微软雅黑",serif;font-size:19px}
+body{font-family:"Times New Roman","Microsoft YaHei","微软雅黑",serif;line-height:1.9}
+h1,h2,h3,h4,h5,h6,.eyebrow,.label,.formula,button,input,select,textarea,summary,table,code,pre{
+font-family:"Times New Roman","Microsoft YaHei","微软雅黑",serif}
+header,main,footer{width:min(1240px,calc(100% - 56px))}
+.paper{width:100%;max-width:none;padding:32px 42px}
+.paper p,.paper li,.paper blockquote,.concept-primer p{max-width:none;font-size:19px;line-height:1.95}
+.toc{max-width:none;width:100%;font-size:17px}
+.toc a,header a,.nav a{font-size:17px}
+h1{max-width:none;font-size:clamp(32px,3.5vw,48px);font-weight:700}
+h2{font-size:27px}h3{font-size:23px}.concept-primer h4,h4{font-size:21px}
+.meta,.hero .meta,.module p,.module label,.route p,table,footer{font-size:17px}
+.eyebrow,.module .label,.maplink,.badge,small{font-size:16px}
+.formula{font-size:22px;line-height:1.9;overflow-x:auto}
+pre,pre code,code{font-size:17px;line-height:1.8;font-variant-ligatures:none}
+pre{max-width:100%;white-space:pre;tab-size:4}
+.lead{font-size:21px}
+@media(max-width:800px){
+header,main,footer{width:calc(100% - 28px)}
+.paper{padding:24px}
+.hero .meta{font-size:16px}
+}
+@media(max-width:500px){
+:root{font-size:18px}
+.paper{padding:20px 16px}
+.paper p,.paper li,.paper blockquote,.concept-primer p{font-size:18px}
+.formula{font-size:20px}
+pre,pre code,code{font-size:16px}
+h2{font-size:25px}h3{font-size:22px}
+}
