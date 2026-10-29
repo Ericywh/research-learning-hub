@@ -918,7 +918,7 @@ jobs:
           NODE
 
   verify-canonical-econometrics:
-    name: Verify DAY21-120 taught-state lessons over HTTPS
+    name: Verify DAY21-120 canonical lesson pages over HTTPS
     needs: deploy
     runs-on: ubuntu-latest
     steps:
@@ -973,23 +973,27 @@ jobs:
             const homepage=await fetch(base+suffix);
             const homepageText=await homepage.text();
             const sourceHome=fs.readFileSync('docs/econometrics/index.html','utf8');
-            const routed=sourceHome.match(/content="0; url=(lessons\/[0-9]{2}-[0-9]{2}[.]html)"/i)?.[1];
-            if(!routed||homepage.status!==200||
-               !homepageText.includes('content="0; url='+routed+'"')||
-               !homepageText.includes('href="course-archive.html"'))
-              throw Error('Course homepage does not route to latest taught lesson');
+            const currentId=sourceHome.match(/<meta\s+name=["']current-lesson["']\s+content=["']([0-9]{2}-[0-9]{2})["']/i)?.[1];
+            const currentLink=homepageText.match(/<a\b[^>]*\bid=["']current-lesson-link["'][^>]*>/i)?.[0];
+            if(!currentId||homepage.status!==200||
+               !homepageText.includes('name="current-lesson" content="'+currentId+'"')||
+               !currentLink||!currentLink.includes('href="lessons/'+currentId+'.html"')||
+               !homepageText.includes('id="catalog"')||!homepageText.includes('id="results"')||
+               !homepageText.includes('href="course-archive.html"')||
+               /http-equiv=["']refresh/i.test(homepageText)||/window\.location\.replace\s*\(/i.test(homepageText))
+              throw Error('Course homepage must expose the full catalogue and current lesson link without redirect');
             const served=await fetch(base+'catalog.js'+suffix);
             if(served.status!==200)throw Error('Deployed catalogue HTTP '+served.status);
             const ctx={window:{}};
             vm.runInNewContext(await served.text(),ctx);
             const entries=ctx.window.ECON_COURSE.chapters.flatMap(c=>c.lessons);
             if(entries.length!==120||entries.filter(l=>l.published&&l.url==='lessons/'+l.id+'.html').length!==120)
-              throw Error('Deployed catalogue must contain 120 taught-state records');
+              throw Error('Deployed catalogue must contain 120 course records with canonical lesson URLs');
             for(let i=0;i<expected.length;i+=8){
               await Promise.all(expected.slice(i,i+8).map(check));
-              console.log('Verified treated-as-taught canonical pages:',Math.min(i+8,100),'/100');
+              console.log('Verified canonical lesson pages:',Math.min(i+8,100),'/100');
             }
-            console.log('PASS 120/120 catalogue status and 100/100 canonical lesson HTML pages over HTTPS');
+            console.log('PASS 120/120 catalogue URL records and 100/100 canonical lesson HTML pages over HTTPS');
           }
           main().catch(err=>{console.error(err);process.exitCode=1;});
           NODE
