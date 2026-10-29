@@ -12,7 +12,8 @@ window.MATH_COURSE={
           "title": "为什么统计学需要向量？从观测数据到随机向量与回归模型",
           "published": true,
           "date": "2026-10-10",
-          "url": "lessons/2026-10-10-01-01.html"
+          "url": "lessons/2026-10-10-01-01.html",
+          "delivered": true
         },
         {
           "chapter": 1,
@@ -21,7 +22,8 @@ window.MATH_COURSE={
           "title": "向量的线性组合：从加权总分到回归预测",
           "published": true,
           "date": "2026-10-10",
-          "url": "lessons/2026-10-10-01-02.html"
+          "url": "lessons/2026-10-10-01-02.html",
+          "delivered": true
         },
         {
           "chapter": 1,
@@ -30,7 +32,8 @@ window.MATH_COURSE={
           "title": "矩阵与多变量数据表",
           "published": true,
           "date": "2026-10-11",
-          "url": "lessons/2026-10-11-01-03.html"
+          "url": "lessons/2026-10-11-01-03.html",
+          "delivered": true
         },
         {
           "chapter": 1,
@@ -39,7 +42,8 @@ window.MATH_COURSE={
           "title": "矩阵与向量相乘：批量预测",
           "published": true,
           "date": "2026-10-12",
-          "url": "lessons/2026-10-12-01-04.html"
+          "url": "lessons/2026-10-12-01-04.html",
+          "delivered": true
         },
         {
           "chapter": 1,
@@ -48,7 +52,8 @@ window.MATH_COURSE={
           "title": "矩阵乘法和线性映射",
           "published": true,
           "date": "2026-10-12",
-          "url": "lessons/2026-10-12-01-05.html"
+          "url": "lessons/2026-10-12-01-05.html",
+          "delivered": true
         },
         {
           "chapter": 1,
@@ -57,7 +62,8 @@ window.MATH_COURSE={
           "title": "随机变量与随机向量的区别及联系",
           "published": true,
           "date": "2026-10-13",
-          "url": "lessons/2026-10-13-01-06.html"
+          "url": "lessons/2026-10-13-01-06.html",
+          "delivered": true
         },
         {
           "chapter": 1,
@@ -66,7 +72,8 @@ window.MATH_COURSE={
           "title": "期望与线性性",
           "published": true,
           "date": "2026-10-14",
-          "url": "lessons/2026-10-14-01-07.html"
+          "url": "lessons/2026-10-14-01-07.html",
+          "delivered": true
         },
         {
           "chapter": 1,
@@ -75,7 +82,8 @@ window.MATH_COURSE={
           "title": "方差和离散程度",
           "published": true,
           "date": "2026-10-15",
-          "url": "lessons/2026-10-15-01-08.html"
+          "url": "lessons/2026-10-15-01-08.html",
+          "delivered": true
         },
         {
           "chapter": 1,
@@ -84,7 +92,8 @@ window.MATH_COURSE={
           "title": "协方差与相关系数",
           "published": true,
           "date": "2026-10-16",
-          "url": "lessons/2026-10-16-01-09.html"
+          "url": "lessons/2026-10-16-01-09.html",
+          "delivered": true
         },
         {
           "chapter": 1,
@@ -93,7 +102,8 @@ window.MATH_COURSE={
           "title": "协方差矩阵的结构",
           "published": true,
           "date": "2026-10-17",
-          "url": "lessons/2026-10-17-01-10.html"
+          "url": "lessons/2026-10-17-01-10.html",
+          "delivered": true
         },
         {
           "chapter": 1,
@@ -102,7 +112,8 @@ window.MATH_COURSE={
           "title": "线性变换如何改变均值",
           "published": true,
           "date": "2026-10-18",
-          "url": "lessons/2026-10-18-01-11.html"
+          "url": "lessons/2026-10-18-01-11.html",
+          "delivered": true
         },
         {
           "chapter": 1,
@@ -111,7 +122,8 @@ window.MATH_COURSE={
           "title": "线性变换如何改变协方差",
           "published": true,
           "date": "2026-10-19",
-          "url": "lessons/2026-10-19-01-12.html"
+          "url": "lessons/2026-10-19-01-12.html",
+          "delivered": true
         }
       ]
     },
@@ -126,7 +138,8 @@ window.MATH_COURSE={
           "title": "线性相关与冗余解释变量",
           "published": true,
           "date": "2026-10-20",
-          "url": "lessons/2026-10-20-02-01.html"
+          "url": "lessons/2026-10-20-02-01.html",
+          "delivered": true
         },
         {
           "chapter": 2,
@@ -135,7 +148,8 @@ window.MATH_COURSE={
           "title": "矩阵秩与列独立",
           "published": true,
           "date": "2026-10-21",
-          "url": "lessons/2026-10-21-02-02.html"
+          "url": "lessons/2026-10-21-02-02.html",
+          "delivered": true
         },
         {
           "chapter": 2,
@@ -144,7 +158,8 @@ window.MATH_COURSE={
           "title": "列空间和模型可拟合的向量",
           "published": true,
           "date": "2026-10-22",
-          "url": "lessons/2026-10-22-02-03.html"
+          "url": "lessons/2026-10-22-02-03.html",
+          "delivered": true
         },
         {
           "chapter": 2,
@@ -153,7 +168,8 @@ window.MATH_COURSE={
           "title": "基与维数",
           "published": true,
           "date": "2026-10-23",
-          "url": "lessons/2026-10-23-02-04.html"
+          "url": "lessons/2026-10-23-02-04.html",
+          "delivered": true
         },
         {
           "chapter": 2,
@@ -162,7 +178,8 @@ window.MATH_COURSE={
           "title": "内积与向量长度",
           "published": true,
           "date": "2026-10-24",
-          "url": "lessons/2026-10-24-02-05.html"
+          "url": "lessons/2026-10-24-02-05.html",
+          "delivered": true
         },
         {
           "chapter": 2,
@@ -171,7 +188,8 @@ window.MATH_COURSE={
           "title": "正交及其含义",
           "published": true,
           "date": "2026-10-25",
-          "url": "lessons/2026-10-25-02-06.html"
+          "url": "lessons/2026-10-25-02-06.html",
+          "delivered": true
         },
         {
           "chapter": 2,
@@ -180,7 +198,8 @@ window.MATH_COURSE={
           "title": "正交投影如何最小化距离",
           "published": true,
           "date": "2026-10-26",
-          "url": "lessons/2026-10-26-02-07.html"
+          "url": "lessons/2026-10-26-02-07.html",
+          "delivered": true
         },
         {
           "chapter": 2,
@@ -189,7 +208,8 @@ window.MATH_COURSE={
           "title": "OLS的几何解释",
           "published": true,
           "date": "2026-10-27",
-          "url": "lessons/2026-10-27-02-08.html"
+          "url": "lessons/2026-10-27-02-08.html",
+          "delivered": true
         },
         {
           "chapter": 2,
@@ -198,7 +218,8 @@ window.MATH_COURSE={
           "title": "OLS正规方程",
           "published": true,
           "date": "2026-10-28",
-          "url": "lessons/2026-10-28-02-09.html"
+          "url": "lessons/2026-10-28-02-09.html",
+          "delivered": true
         },
         {
           "chapter": 2,
@@ -207,43 +228,48 @@ window.MATH_COURSE={
           "title": "满列秩与有限样本系数解的唯一性",
           "published": true,
           "date": "2026-10-29",
-          "url": "lessons/2026-10-29-02-10.html"
+          "url": "lessons/2026-10-29-02-10.html",
+          "delivered": true
         },
         {
           "chapter": 2,
           "section": 11,
           "number": 23,
           "title": "逆矩阵与线性方程组",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-29",
+          "url": "lessons/2026-10-29-02-11.html",
+          "delivered": false
         },
         {
           "chapter": 2,
           "section": 12,
           "number": 24,
           "title": "OLS矩阵解的推导",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-29",
+          "url": "lessons/2026-10-29-02-12.html",
+          "delivered": false
         },
         {
           "chapter": 2,
           "section": 13,
           "number": 25,
           "title": "投影矩阵与残差生成矩阵",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-29",
+          "url": "lessons/2026-10-29-02-13.html",
+          "delivered": false
         },
         {
           "chapter": 2,
           "section": 14,
           "number": 26,
           "title": "含截距回归的残差正交性质",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-29",
+          "url": "lessons/2026-10-29-02-14.html",
+          "delivered": false
         }
       ]
     },
@@ -256,108 +282,120 @@ window.MATH_COURSE={
           "section": 1,
           "number": 27,
           "title": "联合分布和边际分布",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-29",
+          "url": "lessons/2026-10-29-03-01.html",
+          "delivered": false
         },
         {
           "chapter": 3,
           "section": 2,
           "number": 28,
           "title": "独立与零相关",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-29",
+          "url": "lessons/2026-10-29-03-02.html",
+          "delivered": false
         },
         {
           "chapter": 3,
           "section": 3,
           "number": 29,
           "title": "条件分布",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-29",
+          "url": "lessons/2026-10-29-03-03.html",
+          "delivered": false
         },
         {
           "chapter": 3,
           "section": 4,
           "number": 30,
           "title": "条件期望与回归函数",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-29",
+          "url": "lessons/2026-10-29-03-04.html",
+          "delivered": false
         },
         {
           "chapter": 3,
           "section": 5,
           "number": 31,
           "title": "全期望公式",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-29",
+          "url": "lessons/2026-10-29-03-05.html",
+          "delivered": false
         },
         {
           "chapter": 3,
           "section": 6,
           "number": 32,
           "title": "全方差公式",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-29",
+          "url": "lessons/2026-10-29-03-06.html",
+          "delivered": false
         },
         {
           "chapter": 3,
           "section": 7,
           "number": 33,
           "title": "统计量的抽样分布",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-29",
+          "url": "lessons/2026-10-29-03-07.html",
+          "delivered": false
         },
         {
           "chapter": 3,
           "section": 8,
           "number": 34,
           "title": "样本均值的方差与抽样独立条件",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-29",
+          "url": "lessons/2026-10-29-03-08.html",
+          "delivered": false
         },
         {
           "chapter": 3,
           "section": 9,
           "number": 35,
           "title": "OLS系数的条件方差",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-29",
+          "url": "lessons/2026-10-29-03-09.html",
+          "delivered": false
         },
         {
           "chapter": 3,
           "section": 10,
           "number": 36,
           "title": "正态误差下的有限样本t与F推断",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-29",
+          "url": "lessons/2026-10-29-03-10.html",
+          "delivered": false
         },
         {
           "chapter": 3,
           "section": 11,
           "number": 37,
           "title": "二次型与卡方结构",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-29",
+          "url": "lessons/2026-10-29-03-11.html",
+          "delivered": false
         },
         {
           "chapter": 3,
           "section": 12,
           "number": 38,
           "title": "半正定和正定矩阵及协方差矩阵",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-29",
+          "url": "lessons/2026-10-29-03-12.html",
+          "delivered": false
         }
       ]
     },
@@ -370,81 +408,90 @@ window.MATH_COURSE={
           "section": 1,
           "number": 39,
           "title": "特征值与特征向量",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-29",
+          "url": "lessons/2026-10-29-04-01.html",
+          "delivered": false
         },
         {
           "chapter": 4,
           "section": 2,
           "number": 40,
           "title": "对称矩阵的谱分解",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-29",
+          "url": "lessons/2026-10-29-04-02.html",
+          "delivered": false
         },
         {
           "chapter": 4,
           "section": 3,
           "number": 41,
           "title": "特征值和协方差矩阵的非负性",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-29",
+          "url": "lessons/2026-10-29-04-03.html",
+          "delivered": false
         },
         {
           "chapter": 4,
           "section": 4,
           "number": 42,
           "title": "协方差椭圆",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-29",
+          "url": "lessons/2026-10-29-04-04.html",
+          "delivered": false
         },
         {
           "chapter": 4,
           "section": 5,
           "number": 43,
           "title": "PCA的主方向",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-29",
+          "url": "lessons/2026-10-29-04-05.html",
+          "delivered": false
         },
         {
           "chapter": 4,
           "section": 6,
           "number": 44,
           "title": "PCA解释方差",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-29",
+          "url": "lessons/2026-10-29-04-06.html",
+          "delivered": false
         },
         {
           "chapter": 4,
           "section": 7,
           "number": 45,
           "title": "多重共线性与小特征值",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-29",
+          "url": "lessons/2026-10-29-04-07.html",
+          "delivered": false
         },
         {
           "chapter": 4,
           "section": 8,
           "number": 46,
           "title": "奇异值分解",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-29",
+          "url": "lessons/2026-10-29-04-08.html",
+          "delivered": false
         },
         {
           "chapter": 4,
           "section": 9,
           "number": 47,
           "title": "条件数和数值稳定性",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-29",
+          "url": "lessons/2026-10-29-04-09.html",
+          "delivered": false
         }
       ]
     },
@@ -457,144 +504,160 @@ window.MATH_COURSE={
           "section": 1,
           "number": 48,
           "title": "概率收敛",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-29",
+          "url": "lessons/2026-10-29-05-01.html",
+          "delivered": false
         },
         {
           "chapter": 5,
           "section": 2,
           "number": 49,
           "title": "大数定律",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-29",
+          "url": "lessons/2026-10-29-05-02.html",
+          "delivered": false
         },
         {
           "chapter": 5,
           "section": 3,
           "number": 50,
           "title": "样本均值一致性",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-29",
+          "url": "lessons/2026-10-29-05-03.html",
+          "delivered": false
         },
         {
           "chapter": 5,
           "section": 4,
           "number": 51,
           "title": "依分布收敛",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-29",
+          "url": "lessons/2026-10-29-05-04.html",
+          "delivered": false
         },
         {
           "chapter": 5,
           "section": 5,
           "number": 52,
           "title": "中心极限定理及条件",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-29",
+          "url": "lessons/2026-10-29-05-05.html",
+          "delivered": false
         },
         {
           "chapter": 5,
           "section": 6,
           "number": 53,
           "title": "Slutsky定理",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-29",
+          "url": "lessons/2026-10-29-05-06.html",
+          "delivered": false
         },
         {
           "chapter": 5,
           "section": 7,
           "number": 54,
           "title": "Delta Method",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-29",
+          "url": "lessons/2026-10-29-05-07.html",
+          "delivered": false
         },
         {
           "chapter": 5,
           "section": 8,
           "number": 55,
           "title": "渐近标准误与Wald推断",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-29",
+          "url": "lessons/2026-10-29-05-08.html",
+          "delivered": false
         },
         {
           "chapter": 5,
           "section": 9,
           "number": 56,
           "title": "密度与似然函数",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-29",
+          "url": "lessons/2026-10-29-05-09.html",
+          "delivered": false
         },
         {
           "chapter": 5,
           "section": 10,
           "number": 57,
           "title": "Score与梯度",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-29",
+          "url": "lessons/2026-10-29-05-10.html",
+          "delivered": false
         },
         {
           "chapter": 5,
           "section": 11,
           "number": 58,
           "title": "Hessian与曲率",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-29",
+          "url": "lessons/2026-10-29-05-11.html",
+          "delivered": false
         },
         {
           "chapter": 5,
           "section": 12,
           "number": 59,
           "title": "MLE求解与一阶条件",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-29",
+          "url": "lessons/2026-10-29-05-12.html",
+          "delivered": false
         },
         {
           "chapter": 5,
           "section": 13,
           "number": 60,
           "title": "MLE渐近性质与正则条件",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-29",
+          "url": "lessons/2026-10-29-05-13.html",
+          "delivered": false
         },
         {
           "chapter": 5,
           "section": 14,
           "number": 61,
           "title": "矩条件与识别",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-29",
+          "url": "lessons/2026-10-29-05-14.html",
+          "delivered": false
         },
         {
           "chapter": 5,
           "section": 15,
           "number": 62,
           "title": "GMM加权准则",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-29",
+          "url": "lessons/2026-10-29-05-15.html",
+          "delivered": false
         },
         {
           "chapter": 5,
           "section": 16,
           "number": 63,
           "title": "GMM估计的渐近方差",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-29",
+          "url": "lessons/2026-10-29-05-16.html",
+          "delivered": false
         }
       ]
     },
@@ -607,90 +670,100 @@ window.MATH_COURSE={
           "section": 1,
           "number": 64,
           "title": "广义最小二乘",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-29",
+          "url": "lessons/2026-10-29-06-01.html",
+          "delivered": false
         },
         {
           "chapter": 6,
           "section": 2,
           "number": 65,
           "title": "异方差稳健三明治方差",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-29",
+          "url": "lessons/2026-10-29-06-02.html",
+          "delivered": false
         },
         {
           "chapter": 6,
           "section": 3,
           "number": 66,
           "title": "面板固定效应的组内变换",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-29",
+          "url": "lessons/2026-10-29-06-03.html",
+          "delivered": false
         },
         {
           "chapter": 6,
           "section": 4,
           "number": 67,
           "title": "时间序列滞后与依赖",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-29",
+          "url": "lessons/2026-10-29-06-04.html",
+          "delivered": false
         },
         {
           "chapter": 6,
           "section": 5,
           "number": 68,
           "title": "工具变量与正交矩条件",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-29",
+          "url": "lessons/2026-10-29-06-05.html",
+          "delivered": false
         },
         {
           "chapter": 6,
           "section": 6,
           "number": 69,
           "title": "因果识别假设与DAG",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-29",
+          "url": "lessons/2026-10-29-06-06.html",
+          "delivered": false
         },
         {
           "chapter": 6,
           "section": 7,
           "number": 70,
           "title": "贝叶斯后验更新",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-29",
+          "url": "lessons/2026-10-29-06-07.html",
+          "delivered": false
         },
         {
           "chapter": 6,
           "section": 8,
           "number": 71,
           "title": "Ridge正则化",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-29",
+          "url": "lessons/2026-10-29-06-08.html",
+          "delivered": false
         },
         {
           "chapter": 6,
           "section": 9,
           "number": 72,
           "title": "Lasso与高维稀疏性",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-29",
+          "url": "lessons/2026-10-29-06-09.html",
+          "delivered": false
         },
         {
           "chapter": 6,
           "section": 10,
           "number": 73,
           "title": "正交得分与双重机器学习",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-29",
+          "url": "lessons/2026-10-29-06-10.html",
+          "delivered": false
         }
       ]
     }
