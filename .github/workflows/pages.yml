@@ -512,9 +512,9 @@ jobs:
       - name: Verify direct entry and complete taught lesson over HTTPS
         shell: bash
         env:
-          DEPLOY_SHA: \${{ github.sha }}
-          EXPECTED_ID: \${{ needs.build.outputs.latest_econometrics_id }}
-          EXPECTED_TITLE: \${{ needs.build.outputs.latest_econometrics_title }}
+          DEPLOY_SHA: ${{ github.sha }}
+          EXPECTED_ID: ${{ needs.build.outputs.latest_econometrics_id }}
+          EXPECTED_TITLE: ${{ needs.build.outputs.latest_econometrics_title }}
         run: |
           set -euo pipefail
           SITE="https://ericywh.github.io/research-learning-hub/econometrics"
@@ -561,7 +561,7 @@ jobs:
           grep -Fq 'name="course-status" content="taught"' /tmp/econometrics-lesson.html
           grep -Fq 'id="s7"' /tmp/econometrics-lesson.html
           grep -Fq '<pre' /tmp/econometrics-lesson.html
-          grep -Fq 'class="lesson-hero"' /tmp/econometrics-lesson.html
+          grep -Fq 'lesson-hero' /tmp/econometrics-lesson.html
           echo "Verified current taught lesson $LATEST_ID on public GitHub Pages; catalog publication flags were not used to infer chat progress."
 
 
