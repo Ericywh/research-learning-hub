@@ -121,7 +121,7 @@ if (!anchorMatch || !anchorMatch[0].includes('href="' + current.url + '"')) {
 }
 const escapeHtml = value => String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 function replaceElementText(id, value) {
-  const re = new RegExp("(<([a-z][a-z0-9]*)\\b[^>]*\\bid=[\\"']" + id + "[\\"'][^>]*>)[\\s\\S]*?(<\\/\\2>)", "i");
+  const re = new RegExp('(<([a-z][a-z0-9]*)\\b[^>]*\\bid="' + id + '"[^>]*>)[\\s\\S]*?(<\\/\\2>)', 'i');
   if (!re.test(home)) throw Error('Current lesson card element missing: ' + id);
   home = home.replace(re, (_, opening, tag, closing) => opening + escapeHtml(value) + closing);
 }
