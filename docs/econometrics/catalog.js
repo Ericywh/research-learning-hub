@@ -229,7 +229,7 @@ window.ECON_COURSE={
           "section": 15,
           "title": "工资影响因素综合实操",
           "published": true,
-          "date": null,
+          "date": "2026-10-29",
           "url": "lessons/02-15.html"
         }
       ]
