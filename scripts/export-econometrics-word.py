@@ -155,7 +155,7 @@ def main():
  # Actual daily teaching progress comes from the deliberately maintained latest-lesson
  # homepage target, never from the catalog's published display flag.
  landing=(source/'index.html').read_text(encoding='utf8')
- match=re.search(r'<meta\\s+http-equiv="refresh"\\s+content="0;\\s*url=lessons/(\\d{2}-\\d{2})\\.html"',landing,re.I)
+ match=re.search(r'<meta[ ]+http-equiv="refresh"[ ]+content="0;[ ]*url=lessons/([0-9]{2}-[0-9]{2})[.]html"',landing,re.I)
  if not match:raise ValueError('Missing authoritative latest-taught lesson redirect in course homepage')
  latest=next((x for x in lessons if x['id']==match.group(1)),None)
  if latest is None:raise ValueError('Homepage points outside the original 120-lesson plan')
