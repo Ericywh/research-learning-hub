@@ -155,15 +155,18 @@ def main():
  # Actual daily teaching progress comes from the deliberately maintained latest-lesson
  # homepage target, never from the catalog's published display flag.
  landing=(source/'index.html').read_text(encoding='utf8')
- match=re.search(r'<meta[ ]+http-equiv="refresh"[ ]+content="0;[ ]*url=lessons/([0-9]{2}-[0-9]{2})[.]html"',landing,re.I)
- if not match:raise ValueError('Missing authoritative latest-taught lesson redirect in course homepage')
+ match=re.search(r'<meta[ ]+name="current-lesson"[ ]+content="([0-9]{2}-[0-9]{2})"',landing,re.I)
+ if not match:raise ValueError('Missing explicit current-lesson marker in course homepage')
+ if re.search(r'http-equiv=["\']refresh|window\.location\.replace',landing,re.I):raise ValueError('Course homepage must keep the full course directory visible')
  latest=next((x for x in lessons if x['id']==match.group(1)),None)
  if latest is None:raise ValueError('Homepage points outside the original 120-lesson plan')
+ current_html=(source/'lessons'/f"{latest['id']}.html").read_text(encoding='utf8')
+ if 'name="course-status" content="taught"' not in current_html or 'id="s7"' not in current_html:raise ValueError('Current lesson is not a complete taught lesson')
  taught=latest['number']
  manifest={'chapters':10,'lessons':120,'taught':taught,'prewritten':120-taught,'documents':results}
  (folder/'manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2),encoding='utf8')
  links=''.join(f'<li><a href="{r["filename"]}">{("完整120课汇编" if r["lessons"]==120 else "分章讲义"+str(i+1))}（{r["lessons"]}课，Word）</a></li>' for i,r in enumerate(results))
- index='<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>计量经济学120天｜Word下载</title><style>body{font:16px/1.8 system-ui,"Noto Sans SC",sans-serif;max-width:900px;margin:35px auto;padding:20px;color:#264455}a{color:#13777d}li{margin:9px 0}</style><h1>计量经济学120天系统课程｜Word讲义</h1><p>从GitHub课程HTML导出。全部120课在网站上统一显示“已授课”。其中部分正文源自提前编写的教学资料，实际聊天授课历史另行核对。</p><ol>'+links+'</ol><a href="../">返回课程</a></html>'
+ index='<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>计量经济学120天｜Word下载</title><style>body{font:16px/1.8 system-ui,"Noto Sans SC",sans-serif;max-width:900px;margin:35px auto;padding:20px;color:#264455}a{color:#13777d}li{margin:9px 0}</style><h1>计量经济学120天系统课程｜Word讲义</h1><p>从GitHub课程HTML导出。网页归档状态不等同于真实聊天授课进度；实际授课进度以课程首页 current-lesson 标记和真实交付记录核对。</p><ol>'+links+'</ol><a href="../">返回课程</a></html>'
  (folder/'index.html').write_text(index,encoding='utf8')
  print(json.dumps(manifest,ensure_ascii=False,indent=2))
  shutil.rmtree(tmp)

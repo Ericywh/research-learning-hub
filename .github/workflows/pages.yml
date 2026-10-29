@@ -157,14 +157,6 @@ jobs:
             const previous = fs.readFileSync(item.file, 'utf8');
             const updated = previous.replace(item.regex, 'src="' + item.target + '?v=' + sha + '"');
             if (updated === previous) {
-              // The latest-taught econometrics entry intentionally redirects;
-              // it no longer needs a catalog.js script on the landing page.
-              if (item.file === '_site/econometrics/index.html' &&
-                  previous.includes('http-equiv="refresh"') &&
-                  previous.includes('url=lessons/')) {
-                console.log('Skipped catalog cache-buster for direct lesson entry.');
-                continue;
-              }
               throw Error('Cannot version catalog reference: ' + item.file);
             }
             fs.writeFileSync(item.file, updated);
@@ -202,6 +194,13 @@ jobs:
           const heading='第'+lesson.chapter+'章·第'+lesson.section+'节｜'+lesson.title;
           if(!html.includes(heading)||!html.includes('name="course-status" content="taught"')||!html.includes('id="s7"'))
             throw Error('Current entry does not point to a complete taught lesson: '+lesson.id);
+          if(/http-equiv=["']refresh/i.test(index)||/window\.location\.replace\s*\(/i.test(index))
+            throw Error('Course homepage must not auto-redirect away from the full course catalogue.');
+          if(!index.includes('id="catalog"')||!index.includes('id="results"'))
+            throw Error('Course homepage must include the complete searchable lesson catalogue.');
+          const anchor=index.match(/<a\b[^>]*\bid=["']current-lesson-link["'][^>]*>/i);
+          if(!anchor||!anchor[0].includes('href="lessons/'+lesson.id+'.html"'))
+            throw Error('Current lesson card does not link to the explicitly selected lesson: '+lesson.id);
           console.log('lesson_id='+lesson.id);
           console.log('lesson_title='+lesson.title);
           NODE
@@ -550,9 +549,16 @@ jobs:
             return 1
           }
           check_index "$SITE/" /tmp/econometrics-index.html "name=\"current-lesson\" content=\"$LATEST_ID\""
-          grep -Fq "href=\"lessons/$LATEST_ID.html\"" /tmp/econometrics-index.html
-          grep -Fq 'http-equiv="refresh"' /tmp/econometrics-index.html
+          grep -Fq "id=\"current-lesson-link\" href=\"lessons/$LATEST_ID.html\"" /tmp/econometrics-index.html
+          grep -Fq 'id="catalog"' /tmp/econometrics-index.html
+          grep -Fq 'id="results"' /tmp/econometrics-index.html
+          grep -Fq 'course-archive.html' /tmp/econometrics-index.html
           grep -Fq 'catalog.js?v=' /tmp/econometrics-index.html
+          grep -Fq "$LATEST_TITLE" /tmp/econometrics-index.html
+          if grep -Fq 'http-equiv="refresh"' /tmp/econometrics-index.html || grep -Fq 'window.location.replace' /tmp/econometrics-index.html; then
+            echo "::error::Course homepage unexpectedly redirects away from the full catalogue"
+            exit 1
+          fi
           grep -Fq 'study-progress.js' /tmp/econometrics-index.html
           check "$SITE/catalog.js" /tmp/econometrics-catalog.js "\"url\": \"lessons/$LATEST_ID.html\""
           check "$SITE/lessons/$LATEST_ID.html" /tmp/econometrics-lesson.html "$LATEST_TITLE"
@@ -665,12 +671,13 @@ jobs:
               sleep 8
             done
           }
-          # The course entry is a lightweight redirect, not a themed lesson.
-          status=$(curl -L -sS --connect-timeout 10 --max-time 30 -o /tmp/econ-home.html -w '%{http_code}' "$BASE/econometrics/?design=$DEPLOY_SHA" || true)
+          # The course homepage must retain its full searchable catalogue and current-lesson card.
+          status=$(curl -sS --connect-timeout 10 --max-time 30 -o /tmp/econ-home.html -w '%{http_code}' "$BASE/econometrics/?design=$DEPLOY_SHA" || true)
           [[ "$status" == "200" ]] &&
-            grep -Fq 'http-equiv="refresh"' /tmp/econ-home.html &&
-            grep -Eq 'url=lessons/[0-9]{2}-[0-9]{2}[.]html' /tmp/econ-home.html ||
-            { echo "::error::Econometrics homepage redirect is not public"; exit 1; }
+            grep -Fq 'id="catalog"' /tmp/econ-home.html &&
+            grep -Fq 'id="current-lesson-link"' /tmp/econ-home.html &&
+            ! grep -Fq 'http-equiv="refresh"' /tmp/econ-home.html ||
+            { echo "::error::Econometrics full course homepage is not public"; exit 1; }
           check "econometrics/lessons/02-05.html" econometrics /tmp/econ-lesson.html
           check "math/" math /tmp/math-home.html
           check "math/lessons/2026-10-18-01-11.html" math /tmp/math-lesson.html

@@ -85,64 +85,64 @@ fs.writeFileSync(path.join(out, 'catalog.js'),
   '/* Generated during Pages build from the original 120-lesson plan and verified HTML files. */\n' +
   'window.ECON_COURSE=' + JSON.stringify(course, null, 2) + ';\n');
 
-// Update non-JavaScript fallback content for the legacy catalogue. The current
-// taught lesson entry is intentionally a redirect and must remain authoritative.
-// Never infer real chat-teaching progress from catalog.published flags.
-const published = lessons.filter(l => l.published && l.url);
-if (published.length === 0) throw Error('No published econometrics lessons');
-const latest = published[published.length - 1];
-const next = lessons.find(l => !l.published);
-let home = fs.readFileSync(path.join(out, 'index.html'), 'utf8');
-let directEntryId = null;
+
+// Keep the full interactive course catalogue as the homepage. The latest taught
+// lesson is selected explicitly in index.html; never infer chat progress from
+// catalog.published, which only indicates website archive availability.
+const catalogAvailableCount = lessons.filter(l => l.published && l.url).length;
+if (catalogAvailableCount === 0) throw Error('No archived econometrics lessons');
+const homePath = path.join(out, 'index.html');
+let home = fs.readFileSync(homePath, 'utf8');
 const currentEntry = home.match(/<meta\s+name=["']current-lesson["']\s+content=["'](\d{2}-\d{2})["']/i);
-const redirectEntry = home.match(/<meta\s+http-equiv=["']refresh["']\s+content=["']0;\s*url=lessons\/(\d{2}-\d{2})\.html["']/i);
-if (currentEntry || redirectEntry) {
-  if (!currentEntry || !redirectEntry || currentEntry[1] !== redirectEntry[1]) {
-    throw Error('Current lesson metadata and homepage redirect must point to the same lesson.');
-  }
-  directEntryId = currentEntry[1];
-  const current = lessons.find(l => l.id === directEntryId);
-  if (!current || current.url !== 'lessons/' + directEntryId + '.html') {
-    throw Error('Homepage current-lesson target is not a canonical entry in the original 120-lesson plan.');
-  }
-  const currentFile = path.join(out, current.url);
-  if (!fs.existsSync(currentFile)) throw Error('Current taught lesson file is missing: ' + currentFile);
-  const currentHtml = fs.readFileSync(currentFile, 'utf8');
-  const expectedHeading = '第' + current.chapter + '章·第' + current.section + '节｜' + current.title;
-  if (!currentHtml.includes(expectedHeading) ||
-      !currentHtml.includes('name="course-status" content="taught"') ||
-      !currentHtml.includes('id="s7"')) {
-    throw Error('Homepage current lesson is not a complete taught lesson: ' + directEntryId);
-  }
-  if (!home.includes('course-archive.html') || !home.includes('catalog.js')) {
-    throw Error('Direct course entry must retain history/catalog links and the catalog cache-busting hook.');
-  }
-  console.log('Preserved direct entry to actually taught lesson ' + directEntryId + '; legacy catalogue is linked separately.');
-} else {
-  // Backward-compatible fallback for the original interactive catalogue homepage.
-  const escapeHtml = text => String(text).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  function changeText(id, newText) {
-    const regexp = new RegExp('(id="' + id + '"[^>]*>)[^<]*');
-    if (!regexp.test(home)) throw Error('Course homepage marker missing: ' + id);
-    home = home.replace(regexp, (_, opening) => opening + escapeHtml(newText));
-  }
-  changeText('published-count', published.length + ' / ' + lessons.length);
-  changeText('latest-meta', '已授课 · ' + (latest.date ? latest.date.replace(/-/g, '.') + ' · ' : '') +
-    'DAY ' + String(latest.number).padStart(3, '0'));
-  changeText('latest-title', '第' + latest.chapter + '章·第' + latest.section + '节｜' + latest.title);
-  changeText('latest-description', '原120课地址保留；36模块新主线与修订状态见上方入口。代码运行状态逐项披露。');
-  changeText('latest-link', '阅读第' + latest.number + '课完整讲义 ↗');
-  home = home.replace(/(id="latest-link" href=")[^"]+/, '$1' + latest.url);
-  changeText('next-meta', next ? '下一讲 · DAY ' + String(next.number).padStart(3,'0') : '课程已全部归档');
-  changeText('next-title', next ? next.title : '120课原址保留，36处正文实质修订');
-  changeText('next-description', next ?
-    '下一节主题：' + next.title + (next.prepared?'。正文已提前提供，可通过目录进入。':'。完成授课并归档后开放阅读。') :
-    '其余84课保留历史原稿并增加新模块导读，不代表全部120课已经实质重写。');
-  changeText('next-status', next ?
-    '第' + next.number + (next.prepared?'课正文已上线，尚待正式授课。':'课尚未公开归档。') : '学习完成情况与网站历史展示状态分别记录。');
-  fs.writeFileSync(path.join(out, 'index.html'), home);
+if (!currentEntry) throw Error('Homepage must explicitly identify the latest taught lesson.');
+if (/http-equiv=["']refresh/i.test(home) || /window\.location\.replace\s*\(/i.test(home)) {
+  throw Error('Econometrics homepage must show the full course catalogue; automatic lesson redirects are not allowed.');
 }
-console.log('Econometrics public site: ' + published.length +
-  '/120 catalogue entries; direct entry=' + (directEntryId || 'legacy catalogue fallback') +
-  '; last catalogue entry=' + latest.id +
+const currentId = currentEntry[1];
+const current = lessons.find(l => l.id === currentId);
+if (!current || current.url !== 'lessons/' + currentId + '.html') {
+  throw Error('Homepage current lesson is not a canonical entry in the original 120-lesson plan.');
+}
+const currentFile = path.join(out, current.url);
+if (!fs.existsSync(currentFile)) throw Error('Current taught lesson file is missing: ' + currentFile);
+const currentHtml = fs.readFileSync(currentFile, 'utf8');
+const expectedHeading = '第' + current.chapter + '章·第' + current.section + '节｜' + current.title;
+if (!currentHtml.includes(expectedHeading) ||
+    !currentHtml.includes('name="course-status" content="taught"') ||
+    !currentHtml.includes('id="s7"')) {
+  throw Error('Current entry is not a complete taught lesson: ' + currentId);
+}
+for (const marker of ['id="catalog"', 'id="results"', 'id="current-lesson-link"', 'course-archive.html', 'catalog.js']) {
+  if (!home.includes(marker)) throw Error('Complete course homepage is missing required navigation marker: ' + marker);
+}
+const anchorMatch = home.match(/<a\b[^>]*\bid=["']current-lesson-link["'][^>]*>/i);
+if (!anchorMatch || !anchorMatch[0].includes('href="' + current.url + '"')) {
+  throw Error('Current lesson button does not link to the explicitly selected taught lesson: ' + currentId);
+}
+const escapeHtml = value => String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+function replaceElementText(id, value) {
+  const re = new RegExp("(<([a-z][a-z0-9]*)\\b[^>]*\\bid=[\\"']" + id + "[\\"'][^>]*>)[\\s\\S]*?(<\\/\\2>)", "i");
+  if (!re.test(home)) throw Error('Current lesson card element missing: ' + id);
+  home = home.replace(re, (_, opening, tag, closing) => opening + escapeHtml(value) + closing);
+}
+replaceElementText('current-lesson-meta',
+  '最新正式授课 · 全课程第' + current.number + '课 / 共120课' + (current.date ? ' · ' + current.date : ''));
+replaceElementText('current-lesson-title', expectedHeading);
+replaceElementText('current-lesson-description',
+  '本课已完整讲授，包含通俗解释、核心公式、公开教学数据、Stata与Python实现、常见误区及练习答案。');
+replaceElementText('current-lesson-link', '阅读第' + current.number + '课完整讲义 ↗');
+replaceElementText('current-lesson-number', current.number + ' / 120');
+const linkRe = /<a\b[^>]*\bid=["']current-lesson-link["'][^>]*>/i;
+const updatedLink = home.match(linkRe)[0].replace(/\bhref=["'][^"']*["']/i, 'href="' + current.url + '"');
+home = home.replace(linkRe, updatedLink);
+const fillRe = /(<span\b[^>]*\bid=["']current-progress-fill["'][^>]*\bstyle=["']width:)[^"']*(["'][^>]*>)/i;
+if (!fillRe.test(home)) throw Error('Current progress bar is missing.');
+home = home.replace(fillRe, (_, before, after) => before + (current.number / 120 * 100).toFixed(2) + '%' + after);
+const progressRe = /(<div\b[^>]*class=["']current-progress["'][^>]*aria-valuenow=["'])\d+(["'][^>]*>)/i;
+if (!progressRe.test(home)) throw Error('Current lesson progress accessibility metadata is missing.');
+home = home.replace(progressRe, (_, before, after) => before + current.number + after);
+fs.writeFileSync(homePath, home);
+console.log('Preserved full 10-chapter / 120-lesson catalogue; current taught lesson=' + currentId +
+  ' (course lesson ' + current.number + '); archive-available pages=' + catalogAvailableCount + '.');
+console.log('Econometrics public site: ' + catalogAvailableCount + '/120 catalogue pages available; current taught lesson explicitly marked=' + currentId +
   '; automatically discovered=' + (detected.join(',') || 'none') + '.');
