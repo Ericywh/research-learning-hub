@@ -184,22 +184,26 @@ jobs:
         run: |
           node scripts/build-econometrics-public.cjs
 
-      - name: Record newest econometrics lesson from the built artifact
+      - name: Record current taught lesson from the explicit course entry
         id: econometrics_latest
         shell: bash
         run: |
           node <<'NODE' >> "$GITHUB_OUTPUT"
-          const fs=require('node:fs'),vm=require('node:vm');
+          const fs=require('node:fs'),vm=require('node:vm'),path=require('node:path');
+          const index=fs.readFileSync('_site/econometrics/index.html','utf8');
+          const match=index.match(/<meta\s+name=["']current-lesson["']\s+content=["'](\d{2}-\d{2})["']/i);
+          if(!match)throw Error('Course entry must explicitly identify the current taught lesson.');
           const ctx={window:{}};
           vm.runInNewContext(fs.readFileSync('_site/econometrics/catalog.js','utf8'),ctx);
-          const list=ctx.window.ECON_COURSE.chapters.flatMap(c=>c.lessons);
-          const index=fs.readFileSync('_site/econometrics/index.html','utf8');
-          const target=index.match(/content="0; url=lessons\/([0-9]{2}-[0-9]{2})[.]html"/i);
-          if(!target)throw Error('Course landing page lacks latest-taught lesson target');
-          const latest=list.find(l=>l.id===target[1]&&l.url==='lessons/'+target[1]+'.html');
-          if(!latest)throw Error('Latest-taught homepage target not in original catalog');
-          console.log('lesson_id='+latest.id);
-          console.log('lesson_title='+latest.title);
+          const lessons=ctx.window.ECON_COURSE.chapters.flatMap(c=>c.lessons);
+          const lesson=lessons.find(l=>l.id===match[1]);
+          if(!lesson||lesson.url!=='lessons/'+lesson.id+'.html')throw Error('Current lesson is not in the original 120-lesson catalog.');
+          const html=fs.readFileSync(path.join('_site/econometrics',lesson.url),'utf8');
+          const heading='第'+lesson.chapter+'章·第'+lesson.section+'节｜'+lesson.title;
+          if(!html.includes(heading)||!html.includes('name="course-status" content="taught"')||!html.includes('id="s7"'))
+            throw Error('Current entry does not point to a complete taught lesson: '+lesson.id);
+          console.log('lesson_id='+lesson.id);
+          console.log('lesson_title='+lesson.title);
           NODE
 
       - name: Auto-index research frontier and validate lesson links
@@ -498,54 +502,68 @@ jobs:
           echo "Frontier public smoke test passed: archive index and ${#ISSUES[@]} latest issues."
 
   verify-public-econometrics:
-    name: Verify public econometrics pages
+    name: Verify direct course entry, catalog and current taught lesson over HTTPS
     needs: [build, deploy]
     runs-on: ubuntu-latest
     steps:
       - name: Check out source for expected lesson list
         uses: actions/checkout@v4
 
-      - name: Verify deployed index, catalog and newest full lesson over HTTPS
+      - name: Verify direct entry and complete taught lesson over HTTPS
         shell: bash
         env:
-          DEPLOY_SHA: ${{ github.sha }}
-          EXPECTED_ID: ${{ needs.build.outputs.latest_econometrics_id }}
-          EXPECTED_TITLE: ${{ needs.build.outputs.latest_econometrics_title }}
+          DEPLOY_SHA: \${{ github.sha }}
+          EXPECTED_ID: \${{ needs.build.outputs.latest_econometrics_id }}
+          EXPECTED_TITLE: \${{ needs.build.outputs.latest_econometrics_title }}
         run: |
           set -euo pipefail
           SITE="https://ericywh.github.io/research-learning-hub/econometrics"
           LATEST_ID="$EXPECTED_ID"
           LATEST_TITLE="$EXPECTED_TITLE"
-          [[ -n "$LATEST_ID" && -n "$LATEST_TITLE" ]] || { echo "::error::Build did not export a latest lesson"; exit 1; }
+          [[ -n "$LATEST_ID" && -n "$LATEST_TITLE" ]] || { echo "::error::Build did not export the current taught lesson"; exit 1; }
           check() {
             local url="$1" output="$2" marker="$3" status
             for attempt in $(seq 1 10); do
-              status=$(curl -L -sS --connect-timeout 10 --max-time 30 \
-                -o "$output" -w '%{http_code}' "$url?deploy=$DEPLOY_SHA" || true)
+              status=$(curl -L -sS --connect-timeout 10 --max-time 30 -o "$output" -w '%{http_code}' "$url?deploy=$DEPLOY_SHA" || true)
               if [[ "$status" == "200" ]] && grep -Fq "$marker" "$output"; then
                 echo "PASS HTTP 200 + expected content: $url"
                 return 0
               fi
-              echo "Attempt $attempt: status=$status or stale/missing content for $url"
+              echo "Attempt $attempt: status=$status or expected content missing at $url"
               sleep 12
             done
-            echo "::error::The public econometrics site did not update: $url"
+            echo "::error::Public econometrics URL failed HTTP/content check: $url"
             return 1
           }
-          check "$SITE/" /tmp/econometrics-index.html "计量经济学120天"
+          check_index() {
+            local url="$1" output="$2" marker="$3" status
+            for attempt in $(seq 1 10); do
+              status=$(curl -sS --connect-timeout 10 --max-time 30 -o "$output" -w '%{http_code}' "$url?deploy=$DEPLOY_SHA" || true)
+              if [[ "$status" == "200" ]] && grep -Fq "$marker" "$output"; then
+                echo "PASS HTTP 200 + current-entry marker: $url"
+                return 0
+              fi
+              echo "Attempt $attempt: status=$status or current-entry marker missing at $url"
+              sleep 12
+            done
+            echo "::error::Direct course entry failed HTTP/content check: $url"
+            return 1
+          }
+          check_index "$SITE/" /tmp/econometrics-index.html "name=\"current-lesson\" content=\"$LATEST_ID\""
+          grep -Fq "href=\"lessons/$LATEST_ID.html\"" /tmp/econometrics-index.html
+          grep -Fq 'http-equiv="refresh"' /tmp/econometrics-index.html
+          grep -Fq 'catalog.js?v=' /tmp/econometrics-index.html
+          grep -Fq 'study-progress.js' /tmp/econometrics-index.html
           check "$SITE/catalog.js" /tmp/econometrics-catalog.js "\"url\": \"lessons/$LATEST_ID.html\""
           check "$SITE/lessons/$LATEST_ID.html" /tmp/econometrics-lesson.html "$LATEST_TITLE"
-          # Confirm the personal completion feature is present in the deployed HTML and assets.
           check "$SITE/study-progress.js" /tmp/econometrics-progress.js "research-learning-hub:econometrics:completed:v1"
           check "$SITE/study-progress.css" /tmp/econometrics-progress.css "econ-complete-panel"
-          # New course entry is a direct redirect to the last formally taught lecture;
-          # archived catalog and optional personal progress assets remain separate.
-          grep -Fq "content=\"0; url=lessons/$LATEST_ID.html\"" /tmp/econometrics-index.html
-          grep -Fq 'href="course-archive.html"' /tmp/econometrics-index.html
-          grep -Fq 'id="s1"' /tmp/econometrics-lesson.html
+          grep -Fq 'name="course-status" content="taught"' /tmp/econometrics-lesson.html
           grep -Fq 'id="s7"' /tmp/econometrics-lesson.html
           grep -Fq '<pre' /tmp/econometrics-lesson.html
-          echo "Verified newest econometrics course $LATEST_ID on public GitHub Pages."
+          grep -Fq 'class="lesson-hero"' /tmp/econometrics-lesson.html
+          echo "Verified current taught lesson $LATEST_ID on public GitHub Pages; catalog publication flags were not used to infer chat progress."
+
 
   verify-public-math:
     name: Verify public mathematics pages
