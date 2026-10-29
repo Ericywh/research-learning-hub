@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="course-status" content="taught"><meta name="course-revision" content="2026-10-29-lesson22">
+<meta name="course-status" content="taught"><meta name="course-revision" content="2026-10-29-lesson22-visual-polish">
 <title>第2章·第15节｜工资影响因素综合实操｜全课程第22课</title>
 <link rel="stylesheet" href="../v2/course.css"><script defer src="../v2/course.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
@@ -9,30 +9,134 @@ main{max-width:1060px;margin:auto;padding:1.3rem}.hero{padding:2.4rem 2rem}
 .lesson-nav{display:flex;flex-wrap:wrap;gap:.5rem;margin:1.2rem 0}.lesson-nav a{border:1px solid #bfd3d3;border-radius:999px;padding:.42rem .8rem;text-decoration:none;background:#f3f8f7;color:#173e49;font-size:.87rem}
 .paper{scroll-margin-top:1rem}.paper p{line-height:1.88}.paper details{margin:1rem 0}.paper pre{overflow:auto;white-space:pre;line-height:1.55;padding:1.2rem;background:#132a34;color:#e8f4f4;border-radius:.6rem}.paper code{font-size:.87rem}
 .formula{overflow-x:auto;font-size:1.05rem;padding:1.2rem;background:#f3f7f7;border-left:4px solid #a88240;margin:1rem 0}.meta{font-variant-numeric:tabular-nums}.diagram{margin:1.5rem 0;overflow-x:auto}.diagram svg{min-width:620px;max-width:100%}.diagram figcaption{font-size:.8rem;color:#65717a}.paper ol li{margin:.8rem 0;line-height:1.7}.paper a{overflow-wrap:anywhere}
+
+/* lesson-hero-visual-v1 · lesson-scoped layer; does not change shared course CSS */
+main{max-width:1120px;padding-top:1.6rem}
+.lesson-hero{display:grid;grid-template-columns:minmax(0,1.26fr) minmax(290px,.74fr);gap:30px;align-items:center;min-height:360px;padding:48px 44px;background:radial-gradient(circle at 3% 100%,#d5f3e6bb,transparent 32%),linear-gradient(121deg,#f9fffc 5%,#edf5fc 55%,#f0ecfc)}
+.lesson-hero::after{right:-70px;top:-84px;width:250px;height:250px}
+.hero-copy{min-width:0;position:relative;z-index:1}
+.lesson-eyebrow{margin:0;color:#387b82;font:750 11px/1.4 ui-sans-serif,system-ui,sans-serif;letter-spacing:.18em;text-transform:uppercase}
+.lesson-hero h1{font-size:clamp(31px,3.7vw,48px);max-width:690px;margin:16px 0 20px;letter-spacing:-.035em}
+.hero-badges{display:flex;flex-wrap:wrap;gap:9px}
+.lesson-hero .badge{font-size:12px;padding:6px 12px}
+.lesson-hero .meta{line-height:1.6;font-weight:650}
+.hero-copy>p:last-child{font-size:13px;line-height:1.85;color:#54718b;margin-top:17px}
+.hero-copy>p:last-child a{font-weight:700}
+.hero-art{padding:20px;border-radius:22px;color:#e7f7ff;box-shadow:0 18px 36px #233d6928, inset 0 1px #ffffff40;background:radial-gradient(circle at 100% 0%,#4b8d9b8a,transparent 42%),linear-gradient(145deg,#173e5b,#29446e 65%,#504d80);overflow:hidden}
+.hero-art-header{display:flex;align-items:center;justify-content:space-between;gap:8px;font:750 10px/1.4 ui-sans-serif,system-ui,sans-serif;letter-spacing:.12em;color:#c9e4ed}
+.hero-art-header span:last-child{display:inline-flex;align-items:center;gap:6px;color:#e6ddba;letter-spacing:.06em}
+.hero-art-header span:last-child::before{content:"";width:7px;height:7px;border-radius:50%;background:#c5e5bd;box-shadow:0 0 0 4px #c5e5bd1e}
+.hero-art svg{display:block;width:100%;height:auto;margin:14px auto 0;max-width:360px}
+.hero-art-footer{margin:0;color:#c8dbea;font-size:11px;text-align:center;letter-spacing:.02em}
+.lesson-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:-8px 2px 22px}
+.lesson-fact{display:flex;align-items:center;gap:14px;min-width:0;padding:17px 19px;background:#ffffffdb;border:1px solid #dce7f0;border-radius:17px;box-shadow:0 6px 20px #2c4a720b}
+.lesson-fact-icon{display:grid;place-items:center;flex:0 0 42px;height:42px;border-radius:12px;background:linear-gradient(145deg,#d9f0e9,#e3ecfa);color:#28617f;font:700 16px/1 Georgia,serif}
+.lesson-fact b{display:block;color:#284760;line-height:1.35;font-size:14px;overflow-wrap:anywhere}
+.lesson-fact small{display:block;color:#6b8194;font-size:11px;margin:0 0 4px}
+.lesson-nav{position:sticky;top:83px;z-index:24;display:flex;justify-content:center;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:thin;padding:10px;margin:16px auto 24px;background:#f9fcffed;border:1px solid #dfeaf1;border-radius:16px;box-shadow:0 8px 24px #304c6813;backdrop-filter:blur(12px)}
+.lesson-nav a{flex:0 0 auto;white-space:nowrap;background:transparent;color:#3f6380;border-color:transparent;border-radius:10px;font-size:12px;font-weight:650;padding:8px 10px;transition:background .16s,border-color .16s,transform .16s}
+.lesson-nav a:hover{background:#e5f3f0;border-color:#beddd8;transform:translateY(-1px)}
+.reading-scope{display:flex;gap:10px;align-items:center;margin:12px auto 24px;padding:11px 16px;border-left:3px solid #4c9a9a;border-radius:0 12px 12px 0;background:#ecf7f3b8;color:#537083;font-size:12px;line-height:1.8}
+.reading-scope::before{content:"◈";color:#22827f;font-size:17px}
+section.paper{position:relative;margin:23px auto;padding:30px 38px 36px;border-radius:20px}
+section.paper::before{content:attr(data-note);display:inline-block;margin-bottom:13px;color:#47848c;font-size:10px;font-weight:800;letter-spacing:.17em}
+section.paper>h2{margin-bottom:19px;padding-bottom:17px}
+section.paper>h2::before{height:22px;border-radius:6px;background:linear-gradient(180deg,#1caaa0,#727ac7)}
+section.paper p{line-height:1.95}
+section.paper>p:first-of-type{margin-top:0}
+#s2 .formula{position:relative;border-left:5px solid #7185c4;background:radial-gradient(circle at 100% 0%,#ebeaff,transparent 36%),linear-gradient(125deg,#eff8fc,#f6f4fe);border-radius:15px;padding:23px;box-shadow:inset 0 1px #fff}
+.diagram{max-width:860px;margin:22px auto;border:1px solid #d1e4e1;border-radius:18px;padding:20px;background:linear-gradient(110deg,#f1fbf7,#eef5fc)}
+.code-panel{border:1px solid #d9e5ed;border-radius:16px;overflow:hidden;box-shadow:0 8px 24px #1c355516}
+.code-panel>summary{font-size:14px;font-weight:750;background:linear-gradient(110deg,#e6f4f2,#edf0fb);padding:16px 21px}
+.code-panel>summary::marker{color:#248e89}
+.code-panel>button[data-copy]{margin:12px 20px 14px;font-size:12px;padding:7px 12px}
+.code-panel pre{max-height:620px;margin:0;border-radius:0;line-height:1.8}
+#s5 ol{display:grid;grid-template-columns:1fr;gap:12px;padding:0;list-style:none;counter-reset:pitfall}
+#s5 ol li{counter-increment:pitfall;position:relative;margin:0;padding:18px 20px 18px 61px;border-radius:15px;border:1px solid #eee1d5;background:linear-gradient(110deg,#fffaf4,#fff);line-height:1.8}
+#s5 ol li::before{content:counter(pitfall,decimal-leading-zero);position:absolute;left:17px;top:17px;display:grid;place-items:center;width:30px;height:30px;border-radius:10px;background:#f6e5cf;color:#9b622d;font-weight:800;font-size:12px}
+.exercise-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.exercise-card{border:1px solid #d7e4ef;border-radius:17px;padding:21px;background:linear-gradient(145deg,#f9fcff,#f2f7fe);box-shadow:0 6px 20px #35567c0b}
+.exercise-type{display:inline-flex;align-items:center;margin:0 0 12px;padding:5px 10px;border-radius:999px;color:#29637d;background:#e0eff6;font-size:11px;font-weight:800}
+.exercise-card>p{line-height:1.9;margin:0 0 15px}
+.exercise-card details.exercise-answer{border:1px solid #bedcd8;border-radius:12px;background:#fff;margin:12px 0 0}
+.exercise-card details.exercise-answer summary{font-size:12px;padding:11px 15px;background:#e7f5f1;color:#286969}
+.exercise-card details.exercise-answer p{margin:0;padding:14px;font-size:13px;line-height:1.8;color:#36566c}
+.lesson-progress-panel{padding:19px 21px;margin:4px 0 24px;border:1px solid #d5e8e6;border-radius:17px;background:linear-gradient(118deg,#eff9f6,#edf3fb)}
+.lesson-progress-title{display:flex;align-items:center;justify-content:space-between;gap:12px;color:#345b6d;font-size:13px;font-weight:750}
+.lesson-progress-title strong{font:700 21px/1.3 Georgia,serif;color:#286d77}
+.lesson-progress-track{height:10px;background:#dce7ee;border-radius:100px;overflow:hidden;margin:11px 0 8px}
+.lesson-progress-track span{display:block;height:100%;border-radius:100px;background:linear-gradient(90deg,#23a399,#5d7ecc)}
+.lesson-progress-panel small{color:#637f90;font-size:11px}
+.lesson-bottom-nav{max-width:860px;margin:24px auto;justify-content:space-between}
+.lesson-bottom-nav a{box-shadow:0 5px 16px #35547b11}
+body[data-econ-dark="true"] .lesson-hero{background:linear-gradient(120deg,#172c3d,#1c2945 65%,#2b2540)}
+body[data-econ-dark="true"] .lesson-eyebrow{color:#9bdad7}
+body[data-econ-dark="true"] .hero-copy>p:last-child{color:#b9d0e0}
+body[data-econ-dark="true"] .lesson-fact,body[data-econ-dark="true"] .lesson-nav{background:#192a3eec;border-color:#344b61}
+body[data-econ-dark="true"] .lesson-fact b{color:#d5e6f4}
+body[data-econ-dark="true"] .lesson-fact small,body[data-econ-dark="true"] .reading-scope{color:#b4c7d8}
+body[data-econ-dark="true"] .lesson-fact-icon{background:#28455a;color:#d4eefa}
+body[data-econ-dark="true"] .lesson-nav a{color:#c7dbea}
+body[data-econ-dark="true"] .lesson-nav a:hover{background:#24465b}
+body[data-econ-dark="true"] .reading-scope{background:#1c3641}
+body[data-econ-dark="true"] #s2 .formula{background:linear-gradient(110deg,#1b3047,#292844)}
+body[data-econ-dark="true"] #s5 ol li{background:#2c303c;border-color:#50515c;color:#d4dfe9}
+body[data-econ-dark="true"] #s5 ol li::before{background:#594535;color:#f2d1ad}
+body[data-econ-dark="true"] .exercise-card{background:#1e3045;border-color:#3b536b;color:#d9e8f5}
+body[data-econ-dark="true"] .exercise-card details.exercise-answer{background:#192c3c;border-color:#3f6064}
+body[data-econ-dark="true"] .exercise-card details.exercise-answer p{color:#d7e8f3}
+body[data-econ-dark="true"] .lesson-progress-panel{background:#203447;border-color:#37556c}
+body[data-econ-dark="true"] .lesson-progress-title,body[data-econ-dark="true"] .lesson-progress-title strong{color:#d7eaf6}
+body[data-econ-dark="true"] .lesson-progress-track{background:#3b5065}
+@media(max-width:900px){.lesson-hero{gap:20px;padding:32px}.lesson-hero h1{font-size:36px}.hero-art{padding:16px}}
+@media(max-width:720px){.lesson-hero{grid-template-columns:1fr;gap:22px}.hero-art{max-width:480px;width:100%}.lesson-facts{grid-template-columns:1fr;gap:9px}.lesson-fact{padding:11px 14px}.lesson-fact-icon{height:36px;flex-basis:36px}.lesson-nav{position:static;justify-content:flex-start}.exercise-grid{grid-template-columns:1fr}section.paper{padding:25px 22px}.lesson-progress-panel{padding:16px}}
+@media(max-width:460px){.lesson-hero{padding:27px 20px}.lesson-hero h1{font-size:31px}.hero-art svg{max-height:220px}.lesson-fact{gap:10px}section.paper{padding:21px 17px}.lesson-nav{margin:14px 0 20px}.reading-scope{font-size:11px;padding:10px}}
+@media print{.lesson-hero,.lesson-fact,.lesson-nav,.exercise-card,.lesson-progress-panel{background:white!important;box-shadow:none!important;color:black!important}.lesson-nav,.hero-art{display:none!important}.exercise-answer{display:block!important}.exercise-answer>summary{display:none}.exercise-answer>p{display:block!important}.lesson-facts{break-inside:avoid}}
+
 </style></head><body>
 <header><a href="../">← 计量经济学120天课程</a><a href="../v2/">36模块强化路径</a></header>
-<main><div class="hero"><span class="badge">已授课</span><span class="badge">2026-10-29</span>
+<main><div class="hero lesson-hero"><div class="hero-copy"><p class="lesson-eyebrow">ECONOMETRICS · CHAPTER 02 · APPLIED LAB</p><div class="hero-badges"><span class="badge">已授课</span><span class="badge">2026-10-29</span></div>
 <h1>第2章·第15节｜工资影响因素综合实操</h1>
 <p class="meta">全课程第22课 / 共120课 · 10—15分钟 · NLSW88真实公开教学数据 · Stata与Python</p>
-<p>原120课编号与标题保持不变。本页为正式聊天授课后的七模块完整讲义；<a href="../archive/2026-10-27/lessons/02-15.html">查看原网页历史档案</a>。</p></div>
+<p>原120课编号与标题保持不变。本页为正式聊天授课后的七模块完整讲义；<a href="../archive/2026-10-27/lessons/02-15.html">查看原网页历史档案</a>。</p></div><div class="hero-art" aria-hidden="true">
+<div class="hero-art-header"><span>MODEL WORKFLOW</span><span>OLS · HC1</span></div>
+<svg viewBox="0 0 360 235" xmlns="http://www.w3.org/2000/svg">
+<defs><linearGradient id="lesson22flow" x1="0" x2="1"><stop stop-color="#63d4c0"/><stop offset="1" stop-color="#c4c8ff"/></linearGradient></defs>
+<g stroke="#ffffff25" stroke-width="1"><path d="M0 27H360M0 73H360M0 119H360M0 165H360M0 211H360M39 0V235M110 0V235M181 0V235M252 0V235M323 0V235"/></g>
+<g fill="#ffffff1a" stroke="#ffffff60"><rect x="10" y="28" width="126" height="159" rx="17"/><rect x="158" y="44" width="183" height="65" rx="15"/><rect x="158" y="127" width="183" height="60" rx="15"/></g>
+<g fill="#c8e6e8" font-family="system-ui,sans-serif" font-size="10" font-weight="650" letter-spacing="1"><text x="24" y="51">VARIABLES</text><text x="173" y="65">MODEL</text><text x="173" y="147">INFERENCE</text></g>
+<g font-family="system-ui,sans-serif" fill="#f1fbff" font-size="14" font-weight="650"><text x="24" y="82">grade</text><text x="24" y="113">ttl_exp</text><text x="24" y="144">tenure</text><text x="24" y="174">union · race</text><text x="173" y="91" font-size="22">ln(wage) ~ X</text><text x="173" y="174" font-size="21">HC1 / Wald</text></g>
+<path d="M138 105H155M148 98L155 105L148 112" stroke="url(#lesson22flow)" stroke-width="3" stroke-linecap="round" fill="none"/>
+<path d="M247 112V124M241 119L247 125L253 119" stroke="url(#lesson22flow)" stroke-width="2.8" stroke-linecap="round" fill="none"/>
+<circle cx="333" cy="28" r="4" fill="#7fe7d3"/><path d="M10 201H350" stroke="#ffffff35" stroke-width="1.2"/>
+<text x="180" y="221" text-anchor="middle" fill="#d2e9ef" font-size="10" font-family="system-ui,sans-serif">同一样本 · 双软件 · 可复现教学</text>
+</svg>
+<p class="hero-art-footer">分析流程示意，不表示真实回归结果</p>
+</div></div>
+
+<div class="lesson-facts" aria-label="课程概览">
+  <div class="lesson-fact"><span class="lesson-fact-icon" aria-hidden="true">01</span><div><small>研究数据</small><b>NLSW88 · 公开教学数据</b></div></div>
+  <div class="lesson-fact"><span class="lesson-fact-icon" aria-hidden="true">02</span><div><small>本课方法</small><b>OLS · HC1 · 联合检验</b></div></div>
+  <div class="lesson-fact"><span class="lesson-fact-icon" aria-hidden="true">03</span><div><small>实操环境</small><b>Stata + Python</b></div></div>
+</div>
 <nav class="lesson-nav" aria-label="七模块快速导航"><a href="#s1">1 · 通俗理解</a><a href="#s2">2 · 核心理论与公式</a><a href="#s3">3 · 实证案例与数据</a><a href="#s4">4 · Stata与Python实现</a><a href="#s5">5 · 初学者避坑</a><a href="#s6">6 · 今日练习</a><a href="#s7">7 · 学习进度</a></nav>
-<p>2026-10-29 · 全课程第22课 / 共120课 · 10—15分钟 · 真实公开教学数据 · Stata/Python双软件</p>
-<section class="paper" id="s1"><h2>一、通俗理解</h2>
+<p class="reading-scope">2026-10-29 · 全课程第22课 / 共120课 · 10—15分钟 · 真实公开教学数据 · Stata/Python双软件</p>
+<section class="paper" id="s1" data-note="MODULE 01 / 07"><h2>一、通俗理解</h2>
 <p>为什么同样工作一小时，不同劳动者的工资会不同？教育年限、累计工作经验、当前岗位任职年限，以及工会身份、婚姻状态等，都可能与工资有关。但这些变量往往彼此相关：教育较多者的职业经历可能不同，工会成员也可能集中在特定行业。因此，仅把工资对教育做一元回归，与同时控制其他可观测特征的多元回归，回答的不是完全相同的问题。</p>
 <p>本课把前14节知识合并成一次完整实操：明确研究问题，筛选样本，定义变量，估计两个OLS模型，使用稳健标准误，并解释系数、置信区间和联合检验。这里研究的是<strong>条件统计关联</strong>，不是教育、工会或婚姻对工资的因果效应。</p>
 </section>
-<section class="paper" id="s2"><h2>二、核心理论与公式</h2>
+<section class="paper" id="s2" data-note="MODULE 02 / 07"><h2>二、核心理论与公式</h2>
 <p>设 \(wage_i\) 为正的小时工资，\(grade_i\) 为已完成教育年级，\(ttl\_exp_i\) 为累计工作经验年数，\(tenure_i\) 为现岗位任职年数，\(union_i\) 和 \(married_i\) 为0/1变量；\(D_{2i},D_{3i}\) 表示种族类别2和3，类别1作为参照组。完整模型为：</p>
 <div class="formula">\[\ln(wage_i)=\beta_0+\beta_1grade_i+\beta_2ttl\_exp_i+\beta_3tenure_i+\gamma_1union_i+\gamma_2married_i+\delta_2D_{2i}+\delta_3D_{3i}+u_i.\]</div>
 <p>在其他解释变量保持不变时，\(\beta_1\) 是教育年级增加一单位对应的<strong>条件平均对数工资差</strong>；对应条件几何平均工资的精确百分比差为：</p>
 <div class="formula">\[100\bigl(e^{\beta_1}-1\bigr)\%,\qquad \text{当 }|\beta_1|\text{ 较小时近似为 }100\beta_1\%.\]</div>
 <p>OLS需设计矩阵满列秩；若要把系数解释为结构性因果效应，还需有可信的外生性和识别论证。HC1稳健协方差针对异方差下的渐近推断，并不修复内生性；在独立抽样及适当矩条件下使用更为合理。</p>
 </section>
-<section class="paper" id="s3"><h2>三、实证案例与数据</h2>
+<section class="paper" id="s3" data-note="MODULE 03 / 07"><h2>三、实证案例与数据</h2>
 <p>使用Stata官方教学数据 <strong>NLSW88（1988年美国青年女性纵向调查摘录）</strong>，原始文件有2,246条记录、17个变量。数据是经处理的调查摘录，Stata提醒其示例数据可能为教学目的修改，<strong>不应据此作现实政策推断</strong>。本课只保留 \(wage&gt;0\) 且 \(grade\)、\(ttl\_exp\)、\(tenure\)、\(union\)、\(married\)、\(race\) 均非缺失的观测。最终样本量由代码实际输出，不预填数值。</p>
 <p>数据文件：<a href="https://www.stata-press.com/data/r19/nlsw88.dta" rel="noopener noreferrer">Stata Press NLSW88</a>；<a href="https://www.stata-press.com/data/r19/r.html" rel="noopener noreferrer">官方示例数据说明</a>。两个软件读取同一网址，避免因版本或缺失值处理不同导致样本不一致。</p>
 </section>
-<figure class="diagram"><svg viewBox="0 0 860 136" role="img" aria-label="实证分析流程：完整样本、对数工资、两种OLS模型、HC1稳健推断、解释边界"><title>工资影响因素综合实操工作流</title><g fill="#173e49" font-size="17" text-anchor="middle"><rect x="8" y="25" width="146" height="68" rx="12" fill="#e5f1ef"/><rect x="183" y="25" width="146" height="68" rx="12" fill="#e5f1ef"/><rect x="358" y="25" width="146" height="68" rx="12" fill="#e5f1ef"/><rect x="533" y="25" width="146" height="68" rx="12" fill="#e5f1ef"/><rect x="708" y="25" width="146" height="68" rx="12" fill="#e5f1ef"/><text x="81" y="53">完整样本</text><text x="81" y="76" font-size="14">wage &gt; 0</text><text x="256" y="53">对数变换</text><text x="256" y="76" font-size="14">ln(wage)</text><text x="431" y="53">两个OLS</text><text x="431" y="76" font-size="14">相同样本</text><text x="606" y="53">HC1稳健推断</text><text x="606" y="76" font-size="14">SE / CI / Wald</text><text x="781" y="53">解释边界</text><text x="781" y="76" font-size="14">关联 ≠ 因果</text></g><g stroke="#b58b42" stroke-width="3" fill="none"><path d="M157 59h23m-8 -6 8 6 -8 6M332 59h23m-8 -6 8 6 -8 6M507 59h23m-8 -6 8 6 -8 6M682 59h23m-8 -6 8 6 -8 6"/></g></svg><figcaption>教学流程示意图，不是估计结果。</figcaption></figure><section class="paper" id="s4"><h2>四、Stata与Python实现</h2>
+<figure class="diagram"><svg viewBox="0 0 860 136" role="img" aria-label="实证分析流程：完整样本、对数工资、两种OLS模型、HC1稳健推断、解释边界"><title>工资影响因素综合实操工作流</title><g fill="#173e49" font-size="17" text-anchor="middle"><rect x="8" y="25" width="146" height="68" rx="12" fill="#e5f1ef"/><rect x="183" y="25" width="146" height="68" rx="12" fill="#e5f1ef"/><rect x="358" y="25" width="146" height="68" rx="12" fill="#e5f1ef"/><rect x="533" y="25" width="146" height="68" rx="12" fill="#e5f1ef"/><rect x="708" y="25" width="146" height="68" rx="12" fill="#e5f1ef"/><text x="81" y="53">完整样本</text><text x="81" y="76" font-size="14">wage &gt; 0</text><text x="256" y="53">对数变换</text><text x="256" y="76" font-size="14">ln(wage)</text><text x="431" y="53">两个OLS</text><text x="431" y="76" font-size="14">相同样本</text><text x="606" y="53">HC1稳健推断</text><text x="606" y="76" font-size="14">SE / CI / Wald</text><text x="781" y="53">解释边界</text><text x="781" y="76" font-size="14">关联 ≠ 因果</text></g><g stroke="#b58b42" stroke-width="3" fill="none"><path d="M157 59h23m-8 -6 8 6 -8 6M332 59h23m-8 -6 8 6 -8 6M507 59h23m-8 -6 8 6 -8 6M682 59h23m-8 -6 8 6 -8 6"/></g></svg><figcaption>教学流程示意图，不是估计结果。</figcaption></figure><section class="paper" id="s4" data-note="MODULE 04 / 07"><h2>四、Stata与Python实现</h2>
 <p>先在同一完整样本上估计 \(\ln(wage)\) 对 \(grade\) 的简单回归，再加入经验、任职年限、工会、婚姻与种族类别。Stata的 &lt;code&gt;vce(robust)&lt;/code&gt; 与Python的 &lt;code&gt;cov_type=&quot;HC1&quot;&lt;/code&gt; 在相同设计矩阵和样本下采用可比的HC1类标准误。比较教育系数、稳健标准误、置信区间与 \(R^2\)，再联合检验工会和婚姻两个系数是否为零。代码未经本次运行，以下不报告任何估计数值。</p>
 <details class="code-panel"><summary>Stata · 展开可复制代码</summary><button type="button" data-copy>复制代码</button><pre><code>version 17.0
 clear all
@@ -90,19 +194,24 @@ print(&quot;grade精确百分比：&quot;, 100*(np.exp(m2.params[&quot;grade&quo
 print(&quot;union、married联合Wald检验：&quot;, m2.f_test(&quot;union = 0, married = 0&quot;))</code></pre></details>
 <p>阅读输出时先核对两个模型的样本量是否一致，再区分“控制变量后系数变化”和“发现遗漏变量偏误”这两个不同判断。后者需要更强的模型与识别假设。</p>
 </section>
-<section class="paper" id="s5"><h2>五、初学者避坑</h2>
+<section class="paper" id="s5" data-note="MODULE 05 / 07"><h2>五、初学者避坑</h2>
 <ol><li><strong>样本选择</strong>：本数据仅涉及调查中的女性，并且分析只包括有正工资、关键变量完整的观测。不能推广到全部劳动者；就业选择与缺失机制也可能影响解释。</li><li><strong>系数解释</strong>：\(\ln(wage)\) 的系数不是工资金额变化。对二元变量也应使用 \(100(e^{\hat\gamma}-1)\%\) 解释条件几何平均工资的比例差；若解释算术平均工资，需要额外分布或再转换假设。</li><li><strong>推断与因果</strong>：HC1允许一定形式的异方差，但不能消除能力、家庭背景、行业选择等未观测混杂。显著性不等于经济重要性，\(R^2\) 较高也不等于识别成功。</li></ol>
 </section>
-<section class="paper" id="s6"><h2>六、今日练习</h2>
-<p><strong>概念题</strong>：将 \(ttl\_exp\) 和 \(tenure\) 加入回归后，\(grade\) 的估计系数发生变化，是否足以证明原模型存在教育的因果偏误？</p>
-<p><strong>答案</strong>：不足以。系数变化说明控制变量改变了条件比较；是否构成因果偏误还取决于这些变量的角色、外生性、选择机制与正确设定。工作经验甚至可能是教育影响工资的中介，控制后目标效应也会改变。</p>
-<p><strong>计算题</strong>：假设某次回归得到教育系数 \(\hat\beta_1=0.08\)（纯假设，不是NLSW88结果），教育年级多一年对应的条件几何平均工资精确百分比差是多少？</p>
-<p><strong>答案</strong>：\(100(e^{0.08}-1)\%\approx8.33\%\)；线性近似为8%，不应写成工资必然上涨8.33%。</p>
+<section class="paper" id="s6" data-note="MODULE 06 / 07"><h2>六、今日练习</h2>
+<div class="exercise-grid">
+<article class="exercise-card"><span class="exercise-type">CONCEPT · 概念题</span><p><strong>概念题</strong>：将 \(ttl\_exp\) 和 \(tenure\) 加入回归后，\(grade\) 的估计系数发生变化，是否足以证明原模型存在教育的因果偏误？</p><details class="exercise-answer"><summary>查看参考答案</summary><p><strong>答案</strong>：不足以。系数变化说明控制变量改变了条件比较；是否构成因果偏误还取决于这些变量的角色、外生性、选择机制与正确设定。工作经验甚至可能是教育影响工资的中介，控制后目标效应也会改变。</p></details></article>
+<article class="exercise-card"><span class="exercise-type">APPLICATION · 计算题</span><p><strong>计算题</strong>：假设某次回归得到教育系数 \(\hat\beta_1=0.08\)（纯假设，不是NLSW88结果），教育年级多一年对应的条件几何平均工资精确百分比差是多少？</p><details class="exercise-answer"><summary>查看参考答案</summary><p><strong>答案</strong>：\(100(e^{0.08}-1)\%\approx8.33\%\)；线性近似为8%，不应写成工资必然上涨8.33%。</p></details></article>
+</div>
+
+
+
+
 </section>
-<section class="paper" id="s7"><h2>七、学习进度</h2>
+<section class="paper" id="s7" data-note="MODULE 07 / 07"><h2>七、学习进度</h2>
+<div class="lesson-progress-panel"><div class="lesson-progress-title"><span>120天系统课程 · 已授课进度</span><strong>22 / 120</strong></div><div class="lesson-progress-track" role="progressbar" aria-label="正式聊天已授课进度" aria-valuemin="0" aria-valuemax="120" aria-valuenow="22"><span style="width:18.333333%"></span></div><small>已完成约 18.3% · 本课不计为新增授课</small></div>
 <p>本课：第2章·第15节《工资影响因素综合实操》，全课程第22课 / 共120课；2026-10-29正式聊天授课。第2章15节已全部讲授；原第2章第9节《虚拟变量》仍有私人Notion历史补档事项，不影响课次顺序。</p>
 <p>原纲下一课：<strong>第3章·第1节《内生性及其统计后果》</strong>（全课程第23课）。下一课将区分“控制后仍存在关联”与“满足识别假设后的因果估计”。</p>
 </section>
 <p class="paper"><strong>验证边界：</strong>本页数据来源与字段由公开文档核对，Stata/Python代码在本次更新中未实际运行，不报告估计数值。网页构建及部署状态另行验证。</p>
-<nav class="lesson-nav"><a href="02-14.html">← 第21课 多重共线性</a><a href="03-01.html">第23课 内生性及其统计后果 →</a></nav>
+<nav class="lesson-nav lesson-bottom-nav"><a href="02-14.html">← 第21课 多重共线性</a><a href="03-01.html">第23课 内生性及其统计后果 →</a></nav>
 </main></body></html>
