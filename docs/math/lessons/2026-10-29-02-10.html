@@ -1,0 +1,26 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="每日10分钟数学微课程，第22课：满列秩与有限样本系数解的唯一性"><title>第2章·第10节｜满列秩与有限样本系数解的唯一性</title><link rel="stylesheet" href="../site.css"><script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script><style>.article-wrap{max-width:840px;margin:0 auto;padding:36px 20px 80px}.article{font-size:17px;line-height:1.95;color:#263d3a}.article h2{margin-top:1.7em;font-size:1.22em;border-left:3px solid #388777;padding-left:12px}.article h3{margin-top:1.4em}.article p{margin:1em 0}.article .math{overflow:auto;padding:14px;background:#f4f8f5;border-radius:9px;text-align:center}.article .lead{border-left:4px solid #5b998a;padding:12px 20px;background:#edf7f2;border-radius:8px}.muted{font-size:14px;color:#61736e}.answers{background:#f7faf8;border:1px solid #dce7e4;padding:12px 18px;border-radius:10px}.answers summary{font-weight:700;color:#26796e;cursor:pointer}@media(max-width:650px){.article-wrap{padding:24px 16px 64px}.article{font-size:16px}}</style></head><body><header><div class="wrap"><a href="../">← 数学课程目录</a><a href="../../">研究学习中心</a></div></header><main class="article-wrap"><div class="kicker">MATHEMATICS · PROBABILITY · ECONOMETRICS</div><h1>第2章·第10节｜满列秩与有限样本系数解的唯一性</h1><p class="muted">全课程第22课 / 共73课 · 2026-10-29 · 预计学习8分钟</p><article class="article"><aside class="lead"><p>全课程第22课 / 共73课｜2026年10月29日｜预计学习8分钟</p><p><b>核心问题：</b> 为什么设计矩阵满列秩能够保证OLS系数解唯一？观测数不少于参数数是否就足够？</p></aside>
+<h2>一、从正规方程到唯一性</h2>
+<p>上一课推导了OLS正规方程。它总能给出至少一个最小二乘解，但是否只能得到一组系数，取决于设计矩阵的列是否独立。</p>
+<p>设已观测到结果向量 \(\mathbf y\in\mathbb R^n\) 和设计矩阵 \(X\in\mathbb R^{n\times p}\)。这里的 \(p\) 包含截距在内的全部待估系数。所谓满列秩，是指</p>
+<div class="math">\[\operatorname{rank}(X)=p\quad\Longleftrightarrow\quad X\mathbf v=\mathbf0_n\ \text{仅有解}\ \mathbf v=\mathbf0_p.\]</div>
+<p>也就是说，不存在一组非零权重使设计矩阵各列的线性组合恰好为零。必要条件是 \(n\ge p\)，但观测数足够并不保证列独立；重复变量、完全线性组合仍会破坏满列秩。</p>
+<h2>二、为什么满列秩保证唯一</h2>
+<p>考察正规方程中的 \(p\times p\) 矩阵 \(X^{\mathsf T}X\)。对任意非零 \(\mathbf v\in\mathbb R^p\)，有</p>
+<div class="math">\[\mathbf v^{\mathsf T}X^{\mathsf T}X\mathbf v=\|X\mathbf v\|_2^2>0.\]</div>
+<p>最后一个严格不等号成立，正是因为 \(X\) 满列秩时非零 \(\mathbf v\) 不可能被映射为零向量。因此 \(X^{\mathsf T}X\) 正定且可逆，正规方程只有一个解：</p>
+<div class="math">\[\hat{\boldsymbol\beta}=(X^{\mathsf T}X)^{-1}X^{\mathsf T}\mathbf y.\]</div>
+<p>反过来，若 \(X\mathbf v=\mathbf0_n\) 且 \(\mathbf v\ne\mathbf0_p\)，那么只要 \(\hat{\boldsymbol\beta}\) 是一个OLS解，\(\hat{\boldsymbol\beta}+t\mathbf v\) 对任意实数 \(t\) 都产生相同拟合值。系数因而不唯一，但列空间上的正交投影及残差仍然唯一。</p>
+<h2>三、三条观测的手算例子</h2>
+<p>沿用上一课的数据：\(\mathbf x=(0,1,2)^{\mathsf T}\)，\(\mathbf y=(1,2,2)^{\mathsf T}\)。含截距的设计矩阵两列分别为 \((1,1,1)^{\mathsf T}\) 与 \(\mathbf x\)，显然不成比例。直接计算 \(X^{\mathsf T}X=\begin{pmatrix}3&3\\3&5\end{pmatrix}\)，行列式为 \(15-9=6>0\)，故系数唯一，解为截距 \(7/6\)、斜率 \(1/2\)。</p>
+<p>现在人为再加入一列 \(2\mathbf x\)。新矩阵虽有三行三列，但第三列是第二列的两倍，秩仍为2。于是系数 \((7/6,\ 1/2-2t,\ t)^{\mathsf T}\) 对所有实数 \(t\) 都给出同一组预测值。这是完全共线性，而不是样本量不足所造成的必然结果。</p>
+<h2>四、统计与计量中的边界</h2>
+<p>在包含企业固定效应、时间虚拟变量或多项交互项的回归中，某些列可能被其他列精确表示，软件因而会删除冗余项或采用特定约束。此处讨论的是<b>给定样本设计矩阵的代数可解性</b>。满列秩既不保证估计精度，也不保证总体参数具有因果识别意义；近似共线性虽不破坏唯一性，却可能使估计对样本扰动敏感。</p>
+<h2>五、两道自测</h2>
+<p><b>第1题｜概念题：</b> 若 \(n=100\)、\(p=3\)，是否必然存在唯一的OLS系数解？为什么？</p>
+<p><b>第2题｜计算题：</b> 给定 \(X=\begin{pmatrix}1&0\\1&2\end{pmatrix}\)、\(\mathbf y=(3,7)^{\mathsf T}\)，判断是否满列秩，并求OLS系数。</p>
+<details class="answers"><summary>展开参考答案</summary><h3>参考答案</h3>
+<p><b>第1题：</b> 不必然。\(n\ge p\) 只是必要条件；若某列是其他列的线性组合，则秩小于3，系数仍不唯一。</p>
+<p><b>第2题：</b> \(\det(X)=2\ne0\)，故满列秩。由两条方程 \(\beta_0=3\)、\(\beta_0+2\beta_1=7\)，得 \(\hat\beta_0=3\)、\(\hat\beta_1=2\)，且拟合误差为零。</p>
+</details><h2>六、衔接</h2>
+<p>第21课建立正规方程，本课证明系数解唯一的充要条件是设计矩阵满列秩。下一课将讨论逆矩阵与线性方程组，说明如何实际求解这些系数。</p>
+<p><b>下一课：第2章·第11节｜逆矩阵与线性方程组（全课程第23课）。</b></p></article><p class="muted">上一课：第2章·第9节｜OLS正规方程 · 下一课：第2章·第11节｜逆矩阵与线性方程组</p><nav><a href="2026-10-28-02-09.html">← 上一课</a>　<a href="../">课程目录</a></nav><p class="muted">Notion私人归档：https://app.notion.com/p/408b54823a12811e97f6eb32ee0666ab?pvs=204</p></main></body></html>
