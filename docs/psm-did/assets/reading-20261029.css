@@ -1,0 +1,33 @@
+/* Reading-first overrides: prose is a single column, decoration stays outside it. */
+html{scroll-padding-top:32px}
+body.speaking-study{background:#f4f6f8;color:#263343;background-attachment:initial}
+body.speaking-study .sp-wrap{width:min(1100px,calc(100% - 64px));margin:auto;padding-bottom:96px}
+.speaking-study .sp-top{background:transparent;border:0;box-shadow:none;padding:24px 0;margin:0;font-size:14px}
+.speaking-study .sp-pathway{gap:8px;margin:0 0 24px}.speaking-study .sp-pathway a{font-size:12px;padding:8px 14px;font-weight:500}
+.speaking-study .sp-hero{padding:56px 64px;border:0;border-radius:24px;background:linear-gradient(120deg,#e3edf8,#e6f3ef);box-shadow:none;margin-bottom:24px}
+.speaking-study .sp-hero:before,.speaking-study .sp-hero:after{display:none}
+.speaking-study .sp-hero h1{font-size:clamp(28px,3vw,40px);line-height:1.45;max-width:24em;letter-spacing:-.025em;color:#17384e}
+.speaking-study .sp-hero p{font-size:16px;line-height:1.9;margin:18px 0;color:#506b7b}
+.speaking-study .sp-kicker{letter-spacing:.15em;font-size:11px}.speaking-study .sp-hero-meter{font-size:12px;margin-top:24px;color:#577585}
+.speaking-study .sp-dashboard{display:flex;flex-wrap:wrap;gap:8px;padding:0 0 28px;margin:0;border:0;background:none;box-shadow:none}
+.speaking-study .sp-dashboard a{display:block;min-height:0;padding:10px 17px;background:white;border:1px solid #dce4ea;border-radius:8px;font-size:13px;box-shadow:none;color:#34576b}
+.speaking-study .study-layout{display:flex;flex-direction:column;gap:32px;align-items:stretch}
+.speaking-study main.study-content{display:block;min-width:0;width:100%;max-width:none}
+.speaking-study main.study-content > section.sp-paper{display:block!important;position:relative;padding:42px 64px;margin:0 0 24px;background:#fff!important;border:1px solid #e3e9ee;border-radius:16px;box-shadow:0 3px 16px #233b4e03;overflow:visible}
+.speaking-study main.study-content > section.sp-paper:before,.speaking-study main.study-content > section.sp-paper:after{display:none!important}
+.speaking-study main.study-content > section.sp-paper h2{display:block;grid-area:auto;max-width:36em;padding:0;margin:0 0 24px;border:0;font-size:24px;line-height:1.55;font-weight:650;color:#1f3d53;background:none}
+.speaking-study main.study-content > section.sp-paper p{font-family:"Noto Serif SC","Source Han Serif SC","Microsoft YaHei",sans-serif;font-size:17px;line-height:2.05;max-width:48em;margin:0 0 22px;color:#344454;text-align:left;overflow-wrap:anywhere}
+.speaking-study main.study-content > section.sp-paper p:last-child{margin-bottom:0}
+.speaking-study main.study-content > .sp-section .sp-overline,.speaking-study .eyebrow{display:block;grid-area:auto;min-height:0;padding:0;margin:0 0 14px;border:0;font-size:11px;letter-spacing:.12em;color:#6c8c9e;background:none;font-weight:600}
+.speaking-study main.study-content > .sp-section .sp-overline:after{display:none}
+.speaking-study .formula{overflow-x:auto;padding:20px 12px;margin:26px 0;background:#f6f9fc;border-radius:8px;font-size:16px}
+.speaking-study details{margin:20px 0;border:1px solid #e0e8ef;border-radius:10px;background:#f9fbfd;padding:16px 20px}
+.speaking-study summary{cursor:pointer;font-size:15px;font-weight:600;color:#355c78;line-height:1.8}
+.speaking-study details[open] summary{margin-bottom:18px}.speaking-study pre{font-size:13px;line-height:1.8;padding:24px;overflow:auto;white-space:pre;max-width:100%;border-radius:8px}
+.speaking-study .lesson-map{width:100%;position:static}.speaking-study .lesson-map details{background:#fff;margin:0;padding:24px 32px}.speaking-study .lesson-map h2{font-size:18px}.speaking-study .lesson-map p{line-height:1.8;margin:10px 0;font-size:14px}
+.speaking-study .links{display:flex;flex-wrap:wrap;gap:20px;padding:24px 8px;font-size:14px}
+main.catalog-content{width:min(1100px,calc(100% - 64px));margin:48px auto 96px}
+.catalog-content .page-hero{padding:48px;border-radius:24px;margin-bottom:32px}.catalog-content .page-hero h1{font-size:36px;line-height:1.4}.catalog-content .page-hero p{line-height:1.9;margin:14px 0}
+.catalog-content .chapter-card{padding:32px 40px;margin:24px 0;border-radius:16px}.catalog-content .chapter-card h2{font-size:23px;margin:0 0 24px}.catalog-content .lesson-card{display:block;padding:18px 20px;margin:12px 0;line-height:1.7;border-radius:10px;font-size:16px}
+@media(max-width:720px){body.speaking-study .sp-wrap{width:calc(100% - 32px)}.speaking-study .sp-hero{padding:32px 24px}.speaking-study main.study-content > section.sp-paper{padding:28px 24px;margin-bottom:18px}.speaking-study main.study-content > section.sp-paper h2{font-size:22px}.speaking-study main.study-content > section.sp-paper p{font-size:16px;line-height:2}.speaking-study .sp-dashboard a{font-size:12px;padding:8px 12px}main.catalog-content{width:calc(100% - 32px);margin:24px auto}.catalog-content .page-hero{padding:28px 24px}.catalog-content .page-hero h1{font-size:28px}.catalog-content .chapter-card{padding:24px}.catalog-content .chapter-card h2{font-size:20px}}
+@media print{body.speaking-study{background:white}.speaking-study .sp-wrap{width:100%}.speaking-study .sp-dashboard,.speaking-study .lesson-map{display:none}.speaking-study main.study-content > section.sp-paper{border:0;box-shadow:none;padding:20px 0;break-inside:auto}}
