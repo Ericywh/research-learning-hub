@@ -205,9 +205,9 @@ window.MATH_COURSE={
           "section": 10,
           "number": 22,
           "title": "满列秩与有限样本系数解的唯一性",
-          "published": false,
-          "date": null,
-          "url": null
+          "published": true,
+          "date": "2026-10-29",
+          "url": "lessons/2026-10-29-02-10.html"
         },
         {
           "chapter": 2,
