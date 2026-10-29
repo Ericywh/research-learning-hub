@@ -1,27 +1,108 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="course-revision" content="2026-10-27-v2"><meta name="course-status" content="taught"><title>第2章·第15节｜工资影响因素综合实操</title><link rel="stylesheet" href="../v2/course.css"><script defer src="../v2/course.js"></script></head><body><header><a href="../">← 计量经济学120天课程</a><a href="../v2/">36模块新主线</a></header><main><div class="hero"><span class="badge">已授课</span><h1>第2章·第15节｜工资影响因素综合实操</h1><p class="meta">原全课程第22课 / 120 · 原日期：无可核实日期 · 本次实质修订2026-10-27</p><p>本页现采用M13 遗漏变量、测量误差与联立性核心讲义，保留原网址、编号及标题。<a href="../archive/2026-10-27/lessons/02-15.html">阅读修订前原稿</a>。</p></div><section class="paper" id="s1"><div class="concept-primer" data-concept-primer="2026-10-28"><h3>先把概念讲清楚，再读公式</h3><p>本课可分两次学习：先读以下解释和例子；能说清含义后，再读原理与公式，代码可以第三次再做。暂时看不懂公式，不必跳过概念直接复制命令。</p><h4>遗漏变量偏差</h4><p>被遗漏因素影响结果且与已入式解释变量相关时，回归系数可能混入该因素的作用。</p><p class="concept-example"><strong>具体例子：</strong>真式y=βx+2a+u，若Cov(x,a)=0.3、Var(x)=1.5，遗漏a的标量斜率极限偏差为0.4。</p><h4>外生性</h4><p>解释变量与误差之间满足特定正交或条件均值限制。不同模型要求不同，不是“变量来自系统外面”的日常说法。</p><p class="concept-example"><strong>具体例子：</strong>若能力影响工资，又与教育相关，遗漏能力后E[u｜教育]可能不为零。仅换稳健SE不能解决。</p><h4>混杂</h4><p>一个处理前因素同时影响处理选择与结果，使处理组和对照组本来就不同。</p><p class="concept-example"><strong>具体例子：</strong>能力同时影响教育和工资，会使教育—工资关联混入能力差异。仅“相关”不是认定混杂的充分因果依据。</p><details><summary>符号查阅（不要求一次学完）</summary><p>n表示样本量，i给观测编号；Σ表示对观测加总，E[·]表示总体期望，竖线“|”表示给定条件。β、θ通常是未知总体参数，b、带帽符号通常是样本估计。撇号′表示矩阵转置，⁻¹表示逆矩阵，√n表示样本量的平方根；→p与→d分别表示概率收敛和依分布收敛，不能当作普通等号。</p></details><p><a href="../v2/concepts.html">打开基础概念讲解册</a>，可查其他术语。<a href="../v2/concepts.html#c39">遗漏变量偏差</a>　<a href="../v2/concepts.html#c9">外生性</a>　<a href="../v2/concepts.html#c12">混杂</a>　</p><p><strong>读下面正文时：</strong>先找“研究什么量”，再找“需要什么前提”，最后看“怎样计算”。公式表达的是前面文字的关系；软件命令不能替代这些前提。</p></div><h2>1 · 核心问题与推导</h2><p>省略能力a时，教育斜率混入能力与教育的共同变异。y=βx+γa+u中，遗漏偏差为γCov(x,a)/Var(x)。经典测量误差x*=x+v要求v与x、u不相关，简单回归斜率被乘以信度Var(x)/[Var(x)+Var(v)]，向零衰减。非经典误差、多个带误差变量或非线性模型不能套这一结论。联立性来自x与y共同决定，改标准误或增加n不能解决。教育回报示例必须实际把教育放入回归，不能仅在标题提及。</p></section><section class="paper" id="s2"><h2>2 · 公式与统计前提</h2><div class="formula">plim b_遗漏=β+γCov(x,a)/Var(x)</div><p>可能内生不等于已经证实内生，需要制度与测量过程证据。模拟只演示指定机制，不是经验事实。</p></section><section class="paper" id="s3"><h2>3 · 图示与研究含义</h2><div class="diagram"><svg viewBox="0 0 680 100" role="img" aria-label="从识别到推断的学习路径"><title>识别先于估计，推断依赖统计条件</title><g fill="#173e49" font-size="20"><text x="20" y="55">目标量</text><text x="160" y="55">识别假设</text><text x="335" y="55">估计/优化</text><text x="520" y="55">方差与检验</text></g><path d="M95 50H145M255 50H320M445 50H505" stroke="#b98c3b" stroke-width="3"/></svg></div><p>图为概念示意；数值结论以运行代码和明确的数据来源为准。</p></section><section class="paper" id="s4"><h2>4 · 可复现实验：Stata与Python</h2><p>数据性质：固定种子的随机教学模拟，非真实研究数据。两种软件随机流不同，不要求逐行结果相同。Python已运行状态见<a href="../v2/validation.json">核验记录</a>；Stata尚未运行验证。</p><details><summary>Python · 展开代码</summary><p><a download href="../v2/labs/endogeneity.py">下载完整脚本</a></p><button type="button" data-copy>复制代码</button><pre><code># Teaching experiment, synthetic data unless explicitly stated. Seed 20261027.
-import numpy as np
-import statsmodels.api as sm
-rng=np.random.default_rng(20261027);n=20000
-ability=rng.normal(size=n);education=12+.6*ability+rng.normal(size=n)
-logwage=1+.08*education+.3*ability+rng.normal(size=n)
-short=sm.OLS(logwage,sm.add_constant(education)).fit()
-full=sm.OLS(logwage,np.column_stack([np.ones(n),education,ability])).fit()
-predicted=.3*np.cov(education,ability,ddof=0)[0,1]/np.var(education)
-print(&#x27;Education included in both equations&#x27;)
-print(&#x27;short,full, predicted OVB&#x27;,short.params[1],full.params[1],predicted)
-measured=education+rng.normal(size=n)
-print(&#x27;Measurement error slope&#x27;,sm.OLS(logwage,sm.add_constant(measured)).fit().params[1])
-</code></pre></details><details><summary>Stata · 展开代码</summary><p><a download href="../v2/labs/endogeneity.do">下载完整脚本</a></p><button type="button" data-copy>复制代码</button><pre><code>version 17.0
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="course-status" content="taught"><meta name="course-revision" content="2026-10-29-lesson22">
+<title>第2章·第15节｜工资影响因素综合实操｜全课程第22课</title>
+<link rel="stylesheet" href="../v2/course.css"><script defer src="../v2/course.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+main{max-width:1060px;margin:auto;padding:1.3rem}.hero{padding:2.4rem 2rem}
+.lesson-nav{display:flex;flex-wrap:wrap;gap:.5rem;margin:1.2rem 0}.lesson-nav a{border:1px solid #bfd3d3;border-radius:999px;padding:.42rem .8rem;text-decoration:none;background:#f3f8f7;color:#173e49;font-size:.87rem}
+.paper{scroll-margin-top:1rem}.paper p{line-height:1.88}.paper details{margin:1rem 0}.paper pre{overflow:auto;white-space:pre;line-height:1.55;padding:1.2rem;background:#132a34;color:#e8f4f4;border-radius:.6rem}.paper code{font-size:.87rem}
+.formula{overflow-x:auto;font-size:1.05rem;padding:1.2rem;background:#f3f7f7;border-left:4px solid #a88240;margin:1rem 0}.meta{font-variant-numeric:tabular-nums}.diagram{margin:1.5rem 0;overflow-x:auto}.diagram svg{min-width:620px;max-width:100%}.diagram figcaption{font-size:.8rem;color:#65717a}.paper ol li{margin:.8rem 0;line-height:1.7}.paper a{overflow-wrap:anywhere}
+</style></head><body>
+<header><a href="../">← 计量经济学120天课程</a><a href="../v2/">36模块强化路径</a></header>
+<main><div class="hero"><span class="badge">已正式授课</span><span class="badge">2026-10-29</span>
+<h1>第2章·第15节｜工资影响因素综合实操</h1>
+<p class="meta">全课程第22课 / 共120课 · 10—15分钟 · NLSW88真实公开教学数据 · Stata与Python</p>
+<p>原120课编号与标题保持不变。本页为正式聊天授课后的七模块完整讲义；<a href="../archive/2026-10-27/lessons/02-15.html">查看原网页历史档案</a>。</p></div>
+<nav class="lesson-nav" aria-label="七模块快速导航"><a href="#s1">1 · 通俗理解</a><a href="#s2">2 · 核心理论与公式</a><a href="#s3">3 · 实证案例与数据</a><a href="#s4">4 · Stata与Python实现</a><a href="#s5">5 · 初学者避坑</a><a href="#s6">6 · 今日练习</a><a href="#s7">7 · 学习进度</a></nav>
+<p>2026-10-29 · 全课程第22课 / 共120课 · 10—15分钟 · 真实公开教学数据 · Stata/Python双软件</p>
+<section class="paper" id="s1"><h2>一、通俗理解</h2>
+<p>为什么同样工作一小时，不同劳动者的工资会不同？教育年限、累计工作经验、当前岗位任职年限，以及工会身份、婚姻状态等，都可能与工资有关。但这些变量往往彼此相关：教育较多者的职业经历可能不同，工会成员也可能集中在特定行业。因此，仅把工资对教育做一元回归，与同时控制其他可观测特征的多元回归，回答的不是完全相同的问题。</p>
+<p>本课把前14节知识合并成一次完整实操：明确研究问题，筛选样本，定义变量，估计两个OLS模型，使用稳健标准误，并解释系数、置信区间和联合检验。这里研究的是<strong>条件统计关联</strong>，不是教育、工会或婚姻对工资的因果效应。</p>
+</section>
+<section class="paper" id="s2"><h2>二、核心理论与公式</h2>
+<p>设 \(wage_i\) 为正的小时工资，\(grade_i\) 为已完成教育年级，\(ttl\_exp_i\) 为累计工作经验年数，\(tenure_i\) 为现岗位任职年数，\(union_i\) 和 \(married_i\) 为0/1变量；\(D_{2i},D_{3i}\) 表示种族类别2和3，类别1作为参照组。完整模型为：</p>
+<div class="formula">\[\ln(wage_i)=\beta_0+\beta_1grade_i+\beta_2ttl\_exp_i+\beta_3tenure_i+\gamma_1union_i+\gamma_2married_i+\delta_2D_{2i}+\delta_3D_{3i}+u_i.\]</div>
+<p>在其他解释变量保持不变时，\(\beta_1\) 是教育年级增加一单位对应的<strong>条件平均对数工资差</strong>；对应条件几何平均工资的精确百分比差为：</p>
+<div class="formula">\[100\bigl(e^{\beta_1}-1\bigr)\%,\qquad \text{当 }|\beta_1|\text{ 较小时近似为 }100\beta_1\%.\]</div>
+<p>OLS需设计矩阵满列秩；若要把系数解释为结构性因果效应，还需有可信的外生性和识别论证。HC1稳健协方差针对异方差下的渐近推断，并不修复内生性；在独立抽样及适当矩条件下使用更为合理。</p>
+</section>
+<section class="paper" id="s3"><h2>三、实证案例与数据</h2>
+<p>使用Stata官方教学数据 <strong>NLSW88（1988年美国青年女性纵向调查摘录）</strong>，原始文件有2,246条记录、17个变量。数据是经处理的调查摘录，Stata提醒其示例数据可能为教学目的修改，<strong>不应据此作现实政策推断</strong>。本课只保留 \(wage&gt;0\) 且 \(grade\)、\(ttl\_exp\)、\(tenure\)、\(union\)、\(married\)、\(race\) 均非缺失的观测。最终样本量由代码实际输出，不预填数值。</p>
+<p>数据文件：<a href="https://www.stata-press.com/data/r19/nlsw88.dta" rel="noopener noreferrer">Stata Press NLSW88</a>；<a href="https://www.stata-press.com/data/r19/r.html" rel="noopener noreferrer">官方示例数据说明</a>。两个软件读取同一网址，避免因版本或缺失值处理不同导致样本不一致。</p>
+</section>
+<figure class="diagram"><svg viewBox="0 0 860 136" role="img" aria-label="实证分析流程：完整样本、对数工资、两种OLS模型、HC1稳健推断、解释边界"><title>工资影响因素综合实操工作流</title><g fill="#173e49" font-size="17" text-anchor="middle"><rect x="8" y="25" width="146" height="68" rx="12" fill="#e5f1ef"/><rect x="183" y="25" width="146" height="68" rx="12" fill="#e5f1ef"/><rect x="358" y="25" width="146" height="68" rx="12" fill="#e5f1ef"/><rect x="533" y="25" width="146" height="68" rx="12" fill="#e5f1ef"/><rect x="708" y="25" width="146" height="68" rx="12" fill="#e5f1ef"/><text x="81" y="53">完整样本</text><text x="81" y="76" font-size="14">wage &gt; 0</text><text x="256" y="53">对数变换</text><text x="256" y="76" font-size="14">ln(wage)</text><text x="431" y="53">两个OLS</text><text x="431" y="76" font-size="14">相同样本</text><text x="606" y="53">HC1稳健推断</text><text x="606" y="76" font-size="14">SE / CI / Wald</text><text x="781" y="53">解释边界</text><text x="781" y="76" font-size="14">关联 ≠ 因果</text></g><g stroke="#b58b42" stroke-width="3" fill="none"><path d="M157 59h23m-8 -6 8 6 -8 6M332 59h23m-8 -6 8 6 -8 6M507 59h23m-8 -6 8 6 -8 6M682 59h23m-8 -6 8 6 -8 6"/></g></svg><figcaption>教学流程示意图，不是估计结果。</figcaption></figure><section class="paper" id="s4"><h2>四、Stata与Python实现</h2>
+<p>先在同一完整样本上估计 \(\ln(wage)\) 对 \(grade\) 的简单回归，再加入经验、任职年限、工会、婚姻与种族类别。Stata的 &lt;code&gt;vce(robust)&lt;/code&gt; 与Python的 &lt;code&gt;cov_type=&quot;HC1&quot;&lt;/code&gt; 在相同设计矩阵和样本下采用可比的HC1类标准误。比较教育系数、稳健标准误、置信区间与 \(R^2\)，再联合检验工会和婚姻两个系数是否为零。代码未经本次运行，以下不报告任何估计数值。</p>
+<details class="code-panel"><summary>Stata · 展开可复制代码</summary><button type="button" data-copy>复制代码</button><pre><code>version 17.0
 clear all
 set more off
-set seed 20261027
-* Synthetic teaching data. Stata and NumPy RNG streams differ.
-set obs 20000
-gen double ability=rnormal()
-gen double education=12+.6*ability+rnormal()
-gen double logwage=1+.08*education+.3*ability+rnormal()
-regress logwage education, vce(robust)
-regress logwage education ability, vce(robust)
-gen double measured=education+rnormal()
-regress logwage measured, vce(robust)
-</code></pre></details></section><section class="paper" id="s5"><h2>5 · 专属练习与参考答案</h2><p>γ=2、Cov(x,a)=0.3、Var(x)=1.5，遗漏偏差多少？</p><details><summary>展开答案与依据</summary><p>0.4。若经典测量信度为0.8、真斜率1.5，带误差回归的极限为1.2。</p></details></section><p class="paper"><a href="../v2/real-data.html">补充：已运行的真实工资教学数据案例、样本流转与结果表</a></p><section class="paper" id="s6"><h2>6 · 学习验收</h2><p>独立解释本模块公式中的随机对象、目标量与关键条件；运行实验，改变一个前提并说明结果为何改变。只阅读或运行命令不等于掌握。</p><label><input type="checkbox" data-module-check="M13"> 已完成 M13 的推导、实验与练习</label></section><section class="paper" id="s7"><h2>7 · 原120课映射与资料</h2><p>原课编号、标题与历史授课日期保留。下列为主题映射，合并模块并不表示每节旧课均已独立重写。</p><a class="maplink" href="../v2/../lessons/02-15.html">原课 02-15</a><a class="maplink" href="../v2/../lessons/03-02.html">原课 03-02</a><a class="maplink" href="../v2/../lessons/03-03.html">原课 03-03</a><a class="maplink" href="../v2/../lessons/03-04.html">原课 03-04</a><a class="maplink" href="../v2/../lessons/03-12.html">原课 03-12</a><a class="maplink" href="../v2/../lessons/03-13.html">原课 03-13</a><a class="maplink" href="../v2/../lessons/08-05.html">原课 08-05</a><p><a href="../v2/review.html">评审回应与修订范围</a> · <a href="../v2/mapping.html">完整120课映射</a> · <a href="../v2/sources.html">原始文献与软件文档</a></p></section></main><script defer src="../study-progress.js"></script></body></html>
+
+* 两种软件均读取同一版本的公开教学数据
+use &quot;https://www.stata-press.com/data/r19/nlsw88.dta&quot;, clear
+
+* 完整样本：工资严格为正，所有解释变量非缺失
+keep if wage &gt; 0 &amp; !missing(wage, grade, ttl_exp, tenure, union, married, race)
+gen double lnwage = ln(wage)
+count
+summarize wage grade ttl_exp tenure
+tabulate race
+
+* 两个模型都使用同一批样本，HC1类稳健标准误
+regress lnwage grade, vce(robust)
+estimates store m1
+regress lnwage grade ttl_exp tenure union married i.race, vce(robust)
+estimates store m2
+
+* 教育年限增加1年的条件对数工资关联
+display &quot;grade系数对应的精确百分比 = &quot; 100*(exp(_b[grade])-1)
+* 联合检验工会、婚姻两个系数为零
+test union married
+estimates table m1 m2, b(%9.4f) se(%9.4f)</code></pre></details>
+<details class="code-panel"><summary>Python · 展开可复制代码</summary><button type="button" data-copy>复制代码</button><pre><code>import numpy as np
+import pandas as pd
+import statsmodels.formula.api as smf
+
+# 与Stata读取完全相同的公开教学数据版本
+url = &quot;https://www.stata-press.com/data/r19/nlsw88.dta&quot;
+df = pd.read_stata(url, convert_categoricals=False)
+cols = [&quot;wage&quot;, &quot;grade&quot;, &quot;ttl_exp&quot;, &quot;tenure&quot;, &quot;union&quot;, &quot;married&quot;, &quot;race&quot;]
+
+# 工资为正且所有建模变量非缺失：与Stata保持相同口径
+df = df.loc[df[&quot;wage&quot;] &gt; 0, cols].dropna().copy()
+df[&quot;lnwage&quot;] = np.log(df[&quot;wage&quot;])
+print(&quot;完整样本量：&quot;, len(df))
+print(df[[&quot;wage&quot;, &quot;grade&quot;, &quot;ttl_exp&quot;, &quot;tenure&quot;]].describe())
+
+# race=1为基准组；union、married为0/1变量
+m1 = smf.ols(&quot;lnwage ~ grade&quot;, data=df).fit(cov_type=&quot;HC1&quot;)
+m2 = smf.ols(
+    &quot;lnwage ~ grade + ttl_exp + tenure + union + married + &quot;
+    &quot;C(race, Treatment(reference=1))&quot;, data=df
+).fit(cov_type=&quot;HC1&quot;)
+
+for name, fit in [(&quot;单变量模型&quot;, m1), (&quot;多变量模型&quot;, m2)]:
+    print(&quot;\n&quot;, name, &quot;N=&quot;, int(fit.nobs))
+    print(fit.summary())
+    print(&quot;95%稳健置信区间：\n&quot;, fit.conf_int())
+
+print(&quot;grade精确百分比：&quot;, 100*(np.exp(m2.params[&quot;grade&quot;])-1))
+print(&quot;union、married联合Wald检验：&quot;, m2.f_test(&quot;union = 0, married = 0&quot;))</code></pre></details>
+<p>阅读输出时先核对两个模型的样本量是否一致，再区分“控制变量后系数变化”和“发现遗漏变量偏误”这两个不同判断。后者需要更强的模型与识别假设。</p>
+</section>
+<section class="paper" id="s5"><h2>五、初学者避坑</h2>
+<ol><li><strong>样本选择</strong>：本数据仅涉及调查中的女性，并且分析只包括有正工资、关键变量完整的观测。不能推广到全部劳动者；就业选择与缺失机制也可能影响解释。</li><li><strong>系数解释</strong>：\(\ln(wage)\) 的系数不是工资金额变化。对二元变量也应使用 \(100(e^{\hat\gamma}-1)\%\) 解释条件几何平均工资的比例差；若解释算术平均工资，需要额外分布或再转换假设。</li><li><strong>推断与因果</strong>：HC1允许一定形式的异方差，但不能消除能力、家庭背景、行业选择等未观测混杂。显著性不等于经济重要性，\(R^2\) 较高也不等于识别成功。</li></ol>
+</section>
+<section class="paper" id="s6"><h2>六、今日练习</h2>
+<p><strong>概念题</strong>：将 \(ttl\_exp\) 和 \(tenure\) 加入回归后，\(grade\) 的估计系数发生变化，是否足以证明原模型存在教育的因果偏误？</p>
+<p><strong>答案</strong>：不足以。系数变化说明控制变量改变了条件比较；是否构成因果偏误还取决于这些变量的角色、外生性、选择机制与正确设定。工作经验甚至可能是教育影响工资的中介，控制后目标效应也会改变。</p>
+<p><strong>计算题</strong>：假设某次回归得到教育系数 \(\hat\beta_1=0.08\)（纯假设，不是NLSW88结果），教育年级多一年对应的条件几何平均工资精确百分比差是多少？</p>
+<p><strong>答案</strong>：\(100(e^{0.08}-1)\%\approx8.33\%\)；线性近似为8%，不应写成工资必然上涨8.33%。</p>
+</section>
+<section class="paper" id="s7"><h2>七、学习进度</h2>
+<p>本课：第2章·第15节《工资影响因素综合实操》，全课程第22课 / 共120课；2026-10-29正式聊天授课。第2章15节已全部讲授；原第2章第9节《虚拟变量》仍有私人Notion历史补档事项，不影响课次顺序。</p>
+<p>原纲下一课：<strong>第3章·第1节《内生性及其统计后果》</strong>（全课程第23课）。下一课将区分“控制后仍存在关联”与“满足识别假设后的因果估计”。</p>
+</section>
+<p class="paper"><strong>验证边界：</strong>本页数据来源与字段由公开文档核对，Stata/Python代码在本次更新中未实际运行，不报告估计数值。网页构建及部署状态另行验证。</p>
+<nav class="lesson-nav"><a href="02-14.html">← 第21课 多重共线性</a><a href="03-01.html">第23课 内生性及其统计后果 →</a></nav>
+</main></body></html>
