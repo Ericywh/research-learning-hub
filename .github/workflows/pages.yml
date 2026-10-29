@@ -375,8 +375,11 @@ jobs:
           m=json.loads((root/'manifest.json').read_text())
           import re
           source_index=Path('docs/econometrics/index.html').read_text(encoding='utf8')
-          match=re.search(r'content="0; url=lessons/([0-9]{2}-[0-9]{2})[.]html"',source_index,re.I)
+          match=re.search(r'<meta[ ]+name="current-lesson"[ ]+content="([0-9]{2}-[0-9]{2})"',source_index,re.I)
           assert match, 'Course homepage must identify latest taught lesson'
+          assert 'id="catalog"' in source_index and 'id="results"' in source_index, 'Course homepage must keep the full searchable catalogue'
+          assert 'id="current-lesson-link"' in source_index, 'Course homepage must link to the current lesson'
+          assert not re.search(r'http-equiv=["\']refresh|window\.location\.replace',source_index,re.I), 'Course homepage must not redirect away from the full catalogue'
           catalog_text=Path('docs/econometrics/catalog.js').read_text(encoding='utf8')
           course=json.loads(catalog_text[catalog_text.index('{'):catalog_text.rfind('}')+1])
           lessons=[lesson for chapter in course['chapters'] for lesson in chapter['lessons']]
