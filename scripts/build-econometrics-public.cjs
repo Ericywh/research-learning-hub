@@ -92,6 +92,20 @@ if (published.length === 0) throw Error('No published econometrics lessons');
 const latest = published[published.length - 1];
 const next = lessons.find(l => !l.published);
 let home = fs.readFileSync(path.join(out, 'index.html'), 'utf8');
+// A course homepage can intentionally redirect to the latest actually
+// delivered lesson. Do not replace it with the last catalog published flag:
+// that flag also covers prewritten online material.
+const directTarget = home.match(/content="0; url=lessons\/([0-9]{2}-[0-9]{2})[.]html"/i);
+if (directTarget) {
+  const routed = lessons.find(item => item.id === directTarget[1]);
+  if (!routed || !routed.published || !routed.url ||
+      !fs.existsSync(path.join(out, routed.url))) {
+    throw Error('Latest-lesson homepage points to a missing or unlisted lesson: ' + directTarget[1]);
+  }
+  console.log('Preserved latest-taught lesson homepage redirect: ' + directTarget[1]);
+  console.log('Public catalog retained: ' + published.length + '/120 online pages (not a taught count).');
+  process.exit(0);
+}
 const escapeHtml = text => String(text).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 function changeText(id, newText) {
   const regexp = new RegExp('(id="' + id + '"[^>]*>)[^<]*');
