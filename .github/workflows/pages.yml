@@ -156,7 +156,17 @@ jobs:
                     for (const item of changes) {
             const previous = fs.readFileSync(item.file, 'utf8');
             const updated = previous.replace(item.regex, 'src="' + item.target + '?v=' + sha + '"');
-            if (updated === previous) throw Error('Cannot version catalog reference: ' + item.file);
+            if (updated === previous) {
+              // The latest-taught econometrics entry intentionally redirects;
+              // it no longer needs a catalog.js script on the landing page.
+              if (item.file === '_site/econometrics/index.html' &&
+                  previous.includes('http-equiv="refresh"') &&
+                  previous.includes('url=lessons/')) {
+                console.log('Skipped catalog cache-buster for direct lesson entry.');
+                continue;
+              }
+              throw Error('Cannot version catalog reference: ' + item.file);
+            }
             fs.writeFileSync(item.file, updated);
           }
           console.log('Prepared complete docs/ site and versioned catalog requests: ' + sha);
@@ -183,8 +193,11 @@ jobs:
           const ctx={window:{}};
           vm.runInNewContext(fs.readFileSync('_site/econometrics/catalog.js','utf8'),ctx);
           const list=ctx.window.ECON_COURSE.chapters.flatMap(c=>c.lessons);
-          const latest=list.filter(l=>l.published&&l.url).at(-1);
-          if(!latest)throw Error('Published economics course list is empty');
+          const index=fs.readFileSync('_site/econometrics/index.html','utf8');
+          const target=index.match(/content="0; url=lessons\/([0-9]{2}-[0-9]{2})[.]html"/i);
+          if(!target)throw Error('Course landing page lacks latest-taught lesson target');
+          const latest=list.find(l=>l.id===target[1]&&l.url==='lessons/'+target[1]+'.html');
+          if(!latest)throw Error('Latest-taught homepage target not in original catalog');
           console.log('lesson_id='+latest.id);
           console.log('lesson_title='+latest.title);
           NODE
@@ -357,7 +370,15 @@ jobs:
           import json,zipfile
           root=Path('_site/econometrics/word')
           m=json.loads((root/'manifest.json').read_text())
-          assert (m['chapters'],m['lessons'],m['taught'],m['prewritten']) == (10,120,20,100)
+          import re
+          source_index=Path('docs/econometrics/index.html').read_text(encoding='utf8')
+          match=re.search(r'content="0; url=lessons/([0-9]{2}-[0-9]{2})[.]html"',source_index,re.I)
+          assert match, 'Course homepage must identify latest taught lesson'
+          catalog_text=Path('docs/econometrics/catalog.js').read_text(encoding='utf8')
+          course=json.loads(catalog_text[catalog_text.index('{'):catalog_text.rfind('}')+1])
+          lessons=[lesson for chapter in course['chapters'] for lesson in chapter['lessons']]
+          expected=next(lesson['number'] for lesson in lessons if lesson['id']==match.group(1))
+          assert (m['chapters'],m['lessons'],m['taught'],m['prewritten']) == (10,120,expected,120-expected)
           assert len(m['documents'])==11
           assert sum(x['lessons'] for x in m['documents'][:-1])==120
           for item in m['documents']:
@@ -517,9 +538,12 @@ jobs:
           # Confirm the personal completion feature is present in the deployed HTML and assets.
           check "$SITE/study-progress.js" /tmp/econometrics-progress.js "research-learning-hub:econometrics:completed:v1"
           check "$SITE/study-progress.css" /tmp/econometrics-progress.css "econ-complete-panel"
-          grep -Fq 'study-progress.js' /tmp/econometrics-index.html
-          grep -Fq 'study-progress.js' /tmp/econometrics-lesson.html
-          grep -Fq "href=\"lessons/$LATEST_ID.html\"" /tmp/econometrics-index.html
+          # New course entry is a direct redirect to the last formally taught lecture;
+          # archived catalog and optional personal progress assets remain separate.
+          grep -Fq "content=\"0; url=lessons/$LATEST_ID.html\"" /tmp/econometrics-index.html
+          grep -Fq 'href="course-archive.html"' /tmp/econometrics-index.html
+          grep -Fq 'id="s1"' /tmp/econometrics-lesson.html
+          grep -Fq 'id="s7"' /tmp/econometrics-lesson.html
           grep -Fq '<pre' /tmp/econometrics-lesson.html
           echo "Verified newest econometrics course $LATEST_ID on public GitHub Pages."
 
@@ -623,7 +647,12 @@ jobs:
               sleep 8
             done
           }
-          check "econometrics/" econometrics /tmp/econ-home.html
+          # The course entry is a lightweight redirect, not a themed lesson.
+          status=$(curl -L -sS --connect-timeout 10 --max-time 30 -o /tmp/econ-home.html -w '%{http_code}' "$BASE/econometrics/?design=$DEPLOY_SHA" || true)
+          [[ "$status" == "200" ]] &&
+            grep -Fq 'http-equiv="refresh"' /tmp/econ-home.html &&
+            grep -Eq 'url=lessons/[0-9]{2}-[0-9]{2}[.]html' /tmp/econ-home.html ||
+            { echo "::error::Econometrics homepage redirect is not public"; exit 1; }
           check "econometrics/lessons/02-05.html" econometrics /tmp/econ-lesson.html
           check "math/" math /tmp/math-home.html
           check "math/lessons/2026-10-18-01-11.html" math /tmp/math-lesson.html
@@ -915,9 +944,12 @@ jobs:
           async function main(){
             const homepage=await fetch(base+suffix);
             const homepageText=await homepage.text();
-            if(homepage.status!==200||!homepageText.includes('已授课')||
-               homepageText.includes('正文已上线·待正式授课'))
-              throw Error('Course homepage still shows planned status');
+            const sourceHome=fs.readFileSync('docs/econometrics/index.html','utf8');
+            const routed=sourceHome.match(/content="0; url=(lessons\/[0-9]{2}-[0-9]{2}[.]html)"/i)?.[1];
+            if(!routed||homepage.status!==200||
+               !homepageText.includes('content="0; url='+routed+'"')||
+               !homepageText.includes('href="course-archive.html"'))
+              throw Error('Course homepage does not route to latest taught lesson');
             const served=await fetch(base+'catalog.js'+suffix);
             if(served.status!==200)throw Error('Deployed catalogue HTTP '+served.status);
             const ctx={window:{}};
