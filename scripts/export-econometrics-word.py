@@ -152,14 +152,17 @@ def main():
  for chapter in chapters:
   results.append(produce(chapters,lessons,[chapter['number']],source,folder,ref,tmp))
  results.append(produce(chapters,lessons,list(range(1,11)),source,folder,ref,tmp))
- # Actual daily teaching progress comes from the deliberately maintained latest-lesson
- # homepage target, never from the catalog's published display flag.
+ # Actual teaching progress is tracked separately from the 36-module homepage
+ # and from the legacy catalog's published display flags.
  landing=(source/'index.html').read_text(encoding='utf8')
- match=re.search(r'<meta[ ]+name="current-lesson"[ ]+content="([0-9]{2}-[0-9]{2})"',landing,re.I)
- if not match:raise ValueError('Missing explicit current-lesson marker in course homepage')
- if re.search(r'http-equiv=["\']refresh|window\.location\.replace',landing,re.I):raise ValueError('Course homepage must keep the full course directory visible')
+ archive=(source/'course-archive.html').read_text(encoding='utf8')
+ match=re.search(r'<meta[ ]+name="legacy-current-lesson"[ ]+content="([0-9]{2}-[0-9]{2})"',archive,re.I)
+ if not match:raise ValueError('Missing explicit legacy-current-lesson marker in the archive')
+ if 'name="course-revision" content="2026-10-27-v2"' not in landing or 'data-module-check="M36"' not in landing or 'href="course-archive.html"' not in landing:raise ValueError('Course homepage must show the 36-module mainline and link to the legacy archive')
+ if 'id="catalog"' in landing or 'id="current-lesson-link"' in landing:raise ValueError('Legacy 120-lesson catalog must not be rendered as the main homepage')
+ if re.search(r'http-equiv=["\']refresh|window\.location\.replace',landing,re.I):raise ValueError('Course homepage must not redirect away from the 36-module mainline')
  latest=next((x for x in lessons if x['id']==match.group(1)),None)
- if latest is None:raise ValueError('Homepage points outside the original 120-lesson plan')
+ if latest is None:raise ValueError('Archive marker points outside the original 120-lesson plan')
  current_html=(source/'lessons'/f"{latest['id']}.html").read_text(encoding='utf8')
  if 'name="course-status" content="taught"' not in current_html or 'id="s7"' not in current_html:raise ValueError('Current lesson is not a complete taught lesson')
  taught=latest['number']

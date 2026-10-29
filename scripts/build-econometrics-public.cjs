@@ -86,63 +86,57 @@ fs.writeFileSync(path.join(out, 'catalog.js'),
   'window.ECON_COURSE=' + JSON.stringify(course, null, 2) + ';\n');
 
 
-// Keep the full interactive course catalogue as the homepage. The latest taught
-// lesson is selected explicitly in index.html; never infer chat progress from
-// catalog.published, which only indicates website archive availability.
+// The canonical homepage is the 6-week / 36-module learning path.
+// The original 10-chapter / 120-lesson outline remains available only through
+// course-archive.html; its catalog publication flags are not the homepage state.
 const catalogAvailableCount = lessons.filter(l => l.published && l.url).length;
 if (catalogAvailableCount === 0) throw Error('No archived econometrics lessons');
 const homePath = path.join(out, 'index.html');
-let home = fs.readFileSync(homePath, 'utf8');
-const currentEntry = home.match(/<meta\s+name=["']current-lesson["']\s+content=["'](\d{2}-\d{2})["']/i);
-if (!currentEntry) throw Error('Homepage must explicitly identify the latest taught lesson.');
-if (/http-equiv=["']refresh/i.test(home) || /window\.location\.replace\s*\(/i.test(home)) {
-  throw Error('Econometrics homepage must show the full course catalogue; automatic lesson redirects are not allowed.');
+const archivePath = path.join(out, 'course-archive.html');
+const home = fs.readFileSync(homePath, 'utf8');
+const archive = fs.readFileSync(archivePath, 'utf8');
+for (const marker of [
+  'name="course-revision" content="2026-10-27-v2"',
+  'data-module-check="M01"',
+  'data-module-check="M36"',
+  'href="v2/modules/M01.html"',
+  'href="v2/modules/M36.html"',
+  'href="course-archive.html"'
+]) {
+  if (!home.includes(marker)) throw Error('36-module mainline homepage missing marker: ' + marker);
 }
+if (home.includes('id="catalog"') || home.includes('id="current-lesson-link"') ||
+    home.includes('工资影响因素综合实操') || home.includes('第2章·第15节')) {
+  throw Error('Legacy 120-lesson directory or its latest lesson is incorrectly displayed on the mainline homepage.');
+}
+const moduleIds = new Set([...home.matchAll(/href=["']v2\/modules\/(M\d{2})\.html["']/g)].map(m => m[1]));
+if (moduleIds.size !== 36) throw Error('Mainline homepage must link to all 36 modules; found ' + moduleIds.size);
+for (let i = 1; i <= 36; i++) {
+  const id = 'M' + String(i).padStart(2, '0');
+  if (!fs.existsSync(path.join(out, 'v2', 'modules', id + '.html'))) {
+    throw Error('Mainline module page missing: ' + id);
+  }
+}
+if (!archive.includes('id="catalog"') || !archive.includes('id="results"') ||
+    !archive.includes('name="legacy-current-lesson"')) {
+  throw Error('Legacy 120-course archive is missing its catalogue or progress marker.');
+}
+const currentEntry = archive.match(/<meta\s+name=["']legacy-current-lesson["']\s+content=["'](\d{2}-\d{2})["']/i);
+if (!currentEntry) throw Error('Legacy archive must explicitly identify the latest taught lesson for historical exports.');
 const currentId = currentEntry[1];
 const current = lessons.find(l => l.id === currentId);
 if (!current || current.url !== 'lessons/' + currentId + '.html') {
-  throw Error('Homepage current lesson is not a canonical entry in the original 120-lesson plan.');
+  throw Error('Legacy current lesson is not a canonical entry in the original 120-lesson plan.');
 }
 const currentFile = path.join(out, current.url);
-if (!fs.existsSync(currentFile)) throw Error('Current taught lesson file is missing: ' + currentFile);
+if (!fs.existsSync(currentFile)) throw Error('Legacy current lesson file is missing: ' + currentFile);
 const currentHtml = fs.readFileSync(currentFile, 'utf8');
 const expectedHeading = '第' + current.chapter + '章·第' + current.section + '节｜' + current.title;
 if (!currentHtml.includes(expectedHeading) ||
     !currentHtml.includes('name="course-status" content="taught"') ||
     !currentHtml.includes('id="s7"')) {
-  throw Error('Current entry is not a complete taught lesson: ' + currentId);
+  throw Error('Legacy current lesson is not a complete taught lesson: ' + currentId);
 }
-for (const marker of ['id="catalog"', 'id="results"', 'id="current-lesson-link"', 'course-archive.html', 'catalog.js']) {
-  if (!home.includes(marker)) throw Error('Complete course homepage is missing required navigation marker: ' + marker);
-}
-const anchorMatch = home.match(/<a\b[^>]*\bid=["']current-lesson-link["'][^>]*>/i);
-if (!anchorMatch || !anchorMatch[0].includes('href="' + current.url + '"')) {
-  throw Error('Current lesson button does not link to the explicitly selected taught lesson: ' + currentId);
-}
-const escapeHtml = value => String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-function replaceElementText(id, value) {
-  const re = new RegExp('(<([a-z][a-z0-9]*)\\b[^>]*\\bid="' + id + '"[^>]*>)[\\s\\S]*?(<\\/\\2>)', 'i');
-  if (!re.test(home)) throw Error('Current lesson card element missing: ' + id);
-  home = home.replace(re, (_, opening, tag, closing) => opening + escapeHtml(value) + closing);
-}
-replaceElementText('current-lesson-meta',
-  '最新正式授课 · 全课程第' + current.number + '课 / 共120课' + (current.date ? ' · ' + current.date : ''));
-replaceElementText('current-lesson-title', expectedHeading);
-replaceElementText('current-lesson-description',
-  '本课已完整讲授，包含通俗解释、核心公式、公开教学数据、Stata与Python实现、常见误区及练习答案。');
-replaceElementText('current-lesson-link', '阅读第' + current.number + '课完整讲义 ↗');
-replaceElementText('current-lesson-number', current.number + ' / 120');
-const linkRe = /<a\b[^>]*\bid=["']current-lesson-link["'][^>]*>/i;
-const updatedLink = home.match(linkRe)[0].replace(/\bhref=["'][^"']*["']/i, 'href="' + current.url + '"');
-home = home.replace(linkRe, updatedLink);
-const fillRe = /(<span\b[^>]*\bid=["']current-progress-fill["'][^>]*\bstyle=["']width:)[^"']*(["'][^>]*>)/i;
-if (!fillRe.test(home)) throw Error('Current progress bar is missing.');
-home = home.replace(fillRe, (_, before, after) => before + (current.number / 120 * 100).toFixed(2) + '%' + after);
-const progressRe = /(<div\b[^>]*class=["']current-progress["'][^>]*aria-valuenow=["'])\d+(["'][^>]*>)/i;
-if (!progressRe.test(home)) throw Error('Current lesson progress accessibility metadata is missing.');
-home = home.replace(progressRe, (_, before, after) => before + current.number + after);
-fs.writeFileSync(homePath, home);
-console.log('Preserved full 10-chapter / 120-lesson catalogue; current taught lesson=' + currentId +
-  ' (course lesson ' + current.number + '); archive-available pages=' + catalogAvailableCount + '.');
-console.log('Econometrics public site: ' + catalogAvailableCount + '/120 catalogue pages available; current taught lesson explicitly marked=' + currentId +
-  '; automatically discovered=' + (detected.join(',') || 'none') + '.');
+console.log('Econometrics homepage: verified 36-module mainline; original 120-lesson directory is isolated at course-archive.html.');
+console.log('Legacy archive pages available=' + catalogAvailableCount + '; explicitly tracked legacy taught lesson=' +
+  currentId + ' (course lesson ' + current.number + '); automatically discovered=' + (detected.join(',') || 'none') + '.');

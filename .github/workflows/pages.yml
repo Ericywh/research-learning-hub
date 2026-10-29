@@ -150,7 +150,8 @@ jobs:
             { file: '_site/study/index.html', regex: /src="\.\.\/econometrics\/catalog\.js(?:\?[^"]*)?"/g, target: '../econometrics/catalog.js' },
             { file: '_site/study/index.html', regex: /src="\.\.\/math\/catalog\.js(?:\?[^"]*)?"/g, target: '../math/catalog.js' },
             { file: '_site/study/index.html', regex: /src="\.\.\/assets\/hub\.js(?:\?[^"]*)?"/g, target: '../assets/hub.js' },
-            { file: '_site/econometrics/index.html', regex: /src="catalog\.js(?:\?[^"]*)?"/g, target: 'catalog.js' },
+            { file: '_site/econometrics/index.html', regex: /src="v2\/course\.js(?:\?[^"]*)?"/g, target: 'v2/course.js' },
+            { file: '_site/econometrics/course-archive.html', regex: /src="catalog\.js(?:\?[^"]*)?"/g, target: 'catalog.js' },
             { file: '_site/cssci/index.html', regex: /src="catalog\.js(?:\?[^"]*)?"/g, target: 'catalog.js' }
           ];
                     for (const item of changes) {
@@ -176,31 +177,34 @@ jobs:
         run: |
           node scripts/build-econometrics-public.cjs
 
-      - name: Record current taught lesson from the explicit course entry
+      - name: Validate 36-module homepage and record legacy taught lesson
         id: econometrics_latest
         shell: bash
         run: |
           node <<'NODE' >> "$GITHUB_OUTPUT"
           const fs=require('node:fs'),vm=require('node:vm'),path=require('node:path');
           const index=fs.readFileSync('_site/econometrics/index.html','utf8');
-          const match=index.match(/<meta\s+name=["']current-lesson["']\s+content=["'](\d{2}-\d{2})["']/i);
-          if(!match)throw Error('Course entry must explicitly identify the current taught lesson.');
+          const archive=fs.readFileSync('_site/econometrics/course-archive.html','utf8');
+          for(const marker of ['name="course-revision" content="2026-10-27-v2"','data-module-check="M01"','data-module-check="M36"','href="v2/modules/M01.html"','href="v2/modules/M36.html"','href="course-archive.html"']){
+            if(!index.includes(marker))throw Error('36-module homepage marker missing: '+marker);
+          }
+          if(index.includes('id="catalog"')||index.includes('id="current-lesson-link"')||index.includes('工资影响因素综合实操')||index.includes('第2章·第15节'))
+            throw Error('Legacy 120-course content incorrectly appears on the current homepage.');
+          const ids=new Set([...index.matchAll(/href=["']v2\/modules\/(M\d{2})\.html["']/g)].map(m=>m[1]));
+          if(ids.size!==36)throw Error('Homepage must link to all 36 modules; found '+ids.size);
+          const match=archive.match(/<meta\s+name=["']legacy-current-lesson["']\s+content=["'](\d{2}-\d{2})["']/i);
+          if(!match)throw Error('Legacy archive must explicitly identify the latest taught lesson for historical exports.');
           const ctx={window:{}};
           vm.runInNewContext(fs.readFileSync('_site/econometrics/catalog.js','utf8'),ctx);
           const lessons=ctx.window.ECON_COURSE.chapters.flatMap(c=>c.lessons);
           const lesson=lessons.find(l=>l.id===match[1]);
-          if(!lesson||lesson.url!=='lessons/'+lesson.id+'.html')throw Error('Current lesson is not in the original 120-lesson catalog.');
+          if(!lesson||lesson.url!=='lessons/'+lesson.id+'.html')throw Error('Legacy current lesson is not in the original 120-lesson catalog.');
           const html=fs.readFileSync(path.join('_site/econometrics',lesson.url),'utf8');
           const heading='第'+lesson.chapter+'章·第'+lesson.section+'节｜'+lesson.title;
           if(!html.includes(heading)||!html.includes('name="course-status" content="taught"')||!html.includes('id="s7"'))
-            throw Error('Current entry does not point to a complete taught lesson: '+lesson.id);
-          if(/http-equiv=["']refresh/i.test(index)||/window\.location\.replace\s*\(/i.test(index))
-            throw Error('Course homepage must not auto-redirect away from the full course catalogue.');
-          if(!index.includes('id="catalog"')||!index.includes('id="results"'))
-            throw Error('Course homepage must include the complete searchable lesson catalogue.');
-          const anchor=index.match(/<a\b[^>]*\bid=["']current-lesson-link["'][^>]*>/i);
-          if(!anchor||!anchor[0].includes('href="lessons/'+lesson.id+'.html"'))
-            throw Error('Current lesson card does not link to the explicitly selected lesson: '+lesson.id);
+            throw Error('Legacy archive marker does not point to a complete taught lesson: '+lesson.id);
+          if(!archive.includes('id="catalog"')||!archive.includes('id="results"'))
+            throw Error('Legacy 120-course archive must keep its searchable directory.');
           console.log('lesson_id='+lesson.id);
           console.log('lesson_title='+lesson.title);
           NODE
@@ -374,12 +378,14 @@ jobs:
           root=Path('_site/econometrics/word')
           m=json.loads((root/'manifest.json').read_text())
           import re
-          source_index=Path('docs/econometrics/index.html').read_text(encoding='utf8')
-          match=re.search(r'<meta[ ]+name="current-lesson"[ ]+content="([0-9]{2}-[0-9]{2})"',source_index,re.I)
-          assert match, 'Course homepage must identify latest taught lesson'
-          assert 'id="catalog"' in source_index and 'id="results"' in source_index, 'Course homepage must keep the full searchable catalogue'
-          assert 'id="current-lesson-link"' in source_index, 'Course homepage must link to the current lesson'
-          assert not re.search(r'http-equiv=["\']refresh|window\.location\.replace',source_index,re.I), 'Course homepage must not redirect away from the full catalogue'
+          source_home=Path('docs/econometrics/index.html').read_text(encoding='utf8')
+          source_archive=Path('docs/econometrics/course-archive.html').read_text(encoding='utf8')
+          match=re.search(r'<meta[ ]+name="legacy-current-lesson"[ ]+content="([0-9]{2}-[0-9]{2})"',source_archive,re.I)
+          assert match, 'Legacy archive must identify the current taught lesson for Word metadata'
+          assert 'name="course-revision" content="2026-10-27-v2"' in source_home and 'data-module-check="M36"' in source_home, 'Course homepage must expose the 36-module mainline'
+          assert 'href="course-archive.html"' in source_home and 'href="v2/modules/M01.html"' in source_home, 'Mainline must link to the old archive and first module'
+          assert 'id="catalog"' not in source_home and 'id="current-lesson-link"' not in source_home, 'Legacy directory must not be the homepage'
+          assert not re.search(r'http-equiv=["\']refresh|window\.location\.replace',source_home,re.I), 'Course homepage must not redirect away from the 36-module mainline'
           catalog_text=Path('docs/econometrics/catalog.js').read_text(encoding='utf8')
           course=json.loads(catalog_text[catalog_text.index('{'):catalog_text.rfind('}')+1])
           lessons=[lesson for chapter in course['chapters'] for lesson in chapter['lessons']]
@@ -504,14 +510,14 @@ jobs:
           echo "Frontier public smoke test passed: archive index and ${#ISSUES[@]} latest issues."
 
   verify-public-econometrics:
-    name: Verify direct course entry, catalog and current taught lesson over HTTPS
+    name: Verify 36-module mainline and legacy 120-course archive over HTTPS
     needs: [build, deploy]
     runs-on: ubuntu-latest
     steps:
-      - name: Check out source for expected lesson list
+      - name: Check out source for expected legacy lesson list
         uses: actions/checkout@v4
 
-      - name: Verify direct entry and complete taught lesson over HTTPS
+      - name: Verify mainline, archive and lesson links over HTTPS
         shell: bash
         env:
           DEPLOY_SHA: ${{ github.sha }}
@@ -522,7 +528,7 @@ jobs:
           SITE="https://ericywh.github.io/research-learning-hub/econometrics"
           LATEST_ID="$EXPECTED_ID"
           LATEST_TITLE="$EXPECTED_TITLE"
-          [[ -n "$LATEST_ID" && -n "$LATEST_TITLE" ]] || { echo "::error::Build did not export the current taught lesson"; exit 1; }
+          [[ -n "$LATEST_ID" && -n "$LATEST_TITLE" ]] || { echo "::error::Build did not export the legacy archive's current taught lesson"; exit 1; }
           check() {
             local url="$1" output="$2" marker="$3" status
             for attempt in $(seq 1 10); do
@@ -542,27 +548,34 @@ jobs:
             for attempt in $(seq 1 10); do
               status=$(curl -sS --connect-timeout 10 --max-time 30 -o "$output" -w '%{http_code}' "$url?deploy=$DEPLOY_SHA" || true)
               if [[ "$status" == "200" ]] && grep -Fq "$marker" "$output"; then
-                echo "PASS HTTP 200 + current-entry marker: $url"
+                echo "PASS HTTP 200 + mainline marker: $url"
                 return 0
               fi
-              echo "Attempt $attempt: status=$status or current-entry marker missing at $url"
+              echo "Attempt $attempt: status=$status or mainline marker missing at $url"
               sleep 12
             done
-            echo "::error::Direct course entry failed HTTP/content check: $url"
+            echo "::error::Direct course homepage failed HTTP/content check: $url"
             return 1
           }
-          check_index "$SITE/" /tmp/econometrics-index.html "name=\"current-lesson\" content=\"$LATEST_ID\""
-          grep -Fq "id=\"current-lesson-link\" href=\"lessons/$LATEST_ID.html\"" /tmp/econometrics-index.html
-          grep -Fq 'id="catalog"' /tmp/econometrics-index.html
-          grep -Fq 'id="results"' /tmp/econometrics-index.html
-          grep -Fq 'course-archive.html' /tmp/econometrics-index.html
-          grep -Fq 'catalog.js?v=' /tmp/econometrics-index.html
-          grep -Fq "$LATEST_TITLE" /tmp/econometrics-index.html
-          if grep -Fq 'http-equiv="refresh"' /tmp/econometrics-index.html || grep -Fq 'window.location.replace' /tmp/econometrics-index.html; then
-            echo "::error::Course homepage unexpectedly redirects away from the full catalogue"
+          check_index "$SITE/" /tmp/econometrics-index.html 'name="course-revision" content="2026-10-27-v2"'
+          grep -Fq 'data-module-check="M01"' /tmp/econometrics-index.html
+          grep -Fq 'data-module-check="M36"' /tmp/econometrics-index.html
+          grep -Fq 'href="v2/modules/M01.html"' /tmp/econometrics-index.html
+          grep -Fq 'href="v2/modules/M36.html"' /tmp/econometrics-index.html
+          grep -Fq 'href="course-archive.html"' /tmp/econometrics-index.html
+          if grep -Fq 'id="catalog"' /tmp/econometrics-index.html ||
+             grep -Fq 'id="current-lesson-link"' /tmp/econometrics-index.html ||
+             grep -Fq '工资影响因素综合实操' /tmp/econometrics-index.html ||
+             grep -Fq '第2章·第15节' /tmp/econometrics-index.html; then
+            echo "::error::Legacy 120-course content is incorrectly displayed on the mainline homepage"
             exit 1
           fi
-          grep -Fq 'study-progress.js' /tmp/econometrics-index.html
+          check "$SITE/course-archive.html" /tmp/econometrics-archive.html 'id="catalog"'
+          grep -Fq "name=\"legacy-current-lesson\" content=\"$LATEST_ID\"" /tmp/econometrics-archive.html
+          grep -Fq 'id="results"' /tmp/econometrics-archive.html
+          check "$SITE/v2/modules/M01.html" /tmp/econometrics-m01.html 'M01 · 描述、预测与反事实因果'
+          check "$SITE/v2/modules/M36.html" /tmp/econometrics-m36.html 'M36 · 论文复现项目与验收标准'
+          check "$SITE/v2/concepts.html" /tmp/econometrics-concepts.html '先懂概念，再学计量方法'
           check "$SITE/catalog.js" /tmp/econometrics-catalog.js "\"url\": \"lessons/$LATEST_ID.html\""
           check "$SITE/lessons/$LATEST_ID.html" /tmp/econometrics-lesson.html "$LATEST_TITLE"
           check "$SITE/study-progress.js" /tmp/econometrics-progress.js "research-learning-hub:econometrics:completed:v1"
@@ -571,8 +584,7 @@ jobs:
           grep -Fq 'id="s7"' /tmp/econometrics-lesson.html
           grep -Fq '<pre' /tmp/econometrics-lesson.html
           grep -Fq 'lesson-hero' /tmp/econometrics-lesson.html
-          echo "Verified current taught lesson $LATEST_ID on public GitHub Pages; catalog publication flags were not used to infer chat progress."
-
+          echo "Verified 36-module mainline homepage; legacy 120-course archive and taught lesson $LATEST_ID remain accessible."
 
   verify-public-math:
     name: Verify public mathematics pages
@@ -674,13 +686,14 @@ jobs:
               sleep 8
             done
           }
-          # The course homepage must retain its full searchable catalogue and current-lesson card.
+          # The homepage must show the 36-module mainline and link to the old 120-course archive.
           status=$(curl -sS --connect-timeout 10 --max-time 30 -o /tmp/econ-home.html -w '%{http_code}' "$BASE/econometrics/?design=$DEPLOY_SHA" || true)
           [[ "$status" == "200" ]] &&
-            grep -Fq 'id="catalog"' /tmp/econ-home.html &&
-            grep -Fq 'id="current-lesson-link"' /tmp/econ-home.html &&
-            ! grep -Fq 'http-equiv="refresh"' /tmp/econ-home.html ||
-            { echo "::error::Econometrics full course homepage is not public"; exit 1; }
+            grep -Fq 'data-module-check="M36"' /tmp/econ-home.html &&
+            grep -Fq 'href="course-archive.html"' /tmp/econ-home.html &&
+            ! grep -Fq 'id="catalog"' /tmp/econ-home.html &&
+            ! grep -Fq 'id="current-lesson-link"' /tmp/econ-home.html ||
+            { echo "::error::Econometrics 36-module mainline homepage is not public"; exit 1; }
           check "econometrics/lessons/02-05.html" econometrics /tmp/econ-lesson.html
           check "math/" math /tmp/math-home.html
           check "math/lessons/2026-10-18-01-11.html" math /tmp/math-lesson.html
@@ -918,13 +931,13 @@ jobs:
           NODE
 
   verify-canonical-econometrics:
-    name: Verify DAY21-120 canonical lesson pages over HTTPS
+    name: Verify legacy 120-course archive and lesson pages over HTTPS
     needs: deploy
     runs-on: ubuntu-latest
     steps:
       - name: Check out source commit
         uses: actions/checkout@v4
-      - name: Verify 120 catalogue records and 100 updated lesson pages
+      - name: Verify legacy archive records and 100 lesson pages
         shell: bash
         env:
           DEPLOY_SHA: ${{ github.sha }}
@@ -973,15 +986,25 @@ jobs:
             const homepage=await fetch(base+suffix);
             const homepageText=await homepage.text();
             const sourceHome=fs.readFileSync('docs/econometrics/index.html','utf8');
-            const currentId=sourceHome.match(/<meta\s+name=["']current-lesson["']\s+content=["']([0-9]{2}-[0-9]{2})["']/i)?.[1];
-            const currentLink=homepageText.match(/<a\b[^>]*\bid=["']current-lesson-link["'][^>]*>/i)?.[0];
+            const sourceArchive=fs.readFileSync('docs/econometrics/course-archive.html','utf8');
+            const currentId=sourceArchive.match(/<meta\s+name=["']legacy-current-lesson["']\s+content=["']([0-9]{2}-[0-9]{2})["']/i)?.[1];
             if(!currentId||homepage.status!==200||
-               !homepageText.includes('name="current-lesson" content="'+currentId+'"')||
-               !currentLink||!currentLink.includes('href="lessons/'+currentId+'.html"')||
-               !homepageText.includes('id="catalog"')||!homepageText.includes('id="results"')||
+               !homepageText.includes('name="course-revision" content="2026-10-27-v2"')||
+               !homepageText.includes('data-module-check="M01"')||
+               !homepageText.includes('data-module-check="M36"')||
+               !homepageText.includes('href="v2/modules/M01.html"')||
+               !homepageText.includes('href="v2/modules/M36.html"')||
                !homepageText.includes('href="course-archive.html"')||
+               homepageText.includes('id="catalog"')||homepageText.includes('id="current-lesson-link"')||
+               homepageText.includes('工资影响因素综合实操')||homepageText.includes('第2章·第15节')||
                /http-equiv=["']refresh/i.test(homepageText)||/window\.location\.replace\s*\(/i.test(homepageText))
-              throw Error('Course homepage must expose the full catalogue and current lesson link without redirect');
+              throw Error('Course homepage must expose the 36-module mainline and only link to the legacy archive');
+            const archiveResponse=await fetch(base+'course-archive.html'+suffix);
+            const archiveText=await archiveResponse.text();
+            if(archiveResponse.status!==200||
+               !archiveText.includes('name="legacy-current-lesson" content="'+currentId+'"')||
+               !archiveText.includes('id="catalog"')||!archiveText.includes('id="results"'))
+              throw Error('Legacy 120-course archive missing or malformed');
             const served=await fetch(base+'catalog.js'+suffix);
             if(served.status!==200)throw Error('Deployed catalogue HTTP '+served.status);
             const ctx={window:{}};
@@ -993,7 +1016,7 @@ jobs:
               await Promise.all(expected.slice(i,i+8).map(check));
               console.log('Verified canonical lesson pages:',Math.min(i+8,100),'/100');
             }
-            console.log('PASS 120/120 catalogue URL records and 100/100 canonical lesson HTML pages over HTTPS');
+            console.log('PASS 36-module mainline, 120 legacy archive URL records and 100/100 canonical lesson HTML pages over HTTPS');
           }
           main().catch(err=>{console.error(err);process.exitCode=1;});
           NODE
