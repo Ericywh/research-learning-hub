@@ -82,7 +82,7 @@ def blocks(x):
 
 def body_from_html(file):
  soup=BeautifulSoup(file.read_text(encoding='utf8'),'html.parser')
- article=soup.find('article') or soup.find('main') or soup.body
+ article=soup.find('main') or soup.find('article') or soup.body
  if article is None:raise ValueError('No article/main/body: '+str(file))
  body='\n\n'.join(x for x in blocks(article) if x)
  if len(body)<300:raise ValueError('Incomplete lesson source: '+str(file))
@@ -152,7 +152,15 @@ def main():
  for chapter in chapters:
   results.append(produce(chapters,lessons,[chapter['number']],source,folder,ref,tmp))
  results.append(produce(chapters,lessons,list(range(1,11)),source,folder,ref,tmp))
- manifest={'chapters':10,'lessons':120,'taught':20,'prewritten':100,'documents':results}
+ # Actual daily teaching progress comes from the deliberately maintained latest-lesson
+ # homepage target, never from the catalog's published display flag.
+ landing=(source/'index.html').read_text(encoding='utf8')
+ match=re.search(r'<meta\\s+http-equiv="refresh"\\s+content="0;\\s*url=lessons/(\\d{2}-\\d{2})\\.html"',landing,re.I)
+ if not match:raise ValueError('Missing authoritative latest-taught lesson redirect in course homepage')
+ latest=next((x for x in lessons if x['id']==match.group(1)),None)
+ if latest is None:raise ValueError('Homepage points outside the original 120-lesson plan')
+ taught=latest['number']
+ manifest={'chapters':10,'lessons':120,'taught':taught,'prewritten':120-taught,'documents':results}
  (folder/'manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2),encoding='utf8')
  links=''.join(f'<li><a href="{r["filename"]}">{("完整120课汇编" if r["lessons"]==120 else "分章讲义"+str(i+1))}（{r["lessons"]}课，Word）</a></li>' for i,r in enumerate(results))
  index='<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>计量经济学120天｜Word下载</title><style>body{font:16px/1.8 system-ui,"Noto Sans SC",sans-serif;max-width:900px;margin:35px auto;padding:20px;color:#264455}a{color:#13777d}li{margin:9px 0}</style><h1>计量经济学120天系统课程｜Word讲义</h1><p>从GitHub课程HTML导出。全部120课在网站上统一显示“已授课”。其中部分正文源自提前编写的教学资料，实际聊天授课历史另行核对。</p><ol>'+links+'</ol><a href="../">返回课程</a></html>'
