@@ -245,7 +245,7 @@ window.ECON_COURSE={
           "section": 1,
           "title": "内生性及其统计后果",
           "published": true,
-          "date": null,
+          "date": "2026-10-30",
           "url": "lessons/03-01.html"
         },
         {
