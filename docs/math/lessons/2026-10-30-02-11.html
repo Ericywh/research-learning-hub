@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="每日10分钟数学微课程，第23课：逆矩阵与线性方程组，2026-10-30正式授课">
+<meta name="course-status" content="taught">
+<meta name="lesson-number" content="23">
+<meta name="lesson-date" content="2026-10-30">
+<title>第2章·第11节｜逆矩阵与线性方程组</title>
+<link rel="stylesheet" href="../site.css">
+<script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]}};</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+.article-wrap{max-width:830px;margin:0 auto;padding:36px 20px 80px}
+.article{font-size:17px;line-height:1.9;color:#263d3a}
+.article h2{margin-top:1.8em;font-size:1.24em}
+.article h3{margin-top:1.5em}
+.article p{margin:1em 0}
+.article .math{overflow:auto;padding:12px;background:#f4f8f5;border-radius:9px}
+.article .lead{border-left:4px solid #5b998a;padding:12px 20px;background:#edf7f2;border-radius:8px}
+.muted{font-size:14px;color:#61736e}
+@media(max-width:650px){.article-wrap{padding:24px 16px 64px}.article{font-size:16px}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><a href="../">← 数学课程目录</a><a href="../../">研究学习中心</a></div></header>
+<main class="article-wrap">
+<div class="kicker">MATHEMATICS · PROBABILITY · ECONOMETRICS</div>
+<h1>第2章·第11节｜逆矩阵与线性方程组</h1>
+<p class="muted">全课程第23课 / 共73课 · 2026-10-30 · 预计学习8分钟 · 已正式授课</p>
+<article class="article">
+<aside class="lead"><p>全课程第23课 / 共73课｜2026年10月30日｜预计学习8分钟</p><p>核心问题：为什么可逆矩阵能够给出线性方程组的唯一解？这与OLS正规方程有什么关系？</p></aside>
+<h2>一、从方程组到逆矩阵</h2>
+<p>上一课证明，设计矩阵满列秩时，OLS系数解唯一。本课研究其中的代数工具。设 \(A\in\mathbb R^{p\times p}\)、\(\mathbf b,\mathbf c\in\mathbb R^p\)。逆矩阵只对非奇异方阵存在，其定义是</p>
+<div class="math">\[A^{-1}A=AA^{-1}=I_p,\qquad \det(A)\ne0.\]</div>
+<p>若 \(A\mathbf b=\mathbf c\)，在方程两侧左乘 \(A^{-1}\)，利用 \(A^{-1}A=I_p\)，得到</p>
+<div class="math">\[A\mathbf b=\mathbf c\quad\Longrightarrow\quad \mathbf b=A^{-1}\mathbf c.\]</div>
+<p>这不仅给出一个解，还保证唯一性：若另有 \(\mathbf b'\) 满足同一方程，左乘逆矩阵也必得 \(\mathbf b'=A^{-1}\mathbf c\)。若 \(\det(A)=0\)，则不能套用该公式；奇异方程组可能无解，也可能有无穷多解。</p>
+<h2>二、为什么它适用于OLS</h2>
+<p>对已实现的样本，令 \(X\in\mathbb R^{n\times p}\)、\(\mathbf y\in\mathbb R^n\)，其中 \(p\) 包含截距。OLS正规方程为 \(X^{\mathsf T}X\hat{\boldsymbol\beta}=X^{\mathsf T}\mathbf y\)。这里 \(A=X^{\mathsf T}X\) 是 \(p\times p\) 方阵，右端是 \(p\times1\) 向量。若 \(\operatorname{rank}(X)=p\)，则对任意非零 \(\mathbf v\in\mathbb R^p\)，</p>
+<div class="math">\[\mathbf v^{\mathsf T}X^{\mathsf T}X\mathbf v=\|X\mathbf v\|_2^2>0.\]</div>
+<p>因此 \(X^{\mathsf T}X\) 正定、可逆，正规方程可按逆矩阵方法求解。\(n\ge p\) 只是满列秩的必要条件，重复变量或完全共线性仍会使求逆失败。此处的结论只涉及给定样本的代数唯一性，不涉及因果识别。</p>
+<h2>三、两元方程组的手算</h2>
+<p>取 \(A=\begin{pmatrix}2&1\\1&1\end{pmatrix}\)，\(\mathbf c=(5,3)^{\mathsf T}\)。行列式为 \(2\times1-1\times1=1\)，故 \(A^{-1}=\begin{pmatrix}1&-1\\-1&2\end{pmatrix}\)。相乘得到 \(\mathbf b=(2,1)^{\mathsf T}\)。代回检验：\(2\times2+1=5\)，\(2+1=3\)。这里展示的是确定性线性方程求解，不应把两个数字直接解释为具有统计显著性的回归系数。</p>
+<h2>四、统计计算中的适用边界</h2>
+<p>逆矩阵公式适合理论推导，软件通常使用QR分解、Cholesky分解或其他线性求解器，而非显式计算逆矩阵。矩阵接近奇异时，即使逆存在，系数也可能对数据扰动非常敏感。应区分严格秩亏与数值病态；满列秩不保证估计精确，更不自动保证外生性或因果解释。</p>
+<h2>五、两道自测</h2>
+<p><b>第1题｜概念题：</b> 若一个 \(2\times2\) 方阵行列式为零，是否可以通过通常的逆矩阵公式求出唯一解？说明理由。</p>
+<p><b>第2题｜计算/应用题：</b> 求解 \(2b_1+b_2=5\)、\(b_1+b_2=3\)，并检验结果。</p>
+<h3>参考答案</h3>
+<p><b>第1题：</b> 不能。矩阵奇异，通常的逆矩阵不存在；须另行判断方程组是无解还是有无穷多解。</p>
+<p><b>第2题：</b> 两式相减得 \(b_1=2\)，代入得 \(b_2=1\)；两式左端分别为5和3，检验成立。</p>
+<h2>六、前后课衔接</h2>
+<p>第22课说明满列秩为何保证唯一性，本课说明如何利用逆矩阵求解。下一课将系统推导OLS矩阵解，并检查公式的维度与成立条件。</p>
+<p><b>下一课：第2章·第12节｜OLS矩阵解的推导（全课程第24课）。</b></p>
+</article>
+<p class="muted">上一课：第2章·第10节｜满列秩与有限样本系数解的唯一性 · 下一课：第2章·第12节｜OLS矩阵解的推导</p>
+<nav><a href="2026-10-29-02-10.html">← 上一课</a>　<a href="../">课程目录</a>　<a href="2026-10-29-02-12.html">下一课 →</a></nav>
+<p class="muted">Notion私人归档：<a href="https://app.notion.com/p/409b54823a12812494d9c09f481d8f67?pvs=204">https://app.notion.com/p/409b54823a12812494d9c09f481d8f67?pvs=204</a></p>
+</main>
+</body>
+</html>
