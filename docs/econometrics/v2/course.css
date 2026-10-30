@@ -323,3 +323,26 @@ body[data-econ-dark="true"] .formula,body[data-econ-dark="true"] .concept-primer
 body[data-econ-dark="true"] .toc a{background:#243b50;color:#b6e3e7}
 @media(max-width:500px){.concept-primer{padding:17px}.formula{padding:16px}details{padding:12px}.paper{border-radius:14px}}
 @media print{body,.paper,.formula,.concept-primer,.concept-example,details,.toc{background:#fff!important;box-shadow:none!important}.paper p,.paper li,.paper h2,.paper h3,.paper h4,.paper strong{color:#000!important}}
+
+/* Lesson layout and explicit completion control, 2026-10-30 */
+main>.paper{position:relative;isolation:isolate}
+.paper{scroll-margin-top:100px}
+.paper h2{display:flex;align-items:center;gap:12px}
+.paper h2::before{content:"";flex:0 0 9px;width:9px;height:28px;border-radius:8px;background:linear-gradient(180deg,var(--accent,#187c80),#a8bbed)}
+.paper h3{margin-top:30px}
+.paper p+p{margin-top:18px}
+#deepening{border-top-color:#7657aa;background:linear-gradient(120deg,#f1edfb,#fff 55%,#edf8fc)}
+#s5{background:linear-gradient(120deg,#fff5e7,#fff 60%,#fff0f4)}
+.nav{padding:22px;border-radius:16px;border:1px solid #dce3ee;background:linear-gradient(115deg,#e6f5f1,#edf0ff,#f9edf5);justify-content:space-between}
+.lesson-completion{border:1px solid #b9d9d5;border-top:5px solid #25847b;background:linear-gradient(115deg,#e8f8ef,#f5f7ff 60%,#f6effb);padding:30px 36px}
+.completion-choice{display:flex;align-items:center;gap:16px;padding:20px 24px;background:#ffffffd9;border:2px solid #a5c8c5;border-radius:14px;font-size:21px;font-weight:700;cursor:pointer}
+.completion-choice input[type=checkbox]{width:26px;height:26px;min-width:26px;accent-color:#187c70;cursor:pointer}
+.completion-choice:focus-within{outline:3px solid #587cc4;outline-offset:4px}
+.lesson-completion.is-complete .completion-choice{background:#e4f6e8;border-color:#429b70;color:#19583e}
+.lesson-completion .completion-status{font-weight:700;color:#345f6a;margin-bottom:8px}
+.lesson-completion small{display:block;line-height:1.7}
+body[data-econ-dark="true"] #deepening,body[data-econ-dark="true"] #s5,body[data-econ-dark="true"] .lesson-completion,body[data-econ-dark="true"] .nav{background:linear-gradient(120deg,#203d43,#2a304b);border-color:#587782}
+body[data-econ-dark="true"] .completion-choice{background:#233b4f;border-color:#6f989d;color:#e0edf6}
+body[data-econ-dark="true"] .lesson-completion.is-complete .completion-choice{background:#244c40;color:#cef2dc}
+@media(max-width:600px){.lesson-completion{padding:24px 18px}.completion-choice{padding:17px;font-size:19px}.nav a{flex:1 1 100%}}
+@media print{.lesson-completion{display:none}}

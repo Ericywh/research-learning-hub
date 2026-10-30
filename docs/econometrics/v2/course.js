@@ -128,8 +128,37 @@ function addThemeToggle(){
  });
  header.appendChild(button);
 }
+
+function addCompletionPanel(){
+ const main=document.querySelector('main');
+ const existing=main&&main.querySelector('[data-module-check]');
+ if(!existing||!valid.test(existing.dataset.moduleCheck)||!document.querySelector('.hero h1'))return;
+ // Catalogs contain multiple module checks; only a lesson has one unique module.
+ const ids=new Set([...main.querySelectorAll('[data-module-check]')].map(x=>x.dataset.moduleCheck));
+ if(ids.size!==1)return;
+ const id=existing.dataset.moduleCheck;
+ const panel=document.createElement('section');panel.className='paper lesson-completion';panel.id='lesson-completion';
+ const title=document.createElement('h2');title.textContent='本节学习完成情况';
+ const note=document.createElement('p');note.textContent='完成阅读、推导和练习后，可在这里记录学习状态。随时取消勾选，即可恢复为未完成。';
+ const label=document.createElement('label');label.className='completion-choice';
+ const check=document.createElement('input');check.type='checkbox';check.dataset.moduleCheck=id;
+ const text=document.createElement('span');text.textContent='我已完成本节课程学习';
+ label.append(check,text);
+ const status=document.createElement('p');status.className='completion-status';status.setAttribute('role','status');
+ const update=()=>{const complete=done.has(id);panel.classList.toggle('is-complete',complete);status.textContent=complete?'已完成 · 目录进度已同步':'尚未完成 · 可以下次继续学习';};
+ const privacy=document.createElement('small');privacy.textContent='进度保存在当前浏览器，不会跨设备同步。';
+ panel.append(title,note,label,status,privacy);
+ const nav=main.querySelector('nav.nav');if(nav)nav.before(panel);else main.append(panel);
+ check.addEventListener('change',()=>{check.checked?done.add(id):done.delete(id);saveProgress();update();});
+ existing.addEventListener('change',update);
+ window.addEventListener('storage',event=>{if(event.key!==storageKey)return;try{const values=JSON.parse(event.newValue||'[]');done=new Set(Array.isArray(values)?values.filter(x=>valid.test(x)):[]);renderProgress();update();}catch{}});
+ renderProgress();update();
+ const toc=main.querySelector('.toc');
+ if(toc&&!toc.querySelector('[href="#deepening"]')&&main.querySelector('#deepening')){const a=document.createElement('a');a.href='#deepening';a.textContent='进阶讲义';toc.append(a);}
+}
+
 function init(){
- addAutoToc();enhanceCode();bindExistingCopyButtons();addReadingControls();addThemeToggle();
+ addAutoToc();addCompletionPanel();enhanceCode();bindExistingCopyButtons();addReadingControls();addThemeToggle();
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 })();
