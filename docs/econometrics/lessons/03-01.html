@@ -1,59 +1,30 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="course-revision" content="2026-10-27-v2"><meta name="course-status" content="taught"><title>第3章·第1节｜内生性及其统计后果</title><link rel="stylesheet" href="../v2/course.css"><script defer src="../v2/course.js"></script></head><body><header><a href="../">← 计量经济学120天课程</a><a href="../v2/">36模块新主线</a></header><main><div class="hero"><span class="badge">已授课</span><h1>第3章·第1节｜内生性及其统计后果</h1><p class="meta">原全课程第23课 / 120 · 原日期：无可核实日期 · 本次实质修订2026-10-27</p><p>本页现采用M07 大数定律与一致性实验核心讲义，保留原网址、编号及标题。<a href="../archive/2026-10-27/lessons/03-01.html">阅读修订前原稿</a>。</p></div><section class="paper" id="s1"><div class="concept-primer" data-concept-primer="2026-10-28"><h3>先把概念讲清楚，再读公式</h3><p>本课可分两次学习：先读以下解释和例子；能说清含义后，再读原理与公式，代码可以第三次再做。暂时看不懂公式，不必跳过概念直接复制命令。</p><h4>大数定律</h4><p>在适当抽样、依赖及矩条件下，样本平均趋近总体期望。它是证明一致性的工具，不是“大样本总正确”。</p><p class="concept-example"><strong>具体例子：</strong>若数据持续带有选择偏差，增加n可能稳定地得到错误目标；均值收敛不等于识别成立。</p><h4>概率收敛</h4><p>随着样本量增大，估计误差超过任意固定小阈值的概率趋于零，记作→p。不是要求每次扩样都更接近真值。</p><p class="concept-example"><strong>具体例子：</strong>比较n=30、300、3000时误差超过0.2的重复抽样频率；频率下降演示一致性思想，一条路径不够。</p><h4>外生性</h4><p>解释变量与误差之间满足特定正交或条件均值限制。不同模型要求不同，不是“变量来自系统外面”的日常说法。</p><p class="concept-example"><strong>具体例子：</strong>若能力影响工资，又与教育相关，遗漏能力后E[u｜教育]可能不为零。仅换稳健SE不能解决。</p><details><summary>符号查阅（不要求一次学完）</summary><p>n表示样本量，i给观测编号；Σ表示对观测加总，E[·]表示总体期望，竖线“|”表示给定条件。β、θ通常是未知总体参数，b、带帽符号通常是样本估计。撇号′表示矩阵转置，⁻¹表示逆矩阵，√n表示样本量的平方根；→p与→d分别表示概率收敛和依分布收敛，不能当作普通等号。</p></details><p><a href="../v2/concepts.html">打开基础概念讲解册</a>，可查其他术语。<a href="../v2/concepts.html#c33">大数定律</a>　<a href="../v2/concepts.html#c16">概率收敛</a>　<a href="../v2/concepts.html#c9">外生性</a>　</p><p><strong>读下面正文时：</strong>先找“研究什么量”，再找“需要什么前提”，最后看“怎样计算”。公式表达的是前面文字的关系；软件命令不能替代这些前提。</p></div><h2>1 · 核心问题与推导</h2><p>大数定律讨论随机平均量的概率极限，不保证某一条样本路径单调靠近真值。独立同分布且E|W|有限是常用版本的充分条件。OLS误差可写为Q̂⁻¹n⁻¹Σxᵢuᵢ。若E[xu]=0、相应矩存在、Q=E[xx′]非奇异，LLN和连续映射给出一致性。若矩条件不成立，更多样本可能只是更精确地收敛到错误极限。模拟须在每个样本量重复抽样，比较偏差、RMSE及误差超过阈值的频率；一次回归不能证明一致性。</p></section><section class="paper" id="s2"><h2>2 · 公式与统计前提</h2><div class="formula">b−β=(X′X/n)⁻¹(X′u/n) →p Q⁻¹E[xu]</div><p>重尾无有限均值、非平稳或弱识别可能使上述论证失效。一致性不等于有限样本无偏。</p></section><section class="paper" id="s3"><h2>3 · 图示与研究含义</h2><div class="diagram"><svg viewBox="0 0 680 100" role="img" aria-label="从识别到推断的学习路径"><title>识别先于估计，推断依赖统计条件</title><g fill="#173e49" font-size="20"><text x="20" y="55">目标量</text><text x="160" y="55">识别假设</text><text x="335" y="55">估计/优化</text><text x="520" y="55">方差与检验</text></g><path d="M95 50H145M255 50H320M445 50H505" stroke="#b98c3b" stroke-width="3"/></svg></div><p><a href="../v2/labs/results/clt.svg">查看实际Monte Carlo直方图</a>及<a href="../v2/labs/results/asymptotics.csv">数值结果</a>。比较的是重复抽样的统计量分布。</p></section><section class="paper" id="s4"><h2>4 · 可复现实验：Stata与Python</h2><p>数据性质：固定种子的随机教学模拟，非真实研究数据。两种软件随机流不同，不要求逐行结果相同。Python已运行状态见<a href="../v2/validation.json">核验记录</a>；Stata尚未运行验证。</p><details><summary>Python · 展开代码</summary><p><a download href="../v2/labs/asymptotics.py">下载完整脚本</a></p><button type="button" data-copy>复制代码</button><pre><code># Teaching experiment, synthetic data unless explicitly stated. Seed 20261027.
-import numpy as np
-import csv
-from pathlib import Path
-rng=np.random.default_rng(20261027)
-R=1000; rows=[]; hist=[]
-for n in [30,200,2000]:
-    bs=[]; ts=[]
-    for r in range(R):
-        x=rng.uniform(0,4,n)
-        u=x*(rng.exponential(size=n)-1) # E[u|x]=0; heteroskedastic, skewed
-        y=1+2*x+u
-        xc=x-x.mean(); den=xc@xc
-        b=xc@y/den; e=y-(y.mean()-b*x.mean())-b*x
-        se=np.sqrt(n/(n-2)*np.sum(xc**2*e**2))/den
-        bs.append(b);ts.append((b-2)/se)
-    bs=np.array(bs);ts=np.array(ts)
-    cover=np.mean(np.abs(ts)&lt;=1.96)
-    row=dict(n=n,bias=float(bs.mean()-2),sd=float(bs.std(ddof=1)),
-             rmse=float(np.sqrt(np.mean((bs-2)**2))),coverage=float(cover),
-             mcse=float(np.sqrt(cover*(1-cover)/R)))
-    rows.append(row);print(row)
-    counts,edges=np.histogram(ts,bins=np.linspace(-4,4,33))
-    hist.append((n,counts))
-out=Path(__file__).resolve().parent/&#x27;results&#x27;;out.mkdir(exist_ok=True)
-with (out/&#x27;asymptotics.csv&#x27;).open(&#x27;w&#x27;,newline=&#x27;&#x27;) as f:
-    w=csv.DictWriter(f,fieldnames=list(rows[0]));w.writeheader();w.writerows(rows)
-# Actual Monte Carlo histograms; no hand-drawn density presented as results.
-svg=[&#x27;&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 960 330&quot; role=&quot;img&quot; aria-label=&quot;Monte Carlo studentized statistics&quot;&gt;&#x27;,&#x27;&lt;rect width=&quot;960&quot; height=&quot;330&quot; fill=&quot;#f8fafb&quot;/&gt;&#x27;]
-for panel,(n,counts) in enumerate(hist):
-    for j,c in enumerate(counts):
-        h=220*c/max(counts)
-        svg.append(f&#x27;&lt;rect x=&quot;{panel*320+15+j*9}&quot; y=&quot;{270-h}&quot; width=&quot;8&quot; height=&quot;{h}&quot; fill=&quot;#247c80&quot;/&gt;&#x27;)
-    svg.append(f&#x27;&lt;text x=&quot;{panel*320+18}&quot; y=&quot;30&quot;&gt;n={n}, R={R}&lt;/text&gt;&lt;text x=&quot;{panel*320+18}&quot; y=&quot;302&quot;&gt;t scale: -4 to 4&lt;/text&gt;&#x27;)
-svg.append(&#x27;&lt;/svg&gt;&#x27;);(out/&#x27;clt.svg&#x27;).write_text(&#x27;&#x27;.join(svg),encoding=&#x27;utf-8&#x27;)
-</code></pre></details><details><summary>Stata · 展开代码</summary><p><a download href="../v2/labs/asymptotics.do">下载完整脚本</a></p><button type="button" data-copy>复制代码</button><pre><code>version 17.0
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="course-status" content="taught"><meta name="lesson-date" content="2026-10-30"><title>第3章·第1节｜内生性及其统计后果（全课程第23课）</title><link rel="stylesheet" href="../v2/course.css"><script defer src="../v2/course.js"></script></head><body><header><a href="../">← 计量经济学120天课程</a><a href="../v2/">36模块新主线</a></header><main><div class="hero"><span class="badge">正式聊天授课 · 2026-10-30</span><h1>第3章·第1节｜内生性及其统计后果（全课程第23课）</h1><p class="meta">原纲第23课 / 共120课 · 同一NLSW88数据 · Stata与Python</p></div><section class="paper"><p>授课日期：2026-10-30。全课程第23课 / 共120课；第3章第1节。预计学习10—15分钟。</p></section><section class="paper"><h2>一、通俗理解</h2><p>假设我们用受教育年限解释工资。回归系数可能同时反映教育与工资的关系，以及能力、家庭背景等未观测因素的影响。如果这些因素既影响工资，又与教育相关，回归中的“教育变量”便与误差项相关，这就是线性结构模型中的典型内生性。样本再大，也不能仅凭普通最小二乘法（OLS）把教育系数解释为教育的因果回报。</p><p>关键区别在于：OLS总能计算一条拟合直线，但“拟合得好”“系数显著”与“识别出因果效应”是三个不同命题。内生性关心的是模型对目标参数的识别是否可靠，不只是标准误大小。</p></section><section class="paper"><h2>二、核心理论与公式</h2><p>设$x_i$包含截距及所有解释变量，$u_i$是结构误差，目标参数为$\beta$。常用的外生性矩条件是：</p><div class="formula">y_i=x_i^{\prime}\beta+u_i,\qquad E[x_i u_i]=0.</div><p>如果样本满足适当的大数定律、有关矩存在，且$Q=E[x_i x_i^{\prime}]$可逆，则OLS的概率极限为：</p><div class="formula">\operatorname{plim}\widehat\beta_{OLS}=\beta+Q^{-1}E[x_i u_i].</div><p>第二项说明内生性如何造成渐近偏差：只要$E[x_i u_i]\ne0$，通常就无法一致估计结构参数。条件均值为零$E[u_i\mid x_i]=0$是上述正交条件的充分条件，但并非同一概念。有限样本偏差与不一致也不能混为一谈。实际研究中的常见来源包括遗漏共同决定因素、解释变量测量误差、双向因果或同时性，以及特定样本选择机制；它们是否存在必须结合具体模型判断。</p><p>即使改用HC1稳健标准误，也只是调整异方差条件下的方差估计，不能消除$E[x_i u_i]\ne0$。此时围绕结构参数的常规$t$检验和置信区间可能缺乏有效依据。</p></section><section class="paper"><h2>三、实证案例与数据</h2><p>使用Stata公开教学数据<a href="https://www.stata-press.com/data/r17/nlsw88.dta">NLSW88</a>，它是美国青年女性纵向调查的1988年截面提取数据，原始文件约2246条观测。变量包括小时工资<code>wage</code>、受教育年限<code>grade</code>、累计工作经验<code>ttl_exp</code>、任职年限<code>tenure</code>及年龄<code>age</code>。两套代码均仅保留这五个变量非缺失且工资为正的观测，并构造工资对数；最终回归样本量以运行后输出为准。</p><p>比较“教育、经验、任职年限”和“再加入年龄”的两个工资方程。教育系数变化可用于理解控制变量与模型设定的敏感性，却不能证明年龄是遗漏混杂因素，也不能证明加入年龄后教育已外生。数据没有直接观测能力等潜在因素，而且样本只覆盖特定女性群体，不能直接外推总体或认定教育因果效应。</p></section><section class="paper"><h2>四、Stata与Python实现</h2><p>两套代码使用同一公开文件、相同完整案例样本、相同含截距OLS方程和HC1型异方差稳健标准误。Stata的<code>vce(robust)</code>与statsmodels的<code>cov_type=&quot;HC1&quot;</code>在此设定下具有可比性。代码尚未实际运行，不提供虚构系数或显著性结果。</p><h3>Stata</h3><pre><code class="language-stata">* NLSW88：真实公开教学数据；以下命令未在此运行
 clear all
 set more off
-set seed 20261027
-* Synthetic teaching data. Stata and NumPy RNG streams differ.
-capture program drop experiment
-program define experiment, rclass
-    syntax, N(integer)
-    drop _all
-    quietly set obs `n&#x27;
-    gen double x=runiform(0,4)
-    gen double u=x*(rexponential(1)-1)
-    gen double y=1+2*x+u
-    quietly regress y x, vce(robust)
-    return scalar b=_b[x]
-    return scalar t=(_b[x]-2)/_se[x]
-end
-foreach n in 30 200 2000 {
-    simulate b=r(b) t=r(t), reps(1000) nodots: experiment, n(`n&#x27;)
-    gen double covered=abs(t)&lt;=1.96
-    summarize b t covered
-    histogram t, normal name(n`n&#x27;, replace) title(&quot;n=`n&#x27;, R=1000&quot;)
-}
-</code></pre></details></section><section class="paper" id="s5"><h2>5 · 专属练习与参考答案</h2><p>无截距标量模型中Q=2、E[xu]=0.6，极限偏差是多少？</p><details><summary>展开答案与依据</summary><p>偏差为0.3。非零总体矩不会因扩大n消失。</p></details></section><section class="paper" id="s6"><h2>6 · 学习验收</h2><p>独立解释本模块公式中的随机对象、目标量与关键条件；运行实验，改变一个前提并说明结果为何改变。只阅读或运行命令不等于掌握。</p><label><input type="checkbox" data-module-check="M07"> 已完成 M07 的推导、实验与练习</label></section><section class="paper" id="s7"><h2>7 · 原120课映射与资料</h2><p>原课编号、标题与历史授课日期保留。下列为主题映射，合并模块并不表示每节旧课均已独立重写。</p><a class="maplink" href="../v2/../lessons/03-01.html">原课 03-01</a><a class="maplink" href="../v2/../lessons/01-04.html">原课 01-04</a><p><a href="../v2/review.html">评审回应与修订范围</a> · <a href="../v2/mapping.html">完整120课映射</a> · <a href="../v2/sources.html">原始文献与软件文档</a></p></section></main><script defer src="../study-progress.js"></script></body></html>
+use &quot;https://www.stata-press.com/data/r17/nlsw88.dta&quot;, clear
+* 与Python保持完全相同的完整案例筛选
+keep if !missing(wage, grade, ttl_exp, tenure, age) &amp; wage &gt; 0
+gen double lnwage = ln(wage)
+count
+* 两个OLS模型均使用HC1型异方差稳健标准误
+regress lnwage grade ttl_exp tenure, vce(robust)
+scalar b_short = _b[grade]
+regress lnwage grade ttl_exp tenure age, vce(robust)
+display &quot;grade系数变化 = &quot; _b[grade] - b_short</code></pre><h3>Python</h3><pre><code class="language-python"># pip install pandas statsmodels
+# NLSW88：与Stata读取同一个公开.dta文件；代码未在此运行
+import numpy as np
+import pandas as pd
+import statsmodels.formula.api as smf
+
+url = &quot;https://www.stata-press.com/data/r17/nlsw88.dta&quot;
+df = pd.read_stata(url, convert_categoricals=False)
+cols = [&quot;wage&quot;, &quot;grade&quot;, &quot;ttl_exp&quot;, &quot;tenure&quot;, &quot;age&quot;]
+df = df.dropna(subset=cols).copy()
+df = df.loc[df[&quot;wage&quot;] &gt; 0].copy()
+df[&quot;lnwage&quot;] = np.log(df[&quot;wage&quot;])
+print(&quot;共同样本量：&quot;, len(df))
+m1 = smf.ols(&quot;lnwage ~ grade + ttl_exp + tenure&quot;, data=df).fit(cov_type=&quot;HC1&quot;)
+m2 = smf.ols(&quot;lnwage ~ grade + ttl_exp + tenure + age&quot;, data=df).fit(cov_type=&quot;HC1&quot;)
+print(m1.summary())
+print(m2.summary())
+print(&quot;grade系数变化：&quot;, m2.params[&quot;grade&quot;] - m1.params[&quot;grade&quot;])</code></pre><p>读结果时依次检查共同样本量、<code>grade</code>系数变化、HC1标准误及置信区间。系数变化本身既不是内生性检验，也不是因果效应的估计。若要识别教育回报，仍须讨论可信的外生变异或工具变量及其识别假设。</p></section><section class="paper"><h2>五、初学者避坑</h2><p>1. OLS残差与样本解释变量正交，是含截距OLS的代数性质；不能据此推断总体结构误差外生。 2. 增加控制变量可能减少遗漏偏误，也可能引入碰撞变量或后处理偏误；不能以“控制得越多越好”替代因果结构分析。 3. 稳健标准误解决的是特定方差估计问题，不会修复内生性；显著的回归系数也不自动具有因果含义。</p></section><section class="paper"><h2>六、今日练习</h2><p><strong>概念题：</strong> 回归后发现教育年限与OLS残差的样本协方差为零，能否据此认定教育外生？</p><p><strong>答案：</strong> 不能。OLS一阶条件本来就要求样本残差与回归变量正交；外生性要求的是未观测结构误差满足相应总体矩条件，两者不同。</p><p><strong>计算题：</strong> 在含截距的一元结构模型中，若$\operatorname{Var}(x)=4$，$\operatorname{Cov}(x,u)=1$，且适用概率极限公式，OLS斜率的渐近偏差是多少？改用HC1标准误会改变它吗？</p><p><strong>答案：</strong> 渐近偏差为$\operatorname{Cov}(x,u)/\operatorname{Var}(x)=1/4=0.25$；HC1只影响方差估计，不改变OLS斜率点估计及其概率极限。</p></section><section class="paper"><h2>七、学习进度</h2><p>本课：第3章·第1节《内生性及其统计后果》，全课程第23课 / 共120课，2026-10-30完成正式授课。下一课按原纲为第3章·第2节《遗漏变量偏差》（全课程第24课）。本课程独立于73课数学微课程及新版36模块学习主线。</p></section></main><script defer src="../study-progress.js"></script></body></html>
