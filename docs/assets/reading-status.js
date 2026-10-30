@@ -111,6 +111,21 @@
     wrap.appendChild(b); register(id,b);
     return wrap;
   }
+  function ensureEnglishToggle() {
+    if (!/\/english\//.test(location.pathname)) return;
+    const el = document.getElementById("lesson-number");
+    if (!el) return;
+    const match = el.textContent.match(/第\s*(\d+)\s*课/);
+    if (!match) return;
+    const id = "english:lesson:" + String(Number(match[1])).padStart(3,"0");
+    const prior = document.querySelector(".rlh-english-current");
+    if (prior && prior.dataset.readId === id) return;
+    if (prior) prior.remove();
+    const control = makeToggle(id, "英语表达第" + match[1] + "课");
+    control.classList.add("rlh-english-current");
+    control.dataset.readId = id;
+    el.insertAdjacentElement("afterend", control);
+  }
   function scan() {
     const root = document.querySelector("main") || document.body;
     for (const a of root.querySelectorAll("a[href]:not([data-rlh-read-scanned])")) {
@@ -124,6 +139,8 @@
       const holder = makeToggle(id, title);
       a.insertAdjacentElement("afterend", holder);
     }
+    ensureEnglishToggle();
+    if (!currentLesson() && buttons.size && !progress) addProgress();
     refreshProgress();
   }
   function addProgress() {
@@ -155,11 +172,10 @@
     if (!document.body) return;
     addCurrentLesson();
     // Catalog pages: list entries get an independent read/unread control.
-    if (!currentLesson()) addProgress();
     scan();
     let scheduled = false;
     const observer = new MutationObserver(muts => {
-      if (scheduled || !muts.some(m => [...m.addedNodes].some(n => n.nodeType === 1 && !n.classList?.contains("rlh-read-control")))) return;
+      if (scheduled || !muts.some(m => (m.type === "characterData" && m.target.parentElement?.closest?.("#lesson-number")) || (m.type === "childList" && (m.target.id === "lesson-number" || [...m.addedNodes].some(n => n.nodeType === 1 && !n.classList?.contains("rlh-read-control")))))) return;
       scheduled=true;
       requestAnimationFrame(() => { scheduled=false;scan(); });
     });

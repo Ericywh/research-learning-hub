@@ -298,3 +298,6 @@
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", ready, { once: true });
   else ready();
 })();
+
+/* Shared per-lesson read/unread status; separate from exercise completion. */
+(() => { const here = document.currentScript && document.currentScript.src; if (!here) return; const s = document.createElement("script"); s.src = new URL("reading-status.js?v=20261030a", here).href; s.defer = true; document.head.appendChild(s); })();

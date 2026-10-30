@@ -401,6 +401,33 @@ jobs:
           print('Verified 10 chapter DOCX files plus the full 120-lesson DOCX')
           PY
 
+      - name: Add read/unread controls to all published lessons
+        shell: bash
+        env:
+          DEPLOY_SHA: ${{ github.sha }}
+        run: |
+          python3 - <<'PY'
+          import os
+          import re
+          from pathlib import Path
+          root = Path('_site')
+          asset = root / 'assets' / 'reading-status.js'
+          if not asset.is_file():
+              raise RuntimeError('Reading-status script missing from Pages artifact')
+          count = 0
+          for html in root.rglob('*.html'):
+              source = html.read_text(encoding='utf-8')
+              if 'reading-status.js' in source or not re.search(r'</head\s*>', source, re.I):
+                  continue
+              src = os.path.relpath(asset, html.parent).replace(os.sep, '/') + '?v=' + os.environ['DEPLOY_SHA'][:12]
+              updated = re.sub(r'</head\s*>',
+                               lambda m: '<script defer src="' + src + '"></script>' + m.group(),
+                               source, count=1, flags=re.I)
+              html.write_text(updated, encoding='utf-8')
+              count += 1
+          print('Injected local reading markers into', count, 'additional HTML pages')
+          PY
+
       - name: Upload complete site for Pages
         uses: actions/upload-pages-artifact@v3
         with:
