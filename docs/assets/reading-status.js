@@ -9,7 +9,7 @@
   const ROOT = /\/research-learning-hub\//;
   const allowed = [
     /\/math\/lessons\/[^/]+\.html$/,
-    /\/econometrics\/(?:v2\/modules\/M\d{2}|lessons\/\d{2}-\d{2})\.html$/,
+    /\/econometrics\/(?:v2\/modules\/M\d{2}|(?:archive\/\d{4}-\d{2}-\d{2}\/)?lessons\/\d{2}-\d{2})\.html$/,
     /\/speaking\/(?:dual-track-2026\/(?:am|pm)\/day-\d{2}|lessons\/\d{2}-\d{2})\.html$/,
     /\/psm-did\/chapter-\d{2}\/lesson-\d{2}\/$/,
     /\/cssci\/lessons\/[^/]+\.html$/,

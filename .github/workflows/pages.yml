@@ -417,7 +417,13 @@ jobs:
           count = 0
           for html in root.rglob('*.html'):
               source = html.read_text(encoding='utf-8')
-              if 'reading-status.js' in source or not re.search(r'</head\s*>', source, re.I):
+              if 'reading-status.js' in source:
+                  sha = os.environ['DEPLOY_SHA'][:12]
+                  source = re.sub(r'reading-status\.js(?:\?v=[^"\x27]*)?',
+                                  lambda m: 'reading-status.js?v=' + sha, source)
+                  html.write_text(source, encoding='utf-8')
+                  continue
+              if not re.search(r'</head\s*>', source, re.I):
                   continue
               src = os.path.relpath(asset, html.parent).replace(os.sep, '/') + '?v=' + os.environ['DEPLOY_SHA'][:12]
               updated = re.sub(r'</head\s*>',
