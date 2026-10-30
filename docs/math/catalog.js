@@ -237,8 +237,8 @@ window.MATH_COURSE={
           "number": 23,
           "title": "逆矩阵与线性方程组",
           "published": true,
-          "date": "2026-10-29",
-          "url": "lessons/2026-10-29-02-11.html",
+          "date": "2026-10-30",
+          "url": "lessons/2026-10-30-02-11.html",
           "delivered": false
         },
         {
