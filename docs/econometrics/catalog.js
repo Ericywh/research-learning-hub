@@ -255,7 +255,7 @@ window.ECON_COURSE={
           "section": 2,
           "title": "遗漏变量偏差",
           "published": true,
-          "date": null,
+          "date": "2026-10-31",
           "url": "lessons/03-02.html"
         },
         {
