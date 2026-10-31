@@ -1,18 +1,79 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>第3章·第2节｜遗漏变量偏差 · DAY 24</title><meta name="description" content="遗漏变量偏差：理论公式、数据、双软件代码和练习答案。"><script>window.MathJax={tex:{inlineMath:[["\\(","\\)"]],displayMath:[["\\[","\\]"]]},svg:{fontCache:"global"}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script><style>body{margin:0;background:#f6f9fa;color:#243a49;font:16px/1.9 system-ui,"Noto Sans SC",sans-serif}main{max-width:1050px;margin:0 auto;padding:25px}.hero{background:linear-gradient(120deg,#163c50,#236d72);border-radius:15px;padding:33px;color:#fff}.hero h1,.hero p{color:#fff}.hero h1{font-size:clamp(24px,4vw,38px)}.badge{background:#e7f1d5;color:#29484b;border-radius:13px;padding:5px 10px;font-size:12px}.paper{background:#fff;border:1px solid #d9e6e9;border-radius:12px;padding:26px;margin:17px 0}.paper h2{color:#264957;font-size:21px}.equation{padding:15px;background:#f0f6f6;overflow:auto}details{border:1px solid #d0dfe2;border-radius:9px;margin:12px 0;overflow:hidden}summary{cursor:pointer;background:#ebf3f4;padding:12px}pre{overflow:auto;background:#173044;color:#f1f9fc;margin:0;padding:17px;line-height:1.6}pre code{white-space:pre;font:12px/1.7 monospace}a{color:#14717b}@media(max-width:600px){main{padding:12px}.paper,.hero{padding:20px}}</style><meta name="course-status" content="taught"></head><body><aside class="archive-note" style="margin:20px auto;padding:18px;max-width:940px;background:#fff8e6;border-left:4px solid #b98c3b"><strong>本课保留原稿，尚未逐课实质重写。</strong><p>历史“已授课”为展示状态，不代表本次审校通过。旧文可能包含评审指出的占位代码或重复练习，请优先学习对应新模块：<a href="../v2/modules/M13.html">M13</a>　</p><a href="../archive/2026-10-27/lessons/03-02.html">未经修改的历史档案</a> · <a href="../v2/review.html">修订范围</a><p><a href="../v2/concepts.html">术语不熟悉？先读基础概念讲解册</a></p></aside><main><p><a href="../index.html">← 返回计量经济学120天课程目录</a></p><div class="hero"><small>DAY 24 / 120 · CHAPTER 3</small><h1>第3章·第2节｜遗漏变量偏差</h1><span class="badge">已授课</span><p>七模块课程正文 · Stata + Python · 约10—15分钟</p></div><article><section class="paper" id="s1"><h2>一、通俗理解</h2><p>本课研究《遗漏变量偏差》的核心问题。遗漏变量偏误取决于遗漏因素对结果的条件作用，以及它与核心解释变量的相关方向；两个符号共同决定偏误方向。理解这一问题时，不应从软件命令倒推出研究设计，而应先确定研究对象、估计量和数据提供的变异。识别假设、比较对象和统计推断构成解释结果的共同基础。判断统计关联是否可以上升为因果解释，必须给出额外可辩护的识别条件。</p><p>直觉上先问“相对于哪个对照，改变了什么、未观测因素是否可比”，再写回归方程。即使数据非常多或结果显著，也不能省略这一步。对于方法不匹配的公开示例，宁可明确使用教学模拟，也不能伪装为可信的现实因果证据。</p></section>
-<section class="paper" id="s2"><h2>二、核心理论与公式</h2><p>本节重要的数学表达式如下。遗漏变量偏误取决于遗漏因素对结果的条件作用，以及它与核心解释变量的相关方向；两个符号共同决定偏误方向。式中的下标、参数和条件必须由数据结构与研究目的界定。涉及潜在结果时，要区分可观察结果和反事实；涉及协方差或条件均值时，应明确是总体假设还是样本估计。任何公式只有在相应外生性、满秩、时间结构或连续性条件下才具备预期的识别意义。</p><div class="equation">\[\operatorname{Bias}(\widehat\beta_1)=\beta_2\frac{\operatorname{Cov}(X,Z)}{\operatorname{Var}(X)}\]</div><p>检验与估计所需的矩条件、概率模型或识别假设要与这里的对象一致：完全共线性影响参数可识别性；异方差主要影响常规协方差估计；内生性则可能破坏OLS的一致性。不要以为使用HC1就能同时解决这些问题。</p></section>
-<section class="paper" id="s3"><h2>三、实证案例与数据</h2><p>使用Stata官方1978年汽车教学数据auto.dta。价格price、重量weight、油耗mpg、进口标记foreign及必要的长度length。原始数据不是随机政策试验，解释以条件关联与诊断为主。教学时先检查观测单位、变量类型、缺失与筛选规则，确保Stata和Python的有效样本一致。公开数据由Stata Press提供，可以在链接下载，其中没有编造真实政策、论文或因果效应估计结果。 <a href="https://www.stata-press.com/data/r19/auto.dta">官方公开数据文件</a>。</p><p>按照预先确定的口径筛选样本。对处理变量，必须说明其赋值规则与时点；对连续自变量，必须说明量纲；对面板数据，必须说明主体、时间与缺失结构。分析没有实际运行，因此本页只给出计算流程，不填写未经验证的回归系数或p值。</p></section>
-<section class="paper" id="s4"><h2>四、Stata与Python实现</h2><p>以下Stata和Python采用相同数据文件或相同透明模拟公式，目的是让估计流程可以复核。不能将未实际执行的程序输出标记为“已运行”。</p><h3>Stata</h3><details><summary>展开 Stata 完整代码</summary><pre><code class="language-stata">use &quot;https://www.stata-press.com/data/r19/auto.dta&quot;, clear
-keep if !missing(price,weight,mpg,foreign)
-regress price weight mpg i.foreign, vce(robust)
-rvfplot, yline(0)
-regress price weight mpg i.foreign
-estat hettest, rhs
-estat vif</code></pre></details><h3>Python</h3><details><summary>展开 Python 完整代码</summary><pre><code class="language-python">import pandas as pd,statsmodels.formula.api as smf
-from statsmodels.stats.diagnostic import het_breuschpagan
-df=pd.read_stata(&quot;https://www.stata-press.com/data/r19/auto.dta&quot;,convert_categoricals=False)
-df=df[[&quot;price&quot;,&quot;weight&quot;,&quot;mpg&quot;,&quot;foreign&quot;]].dropna()
-f=smf.ols(&quot;price ~ weight + mpg + C(foreign)&quot;,df).fit()
-print(&quot;N:&quot;,len(df),&quot;BP/Koenker:&quot;,het_breuschpagan(f.resid,f.model.exog,robust=True)[:2])</code></pre></details><p>Stata het-test与Python Koenker版本不保证p值一致，诊断拒绝只说明对应统计假设受到挑战。若两端自由度、小样本修正或处理变量定义不同，应先核对这些选择，再比较系数和标准误；不能为了获得更小p值而选择软件。</p></section>
-<section class="paper" id="s5"><h2>五、初学者避坑</h2><p>误区一：把“遗漏变量偏差”当成所有数据都适用的默认模型。遗漏变量偏误取决于遗漏因素对结果的条件作用，以及它与核心解释变量的相关方向；两个符号共同决定偏误方向。误区二：仅根据p值判断假设成立。研究设计的关键条件往往不能由一个显著性检验直接证明。误区三：忽略样本和标准误口径。Stata het-test与Python Koenker版本不保证p值一致，诊断拒绝只说明对应统计假设受到挑战。应逐项记录样本量、变量单位、基准组、模型估计方法以及置信区间的计算约定。</p></section>
-<section class="paper" id="s6"><h2>六、今日练习</h2><p><strong>概念题：</strong>请说明本课《遗漏变量偏差》针对的核心统计对象，并指出一个不能只依靠显著性结果验证的条件。</p><details><summary>查看概念题答案</summary><p>遗漏变量偏误取决于遗漏因素对结果的条件作用，以及它与核心解释变量的相关方向；两个符号共同决定偏误方向。相应模型还需要关于数据生成机制、可比性或外生性的条件，显著性本身不会验证这些条件。</p></details><p><strong>计算或应用题：</strong>某项教学示例中斜率估计为2、HC1标准误为0.5，求t值并解释局限。</p><details><summary>查看计算题答案</summary><p>t=4；在所用模型下给出零系数的统计检验证据，不证明遗漏变量不存在，也不意味着因果识别成功。</p></details></section>
-<section class="paper" id="s7"><h2>七、学习进度</h2><p><strong>第3章·第2节｜遗漏变量偏差（全课程第24课 / 共120课）</strong>，课程网站状态：<strong>已授课</strong>。本课正文、公式、Stata与Python示例及练习答案已在GitHub归档。</p><p>下一课：<a href="03-03.html">第3章·第3节｜测量误差</a>（全课程第25课）。具体软件结果以实际运行核验为准，不补造未经执行的估计数值。</p></section></article></main></body></html>
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>第3章·第2节｜遗漏变量偏差 · 全课程第24课</title><meta name="description" content="2026-10-31正式授课：遗漏变量偏差、FWL分解、NLSW88数据、Stata/Python与练习答案。"><meta name="course-status" content="taught-2026-10-31"><script>window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['\\[','\\]']]},svg:{fontCache:'global'}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script><style>body{margin:0;background:#f5f8f9;color:#243746;font:16px/1.85 system-ui,"Noto Sans SC",sans-serif}main{max-width:950px;margin:0 auto;padding:25px}.hero{background:linear-gradient(120deg,#163c50,#236d72);border-radius:16px;padding:32px;color:#fff}.hero h1{color:#fff;font-size:clamp(25px,4vw,36px);line-height:1.35}.hero p{color:#fff}.paper{background:#fff;border:1px solid #d9e6e9;border-radius:12px;padding:24px;margin:18px 0}.paper h2{font-size:22px;color:#264957;border-bottom:1px solid #d9e6e9;padding-bottom:9px}.paper h3{color:#264957}.equation{padding:14px;background:#eff6f6;overflow:auto;margin:14px 0}pre{overflow:auto;background:#173044;color:#f1f9fc;padding:16px;border-radius:8px;font:13px/1.6 monospace}pre code{white-space:pre}a{color:#14717b}li{margin:7px 0}@media(max-width:600px){main{padding:12px}.paper,.hero{padding:18px}}</style></head><body><main><p><a href="../index.html">返回120天课程目录</a></p><header class="hero"><p>DAY 24 / 120 · 2026-10-31 · 10—15分钟</p><h1>第3章·第2节｜遗漏变量偏差</h1><p>原纲正式课程 · 七模块 · Stata与Python</p></header><article><section class="paper"><p>授课日期：2026-10-31。全课程第24课 / 共120课。建议学习时间：10—15分钟。</p></section>
+<section class="paper"><h2>一、通俗理解</h2>
+<p>研究教育年限与工资的关系时，假设真实工资方程还受到累计工作经验影响。如果经验既与工资有关，又与教育年限相关，而我们把经验排除在回归之外，教育系数便可能“代替”经验解释一部分工资差异。这就是遗漏变量偏差（omitted-variable bias，OVB）的直觉。遗漏因素仅影响工资还不够；它必须与教育在控制其他变量后仍有相关性，才会通过这条路径影响教育系数。</p>
+<p>要区分两件事：删掉一个变量后系数变化，是可以在样本中直接观察的统计事实；这种变化是否代表对真实因果效应的偏差，还需要完整模型外生性等额外假设。上一课介绍内生性，本课解释其中一种具体机制。</p></section>
+<section class="paper"><h2>二、核心理论与公式</h2>
+<p>设因变量为对数小时工资，核心解释变量为教育年限，可能遗漏的变量为累计经验，其他控制变量为任职年限和年龄。考虑完整线性模型：</p>
+<div class="equation">\[\ln(wage_i)=\beta_0+\beta_1 grade_i+\beta_2 ttl\_exp_i+\gamma_1 tenure_i+\gamma_2 age_i+u_i\]</div>
+<p>其中 $\beta_1$ 是保持经验、任职年限及年龄不变时教育与对数工资的条件线性关系；若要赋予因果含义，还须论证 $E[u_i\mid grade_i,ttl\_exp_i,tenure_i,age_i]=0$ 等识别条件。</p>
+<p>记短模型省略 $ttl\_exp$ 后的教育系数为 $\widetilde b_1$，长模型教育与经验系数分别为 $\widehat b_1,\widehat b_2$；$\widehat\delta$ 是把累计经验回归于教育、任职年限和年龄所得的教育系数。相同样本、含截距且设计矩阵满秩时，OLS满足精确恒等式：</p>
+<div class="equation">\[\widetilde b_1-\widehat b_1=\widehat b_2\widehat\delta\]</div>
+<p>它来自Frisch–Waugh–Lovell定理：先剔除其他控制变量的线性投影，再考察教育与遗漏经验的剩余关联。在完整模型外生且常规大样本条件成立时，右边的总体对应量才可解释为短模型的渐近遗漏变量偏差。方向由两个因子的乘积决定；其中一个为零，便不存在由该变量引起的这项偏差。</p></section>
+<section class="paper"><h2>三、实证案例与数据</h2>
+<p>沿用上一课的公开教学数据 <a href="https://www.stata-press.com/data/r17/nlsw88.dta" rel="noopener noreferrer">Stata NLSW88（1988年女性调查截面提取）</a>。原始文件约2246条记录，含小时工资 $wage$、教育年限 $grade$、累计工作经验 $ttl\_exp$、任职年限 $tenure$、年龄 $age$。来源及变量说明亦见 <a href="https://www.rdocumentation.org/packages/Counterfactual/versions/1.2/topics/nlsw88" rel="noopener noreferrer">NLSW88数据文档</a>。</p>
+<p>分析单位为个人；只保留五个变量均非缺失且工资大于零的观测，并对工资取自然对数。比较短模型（教育、任职年限、年龄）与长模型（再加累计经验），再以辅助回归核对系数差的代数分解。该数据不是随机教育实验，完整模型未必满足因果识别条件，因此不能把系数差直接当作教育因果回报的真实偏差。</p></section>
+<section class="paper"><h2>四、Stata与Python实现</h2>
+<p>两套代码下载同一数据、执行相同筛选、含截距OLS，均使用HC1异方差稳健标准误。Python明确使用t分布以便与Stata的回归推断口径更接近；由于软件数值精度等差异，输出以实际运行核验为准。以下程序未经本次运行，不报告任何虚构系数。</p>
+<h3>Stata</h3>
+<pre><code class="language-stata">* 公开NLSW88，完整案例，工资为正
+clear all
+set more off
+use &quot;https://www.stata-press.com/data/r17/nlsw88.dta&quot;, clear
+keep if !missing(wage, grade, ttl_exp, tenure, age) &amp; wage &gt; 0
+gen double lnwage = ln(wage)
+count
+
+* 短模型：遗漏累计经验
+regress lnwage grade tenure age, vce(robust)
+scalar b_short = _b[grade]
+
+* 长模型：加入累计经验
+regress lnwage grade ttl_exp tenure age, vce(robust)
+scalar b_full = _b[grade]
+scalar b_exp = _b[ttl_exp]
+
+* 辅助回归：累计经验对教育及其他控制变量
+regress ttl_exp grade tenure age, vce(robust)
+scalar delta = _b[grade]
+
+display &quot;系数差：&quot; %10.6f (b_short-b_full)
+display &quot;代数分解：&quot; %10.6f (b_exp*delta)</code></pre>
+<h3>Python</h3>
+<pre><code class="language-python"># pip install pandas statsmodels numpy
+import numpy as np
+import pandas as pd
+import statsmodels.formula.api as smf
+
+url = &quot;https://www.stata-press.com/data/r17/nlsw88.dta&quot;
+df = pd.read_stata(url, convert_categoricals=False)
+cols = [&quot;wage&quot;, &quot;grade&quot;, &quot;ttl_exp&quot;, &quot;tenure&quot;, &quot;age&quot;]
+df = df.dropna(subset=cols).copy()
+df = df.loc[df[&quot;wage&quot;] &gt; 0].copy()
+df[&quot;lnwage&quot;] = np.log(df[&quot;wage&quot;])
+print(&quot;共同样本量：&quot;, len(df))
+
+short = smf.ols(&quot;lnwage ~ grade + tenure + age&quot;, df).fit(
+    cov_type=&quot;HC1&quot;, use_t=True)
+full = smf.ols(&quot;lnwage ~ grade + ttl_exp + tenure + age&quot;, df).fit(
+    cov_type=&quot;HC1&quot;, use_t=True)
+aux = smf.ols(&quot;ttl_exp ~ grade + tenure + age&quot;, df).fit(
+    cov_type=&quot;HC1&quot;, use_t=True)
+
+print(short.summary())
+print(full.summary())
+print(&quot;系数差：&quot;, short.params[&quot;grade&quot;] - full.params[&quot;grade&quot;])
+print(&quot;代数分解：&quot;, full.params[&quot;ttl_exp&quot;] * aux.params[&quot;grade&quot;])</code></pre>
+<p>预期两条“系数差”和“代数分解”在数值误差范围内相等。这是OLS代数恒等式，不是内生性检验。应记录共同样本量、两个教育系数、经验系数及其置信区间，再判断变化方向；稳健标准误不改变系数差。</p></section>
+<section class="paper"><h2>五、初学者避坑</h2>
+<ol>
+<li><strong>相关不等于偏差。</strong> 遗漏变量须同时与结果有关，并在给定其余控制变量后与核心解释变量相关；单看两个变量的简单相关系数不足以判断多元模型中的偏差方向。</li>
+<li><strong>系数变化不等于因果纠偏。</strong> 新增变量可能是混杂因素，也可能是中介、碰撞变量或测量有误的代理变量；不能采用“控制越多越好”的机械策略。</li>
+<li><strong>稳健标准误不能修复遗漏变量偏差。</strong> HC1只调整方差估计；样本选择、模型设定和外生性仍需单独讨论。</li>
+</ol></section>
+<section class="paper"><h2>六、今日练习</h2>
+<p><strong>概念题：</strong> 如果累计经验影响工资，但在控制年龄与任职年限后，与教育年限的剩余线性相关为零，省略经验是否会产生上述教育系数的遗漏变量偏差？</p>
+<p><strong>答案：</strong> 在相同样本、线性OLS和满秩条件下，$\widehat\delta=0$，由恒等式知两模型教育系数相等。若完整模型还满足外生性，经验不会通过这一路径造成渐近遗漏变量偏差；但不能因此认定不存在其他内生性来源。</p>
+<p><strong>计算题：</strong> 某教学假设中，长模型经验系数为 $0.12$，辅助回归中教育系数为 $-0.25$。短模型教育系数比长模型高还是低？相差多少？</p>
+<p><strong>答案：</strong> $0.12\times(-0.25)=-0.03$，短模型教育系数比长模型低0.03。这是给定假设数值的代数计算，并非NLSW88的实证结果。</p></section>
+<section class="paper"><h2>七、学习进度</h2>
+<p>本课：第3章·第2节《遗漏变量偏差》，全课程第24课 / 共120课，2026-10-31正式交付。下一课按原纲为第3章·第3节《测量误差》（全课程第25课）。本课程与73课数学微课程及新版36模块课程分别计数。</p></section></article><p><a href="03-03.html">下一课：第3章·第3节｜测量误差</a></p></main><script defer src="../study-progress.js"></script></body></html>
