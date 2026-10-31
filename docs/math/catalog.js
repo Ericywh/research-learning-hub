@@ -247,9 +247,9 @@ window.MATH_COURSE={
           "number": 24,
           "title": "OLS矩阵解的推导",
           "published": true,
-          "date": "2026-10-29",
-          "url": "lessons/2026-10-29-02-12.html",
-          "delivered": false
+          "date": "2026-10-31",
+          "url": "lessons/2026-10-31-02-12.html",
+          "delivered": true
         },
         {
           "chapter": 2,
