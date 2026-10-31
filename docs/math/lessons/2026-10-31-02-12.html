@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="每日10分钟数学微课程，第24课：OLS矩阵解的推导，2026-10-31正式授课">
+<meta name="course-status" content="taught"><meta name="lesson-number" content="24"><meta name="lesson-date" content="2026-10-31">
+<title>第2章·第12节｜OLS矩阵解的推导</title>
+<link rel="stylesheet" href="../site.css">
+<script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]}};</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>.article-wrap{max-width:830px;margin:0 auto;padding:36px 20px 80px}.article{font-size:17px;line-height:1.9;color:#263d3a}.article h2{margin-top:1.8em;font-size:1.24em}.article p{margin:1em 0}.article .math{overflow:auto;padding:12px;background:#f4f8f5;border-radius:9px}.article .lead{border-left:4px solid #5b998a;padding:12px 20px;background:#edf7f2;border-radius:8px}.muted{font-size:14px;color:#61736e}</style>
+<script defer src="../../assets/reading-status.js?v=20261030a"></script>
+</head><body><header><div class="wrap"><a href="../">← 数学课程目录</a><a href="../../">研究学习中心</a></div></header>
+<main class="article-wrap"><div class="kicker">MATHEMATICS · PROBABILITY · ECONOMETRICS</div>
+<h1>第2章·第12节｜OLS矩阵解的推导</h1>
+<p class="muted">全课程第24课 / 共73课 · 2026-10-31 · 预计学习8分钟 · 已正式授课</p>
+<article class="article"><p>全课程第24课 / 共73课 · 2026年10月31日 · 预计学习8分钟</p>
+<p><b>核心问题：</b> OLS系数公式如何从最小二乘目标函数推出？为什么一阶条件、全局最优与唯一性是三个不同的判断？</p>
+<h2>一、从样本残差平方和出发</h2>
+<p>上一课讨论了可逆矩阵如何求解线性方程组。本课回到OLS的优化问题。给定已实现的样本，设设计矩阵 \(X\in\mathbb R^{n\times p}\)，结果向量 \(\mathbf y\in\mathbb R^n\)，待估系数 \(\boldsymbol\beta\in\mathbb R^p\)。若模型含截距，截距列也计入 \(p\)。OLS选择使残差平方和最小的系数：</p>
+<div class="math">\[Q(\boldsymbol\beta)=(\mathbf y-X\boldsymbol\beta)^{\mathsf T}(\mathbf y-X\boldsymbol\beta)
+=\mathbf y^{\mathsf T}\mathbf y-2\boldsymbol\beta^{\mathsf T}X^{\mathsf T}\mathbf y+\boldsymbol\beta^{\mathsf T}X^{\mathsf T}X\boldsymbol\beta.\]</div>
+<h2>二、求导、正规方程与唯一解</h2>
+<p>对 \(p\times1\) 系数向量求梯度，令其为零：</p>
+<div class="math">\[\nabla_{\boldsymbol\beta}Q=-2X^{\mathsf T}\mathbf y+2X^{\mathsf T}X\boldsymbol\beta=0
+\quad\Longleftrightarrow\quad
+X^{\mathsf T}X\boldsymbol\beta=X^{\mathsf T}\mathbf y.\]</div>
+<p>右边就是正规方程。由于Hessian为 \(2X^{\mathsf T}X\)，对任何 \(X\) 都半正定，故满足正规方程的系数达到全局最小值。若 \(\operatorname{rank}(X)=p\)，Hessian正定，\(X^{\mathsf T}X\) 可逆，因而得到唯一解：</p>
+<div class="math">\[\hat{\boldsymbol\beta}=(X^{\mathsf T}X)^{-1}X^{\mathsf T}\mathbf y
+\quad\bigl(X:n\times p,\ \operatorname{rank}(X)=p\bigr).\]</div>
+<p>秩不足时，最小二乘解仍存在，但系数可能不唯一；同一列空间上的投影拟合值却是唯一的。推导说明样本内的优化性质，不自动保证估计量无偏、一致或具有因果解释。</p>
+<h2>三、一个完整的手算回归</h2>
+<p>设三次观测的解释变量为 \(x=(0,1,2)^{\mathsf T}\)，结果为 \(\mathbf y=(1,2,2)^{\mathsf T}\)，模型含截距。于是 \(X\) 的三行分别为 \((1,0),(1,1),(1,2)\)。手算得 \(X^{\mathsf T}X=\begin{pmatrix}3&amp;3\\3&amp;5\end{pmatrix}\)，\(X^{\mathsf T}\mathbf y=(5,6)^{\mathsf T}\)。行列式为6，解得截距 \(\hat\beta_0=7/6\)、斜率 \(\hat\beta_1=1/2\)。拟合值为 \((7/6,5/3,13/6)^{\mathsf T}\)，残差为 \((-1/6,1/3,-1/6)^{\mathsf T}\)；其和为零，与 \(x\) 的内积也为零，验证了正规方程。</p>
+<h2>四、统计应用与适用边界</h2>
+<p>在工资对受教育年限的线性回归中，这一公式给出样本内使平方残差最小的系数。是否可以解释为教育的因果效应，还取决于混杂、外生性及识别设计。实际计算通常采用QR等分解法，而非显式求逆；接近共线时还应检查数值条件。</p>
+<h2>五、两道自测</h2>
+<p><b>第1题｜概念题：</b> 为什么一阶条件成立还不足以单独说明系数解唯一？</p>
+<p><b>第2题｜计算/应用题：</b> 对上述三次观测，计算 \(X^{\mathsf T}X\) 与 \(X^{\mathsf T}\mathbf y\)，求OLS截距和斜率。</p>
+<p><b>参考答案</b></p>
+<p><b>第1题：</b> 一阶条件给出驻点；Hessian半正定保证全局最小，只有 \(X\) 满列秩使Hessian正定，才能保证系数唯一。</p>
+<p><b>第2题：</b> \(X^{\mathsf T}X=\begin{pmatrix}3&amp;3\\3&amp;5\end{pmatrix}\)，\(X^{\mathsf T}\mathbf y=(5,6)^{\mathsf T}\)，所以 \(\hat{\boldsymbol\beta}=(7/6,1/2)^{\mathsf T}\)。</p>
+<h2>六、阶段复习与衔接</h2>
+<p>第19—24课依次建立了正交投影、OLS几何解释、正规方程、满列秩条件、逆矩阵和闭式解。记住三层逻辑：正交性给出正规方程，凸性保证最小化，满列秩保证系数唯一。</p>
+<p><b>下一课：第2章·第13节｜投影矩阵与残差生成矩阵（全课程第25课）。</b></p></article>
+<p class="muted">上一课：第2章·第11节｜逆矩阵与线性方程组 · 下一课：第2章·第13节｜投影矩阵与残差生成矩阵</p>
+<nav><a href="2026-10-30-02-11.html">← 上一课</a>　<a href="../">课程目录</a>　<a href="2026-10-29-02-13.html">下一课 →</a></nav></main></body></html>
