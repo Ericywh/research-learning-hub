@@ -9,6 +9,9 @@
   // Do not add a second read/complete toggle or a separate directory state here.
   // The speaking completion module owns both the lesson button and catalog badges.
   if (/\/speaking\/dual-track-2026\//.test(location.pathname)) return;
+  // Econometrics lessons and catalogs already use their own completion tracker.
+  // Avoid rendering a second, conflicting reading-status widget on those pages.
+  if (/\/econometrics\//.test(location.pathname)) return;
   const PREFIX = "rlh:read:v1:";
   const ROOT = /\/research-learning-hub\//;
   const allowed = [
