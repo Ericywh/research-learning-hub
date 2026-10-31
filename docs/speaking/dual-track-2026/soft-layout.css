@@ -116,7 +116,7 @@ body.rv-page[data-chapter="6"],.rv-page [data-chapter="6"]{--soft-chapter:#53688
 .rv-page .rv-course-link.rv-pm-link{background:linear-gradient(135deg,#eaf4ed,#f4faf6 70%,#edf4fb);border-color:#d3e3da}
 .rv-page .rv-course-link.rv-pm-link small,.rv-page .rv-course-link.rv-pm-link>span:not(.course-completion-mark){color:#4a7060}
 .rv-page .rv-course-link.rv-pm-link strong{color:#315e4e}
-.rv-page .rv-course-link .course-completion-mark{grid-column:1/-1;grid-row:3;justify-self:start;margin-top:3px;font-size:10px;padding:1px 5px}
+.rv-page .rv-course-link .course-completion-mark{grid-column:1/-1;grid-row:3;justify-self:start;margin-top:3px;font-size:11px;line-height:1.5;padding:3px 8px;max-width:100%;color:#fff;white-space:normal;overflow-wrap:anywhere}
 .rv-page .rv-course-link:hover{border-color:#a08abd;box-shadow:0 3px 11px #6650800a}
 .rv-page .rv-course-link.rv-pm-link:hover{border-color:#7ba58f}
 

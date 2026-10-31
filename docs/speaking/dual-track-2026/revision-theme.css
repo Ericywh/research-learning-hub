@@ -206,11 +206,11 @@ body.rv-page{margin:0;background:#f5f6fb;color:var(--rv-ink);font:400 17px/1.85 
 .rv-course-link span{font-size:11px;line-height:1.6;color:#655b79}
 .rv-course-link strong{font-size:14px;line-height:1.8;font-weight:650;color:#493963}
 .rv-course-link.rv-pm-link{background:#edf6f2;border-color:#d4e5dc}
-.rv-course-link.rv-pm-link small,.rv-course-link.rv-pm-link span{color:#416f5d}
+.rv-course-link.rv-pm-link small,.rv-course-link.rv-pm-link span:not(.course-completion-mark){color:#416f5d}
 .rv-course-link.rv-pm-link strong{color:#305e4c}
 .rv-course-link:hover{border-color:#9a89ba;box-shadow:0 4px 13px #58467d0b}
 .rv-course-link.rv-pm-link:hover{border-color:#83ab96}
-.rv-catalog .course-completion-mark{display:block;width:fit-content;font-size:10px;margin-top:5px;color:#fff;background:#2e7758;padding:2px 6px;border-radius:4px}
+.rv-catalog .rv-course-link .course-completion-mark{display:inline-flex;align-items:center;width:fit-content;max-width:100%;box-sizing:border-box;font-size:11px;line-height:1.5;margin-top:5px;color:#fff;background:#2e7758;padding:3px 8px;border-radius:6px;white-space:normal;overflow-wrap:anywhere}
 .rv-hero-copy{position:relative;z-index:1;max-width:980px;padding-right:125px}
 .rv-hero-ornament{position:absolute;right:25px;top:50%;width:240px;height:120px;transform:translateY(-50%);color:#fff;opacity:.15;pointer-events:none;z-index:0}
 .rv-hero-ornament svg{display:block;width:100%;height:auto}
