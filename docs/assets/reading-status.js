@@ -5,6 +5,10 @@
   "use strict";
   if (window.__rlhReadingStatusLoaded) return;
   window.__rlhReadingStatusLoaded = true;
+  // Dual-track speaking pages already have a canonical exercise-completion control.
+  // Do not add a second read/complete toggle or a separate directory state here.
+  // The speaking completion module owns both the lesson button and catalog badges.
+  if (/\/speaking\/dual-track-2026\//.test(location.pathname)) return;
   const PREFIX = "rlh:read:v1:";
   const ROOT = /\/research-learning-hub\//;
   const allowed = [
