@@ -58,11 +58,13 @@ function setupLesson(){
       fallback=ok?null:next;
       paint(ok?null:"当前浏览器禁止保存，标记可能在刷新后丢失。");
       updateDirectory();
+      if(ok)window.dispatchEvent(new CustomEvent("speaking:completion-local-change",{detail:{id,completed:next}}));
     });
     window.addEventListener("storage",e=>{if(e.key===storageKey(id)){fallback=null;paint();}});
+    window.addEventListener("speaking:progress-applied",()=>{fallback=null;paint();});
   });
 }
-function init(){setupLesson();updateDirectory();window.addEventListener("storage",updateDirectory);window.addEventListener("pageshow",updateDirectory);}
+function init(){setupLesson();updateDirectory();window.addEventListener("storage",updateDirectory);window.addEventListener("pageshow",updateDirectory);window.addEventListener("speaking:progress-applied",updateDirectory);}
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init,{once:true});else init();
 })();
 
@@ -82,3 +84,15 @@ document.head.appendChild(node);
 })();
 
 
+
+/* Optional cloud sync and manual transfer are shared by legacy and AM/PM pages.
+   Loader needs no changes to individual lesson pages. */
+(function(){
+"use strict";
+if(document.querySelector('script[data-speaking-sync-loader]'))return;
+const source=document.currentScript&&document.currentScript.src;
+if(!source)return;
+const css=document.createElement("link");css.rel="stylesheet";css.href=new URL("./progress-sync.css?v=20261101",source).href;document.head.appendChild(css);
+function loadSync(){const js=document.createElement("script");js.src=new URL("./progress-sync.js?v=20261101",source).href;js.async=true;document.head.appendChild(js);}
+const conf=document.createElement("script");conf.dataset.speakingSyncLoader="yes";conf.src=new URL("./progress-sync-config.js?v=20261101",source).href;conf.async=true;conf.onload=loadSync;conf.onerror=loadSync;document.head.appendChild(conf);
+})();
