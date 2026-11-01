@@ -78,12 +78,12 @@ async function sync(reason){
   const cloud=new Map(remote.filter(x=>valid(x.lesson_id)).map(x=>[x.lesson_id,x]));
   const sameUser=!get(LAST_USER)||get(LAST_USER)===user;
   const edits=pending(user),guest=sameUser?pending("guest"):{};
-  const active={...guest,...edits};const upload=[];
+  const active={...guest,...edits};const conflicts={};const upload=[];
   for(const [id,value] of Object.entries(active)){
    if(!valid(id))continue;
    const old=cloud.get(id),stamp=Number(value.at)||0;
    if(!old||stamp>=Date.parse(old.updated_at||"1970-01-01"))upload.push({user_id:user,lesson_id:id,completed:!!value.done});
-   else delete active[id]; // later cloud write wins
+   else{conflicts[id]=value.at;delete active[id];} // later cloud write wins
   }
   if(sameUser){const local=allLocal();for(const id of Object.keys(local)){
    if(!cloud.has(id)&&!active[id]&&!upload.some(x=>x.lesson_id===id))upload.push({user_id:user,lesson_id:id,completed:true});
@@ -96,10 +96,16 @@ async function sync(reason){
   }
   // Only overwrite local state after a successful read AND any requested writes.
   const latest=pending(user);
-  for(const [id,row] of cloud){if(latest[id]&&!active[id])continue;saveLocally(id,row.completed)}
+  for(const [id,row] of cloud){
+   // Don't overwrite a more recent local click made while the request was in flight.
+   if(latest[id] && latest[id].at!==active[id]?.at && latest[id].at!==conflicts[id])continue;
+   saveLocally(id,row.completed);
+  }
   // On account switching, do not leak another account's local marks into this account.
   if(!sameUser){for(const id of Object.keys(allLocal()))if(!cloud.has(id))saveLocally(id,false)}
-  const saved=pending(user);for(const id of Object.keys(active))if(saved[id]?.at===active[id].at)delete saved[id];
+  const saved=pending(user);
+  for(const id of Object.keys(active))if(saved[id]?.at===active[id].at)delete saved[id];
+  for(const id of Object.keys(conflicts))if(saved[id]?.at===conflicts[id])delete saved[id];
   savePending(user,saved);
   if(sameUser)savePending("guest",{});
   set(LAST_USER,user);lastPull=Date.now();offline=false;success=true;changed();
@@ -122,8 +128,9 @@ function importCode(value){
  const code=String(value||"").trim();if(!code.startsWith("SPK1:"))throw Error("进度码格式不正确。");
  let d;try{d=JSON.parse(atob(code.slice(5)))}catch{throw Error("进度码无法解码。")}
  if(d.version!==1||!Array.isArray(d.lessons)||d.lessons.length>500||!d.lessons.every(valid))throw Error("进度码内容不符合课程格式。");
- let count=0;for(const id of d.lessons){if(get(PREFIX+id)!=="1"){saveLocally(id,true);recordChange({id,completed:true});count++}}
- changed();return count;
+ let count=0;const who=session?.user?.id||"guest",edits=pending(who),when=Date.now();
+ for(const id of d.lessons){if(get(PREFIX+id)!=="1"){saveLocally(id,true);edits[id]={done:true,at:when};count++}}
+ savePending(who,edits);changed();if(count&&session?.user?.id)sync("manual-import");return count;
 }
 function render(){
  if(document.querySelector("[data-speaking-sync]"))return;
