@@ -265,7 +265,7 @@ window.ECON_COURSE={
           "section": 3,
           "title": "测量误差",
           "published": true,
-          "date": null,
+          "date": "2026-11-01",
           "url": "lessons/03-03.html"
         },
         {
