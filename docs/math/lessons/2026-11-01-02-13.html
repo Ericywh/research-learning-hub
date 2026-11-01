@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="每日10分钟数学微课程，第25课：投影矩阵与残差生成矩阵">
+<meta name="course-status" content="taught">
+<title>第2章·第13节｜投影矩阵与残差生成矩阵</title>
+<link rel="stylesheet" href="../site.css">
+<script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]}};</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+.article-wrap{max-width:840px;margin:0 auto;padding:34px 20px 75px}
+.article{font-size:17px;line-height:1.9;color:#263d3a}
+.article h2{font-size:1.24em;margin-top:1.8em}
+.article p{margin:.9em 0}
+.article .math{overflow-x:auto;padding:13px 10px;background:#f4f8f5;border-radius:8px;margin:16px 0}
+.article .lead{border-left:4px solid #4c8d81;padding:12px 17px;background:#eff7f3}
+.muted{font-size:14px;color:#61736e}
+@media(max-width:650px){.article{font-size:16px}}
+</style>
+</head>
+<body><header><div class="wrap"><a href="../">← 数学课程目录</a><a href="../../">研究学习中心</a></div></header>
+<main class="article-wrap"><div class="kicker">MATHEMATICS · PROBABILITY · ECONOMETRICS</div>
+<h1>第2章·第13节｜投影矩阵与残差生成矩阵</h1><p class="muted">全课程第25课 / 共73课 · 2026-11-01 已正式授课 · 预计学习8分钟</p>
+<article class="article">
+<p>全课程第25课 / 共73课 · 2026年11月1日 · 预计学习8分钟</p>
+<p><strong>核心问题：</strong> 如何把OLS的拟合值与残差表示为同一个结果向量的两种线性变换？</p>
+<h2>一、由OLS系数解得到两个矩阵</h2>
+<p>上一课推导了OLS系数的闭式解。对给定的已实现样本，设设计矩阵 \(X\in\mathbb R^{n\times p}\)、\(\mathbf y\in\mathbb R^n\)，且 \(\operatorname{rank}(X)=p\)。将系数解代入拟合值，可定义两个 \(n\times n\) 矩阵：</p>
+<div class="math">\[P_X=X(X^{\mathsf T}X)^{-1}X^{\mathsf T},
+\qquad M_X=I_n-P_X.\]</div>
+<p>其中 \(P_X\) 是投影矩阵，\(M_X\) 是残差生成矩阵。相应地，</p>
+<div class="math">\[\hat{\mathbf y}=P_X\mathbf y,\qquad
+\mathbf e=M_X\mathbf y.\]</div>
+<p>\(P_X\) 将样本结果向量投影到 \(X\) 的列空间；\(M_X\) 提取与该空间正交的部分。给定 \(X\) 后，两者都不随 \(\mathbf y\) 的取值改变。</p>
+<h2>二、为什么它们是正交投影</h2>
+<p>利用 \(X^{\mathsf T}X\) 可逆，可直接验证 \(P_X^{\mathsf T}=P_X\)，并且</p>
+<div class="math">\[P_X^2=P_X,\qquad M_X^2=M_X,\qquad P_XM_X=0.\]</div>
+<p>对称性意味着投影是正交的；幂等性意味着投影一次后再投影，结果不变。由于 \(P_XX=X\)、\(M_XX=0\)，拟合值属于 \(\operatorname{col}(X)\)，残差与设计矩阵每一列正交。进一步有 \(\operatorname{rank}(P_X)=\operatorname{tr}(P_X)=p\)，\(\operatorname{rank}(M_X)=n-p\)。这些是固定样本设计矩阵下的代数结论。</p>
+<h2>三、一个可以完整核对的例子</h2>
+<p>考虑只有截距的三次观测：\(X=(1,1,1)^{\mathsf T}\)，\(\mathbf y=(1,2,3)^{\mathsf T}\)。此时 \(X^{\mathsf T}X=3\)，所以 \(P_X\) 的九个元素均为 \(1/3\)，\(M_X=I_3-P_X\)。</p>
+<p>由于样本均值为2，拟合值为 \((2,2,2)^{\mathsf T}\)，残差为 \((-1,0,1)^{\mathsf T}\)。残差和为零，且拟合值与残差的内积为零。投影矩阵三个对角元都是 \(1/3\)，其迹为1，恰好等于模型的参数个数。</p>
+<h2>四、统计应用及边界</h2>
+<p>投影矩阵的第 \(i\) 个对角元 \(h_{ii}\) 称为杠杆值，反映第 \(i\) 个观测在解释变量空间中的位置。满列秩OLS中，杠杆值介于0与1之间，平均值为 \(p/n\)。高杠杆不必然对应大残差或强影响力；影响诊断还需结合残差和删除观测后的系数变化。若 \(X\) 秩不足，上述普通逆矩阵公式失效，但仍可通过列空间的正交投影定义唯一拟合值。</p>
+<h2>五、两道自测</h2>
+<p><strong>第1题｜概念题：</strong> \(P_X^2=P_X\) 的含义是什么？高杠杆是否必然意味着大残差？</p>
+<p><strong>第2题｜计算题：</strong> 在上述仅含截距、\(\mathbf y=(1,2,3)^{\mathsf T}\) 的例子中，求拟合值、残差及残差平方和。</p>
+<p><strong>参考答案</strong></p>
+<p><strong>第1题：</strong> 幂等性表示重复投影不再改变向量。高杠杆描述解释变量的位置，不必然产生大残差。</p>
+<p><strong>第2题：</strong> 拟合值为 \((2,2,2)^{\mathsf T}\)，残差为 \((-1,0,1)^{\mathsf T}\)，残差平方和为 \(1+0+1=2\)。</p>
+<h2>六、衔接</h2>
+<p>本课把OLS系数公式转化为拟合值与残差的矩阵表示。下一课利用 \(M_XX=0\)，解释含截距回归中残差和为零等性质。</p>
+<p><strong>下一课：第2章·第14节｜含截距回归的残差正交性质（全课程第26课）。</strong></p>
+
+</article>
+<nav><a href="2026-10-31-02-12.html">← 上一课</a>　<a href="../">课程目录</a>　<a href="2026-10-29-02-14.html">下一课 →</a></nav>
+</main></body></html>
