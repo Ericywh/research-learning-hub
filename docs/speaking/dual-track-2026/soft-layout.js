@@ -26,12 +26,13 @@
           else{track.removeAttribute('aria-valuenow');track.setAttribute('aria-valuetext','当前浏览器无法读取完成标记');}
         }
         if(fill)fill.style.width=available?(completed/126*100).toFixed(4)+'%':'0%';
-        if(status)status.textContent=available?'仅统计本浏览器保存的完成标记。':'当前浏览器无法读取完成标记，进度未统计。';
+        if(status)status.textContent=available?'显示本设备缓存的课程标记；登录上方云端账户后，将从云端更新并同步到其他设备。':'当前浏览器无法读取完成标记，进度未统计。';
       });
     }
     update();
     window.addEventListener('storage',event=>{if(event.key===null||event.key.startsWith(prefix))update();});
     window.addEventListener('pageshow',update);
+    window.addEventListener('speaking:progress-applied',update);
     document.addEventListener('click',event=>{if(event.target.closest&&event.target.closest('.course-completion-button'))queueMicrotask(update);});
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
