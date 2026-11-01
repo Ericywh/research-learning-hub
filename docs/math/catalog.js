@@ -257,9 +257,9 @@ window.MATH_COURSE={
           "number": 25,
           "title": "投影矩阵与残差生成矩阵",
           "published": true,
-          "date": "2026-10-29",
-          "url": "lessons/2026-10-29-02-13.html",
-          "delivered": false
+          "date": "2026-11-01",
+          "url": "lessons/2026-11-01-02-13.html",
+          "delivered": true
         },
         {
           "chapter": 2,
