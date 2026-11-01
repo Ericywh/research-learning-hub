@@ -1,0 +1,24 @@
+/* Multi-device progress controls. Does not replace lesson content or existing completion buttons. */
+.speaking-sync{max-width:1120px;width:calc(100% - 24px);margin:13px auto 17px;color:#34435c;line-height:1.65;font-family:system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+.speaking-sync *{box-sizing:border-box}
+.speaking-sync-details{background:#fff;border:1px solid #dae4f0;border-radius:15px;box-shadow:0 5px 19px #2d42600d;overflow:hidden}
+.speaking-sync-details>summary{display:flex;align-items:center;gap:10px;cursor:pointer;list-style:none;font-size:14px;font-weight:700;padding:15px 18px;color:#41527a}
+.speaking-sync-details>summary::-webkit-details-marker{display:none}
+.speaking-sync [data-sync-badge]{margin-left:auto;border-radius:30px;background:#ecf3ff;border:1px solid #d7e3f5;color:#4b6585;padding:3px 10px;font-weight:600;font-size:11px}
+.speaking-sync-body{border-top:1px solid #e5eaf3;padding:16px 20px 19px}
+.speaking-sync-body [data-sync-status]{font-size:13px;margin:0 0 12px;min-height:24px;color:#5b6181;background:#f4f6fc;border-radius:9px;padding:10px 12px}
+.speaking-sync-explain,.speaking-sync-setup p,.speaking-sync-transfer p{color:#69768c;font-size:12px;margin:6px 0 13px}
+.speaking-sync-cloud{display:grid;gap:10px}
+.speaking-sync label{display:block;color:#465771;font-size:12px;font-weight:700;margin:12px 0 5px}
+.speaking-sync input,.speaking-sync textarea{display:block;width:100%;border:1px solid #c7d3e3;border-radius:9px;padding:10px 12px;color:#2c3d58;background:#fff;font:inherit;font-size:14px}
+.speaking-sync textarea{margin-top:12px;resize:vertical;overflow-wrap:anywhere;font-family:ui-monospace,Consolas,monospace;font-size:12px}
+.speaking-sync button{border:1px solid #8b97b5;border-radius:9px;background:#eff3fb;color:#41547b;font:inherit;font-size:12px;font-weight:700;padding:9px 14px;min-height:39px;cursor:pointer}
+.speaking-sync button:disabled{opacity:.65;cursor:wait}
+.speaking-sync button:hover:not(:disabled){background:#e2eaf8}
+.speaking-sync button:focus-visible,.speaking-sync summary:focus-visible,.speaking-sync input:focus-visible,.speaking-sync textarea:focus-visible{outline:3px solid #a4a0e5;outline-offset:2px}
+.speaking-sync-actions{display:flex;flex-wrap:wrap;gap:8px;margin:9px 0 5px}
+.speaking-sync-setup,.speaking-sync-transfer{border-top:1px solid #e8ecf2;padding-top:12px;margin-top:5px}
+.speaking-sync-setup summary,.speaking-sync-transfer summary{cursor:pointer;color:#635794;font-size:13px;font-weight:750}
+.speaking-sync-setup>p,.speaking-sync-transfer>p{margin-top:10px}
+.speaking-sync [hidden]{display:none!important}
+@media(max-width:600px){.speaking-sync{width:calc(100% - 20px);margin:11px auto}.speaking-sync-body{padding:13px}.speaking-sync-details>summary{padding:12px}.speaking-sync button{width:100%}.speaking-sync-actions{flex-direction:column}}
