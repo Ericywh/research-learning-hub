@@ -1,18 +1,54 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>第3章·第3节｜测量误差 · DAY 25</title><meta name="description" content="测量误差：理论公式、数据、双软件代码和练习答案。"><script>window.MathJax={tex:{inlineMath:[["\\(","\\)"]],displayMath:[["\\[","\\]"]]},svg:{fontCache:"global"}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script><style>body{margin:0;background:#f6f9fa;color:#243a49;font:16px/1.9 system-ui,"Noto Sans SC",sans-serif}main{max-width:1050px;margin:0 auto;padding:25px}.hero{background:linear-gradient(120deg,#163c50,#236d72);border-radius:15px;padding:33px;color:#fff}.hero h1,.hero p{color:#fff}.hero h1{font-size:clamp(24px,4vw,38px)}.badge{background:#e7f1d5;color:#29484b;border-radius:13px;padding:5px 10px;font-size:12px}.paper{background:#fff;border:1px solid #d9e6e9;border-radius:12px;padding:26px;margin:17px 0}.paper h2{color:#264957;font-size:21px}.equation{padding:15px;background:#f0f6f6;overflow:auto}details{border:1px solid #d0dfe2;border-radius:9px;margin:12px 0;overflow:hidden}summary{cursor:pointer;background:#ebf3f4;padding:12px}pre{overflow:auto;background:#173044;color:#f1f9fc;margin:0;padding:17px;line-height:1.6}pre code{white-space:pre;font:12px/1.7 monospace}a{color:#14717b}@media(max-width:600px){main{padding:12px}.paper,.hero{padding:20px}}</style><meta name="course-status" content="taught"></head><body><aside class="archive-note" style="margin:20px auto;padding:18px;max-width:940px;background:#fff8e6;border-left:4px solid #b98c3b"><strong>本课保留原稿，尚未逐课实质重写。</strong><p>历史“已授课”为展示状态，不代表本次审校通过。旧文可能包含评审指出的占位代码或重复练习，请优先学习对应新模块：<a href="../v2/modules/M13.html">M13</a>　</p><a href="../archive/2026-10-27/lessons/03-03.html">未经修改的历史档案</a> · <a href="../v2/review.html">修订范围</a><p><a href="../v2/concepts.html">术语不熟悉？先读基础概念讲解册</a></p></aside><main><p><a href="../index.html">← 返回计量经济学120天课程目录</a></p><div class="hero"><small>DAY 25 / 120 · CHAPTER 3</small><h1>第3章·第3节｜测量误差</h1><span class="badge">已授课</span><p>七模块课程正文 · Stata + Python · 约10—15分钟</p></div><article><section class="paper" id="s1"><h2>一、通俗理解</h2><p>本课研究《测量误差》的核心问题。解释变量的经典测量误差在简单线性模型中可能引起衰减偏误，但非经典误差或多元回归并不保证相同方向。理解这一问题时，不应从软件命令倒推出研究设计，而应先确定研究对象、估计量和数据提供的变异。识别假设、比较对象和统计推断构成解释结果的共同基础。判断统计关联是否可以上升为因果解释，必须给出额外可辩护的识别条件。</p><p>直觉上先问“相对于哪个对照，改变了什么、未观测因素是否可比”，再写回归方程。即使数据非常多或结果显著，也不能省略这一步。对于方法不匹配的公开示例，宁可明确使用教学模拟，也不能伪装为可信的现实因果证据。</p></section>
-<section class="paper" id="s2"><h2>二、核心理论与公式</h2><p>本节重要的数学表达式如下。解释变量的经典测量误差在简单线性模型中可能引起衰减偏误，但非经典误差或多元回归并不保证相同方向。式中的下标、参数和条件必须由数据结构与研究目的界定。涉及潜在结果时，要区分可观察结果和反事实；涉及协方差或条件均值时，应明确是总体假设还是样本估计。任何公式只有在相应外生性、满秩、时间结构或连续性条件下才具备预期的识别意义。</p><div class="equation">\[X^{obs}_i=X_i^*+v_i\]</div><p>检验与估计所需的矩条件、概率模型或识别假设要与这里的对象一致：完全共线性影响参数可识别性；异方差主要影响常规协方差估计；内生性则可能破坏OLS的一致性。不要以为使用HC1就能同时解决这些问题。</p></section>
-<section class="paper" id="s3"><h2>三、实证案例与数据</h2><p>使用Stata官方1978年汽车教学数据auto.dta。价格price、重量weight、油耗mpg、进口标记foreign及必要的长度length。原始数据不是随机政策试验，解释以条件关联与诊断为主。教学时先检查观测单位、变量类型、缺失与筛选规则，确保Stata和Python的有效样本一致。公开数据由Stata Press提供，可以在链接下载，其中没有编造真实政策、论文或因果效应估计结果。 <a href="https://www.stata-press.com/data/r19/auto.dta">官方公开数据文件</a>。</p><p>按照预先确定的口径筛选样本。对处理变量，必须说明其赋值规则与时点；对连续自变量，必须说明量纲；对面板数据，必须说明主体、时间与缺失结构。分析没有实际运行，因此本页只给出计算流程，不填写未经验证的回归系数或p值。</p></section>
-<section class="paper" id="s4"><h2>四、Stata与Python实现</h2><p>以下Stata和Python采用相同数据文件或相同透明模拟公式，目的是让估计流程可以复核。不能将未实际执行的程序输出标记为“已运行”。</p><h3>Stata</h3><details><summary>展开 Stata 完整代码</summary><pre><code class="language-stata">use &quot;https://www.stata-press.com/data/r19/auto.dta&quot;, clear
-keep if !missing(price,weight,mpg,foreign)
-regress price weight mpg i.foreign, vce(robust)
-rvfplot, yline(0)
-regress price weight mpg i.foreign
-estat hettest, rhs
-estat vif</code></pre></details><h3>Python</h3><details><summary>展开 Python 完整代码</summary><pre><code class="language-python">import pandas as pd,statsmodels.formula.api as smf
-from statsmodels.stats.diagnostic import het_breuschpagan
-df=pd.read_stata(&quot;https://www.stata-press.com/data/r19/auto.dta&quot;,convert_categoricals=False)
-df=df[[&quot;price&quot;,&quot;weight&quot;,&quot;mpg&quot;,&quot;foreign&quot;]].dropna()
-f=smf.ols(&quot;price ~ weight + mpg + C(foreign)&quot;,df).fit()
-print(&quot;N:&quot;,len(df),&quot;BP/Koenker:&quot;,het_breuschpagan(f.resid,f.model.exog,robust=True)[:2])</code></pre></details><p>Stata het-test与Python Koenker版本不保证p值一致，诊断拒绝只说明对应统计假设受到挑战。若两端自由度、小样本修正或处理变量定义不同，应先核对这些选择，再比较系数和标准误；不能为了获得更小p值而选择软件。</p></section>
-<section class="paper" id="s5"><h2>五、初学者避坑</h2><p>误区一：把“测量误差”当成所有数据都适用的默认模型。解释变量的经典测量误差在简单线性模型中可能引起衰减偏误，但非经典误差或多元回归并不保证相同方向。误区二：仅根据p值判断假设成立。研究设计的关键条件往往不能由一个显著性检验直接证明。误区三：忽略样本和标准误口径。Stata het-test与Python Koenker版本不保证p值一致，诊断拒绝只说明对应统计假设受到挑战。应逐项记录样本量、变量单位、基准组、模型估计方法以及置信区间的计算约定。</p></section>
-<section class="paper" id="s6"><h2>六、今日练习</h2><p><strong>概念题：</strong>请说明本课《测量误差》针对的核心统计对象，并指出一个不能只依靠显著性结果验证的条件。</p><details><summary>查看概念题答案</summary><p>解释变量的经典测量误差在简单线性模型中可能引起衰减偏误，但非经典误差或多元回归并不保证相同方向。相应模型还需要关于数据生成机制、可比性或外生性的条件，显著性本身不会验证这些条件。</p></details><p><strong>计算或应用题：</strong>某项教学示例中斜率估计为2、HC1标准误为0.5，求t值并解释局限。</p><details><summary>查看计算题答案</summary><p>t=4；在所用模型下给出零系数的统计检验证据，不证明遗漏变量不存在，也不意味着因果识别成功。</p></details></section>
-<section class="paper" id="s7"><h2>七、学习进度</h2><p><strong>第3章·第3节｜测量误差（全课程第25课 / 共120课）</strong>，课程网站状态：<strong>已授课</strong>。本课正文、公式、Stata与Python示例及练习答案已在GitHub归档。</p><p>下一课：<a href="03-04.html">第3章·第4节｜双向因果和同时性</a>（全课程第26课）。具体软件结果以实际运行核验为准，不补造未经执行的估计数值。</p></section></article></main></body></html>
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>第3章·第3节｜测量误差 · 全课程第25课</title><meta name="description" content="计量经济学120天系统课程第25课：测量误差、经典衰减偏误、公开汽车数据、Stata与Python HC1实证及练习答案。"><style>:root{color-scheme:light;font-family:system-ui,-apple-system,"Noto Sans SC","PingFang SC",sans-serif;color:#213a47;background:#f5f8f8}*{box-sizing:border-box}body{margin:0;line-height:1.9}a{color:#176b70}main{max-width:1040px;margin:0 auto;padding:24px 18px 70px}.hero{background:linear-gradient(120deg,#153f50,#246b6d);border-radius:16px;color:white;padding:34px 38px}.hero h1{font-size:clamp(25px,4vw,37px);line-height:1.4;margin:10px 0}.hero p{margin:5px 0;color:#e1f1f0}.hero small{letter-spacing:.08em}.paper{background:#fff;border:1px solid #dce8e8;border-radius:13px;padding:26px 32px;margin:18px 0;box-shadow:0 3px 15px #18374408}.paper h2{font-size:23px;color:#214b55;margin:0 0 16px}.paper h3{font-size:18px;color:#28616b}.paper p{margin:13px 0}.paper code:not(pre code){background:#edf4f4;border-radius:4px;padding:1px 5px}.equation{overflow:auto;padding:10px 12px;background:#f0f7f6;border-radius:8px;margin:18px 0;text-align:center}details{border:1px solid #d7e5e5;border-radius:9px;margin:15px 0;overflow:hidden}summary{cursor:pointer;padding:10px 14px;background:#eff5f5;font-weight:600}pre{overflow:auto;background:#183546;color:#f2f9fc;padding:18px;margin:0;line-height:1.6;font-size:12px}pre code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;white-space:pre}.answer p{padding:4px 16px 12px}ol{padding-left:24px}li{margin:8px 0}@media(max-width:650px){main{padding:12px}.hero,.paper{padding:19px}.paper h2{font-size:20px}}</style><script>window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']]},svg:{fontCache:'global'}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script><script defer src="../study-progress.js?v=20261101-1"></script></head><body><main><header class="hero"><small>ECONOMETRICS · DAY 025 / 120 · 2026-11-01</small><h1>第3章·第3节｜测量误差</h1><p>全课程第25课 / 共120课 · 10—15分钟 · Stata + Python</p></header><article><p>授课日期：2026-11-01。全课程第25课 / 共120课。预计学习10—15分钟。</p><section class="paper" id="s1"><h2>一、通俗理解</h2><p>回归使用的数据未必等于研究者真正想测量的变量。例如，汽车真实重量为3000磅，登记数据却因录入、四舍五入或仪器误差变成3150磅。若用错误的重量解释价格，OLS会把测量误差当作重量本身的变动，斜率可能偏离真实变量对应的线性投影系数。</p><p>要分清两个问题：数据是否测量准确，以及回归能否识别因果效应。即使没有测量误差，汽车重量与价格的回归也不能自动解释为重量对价格的因果作用。今天重点研究解释变量测量误差对OLS的影响。</p></section><section class="paper" id="s2"><h2>二、核心理论与公式</h2><p>设真正的解释变量为 $x_i$，记录到的数据为 $w_i$，测量误差为 $v_i$；结果变量为 $y_i$，结构扰动为 $u_i$：</p><div class="equation">$$
+y_i=\alpha+\beta x_i+u_i,\qquad w_i=x_i+v_i.
+$$</div><p>若观测独立同分布、二阶矩有限，$\operatorname{Var}(x_i)&gt;0$，且 $\operatorname{Cov}(x_i,u_i)=\operatorname{Cov}(x_i,v_i)=\operatorname{Cov}(u_i,v_i)=0$，那么将 $y_i$ 对 $w_i$ 作含截距OLS回归时：</p><div class="equation">$$
+\operatorname{plim}\widehat\beta_w
+=\beta\frac{\operatorname{Var}(x_i)}
+{\operatorname{Var}(x_i)+\operatorname{Var}(v_i)}.
+$$</div><p>分式称为可靠性比率，介于0与1之间。在这些经典条件下，斜率向零收缩，称为衰减偏误。若测量误差与真实变量、结构扰动相关，或模型包含多个解释变量，偏差方向不一定向零。若测量误差只出现在因变量，且与解释变量正交，OLS斜率通常仍一致，但误差方差和推断精度会受到影响。</p></section><section class="paper" id="s3"><h2>三、实证案例与数据</h2><p>使用Stata官方1978年汽车教学数据 <a href="https://www.stata-press.com/data/r17/auto.dta">auto.dta</a>。原始数据有74辆汽车，观测单位为汽车，变量 &lt;code&gt;price&lt;/code&gt; 为价格（美元），&lt;code&gt;weight&lt;/code&gt; 为重量（磅）。仅保留两变量均非缺失的记录，实际样本量由代码输出。</p><p>我们把原始 &lt;code&gt;weight&lt;/code&gt; 视为教学中的基准测量值，再用确定性正弦、余弦扰动生成 &lt;code&gt;weight_observed&lt;/code&gt;。这样两套软件可严格复现同一扰动。它只是人为误录情景，不能据此声称扰动满足经典独立性，也不保证本次样本一定发生衰减。</p></section><section class="paper" id="s4"><h2>四、Stata与Python实现</h2><p>两套代码使用相同数据、相同筛选、含截距OLS与HC1异方差稳健标准误。分别估计 &lt;code&gt;price ~ weight&lt;/code&gt; 与 &lt;code&gt;price ~ weight_observed&lt;/code&gt;，比较斜率和置信区间；代码未经本次运行，不报告估计数值。</p><h3>Stata</h3><details class="code"><summary>展开 Stata 完整代码</summary><pre><code class="language-stata">* 官方汽车数据；保留相同的完整案例
+clear all
+set more off
+use &quot;https://www.stata-press.com/data/r17/auto.dta&quot;, clear
+keep if !missing(price, weight)
+
+* 构造可跨软件复现的人工测量扰动
+gen long obs_id = _n
+gen double v = 250*sin(7*obs_id) + 150*cos(11*obs_id)
+quietly summarize v, meanonly
+replace v = v - r(mean)
+gen double weight_observed = weight + v
+count
+
+* 基准重量回归：HC1稳健标准误
+regress price weight, vce(robust)
+scalar b_base = _b[weight]
+
+* 含测量误差重量回归：相同样本
+regress price weight_observed, vce(robust)
+scalar b_noisy = _b[weight_observed]
+display &quot;斜率变化 = &quot; %10.6f (b_noisy-b_base)</code></pre></details><h3>Python</h3><details class="code"><summary>展开 Python 完整代码</summary><pre><code class="language-python"># pip install pandas numpy statsmodels
+import numpy as np
+import pandas as pd
+import statsmodels.formula.api as smf
+
+url = &quot;https://www.stata-press.com/data/r17/auto.dta&quot;
+df = pd.read_stata(url, convert_categoricals=False)
+df = df.dropna(subset=[&quot;price&quot;, &quot;weight&quot;]).copy()
+
+# 与Stata相同的行号和扰动生成公式
+i = np.arange(1, len(df) + 1)
+v = 250*np.sin(7*i) + 150*np.cos(11*i)
+df[&quot;weight_observed&quot;] = df[&quot;weight&quot;] + v - v.mean()
+print(&quot;共同样本量：&quot;, len(df))
+
+# OLS + HC1；t分布参考与Stata常规输出接近
+base = smf.ols(&quot;price ~ weight&quot;, data=df).fit(
+    cov_type=&quot;HC1&quot;, use_t=True
+)
+noisy = smf.ols(&quot;price ~ weight_observed&quot;, data=df).fit(
+    cov_type=&quot;HC1&quot;, use_t=True
+)
+print(base.summary())
+print(noisy.summary())
+print(&quot;斜率变化：&quot;,
+      noisy.params[&quot;weight_observed&quot;] - base.params[&quot;weight&quot;])</code></pre></details></section><section class="paper" id="s5"><h2>五、初学者避坑</h2><ol><li>经典衰减结论需要严格的正交条件；在多元回归、非经典测量误差中不能直接套用。</li><li>HC1稳健标准误只修正方差估计的异方差问题，不能消除测量误差造成的斜率不一致。</li><li>把代理变量与真实变量混同，或者把“加入噪声后系数变小”直接称为因果偏误，都会误读模型。重复测量、外部验证样本或合适工具变量才可能提供进一步识别信息，但各自也有条件。</li></ol></section><section class="paper" id="s6"><h2>六、今日练习</h2><p><strong>概念题：</strong> 如果工资因变量存在均值为零、与教育及结构扰动正交的记录误差，教育系数是否必然出现经典衰减偏误？</p><details class="answer"><summary>查看参考答案</summary><p><strong>答案：</strong> 不会。经典衰减主要针对解释变量的测量误差；满足正交条件时，因变量的加性测量误差不改变斜率一致性，但会增大残差变异，影响估计精度。</p></details><p><strong>计算题：</strong> 若真实模型斜率 $\beta=2$，$\operatorname{Var}(x)=400$，$\operatorname{Var}(v)=100$，并满足经典条件，使用误测解释变量的OLS斜率概率极限是多少？</p><details class="answer"><summary>查看参考答案</summary><p><strong>答案：</strong> 可靠性比率为 $400/(400+100)=0.8$，所以 $\operatorname{plim}\widehat\beta_w=2\times0.8=1.6$。渐近偏差为 $-0.4$。这些是练习设定值，不是汽车数据的估计结果。</p></details></section><section class="paper" id="s7"><h2>七、学习进度</h2><p>本课为第3章·第3节《测量误差》，全课程第25课 / 120课。前24课已在普通聊天正式交付；本课完成后累计25/120。下一课严格按原纲为第3章·第4节《双向因果和同时性》（全课程第26课）。</p></section></article></main></body></html>
