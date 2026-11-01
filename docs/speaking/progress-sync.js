@@ -74,6 +74,7 @@ async function sync(reason){
  try{
   const token=await access(),user=session.user.id;
   const remote=await request("/rest/v1/speaking_read_status?select=lesson_id,completed,updated_at",{headers:{Authorization:"Bearer "+token}});
+  if(session?.user?.id!==user)return false; // Ignore stale response after logout/account change.
   if(!Array.isArray(remote))throw Error("云端返回格式异常");
   const cloud=new Map(remote.filter(x=>valid(x.lesson_id)).map(x=>[x.lesson_id,x]));
   const sameUser=!get(LAST_USER)||get(LAST_USER)===user;
