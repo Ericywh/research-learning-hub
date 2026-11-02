@@ -269,7 +269,7 @@ window.MATH_COURSE={
           "published": true,
           "date": "2026-11-02",
           "url": "lessons/2026-11-02-02-14.html",
-          "delivered": false
+          "delivered": true
         }
       ]
     },
