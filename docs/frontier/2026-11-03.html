@@ -1,0 +1,36 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>第4章·第5节｜今日研究前沿｜第026期</title><style>:root{font-family:system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;color:#203940;background:#f7f8f6}*{box-sizing:border-box}body{margin:0;line-height:1.8}main{width:min(890px,calc(100% - 32px));margin:40px auto;background:#fff;border:1px solid #dce6e3;border-radius:16px;padding:32px}h1{font-size:clamp(26px,5vw,36px);color:#174c4b}h2{font-size:20px;margin:35px 0 14px;padding-top:12px;border-top:1px solid #e1e9e7;color:#1e5552}a{color:#146b65}p{margin:11px 0}.eyebrow{font-size:12px;letter-spacing:.14em;color:#277c74;font-weight:750}.tablewrap{overflow:auto}table{border-collapse:collapse;width:100%;font-size:13px}th,td{padding:10px 8px;border-bottom:1px solid #dce6e3;text-align:left;vertical-align:top}th{background:#eef5f1}@media(max-width:650px){main{padding:17px;margin:16px auto}table{min-width:650px}}</style></head><body><main><div class="eyebrow">RESEARCH FRONTIER / ISSUE 026 / 2026-11-03</div><h1>第4章·第5节｜今日研究前沿</h1><p><strong>全课程第26课｜第026期｜2026年11月3日</strong></p>
+<p>第四章专题：因果效应估计、效率优化与政策评估方法选择。</p>
+<p>本期选取2026年10月29—30日首次提交的三篇arXiv论文。已核对官方v1书目，审读公开HTML全文中的理论、模型、模拟和应用；未独立复现。</p>
+<h2>01｜税制折点聚集估计中的弱识别：稀有事件与反事实不确定性</h2>
+<p><strong>Weak Identification in Bunching Designs: Rare Events and Counterfactual Uncertainty</strong></p>
+<p>作者：Kun Huang。arXiv:2610.40719v1；2026-10-29首次提交；预印本。arXiv DOI：10.48550/arXiv.2610.40719（官方标注注册待完成）。</p>
+<p>研究问题：税率折点很小时，聚集质量既稀少，又依赖无法直接观察的反事实收入密度。常规“超额质量/密度”比值估计同时受到抽样不确定性和部分识别误差影响。</p>
+<p>方法与假设：在齐次劳动供给弹性、精确折点选择、已知背景原子质量及反事实密度局部Hölder光滑的模型下，作者证明最小最大误差与诚实置信集长度的阶为 min{1, sqrt\[(γ+d)/(n d²)\] + d\^s}。前项反映稀有事件与弱信号，后项是未观察迁移区间带来的反事实外推误差。作者利用邻近未受影响区间估计密度，以二项分布精确区间及光滑性偏差界反演置信集；少量聚集观测时常规Wald正态近似会失效。</p>
+<p>模拟与数据：结构性Monte Carlo覆盖强、弱及极弱聚集情形；极弱设计下Wald覆盖率约0.18，诚实集合覆盖率接近1，但集合明显更宽。无真实税收行政数据应用。</p>
+<p>科研迁移：适用于税收、社保缴费和补贴门槛bunching设计。收入取整、优化摩擦、背景原子质量和密度光滑半径须单独论证，不能将本文覆盖保证直接推广到一般取整数据。</p>
+<p>精读与代码：第3—4、6—8节及附录C。论文描述内部复制程序和数值来源，未核实独立公开代码仓库。</p>
+<p><a href="https://arxiv.org/abs/2610.40719">官方书目</a> · <a href="https://arxiv.org/html/2610.40719v1">公开HTML全文</a></p>
+<h2>02｜双边平台随机实验：用双对角估计减少干扰偏差</h2>
+<p><strong>The Double Diagonal Estimator: Reducing Bias in Two-Sided Marketplace Experiments</strong></p>
+<p>作者：Saanvi Chawla、Vasilis Syrgkanis。arXiv:2610.41294v1；2026-10-30首次提交。作者注明拟发表于EC 2026；本期按预印本处理。arXiv DOI：10.48550/arXiv.2610.41294（注册待完成）。</p>
+<p>研究问题：平台连接买卖双方，处理一侧会改变另一侧的匹配机会。传统A/B测试的局部实验差异可能偏离全平台处理与全平台不处理的总效应。</p>
+<p>方法与假设：Double Diagonal（DD）估计量对比处理—处理、对照—对照匹配结果，并用处理—对照及对照—处理单元校正干扰。理论在单一供需类型、均衡到达与周转、较小处理效应的均值场市场模型中证明DD偏差为负、朴素双边随机化估计TSRN偏差为正。外部选项吸引力低于随随机化比例变化的临界值时DD绝对偏差较小；卖方处理比例1/2时临界值约2.34。</p>
+<p>模拟与数据：40个数值市场场景中，DD在35个场景的绝对偏差最低，中位相对绝对偏差20.5%，TSRN为117.1%。这些是模型仿真，未提供现实平台随机实验的外部验证。</p>
+<p>科研迁移：适用于网约车、招聘、保险撮合等双边平台实验。须区分全平台总效应与局部配对效应，并核查供需结构、外部选项、随机化比例及匹配网络。</p>
+<p>精读与代码：第3—8节、附录B；独立公开代码仓库未核实。</p>
+<p><a href="https://arxiv.org/abs/2610.41294">官方书目</a> · <a href="https://arxiv.org/html/2610.41294v1">公开HTML全文</a></p>
+<h2>03｜结果相关非随机抽样下的半参数数据融合</h2>
+<p><strong>A Semiparametric Model Approach to Data Integration under Missing Not at Random</strong></p>
+<p>作者：Danhyang Lee、Kosuke Morikawa、Jae Kwang Kim。arXiv:2610.41937v1；2026-10-30首次提交；预印本。arXiv DOI：10.48550/arXiv.2610.41937（注册待完成）。</p>
+<p>研究问题：概率样本只观察协变量，非概率样本同时观察协变量和结果，但入选概率依赖结果本身。按MAR加权或插补会产生选择偏差。</p>
+<p>方法与假设：设入选概率为 expit{g(X₁)−γY}，其中g为未知协变量函数、γ为结果倾斜参数。使用只影响结果、不直接影响选择的X₂作为工具，结合条件完备性识别γ和总体均值；剖面化g后构造Neyman正交方程，采用交叉拟合及正交化质量插补，在干扰函数乘积收敛等条件下实现根N推断。γ=0仅对应受限MAR子模型。</p>
+<p>模拟与数据：模拟考察协变量选择模型错设、工具无效与倾斜模型错设。以韩国2014年健康筛查5万条记录构造抽样模拟，正交插补在两种机制下的95%区间覆盖率分别为94.4%与89.6%；这不是对真实样本入选机制的识别。</p>
+<p>科研迁移：适用于调查与平台数据融合、保险理赔样本偏选和企业非概率数据库。关键在工具排除限制、条件完备性与弱工具诊断。</p>
+<p>精读与代码：第2—4、5—6节及补充材料。作者声明R/C++程序、数据及Monte Carlo输出公开于<a href="https://doi.org/10.5281/zenodo.23513896">Zenodo</a>，本次未下载运行。</p>
+<p><a href="https://arxiv.org/abs/2610.41937">官方书目</a> · <a href="https://arxiv.org/html/2610.41937v1">公开HTML全文</a></p>
+<h2>三篇方法横向比较</h2>
+<div class="tablewrap"><table><tr><th>方向</th><th>核心方法</th><th>关键条件</th><th>适用研究</th></tr><tr><td>税制折点弱识别</td><td>精确二项反演、Hölder偏差界</td><td>折点选择、背景原子、反事实密度光滑</td><td>税收弹性与阈值行为</td></tr><tr><td>双边市场干扰</td><td>双对角配对对比、非对角校正</td><td>双边随机化、均值场、小处理效应</td><td>平台实验总效应</td></tr><tr><td>MNAR样本融合</td><td>IV识别、半参数正交插补</td><td>排除限制、条件完备性、重叠与乘积速率</td><td>调查、行政和平台数据整合</td></tr></table></div>
+<p><strong>今日首推第三篇。</strong> 它将结果相关选择、工具变量识别、干扰函数正交化和复杂抽样方差放在同一框架中。迁移前应论证工具变量为何影响Y而不直接影响入选，并进行弱工具与倾斜函数敏感性分析。</p>
+<p>待查问题：bunching的光滑性半径如何外部校准？双边市场存在跨期竞争时DD偏差符号能否维持？MNAR工具排除与条件完备性如何进行可解释的诊断？</p>
+<p>课程进度：第四章完成5/7节；累计26课、78篇不同论文。下一课第4章·第6节／全课程第27课。第四章未完结，不生成章末汇编。</p>
+<p>资料说明：理论、模拟和代码声明来自作者公开版本；未独立复现。</p></main></body></html>
