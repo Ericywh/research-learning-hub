@@ -267,8 +267,8 @@ window.MATH_COURSE={
           "number": 26,
           "title": "含截距回归的残差正交性质",
           "published": true,
-          "date": "2026-10-29",
-          "url": "lessons/2026-10-29-02-14.html",
+          "date": "2026-11-02",
+          "url": "lessons/2026-11-02-02-14.html",
           "delivered": false
         }
       ]
