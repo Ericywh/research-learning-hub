@@ -1,18 +1,99 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>第3章·第4节｜双向因果和同时性 · DAY 26</title><meta name="description" content="双向因果和同时性：理论公式、数据、双软件代码和练习答案。"><script>window.MathJax={tex:{inlineMath:[["\\(","\\)"]],displayMath:[["\\[","\\]"]]},svg:{fontCache:"global"}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script><style>body{margin:0;background:#f6f9fa;color:#243a49;font:16px/1.9 system-ui,"Noto Sans SC",sans-serif}main{max-width:1050px;margin:0 auto;padding:25px}.hero{background:linear-gradient(120deg,#163c50,#236d72);border-radius:15px;padding:33px;color:#fff}.hero h1,.hero p{color:#fff}.hero h1{font-size:clamp(24px,4vw,38px)}.badge{background:#e7f1d5;color:#29484b;border-radius:13px;padding:5px 10px;font-size:12px}.paper{background:#fff;border:1px solid #d9e6e9;border-radius:12px;padding:26px;margin:17px 0}.paper h2{color:#264957;font-size:21px}.equation{padding:15px;background:#f0f6f6;overflow:auto}details{border:1px solid #d0dfe2;border-radius:9px;margin:12px 0;overflow:hidden}summary{cursor:pointer;background:#ebf3f4;padding:12px}pre{overflow:auto;background:#173044;color:#f1f9fc;margin:0;padding:17px;line-height:1.6}pre code{white-space:pre;font:12px/1.7 monospace}a{color:#14717b}@media(max-width:600px){main{padding:12px}.paper,.hero{padding:20px}}</style><meta name="course-status" content="taught"></head><body><aside class="archive-note" style="margin:20px auto;padding:18px;max-width:940px;background:#fff8e6;border-left:4px solid #b98c3b"><strong>本课保留原稿，尚未逐课实质重写。</strong><p>历史“已授课”为展示状态，不代表本次审校通过。旧文可能包含评审指出的占位代码或重复练习，请优先学习对应新模块：<a href="../v2/modules/M13.html">M13</a>　</p><a href="../archive/2026-10-27/lessons/03-04.html">未经修改的历史档案</a> · <a href="../v2/review.html">修订范围</a><p><a href="../v2/concepts.html">术语不熟悉？先读基础概念讲解册</a></p></aside><main><p><a href="../index.html">← 返回计量经济学120天课程目录</a></p><div class="hero"><small>DAY 26 / 120 · CHAPTER 3</small><h1>第3章·第4节｜双向因果和同时性</h1><span class="badge">已授课</span><p>七模块课程正文 · Stata + Python · 约10—15分钟</p></div><article><section class="paper" id="s1"><h2>一、通俗理解</h2><p>本课研究《双向因果和同时性》的核心问题。价格与交易量等变量可能同时由供需决定，回归方程中的因变量与解释变量之分不能替代因果方向识别。理解这一问题时，不应从软件命令倒推出研究设计，而应先确定研究对象、估计量和数据提供的变异。识别假设、比较对象和统计推断构成解释结果的共同基础。判断统计关联是否可以上升为因果解释，必须给出额外可辩护的识别条件。</p><p>直觉上先问“相对于哪个对照，改变了什么、未观测因素是否可比”，再写回归方程。即使数据非常多或结果显著，也不能省略这一步。对于方法不匹配的公开示例，宁可明确使用教学模拟，也不能伪装为可信的现实因果证据。</p></section>
-<section class="paper" id="s2"><h2>二、核心理论与公式</h2><p>本节重要的数学表达式如下。价格与交易量等变量可能同时由供需决定，回归方程中的因变量与解释变量之分不能替代因果方向识别。式中的下标、参数和条件必须由数据结构与研究目的界定。涉及潜在结果时，要区分可观察结果和反事实；涉及协方差或条件均值时，应明确是总体假设还是样本估计。任何公式只有在相应外生性、满秩、时间结构或连续性条件下才具备预期的识别意义。</p><div class="equation">\[E(Y_i\mid X_i)=X_i^\top\beta\]</div><p>检验与估计所需的矩条件、概率模型或识别假设要与这里的对象一致：完全共线性影响参数可识别性；异方差主要影响常规协方差估计；内生性则可能破坏OLS的一致性。不要以为使用HC1就能同时解决这些问题。</p></section>
-<section class="paper" id="s3"><h2>三、实证案例与数据</h2><p>使用Stata官方1978年汽车教学数据auto.dta。价格price、重量weight、油耗mpg、进口标记foreign及必要的长度length。原始数据不是随机政策试验，解释以条件关联与诊断为主。教学时先检查观测单位、变量类型、缺失与筛选规则，确保Stata和Python的有效样本一致。公开数据由Stata Press提供，可以在链接下载，其中没有编造真实政策、论文或因果效应估计结果。 <a href="https://www.stata-press.com/data/r19/auto.dta">官方公开数据文件</a>。</p><p>按照预先确定的口径筛选样本。对处理变量，必须说明其赋值规则与时点；对连续自变量，必须说明量纲；对面板数据，必须说明主体、时间与缺失结构。分析没有实际运行，因此本页只给出计算流程，不填写未经验证的回归系数或p值。</p></section>
-<section class="paper" id="s4"><h2>四、Stata与Python实现</h2><p>以下Stata和Python采用相同数据文件或相同透明模拟公式，目的是让估计流程可以复核。不能将未实际执行的程序输出标记为“已运行”。</p><h3>Stata</h3><details><summary>展开 Stata 完整代码</summary><pre><code class="language-stata">use &quot;https://www.stata-press.com/data/r19/auto.dta&quot;, clear
-keep if !missing(price,weight,mpg,foreign)
-regress price weight mpg i.foreign, vce(robust)
-rvfplot, yline(0)
-regress price weight mpg i.foreign
-estat hettest, rhs
-estat vif</code></pre></details><h3>Python</h3><details><summary>展开 Python 完整代码</summary><pre><code class="language-python">import pandas as pd,statsmodels.formula.api as smf
-from statsmodels.stats.diagnostic import het_breuschpagan
-df=pd.read_stata(&quot;https://www.stata-press.com/data/r19/auto.dta&quot;,convert_categoricals=False)
-df=df[[&quot;price&quot;,&quot;weight&quot;,&quot;mpg&quot;,&quot;foreign&quot;]].dropna()
-f=smf.ols(&quot;price ~ weight + mpg + C(foreign)&quot;,df).fit()
-print(&quot;N:&quot;,len(df),&quot;BP/Koenker:&quot;,het_breuschpagan(f.resid,f.model.exog,robust=True)[:2])</code></pre></details><p>Stata het-test与Python Koenker版本不保证p值一致，诊断拒绝只说明对应统计假设受到挑战。若两端自由度、小样本修正或处理变量定义不同，应先核对这些选择，再比较系数和标准误；不能为了获得更小p值而选择软件。</p></section>
-<section class="paper" id="s5"><h2>五、初学者避坑</h2><p>误区一：把“双向因果和同时性”当成所有数据都适用的默认模型。价格与交易量等变量可能同时由供需决定，回归方程中的因变量与解释变量之分不能替代因果方向识别。误区二：仅根据p值判断假设成立。研究设计的关键条件往往不能由一个显著性检验直接证明。误区三：忽略样本和标准误口径。Stata het-test与Python Koenker版本不保证p值一致，诊断拒绝只说明对应统计假设受到挑战。应逐项记录样本量、变量单位、基准组、模型估计方法以及置信区间的计算约定。</p></section>
-<section class="paper" id="s6"><h2>六、今日练习</h2><p><strong>概念题：</strong>请说明本课《双向因果和同时性》针对的核心统计对象，并指出一个不能只依靠显著性结果验证的条件。</p><details><summary>查看概念题答案</summary><p>价格与交易量等变量可能同时由供需决定，回归方程中的因变量与解释变量之分不能替代因果方向识别。相应模型还需要关于数据生成机制、可比性或外生性的条件，显著性本身不会验证这些条件。</p></details><p><strong>计算或应用题：</strong>某项教学示例中斜率估计为2、HC1标准误为0.5，求t值并解释局限。</p><details><summary>查看计算题答案</summary><p>t=4；在所用模型下给出零系数的统计检验证据，不证明遗漏变量不存在，也不意味着因果识别成功。</p></details></section>
-<section class="paper" id="s7"><h2>七、学习进度</h2><p><strong>第3章·第4节｜双向因果和同时性（全课程第26课 / 共120课）</strong>，课程网站状态：<strong>已授课</strong>。本课正文、公式、Stata与Python示例及练习答案已在GitHub归档。</p><p>下一课：<a href="03-05.html">第3章·第5节｜异方差检验与稳健标准误</a>（全课程第27课）。具体软件结果以实际运行核验为准，不补造未经执行的估计数值。</p></section></article></main></body></html>
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第3章·第4节｜双向因果和同时性 · 第26课</title>
+<meta name="description" content="计量经济学120天系统课程第26课：供需同时性、OLS内生性、富尔顿鱼市场真实数据及Stata/Python可复现代码。">
+<meta name="course-status" content="taught"><meta name="lesson-date" content="2026-11-02">
+<script>window.MathJax={tex:{inlineMath:[["\\(","\\)"]],displayMath:[["\\[","\\]"]]},svg:{fontCache:"global"}};</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f5f8fa;color:#233746;font:16px/1.85 system-ui,-apple-system,"Noto Sans SC","PingFang SC",sans-serif}
+main{max-width:1020px;margin:0 auto;padding:22px}.hero{background:linear-gradient(120deg,#183d50,#236d73);border-radius:16px;padding:30px;color:#fff}
+.hero h1{margin:8px 0;font-size:clamp(24px,4vw,35px);line-height:1.35}.hero p{margin:4px 0;color:#e5f4f2}
+.paper{background:#fff;border:1px solid #dce7ea;border-radius:13px;padding:24px 28px;margin:18px 0}
+.paper h2{font-size:21px;color:#235361;margin:0 0 14px}.paper h3{font-size:17px;color:#235361;margin:18px 0 8px}
+p{margin:12px 0}a{color:#126d7b}.equation{padding:16px;background:#f0f6f6;border-radius:9px;overflow:auto;margin:16px 0}
+pre{overflow:auto;background:#173247;color:#f2f8fb;border-radius:9px;padding:18px;font:13px/1.65 ui-monospace,Consolas,monospace}
+pre code{white-space:pre}code:not(pre code){background:#edf2f5;border-radius:3px;padding:1px 4px}
+li{margin:7px 0}.foot{color:#5b6c78;font-size:13px}
+@media(max-width:650px){main{padding:10px}.hero,.paper{padding:18px}pre{font-size:12px}}
+</style></head><body><main>
+<p><a href="../index.html">← 返回120课原课程目录</a></p>
+<header class="hero"><p>CHAPTER 3 · DAY 26 / 120 · 2026-11-02</p><h1>第3章·第4节｜双向因果和同时性</h1><p>七模块完整讲义 · 真实公开数据 · Stata / Python · 10—15分钟</p></header>
+<p>授课日期：2026-11-02。全课程第26课 / 共120课。预计学习10—15分钟。</p>
+<section class="paper" id="s1"><h2>一、通俗理解</h2>
+<p>鱼市场中，价格上升可能使消费者减少购买，这是需求规律；但当天捕捞量减少也会同时推高价格、压低成交量。我们看到的价格和数量，是供给与需求共同作用后的市场均衡结果。直接把成交量对价格做回归，斜率未必是需求曲线的斜率。</p>
+<p>所谓双向因果，是两个经济变量存在相互作用；同时性更具体，指多个内生变量在同一个方程组中联合决定。研究者在回归式左边写“数量”、右边写“价格”，不会让价格自动成为外生变量。需要把经济行为方程与市场均衡条件分开理解。</p>
+</section>
+<section class="paper" id="s2"><h2>二、核心理论与公式</h2>
+<p>考虑线性供需系统，其中 \(P_i\) 是价格，\(Q_i^d,Q_i^s\) 是需求量和供给量，\(u_i^d,u_i^s\) 分别为需求、供给冲击，\(b,d>0\)：</p>
+<div class="equation">\[Q_i^d=a-bP_i+u_i^d,\qquad Q_i^s=c+dP_i+u_i^s,\qquad Q_i^d=Q_i^s.\]</div>
+<p>联立均衡条件可得：</p>
+<div class="equation">\[P_i=\frac{a-c+u_i^d-u_i^s}{b+d}.\]</div>
+<p>因此价格包含需求冲击 \(u_i^d\)。在冲击相互独立且需求冲击方差非零时，价格与需求方程误差正相关，需求方程的OLS外生性条件失效；其斜率可能比真实的负需求斜率更接近零，甚至变号。推导依赖线性系统、稳定的均衡关系及冲击假设；现实市场还可能存在动态调整、预期与测量误差。</p>
+<p>区分“需求曲线移动”和“沿需求曲线移动”是本课的关键。识别需求弹性通常需要只移动供给、不直接改变需求的外生变异，例如有充分依据的天气冲击；工具变量的相关性和排除限制必须另行论证。</p>
+</section>
+<section class="paper" id="s3"><h2>三、实证案例与数据</h2>
+<p>使用Wooldridge计量经济学教材数据包的Fulton Fish Market（纽约富尔顿鱼市场）数据，来源为Graddy（1995）的市场研究。公开CSV含97条日度观测，变量包括数量加权平均价格 \`avgprc\`、总成交量 \`totqty\`、星期一至星期四指示变量 \`mon\`、\`tues\`、\`wed\`、\`thurs\`，以及此前两天海浪高度指标 \`wave2\`。周五作为省略的基准日。</p>
+<p>数据：<a href="https://raw.githubusercontent.com/vincentarelbundock/Rdatasets/master/csv/wooldridge/fish.csv">公开CSV</a>；<a href="https://ftp.sun.ac.za/ftp/CRAN/web/packages/wooldridge/wooldridge.pdf">变量说明（Wooldridge数据包）</a>。</p>
+<p>保留上述变量均非缺失、价格和数量为正的日观测，生成价格和数量的自然对数。先估计数量—价格关联，再用海浪指标解释价格的变化。后者仅作供给冲击相关性的探索，不构成有效工具变量的证明；日度数据还可能有序列相关，HC1不能替代时间序列稳健推断。</p>
+</section>
+<section class="paper" id="s4"><h2>四、Stata与Python实现</h2>
+<p>两端使用同一CSV、同一筛选、同一含截距OLS模型及HC1异方差稳健标准误。以下代码未实际运行，不填报估计系数或显著性结果。</p>
+<h3>Stata</h3>
+<pre><code class="language-stata">* 富尔顿鱼市场：同一公开CSV与共同样本
+clear all
+set more off
+import delimited &quot;https://raw.githubusercontent.com/vincentarelbundock/Rdatasets/master/csv/wooldridge/fish.csv&quot;, clear varnames(1)
+
+keep if !missing(avgprc, totqty, mon, tues, wed, thurs, wave2)
+keep if avgprc &gt; 0 &amp; totqty &gt; 0
+gen double lnprice = ln(avgprc)
+gen double lnqty   = ln(totqty)
+count
+
+* 均衡数量对价格的条件关联，HC1
+regress lnqty lnprice mon tues wed thurs, vce(robust)
+
+* 海浪与均衡价格的条件关联；不是IV估计
+regress lnprice wave2 mon tues wed thurs, vce(robust)</code></pre>
+<h3>Python</h3>
+<pre><code class="language-python"># pip install pandas numpy statsmodels
+import numpy as np
+import pandas as pd
+import statsmodels.formula.api as smf
+
+url = &quot;https://raw.githubusercontent.com/vincentarelbundock/Rdatasets/master/csv/wooldridge/fish.csv&quot;
+df = pd.read_csv(url)
+cols = [&quot;avgprc&quot;, &quot;totqty&quot;, &quot;mon&quot;, &quot;tues&quot;, &quot;wed&quot;, &quot;thurs&quot;, &quot;wave2&quot;]
+df = df.dropna(subset=cols).copy()
+df = df.loc[(df[&quot;avgprc&quot;] &gt; 0) &amp; (df[&quot;totqty&quot;] &gt; 0)].copy()
+df[&quot;lnprice&quot;] = np.log(df[&quot;avgprc&quot;])
+df[&quot;lnqty&quot;] = np.log(df[&quot;totqty&quot;])
+print(&quot;共同样本量：&quot;, len(df))
+
+# 与Stata相同的OLS、HC1及t参考分布
+m1 = smf.ols(&quot;lnqty ~ lnprice + mon + tues + wed + thurs&quot;,
+             data=df).fit(cov_type=&quot;HC1&quot;, use_t=True)
+m2 = smf.ols(&quot;lnprice ~ wave2 + mon + tues + wed + thurs&quot;,
+             data=df).fit(cov_type=&quot;HC1&quot;, use_t=True)
+print(m1.summary())
+print(m2.summary())</code></pre>
+<p>比较两端样本量、系数及HC1标准误；若将第一式的价格系数直接称为需求价格弹性，便忽略了同时决定机制。第二式也不能仅凭显著性证明海浪满足工具变量排除限制。</p>
+</section>
+<section class="paper" id="s5"><h2>五、初学者避坑</h2>
+<ol>
+<li>把市场均衡点的回归斜率当作结构性需求曲线斜率，混淆了均衡关联与需求响应。</li>
+<li>认为增加星期虚拟变量或使用HC1即可消除同时性；这些操作不改变价格与结构冲击的相关机制。</li>
+<li>认为天气与价格显著相关就一定是有效工具变量；仍需论证天气不直接影响需求，并考虑动态相关与其他渠道。</li>
+</ol>
+</section>
+<section class="paper" id="s6"><h2>六、今日练习</h2>
+<p><b>概念题：</b> 为什么在鱼市场数据中，直接回归成交数量对价格通常不能识别需求价格弹性？</p>
+<p><b>答案：</b> 供给与需求冲击共同决定均衡价格和数量；价格可能与需求结构误差相关。OLS得到的是均衡数据的条件线性关联，不能直接视为沿需求曲线移动的因果效应。</p>
+<p><b>计算题：</b> 在线性供需系统中，设 \(b=2\)、\(d=3\)，其他条件不变，需求冲击增加1单位，均衡价格变化多少？</p>
+<p><b>答案：</b> 由第二个公式，价格增加 \(1/(2+3)=0.2\) 单位。需求冲击进入均衡价格，直观说明价格不是独立于需求误差形成的。数值为教学假设，不是鱼市场数据估计结果。</p>
+</section>
+<section class="paper" id="s7"><h2>七、学习进度</h2>
+<p>本课为第3章·第4节《双向因果和同时性》，全课程第26课 / 共120课。前25课已在普通聊天交付，本课完成后累计26/120（21.7%）。原纲下一课为第3章·第5节《异方差检验与稳健标准误》（全课程第27课）。</p></section>
+<p class="foot">资料：Wooldridge鱼市场公开数据；课程正文与私人Notion归档对应。未执行代码，不提供未经核实的估计结果。</p>
+</main></body></html>
