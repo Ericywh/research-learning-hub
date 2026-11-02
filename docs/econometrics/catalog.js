@@ -275,7 +275,7 @@ window.ECON_COURSE={
           "section": 4,
           "title": "双向因果和同时性",
           "published": true,
-          "date": null,
+          "date": "2026-11-02",
           "url": "lessons/03-04.html"
         },
         {
