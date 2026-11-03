@@ -283,8 +283,8 @@ window.MATH_COURSE={
           "number": 27,
           "title": "联合分布和边际分布",
           "published": true,
-          "date": "2026-10-29",
-          "url": "lessons/2026-10-29-03-01.html",
+          "date": "2026-11-03",
+          "url": "lessons/2026-11-03-03-01.html",
           "delivered": false
         },
         {
