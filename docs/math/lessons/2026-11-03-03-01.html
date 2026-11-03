@@ -1,0 +1,28 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="每日10分钟数学微课程，第27课：联合分布和边际分布"><meta name="course-status" content="taught"><title>第3章·第1节｜联合分布和边际分布</title><link rel="stylesheet" href="../site.css"><script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script><style>.article-wrap{max-width:840px;margin:0 auto;padding:35px 22px 80px}.article{font-size:17px;line-height:1.9;color:#263d3a}.article h2{margin-top:1.7em;font-size:1.25em}.article p{margin:1em 0}.article .math{overflow:auto;padding:12px;background:#f4f8f5;border-radius:9px}.article table{border-collapse:collapse;width:100%;margin:18px 0}.article th,.article td{border:1px solid #d3e3dc;padding:8px 12px;text-align:center}.article th{background:#eef7f2}.article strong{color:#245e55}.muted{font-size:14px;color:#61736e}@media(max-width:650px){.article-wrap{padding:24px 16px 64px}.article{font-size:16px}}</style><script defer src="../../assets/reading-status.js?v=20261030a"></script></head><body><header><div class="wrap"><a href="../">← 数学课程目录</a><a href="../../">研究学习中心</a></div></header><main class="article-wrap"><div class="kicker">MATHEMATICS · PROBABILITY · ECONOMETRICS</div><h1>第3章·第1节｜联合分布和边际分布</h1><p class="muted">全课程第27课 / 共73课 · 2026年11月3日正式授课 · 预计学习8分钟</p><article class="article" data-course-status="taught" data-delivered="true"><p>全课程第27课 / 共73课 · 2026年11月3日 · 预计学习8分钟</p>
+<p><strong>核心问题：</strong> 分别知道两个随机变量的分布，为什么仍不足以判断它们是否相互关联？</p>
+<h2>一、从样本代数转向概率结构</h2>
+<p>第二章研究给定样本的OLS拟合与残差；第三章开始研究随机变量在重复抽样或随机试验下的概率规律。设离散随机变量 \(X,Y\) 分别表示受教育程度是否较高、收入是否较高，取值均为0或1。联合分布描述二者同时取值的概率，必须满足</p>
+<div class="math">\[p_{X,Y}(x,y)=P(X=x,Y=y),\quad p_{X,Y}(x,y)\geq0,\quad\sum_x\sum_y p_{X,Y}(x,y)=1.\]</div>
+<p>这里的概率是总体或指定概率模型中的概率，不是某次样本里观测到的频率。频率可用于估计概率，但不能与概率本身混同。</p>
+<h2>二、怎样得到边际分布</h2>
+<p>若只关心 \(X\)，就把每个 \(x\) 对应的所有 \(Y\) 取值概率相加；反之亦然：</p>
+<div class="math">\[p_X(x)=\sum_y p_{X,Y}(x,y),\qquad p_Y(y)=\sum_x p_{X,Y}(x,y).\]</div>
+<p>连续随机变量的对应对象是联合密度 \(f_{X,Y}(x,y)\)，边际密度由积分得到：</p>
+<div class="math">\[f_X(x)=\int_{-\infty}^{\infty}f_{X,Y}(x,y)\,dy,\qquad f_Y(y)=\int_{-\infty}^{\infty}f_{X,Y}(x,y)\,dx.\]</div>
+<p>积分要求联合密度非负、在整个平面上的积分为1。边际分布保留单个变量的概率规律，却舍弃了二者如何共同变化的信息。</p>
+<h2>三、手算一张联合概率表</h2>
+<p>考虑下列假设性总体分布，表内四项概率之和为1：</p>
+<table><thead><tr><th></th><th>\(Y=0\)</th><th>\(Y=1\)</th><th>行和</th></tr></thead><tbody><tr><td>\(X=0\)</td><td>0.20</td><td>0.30</td><td>0.50</td></tr><tr><td>\(X=1\)</td><td>0.10</td><td>0.40</td><td>0.50</td></tr><tr><td>列和</td><td>0.30</td><td>0.70</td><td>1.00</td></tr></tbody></table>
+<p>因此 \(P(X=1)=0.50\)，\(P(Y=1)=0.70\)，而两者同时为1的概率是0.40。在 \(X=1\) 的群体中，\(Y=1\) 的比例为 \(0.40/0.50=0.80\)；在 \(X=0\) 的群体中则为 \(0.30/0.50=0.60\)。这是概率关联，不是教育提高收入的因果效应。</p>
+<p>更关键的是：如果把四格改成0.15、0.35、0.15、0.35，两个边际分布完全不变，但同时为1的概率变成0.35。可见边际分布不能唯一确定联合分布。</p>
+<h2>四、统计与计量应用</h2>
+<p>保险研究中，即使分别掌握事故发生率和某类高损失事件的发生率，仍无法仅凭这两个边际概率确定二者共同发生的风险。联合概率决定交集事件的概率，也为后续条件分布、协方差和风险依赖分析提供基础。</p>
+<h2>五、两道自测</h2>
+<p><strong>第1题｜概念题：</strong> 已知 \(X\) 和 \(Y\) 各自的边际分布，能否唯一确定它们的联合分布？为什么？</p>
+<p><strong>第2题｜计算题：</strong> 根据上表，计算 \(P(Y=1)\) 和 \(P(X=1\text{ 或 }Y=1)\)。</p>
+<p><strong>参考答案</strong></p>
+<p><strong>第1题：</strong> 一般不能。相同的行和、列和可以对应不同的单元格概率，因而对应不同的依赖结构。</p>
+<p><strong>第2题：</strong> \(P(Y=1)=0.30+0.40=0.70\)；由容斥公式，\(P(X=1\text{ 或 }Y=1)=0.50+0.70-0.40=0.80\)。</p>
+<h2>六、前后课衔接</h2>
+<p>上一课的残差正交是给定样本的代数恒等式。本课的联合分布则刻画随机对象的概率规律。下一课将利用联合分布区分“独立”和“零相关”。</p>
+<p><strong>下一课：第3章·第2节｜独立与零相关（全课程第28课）。</strong></p></article><p class="muted">上一课：第2章·第14节｜含截距回归的残差正交性质 · 下一课：第3章·第2节｜独立与零相关</p><nav><a href="2026-11-02-02-14.html">← 上一课</a>　<a href="../">课程目录</a>　<a href="2026-10-29-03-02.html">下一课 →</a></nav></main></body></html>
