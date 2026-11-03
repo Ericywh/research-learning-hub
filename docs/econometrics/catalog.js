@@ -285,7 +285,7 @@ window.ECON_COURSE={
           "section": 5,
           "title": "异方差检验与稳健标准误",
           "published": true,
-          "date": null,
+          "date": "2026-11-03",
           "url": "lessons/03-05.html"
         },
         {
