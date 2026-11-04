@@ -4,3 +4,4 @@ body .formula.econ-math-prose,body .formula.econ-math-unconverted{text-align:lef
 mjx-container[jax="SVG"]{color:inherit!important}mjx-container[jax="SVG"][display="true"]{max-width:100%!important;margin:.75em auto!important;overflow-x:auto;overflow-y:hidden;line-height:1.45}mjx-container[jax="SVG"] svg{max-width:none;vertical-align:middle}
 @media(max-width:640px){body .formula,body .equation{font-size:.94em!important;padding:.3em 0!important}mjx-container[jax="SVG"][display="true"]{font-size:95%!important}}
 @media print{body .formula,body .equation,mjx-container[jax="SVG"][display="true"]{color:#000!important;background:transparent!important;border:0!important;box-shadow:none!important;break-inside:avoid;page-break-inside:avoid}}
+body .econ-equation-note{max-width:100%;margin:-.65em 0 1.1em!important;color:inherit!important;font-size:.88em;line-height:1.6;text-align:center}
