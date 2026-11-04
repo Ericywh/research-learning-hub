@@ -5,3 +5,26 @@ mjx-container[jax="SVG"]{color:inherit!important}mjx-container[jax="SVG"][displa
 @media(max-width:640px){body .formula,body .equation{font-size:.94em!important;padding:.3em 0!important}mjx-container[jax="SVG"][display="true"]{font-size:95%!important}}
 @media print{body .formula,body .equation,mjx-container[jax="SVG"][display="true"]{color:#000!important;background:transparent!important;border:0!important;box-shadow:none!important;break-inside:avoid;page-break-inside:avoid}}
 body .econ-equation-note{max-width:100%;margin:-.65em 0 1.1em!important;color:inherit!important;font-size:.88em;line-height:1.6;text-align:center}
+
+/* Journal spacing and small-screen display for source-normalized equations. */
+body .formula.econ-math-display,body .equation.econ-math-display{
+  font-size:1.06em!important;line-height:1.7!important;
+  margin:1.45em auto 1.55em!important;padding:.55em .15em!important;
+  border:0!important;background:none!important;
+  -webkit-font-smoothing:antialiased;
+}
+body .econ-math-display mjx-container[display="true"]{
+  margin:.55em auto!important;max-width:100%;overflow-x:auto;
+  overflow-y:hidden;scrollbar-width:thin;
+}
+@media(max-width:640px){
+  body .formula.econ-math-display,body .equation.econ-math-display{
+    font-size:.96em!important;padding:.4em 0!important;margin:1.2em auto!important;
+  }
+}
+@media print{
+  body .formula.econ-math-display,body .equation.econ-math-display{
+    font-size:11pt!important;orphans:2;widows:2;
+    break-inside:avoid;page-break-inside:avoid;
+  }
+}
