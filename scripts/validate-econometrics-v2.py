@@ -28,9 +28,10 @@ for l in [l for ch in catalog['chapters'] for l in ch['lessons']]:
     heading=f'第{l["chapter"]}章·第{l["section"]}节｜{l["title"]}'
     assert heading in s,l['id']
     if l['number']>=21:
-        assert '<span class="badge">已授课</span>' in s,l['id']
+        # 完整七模块课页有两种合法版式：装饰性徽标不是内容完备性的判据。
         assert 'name="course-status" content="taught"' in s,l['id']
         assert len(re.findall(r'<section class="paper"',s))==7,l['id']
         assert len(re.findall(r'<pre>',s))==2,l['id']
+    assert 'math-typography.js' in s,l['id']
     assert all(t in s for t in ['Stata','Python','答案']),l['id']
 print('PASS: 120 archive hashes, 120 original headings/status/sections, 36 modules, all local v2 and rewritten-lecture links')
