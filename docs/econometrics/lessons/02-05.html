@@ -5,7 +5,7 @@
 
 
 
-<link rel="stylesheet" href="../course-theme.css?v=20261025-3"><script defer src="../course-theme.js?v=20261025-3"></script><script defer src="../math-typography.js?v=20261104"></script></head>
+<link rel="stylesheet" href="../course-theme.css?v=20261025-3"><script defer src="../course-theme.js?v=20261025-3"></script><script defer src="../math-typography.js?v=20261104d"></script></head>
 <body><aside class="archive-note" style="margin:20px auto;padding:18px;max-width:940px;background:#fff8e6;border-left:4px solid #b98c3b"><strong>本课保留原稿，尚未逐课实质重写。</strong><p>历史“已授课”为展示状态，不代表本次审校通过。旧文可能包含评审指出的占位代码或重复练习，请优先学习对应新模块：<a href="../v2/modules/M03.html">M03</a>　</p><a href="../archive/2026-10-27/lessons/02-05.html">未经修改的历史档案</a> · <a href="../v2/review.html">修订范围</a><p><a href="../v2/concepts.html">术语不熟悉？先读基础概念讲解册</a></p></aside><header><a href="../">← 计量经济学120天课程目录</a><a href="../../study/">学习中心</a></header><main>
 <h1>第2章·第5节｜偏回归系数与教育回报</h1><div class="meta">全课程第12课 / 共120课　·　授课日期：2026-10-18　·　学习时间：10—15分钟</div>
 <p>全课程第12课 / 共120课<br>授课日期：2026年10月18日（Asia/Taipei）｜预计10—15分钟</p>
@@ -13,9 +13,13 @@
 <p>上一课在回归中同时纳入汽车重量和长度，发现一个系数的含义取决于其他解释变量。本课转向教育与工资：受教育年限较长者往往工资较高，但工作经验、任职年限和年龄也与工资有关。<strong>偏回归系数</strong>是指在模型中剔除其他控制变量所能线性解释的部分后，目标解释变量与结果变量剩余变化之间的线性斜率。<br>直觉上，可以先用工作经验等变量预测教育年限，再用同一组变量预测工资；把两次预测都未解释的部分拿来比较，得到的教育斜率与完整多元OLS中的教育系数相同。这不是另一种因果识别方法，而是同一个OLS估计量的另一种表达。</p>
 <h3>二、核心理论与公式</h3>
 <p>设定含截距的半对数工资方程：</p>
-<div class="formula">$$\ln(wage_i)=\beta_0+\beta_1grade_i+\beta_2ttl\_exp_i+\beta_3tenure_i+\beta_4age_i+u_i.$$</div>
+<div class="formula">\begin{equation}
+\ln(wage_i)=\beta_0+\beta_1grade_i+\beta_2ttl\_exp_i+\beta_3tenure_i+\beta_4age_i+u_i.
+\end{equation}</div>
 <p>其中 wage 为正的小时工资，grade 为已完成的受教育年级数，ttl_exp 为累计工作经验，tenure 为当前岗位任职年限，age 为年龄。(beta_1) 是其他三个变量给定时，教育增加一个年级对应的<strong>条件对数工资差异</strong>；小系数时约为 (100beta_1%)，精确百分比变化为 (100[exp(beta_1)-1]%)。<br>Frisch–Waugh–Lovell（FWL）定理给出：</p>
-<div class="formula">$$\widehat\beta_1=\frac{\sum_i\widetilde{grade}_i\widetilde{\ln(wage)}_i}{\sum_i\widetilde{grade}_i^2}.$$</div>
+<div class="formula">\begin{equation}
+\widehat\beta_1=\frac{\sum_i\widetilde{grade}_i\widetilde{\ln(wage)}_i}{\sum_i\widetilde{grade}_i^2}.
+\end{equation}</div>
 <p>波浪号表示分别对截距、经验、任职年限、年龄做OLS回归后的残差。该等式要求同一样本、相同控制变量及完整模型满列秩；若教育被控制变量完全线性解释，分母为零，系数不可识别。FWL是有限样本代数恒等式，不依赖因果外生性；统计推断和因果解释则另需相应假设。</p>
 <h3>三、实证案例与数据</h3>
 <p>使用Stata Press官方示例数据 nlsw88.dta，源自1988年美国女性劳动力纵向调查的截面摘录。公开版本原始记录为2,246条；本课只保留 wage、grade、ttl_exp、tenure、age 均非缺失且 wage\&gt;0 的记录，实际有效样本量由代码报告，不预设结果。数据及变量定义可核查：<a href="https://www.stata-press.com/data/r19/g.html" target="_blank" rel="noopener noreferrer">Stata Press Release 19数据目录</a>、<a href="https://www.stata-press.com/data/r19/nlsw88.dta" target="_blank" rel="noopener noreferrer">nlsw88.dta原始文件</a>。该文件用于教学，不宜未经抽样设计核查直接推断总体教育回报。</p>
