@@ -54,7 +54,7 @@ function normalize(){
       let tex=mapped;
       if(tex.length>130 && tex.includes('\\qquad')){
         const pieces=tex.split('\\qquad');
-        tex='\\begin{aligned}'+pieces.map(p=>p.replace('=','&=')).join('\\[0.7ex]')+'\\end{aligned}';
+        tex='\\begin{aligned}'+pieces.map(p=>p.replace('=','&=')).join('\\\\[0.7ex]')+'\\end{aligned}';
       }
       el.textContent='\\begin{equation}'+tex+'\\end{equation}';
       el.classList.add('econ-math-display');
