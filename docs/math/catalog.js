@@ -293,9 +293,9 @@ window.MATH_COURSE={
           "number": 28,
           "title": "独立与零相关",
           "published": true,
-          "date": "2026-10-29",
-          "url": "lessons/2026-10-29-03-02.html",
-          "delivered": false
+          "date": "2026-11-04",
+          "url": "lessons/2026-11-04-03-02.html",
+          "delivered": true
         },
         {
           "chapter": 3,
