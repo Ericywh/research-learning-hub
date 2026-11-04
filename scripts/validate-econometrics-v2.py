@@ -23,6 +23,8 @@ assert not missing,missing
 assert len(list((V/'modules').glob('M*.html')))==36
 mapping=json.loads((V/'mapping.json').read_text(encoding='utf-8'));assert len(mapping['byLegacy'])==120
 catalog=json.loads((C/'catalog.js').read_text(encoding='utf-8').split('window.ECON_COURSE=')[1].rstrip().rstrip(';'))
+equation_count=0
+prose_blocks=0
 for l in [l for ch in catalog['chapters'] for l in ch['lessons']]:
     s=(C/l['url']).read_text(encoding='utf-8')
     heading=f'第{l["chapter"]}章·第{l["section"]}节｜{l["title"]}'
@@ -32,8 +34,21 @@ for l in [l for ch in catalog['chapters'] for l in ch['lessons']]:
         assert 'name="course-status" content="taught"' in s,l['id']
         assert len(re.findall(r'<section class="paper"',s))==7,l['id']
         assert len(re.findall(r'<pre>',s))==2,l['id']
+    # Every legacy lecture must retain TeX source in an explicit numbered
+    # equation environment, not in a Unicode-only or plain-text formula box.
+    blocks=re.findall(r'<div\b[^>]*class=["\'][^"\']*(?:formula|equation)[^"\']*["\'][^>]*>(.*?)</div>',s,re.S|re.I)
+    assert blocks,l['id']
+    assert 'math-typography.js?v=20261104d' in s,l['id']
+    for body in blocks:
+        if l['id']=='08-06' and '总效应调整需阻断后门路径' in body:
+            prose_blocks+=1
+            continue
+        assert body.count(r'\begin{equation}')==1 and body.count(r'\end{equation}')==1,l['id']
+        assert not body.strip().startswith(('$',r'\[')),l['id']
+        equation_count+=1
     assert 'math-typography.js' in s,l['id']
     assert all(t in s for t in ['Stata','Python','答案']),l['id']
+assert equation_count==139 and prose_blocks==1,(equation_count,prose_blocks)
 home=(C/'index.html').read_text(encoding='utf8')
 extension=(V/'index.html').read_text(encoding='utf8')
 assert 'name="course-default" content="legacy-120"' in home and 'id="catalog"' in home and 'id="results"' in home
