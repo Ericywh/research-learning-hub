@@ -4,6 +4,7 @@ if(window.__econAcademicMathInitialized)return;
 window.__econAcademicMathInitialized=true;
 const formulas=new Map([
 ['ATE=E[Y(1)−Y(0)]；ATT=E[Y(1)−Y(0)|D=1]',"\\mathrm{ATE}=\\mathbb E[Y(1)-Y(0)],\\qquad\\mathrm{ATT}=\\mathbb E[Y(1)-Y(0)\\mid D=1]"],
+['观测均值差 = ATT + 未处理潜在结果的选择偏差',"\\mathbb E[Y\\mid D=1]-\\mathbb E[Y\\mid D=0]=\\mathrm{ATT}+\\bigl(\\mathbb E[Y(0)\\mid D=1]-\\mathbb E[Y(0)\\mid D=0]\\bigr)"],
 ['b₁=Σ(xᵢ−x̄)(yᵢ−ȳ)/Σ(xᵢ−x̄)²；R²=1−SSE/SST',"\\widehat b_1=\\frac{\\sum_i(x_i-\\bar x)(y_i-\\bar y)}{\\sum_i(x_i-\\bar x)^2},\\qquad R^2=1-\\frac{\\mathrm{SSE}}{\\mathrm{SST}}"],
 ['bₓ=(x′M_Zx)⁻¹x′M_Zy；M_Z=I−Z(Z′Z)⁻¹Z′',"\\widehat b_x=(x^\\top M_Zx)^{-1}x^\\top M_Zy,\\qquad M_Z=I-Z(Z^\\top Z)^{-1}Z^\\top"],
 ['P=X(X′X)⁻¹X′；P²=P；P′=P；M=I−P',"P=X(X^\\top X)^{-1}X^\\top,\\quad P^2=P,\\quad P^\\top=P,\\quad M=I-P"],
@@ -39,12 +40,31 @@ const formulas=new Map([
 ['E[(D−m(X)){Y−l(X)−θ(D−m(X))}]=0',"\\mathbb E[(D-m(X))\\{Y-\\ell(X)-\\theta(D-m(X))\\}]=0"],
 ['多重插补总方差T=W+(1+1/M)B；复现差异Δ=本次结果−原文结果',"T=W+\\left(1+\\frac1M\\right)B"]
 ]);
+const notes = new Map([
+  ['τ̂_bc=τ̂−Biaŝ(τ̂)；区间需计入偏差估计变异','区间估计还需要计入偏差估计本身的变异。'],
+  ['k=max{i:p_(i)≤iq/m}；拒绝排序前k项','按排序后的检验p值拒绝前k个原假设。'],
+  ['多重插补总方差T=W+(1+1/M)B；复现差异Δ=本次结果−原文结果','复现差异：Δ = 本次结果 − 原文结果。']
+]);
 function normalize(){
   for(const el of document.querySelectorAll('main .formula,main .equation,article .formula,article .equation')){
     if(el.dataset.econMathDone||el.querySelector('pre,code,math,svg,mjx-container'))continue;
     el.dataset.econMathDone='1';
     const raw=(el.textContent||'').trim();const mapped=formulas.get(raw);
-    if(mapped){el.textContent='\\begin{equation}'+mapped+'\\end{equation}';el.classList.add('econ-math-display');}
+    if(mapped){
+      let tex=mapped;
+      if(tex.length>130 && tex.includes('\qquad')){
+        const pieces=tex.split('\qquad');
+        tex='\begin{aligned}'+pieces.map(p=>p.replace('=','&=')).join('\\[0.7ex]')+'\end{aligned}';
+      }
+      el.textContent='\begin{equation}'+tex+'\end{equation}';
+      el.classList.add('econ-math-display');
+      if(notes.has(raw)){
+        const p=document.createElement('p');
+        p.className='econ-equation-note';
+        p.textContent=notes.get(raw);
+        el.insertAdjacentElement('afterend',p);
+      }
+    }
     else if(raw.startsWith('\\[')&&raw.endsWith('\\]')){el.textContent='\\begin{equation}'+raw.slice(2,-2)+'\\end{equation}';el.classList.add('econ-math-display');}
     else if(raw.startsWith('$$')&&raw.endsWith('$$')){el.textContent='\\begin{equation}'+raw.slice(2,-2)+'\\end{equation}';el.classList.add('econ-math-display');}
     else if(raw.startsWith('\\begin{'))el.classList.add('econ-math-display');
