@@ -1,0 +1,6 @@
+/* Research Learning Hub | Econometrics journal-style equations */
+body .formula,body .equation,body.econ-theme .formula,body.econ-theme .equation{box-sizing:border-box!important;display:block!important;width:100%!important;max-width:100%!important;margin:1.15em auto 1.3em!important;padding:.4em .1em!important;color:inherit!important;background:transparent!important;background-image:none!important;border:0!important;border-radius:0!important;box-shadow:none!important;line-height:1.65!important;text-align:center!important;overflow-x:auto!important;overflow-y:hidden!important;scrollbar-width:thin}
+body .formula.econ-math-prose,body .formula.econ-math-unconverted{text-align:left!important;font-size:.96em}
+mjx-container[jax="SVG"]{color:inherit!important}mjx-container[jax="SVG"][display="true"]{max-width:100%!important;margin:.75em auto!important;overflow-x:auto;overflow-y:hidden;line-height:1.45}mjx-container[jax="SVG"] svg{max-width:none;vertical-align:middle}
+@media(max-width:640px){body .formula,body .equation{font-size:.94em!important;padding:.3em 0!important}mjx-container[jax="SVG"][display="true"]{font-size:95%!important}}
+@media print{body .formula,body .equation,mjx-container[jax="SVG"][display="true"]{color:#000!important;background:transparent!important;border:0!important;box-shadow:none!important;break-inside:avoid;page-break-inside:avoid}}
