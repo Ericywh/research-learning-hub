@@ -122,3 +122,9 @@ body.econ-theme[data-econ-dark="true"] .tag:nth-of-type(n){background:#29475a;co
 body.econ-theme .econ-hero .meta,body.econ-theme .hero .meta,body.econ-theme .econ-hero aside.meta{background:#203e50!important;color:#f4f8fa!important;border:1px solid #7895a4!important}
 body.econ-theme .econ-hero .meta *,body.econ-theme .hero .meta *,body.econ-theme .econ-hero aside.meta *{color:#f4f8fa!important}
 body.econ-theme[data-econ-dark="true"] .econ-hero .meta,body.econ-theme[data-econ-dark="true"] .hero .meta{background:#203e50!important;color:#f4f8fa!important}
+
+/* A deployed lesson uses the shared reader's sole TOC. Avoid an empty 235px
+   column from the older two-column template, and hide any preexisting old nav. */
+body.econ-theme[data-course-lesson="true"] .econ-layout{grid-template-columns:minmax(0,1fr)}
+body.econ-theme[data-course-lesson="true"] .econ-layout>.econ-article{grid-column:1/-1}
+body.econ-theme[data-course-lesson="true"]:has(.cr-reader-toc) .econ-aside{display:none!important}
