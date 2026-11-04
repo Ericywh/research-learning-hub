@@ -52,11 +52,11 @@ function normalize(){
     const raw=(el.textContent||'').trim();const mapped=formulas.get(raw);
     if(mapped){
       let tex=mapped;
-      if(tex.length>130 && tex.includes('\qquad')){
-        const pieces=tex.split('\qquad');
-        tex='\begin{aligned}'+pieces.map(p=>p.replace('=','&=')).join('\\[0.7ex]')+'\end{aligned}';
+      if(tex.length>130 && tex.includes('\\qquad')){
+        const pieces=tex.split('\\qquad');
+        tex='\\begin{aligned}'+pieces.map(p=>p.replace('=','&=')).join('\\[0.7ex]')+'\\end{aligned}';
       }
-      el.textContent='\begin{equation}'+tex+'\end{equation}';
+      el.textContent='\\begin{equation}'+tex+'\\end{equation}';
       el.classList.add('econ-math-display');
       if(notes.has(raw)){
         const p=document.createElement('p');
