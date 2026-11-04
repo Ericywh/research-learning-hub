@@ -74,7 +74,7 @@ function normalize(){
 }
 const src=document.currentScript?.src||new URL('../math-typography.js',location.href).href;
 function start(){
-  const css=document.createElement('link');css.rel='stylesheet';css.href=new URL('math-typography.css?v=20261104',src).href;document.head.appendChild(css);
+  const css=document.createElement('link');css.rel='stylesheet';css.href=new URL('math-typography.css?v=20261104b',src).href;document.head.appendChild(css);
   normalize();
   window.MathJax={tex:{inlineMath:[['\\(','\\)'],['$','$']],displayMath:[['\\[','\\]'],['$$','$$']],processEscapes:true,processEnvironments:true,tags:'ams',tagSide:'right',tagIndent:'1em'},svg:{fontCache:'global'},options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']}};
   const loader=document.createElement('script');loader.src='https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js';loader.async=true;loader.onerror=()=>{document.documentElement.dataset.econMathStatus='load-error';};document.head.appendChild(loader);
