@@ -40,44 +40,101 @@ const formulas=new Map([
 ['E[(D−m(X)){Y−l(X)−θ(D−m(X))}]=0',"\\mathbb E[(D-m(X))\\{Y-\\ell(X)-\\theta(D-m(X))\\}]=0"],
 ['多重插补总方差T=W+(1+1/M)B；复现差异Δ=本次结果−原文结果',"T=W+\\left(1+\\frac1M\\right)B"]
 ]);
+// Exact transcription of early legacy formulas previously left as Unicode text.
+const extras=new Map([
+  ['ρXY = Cov(X,Y) / [σXσY]',String.raw`\rho_{XY}=\frac{\operatorname{Cov}(X,Y)}{\sigma_X\sigma_Y}`],
+  ['τ100 = E[Pi(w+100) − Pi(w)]',String.raw`\tau_{100}=\mathbb E[P_i(w+100)-P_i(w)]`],
+  ['yit (i=1,…,N; t=1,…,T)',String.raw`y_{it},\qquad i=1,\ldots,N,\quad t=1,\ldots,T`],
+  ['Δyit = yit − yi,t−1',String.raw`\Delta y_{it}=y_{it}-y_{i,t-1}`],
+  ['E(X)=μ；Var(X)=E[(X−μ)²]；Cov(X,Y)=E[(X−μₓ)(Y−μᵧ)]',String.raw`\begin{aligned}\mathbb E[X]&=\mu,\\\operatorname{Var}(X)&=\mathbb E[(X-\mu)^2],\\\operatorname{Cov}(X,Y)&=\mathbb E[(X-\mu_X)(Y-\mu_Y)]\end{aligned}`],
+  ['SE(x̄)=s/√n；t=(x̄−μ₀)/(s/√n)',String.raw`\operatorname{SE}(\bar x)=\frac{s}{\sqrt n},\qquad t=\frac{\bar x-\mu_0}{s/\sqrt n}`],
+  [String.raw`y_i=x_i^{\prime}\beta+u_i,\qquad E[x_i u_i]=0.`,String.raw`y_i=x_i^\top\beta+u_i,\qquad\mathbb E[x_iu_i]=0`],
+  [String.raw`\operatorname{plim}\widehat\beta_{OLS}=\beta+Q^{-1}E[x_i u_i].`,String.raw`\operatorname{plim}\widehat\beta_{\mathrm{OLS}}=\beta+Q^{-1}\mathbb E[x_iu_i]`]
+]);
 const notes = new Map([
   ['τ̂_bc=τ̂−Biaŝ(τ̂)；区间需计入偏差估计变异','区间估计还需要计入偏差估计本身的变异。'],
   ['k=max{i:p_(i)≤iq/m}；拒绝排序前k项','按排序后的检验p值拒绝前k个原假设。'],
   ['多重插补总方差T=W+(1+1/M)B；复现差异Δ=本次结果−原文结果','复现差异：Δ = 本次结果 − 原文结果。']
 ]);
+function normalizedText(value){
+  return String(value||'').replace(/\u00a0/g,' ').replace(/\s+/g,' ').trim();
+}
+function texFromSource(raw){
+  const clean=normalizedText(raw);
+  if(!clean)return null;
+  const mapped=formulas.get(clean)||extras.get(clean);
+  if(mapped)return {tex:mapped,note:notes.get(clean)||null};
+  const literal=raw.trim();
+  if(literal.startsWith('\\begin{equation}')&&literal.endsWith('\\end{equation}'))
+    return {equation:literal};
+  if(literal.startsWith('\\[')&&literal.endsWith('\\]'))
+    return {tex:literal.slice(2,-2).trim()};
+  if(literal.startsWith('$$')&&literal.endsWith('$$'))
+    return {tex:literal.slice(2,-2).trim()};
+  if(/\\(?:beta|alpha|gamma|operatorname|mathbb|frac|widehat|qquad|top|Delta|ln|bar)\b/.test(literal))
+    return {tex:literal};
+  return null;
+}
 function normalize(){
-  for(const el of document.querySelectorAll('main .formula,main .equation,article .formula,article .equation')){
+  let converted=0,notMath=0,unconverted=0;
+  for(const el of document.querySelectorAll('main .formula, main .equation, article .formula, article .equation')){
     if(el.dataset.econMathDone||el.querySelector('pre,code,math,svg,mjx-container'))continue;
     el.dataset.econMathDone='1';
-    const raw=(el.textContent||'').trim();const mapped=formulas.get(raw);
-    if(mapped){
-      let tex=mapped;
-      if(tex.length>130 && tex.includes('\\qquad')){
-        const pieces=tex.split('\\qquad');
-        tex='\\begin{aligned}'+pieces.map(p=>p.replace('=','&=')).join('\\\\[0.7ex]')+'\\end{aligned}';
-      }
-      el.textContent='\\begin{equation}'+tex+'\\end{equation}';
+    const raw=el.textContent||'';
+    const result=texFromSource(raw);
+    if(result){
+      el.textContent=result.equation||('\\begin{equation}'+result.tex+'\\end{equation}');
       el.classList.add('econ-math-display');
-      if(notes.has(raw)){
+      converted++;
+      if(result.note){
         const p=document.createElement('p');
         p.className='econ-equation-note';
-        p.textContent=notes.get(raw);
+        p.textContent=result.note;
         el.insertAdjacentElement('afterend',p);
       }
-    }
-    else if(raw.startsWith('\\[')&&raw.endsWith('\\]')){el.textContent='\\begin{equation}'+raw.slice(2,-2)+'\\end{equation}';el.classList.add('econ-math-display');}
-    else if(raw.startsWith('$$')&&raw.endsWith('$$')){el.textContent='\\begin{equation}'+raw.slice(2,-2)+'\\end{equation}';el.classList.add('econ-math-display');}
-    else if(raw.startsWith('\\begin{'))el.classList.add('econ-math-display');
-    else if(/^\S.+[=≠≤≥∑Σ∫∂βγλθρτ√²³₀-₉]/u.test(raw)&&!/[。！？]/u.test(raw))el.classList.add('econ-math-unconverted');
-    else el.classList.add('econ-math-prose');
+    }else if(/[=≠≤≥∑Σ∫∂βγλθρτ√²³₀-₉]/u.test(raw)&&!/[。！？]/u.test(raw)){
+      el.classList.add('econ-math-unconverted');unconverted++;
+    }else{el.classList.add('econ-math-prose');notMath++;}
   }
+  document.documentElement.dataset.econMathConverted=String(converted);
+  document.documentElement.dataset.econMathUnconverted=String(unconverted);
 }
 const src=document.currentScript?.src||new URL('../math-typography.js',location.href).href;
 function start(){
-  const css=document.createElement('link');css.rel='stylesheet';css.href=new URL('math-typography.css?v=20261104b',src).href;document.head.appendChild(css);
+  const css=document.createElement('link');css.rel='stylesheet';
+  css.href=new URL('math-typography.css?v=20261104c',src).href;
+  document.head.appendChild(css);
   normalize();
-  window.MathJax={tex:{inlineMath:[['\\(','\\)'],['$','$']],displayMath:[['\\[','\\]'],['$$','$$']],processEscapes:true,processEnvironments:true,tags:'ams',tagSide:'right',tagIndent:'1em'},svg:{fontCache:'global'},options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']}};
-  const loader=document.createElement('script');loader.src='https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js';loader.async=true;loader.onerror=()=>{document.documentElement.dataset.econMathStatus='load-error';};document.head.appendChild(loader);
+  window.MathJax={
+    tex:{inlineMath:[['\\(','\\)'],['$','$']],
+      displayMath:[['\\[','\\]'],['$$','$$']],processEscapes:true,
+      processEnvironments:true,tags:'ams',tagSide:'right',tagIndent:'1em'},
+    svg:{fontCache:'global'},
+    options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']}
+  };
+  const urls=[
+    'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js',
+    'https://unpkg.com/mathjax@3.2.2/es5/tex-svg.js'
+  ];
+  const load=at=>{
+    if(at>=urls.length){document.documentElement.dataset.econMathStatus='cdn-error';return;}
+    const node=document.createElement('script');node.src=urls[at];node.async=true;
+    node.onerror=()=>load(at+1);
+    node.onload=()=>{
+      if(!window.MathJax||!window.MathJax.startup||!window.MathJax.typesetPromise){
+        document.documentElement.dataset.econMathStatus='runtime-error';return;
+      }
+      window.MathJax.startup.promise.then(()=>
+        window.MathJax.typesetPromise(
+          [...document.querySelectorAll('main .formula,main .equation,article .formula,article .equation')]
+        )
+      ).then(()=>{document.documentElement.dataset.econMathStatus='ready';})
+       .catch(()=>{document.documentElement.dataset.econMathStatus='typeset-error';});
+    };
+    document.head.appendChild(node);
+  };
+  load(0);
 }
-if(document.readyState==='complete')start();else window.addEventListener('load',start,{once:true});
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});
+else start();
 })();
