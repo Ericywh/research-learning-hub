@@ -53,10 +53,14 @@ function start(){
  }
  if(window.MathJax?.typesetPromise)window.MathJax.typesetPromise([article]).catch(()=>{});
 
+ // The shared reader builds the single responsive lesson index on published pages.
+ // Keep this legacy navigation only for standalone previews without that reader.
+ if (!b.hasAttribute("data-course-lesson")) {
  const sections=[...article.querySelectorAll(":scope > section")].filter(x=>x.querySelector("h2,h3"));
  const nav=holder.querySelector(":scope > nav")||document.createElement("nav");if(!nav.parentElement){nav.className="econ-aside";nav.setAttribute("aria-label","课内导航");holder.prepend(nav)}
  if(!nav.querySelector("a")){const heading=document.createElement("div");heading.className="econ-aside-title";heading.textContent="本课阅读目录";nav.append(heading);
  sections.forEach((section,i)=>{const h=section.querySelector("h2,h3");if(!section.id)section.id="section-"+(i+1);const a=document.createElement("a");a.href="#"+section.id;a.textContent=h.textContent.trim().slice(0,31);nav.append(a)})}
+ }
  // The build-level lesson reader handles all code blocks; avoid duplicate toolbars.
  // Without the build-level reader (static HTML previews), use native closed disclosures.
  if (!b.hasAttribute("data-course-lesson")) {
