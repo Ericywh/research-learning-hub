@@ -34,4 +34,10 @@ for l in [l for ch in catalog['chapters'] for l in ch['lessons']]:
         assert len(re.findall(r'<pre>',s))==2,l['id']
     assert 'math-typography.js' in s,l['id']
     assert all(t in s for t in ['Stata','Python','答案']),l['id']
-print('PASS: 120 archive hashes, 120 original headings/status/sections, 36 modules, all local v2 and rewritten-lecture links')
+home=(C/'index.html').read_text(encoding='utf8')
+extension=(V/'index.html').read_text(encoding='utf8')
+assert 'name="course-default" content="legacy-120"' in home and 'id="catalog"' in home and 'id="results"' in home
+assert 'href="v2/"' in home and 'data-module-check="M36"' not in home
+assert len(set(re.findall(r'href="modules/(M\d{2})\.html"',extension)))==36
+assert 'href="../#catalog"' in extension
+print('PASS: canonical 120-lesson home, 36-module extension, archive, lesson structures and links')
