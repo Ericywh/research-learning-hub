@@ -164,3 +164,13 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 })();
 /* Shared per-lesson read/unread status; separate from exercise completion. */
 (() => { const here = document.currentScript && document.currentScript.src; if (!here) return; const s = document.createElement("script"); s.src = new URL("../../assets/reading-status.js?v=20261030a", here).href; s.defer = true; document.head.appendChild(s); })();
+
+/* Shared econometrics mathematical typography, including all 36 revised modules. */
+(() => {
+  const here = document.currentScript?.src;
+  if (!here || !/\/econometrics\/v2\//.test(location.pathname)) return;
+  const s = document.createElement('script');
+  s.src = new URL('../math-typography.js?v=20261104', here).href;
+  s.defer = true;
+  document.head.appendChild(s);
+})();
