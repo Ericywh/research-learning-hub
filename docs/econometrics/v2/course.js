@@ -174,3 +174,28 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   s.defer = true;
   document.head.appendChild(s);
 })();
+
+/* Standalone 36-module visual system and canonical 120-course navigation. */
+(() => {
+  const here = document.currentScript?.src;
+  if (!here || !/\/econometrics\/v2\//.test(location.pathname)) return;
+  if (!document.querySelector('link[data-econ-editorial]')) {
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = new URL('./editorial.css?v=20261104', here).href;
+    link.dataset.econEditorial = '1';
+    document.head.appendChild(link);
+  }
+  const addMainCourse = () => {
+    const header = document.querySelector('body>header');
+    if (!header || header.querySelector('.return-classic')) return;
+    const a = document.createElement('a');
+    a.className = 'return-classic';
+    a.href = /\/v2\/modules\//.test(location.pathname) ? '../../#catalog' : '../#catalog';
+    a.textContent = '原120课主课程';
+    header.appendChild(a);
+  };
+  if (document.readyState === 'loading')
+    document.addEventListener('DOMContentLoaded', addMainCourse, {once:true});
+  else addMainCourse();
+})();
