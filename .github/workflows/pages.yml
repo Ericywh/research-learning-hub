@@ -992,7 +992,7 @@ jobs:
             const file=path.join('docs/econometrics',lesson.url);
             const html=fs.readFileSync(file,'utf8');
             const heading='第'+lesson.chapter+'章·第'+lesson.section+'节｜'+lesson.title;
-            if(!html.includes(heading)||!html.includes('<span class="badge">已授课</span>')||
+            if(!html.includes(heading)||!html.includes('math-typography.js')||
                !html.includes('name="course-status" content="taught"')||
                (html.match(/<section class="paper"/g)||[]).length!==7||
                (html.match(/<pre>/g)||[]).length!==2||
@@ -1004,7 +1004,7 @@ jobs:
                 const response=await fetch(base+lesson.url+suffix,{signal:AbortSignal.timeout(20000)});
                 if(response.status!==200)throw Error('HTTP '+response.status);
                 const deployed=await response.text();
-                if(!deployed.includes(heading)||!deployed.includes('<span class="badge">已授课</span>')||
+                if(!deployed.includes(heading)||!deployed.includes('math-typography.js')||
                    !deployed.includes('name="course-status" content="taught"')||
                    !deployed.includes('Stata')||!deployed.includes('Python')||
                    !deployed.includes('答案')||
