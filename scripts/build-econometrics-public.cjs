@@ -86,41 +86,28 @@ fs.writeFileSync(path.join(out, 'catalog.js'),
   'window.ECON_COURSE=' + JSON.stringify(course, null, 2) + ';\n');
 
 
-// The canonical homepage is the 6-week / 36-module learning path.
-// The original 10-chapter / 120-lesson outline remains available only through
-// course-archive.html; its catalog publication flags are not the homepage state.
+// The canonical homepage is the original 10-chapter / 120-lesson plan.
+// The optional, independent 36-module extension lives at v2/.
 const catalogAvailableCount = lessons.filter(l => l.published && l.url).length;
 if (catalogAvailableCount === 0) throw Error('No archived econometrics lessons');
 const homePath = path.join(out, 'index.html');
 const archivePath = path.join(out, 'course-archive.html');
+const extensionPath = path.join(out, 'v2', 'index.html');
 const home = fs.readFileSync(homePath, 'utf8');
 const archive = fs.readFileSync(archivePath, 'utf8');
-for (const marker of [
-  'name="course-revision" content="2026-10-27-v2"',
-  'data-module-check="M01"',
-  'data-module-check="M36"',
-  'href="v2/modules/M01.html"',
-  'href="v2/modules/M36.html"',
-  'href="course-archive.html"'
-]) {
-  if (!home.includes(marker)) throw Error('36-module mainline homepage missing marker: ' + marker);
+const extension = fs.readFileSync(extensionPath, 'utf8');
+for(const marker of ['name="course-default" content="legacy-120"','id="catalog"','id="results"','href="v2/"','src="catalog.js']){
+  if(!home.includes(marker))throw Error('Original 120-lesson homepage missing: '+marker);
 }
-if (home.includes('id="catalog"') || home.includes('id="current-lesson-link"') ||
-    home.includes('工资影响因素综合实操') || home.includes('第2章·第15节')) {
-  throw Error('Legacy 120-lesson directory or its latest lesson is incorrectly displayed on the mainline homepage.');
+if(home.includes('data-module-check="M36"'))throw Error('36-module grid must not replace the original 120-course homepage');
+const moduleIds = new Set([...extension.matchAll(/href=["']modules\/(M\d{2})\.html["']/g)].map(m=>m[1]));
+if(moduleIds.size!==36)throw Error('Independent 36-module index must link all modules: '+moduleIds.size);
+for(let i=1;i<=36;i++){
+  const id='M'+String(i).padStart(2,'0');
+  if(!fs.existsSync(path.join(out,'v2','modules',id+'.html')))throw Error('Missing independent module: '+id);
 }
-const moduleIds = new Set([...home.matchAll(/href=["']v2\/modules\/(M\d{2})\.html["']/g)].map(m => m[1]));
-if (moduleIds.size !== 36) throw Error('Mainline homepage must link to all 36 modules; found ' + moduleIds.size);
-for (let i = 1; i <= 36; i++) {
-  const id = 'M' + String(i).padStart(2, '0');
-  if (!fs.existsSync(path.join(out, 'v2', 'modules', id + '.html'))) {
-    throw Error('Mainline module page missing: ' + id);
-  }
-}
-if (!archive.includes('id="catalog"') || !archive.includes('id="results"') ||
-    !archive.includes('name="legacy-current-lesson"')) {
-  throw Error('Legacy 120-course archive is missing its catalogue or progress marker.');
-}
+if(!archive.includes('id="catalog"')||!archive.includes('id="results"')||
+   !archive.includes('name="legacy-current-lesson"'))throw Error('Legacy archive missing index or last-taught marker');
 const currentEntry = archive.match(/<meta\s+name=["']legacy-current-lesson["']\s+content=["'](\d{2}-\d{2})["']/i);
 if (!currentEntry) throw Error('Legacy archive must explicitly identify the latest taught lesson for historical exports.');
 const currentId = currentEntry[1];
@@ -137,6 +124,6 @@ if (!currentHtml.includes(expectedHeading) ||
     !currentHtml.includes('id="s7"')) {
   throw Error('Legacy current lesson is not a complete taught lesson: ' + currentId);
 }
-console.log('Econometrics homepage: verified 36-module mainline; original 120-lesson directory is isolated at course-archive.html.');
+console.log('Econometrics homepage: original 120 lessons are canonical; independent 36-module course at v2/.');
 console.log('Legacy archive pages available=' + catalogAvailableCount + '; explicitly tracked legacy taught lesson=' +
   currentId + ' (course lesson ' + current.number + '); automatically discovered=' + (detected.join(',') || 'none') + '.');
