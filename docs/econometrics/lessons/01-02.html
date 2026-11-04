@@ -29,7 +29,7 @@ footer{margin-top:30px;font-size:13px;color:#71828a}
 
 
 
-<link rel="stylesheet" href="../course-theme.css?v=20261025-3"><script defer src="../course-theme.js?v=20261025-3"></script><script defer src="../math-typography.js?v=20261104"></script></head><body><aside style="padding:18px;background:#fff8e6"><strong>原课正文保留，已修复原HTML重复嵌入与公式配置错误。</strong><p>本课尚未独立实质重写。请优先学习：<a href="../v2/modules/M01.html">M01</a>　。<a href="../archive/2026-10-27/lessons/01-02.html">完整原始文件</a>。</p><p><a href="../v2/concepts.html">术语不熟悉？先读基础概念讲解册</a></p></aside>
+<link rel="stylesheet" href="../course-theme.css?v=20261025-3"><script defer src="../course-theme.js?v=20261025-3"></script><script defer src="../math-typography.js?v=20261104d"></script></head><body><aside style="padding:18px;background:#fff8e6"><strong>原课正文保留，已修复原HTML重复嵌入与公式配置错误。</strong><p>本课尚未独立实质重写。请优先学习：<a href="../v2/modules/M01.html">M01</a>　。<a href="../archive/2026-10-27/lessons/01-02.html">完整原始文件</a>。</p><p><a href="../v2/concepts.html">术语不熟悉？先读基础概念讲解册</a></p></aside>
 <header class="top"><a href="../../study/#courses">← 统一学习门户</a><a href="../">计量经济学120天 · 完整课程目录 →</a></header>
 <main class="wrap">
 <section class="hero">
@@ -53,10 +53,14 @@ footer{margin-top:30px;font-size:13px;color:#71828a}
 <section class="paper" id="theory">
 <h2>二、核心理论与公式</h2>
 <h3>2.1 相关系数</h3>
-<div class="formula">ρ<sub>XY</sub> = Cov(X,Y) / [σ<sub>X</sub>σ<sub>Y</sub>]</div>
+<div class="formula">\begin{equation}
+\rho_{XY}=\frac{\operatorname{Cov}(X,Y)}{\sigma_X\sigma_Y}
+\end{equation}</div>
 <p>皮尔逊相关系数描述两个随机变量之间的线性关联，需要两个变量有有限且非零的方差。系数的范围是−1至1；正值代表正向线性关联，负值代表负向线性关联，接近零表示线性关联较弱，但并不排除非线性关系。相关系数不能确定因果方向。</p>
 <h3>2.2 反事实与潜在结果</h3>
-<div class="formula">τ<sub>100</sub> = E[P<sub>i</sub>(w+100) − P<sub>i</sub>(w)]</div>
+<div class="formula">\begin{equation}
+\tau_{100}=\mathbb E[P_i(w+100)-P_i(w)]
+\end{equation}</div>
 <p>如果能够清楚定义“仅以某种方式将汽车重量从w磅增加100磅”的干预，P<sub>i</sub>(w)与P<sub>i</sub>(w+100)分别表示两种干预状态下的潜在价格。两者之差是单位层面的因果效应，对适当总体取平均得到平均效应。</p>
 <p>这一表达还依赖干预的一致性与潜在结果可比较性。对于同一辆汽车，我们通常只能观察到其中一个实际状态下的价格，无法同时观察两种状态。这就是<strong>反事实问题</strong>。此外，添加配重与升级动力系统造成的增重，可能是不同干预，不能简单认为100磅是唯一要素。</p>
 </section>

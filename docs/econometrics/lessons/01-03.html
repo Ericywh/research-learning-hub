@@ -9,7 +9,7 @@
 </style>
 
 
-<link rel="stylesheet" href="../course-theme.css?v=20261025-3"><script defer src="../course-theme.js?v=20261025-3"></script><script defer src="../math-typography.js?v=20261104"></script></head><body><aside style="padding:18px;background:#fff8e6"><strong>原课正文保留，已修复原HTML重复嵌入与公式配置错误。</strong><p>本课尚未独立实质重写。请优先学习：<a href="../v2/modules/M01.html">M01</a>　。<a href="../archive/2026-10-27/lessons/01-03.html">完整原始文件</a>。</p><p><a href="../v2/concepts.html">术语不熟悉？先读基础概念讲解册</a></p></aside>
+<link rel="stylesheet" href="../course-theme.css?v=20261025-3"><script defer src="../course-theme.js?v=20261025-3"></script><script defer src="../math-typography.js?v=20261104d"></script></head><body><aside style="padding:18px;background:#fff8e6"><strong>原课正文保留，已修复原HTML重复嵌入与公式配置错误。</strong><p>本课尚未独立实质重写。请优先学习：<a href="../v2/modules/M01.html">M01</a>　。<a href="../archive/2026-10-27/lessons/01-03.html">完整原始文件</a>。</p><p><a href="../v2/concepts.html">术语不熟悉？先读基础概念讲解册</a></p></aside>
 <header class="top"><a href="../../study/#courses">← 统一学习门户</a><a href="../">计量经济学120天 · 完整课程目录 →</a></header>
 <main class="wrap">
 <section class="hero">
@@ -42,10 +42,14 @@
 <section class="paper" id="formula">
 <h2>三、核心理论与公式</h2>
 <h3>3.1 面板数据的双下标</h3>
-<div class="formula">y<sub>it</sub> &nbsp; (i=1,…,N; t=1,…,T)</div>
+<div class="formula">\begin{equation}
+y_{it},\qquad i=1,\ldots,N,\quad t=1,\ldots,T
+\end{equation}</div>
 <p><em>i</em> 表示企业，<em>t</em> 表示年份。例如，y<sub>1,1935</sub> 代表第1家企业在1935年的投资。若每家企业都有相同T期、单位—时间组合不重复、数据无缺口，就构成<strong>平衡面板</strong>，记录数为 <strong>N × T</strong>。若一些企业缺少年份，则属于非平衡面板，不能简单套用N×T。</p>
 <h3>3.2 企业内部的相邻期变化</h3>
-<div class="formula">Δy<sub>it</sub> = y<sub>it</sub> − y<sub>i,t−1</sub></div>
+<div class="formula">\begin{equation}
+\Delta y_{it}=y_{it}-y_{i,t-1}
+\end{equation}</div>
 <p>这个差值比较同一家企业相邻两个观察年份的投资。只有两个时期确实相邻、数值口径一致时，才能解释为“一年内变化”；在存在年份缺口时必须先核对年份。差分有时能去掉不随时间改变的企业特征，却不一定消除随时间变化的混杂因素。</p>
 </section>
 <section class="paper" id="data">

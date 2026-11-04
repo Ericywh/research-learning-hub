@@ -5,7 +5,7 @@
 
 
 
-<link rel="stylesheet" href="../course-theme.css?v=20261025-3"><script defer src="../course-theme.js?v=20261025-3"></script><script defer src="../math-typography.js?v=20261104"></script></head>
+<link rel="stylesheet" href="../course-theme.css?v=20261025-3"><script defer src="../course-theme.js?v=20261025-3"></script><script defer src="../math-typography.js?v=20261104d"></script></head>
 <body><aside class="archive-note" style="margin:20px auto;padding:18px;max-width:940px;background:#fff8e6;border-left:4px solid #b98c3b"><strong>本课保留原稿，尚未逐课实质重写。</strong><p>历史“已授课”为展示状态，不代表本次审校通过。旧文可能包含评审指出的占位代码或重复练习，请优先学习对应新模块：<a href="../v2/modules/M02.html">M02</a>　</p><a href="../archive/2026-10-27/lessons/02-03.html">未经修改的历史档案</a> · <a href="../v2/review.html">修订范围</a><p><a href="../v2/concepts.html">术语不熟悉？先读基础概念讲解册</a></p></aside><header><a href="../">← 计量经济学120天课程目录</a><a href="../../study/">学习中心</a></header><main>
 <h1>第2章·第3节｜拟合优度R²</h1><div class="meta">全课程第10课 / 共120课　·　授课日期：2026-10-16　·　学习时间：10—15分钟</div>
 <p>全课程第10课 / 共120课<br>预计学习时间：10—15分钟<br>授课日期：2026年10月16日（Asia/Taipei）</p>
@@ -13,10 +13,13 @@
 <p>上一课用普通最小二乘法（OLS）寻找一条使样本残差平方和最小的直线。本课回答一个不同的问题：<strong>这条直线究竟解释了价格差异的多少？</strong><br>假设两组汽车价格相差很大，而仅凭重量作出的预测仍与真实价格相距甚远，即使回归斜率显著，模型也未必能准确描述样本价格差异。拟合优度（goodness of fit）衡量模型预测值与样本观测值的贴合程度；最常用的指标是决定系数 R²。<br>理解 R² 可以从两个基准出发：完全不考虑重量时，用所有汽车的样本平均价格预测每辆车；加入重量后，改用回归模型预测。如果回归后的残差平方和明显小于“只预测均值”产生的平方误差，说明重量对样本内价格差异具有一定解释能力。注意，这里的“解释”是统计意义上的拟合，而不是因果识别。</p>
 <h3>二、核心理论与公式</h3>
 <p>对<strong>含截距项</strong>的OLS回归，定义总平方和 SST、残差平方和 SSE，则</p>
-<div class="formula">$$R^2=1-\frac{SSE}{SST}
-=1-\frac{\sum_{i=1}^{n}(y_i-\hat y_i)^2}{\sum_{i=1}^{n}(y_i-\bar y)^2}.$$</div>
+<div class="formula">\begin{equation}
+R^2=1-\frac{SSE}{SST} =1-\frac{\sum_{i=1}^{n}(y_i-\hat y_i)^2}{\sum_{i=1}^{n}(y_i-\bar y)^2}.
+\end{equation}</div>
 <p>其中，$<code>\hat y_i</code>$ 是模型预测值，$<code>\bar y</code>$ 是样本均值，n 为有效观测数。要求因变量不全相同，即 SST\&gt;0。含截距OLS的样本内 R² 介于0与1之间；越接近1，样本内平方误差相对于均值基准减少得越多。<br>普通 R² 有一个局限：在同一样本、同一因变量下，给OLS模型添加解释变量不会使 R² 下降，即使新变量没有实质价值。因此常同时报告<strong>调整后的决定系数</strong>：</p>
-<div class="formula">$$\bar R^2=1-(1-R^2)\frac{n-1}{n-k-1},$$</div>
+<div class="formula">\begin{equation}
+\bar R^2=1-(1-R^2)\frac{n-1}{n-k-1},
+\end{equation}</div>
 <p>k 为不含截距的解释变量个数，要求 n\&gt;k+1。调整后 R² 对增加变量施加自由度惩罚，可能为负，但仍不是预测性能或因果有效性的充分证据。</p>
 <h3>三、实证案例与数据</h3>
 <p>继续使用 Stata 官方1978年汽车示例数据 <code>auto.dta</code>，原始数据包含74条车型记录。被解释变量 <code>price</code> 为美元价格，<code>weight</code> 为磅重，<code>mpg</code> 为每加仑英里数。为了比较模型，统一保留这三个变量均非缺失的记录，并定义 <code>weight100=weight/100</code>。<br>比较模型A（价格对重量的一元回归）与模型B（在模型A基础上加入油耗指标 <code>mpg</code>）。两模型的因变量、估计样本与OLS方法保持一致，均使用HC1异方差稳健标准误。我们观察 R² 和调整后 R² 的变化，但不把新增变量带来的拟合改善解释为因果效应。数据来源：<a href="https://www.stata.com/links/stata-basics/example-datasets/" target="_blank" rel="noopener noreferrer">Stata官方示例数据说明</a>；<a href="https://www.stata-press.com/data/r19/auto.dta" target="_blank" rel="noopener noreferrer">Stata Press auto.dta</a>。</p>

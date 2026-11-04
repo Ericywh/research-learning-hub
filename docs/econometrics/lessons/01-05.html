@@ -1,7 +1,7 @@
 <!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>第1章·第5节｜完整计量研究流程</title><meta name="description" content="计量经济学120天第5课：研究设计、估计目标、数据质量、Stata及Python实操"><style>:root{background:#f7f8f6;color:#243c49;font:15px/1.9 system-ui,"Noto Sans SC",sans-serif}*{box-sizing:border-box}body{margin:0}header,main,footer{max-width:980px;margin:auto;padding:15px}header{display:flex;gap:22px}a{color:#176e68}h1{font-size:clamp(25px,4vw,36px)}h2{font-size:21px;color:#1b5550}.hero{background:#e8f3ee;border-radius:15px;padding:28px;margin:18px 0}section{background:#fff;border:1px solid #dde7e6;border-radius:13px;padding:24px;margin:16px 0}.formula{background:#f1f6f5;padding:17px;text-align:center;overflow-x:auto}pre{background:#192d3b;color:#e5f1f5;overflow-x:auto;padding:18px;border-radius:9px;font:12px/1.8 monospace}nav{display:flex;gap:24px;flex-wrap:wrap}footer{font-size:13px;color:#637982}@media(max-width:650px){section{padding:16px}.hero{padding:18px}main{padding:10px}}</style>
 
 
-<link rel="stylesheet" href="../course-theme.css?v=20261025-3"><script defer src="../course-theme.js?v=20261025-3"></script><script defer src="../math-typography.js?v=20261104"></script></head><body><aside class="archive-note" style="margin:20px auto;padding:18px;max-width:940px;background:#fff8e6;border-left:4px solid #b98c3b"><strong>本课保留原稿，尚未逐课实质重写。</strong><p>历史“已授课”为展示状态，不代表本次审校通过。旧文可能包含评审指出的占位代码或重复练习，请优先学习对应新模块：<a href="../v2/modules/M01.html">M01</a>　</p><a href="../archive/2026-10-27/lessons/01-05.html">未经修改的历史档案</a> · <a href="../v2/review.html">修订范围</a><p><a href="../v2/concepts.html">术语不熟悉？先读基础概念讲解册</a></p></aside><header><a href="../">← 120节课程目录</a><a href="../../study/#courses">学习中心</a></header><main><div class="hero"><small>CHAPTER 01 · LESSON 05 / 120</small><h1>第1章·第5节｜完整计量研究流程</h1><p>2026年10月11日 · 10—15分钟</p><p>从研究问题到估计目标、数据、模型与透明复现</p><small>上一讲：统计推断基础｜下一讲：Stata基础操作与数据分析</small></div><section><p><strong>第1章·第5节｜完整计量研究流程（全课程第5课 / 共120课）</strong></p>
+<link rel="stylesheet" href="../course-theme.css?v=20261025-3"><script defer src="../course-theme.js?v=20261025-3"></script><script defer src="../math-typography.js?v=20261104d"></script></head><body><aside class="archive-note" style="margin:20px auto;padding:18px;max-width:940px;background:#fff8e6;border-left:4px solid #b98c3b"><strong>本课保留原稿，尚未逐课实质重写。</strong><p>历史“已授课”为展示状态，不代表本次审校通过。旧文可能包含评审指出的占位代码或重复练习，请优先学习对应新模块：<a href="../v2/modules/M01.html">M01</a>　</p><a href="../archive/2026-10-27/lessons/01-05.html">未经修改的历史档案</a> · <a href="../v2/review.html">修订范围</a><p><a href="../v2/concepts.html">术语不熟悉？先读基础概念讲解册</a></p></aside><header><a href="../">← 120节课程目录</a><a href="../../study/#courses">学习中心</a></header><main><div class="hero"><small>CHAPTER 01 · LESSON 05 / 120</small><h1>第1章·第5节｜完整计量研究流程</h1><p>2026年10月11日 · 10—15分钟</p><p>从研究问题到估计目标、数据、模型与透明复现</p><small>上一讲：统计推断基础｜下一讲：Stata基础操作与数据分析</small></div><section><p><strong>第1章·第5节｜完整计量研究流程（全课程第5课 / 共120课）</strong></p>
 <p>2026年10月11日，预计10—15分钟。</p>
 <p><strong>今日研究问题：</strong> 汽车越重，价格是否越高？怎样把一句直觉判断变成可以复现、且不过度宣称因果关系的计量研究？</p>
 </section><section><h2>一、从一个疑问到研究设计</h2>
@@ -17,10 +17,14 @@
 <p><strong>第七步，透明报告。</strong> 记录数据URL、软件代码、变量单位、筛选规则、标准误类型和识别局限。不显著结果也应如实报告，避免只呈现支持原先判断的模型。</p>
 </section><section><h2>三、两个核心公式</h2>
 <p><strong>公式1：控制变量后的线性关联模型</strong></p>
-<div class="formula">$$ \mathrm{price}_i=\alpha+\beta\mathrm{weight}_i+\gamma\mathrm{length}_i+\delta\mathrm{foreign}_i+u_i $$</div>
+<div class="formula">\begin{equation}
+\mathrm{price}_i=\alpha+\beta\mathrm{weight}_i+\gamma\mathrm{length}_i+\delta\mathrm{foreign}_i+u_i
+\end{equation}</div>
 <p>β的单位是美元/磅；100β表示在其他模型变量不变时，重量相差100磅对应的线性预测价格差。OLS可以估计线性投影系数；要赋予β因果含义，还需要定义干预、论证混杂控制等更强的识别条件。</p>
 <p><strong>公式2：潜在结果框架中的因果目标</strong></p>
-<div class="formula">$$ \tau_{100}=E\left[Y_i(w+100)-Y_i(w)\right] $$</div>
+<div class="formula">\begin{equation}
+\tau_{100}=E\left[Y_i(w+100)-Y_i(w)\right]
+\end{equation}</div>
 <p>Y_i(w)表示将同一辆车的重量通过明确方式设为w时的潜在价格。添加配重与升级发动机可能是不同干预，不能只凭“增加100磅”定义因果处理。观察性截面回归中的显著系数无法自动识别这个因果量。</p>
 </section><section><h2>四、可手算的数值示意</h2>
 <p>假设某个<strong>完全虚构的教学模型</strong>估计β=2.5美元/磅，那么重量差100磅对应的模型预测价格差为2.5×100=250美元。这个数字只说明单位换算，<strong>既不是本课真实汽车数据的估计值，也不是增重的因果效应</strong>。实际数值必须通过软件读取。</p>

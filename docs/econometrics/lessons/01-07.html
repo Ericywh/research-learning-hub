@@ -7,7 +7,7 @@
 
 
 
-<link rel="stylesheet" href="../course-theme.css?v=20261025-3"><script defer src="../course-theme.js?v=20261025-3"></script><script defer src="../math-typography.js?v=20261104"></script></head><body><aside class="archive-note" style="margin:20px auto;padding:18px;max-width:940px;background:#fff8e6;border-left:4px solid #b98c3b"><strong>本课保留原稿，尚未逐课实质重写。</strong><p>历史“已授课”为展示状态，不代表本次审校通过。旧文可能包含评审指出的占位代码或重复练习，请优先学习对应新模块：<a href="../v2/modules/M01.html">M01</a>　</p><a href="../archive/2026-10-27/lessons/01-07.html">未经修改的历史档案</a> · <a href="../v2/review.html">修订范围</a><p><a href="../v2/concepts.html">术语不熟悉？先读基础概念讲解册</a></p></aside>
+<link rel="stylesheet" href="../course-theme.css?v=20261025-3"><script defer src="../course-theme.js?v=20261025-3"></script><script defer src="../math-typography.js?v=20261104d"></script></head><body><aside class="archive-note" style="margin:20px auto;padding:18px;max-width:940px;background:#fff8e6;border-left:4px solid #b98c3b"><strong>本课保留原稿，尚未逐课实质重写。</strong><p>历史“已授课”为展示状态，不代表本次审校通过。旧文可能包含评审指出的占位代码或重复练习，请优先学习对应新模块：<a href="../v2/modules/M01.html">M01</a>　</p><a href="../archive/2026-10-27/lessons/01-07.html">未经修改的历史档案</a> · <a href="../v2/review.html">修订范围</a><p><a href="../v2/concepts.html">术语不熟悉？先读基础概念讲解册</a></p></aside>
 <header><a href="../">← 120节课程目录</a><a href="../../study/#courses">学习中心</a></header>
 <main>
 <div class="hero"><div class="eyebrow">CHAPTER 01 · LESSON 07 / 120</div>
@@ -20,14 +20,14 @@
 <p>研究“汽车越重，价格是否越高”时，原始数据通常不能直接用于回归：需要先检查字段、删除相关变量的缺失值、构造统一单位、观察分布，再估计模型。Python中的 <strong>DataFrame（数据框）</strong> 是按行、列组织的数据表：每行是一辆车型记录，每列是价格、重量等变量。<code>pandas</code> 负责数据整理，<code>matplotlib</code> 负责画图，<code>statsmodels</code> 负责统计建模。Python的优势不是自动得出因果结论，而是可以把数据处理和估计写成一份可重复运行的程序。</p>
 </section><section><h2>二、核心理论与公式</h2>
 <p>描述统计先回答“样本的典型水平是多少”。价格的样本均值为：</p>
-<div class="equation">$$
+<div class="equation">\begin{equation}
 \bar p=\frac{1}{n}\sum_{i=1}^{n}price_i
-$$</div>
+\end{equation}</div>
 <p>其中 <span class="inline-math">\(n\)</span> 是非缺失价格记录数。均值容易受到极端高价车型影响，因此还应检查最小值、最大值与标准差。</p>
 <p>随后考察控制产地类别后的条件线性关系：</p>
-<div class="equation">$$
+<div class="equation">\begin{equation}
 price_i=\alpha+\beta\,weight100_i+\gamma\,foreign_i+u_i
-$$</div>
+\end{equation}</div>
 <p><code>weight100=weight/100</code>，所以 <span class="inline-math">\(\beta\)</span> 的单位是“美元/100磅”；<code>foreign</code> 为0/1变量，<span class="inline-math">\(\gamma\)</span> 表示在重量相同的模型条件下，进口与国产车型的预测价格差。OLS（普通最小二乘法）选择系数，使样本残差平方和最小。系数可被计算需要解释变量无完全共线性；要作可信的统计推断还需合适的抽样与误差条件；要作因果解释则需要更强的外生性等识别条件。</p>
 </section><section><h2>三、实证案例与数据</h2>
 <p>继续使用Stata官方1978年汽车数据 <code>auto.dta</code>，原始数据有<strong>74条车型记录、12个变量</strong>，属于截面数据。研究变量为价格 <code>price</code>（美元）、重量 <code>weight</code>（磅）、产地 <code>foreign</code>（0国产、1进口）。Stata用 <code>sysuse auto</code> 读取；Python从<a href="https://www.stata-press.com/data/r19/auto.dta" rel="noopener noreferrer">Stata Press公开数据地址</a>读取同一数据。两端都只保留这三个变量的完整观测，避免软件默认缺失处理造成样本不一致。官方示例报告原始样本的平均价格约6165美元、平均重量约3019磅；本课不虚构未运行的回归系数。</p>

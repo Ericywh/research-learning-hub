@@ -1,7 +1,7 @@
 <!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>第1章·第6节｜Stata基础操作与数据分析</title><meta name="description" content="计量经济学120天系统课程第6课，官方汽车数据、Stata与Python复现、统计直觉和两道自测"><style>:root{background:#f7f8f6;color:#243c49;font:15px/1.9 system-ui,-apple-system,"Noto Sans SC",sans-serif}*{box-sizing:border-box}body{margin:0}header,main,footer{max-width:980px;margin:auto;padding:15px}header{display:flex;gap:22px;flex-wrap:wrap;font-size:13px}a{color:#176e68}h1{font-size:clamp(25px,4vw,36px);line-height:1.4}h2{font-size:21px;color:#1b5550}.hero{background:#e8f3ee;border-radius:15px;padding:28px;margin:18px 0}section{background:white;border:1px solid #dde7e6;border-radius:13px;padding:24px;margin:16px 0}.formula{background:#f1f6f5;border-radius:8px;padding:18px;overflow-x:auto;text-align:center}pre{background:#192d3b;color:#e5f1f5;overflow-x:auto;padding:18px;border-radius:9px;font:12px/1.8 monospace}p code{background:#edf2f1;padding:2px 4px;border-radius:3px}nav{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}footer{font-size:13px;color:#637982}@media(max-width:650px){section{padding:16px}.hero{padding:18px}main{padding:10px}}</style>
 
 
-<link rel="stylesheet" href="../course-theme.css?v=20261025-3"><script defer src="../course-theme.js?v=20261025-3"></script><script defer src="../math-typography.js?v=20261104"></script></head><body><aside class="archive-note" style="margin:20px auto;padding:18px;max-width:940px;background:#fff8e6;border-left:4px solid #b98c3b"><strong>本课保留原稿，尚未逐课实质重写。</strong><p>历史“已授课”为展示状态，不代表本次审校通过。旧文可能包含评审指出的占位代码或重复练习，请优先学习对应新模块：<a href="../v2/modules/M01.html">M01</a>　</p><a href="../archive/2026-10-27/lessons/01-06.html">未经修改的历史档案</a> · <a href="../v2/review.html">修订范围</a><p><a href="../v2/concepts.html">术语不熟悉？先读基础概念讲解册</a></p></aside><header><a href="../">← 120节课程目录</a><a href="../../study/#courses">学习中心</a></header><main><div class="hero"><small>CHAPTER 01 · LESSON 06 / 120</small><h1>第1章·第6节｜Stata基础操作与数据分析</h1><p>2026年10月12日 · 10—15分钟</p><p><strong>核心问题：</strong>如何在Stata中将原始数据转换为可复现的计量分析？</p><small>上一讲：完整计量研究流程；下一讲：Python基础操作与数据分析</small></div><section><p>2026年10月12日｜全课程第6课 / 共120课｜建议学习10—15分钟。</p>
+<link rel="stylesheet" href="../course-theme.css?v=20261025-3"><script defer src="../course-theme.js?v=20261025-3"></script><script defer src="../math-typography.js?v=20261104d"></script></head><body><aside class="archive-note" style="margin:20px auto;padding:18px;max-width:940px;background:#fff8e6;border-left:4px solid #b98c3b"><strong>本课保留原稿，尚未逐课实质重写。</strong><p>历史“已授课”为展示状态，不代表本次审校通过。旧文可能包含评审指出的占位代码或重复练习，请优先学习对应新模块：<a href="../v2/modules/M01.html">M01</a>　</p><a href="../archive/2026-10-27/lessons/01-06.html">未经修改的历史档案</a> · <a href="../v2/review.html">修订范围</a><p><a href="../v2/concepts.html">术语不熟悉？先读基础概念讲解册</a></p></aside><header><a href="../">← 120节课程目录</a><a href="../../study/#courses">学习中心</a></header><main><div class="hero"><small>CHAPTER 01 · LESSON 06 / 120</small><h1>第1章·第6节｜Stata基础操作与数据分析</h1><p>2026年10月12日 · 10—15分钟</p><p><strong>核心问题：</strong>如何在Stata中将原始数据转换为可复现的计量分析？</p><small>上一讲：完整计量研究流程；下一讲：Python基础操作与数据分析</small></div><section><p>2026年10月12日｜全课程第6课 / 共120课｜建议学习10—15分钟。</p>
 <p><strong>今日研究问题：如何使用Stata，将原始数据转化为可检查、可分析、可复现的计量研究结果？</strong></p>
 <p>上一课讨论完整计量研究流程。本课将该流程真正落实到软件操作中，继续使用Stata官方1978年汽车数据，研究车型重量与价格的统计关系。</p>
 </section><section><h2>一、理解Stata的基本工作逻辑</h2>
@@ -19,14 +19,14 @@
 </section><section><h2>三、数据检查、样本筛选与核心公式</h2>
 <p><code>describe</code>用于检查变量类型、标签与数据结构；<code>summarize</code>计算均值和标准差；<code>misstable summarize</code>核查缺失；<code>tabulate</code>对分类变量计数；<code>count</code>报告观测条数；<code>generate</code>创建新变量。官方示例里，维修记录<code>rep78</code>只有69个有效值，而<code>price</code>与<code>weight</code>都有74个有效值，说明控制变量改变时样本量可能变化。每一项筛选都应明确记录。</p>
 <p>基础模型为：</p>
-<div class="formula">$$
+<div class="formula">\begin{equation}
 price_i=\alpha+\beta weight_i+u_i
-$$</div>
+\end{equation}</div>
 <p>其中β的单位为美元/磅，描述重量相差1磅时的模型线性预测价格差。OLS斜率需要重量存在样本内变异才能定义；要进行统计推断则还需关于误差、抽样与外生性等适当假设，不能将β直接称为因果效应。</p>
 <p>为便于解释，转换为每100磅：</p>
-<div class="formula">$$
+<div class="formula">\begin{equation}
 weight100_i=weight_i/100,\qquad \beta_{100}=100\beta
-$$</div>
+\end{equation}</div>
 <p>如果纯教学假设β=2美元/磅，则β₁₀₀=200美元/百磅。该200只是单位换算示例，不是实际回归结果，更不能解释成把同一辆车增重100磅将使其售价提高200美元。</p>
 </section><section><h2>四、Stata可运行完整实操</h2>
 <p>在Do-file Editor新建 <code>lesson_06.do</code>，把以下所有命令放在同一程序内执行。<code>replace</code>会覆盖同名文件，建议先使用单独的练习目录。</p>
