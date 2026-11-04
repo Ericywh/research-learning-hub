@@ -151,7 +151,6 @@ jobs:
             { file: '_site/study/index.html', regex: /src="\.\.\/math\/catalog\.js(?:\?[^"]*)?"/g, target: '../math/catalog.js' },
             { file: '_site/study/index.html', regex: /src="\.\.\/assets\/hub\.js(?:\?[^"]*)?"/g, target: '../assets/hub.js' },
             { file: '_site/econometrics/index.html', regex: /src="catalog\.js(?:\?[^"]*)?"/g, target: 'catalog.js' },
-            { file: '_site/econometrics/v2/index.html', regex: /src="\.\/course\.js(?:\?[^"]*)?"/g, target: './course.js' },
             { file: '_site/econometrics/course-archive.html', regex: /src="catalog\.js(?:\?[^"]*)?"/g, target: 'catalog.js' },
             { file: '_site/cssci/index.html', regex: /src="catalog\.js(?:\?[^"]*)?"/g, target: 'catalog.js' }
           ];
