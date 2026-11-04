@@ -93,7 +93,7 @@ body[data-econ-dark="true"] .lesson-progress-track{background:#3b5065}
 @media(max-width:460px){.lesson-hero{padding:27px 20px}.lesson-hero h1{font-size:31px}.hero-art svg{max-height:220px}.lesson-fact{gap:10px}section.paper{padding:21px 17px}.lesson-nav{margin:14px 0 20px}.reading-scope{font-size:11px;padding:10px}}
 @media print{.lesson-hero,.lesson-fact,.lesson-nav,.exercise-card,.lesson-progress-panel{background:white!important;box-shadow:none!important;color:black!important}.lesson-nav,.hero-art{display:none!important}.exercise-answer{display:block!important}.exercise-answer>summary{display:none}.exercise-answer>p{display:block!important}.lesson-facts{break-inside:avoid}}
 
-</style><script defer src="../math-typography.js?v=20261104"></script></head><body>
+</style><script defer src="../math-typography.js?v=20261104d"></script></head><body>
 <header><a href="../course-archive.html">← 历史课程目录</a><a href="../v2/">36模块强化路径</a><a href="../archive/2026-10-27/">旧版课程档案</a></header>
 <main><div class="hero lesson-hero"><div class="hero-copy"><p class="lesson-eyebrow">ECONOMETRICS · CHAPTER 02 · APPLIED LAB</p><div class="hero-badges"><span class="badge">已授课</span><span class="badge">2026-10-29</span></div>
 <h1>第2章·第15节｜工资影响因素综合实操</h1>
@@ -127,9 +127,13 @@ body[data-econ-dark="true"] .lesson-progress-track{background:#3b5065}
 </section>
 <section class="paper" id="s2" data-note="MODULE 02 / 07"><h2>二、核心理论与公式</h2>
 <p>设 \(wage_i\) 为正的小时工资，\(grade_i\) 为已完成教育年级，\(ttl\_exp_i\) 为累计工作经验年数，\(tenure_i\) 为现岗位任职年数，\(union_i\) 和 \(married_i\) 为0/1变量；\(D_{2i},D_{3i}\) 表示种族类别2和3，类别1作为参照组。完整模型为：</p>
-<div class="formula">\[\ln(wage_i)=\beta_0+\beta_1grade_i+\beta_2ttl\_exp_i+\beta_3tenure_i+\gamma_1union_i+\gamma_2married_i+\delta_2D_{2i}+\delta_3D_{3i}+u_i.\]</div>
+<div class="formula">\begin{equation}
+\ln(wage_i)=\beta_0+\beta_1grade_i+\beta_2ttl\_exp_i+\beta_3tenure_i+\gamma_1union_i+\gamma_2married_i+\delta_2D_{2i}+\delta_3D_{3i}+u_i.
+\end{equation}</div>
 <p>在其他解释变量保持不变时，\(\beta_1\) 是教育年级增加一单位对应的<strong>条件平均对数工资差</strong>；对应条件几何平均工资的精确百分比差为：</p>
-<div class="formula">\[100\bigl(e^{\beta_1}-1\bigr)\%,\qquad \text{当 }|\beta_1|\text{ 较小时近似为 }100\beta_1\%.\]</div>
+<div class="formula">\begin{equation}
+100\bigl(e^{\beta_1}-1\bigr)\%,\qquad \text{当 }|\beta_1|\text{ 较小时近似为 }100\beta_1\%.
+\end{equation}</div>
 <p>OLS需设计矩阵满列秩；若要把系数解释为结构性因果效应，还需有可信的外生性和识别论证。HC1稳健协方差针对异方差下的渐近推断，并不修复内生性；在独立抽样及适当矩条件下使用更为合理。</p>
 </section>
 <section class="paper" id="s3" data-note="MODULE 03 / 07"><h2>三、实证案例与数据</h2>

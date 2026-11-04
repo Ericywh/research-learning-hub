@@ -16,7 +16,7 @@ pre{overflow:auto;background:#173247;color:#f2f8fb;border-radius:9px;padding:18p
 pre code{white-space:pre}code:not(pre code){background:#edf2f5;border-radius:3px;padding:1px 4px}
 li{margin:7px 0}.foot{color:#5b6c78;font-size:13px}
 @media(max-width:650px){main{padding:10px}.hero,.paper{padding:18px}pre{font-size:12px}}
-</style><script defer src="../math-typography.js?v=20261104"></script></head><body><main>
+</style><script defer src="../math-typography.js?v=20261104d"></script></head><body><main>
 <p><a href="../index.html">← 返回120课原课程目录</a></p>
 <header class="hero"><span class="badge">已授课</span><p>CHAPTER 3 · DAY 26 / 120 · 2026-11-02</p><h1>第3章·第4节｜双向因果和同时性</h1><p>七模块完整讲义 · 真实公开数据 · Stata / Python · 10—15分钟</p></header>
 <p>授课日期：2026-11-02。全课程第26课 / 共120课。预计学习10—15分钟。</p>
@@ -26,9 +26,13 @@ li{margin:7px 0}.foot{color:#5b6c78;font-size:13px}
 </section>
 <section class="paper" id="s2"><h2>二、核心理论与公式</h2>
 <p>考虑线性供需系统，其中 \(P_i\) 是价格，\(Q_i^d,Q_i^s\) 是需求量和供给量，\(u_i^d,u_i^s\) 分别为需求、供给冲击，\(b,d>0\)：</p>
-<div class="equation">\[Q_i^d=a-bP_i+u_i^d,\qquad Q_i^s=c+dP_i+u_i^s,\qquad Q_i^d=Q_i^s.\]</div>
+<div class="equation">\begin{equation}
+Q_i^d=a-bP_i+u_i^d,\qquad Q_i^s=c+dP_i+u_i^s,\qquad Q_i^d=Q_i^s.
+\end{equation}</div>
 <p>联立均衡条件可得：</p>
-<div class="equation">\[P_i=\frac{a-c+u_i^d-u_i^s}{b+d}.\]</div>
+<div class="equation">\begin{equation}
+P_i=\frac{a-c+u_i^d-u_i^s}{b+d}.
+\end{equation}</div>
 <p>因此价格包含需求冲击 \(u_i^d\)。在冲击相互独立且需求冲击方差非零时，价格与需求方程误差正相关，需求方程的OLS外生性条件失效；其斜率可能比真实的负需求斜率更接近零，甚至变号。推导依赖线性系统、稳定的均衡关系及冲击假设；现实市场还可能存在动态调整、预期与测量误差。</p>
 <p>区分“需求曲线移动”和“沿需求曲线移动”是本课的关键。识别需求弹性通常需要只移动供给、不直接改变需求的外生变异，例如有充分依据的天气冲击；工具变量的相关性和排除限制必须另行论证。</p>
 </section>
