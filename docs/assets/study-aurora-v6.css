@@ -1,0 +1,223 @@
+/* Research Learning Hub — Aurora Deep Teal background
+   CSS-only background treatment; no external image or script dependency.
+   Scoped to the study catalogue page to preserve course-page themes. */
+
+body.study-v2{
+  isolation:isolate;
+  min-height:100vh;
+  color:#e7f3ed!important;
+  background:
+    radial-gradient(ellipse 78vw 62vh at 82% 74%,rgba(37,154,127,.24) 0%,rgba(17,103,94,.13) 42%,transparent 74%),
+    radial-gradient(ellipse 60vw 52vh at 15% 4%,rgba(20,99,97,.24) 0%,transparent 70%),
+    radial-gradient(ellipse 58vw 42vh at 48% 108%,rgba(19,111,105,.20) 0%,transparent 72%),
+    linear-gradient(132deg,#062b33 0%,#073a40 47%,#062f39 100%)!important;
+  background-attachment:fixed!important;
+}
+
+/* Soft aurora light bands and restrained contour lines. */
+body.study-v2::before{
+  content:"";
+  position:fixed;
+  inset:-8%;
+  z-index:-1;
+  pointer-events:none;
+  background:
+    radial-gradient(ellipse 52% 19% at 77% 69%,rgba(115,244,194,.19),transparent 72%),
+    radial-gradient(ellipse 45% 17% at 69% 76%,rgba(45,197,155,.17),transparent 73%),
+    radial-gradient(ellipse 42% 15% at 36% 22%,rgba(49,156,145,.13),transparent 74%),
+    linear-gradient(164deg,transparent 42%,rgba(89,220,177,.055) 51%,transparent 63%);
+  filter:blur(18px);
+  opacity:.95;
+}
+body.study-v2::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  opacity:.32;
+  background:
+    repeating-radial-gradient(ellipse 58% 27% at 83% 83%,
+      transparent 0 72px,
+      rgba(157,247,211,.10) 73px 74px,
+      transparent 75px 108px);
+  mask-image:linear-gradient(115deg,transparent 22%,#000 66%,rgba(0,0,0,.5) 100%);
+}
+body.study-v2>header,
+body.study-v2>main,
+body.study-v2>footer{
+  position:relative;
+  z-index:1;
+}
+
+/* Deep translucent navigation bar. */
+.study-v2 .site-header{
+  background:rgba(4,34,40,.82)!important;
+  border-bottom:1px solid rgba(167,229,205,.14)!important;
+  box-shadow:0 8px 28px rgba(0,18,22,.18)!important;
+  backdrop-filter:blur(20px)!important;
+  -webkit-backdrop-filter:blur(20px)!important;
+}
+.study-v2 .identity-title{color:#edf7f1!important;}
+.study-v2 .identity-sub{color:#a9c9ba!important;}
+.study-v2 .identity-icon svg{
+  fill:#8ebc75!important;
+  stroke:#d5ebc8!important;
+}
+.study-v2 .site-nav a{
+  color:#c6ddd2!important;
+  background:transparent!important;
+}
+.study-v2 .site-nav a::before{color:#9fcdb5!important;}
+.study-v2 .site-nav a:hover,
+.study-v2 .site-nav a.nav-current{
+  color:#f4fff8!important;
+  background:linear-gradient(135deg,rgba(45,126,96,.88),rgba(31,103,91,.92))!important;
+  border:1px solid rgba(159,231,195,.20)!important;
+  box-shadow:0 7px 20px rgba(0,20,20,.20)!important;
+}
+.study-v2 .site-nav a:hover::before,
+.study-v2 .site-nav a.nav-current::before{color:#f4fff8!important;}
+.study-v2 .header-bell{color:#c4dfd3!important;}
+.study-v2 .header-avatar{
+  border-color:rgba(194,231,210,.48)!important;
+  box-shadow:0 3px 12px rgba(0,0,0,.28)!important;
+}
+
+/* Section title and supporting text remain legible against the dark canvas. */
+.study-v2 .section-top .eyebrow{
+  color:#9bd9c0!important;
+  letter-spacing:.18em!important;
+}
+.study-v2 .section-top h2{
+  color:#f0f7f2!important;
+  text-shadow:0 2px 18px rgba(0,0,0,.18);
+}
+.study-v2 .section-top p{
+  color:#bdd3c9!important;
+}
+.study-v2 .section-aside{
+  color:#a7d6c0!important;
+}
+
+/* Search and category controls: dark glass shell, bright readable search field. */
+.study-v2 #courses .filter-bar{
+  background:rgba(7,48,53,.78)!important;
+  border:1px solid rgba(159,220,197,.22)!important;
+  box-shadow:0 14px 34px rgba(0,18,22,.19),inset 0 1px 0 rgba(255,255,255,.05)!important;
+  backdrop-filter:blur(16px)!important;
+  -webkit-backdrop-filter:blur(16px)!important;
+}
+.study-v2 #courses .course-search-wrap{
+  background:rgba(246,252,248,.97)!important;
+  border:1px solid rgba(205,231,216,.95)!important;
+  box-shadow:0 4px 14px rgba(0,22,25,.12)!important;
+}
+.study-v2 #courses .search-symbol{color:#32745d!important;}
+.study-v2 #courses .search-input{color:#203e34!important;}
+.study-v2 #courses .search-input::placeholder{color:#81968b!important;}
+.study-v2 #courses .search-submit{
+  background:linear-gradient(135deg,#286d53,#3e9270)!important;
+  color:#f5fff8!important;
+  box-shadow:0 5px 13px rgba(15,71,52,.22)!important;
+}
+.study-v2 #courses .search-submit:hover{
+  background:linear-gradient(135deg,#347e61,#4ca17c)!important;
+}
+.study-v2 #courses .filter{
+  color:#c3ddd0!important;
+}
+.study-v2 #courses .filter::before{color:#9bd0b4!important;}
+.study-v2 #courses .filter:hover{
+  color:#f1fff6!important;
+  background:rgba(142,211,176,.12)!important;
+}
+.study-v2 #courses .filter[aria-pressed="true"]{
+  color:#f6fff9!important;
+  background:linear-gradient(135deg,#2d7657,#39866a)!important;
+  box-shadow:0 5px 14px rgba(0,25,24,.25)!important;
+}
+
+/* Keep course cards light so photography and course information stay prominent. */
+.study-v2 .study-main-column>#courses .course-card,
+.study-v2 .study-main-column>#courses .course-card.course-card-featured{
+  border-color:rgba(205,228,214,.82)!important;
+  box-shadow:0 12px 29px rgba(0,19,22,.20),inset 0 1px 0 rgba(255,255,255,.96)!important;
+}
+.study-v2 .study-main-column>#courses .course-card:hover{
+  border-color:#8dc7a9!important;
+  box-shadow:0 19px 38px rgba(0,18,22,.27)!important;
+}
+.study-v2 .study-main-column>#courses .course-card .course-cover{
+  background:#dce9df!important;
+}
+.study-v2 .study-main-column>#courses .course-card .card-foot{
+  border-top-color:#e1e9e1!important;
+}
+
+/* Harmonize the featured card with the aurora palette while retaining its image. */
+.study-v2 .study-main-column>#courses .course-card.course-card-featured{
+  background:linear-gradient(145deg,#0b4245 0%,#125b55 62%,#1d725d 100%)!important;
+  border-color:rgba(134,207,171,.58)!important;
+}
+.study-v2 .study-main-column>#courses .course-card.course-card-featured .program,
+.study-v2 .study-main-column>#courses .course-card.course-card-featured h3,
+.study-v2 .study-main-column>#courses .course-card.course-card-featured p,
+.study-v2 .study-main-column>#courses .course-card.course-card-featured .progress{
+  color:#effaf3!important;
+}
+.study-v2 .study-main-column>#courses .course-card.course-card-featured .tag{
+  color:#dff4e7!important;
+  background:rgba(231,255,241,.12)!important;
+  border-color:rgba(208,246,222,.22)!important;
+}
+.study-v2 .study-main-column>#courses .course-card.course-card-featured .card-foot{
+  border-top-color:rgba(213,244,224,.22)!important;
+}
+.study-v2 .study-main-column>#courses .course-card.course-card-featured .go{
+  color:#164d3c!important;
+  background:#d8f0df!important;
+}
+
+/* Side dashboard and motivation remain softly illuminated glass/paper cards. */
+.study-v2 .study-side-column>.motivation-panel,
+.study-v2 .study-side-column>.learning-dashboard,
+.study-v2 .study-side-column>#overview,
+.study-v2 .study-side-column>#about{
+  box-shadow:0 13px 32px rgba(0,18,22,.17)!important;
+}
+.study-v2 .study-side-column>.learning-dashboard{
+  border-color:rgba(215,234,220,.88)!important;
+  background:rgba(250,253,249,.96)!important;
+}
+.study-v2 .study-side-column>.motivation-panel{
+  border-color:rgba(218,238,219,.78)!important;
+}
+.study-v2 .site-footer{
+  color:#a9c5b8!important;
+  border-top-color:rgba(167,220,197,.18)!important;
+}
+.study-v2 .site-footer a{color:#c4e6d2!important;}
+.study-v2 .photo-credit{color:#9bb9aa!important;}
+
+@media(max-width:760px){
+  body.study-v2{
+    background-attachment:scroll!important;
+  }
+  body.study-v2::before,
+  body.study-v2::after{
+    position:absolute;
+    min-height:100%;
+  }
+  .study-v2 .site-header{
+    background:rgba(4,34,40,.91)!important;
+  }
+  .study-v2 .section-top h2{font-size:27px!important;}
+  .study-v2 #courses .filter-bar{border-radius:15px!important;}
+}
+@media(prefers-reduced-motion:reduce){
+  body.study-v2::before,
+  body.study-v2::after{filter:none;}
+  .study-v2 #courses .search-submit,
+  .study-v2 .site-nav a{transition:none!important;}
+}
