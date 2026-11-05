@@ -4,7 +4,7 @@
 /* Approved learning-hub layout: wide photo hero and a right-side reminder card. */
 .study-v2 .study-main-column > .hero-photo img{object-position:center 48%!important;filter:saturate(.88) brightness(.82)!important}
 .study-v2 .study-side-column > .motivation-panel{
- background:linear-gradient(90deg,rgba(248,249,238,.96) 0%,rgba(248,249,238,.84) 55%,rgba(248,249,238,.28) 100%),url("https://images.pexels.com/photos/13933559/pexels-photo-13933559.jpeg?auto=compress&dpr=1&h=750&w=1260") center 44%/cover no-repeat!important
+ background:linear-gradient(90deg,rgba(248,249,238,.96) 0%,rgba(248,249,238,.84) 55%,rgba(248,249,238,.28) 100%),url("https://images.pexels.com/photos/4094183/pexels-photo-4094183.jpeg?auto=compress&dpr=1&h=750&w=1260") center 44%/cover no-repeat!important
 }
 
 /* Three single-column photographic course covers. */
