@@ -550,3 +550,155 @@ body.study-v2::after{
   }
   body.study-v2::before{opacity:.75!important;}
 }
+
+
+/* ==========================================================
+   Theme 01 — Bookish Library · symmetric side photography
+   Match the selected reference: mirrored library wings on both
+   sides, with the learning interface held in a bright glass panel.
+   ========================================================== */
+body.study-v2{
+  isolation:isolate!important;
+  min-height:100vh!important;
+  color:#304438!important;
+  background:#f5f1e8!important;
+}
+
+/* Use the same library photograph on both wings; the right wing is
+   mirrored so the left and right edges form a deliberate symmetry. */
+body.study-v2::before,
+body.study-v2::after{
+  content:""!important;
+  position:fixed!important;
+  top:0!important;
+  bottom:0!important;
+  width:50vw!important;
+  height:100vh!important;
+  z-index:-1!important;
+  pointer-events:none!important;
+  background-image:
+    linear-gradient(180deg,rgba(250,247,237,.05),rgba(250,247,237,.14)),
+    url("https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=2400&q=88")!important;
+  background-size:cover!important;
+  background-position:left center!important;
+  background-repeat:no-repeat!important;
+  filter:saturate(.92) brightness(1.06)!important;
+  opacity:1!important;
+  mask-image:none!important;
+}
+body.study-v2::before{
+  left:0!important;
+  right:auto!important;
+  transform:none!important;
+}
+body.study-v2::after{
+  left:50%!important;
+  right:auto!important;
+  transform:scaleX(-1)!important;
+  transform-origin:center center!important;
+}
+
+/* The central site frame is intentionally narrower so the photo
+   remains visible as two balanced side panels on wide screens. */
+:root{
+  --study-library-frame:min(1360px,calc(100% - clamp(40px,28vw,480px)));
+}
+.study-v2 .site-header{
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+}
+.study-v2 .site-header>.container.site-bar{
+  width:var(--study-library-frame)!important;
+  max-width:1360px!important;
+  min-height:68px!important;
+  margin:0 auto!important;
+  padding:0 18px!important;
+  box-sizing:border-box!important;
+  background:rgba(253,251,246,.88)!important;
+  border:1px solid rgba(255,255,255,.76)!important;
+  border-top:0!important;
+  border-radius:0 0 13px 13px!important;
+  box-shadow:0 7px 22px rgba(48,43,32,.09)!important;
+  backdrop-filter:blur(15px)!important;
+  -webkit-backdrop-filter:blur(15px)!important;
+}
+.study-v2 main.study-layout{
+  width:var(--study-library-frame)!important;
+  max-width:1360px!important;
+  margin:0 auto!important;
+  padding:17px 18px 28px!important;
+  box-sizing:border-box!important;
+  background:rgba(253,251,246,.83)!important;
+  border-left:1px solid rgba(255,255,255,.78)!important;
+  border-right:1px solid rgba(255,255,255,.78)!important;
+  border-bottom:1px solid rgba(255,255,255,.82)!important;
+  border-radius:0 0 20px 20px!important;
+  box-shadow:0 18px 44px rgba(49,43,32,.12)!important;
+  backdrop-filter:blur(8px)!important;
+  -webkit-backdrop-filter:blur(8px)!important;
+}
+.study-v2 .site-footer{
+  margin:0!important;
+  padding:0 0 30px!important;
+  background:transparent!important;
+  border:0!important;
+}
+.study-v2 .site-footer>.container.footer-inner{
+  width:var(--study-library-frame)!important;
+  max-width:1360px!important;
+  margin:0 auto!important;
+  padding:17px 22px 21px!important;
+  box-sizing:border-box!important;
+  background:rgba(253,251,246,.84)!important;
+  border-left:1px solid rgba(255,255,255,.78)!important;
+  border-right:1px solid rgba(255,255,255,.78)!important;
+  border-bottom:1px solid rgba(255,255,255,.82)!important;
+  border-radius:0 0 18px 18px!important;
+  box-shadow:0 12px 30px rgba(49,43,32,.09)!important;
+  backdrop-filter:blur(10px)!important;
+  -webkit-backdrop-filter:blur(10px)!important;
+}
+
+/* Keep course cards crisp against the translucent central frame. */
+.study-v2 .study-main-column>.hero,
+.study-v2 #courses .filter-bar,
+.study-v2 .study-side-column>.motivation-panel,
+.study-v2 .study-side-column>.learning-dashboard{
+  box-shadow:0 8px 22px rgba(52,61,43,.075)!important;
+}
+
+/* Tablet: expand the usable content width while retaining the
+   mirrored photographic edges wherever the viewport allows. */
+@media(max-width:1240px){
+  .study-v2 .site-header>.container.site-bar,
+  .study-v2 main.study-layout,
+  .study-v2 .site-footer>.container.footer-inner{
+    width:calc(100% - 32px)!important;
+  }
+}
+@media(max-width:760px){
+  body.study-v2::before,
+  body.study-v2::after{
+    background-position:left center!important;
+    filter:saturate(.88) brightness(1.04)!important;
+  }
+  .study-v2 .site-header>.container.site-bar,
+  .study-v2 main.study-layout,
+  .study-v2 .site-footer>.container.footer-inner{
+    width:calc(100% - 20px)!important;
+  }
+  .study-v2 .site-header>.container.site-bar{
+    min-height:60px!important;
+    padding:0 11px!important;
+  }
+  .study-v2 main.study-layout{
+    padding:12px 11px 20px!important;
+    background:rgba(253,251,246,.89)!important;
+  }
+  .study-v2 .site-footer>.container.footer-inner{
+    padding:14px 13px 18px!important;
+  }
+}
