@@ -5,7 +5,7 @@
 | 用途 | 摄影者 | 原始图片页面 | 使用位置 |
 |---|---|---|---|
 | 学习中心主横幅：绿色阅读灯与图书馆 | Ilya Semenov | https://unsplash.com/photos/a-green-desk-lamp-in-a-library-B8HRcng8Ibg | `study/index.html` 主横幅 |
-| 激励语录：绿叶与打开的书 | Gülru Sude | https://www.pexels.com/photo/green-dried-plants-on-the-book-page-13933559/ | 首页激励语录背景 |
+| 激励语录：绿叶与打开的书 | Rubenstein Rebello | https://www.pexels.com/photo/opened-book-placed-in-shadow-near-plant-4094183/ | 首页激励语录背景 |
 | 公众表达：空剧场与话筒 | Allie Reefer | https://www.pexels.com/photo/black-microphone-in-close-up-photography-9547593/ | 公众表达课程卡片与主页封面 |
 | 英语表达：学术教材 | Anete Lusina | https://www.pexels.com/photo/stack-of-textbooks-on-wooden-table-5239563/ | 英语表达课程卡片与主页封面 |
 | 计量经济学：电脑与数据图表 | Nataliya Vaitkevich | https://www.pexels.com/photo/a-notebook-beside-a-laptop-with-graphs-6120209/ | 计量经济学课程卡片与主页封面 |
