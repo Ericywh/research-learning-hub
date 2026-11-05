@@ -212,3 +212,120 @@ body.study-v2>footer{
   .study-v2 #courses .search-submit,
   .study-v2 .site-nav a{transition:none!important;}
 }
+
+
+/* Forest Gradient refinement — lighter, quieter sage canvas.
+   Keeps the forest identity while reducing overall darkness and saturation. */
+body.study-v2{
+  color:#30483a!important;
+  background:
+    radial-gradient(ellipse 68vw 54vh at 84% 12%,rgba(173,194,151,.25) 0%,rgba(173,194,151,.09) 38%,transparent 72%),
+    radial-gradient(ellipse 66vw 48vh at 12% 76%,rgba(128,157,117,.15) 0%,transparent 72%),
+    radial-gradient(ellipse 54vw 40vh at 55% 108%,rgba(180,196,160,.17) 0%,transparent 72%),
+    linear-gradient(132deg,#eef1e8 0%,#e7ede2 42%,#dfe8da 72%,#d7e2d2 100%)!important;
+}
+body.study-v2::before{
+  background:
+    radial-gradient(ellipse 48% 22% at 78% 16%,rgba(248,250,239,.42),transparent 74%),
+    radial-gradient(ellipse 46% 18% at 23% 72%,rgba(174,196,158,.18),transparent 75%),
+    radial-gradient(ellipse 42% 16% at 61% 88%,rgba(206,217,188,.20),transparent 75%),
+    linear-gradient(158deg,transparent 38%,rgba(255,255,245,.12) 51%,transparent 65%);
+  filter:blur(21px);
+  opacity:.82;
+}
+body.study-v2::after{
+  opacity:.15;
+  background:
+    repeating-radial-gradient(ellipse 62% 30% at 84% 17%,
+      transparent 0 76px,
+      rgba(111,139,100,.10) 77px 78px,
+      transparent 79px 116px),
+    linear-gradient(122deg,transparent 28%,rgba(132,157,119,.045) 51%,transparent 76%);
+}
+
+/* Lighter header with dark, high-contrast navigation text. */
+.study-v2 .site-header{
+  background:rgba(247,249,242,.91)!important;
+  border-bottom:1px solid rgba(105,130,96,.18)!important;
+  box-shadow:0 6px 22px rgba(40,62,39,.08)!important;
+}
+.study-v2 .identity-title{color:#294332!important;}
+.study-v2 .identity-sub{color:#71816b!important;}
+.study-v2 .identity-icon svg{
+  fill:#8da578!important;
+  stroke:#456443!important;
+}
+.study-v2 .site-nav a{color:#455d48!important;}
+.study-v2 .site-nav a::before{color:#6c8764!important;}
+.study-v2 .site-nav a:hover,
+.study-v2 .site-nav a.nav-current{
+  color:#fbfff5!important;
+  background:linear-gradient(135deg,#4c704f,#718b65)!important;
+  border:1px solid rgba(83,116,76,.18)!important;
+  box-shadow:0 5px 15px rgba(49,76,45,.13)!important;
+}
+.study-v2 .header-bell{color:#526d51!important;}
+.study-v2 .header-avatar{
+  border-color:rgba(110,139,96,.42)!important;
+  box-shadow:0 2px 8px rgba(40,62,39,.10)!important;
+}
+
+/* Restore dark forest typography on the lighter page canvas. */
+.study-v2 .section-top .eyebrow{color:#66805d!important;}
+.study-v2 .section-top h2{
+  color:#263e30!important;
+  text-shadow:none!important;
+}
+.study-v2 .section-top p{color:#647565!important;}
+.study-v2 .section-aside{color:#637c60!important;}
+
+/* Pale sage filter tray; selected category remains a restrained forest accent. */
+.study-v2 #courses .filter-bar{
+  background:rgba(229,236,223,.88)!important;
+  border:1px solid rgba(151,172,137,.34)!important;
+  box-shadow:0 10px 25px rgba(47,68,43,.08),inset 0 1px 0 rgba(255,255,255,.68)!important;
+}
+.study-v2 #courses .course-search-wrap{
+  background:rgba(250,251,246,.98)!important;
+  border:1px solid rgba(211,222,203,.96)!important;
+  box-shadow:0 3px 10px rgba(44,65,41,.07)!important;
+}
+.study-v2 #courses .search-symbol{color:#5c7957!important;}
+.study-v2 #courses .search-input{color:#2d4435!important;}
+.study-v2 #courses .search-input::placeholder{color:#879485!important;}
+.study-v2 #courses .filter{color:#526b53!important;}
+.study-v2 #courses .filter::before{color:#748d6a!important;}
+.study-v2 #courses .filter:hover{
+  color:#314c37!important;
+  background:rgba(122,153,109,.13)!important;
+}
+.study-v2 #courses .filter[aria-pressed="true"]{
+  color:#fbfff5!important;
+  background:linear-gradient(135deg,#567653,#78916d)!important;
+  box-shadow:0 4px 11px rgba(53,81,48,.15)!important;
+}
+
+/* Reduce the heaviness of card shadows against the softer canvas. */
+.study-v2 .study-main-column>#courses .course-card,
+.study-v2 .study-main-column>#courses .course-card.course-card-featured{
+  box-shadow:0 9px 23px rgba(40,59,36,.10),inset 0 1px 0 rgba(255,255,255,.96)!important;
+}
+.study-v2 .study-main-column>#courses .course-card:hover{
+  box-shadow:0 14px 30px rgba(40,59,36,.15)!important;
+}
+.study-v2 .study-side-column>.motivation-panel,
+.study-v2 .study-side-column>.learning-dashboard,
+.study-v2 .study-side-column>#overview,
+.study-v2 .study-side-column>#about{
+  box-shadow:0 9px 24px rgba(40,59,36,.09)!important;
+}
+.study-v2 .site-footer{
+  color:#687b68!important;
+  border-top-color:rgba(113,141,101,.22)!important;
+}
+.study-v2 .site-footer a{color:#496849!important;}
+.study-v2 .photo-credit{color:#71816d!important;}
+
+@media(max-width:760px){
+  .study-v2 .site-header{background:rgba(247,249,242,.96)!important;}
+}
