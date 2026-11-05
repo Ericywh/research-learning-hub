@@ -705,58 +705,32 @@ body.study-v2::after{
 
 
 /* ==========================================================
-   Reference 05 — Forest Morning Light (林间晨光)
-   Match the selected sample: bright green woodland, warm sun
-   rays, and a pale translucent central learning panel.
-   Forest photograph: Unsplash photo by Johannes Plenio.
+   Reference 05 — Exact uploaded Forest Morning reference
+   Use the supplied screenshot-derived forest image as the
+   actual page background. Do not mirror or replace the photo.
    ========================================================== */
 :root{
-  --study-forest-frame:min(1500px,74vw);
+  --study-forest-frame:min(1500px,76vw);
 }
 body.study-v2{
   isolation:isolate!important;
   min-height:100vh!important;
   color:#294734!important;
-  background:#dce8d2!important;
-  background-image:none!important;
+  background-color:#e7eddf!important;
+  background-image:url("../assets/forest-morning-reference.webp")!important;
+  background-position:center top!important;
+  background-size:100vw 100vh!important;
+  background-repeat:no-repeat!important;
+  background-attachment:fixed!important;
 }
 body.study-v2::before,
 body.study-v2::after{
-  content:""!important;
-  display:block!important;
-  position:fixed!important;
-  z-index:-1!important;
-  top:0!important;
-  bottom:0!important;
-  width:50vw!important;
-  height:100vh!important;
-  pointer-events:none!important;
-  background-image:
-    linear-gradient(180deg,rgba(248,251,232,.025),rgba(28,68,34,.10)),
-    url("https://images.unsplash.com/photo-1523712999610-f77fbcfc3843?auto=format&fit=crop&w=2560&q=88")!important;
-  /* Both sides use the same half-image; the right side is mirrored
-     so the visible forest wings remain balanced around the glass panel. */
-  background-size:100vw 100vh!important;
-  background-position:left center!important;
-  background-repeat:no-repeat!important;
-  filter:saturate(1.04) brightness(1.08) contrast(.98)!important;
-  opacity:1!important;
-  mask-image:none!important;
-}
-body.study-v2::before{
-  left:0!important;
-  right:auto!important;
-  transform:none!important;
-}
-body.study-v2::after{
-  left:auto!important;
-  right:0!important;
-  transform:scaleX(-1)!important;
-  transform-origin:center center!important;
+  content:none!important;
+  display:none!important;
 }
 
-/* The header, course area and footer form one pale, continuous
-   glass surface; the woodland remains visible around both sides. */
+/* The central page surface follows the large pale glass panel
+   in the reference image; the forest remains visible at both sides. */
 .study-v2 .site-header{
   position:sticky!important;
   top:0!important;
@@ -774,8 +748,8 @@ body.study-v2::after{
   margin:0 auto!important;
   padding:0 20px!important;
   box-sizing:border-box!important;
-  background:rgba(250,253,244,.91)!important;
-  border:1px solid rgba(255,255,255,.90)!important;
+  background:rgba(250,253,244,.95)!important;
+  border:1px solid rgba(255,255,255,.92)!important;
   border-bottom:0!important;
   border-radius:19px 19px 0 0!important;
   box-shadow:0 8px 24px rgba(44,70,38,.085)!important;
@@ -788,10 +762,10 @@ body.study-v2::after{
   margin:0 auto!important;
   padding:17px 20px 30px!important;
   box-sizing:border-box!important;
-  background:rgba(250,253,244,.87)!important;
-  border-left:1px solid rgba(255,255,255,.90)!important;
-  border-right:1px solid rgba(255,255,255,.90)!important;
-  border-bottom:1px solid rgba(255,255,255,.92)!important;
+  background:rgba(250,253,244,.94)!important;
+  border-left:1px solid rgba(255,255,255,.92)!important;
+  border-right:1px solid rgba(255,255,255,.92)!important;
+  border-bottom:1px solid rgba(255,255,255,.94)!important;
   border-radius:0 0 20px 20px!important;
   box-shadow:0 18px 44px rgba(44,70,38,.12)!important;
   backdrop-filter:blur(13px)!important;
@@ -809,17 +783,17 @@ body.study-v2::after{
   margin:0 auto!important;
   padding:16px 22px 20px!important;
   box-sizing:border-box!important;
-  background:rgba(250,253,244,.89)!important;
-  border-left:1px solid rgba(255,255,255,.90)!important;
-  border-right:1px solid rgba(255,255,255,.90)!important;
-  border-bottom:1px solid rgba(255,255,255,.92)!important;
+  background:rgba(250,253,244,.94)!important;
+  border-left:1px solid rgba(255,255,255,.92)!important;
+  border-right:1px solid rgba(255,255,255,.92)!important;
+  border-bottom:1px solid rgba(255,255,255,.94)!important;
   border-radius:0 0 20px 20px!important;
   box-shadow:0 12px 30px rgba(44,70,38,.09)!important;
   backdrop-filter:blur(12px)!important;
   -webkit-backdrop-filter:blur(12px)!important;
 }
 
-/* Preserve the existing course cards, controls and page behavior. */
+/* Keep existing cards, controls and course interactions intact. */
 .study-v2 .study-main-column>.hero,
 .study-v2 #courses .filter-bar,
 .study-v2 .study-side-column>.motivation-panel,
@@ -837,7 +811,7 @@ body.study-v2::after{
   }
   .study-v2 main.study-layout{
     padding:12px 11px 20px!important;
-    background:rgba(250,253,244,.95)!important;
+    background:rgba(250,253,244,.97)!important;
   }
   .study-v2 .site-footer>.container.footer-inner{
     padding:14px 13px 18px!important;
