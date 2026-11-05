@@ -477,3 +477,76 @@ body.study-v2::after{
     opacity:.12!important;
   }
 }
+
+
+/* Theme 01 — Bookish Library
+   Full-page photographic library background; keep the photo visible but soften it
+   enough that the learning interface remains comfortable to read. */
+body.study-v2{
+  color:#34483b!important;
+  background-color:#f5f1e8!important;
+  background-image:
+    linear-gradient(
+      180deg,
+      rgba(250,248,241,.38) 0%,
+      rgba(249,247,240,.48) 44%,
+      rgba(250,248,242,.62) 100%
+    ),
+    url("https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=2600&q=88")!important;
+  background-position:center 32%!important;
+  background-size:cover!important;
+  background-repeat:no-repeat!important;
+  background-attachment:fixed!important;
+  background-blend-mode:normal!important;
+}
+
+/* Remove the previous secondary desk photo: this version is library-led. */
+body.study-v2::before{
+  background:
+    linear-gradient(
+      115deg,
+      rgba(255,252,244,.08) 0%,
+      rgba(255,252,244,.02) 42%,
+      rgba(224,213,190,.08) 100%
+    )!important;
+  filter:none!important;
+  opacity:1!important;
+}
+body.study-v2::after{
+  background:
+    radial-gradient(ellipse 48% 32% at 14% 12%,rgba(255,250,235,.15),transparent 76%),
+    linear-gradient(180deg,transparent 58%,rgba(249,246,237,.12) 100%)!important;
+  opacity:1!important;
+  mask-image:none!important;
+}
+
+/* Warm ivory glass surfaces complement the library photography. */
+.study-v2 .site-header{
+  background:rgba(252,249,242,.91)!important;
+  border-bottom:1px solid rgba(151,129,99,.18)!important;
+  box-shadow:0 7px 24px rgba(57,47,34,.08)!important;
+  backdrop-filter:blur(14px)!important;
+  -webkit-backdrop-filter:blur(14px)!important;
+}
+.study-v2 #courses .filter-bar{
+  background:rgba(250,247,239,.91)!important;
+  border-color:rgba(184,168,139,.30)!important;
+  box-shadow:0 10px 27px rgba(66,55,39,.09),inset 0 1px 0 rgba(255,255,255,.78)!important;
+  backdrop-filter:blur(12px)!important;
+  -webkit-backdrop-filter:blur(12px)!important;
+}
+.study-v2 .study-main-column>#courses .course-card,
+.study-v2 .study-main-column>#courses .course-card.course-card-featured,
+.study-v2 .study-side-column>.motivation-panel,
+.study-v2 .study-side-column>.learning-dashboard{
+  box-shadow:0 9px 25px rgba(61,51,37,.10),inset 0 1px 0 rgba(255,255,255,.96)!important;
+}
+
+@media(max-width:760px){
+  body.study-v2{
+    background-attachment:scroll!important;
+    background-position:center top!important;
+    background-size:auto 100vh!important;
+  }
+  body.study-v2::before{opacity:.75!important;}
+}
