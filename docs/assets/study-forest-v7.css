@@ -1,0 +1,214 @@
+/* Research Learning Hub — Forest Gradient theme (#02)
+   Deep forest green, muted sage light and restrained organic contours.
+   CSS-only and scoped to the study catalogue page. */
+
+body.study-v2{
+  isolation:isolate;
+  min-height:100vh;
+  color:#e9f0e6!important;
+  background:
+    radial-gradient(ellipse 68vw 54vh at 84% 12%,rgba(170,194,153,.20) 0%,rgba(115,147,112,.10) 38%,transparent 72%),
+    radial-gradient(ellipse 66vw 48vh at 12% 76%,rgba(77,125,88,.20) 0%,transparent 72%),
+    radial-gradient(ellipse 54vw 40vh at 55% 108%,rgba(139,166,126,.14) 0%,transparent 72%),
+    linear-gradient(132deg,#0b241d 0%,#14382b 42%,#234633 72%,#344f3a 100%)!important;
+  background-attachment:fixed!important;
+}
+
+/* Soft sage light and subtle botanical contour lines. */
+body.study-v2::before{
+  content:"";
+  position:fixed;
+  inset:-8%;
+  z-index:-1;
+  pointer-events:none;
+  background:
+    radial-gradient(ellipse 48% 22% at 78% 16%,rgba(197,216,177,.19),transparent 74%),
+    radial-gradient(ellipse 46% 18% at 23% 72%,rgba(124,165,119,.15),transparent 75%),
+    radial-gradient(ellipse 42% 16% at 61% 88%,rgba(165,190,147,.12),transparent 75%),
+    linear-gradient(158deg,transparent 38%,rgba(186,207,166,.055) 51%,transparent 65%);
+  filter:blur(19px);
+  opacity:.96;
+}
+body.study-v2::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  opacity:.25;
+  background:
+    repeating-radial-gradient(ellipse 62% 30% at 84% 17%,
+      transparent 0 76px,
+      rgba(205,222,185,.105) 77px 78px,
+      transparent 79px 116px),
+    linear-gradient(122deg,transparent 28%,rgba(190,210,173,.035) 51%,transparent 76%);
+  mask-image:linear-gradient(112deg,transparent 12%,#000 62%,rgba(0,0,0,.45) 100%);
+}
+body.study-v2>header,
+body.study-v2>main,
+body.study-v2>footer{
+  position:relative;
+  z-index:1;
+}
+
+/* Dark forest-glass navigation. */
+.study-v2 .site-header{
+  background:rgba(8,29,23,.84)!important;
+  border-bottom:1px solid rgba(190,211,178,.17)!important;
+  box-shadow:0 8px 28px rgba(3,17,12,.20)!important;
+  backdrop-filter:blur(20px)!important;
+  -webkit-backdrop-filter:blur(20px)!important;
+}
+.study-v2 .identity-title{color:#f0f3e9!important;}
+.study-v2 .identity-sub{color:#b8c9ad!important;}
+.study-v2 .identity-icon svg{
+  fill:#a3b98b!important;
+  stroke:#e0e8d2!important;
+}
+.study-v2 .site-nav a{
+  color:#d2ddc9!important;
+  background:transparent!important;
+}
+.study-v2 .site-nav a::before{color:#b1c69f!important;}
+.study-v2 .site-nav a:hover,
+.study-v2 .site-nav a.nav-current{
+  color:#fbfff5!important;
+  background:linear-gradient(135deg,rgba(62,104,69,.94),rgba(88,126,82,.92))!important;
+  border:1px solid rgba(207,224,190,.24)!important;
+  box-shadow:0 7px 20px rgba(5,24,15,.22)!important;
+}
+.study-v2 .site-nav a:hover::before,
+.study-v2 .site-nav a.nav-current::before{color:#fbfff5!important;}
+.study-v2 .header-bell{color:#d0ddc4!important;}
+.study-v2 .header-avatar{
+  border-color:rgba(205,222,190,.50)!important;
+  box-shadow:0 3px 12px rgba(0,0,0,.27)!important;
+}
+
+/* Typography and section labels on the dark canvas. */
+.study-v2 .section-top .eyebrow{
+  color:#c1d1ad!important;
+  letter-spacing:.18em!important;
+}
+.study-v2 .section-top h2{
+  color:#f2f3e9!important;
+  text-shadow:0 2px 18px rgba(0,0,0,.20);
+}
+.study-v2 .section-top p{color:#c4d0bd!important;}
+.study-v2 .section-aside{color:#c0d0ae!important;}
+
+/* Search and filters: forest glass around a light, legible search field. */
+.study-v2 #courses .filter-bar{
+  background:rgba(17,48,35,.84)!important;
+  border:1px solid rgba(190,213,176,.25)!important;
+  box-shadow:0 14px 34px rgba(3,19,13,.22),inset 0 1px 0 rgba(255,255,255,.055)!important;
+  backdrop-filter:blur(16px)!important;
+  -webkit-backdrop-filter:blur(16px)!important;
+}
+.study-v2 #courses .course-search-wrap{
+  background:rgba(248,249,241,.98)!important;
+  border:1px solid rgba(222,229,210,.96)!important;
+  box-shadow:0 4px 14px rgba(8,28,17,.14)!important;
+}
+.study-v2 #courses .search-symbol{color:#55764d!important;}
+.study-v2 #courses .search-input{color:#2c4030!important;}
+.study-v2 #courses .search-input::placeholder{color:#899582!important;}
+.study-v2 #courses .search-submit{
+  background:linear-gradient(135deg,#355e3c,#648153)!important;
+  color:#fbfff5!important;
+  box-shadow:0 5px 13px rgba(26,57,31,.24)!important;
+}
+.study-v2 #courses .search-submit:hover{
+  background:linear-gradient(135deg,#416d48,#789466)!important;
+}
+.study-v2 #courses .filter{color:#d0ddc7!important;}
+.study-v2 #courses .filter::before{color:#b9cba8!important;}
+.study-v2 #courses .filter:hover{
+  color:#fbfff5!important;
+  background:rgba(188,211,168,.13)!important;
+}
+.study-v2 #courses .filter[aria-pressed="true"]{
+  color:#fbfff5!important;
+  background:linear-gradient(135deg,#486e49,#6d8b5e)!important;
+  box-shadow:0 5px 14px rgba(4,24,13,.26)!important;
+}
+
+/* Preserve bright course cards and their photography for comfortable reading. */
+.study-v2 .study-main-column>#courses .course-card,
+.study-v2 .study-main-column>#courses .course-card.course-card-featured{
+  border-color:rgba(216,226,207,.90)!important;
+  box-shadow:0 12px 29px rgba(2,18,12,.23),inset 0 1px 0 rgba(255,255,255,.96)!important;
+}
+.study-v2 .study-main-column>#courses .course-card:hover{
+  border-color:#9caf8b!important;
+  box-shadow:0 19px 38px rgba(2,17,11,.29)!important;
+}
+.study-v2 .study-main-column>#courses .course-card .course-cover{
+  background:#e1e7d9!important;
+}
+.study-v2 .study-main-column>#courses .course-card .card-foot{
+  border-top-color:#e2e8dc!important;
+}
+
+/* Featured course uses a deeper forest cover with restrained sage accents. */
+.study-v2 .study-main-column>#courses .course-card.course-card-featured{
+  background:linear-gradient(145deg,#1d3e2d 0%,#31583b 60%,#496b4c 100%)!important;
+  border-color:rgba(178,201,157,.62)!important;
+}
+.study-v2 .study-main-column>#courses .course-card.course-card-featured .program,
+.study-v2 .study-main-column>#courses .course-card.course-card-featured h3,
+.study-v2 .study-main-column>#courses .course-card.course-card-featured p,
+.study-v2 .study-main-column>#courses .course-card.course-card-featured .progress{
+  color:#f0f3e8!important;
+}
+.study-v2 .study-main-column>#courses .course-card.course-card-featured .tag{
+  color:#e4ecd9!important;
+  background:rgba(240,247,228,.12)!important;
+  border-color:rgba(220,234,203,.24)!important;
+}
+.study-v2 .study-main-column>#courses .course-card.course-card-featured .card-foot{
+  border-top-color:rgba(223,235,207,.24)!important;
+}
+.study-v2 .study-main-column>#courses .course-card.course-card-featured .go{
+  color:#294632!important;
+  background:#e1ead5!important;
+}
+
+/* Keep the learning dashboard and motivation panel softly lit. */
+.study-v2 .study-side-column>.motivation-panel,
+.study-v2 .study-side-column>.learning-dashboard,
+.study-v2 .study-side-column>#overview,
+.study-v2 .study-side-column>#about{
+  box-shadow:0 13px 32px rgba(2,17,11,.19)!important;
+}
+.study-v2 .study-side-column>.learning-dashboard{
+  border-color:rgba(220,229,210,.94)!important;
+  background:rgba(250,251,245,.97)!important;
+}
+.study-v2 .study-side-column>.motivation-panel{
+  border-color:rgba(220,231,205,.82)!important;
+}
+.study-v2 .site-footer{
+  color:#c0cdb6!important;
+  border-top-color:rgba(190,211,178,.20)!important;
+}
+.study-v2 .site-footer a{color:#d8e4cc!important;}
+.study-v2 .photo-credit{color:#b2c1a7!important;}
+
+@media(max-width:760px){
+  body.study-v2{background-attachment:scroll!important;}
+  body.study-v2::before,
+  body.study-v2::after{
+    position:absolute;
+    min-height:100%;
+  }
+  .study-v2 .site-header{background:rgba(8,29,23,.93)!important;}
+  .study-v2 .section-top h2{font-size:27px!important;}
+  .study-v2 #courses .filter-bar{border-radius:15px!important;}
+}
+@media(prefers-reduced-motion:reduce){
+  body.study-v2::before,
+  body.study-v2::after{filter:none;}
+  .study-v2 #courses .search-submit,
+  .study-v2 .site-nav a{transition:none!important;}
+}
