@@ -1,0 +1,74 @@
+/* Study page layout v4
+   Fix the main-column DOM flow explicitly and keep the course catalog in the wide column. */
+.study-v2 main.study-layout {
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 326px;
+  gap:18px;
+  align-items:start;
+}
+.study-v2 main.study-layout > .study-main-column {
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+  grid-column:1;
+  grid-row:1;
+  width:100%;
+  min-width:0;
+}
+.study-v2 main.study-layout > .study-side-column {
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  grid-column:2;
+  grid-row:1;
+  width:100%;
+  min-width:0;
+}
+.study-v2 .study-main-column > .hero,
+.study-v2 .study-main-column > #courses {
+  width:100%;
+  min-width:0;
+}
+.study-v2 .study-main-column > #courses .course-grid {
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:12px;
+}
+.study-v2 .study-main-column > #courses .course-card {
+  grid-column:auto!important;
+  min-width:0;
+}
+.study-v2 .study-side-column > #overview,
+.study-v2 .study-side-column > #about {
+  width:100%;
+  min-width:0;
+}
+.study-v2 .study-side-column > #about { margin:0; }
+@media(max-width:1320px) {
+  .study-v2 main.study-layout {grid-template-columns:minmax(0,1fr) 300px;gap:14px;}
+  .study-v2 .study-main-column > #courses .course-grid {grid-template-columns:repeat(3,minmax(0,1fr));}
+}
+@media(max-width:1040px) {
+  .study-v2 main.study-layout {grid-template-columns:minmax(0,1fr) 285px;gap:12px;}
+  .study-v2 .study-main-column > #courses .course-grid {grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+@media(max-width:850px) {
+  .study-v2 main.study-layout {grid-template-columns:minmax(0,1fr);}
+  .study-v2 main.study-layout > .study-main-column,
+  .study-v2 main.study-layout > .study-side-column {
+    grid-column:1;
+    grid-row:auto;
+  }
+  .study-v2 main.study-layout > .study-side-column {
+    position:static;
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    align-items:start;
+  }
+  .study-v2 .study-side-column > #overview {grid-row:span 2;}
+}
+@media(max-width:600px) {
+  .study-v2 main.study-layout {gap:15px;padding-top:11px;}
+  .study-v2 main.study-layout > .study-side-column {display:flex;flex-direction:column;}
+  .study-v2 .study-main-column > #courses .course-grid {grid-template-columns:1fr;gap:10px;}
+}
