@@ -303,8 +303,8 @@ window.MATH_COURSE={
           "number": 29,
           "title": "条件分布",
           "published": true,
-          "date": "2026-10-29",
-          "url": "lessons/2026-10-29-03-03.html",
+          "date": "2026-11-05",
+          "url": "lessons/2026-11-05-03-03.html",
           "delivered": false
         },
         {
