@@ -72,26 +72,17 @@
     const rest = seconds % 60;
     return [hours, minutes, rest].map((value) => String(value).padStart(2, "0")).join(":");
   }
-  function readingId(href) {
-    try {
-      const url = new URL(href, location.href);
-      if (url.origin !== location.origin) return null;
-      const path = decodeURIComponent(url.pathname).replace(/\/index\.html$/, "/");
-      if (/\/english\/(?:index\.html|week-\d{2}\.html)?$/.test(path) && /^#lesson-\d{1,3}$/.test(url.hash)) {
-        return "english:lesson:" + String(Number(url.hash.slice(8))).padStart(3, "0");
-      }
-      if (!/\/research-learning-hub\//.test(path)) return null;
-      return path.replace(/^.*?\/research-learning-hub\//, "");
-    } catch (_) { return null; }
-  }
   function updateReadingProgress() {
-    const links = Array.from(document.querySelectorAll(".latest-list a[href]"));
-    const ids = Array.from(new Set(links.map((link) => readingId(link.getAttribute("href"))).filter(Boolean)));
-    const completed = ids.filter((id) => storageGet(READ_PREFIX + id) === "1").length;
     const count = $("[data-reading-count]");
-    const bar = $("[data-reading-bar]");
-    if (count) count.textContent = completed + " / " + ids.length;
-    if (bar) bar.style.width = (ids.length ? completed / ids.length * 100 : 0) + "%";
+    if (!count) return;
+    let completed = 0;
+    try {
+      for (let index = 0; index < localStorage.length; index += 1) {
+        const key = localStorage.key(index);
+        if (key && key.startsWith(READ_PREFIX) && localStorage.getItem(key) === "1") completed += 1;
+      }
+    } catch (_) {}
+    count.textContent = completed + " 项";
   }
   function updateTimer() {
     const active = getActive();
