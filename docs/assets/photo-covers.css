@@ -1,0 +1,102 @@
+/* Real-photography course covers for Research Learning Hub.
+   Image source pages and photographers are recorded in photo-sources.md. */
+
+/* Approved learning-hub layout: wide photo hero and a right-side reminder card. */
+.study-v2 .study-main-column > .hero-photo img{object-position:center 48%!important;filter:saturate(.88) brightness(.82)!important}
+.study-v2 .study-side-column > .motivation-panel{
+ background:linear-gradient(90deg,rgba(248,249,238,.96) 0%,rgba(248,249,238,.84) 55%,rgba(248,249,238,.28) 100%),url("https://images.pexels.com/photos/13933559/pexels-photo-13933559.jpeg?auto=compress&dpr=1&h=750&w=1260") center 44%/cover no-repeat!important
+}
+
+/* Three single-column photographic course covers. */
+body[data-course-experience="cssci"] main > .hero,
+body[data-course-experience="classics"] main > .hero,
+body[data-course-experience="math"] main > .hero{
+ position:relative;isolation:isolate;display:flex;flex-direction:column;justify-content:center;
+ min-height:275px;padding:38px 42px;border:1px solid rgba(255,255,255,.22);
+ border-radius:22px;overflow:hidden;color:#fff;box-shadow:0 18px 38px rgba(25,49,36,.15)
+}
+body[data-course-experience="cssci"] main > .hero{background:linear-gradient(90deg,rgba(16,43,32,.94) 0%,rgba(18,53,41,.78) 58%,rgba(18,53,41,.30) 100%),url("https://images.pexels.com/photos/5905439/pexels-photo-5905439.jpeg?auto=compress&dpr=1&h=750&w=1260") center 48%/cover no-repeat!important}
+body[data-course-experience="classics"] main > .hero{background:linear-gradient(90deg,rgba(31,26,21,.91) 0%,rgba(47,34,25,.73) 58%,rgba(47,34,25,.28) 100%),url("https://images.pexels.com/photos/33352856/pexels-photo-33352856/free-photo-of-vintage-leather-bound-books-on-wooden-desk.jpeg?auto=compress&dpr=1&h=750&w=1260") center 52%/cover no-repeat!important}
+body[data-course-experience="math"] main > .hero{background:linear-gradient(90deg,rgba(18,43,38,.93) 0%,rgba(23,57,50,.77) 58%,rgba(23,57,50,.28) 100%),url("https://images.pexels.com/photos/22690750/pexels-photo-22690750/free-photo-of-close-up-of-complicated-equations-written-on-a-blackboard.jpeg?auto=compress&dpr=1&h=750&w=1260") center 48%/cover no-repeat!important}
+body[data-course-experience="cssci"] main > .hero :is(.eyebrow,h1,.lead),
+body[data-course-experience="classics"] main > .hero :is(.eyebrow,h1,.lead),
+body[data-course-experience="math"] main > .hero :is(.kicker,h1,p){color:#fff!important}
+body[data-course-experience="cssci"] main > .hero .eyebrow,
+body[data-course-experience="classics"] main > .hero .eyebrow,
+body[data-course-experience="math"] main > .hero .kicker{color:#e0ebd6!important}
+body[data-course-experience="cssci"] main > .hero .lead{max-width:790px;color:#edf3e9!important}
+body[data-course-experience="classics"] main > .hero h1 em{color:#e8d2a6!important}
+body[data-course-experience="classics"] main > .hero .stat{color:#f5f1e7;background:rgba(255,255,255,.13);border-color:rgba(255,255,255,.24);backdrop-filter:blur(7px)}
+body[data-course-experience="classics"] main > .hero .stat strong{color:#fff}
+
+/* Econometrics: retain its equation panel and two-column composition. */
+body[data-course-experience="econometrics"] main > .hero{
+ position:relative;isolation:isolate;min-height:315px;padding:38px 40px;border:1px solid rgba(255,255,255,.22);
+ border-radius:22px;overflow:hidden;
+ background:linear-gradient(90deg,rgba(16,43,38,.94) 0%,rgba(19,56,48,.82) 58%,rgba(19,56,48,.34) 100%),url("https://images.pexels.com/photos/6120209/pexels-photo-6120209.jpeg?auto=compress&dpr=1&h=750&w=1260") center 48%/cover no-repeat!important;
+ box-shadow:0 18px 38px rgba(25,49,36,.14)
+}
+body[data-course-experience="econometrics"] main > .hero :is(.eyebrow,h1,.lead,.hint){color:#fff!important}
+body[data-course-experience="econometrics"] main > .hero .eyebrow{color:#dcebd8!important}
+body[data-course-experience="econometrics"] main > .hero .lead{color:#edf3ef!important}
+body[data-course-experience="econometrics"] main > .hero .hint{color:#d4e2d9!important}
+body[data-course-experience="econometrics"] main > .hero .hero-box{background:rgba(8,34,31,.58);border:1px solid rgba(255,255,255,.24);color:#fff;backdrop-filter:blur(8px);box-shadow:0 12px 30px rgba(0,0,0,.12)}
+body[data-course-experience="econometrics"] main > .hero .hero-box small{color:#e0eee7}
+
+/* English: keep the existing single hero panel and its side metrics. */
+body[data-course-experience="english"] .hero-main{
+ background:linear-gradient(100deg,rgba(7,31,26,.94) 0%,rgba(13,55,44,.78) 64%,rgba(13,55,44,.35) 100%),url("https://images.pexels.com/photos/5239563/pexels-photo-5239563.jpeg?auto=compress&dpr=1&h=750&w=1260") center 48%/cover no-repeat!important;
+ border:1px solid rgba(255,255,255,.24)
+}
+body[data-course-experience="english"] .hero-main:before{border-color:rgba(240,255,245,.20);box-shadow:0 0 0 55px rgba(240,255,245,.055),0 0 0 108px rgba(240,255,245,.025)}
+
+/* Research frontier: image is integrated into the existing page introduction. */
+body[data-course-experience="frontier"] .ce-page-intro{
+ position:relative;isolation:isolate;display:flex;flex-direction:column;justify-content:center;
+ min-height:260px;padding:34px 38px;border:1px solid rgba(255,255,255,.2);
+ border-radius:20px;overflow:hidden;
+ background:linear-gradient(90deg,rgba(18,43,40,.94) 0%,rgba(25,60,55,.78) 58%,rgba(25,60,55,.32) 100%),url("https://images.pexels.com/photos/34084875/pexels-photo-34084875/free-photo-of-cozy-library-interior-with-open-books-on-table.jpeg?auto=compress&dpr=1&h=750&w=1260") center 48%/cover no-repeat!important;
+ box-shadow:0 16px 34px rgba(25,49,36,.13)
+}
+body[data-course-experience="frontier"] .ce-page-intro :is(.eyebrow,h1,p){color:#fff!important}
+body[data-course-experience="frontier"] .ce-page-intro .eyebrow{color:#dcebd8!important}
+body[data-course-experience="frontier"] .ce-page-intro p{color:#edf3ee!important}
+
+/* PSM-DID: retain the existing title, badges and chapter navigation. */
+body[data-course-experience="psm-did"] .page-hero{
+ position:relative;isolation:isolate;min-height:255px;padding:40px 42px;
+ border:1px solid rgba(255,255,255,.2);border-radius:22px;overflow:hidden;
+ background:linear-gradient(90deg,rgba(14,43,44,.94) 0%,rgba(19,64,64,.78) 58%,rgba(19,64,64,.32) 100%),url("https://images.pexels.com/photos/6285258/pexels-photo-6285258.jpeg?auto=compress&dpr=1&h=750&w=1260") center 48%/cover no-repeat!important;
+ box-shadow:0 17px 36px rgba(20,64,57,.15)
+}
+body[data-course-experience="psm-did"] .page-hero :is(h1,p,.kicker,.main-desc){color:#fff!important}
+body[data-course-experience="psm-did"] .page-hero .visual-badges span{color:#f4faf6;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.23)}
+body[data-course-experience="psm-did"] .page-hero .hero-art{opacity:.18}
+
+/* Public speaking: preserve the purple course identity over an empty-stage photo. */
+body[data-course-experience="speaking"] .rv-hero{
+ color:#fff!important;
+ background:linear-gradient(100deg,rgba(42,22,51,.93) 0%,rgba(66,31,63,.78) 58%,rgba(70,31,56,.34) 100%),url("https://images.pexels.com/photos/9547593/pexels-photo-9547593.jpeg?auto=compress&dpr=1&h=750&w=1260") center 50%/cover no-repeat!important;
+ border-color:rgba(255,255,255,.28)!important;box-shadow:0 16px 34px rgba(42,25,51,.18)!important
+}
+body[data-course-experience="speaking"] .rv-hero :is(h1,.rv-lead,.rv-kicker,.rv-hero>p){color:#fff!important}
+body[data-course-experience="speaking"] .rv-hero .rv-kicker{color:#f5d9ef!important}
+body[data-course-experience="speaking"] .rv-hero .rv-lead{color:#f3eaf2!important}
+body[data-course-experience="speaking"] .rv-hero .rv-badges span{color:#fff;background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.26)}
+body[data-course-experience="speaking"] .rv-hero::before{border-color:rgba(255,255,255,.22);box-shadow:0 0 0 32px rgba(255,255,255,.04),0 0 0 64px rgba(255,255,255,.025)}
+body[data-course-experience="speaking"] .rv-hero-ornament{color:#fff;opacity:.22}
+
+@media(max-width:780px){
+ body[data-course-experience="econometrics"] main > .hero{grid-template-columns:1fr;padding:27px 24px;gap:18px}
+ body[data-course-experience="econometrics"] main > .hero .hero-box{min-height:130px}
+}
+@media(max-width:640px){
+ body[data-course-experience="cssci"] main > .hero,
+ body[data-course-experience="classics"] main > .hero,
+ body[data-course-experience="math"] main > .hero,
+ body[data-course-experience="frontier"] .ce-page-intro,
+ body[data-course-experience="psm-did"] .page-hero{min-height:220px;padding:27px 22px;border-radius:15px}
+ body[data-course-experience="speaking"] .rv-hero{padding:25px 20px!important;border-radius:15px!important}
+ body[data-course-experience="english"] .hero-main{min-height:250px;padding:28px 24px}
+}
+@media(prefers-reduced-motion:reduce){.study-v2 .course-card .course-cover img{transition:none}}
