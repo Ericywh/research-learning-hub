@@ -329,3 +329,106 @@ body.study-v2::after{
 @media(max-width:760px){
   .study-v2 .site-header{background:rgba(247,249,242,.96)!important;}
 }
+
+
+/* Forest Gradient — bright multi-colour botanical atmosphere.
+   Luminous ivory, leaf green, mint, soft sky blue, warm cream and lavender.
+   Colour is distributed across the canvas rather than using one flat tint. */
+body.study-v2{
+  color:#34483b!important;
+  background:
+    radial-gradient(ellipse 60vw 55vh at 12% 12%,rgba(211,236,197,.78) 0%,rgba(211,236,197,.18) 45%,transparent 72%),
+    radial-gradient(ellipse 52vw 48vh at 90% 18%,rgba(202,228,239,.72) 0%,rgba(202,228,239,.16) 46%,transparent 72%),
+    radial-gradient(ellipse 62vw 54vh at 83% 86%,rgba(249,223,198,.62) 0%,rgba(249,223,198,.15) 48%,transparent 74%),
+    radial-gradient(ellipse 48vw 44vh at 17% 90%,rgba(224,216,242,.56) 0%,rgba(224,216,242,.14) 46%,transparent 72%),
+    linear-gradient(125deg,#fbf8ed 0%,#eef4e8 28%,#edf5f3 55%,#f7f0e8 78%,#f3eff8 100%)!important;
+  background-attachment:fixed!important;
+}
+body.study-v2::before{
+  background:
+    radial-gradient(ellipse 48% 26% at 17% 18%,rgba(194,226,177,.48),transparent 74%),
+    radial-gradient(ellipse 44% 24% at 83% 23%,rgba(180,218,235,.43),transparent 74%),
+    radial-gradient(ellipse 48% 24% at 78% 82%,rgba(247,211,178,.38),transparent 75%),
+    radial-gradient(ellipse 42% 23% at 18% 84%,rgba(210,198,233,.34),transparent 75%),
+    linear-gradient(155deg,transparent 31%,rgba(255,255,255,.30) 48%,transparent 65%),
+    linear-gradient(25deg,transparent 45%,rgba(190,220,184,.16) 56%,transparent 68%);
+  filter:blur(24px);
+  opacity:.94;
+}
+body.study-v2::after{
+  opacity:.28;
+  background:
+    repeating-radial-gradient(ellipse 62% 30% at 84% 17%,
+      transparent 0 82px,
+      rgba(123,157,119,.09) 83px 84px,
+      transparent 85px 124px),
+    linear-gradient(118deg,transparent 0 26%,rgba(255,255,255,.26) 39%,transparent 52%),
+    linear-gradient(154deg,transparent 0 55%,rgba(164,205,185,.13) 64%,transparent 76%);
+  mask-image:linear-gradient(112deg,rgba(0,0,0,.18) 0%,#000 48%,rgba(0,0,0,.5) 100%);
+}
+
+/* Bright neutral navigation lets the coloured canvas remain visible. */
+.study-v2 .site-header{
+  background:rgba(255,253,247,.93)!important;
+  border-bottom:1px solid rgba(145,166,133,.18)!important;
+  box-shadow:0 6px 22px rgba(58,76,52,.07)!important;
+}
+.study-v2 .identity-title{color:#304a38!important;}
+.study-v2 .identity-sub{color:#7a8972!important;}
+.study-v2 .identity-icon svg{
+  fill:#9ab783!important;
+  stroke:#4e704b!important;
+}
+.study-v2 .site-nav a{color:#4d624d!important;}
+.study-v2 .site-nav a::before{color:#78936c!important;}
+.study-v2 .site-nav a:hover,
+.study-v2 .site-nav a.nav-current{
+  color:#fffdf6!important;
+  background:linear-gradient(120deg,#527c55,#78986b 58%,#83a58a)!important;
+  border:1px solid rgba(87,126,83,.16)!important;
+  box-shadow:0 5px 14px rgba(60,91,56,.12)!important;
+}
+
+/* A light, gently varied filter tray rather than a dark green block. */
+.study-v2 #courses .filter-bar{
+  background:linear-gradient(115deg,rgba(231,243,225,.94),rgba(232,243,246,.94) 52%,rgba(248,239,229,.94))!important;
+  border:1px solid rgba(184,204,177,.46)!important;
+  box-shadow:0 9px 23px rgba(63,85,59,.07),inset 0 1px 0 rgba(255,255,255,.82)!important;
+}
+.study-v2 #courses .course-search-wrap{
+  background:rgba(255,255,251,.98)!important;
+  border-color:rgba(216,226,207,.94)!important;
+}
+.study-v2 #courses .filter{color:#526b53!important;}
+.study-v2 #courses .filter::before{color:#819a72!important;}
+.study-v2 #courses .filter:hover{
+  color:#314d39!important;
+  background:rgba(157,190,143,.17)!important;
+}
+.study-v2 #courses .filter[aria-pressed="true"]{
+  color:#fffdf6!important;
+  background:linear-gradient(120deg,#5d8057,#85a277)!important;
+  box-shadow:0 4px 11px rgba(65,96,57,.14)!important;
+}
+
+/* Keep the cards bright and distinct from the multicolour page background. */
+.study-v2 .study-main-column>#courses .course-card,
+.study-v2 .study-main-column>#courses .course-card.course-card-featured{
+  box-shadow:0 8px 22px rgba(59,77,53,.09),inset 0 1px 0 rgba(255,255,255,.98)!important;
+}
+.study-v2 .study-main-column>#courses .course-card:hover{
+  box-shadow:0 13px 29px rgba(59,77,53,.14)!important;
+}
+.study-v2 .study-side-column>.motivation-panel,
+.study-v2 .study-side-column>.learning-dashboard,
+.study-v2 .study-side-column>#overview,
+.study-v2 .study-side-column>#about{
+  box-shadow:0 8px 23px rgba(59,77,53,.08)!important;
+}
+.study-v2 .site-footer{color:#687b68!important;}
+.study-v2 .site-footer a{color:#496849!important;}
+
+@media(max-width:760px){
+  body.study-v2{background-attachment:scroll!important;}
+  .study-v2 .site-header{background:rgba(255,253,247,.97)!important;}
+}
