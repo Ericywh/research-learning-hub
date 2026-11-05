@@ -163,6 +163,13 @@
     dailyTotals.forEach((value, key) => {
       if (key >= weekStartKey && key <= dayKey(now)) weekTotal += value;
     });
+    const sessionCountEl = $("[data-session-count]");
+    if (sessionCountEl) sessionCountEl.textContent = String(sessions.length);
+    const share = total > 0 ? Math.round(weekTotal / total * 100) : 0;
+    const shareEl = $("[data-week-share]");
+    const shareBar = $("[data-week-share-bar]");
+    if (shareEl) shareEl.textContent = share + "%";
+    if (shareBar) shareBar.style.width = share + "%";
     const totalEl = $("[data-total-time]");
     const weekEl = $("[data-week-time]");
     const streakEl = $("[data-study-streak]");
