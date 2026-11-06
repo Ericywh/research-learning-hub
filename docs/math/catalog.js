@@ -313,9 +313,9 @@ window.MATH_COURSE={
           "number": 30,
           "title": "条件期望与回归函数",
           "published": true,
-          "date": "2026-10-29",
-          "url": "lessons/2026-10-29-03-04.html",
-          "delivered": false
+          "date": "2026-11-06",
+          "url": "lessons/2026-11-06-03-04.html",
+          "delivered": true
         },
         {
           "chapter": 3,
