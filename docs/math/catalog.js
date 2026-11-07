@@ -323,9 +323,9 @@ window.MATH_COURSE={
           "number": 31,
           "title": "全期望公式",
           "published": true,
-          "date": "2026-10-29",
-          "url": "lessons/2026-10-29-03-05.html",
-          "delivered": false
+          "date": "2026-11-07",
+          "url": "lessons/2026-11-07-03-05.html",
+          "delivered": true
         },
         {
           "chapter": 3,
