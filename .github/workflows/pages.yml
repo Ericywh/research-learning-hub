@@ -270,6 +270,9 @@ jobs:
         run: |
           set -euo pipefail
           node --check docs/assets/lesson-reader.js
+          node --check docs/assets/selected-course-ui.js
+          test -s docs/assets/selected-burgundy.css
+          test -s docs/assets/selected-lilac.css
           node --check docs/econometrics/study-progress.js
           grep -Fq 'econ-answer-fold' docs/econometrics/study-progress.js
           grep -Fq 'econ-reading-guide' docs/econometrics/study-progress.css
@@ -309,10 +312,17 @@ jobs:
                 (rel.split(path.sep).some(s=>s==='v2'||s==='archive') ||
                  original.includes('name="course-revision"'));
               if(econIndependent){
-                if(output!==original)throw Error('Independent page or archive changed: '+built);
-                if(!rel.split(path.sep).includes('archive') &&
-                   (!output.includes('course.css') || !output.includes('course.js')))
-                  throw Error('Independent reader assets missing: '+built);
+                if(rel.split(path.sep).includes('archive')){
+                  if(output!==original)throw Error('Immutable econometrics archive changed: '+built);
+                }else{
+                  if(innerBody(output)!==innerBody(original))
+                    throw Error('Revised econometrics lesson body changed: '+built);
+                  for(const marker of ['data-selected-theme="lilac"','selected-lilac.css','selected-course-ui.js']){
+                    if(!output.includes(marker))throw Error('Revised lesson missing '+marker+': '+built);
+                  }
+                  if(!output.includes('course.css') || !output.includes('course.js'))
+                    throw Error('Independent reader assets missing: '+built);
+                }
                 count++;total++;continue;
               }
               if(innerBody(original)===null || innerBody(output)===null)
@@ -358,6 +368,32 @@ jobs:
           }
           if(total<63)throw Error('Expected at least 63 existing lessons: '+total);
           console.log('PASS '+total+' lesson bodies preserved with valid lesson CSS / JS assets.');
+          NODE
+
+
+      - name: Preserve 126 speaking lessons while applying the selected burgundy style
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs=require('node:fs');
+          let count=0;
+          for(const mode of ['am','pm']){
+            for(let day=1;day<=63;day++){
+              const name='day-'+String(day).padStart(2,'0')+'.html';
+              const source='docs/speaking/dual-track-2026/'+mode+'/'+name;
+              const output='_site/speaking/dual-track-2026/'+mode+'/'+name;
+              if(!fs.existsSync(source)||!fs.existsSync(output))throw Error('Speaking lesson missing '+source);
+              const a=fs.readFileSync(source,'utf8');
+              const b=fs.readFileSync(output,'utf8');
+              const body=x=>x.match(/<body\b[^>]*>([\s\S]*?)<\/body>/i)?.[1]??null;
+              if(body(a)===null||body(a)!==body(b))throw Error('Speaking lesson content changed '+name);
+              for(const term of ['data-selected-theme="burgundy"','selected-burgundy.css','selected-course-ui.js'])
+                if(!b.includes(term))throw Error('Speaking design marker missing '+term+' in '+output);
+              count++;
+            }
+          }
+          if(count!==126)throw Error('Expected 126 speaking lessons, got '+count);
+          console.log('PASS 126 speaking lessons unchanged and dressed in selected burgundy-gold style');
           NODE
 
       - name: Export ten complete econometrics chapters and full 120-lesson Word book
