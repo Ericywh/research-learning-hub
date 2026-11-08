@@ -317,7 +317,16 @@ function start(){
         Math.round(rect(grid).top),
         Math.round(rect(breadcrumb).height),
         Math.round(rect(main.querySelector(".hero")||main).height),
-        Math.round(rect(main.querySelector(".econ-screenshot-facts")||main).height)
+        Math.round(rect(main.querySelector(".econ-screenshot-facts")||main).height),
+        Math.round(rect(main).top),
+        Math.round(rect(main.querySelector(".hero")||main).top),
+        Math.round(rect(main.querySelector(".econ-screenshot-facts")||main).top),
+        Math.round(rect(breadcrumb).top),
+        Math.round(rect(parts[0]||main).top),
+        Math.round(parseFloat(getComputedStyle(main).marginTop)||0),
+        Math.round(parseFloat(getComputedStyle(main).paddingTop)||0),
+        Math.round(parseFloat(getComputedStyle(main.querySelector(".hero")||main).marginBottom)||0),
+        Math.round(parseFloat(getComputedStyle(main.querySelector(".econ-screenshot-facts")||main).marginBottom)||0)
       ];
       body.setAttribute("data-econ-geometry",JSON.stringify(snapshot));
     });
