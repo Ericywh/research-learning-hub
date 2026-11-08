@@ -328,7 +328,8 @@
     buildRail(rail,day,chapter,mode);
     const breadcrumb=wrap.querySelector(".rv-topnav");
     if(breadcrumb){breadcrumb.classList.add("st-reference-breadcrumb");main.prepend(breadcrumb);}
-    main.prepend(hero);hero.classList.add("st-lesson-title-hero");
+    if(breadcrumb)breadcrumb.insertAdjacentElement("afterend",hero);else main.prepend(hero);
+    hero.classList.add("st-lesson-title-hero");
     const tool=wrap.querySelector(".rv-tools");
     if(tool){hero.insertAdjacentElement("afterend",tool);}
     const note=wrap.querySelector(".rv-notice");
