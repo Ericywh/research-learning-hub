@@ -1,0 +1,207 @@
+/* Selected design 02 — SOFT LILAC & BLUE, scoped only to Econometrics.
+   Applies to original 120 lessons and optional 36-module supplement. */
+body[data-selected-theme="lilac"]{
+ --el-indigo:#40348c;--el-violet:#7050b7;--el-orchid:#b483cf;
+ --el-blue:#4b92ce;--el-pink:#d46a9d;--el-mint:#49b6af;
+ --el-ink:#283252;--el-muted:#68728e;--el-line:#e4def2;
+ --el-paper:#fff;--el-bg:#f7f5ff;
+ --ink:#293453;--muted:#65728c;--teal:#7863ba;--green:#7863ba;
+ --gold:#ca95c2;--line:#e3def1;--paper:#fff;
+ background:radial-gradient(ellipse at 0% 0%,#efeaff 0,transparent 44%),
+            radial-gradient(ellipse at 100% 10%,#e1f2ff 0,transparent 35%),
+            linear-gradient(180deg,#fbfaff,#f4f5ff 70%,#fdfbff)!important;
+ color:var(--el-ink)!important;font-family:Inter,-apple-system,"Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif!important;
+ line-height:1.86!important
+}
+body[data-selected-theme="lilac"] a{color:#6953b2!important;text-underline-offset:3px}
+body[data-selected-theme="lilac"] a:hover{color:#c0508b!important}
+body[data-selected-theme="lilac"] :is(a,button,summary,input):focus-visible{outline:3px solid #d59bc7!important;outline-offset:3px}
+body[data-selected-theme="lilac"] :is(.top,body>header,header:not(.hero)){
+ background:rgba(254,252,255,.93)!important;border:0!important;
+ border-bottom:1px solid #ded9f1!important;color:#514178!important;
+ backdrop-filter:blur(13px);box-shadow:0 5px 24px #4c438915
+}
+body[data-selected-theme="lilac"] :is(.top,body>header) a{font-weight:750!important}
+body[data-selected-theme="lilac"] .hero{
+ background-image:linear-gradient(100deg,#343173bd 0%,#5243a4a6 48%,#626cc64a 100%),url("./lilac-data.svg")!important;
+ background-size:cover!important;background-position:center!important;
+ background-repeat:no-repeat!important;
+ color:#fff!important;border:1px solid #a8a4e3!important;
+ border-radius:24px!important;padding:clamp(30px,3.6vw,55px)!important;
+ box-shadow:0 22px 52px #5a53a82b!important;
+ position:relative!important;isolation:isolate;overflow:hidden!important
+}
+body[data-selected-theme="lilac"] .hero :is(h1,h2,h3,p,.meta,.lead,.eyebrow,small,.hint){color:#fff!important;text-shadow:none}
+body[data-selected-theme="lilac"] .hero h1{
+ font-family:"Noto Serif SC","Songti SC",Georgia,serif!important;font-size:clamp(29px,3.4vw,46px)!important;
+ font-weight:740!important;line-height:1.36!important;letter-spacing:-.027em!important
+}
+body[data-selected-theme="lilac"] .hero .eyebrow,
+body[data-selected-theme="lilac"] .hero :is(.badge,.hero-badges>span){
+ background:#f4e8ff29!important;color:#f9defd!important;border:1px solid #efd4ff61!important;
+ border-radius:999px!important;padding:6px 12px!important
+}
+body[data-selected-theme="lilac"] .hero .hero-box{
+ background:rgba(34,26,96,.5)!important;border:1px solid #b4abea88!important;color:white!important;
+ backdrop-filter:blur(8px);box-shadow:0 14px 25px #2a287244
+}
+body[data-selected-theme="lilac"] .hero a{color:#fff2fc!important;font-weight:730}
+body[data-selected-theme="lilac"] :is(.cta,.home-actions a.cta,.button){
+ background:linear-gradient(105deg,#7e64d3,#518ed2)!important;color:#fff!important;
+ border:1px solid #aab5f1!important;border-radius:13px!important;
+ box-shadow:0 9px 25px #6557be34!important
+}
+body[data-selected-theme="lilac"] main{
+ color:var(--el-ink);border-color:var(--el-line)
+}
+body[data-selected-theme="lilac"] :is(.default-note,.course-learning-map,.outline,.feature,.card,.fact,.module,.week,.route,.section-head,.paper,.cr-lesson-unit){
+ border-color:var(--el-line)!important;
+ border-radius:18px!important;box-shadow:0 8px 25px #5048850d!important
+}
+body[data-selected-theme="lilac"] :is(.default-note,.course-learning-map,.outline,.feature,.card,.fact,.module,.week,.paper,.cr-lesson-unit){
+ background:linear-gradient(150deg,#fff 75%,#f9f7ff)!important
+}
+body[data-selected-theme="lilac"] :is(.course-learning-map,.default-note){
+ border-left:5px solid #9679d1!important
+}
+body[data-selected-theme="lilac"] :is(.ce-step,.fact,.card,.module):nth-child(4n+1){border-top:4px solid #7b6ac7!important}
+body[data-selected-theme="lilac"] :is(.ce-step,.fact,.card,.module):nth-child(4n+2){border-top:4px solid #70b2d8!important}
+body[data-selected-theme="lilac"] :is(.ce-step,.fact,.card,.module):nth-child(4n+3){border-top:4px solid #da87b3!important}
+body[data-selected-theme="lilac"] :is(.ce-step,.fact,.card,.module):nth-child(4n+4){border-top:4px solid #4ebcae!important}
+body[data-selected-theme="lilac"] :is(.fact strong,.ce-step-no){color:#694bb2!important}
+body[data-selected-theme="lilac"] :is(.outline>h2,.section-head h2,.week>h2,.paper>h2){
+ font-family:"Noto Serif SC","Songti SC",Georgia,serif!important;color:#4d438c!important
+}
+body[data-selected-theme="lilac"] :is(.filters button,.filter){
+ background:#f5f3ff!important;color:#6b5aa5!important;border:1px solid #e3dbfa!important;border-radius:9px!important
+}
+body[data-selected-theme="lilac"] :is(.filters button,.filter)[aria-pressed="true"]{
+ color:#fff!important;background:#7657c4!important;border-color:#7657c4!important
+}
+body[data-selected-theme="lilac"] :is(.lesson,.item,.module,.card):hover{border-color:#a8a0d9!important}
+body[data-selected-theme="lilac"] :is(.tag,.badge,.status.published,.pill){
+ color:#684cae!important;background:#f0eaff!important;border:1px solid #d7caf6!important;border-radius:100px!important
+}
+body[data-selected-theme="lilac"] :is(main .toc, .cr-reader-toc, nav.st-econ-rail){
+ background:linear-gradient(180deg,#fff,#f7f4ff)!important;
+ border:1px solid #e3ddf2!important;border-radius:15px!important
+}
+body[data-selected-theme="lilac"] :is(.cr-lesson-content,.paper,.cr-lesson-unit) :is(h2,h3){
+ color:#654d9e!important
+}
+body[data-selected-theme="lilac"] main :is(.paper,.cr-lesson-unit){
+ border-top:4px solid #9a7dda!important;margin-bottom:22px!important
+}
+body[data-selected-theme="lilac"] main :is(.paper,.cr-lesson-unit):nth-of-type(4n+2){border-top-color:#69afd0!important}
+body[data-selected-theme="lilac"] main :is(.paper,.cr-lesson-unit):nth-of-type(4n+3){border-top-color:#dc83b0!important}
+body[data-selected-theme="lilac"] main :is(.paper,.cr-lesson-unit):nth-of-type(4n+4){border-top-color:#5bbca9!important}
+body[data-selected-theme="lilac"] main :is(.paper,.cr-lesson-unit)>h2,
+body[data-selected-theme="lilac"] main :is(.paper,.cr-lesson-unit)>h3{
+ background:linear-gradient(105deg,#eee9ff,#e7f4fe)!important;
+ border-radius:11px!important;border:0!important;padding:13px 18px!important;
+ margin:0 0 18px!important;color:#473985!important;
+}
+body[data-selected-theme="lilac"] :is(.concept-primer,.concept-example,.diagram,.equation,.formula,.math,.mathbox){
+ background:linear-gradient(110deg,#f4f0ff,#f0f9ff)!important;
+ border:1px solid #ddd7f1!important;border-left:4px solid #916bd0!important;
+ border-radius:13px!important;padding:16px 21px!important
+}
+body[data-selected-theme="lilac"] :is(.callout,.notice,.hint,.archive-note){
+ border-radius:13px!important;border-color:#e6d7eb!important;
+ background:linear-gradient(112deg,#fff3fa,#fff9ef)!important;color:#604b67!important
+}
+body[data-selected-theme="lilac"] :is(pre,pre code){
+ border-radius:10px!important;font-size:13px!important;line-height:1.75!important
+}
+body[data-selected-theme="lilac"] pre{
+ background:linear-gradient(135deg,#25224e,#252f5b)!important;color:#edf0ff!important;
+ border:1px solid #48446e!important;border-top:3px solid #8fb2ff!important;
+ padding:19px!important;overflow-x:auto!important;white-space:pre!important
+}
+body[data-selected-theme="lilac"] :is(.cr-reader-codebar, .code-label){
+ background:linear-gradient(115deg,#6055a1,#526daa)!important;color:#fff!important;
+ border-radius:9px!important;padding:10px 14px!important
+}
+body[data-selected-theme="lilac"] :is(details.cr-reader-codefold,details.econ-code-disclosure){
+ background:#fff!important;border:1px solid #d8d0ee!important;border-radius:12px!important;overflow:hidden
+}
+body[data-selected-theme="lilac"] :is(details.cr-reader-codefold,details.econ-code-disclosure)>summary{
+ background:linear-gradient(110deg,#eeeaff,#eaf4ff)!important;color:#5c488e!important;
+ border-left:4px solid #8e6fc9!important;font-weight:780!important;padding:14px 18px!important
+}
+body[data-selected-theme="lilac"] :is(th,td){border-color:#e5dff2!important}
+body[data-selected-theme="lilac"] th{background:#efebff!important;color:#493a85!important}
+body[data-selected-theme="lilac"] tbody tr:nth-child(even){background:#faf8ff!important}
+body[data-selected-theme="lilac"] :is(.cr-reader-toc-links a.is-active,.toc a:hover){
+ background:#7255c3!important;color:#fff!important;border-radius:8px!important
+}
+body[data-selected-theme="lilac"] .cr-reader-progress-fill,
+body[data-selected-theme="lilac"] .st-econ-progress span{
+ background:linear-gradient(90deg,#855acd,#6caee6,#d183ba,#59c3b2)!important
+}
+body[data-selected-theme="lilac"].st-econ-lesson main{
+ max-width:920px!important;width:min(920px,calc(100% - 32px))!important;
+ margin:26px auto 48px!important;padding:0!important;overflow:visible!important
+}
+body[data-selected-theme="lilac"] .st-econ-rail,
+body[data-selected-theme="lilac"] .st-econ-tools{
+ display:none;position:fixed;z-index:15;top:100px;
+ width:210px;max-height:calc(100vh - 124px);overflow-y:auto;
+ border:1px solid #e0d9f1;border-radius:17px;padding:17px;
+ background:linear-gradient(155deg,#fff,#f7f4ff);box-shadow:0 13px 34px #4c429022
+}
+body[data-selected-theme="lilac"] .st-econ-rail{left:max(14px,calc((100vw - 1430px)/2))}
+body[data-selected-theme="lilac"] .st-econ-tools{right:max(14px,calc((100vw - 1430px)/2))}
+body[data-selected-theme="lilac"] .st-econ-rail h2,
+body[data-selected-theme="lilac"] .st-econ-tools h2{
+ margin:0 0 14px!important;padding:11px!important;
+ border-radius:10px!important;background:linear-gradient(110deg,#674db8,#8b72d0)!important;
+ color:#fff!important;font-size:15px!important;line-height:1.5!important
+}
+body[data-selected-theme="lilac"] .st-econ-rail a{
+ display:block;padding:9px 10px;margin:3px 0;border-radius:8px;
+ color:#5c5181!important;text-decoration:none;font-size:12px;line-height:1.55
+}
+body[data-selected-theme="lilac"] .st-econ-rail a:hover,
+body[data-selected-theme="lilac"] .st-econ-rail a.is-active{
+ color:#fff!important;background:#765bc0!important
+}
+body[data-selected-theme="lilac"] .st-econ-tools :is(.st-econ-tip,.st-econ-stat){
+ font-size:12px;line-height:1.75;color:#665d7d;background:#f1eeff;
+ padding:12px;border-radius:10px;margin-bottom:12px
+}
+body[data-selected-theme="lilac"] .st-econ-tools .st-econ-stat{background:#ecf7ff;color:#416482}
+body[data-selected-theme="lilac"] .st-econ-progress{
+ height:8px;border-radius:10px;overflow:hidden;background:#e8e4f3;margin:12px 0
+}
+body[data-selected-theme="lilac"] .st-econ-progress span{
+ display:block;height:100%;width:100%;transform:scaleX(0);transform-origin:left
+}
+body[data-selected-theme="lilac"] .st-econ-tools a{
+ font-weight:750;font-size:12px
+}
+body[data-selected-theme="lilac"] :is(.econ-hero,.hero) :is(.hero-art,.hero-box){position:relative;z-index:1}
+@media(min-width:1450px){
+ body[data-selected-theme="lilac"] :is(.st-econ-rail,.st-econ-tools){display:block}
+ body[data-selected-theme="lilac"] .cr-reader-toc{display:none!important}
+ body[data-selected-theme="lilac"].st-econ-lesson main{width:min(920px,calc(100% - 510px))!important}
+}
+@media(max-width:880px){
+ body[data-selected-theme="lilac"] .hero{padding:29px 24px!important}
+ body[data-selected-theme="lilac"] .hero h1{font-size:28px!important}
+ body[data-selected-theme="lilac"] :is(.hero-grid,.layout){grid-template-columns:1fr!important}
+ body[data-selected-theme="lilac"] :is(.module,.paper,.cr-lesson-unit){padding:20px 18px!important}
+ body[data-selected-theme="lilac"] .hero .hero-box{min-height:130px!important}
+}
+@media(max-width:600px){
+ body[data-selected-theme="lilac"] .hero{padding:26px 19px!important}
+ body[data-selected-theme="lilac"] main{width:calc(100% - 24px)!important}
+ body[data-selected-theme="lilac"] :is(.paper,.cr-lesson-unit){padding:17px 15px!important}
+ body[data-selected-theme="lilac"] :is(.formula,.math,.equation){padding:12px!important}
+ body[data-selected-theme="lilac"] .hero h1{font-size:26px!important}
+}
+@media print{
+ body[data-selected-theme="lilac"]{background:#fff!important}
+ body[data-selected-theme="lilac"] :is(.st-econ-rail,.st-econ-tools){display:none!important}
+ body[data-selected-theme="lilac"] :is(.paper,.cr-lesson-unit){box-shadow:none!important;break-inside:avoid}
+}

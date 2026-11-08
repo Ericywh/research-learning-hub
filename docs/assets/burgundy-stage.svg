@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 370" role="img" aria-label="酒红色舞台、金色麦克风与观众席的装饰背景">
+<defs>
+ <linearGradient id="bg" x2="1" y2=".25"><stop stop-color="#460819"/><stop offset=".42" stop-color="#74142d"/><stop offset=".72" stop-color="#421324"/><stop offset="1" stop-color="#17243d"/></linearGradient>
+ <radialGradient id="light"><stop stop-color="#f9d2a0" stop-opacity=".75"/><stop offset="1" stop-color="#e69e84" stop-opacity="0"/></radialGradient>
+ <linearGradient id="gold" x1=".1" x2=".9" y2="1"><stop stop-color="#fff2b5"/><stop offset=".39" stop-color="#c88a40"/><stop offset=".65" stop-color="#f1c883"/><stop offset="1" stop-color="#85562e"/></linearGradient>
+ <linearGradient id="mic" x1="0" x2="1" y2="1"><stop stop-color="#fff3c1"/><stop offset=".35" stop-color="#c79a60"/><stop offset=".62" stop-color="#f6db9f"/><stop offset="1" stop-color="#69452f"/></linearGradient>
+ <filter id="blur"><feGaussianBlur stdDeviation="16"/></filter>
+ <pattern id="mesh" patternUnits="userSpaceOnUse" width="9" height="9"><path d="M0 4.5H9M4.5 0V9" stroke="#79502d" stroke-width="1" opacity=".8"/></pattern>
+</defs>
+<rect width="1600" height="370" fill="url(#bg)"/>
+<g opacity=".35"><path d="M0 0C90 170 120 202 170 350H0Z" fill="#a92643"/><path d="M150 0C165 107 115 232 76 370H130C195 210 209 105 228 0Z" fill="#a62c3e"/><path d="M260 0C247 107 292 255 358 370H300C245 245 206 113 210 0Z" fill="#591122"/><path d="M1470 0C1440 156 1500 252 1570 370H1600V0Z" fill="#7e1438"/></g>
+<g filter="url(#blur)" opacity=".68"><circle cx="935" cy="40" r="85" fill="url(#light)"/><circle cx="1320" cy="30" r="125" fill="url(#light)"/><circle cx="1530" cy="85" r="95" fill="url(#light)"/></g>
+<g stroke="#f0bb6a" fill="none" opacity=".54"><path d="M0 265C237 188 369 307 590 260S1014 212 1186 252 1436 307 1600 248" stroke-width="2"/><path d="M0 283C237 206 369 325 590 278S1014 230 1186 270 1436 325 1600 266" stroke-width="1.5"/><path d="M0 301C237 224 369 343 590 296S1014 248 1186 288 1436 343 1600 284" stroke-width="1"/></g>
+<g opacity=".2" fill="#0e1327"><ellipse cx="1000" cy="362" rx="36" ry="53"/><ellipse cx="1060" cy="367" rx="33" ry="61"/><ellipse cx="1125" cy="364" rx="42" ry="67"/><ellipse cx="1375" cy="363" rx="40" ry="62"/><ellipse cx="1460" cy="360" rx="45" ry="77"/><ellipse cx="1540" cy="360" rx="55" ry="69"/></g>
+<g transform="translate(1210 26) rotate(16 120 130)">
+ <path d="M122 191L136 314" stroke="#291925" stroke-width="31" stroke-linecap="round"/>
+ <path d="M124 191L137 312" stroke="url(#gold)" stroke-width="20" stroke-linecap="round"/>
+ <path d="M128 294h41" stroke="#cfa96e" stroke-width="11" stroke-linecap="round"/>
+ <rect x="70" y="7" width="100" height="174" rx="50" fill="#1e1826" stroke="url(#gold)" stroke-width="7"/>
+ <rect x="80" y="17" width="80" height="154" rx="40" fill="url(#mic)"/>
+ <rect x="82" y="19" width="76" height="150" rx="38" fill="url(#mesh)" opacity=".75"/>
+ <g stroke="#85512e" stroke-width="7" opacity=".9"><path d="M86 56h68M82 81h77M83 108h74M90 133h63"/></g>
+ <path d="M62 86v45a58 58 0 0 0 116 0V86" fill="none" stroke="url(#gold)" stroke-width="8" stroke-linecap="round"/>
+ <path d="M119 191v-33" stroke="#c18c4b" stroke-width="9" stroke-linecap="round"/>
+</g>
+<g fill="#f8dfaa" opacity=".8"><circle cx="968" cy="35" r="5"/><circle cx="1101" cy="66" r="4"/><circle cx="1463" cy="36" r="5"/></g>
+</svg>

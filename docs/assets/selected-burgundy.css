@@ -1,0 +1,231 @@
+/* Selected design 04 — WINE & GOLD editorial course, scoped to Speaking only.
+   Preserves 9-week / 63-day / 126-lesson AM-PM curriculum and existing interactions. */
+body[data-selected-theme="burgundy"]{
+ --sw-wine:#821b37;--sw-deep:#501528;--sw-plum:#a72a46;--sw-rose:#d66b77;
+ --sw-gold:#cda35c;--sw-cream:#fff8ed;--sw-ink:#362d34;--sw-line:#ecddce;
+ --rv-accent:#9b2d48;--rv-ink:#312d34;--rv-muted:#74636b;--rv-line:#eadfd8;
+ --rv-soft:#fff5ef;--rv-shadow:0 8px 30px rgba(79,27,39,.09);
+ background:radial-gradient(ellipse at 10% -12%,#f7dfd9,transparent 38%),linear-gradient(180deg,#fdf9f5,#f9f3ee 48%,#fffaf4)!important;
+ color:var(--sw-ink)!important;
+ font-family:Inter,"Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif!important;
+}
+body[data-selected-theme="burgundy"] :is(a,button,summary,input):focus-visible{outline:3px solid #dbad6f!important;outline-offset:3px}
+body[data-selected-theme="burgundy"] a{color:#9b3150}
+body[data-selected-theme="burgundy"] :is(.rv-wrap,.rv-shell){width:min(1510px,calc(100% - 34px))!important;max-width:1510px!important}
+body[data-selected-theme="burgundy"] .rv-topnav,
+body[data-selected-theme="burgundy"] .rv-topbar{
+ display:flex!important;align-items:center;justify-content:space-between;
+ background:linear-gradient(100deg,#57142a,#83203d 55%,#651b37)!important;
+ border:1px solid #b27165!important;border-radius:0 0 15px 15px;
+ color:#fce9d4!important;padding:14px 24px!important;margin:-24px 0 18px!important;
+ min-height:53px;box-shadow:0 6px 20px #50172b1c;
+}
+body[data-selected-theme="burgundy"] :is(.rv-topnav,.rv-topbar) a,
+body[data-selected-theme="burgundy"] :is(.rv-topnav,.rv-topbar) span{color:#ffead1!important;font-size:13px;font-weight:700}
+body[data-selected-theme="burgundy"] :is(.rv-topnav,.rv-topbar) a:hover{color:#ffe3a6!important;text-decoration:underline}
+body[data-selected-theme="burgundy"] :is(.rv-hero, .rv-page[data-mode="pm"] .rv-hero){
+ min-height:270px!important;border-radius:20px!important;
+ padding:42px 50px!important;
+ background-image:linear-gradient(90deg,rgba(67,11,26,.55) 0%,rgba(91,18,42,.36) 58%,rgba(64,15,31,.08) 100%),url("./burgundy-stage.svg")!important;
+ background-position:center center!important;background-size:cover!important;
+ background-repeat:no-repeat!important;
+ border:1px solid #a45d57!important;box-shadow:0 19px 48px #55192836!important;
+ position:relative!important;overflow:hidden!important;color:#ffefd5!important
+}
+body[data-selected-theme="burgundy"] .rv-hero:before,
+body[data-selected-theme="burgundy"] .rv-hero:after{display:none!important}
+body[data-selected-theme="burgundy"] .rv-hero :is(h1,p,.rv-lead,.rv-eyebrow,.rv-kicker){color:#fff3da!important;position:relative;z-index:2}
+body[data-selected-theme="burgundy"] .rv-hero h1{
+ max-width:910px!important;font-family:Georgia,"Noto Serif SC","Songti SC",serif!important;
+ font-size:clamp(29px,3.5vw,47px)!important;font-weight:760!important;
+ line-height:1.35!important;letter-spacing:-.02em!important;
+ text-shadow:0 2px 12px #48142780
+}
+body[data-selected-theme="burgundy"] .rv-hero :is(.rv-eyebrow,.rv-kicker){letter-spacing:.22em!important;color:#edbe75!important;font-size:12px!important}
+body[data-selected-theme="burgundy"] .rv-hero :is(.rv-hero-art,.rv-hero-ornament,.soft-hero-symbol){display:none!important}
+body[data-selected-theme="burgundy"] .rv-hero .rv-pills,
+body[data-selected-theme="burgundy"] .rv-hero .rv-badges{display:flex;gap:10px;flex-wrap:wrap;position:relative;z-index:2}
+body[data-selected-theme="burgundy"] :is(.rv-pills,.rv-badges)>span{
+ background:rgba(255,244,211,.16)!important;border:1px solid rgba(255,213,149,.45)!important;
+ color:#ffead3!important;border-radius:100px!important;padding:6px 13px!important;
+ font-size:12px;font-weight:740;backdrop-filter:blur(8px)
+}
+body[data-selected-theme="burgundy"] .rv-hero :is(.soft-position,.soft-position-track){
+ border-color:#e2bc8b60!important;background:#fff4e51c!important;color:#fff2d8!important
+}
+body[data-selected-theme="burgundy"] .rv-hero .soft-position-fill{
+ background:linear-gradient(90deg,#fce2a4,#d98e78)!important
+}
+body[data-selected-theme="burgundy"] :is(.rv-primary-link,.rv-hero-actions a:first-child){
+ background:linear-gradient(110deg,#ffe0a0,#dc9c59)!important;color:#5d2332!important;
+ border:1px solid #ffe5b2!important;border-radius:12px!important;box-shadow:0 8px 20px #30102140!important;font-weight:800!important
+}
+body[data-selected-theme="burgundy"] :is(.rv-primary-link,.rv-hero-actions a:first-child):hover{transform:translateY(-2px);filter:brightness(1.04)}
+body[data-selected-theme="burgundy"] :is(.rv-tools,.rv-notice){
+ border:1px solid #ead9d0!important;border-left:4px solid #b27657!important;
+ background:linear-gradient(110deg,#fffaf1,#fff4f1)!important;color:#5a3b3c!important;border-radius:13px!important
+}
+body[data-selected-theme="burgundy"] .rv-tool-actions :is(button,a){
+ border:1px solid #d7b2aa!important;border-radius:9px!important;
+ background:#fff8f4!important;color:#8e354c!important
+}
+body[data-selected-theme="burgundy"] .rv-tool-actions [aria-pressed="true"]{
+ background:#7e2945!important;color:#fff!important
+}
+body[data-selected-theme="burgundy"].st-speaking-lesson .rv-layout{
+ display:grid!important;grid-template-columns:205px minmax(0,1fr) 255px!important;
+ gap:17px!important;max-width:1510px!important;align-items:start!important;
+}
+body[data-selected-theme="burgundy"] .rv-layout>.rv-main{min-width:0!important;grid-column:2!important;width:100%!important}
+body[data-selected-theme="burgundy"] .rv-layout>.rv-sidebar{
+ grid-column:3!important;position:sticky!important;top:14px!important;
+ display:grid!important;align-content:start!important;gap:14px!important;min-width:0!important;
+}
+body[data-selected-theme="burgundy"] .st-speaking-rail{
+ grid-column:1!important;position:sticky;top:14px;align-self:start;
+ padding:19px 14px 22px;border:1px solid #e7d5cf;border-radius:16px;
+ background:linear-gradient(180deg,#fffaf5,#fff);box-shadow:0 10px 25px #64314316;
+ max-height:calc(100vh - 30px);overflow-y:auto
+}
+body[data-selected-theme="burgundy"] .st-rail-head{
+ margin:-19px -14px 18px;padding:16px 17px;color:#fff;font-size:15px;
+ font-weight:800;background:linear-gradient(100deg,#8e2645,#a64055);border-radius:15px 15px 0 0
+}
+body[data-selected-theme="burgundy"] .st-rail-chapter{
+ display:block;padding:11px 10px;margin-bottom:5px;text-decoration:none;font-size:13px;
+ font-weight:650;line-height:1.55;color:#604a50!important;border-radius:9px;border:1px solid transparent
+}
+body[data-selected-theme="burgundy"] .st-rail-chapter.is-current{
+ background:#f9e7df;color:#912945!important;border-color:#eec8bb;font-weight:800
+}
+body[data-selected-theme="burgundy"] .st-rail-chapter:hover{background:#faeee7}
+body[data-selected-theme="burgundy"] .st-rail-label{
+ display:block;margin:17px 6px 7px;padding-top:14px;border-top:1px solid #e9ddd8;
+ color:#95627a;font-size:11px;letter-spacing:.1em;font-weight:800
+}
+body[data-selected-theme="burgundy"] .st-rail-mode{
+ display:block;text-decoration:none;padding:10px 12px;margin:7px 0;border-radius:9px;
+ border:1px solid #e6d3cf;background:#fff;color:#74394c!important;font-size:13px;font-weight:750
+}
+body[data-selected-theme="burgundy"] .st-rail-mode.is-current{background:#892542;color:white!important}
+body[data-selected-theme="burgundy"] .rv-main :is(.rv-section,.lesson-panel,.rv-card){
+ background:#fffdfa!important;border:1px solid #e9dcd0!important;
+ border-radius:16px!important;box-shadow:0 8px 25px #5a29320c!important;
+ padding:clamp(20px,2.1vw,31px)!important;margin-bottom:17px!important
+}
+body[data-selected-theme="burgundy"] .rv-main .rv-section:nth-of-type(4n+1){border-top:4px solid #ad3553!important}
+body[data-selected-theme="burgundy"] .rv-main .rv-section:nth-of-type(4n+2){border-top:4px solid #cf9559!important}
+body[data-selected-theme="burgundy"] .rv-main .rv-section:nth-of-type(4n+3){border-top:4px solid #527b95!important}
+body[data-selected-theme="burgundy"] .rv-main .rv-section:nth-of-type(4n+4){border-top:4px solid #9d759a!important}
+body[data-selected-theme="burgundy"] .rv-main .rv-section>h2,
+body[data-selected-theme="burgundy"] .rv-main .lesson-panel>h2{
+ color:#812945!important;font-family:"Noto Serif SC","Songti SC",Georgia,serif!important;
+ border:0!important;border-bottom:1px solid #eddcd5!important;
+ font-size:clamp(19px,2.1vw,25px)!important;line-height:1.5!important;
+ padding:0 0 13px!important;margin:0 0 20px!important
+}
+body[data-selected-theme="burgundy"] .rv-main .rv-section>h2:before{
+ content:"";display:inline-block;width:5px;height:1.1em;border-radius:5px;
+ background:linear-gradient(#b42c52,#d6a25c);margin-right:10px;vertical-align:-.17em
+}
+body[data-selected-theme="burgundy"] .rv-main :is(.rv-kicker,.rv-eyebrow){color:#a24454!important}
+body[data-selected-theme="burgundy"] .rv-main :is(.rv-step,.step,.rv-flow>*,.rv-example,.rv-answer,.model-answer){
+ border-radius:12px!important;border-color:#e9dacf!important;
+ background:linear-gradient(120deg,#fff9f3,#fffdfb)!important
+}
+body[data-selected-theme="burgundy"] .rv-main .rv-step:nth-child(5n+1){border-left:4px solid #a63555!important}
+body[data-selected-theme="burgundy"] .rv-main .rv-step:nth-child(5n+2){border-left:4px solid #c99a55!important}
+body[data-selected-theme="burgundy"] .rv-main .rv-step:nth-child(5n+3){border-left:4px solid #54768f!important}
+body[data-selected-theme="burgundy"] .rv-main .rv-step:nth-child(5n+4){border-left:4px solid #7d987b!important}
+body[data-selected-theme="burgundy"] .rv-main .rv-step:nth-child(5n+5){border-left:4px solid #a477a3!important}
+body[data-selected-theme="burgundy"] .rv-main :is(.rv-keywords,.rv-post-practice,.rv-record-note){
+ background:linear-gradient(115deg,#fff5e8,#fffaf6)!important;
+ border-left:4px solid #cba064!important;border-radius:12px!important
+}
+body[data-selected-theme="burgundy"] .rv-sidebar :is(.rv-side-card,.soft-progress){
+ padding:18px 20px!important;border:1px solid #e7d6ca!important;
+ border-radius:15px!important;background:#fffdfa!important;
+ box-shadow:0 8px 25px #562d3814!important
+}
+body[data-selected-theme="burgundy"] .rv-sidebar .rv-side-card h2{
+ margin:-18px -20px 14px!important;border:0!important;border-radius:14px 14px 0 0!important;
+ background:linear-gradient(105deg,#782341,#a73a50)!important;color:#fff8ec!important;
+ font-size:17px!important;padding:12px 17px!important
+}
+body[data-selected-theme="burgundy"] .rv-sidebar .soft-progress{
+ background:linear-gradient(130deg,#fff1df,#fffaf5)!important
+}
+body[data-selected-theme="burgundy"] :is(.soft-progress-fill,.rv-sidebar progress::-webkit-progress-value){
+ background:linear-gradient(90deg,#a33750,#d8a65d)!important
+}
+body[data-selected-theme="burgundy"] .rv-sidebar :is(button,.rv-timer-controls button){
+ border-radius:10px!important;background:#8e2849!important;color:#fffaf4!important
+}
+body[data-selected-theme="burgundy"] .rv-lesson-nav{
+ background:#fff7f1!important;border-color:#e8d6cb!important;border-radius:13px!important
+}
+body[data-selected-theme="burgundy"] .rv-lesson-nav a{
+ color:#842a49!important;font-weight:800!important
+}
+body[data-selected-theme="burgundy"] .rv-page.rv-catalog .rv-card,
+body[data-selected-theme="burgundy"] :is(.rv-learning-note,.rv-chapter-block){
+ border:1px solid #e8d9ce!important;border-radius:18px!important;
+ background:#fffdf9!important;box-shadow:0 9px 28px #5f243010!important
+}
+body[data-selected-theme="burgundy"] .rv-chapter-nav{
+ position:sticky;top:0;z-index:10;background:#fffaf5eE!important;
+ backdrop-filter:blur(13px);border:1px solid #e8d7c9!important;
+ border-radius:14px;padding:11px!important
+}
+body[data-selected-theme="burgundy"] .rv-chapter-nav a{color:#8a2e47!important;font-weight:750}
+body[data-selected-theme="burgundy"] .rv-chapter-block .rv-section-head{
+ border-bottom:2px solid #e7d3c4!important;color:#762840!important
+}
+body[data-selected-theme="burgundy"] .rv-lesson-pair{
+ background:#fffaf5!important;border:1px solid #e8d7ca!important;border-radius:15px!important
+}
+body[data-selected-theme="burgundy"] .rv-course-link{
+ border-radius:12px!important;background:linear-gradient(125deg,#fff7f2,#fff)!important;
+ border-color:#e8d8d0!important;color:#682f40!important
+}
+body[data-selected-theme="burgundy"] .rv-course-link.rv-am-link{border-left:4px solid #b63b54!important}
+body[data-selected-theme="burgundy"] .rv-course-link.rv-pm-link{border-left:4px solid #cc9a52!important}
+body[data-selected-theme="burgundy"] .rv-course-link:hover{background:#fff0e5!important;transform:translateY(-2px)}
+body[data-selected-theme="burgundy"] :is(.rv-catalog h2,.rv-chapter-block h2){color:#72283e!important}
+body[data-selected-theme="burgundy"] .rv-footer{color:#886c66!important}
+body[data-selected-theme="burgundy"] .rv-hero .rv-hero-copy{max-width:830px!important}
+body[data-selected-theme="burgundy"] :is(.rv-hero-actions a,.rv-primary-link){text-decoration:none}
+body[data-selected-theme="burgundy"] :is(.rv-toc a, .rv-side-card a):hover{color:#b44352!important}
+body[data-selected-theme="burgundy"] .rv-side-card .rv-toc a{
+ border-left:3px solid #ddb7a2;padding:6px 9px;margin:2px 0;border-radius:5px
+}
+body[data-selected-theme="burgundy"] .rv-side-card .rv-toc a:hover{background:#f9ebe4}
+body[data-selected-theme="burgundy"] .rv-footer{border-top:1px solid #ead9ce;margin-top:32px}
+@media(max-width:1240px){
+ body[data-selected-theme="burgundy"].st-speaking-lesson .rv-layout{grid-template-columns:minmax(0,1fr) 267px!important}
+ body[data-selected-theme="burgundy"] .st-speaking-rail{display:none!important}
+ body[data-selected-theme="burgundy"] .rv-layout>.rv-main{grid-column:1!important}
+ body[data-selected-theme="burgundy"] .rv-layout>.rv-sidebar{grid-column:2!important}
+}
+@media(max-width:850px){
+ body[data-selected-theme="burgundy"].st-speaking-lesson .rv-layout{grid-template-columns:minmax(0,1fr)!important}
+ body[data-selected-theme="burgundy"] .rv-layout>.rv-sidebar{grid-column:1!important;position:static!important}
+ body[data-selected-theme="burgundy"] .rv-hero{padding:32px 25px!important;min-height:230px!important}
+ body[data-selected-theme="burgundy"] :is(.rv-topnav,.rv-topbar){margin:-12px 0 14px!important}
+}
+@media(max-width:580px){
+ body[data-selected-theme="burgundy"] :is(.rv-wrap,.rv-shell){width:calc(100% - 22px)!important}
+ body[data-selected-theme="burgundy"] .rv-hero{padding:27px 20px!important;background-position:58% center!important}
+ body[data-selected-theme="burgundy"] .rv-hero h1{font-size:27px!important}
+ body[data-selected-theme="burgundy"] .rv-main .rv-section{padding:19px 16px!important}
+ body[data-selected-theme="burgundy"] .rv-sidebar .rv-side-card{padding:16px!important}
+}
+@media(prefers-reduced-motion:reduce){
+ body[data-selected-theme="burgundy"] .rv-course-link{transition:none!important}
+}
+@media print{
+ body[data-selected-theme="burgundy"]{background:#fff!important}
+ body[data-selected-theme="burgundy"] :is(.st-speaking-rail,.rv-sidebar,.rv-tools){display:none!important}
+ body[data-selected-theme="burgundy"] .rv-layout{display:block!important}
+ body[data-selected-theme="burgundy"] .rv-main .rv-section{box-shadow:none!important;break-inside:avoid}
+}

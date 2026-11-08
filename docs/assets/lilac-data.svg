@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 380" aria-label="紫蓝色学习图表与抽象数学曲线装饰">
+<defs><linearGradient id="bg"><stop stop-color="#36317c"/><stop offset=".52" stop-color="#5650ac"/><stop offset="1" stop-color="#576cba"/></linearGradient><radialGradient id="light"><stop stop-color="#fbcced" stop-opacity=".46"/><stop offset="1" stop-color="#fbcced" stop-opacity="0"/></radialGradient><linearGradient id="wave"><stop stop-color="#f5b2d6"/><stop offset=".5" stop-color="#a8e5ff"/><stop offset="1" stop-color="#f6e0b5"/></linearGradient><filter id="glow"><feGaussianBlur stdDeviation="14"/></filter></defs>
+<rect width="1600" height="380" fill="url(#bg)"/>
+<circle cx="1140" cy="74" r="225" fill="url(#light)"/><circle cx="1500" cy="200" r="215" fill="url(#light)"/>
+<g stroke="#d2d9ff" opacity=".17"><path d="M850 30V350M945 30V350M1040 30V350M1135 30V350M1230 30V350M1325 30V350M1420 30V350M1515 30V350M830 70H1600M830 130H1600M830 190H1600M830 250H1600M830 310H1600"/></g>
+<g fill="#ffd7e9" opacity=".84"><circle cx="946" cy="274" r="7"/><circle cx="986" cy="254" r="6"/><circle cx="1040" cy="234" r="7"/><circle cx="1090" cy="232" r="7"/><circle cx="1140" cy="204" r="6"/><circle cx="1192" cy="202" r="7"/><circle cx="1240" cy="159" r="6"/><circle cx="1300" cy="156" r="7"/><circle cx="1355" cy="135" r="5"/><circle cx="1400" cy="123" r="6"/></g>
+<g fill="none" stroke="url(#wave)" stroke-width="6" stroke-linecap="round"><path d="M884 299C1030 288 1100 231 1198 193S1388 123 1558 95"/><path opacity=".55" stroke-width="2" d="M844 322C1060 271 1148 319 1315 188S1485 162 1590 137"/></g>
+<g opacity=".77"><rect x="1002" y="136" width="31" height="104" rx="9" fill="#96c8ff"/><rect x="1063" y="113" width="31" height="127" rx="9" fill="#b9a5fa"/><rect x="1124" y="81" width="31" height="159" rx="9" fill="#f8badb"/><rect x="1185" y="103" width="31" height="137" rx="9" fill="#afe3ef"/></g>
+<g opacity=".11" stroke="#fff" stroke-width="2"><circle cx="1295" cy="172" r="145"/><circle cx="1295" cy="172" r="193"/><circle cx="1295" cy="172" r="235"/></g>
+<path d="M0 320C247 255 412 366 658 300S1026 365 1240 307 1450 318 1600 281V380H0Z" fill="#a890d6" opacity=".22"/>
+<path d="M0 347C253 272 443 379 697 326S1122 347 1399 314 1515 317 1600 307" stroke="#f9cedd" stroke-width="2" fill="none" opacity=".46"/>
+</svg>
