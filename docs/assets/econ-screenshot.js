@@ -282,6 +282,25 @@ function start(){
     items.append(a("十章120课目录",root+"#catalog"),a("六周36模块拓展",root+"v2/"));
     box.append(items);right.append(box);
   }
+
+  // Opt-in QA telemetry used only by GitHub Actions' browser layout test.
+  if(new URLSearchParams(location.search).has("layout-qa")){
+    requestAnimationFrame(()=>{
+      const rect=x=>x.getBoundingClientRect();
+      const l=rect(left),m=rect(center),r=rect(right),h=rect(mast);
+      const snapshot=[
+        innerWidth,document.documentElement.scrollWidth,
+        Math.round(h.height),
+        Math.round(l.left),Math.round(l.width),
+        Math.round(m.left),Math.round(m.width),
+        Math.round(r.left),Math.round(r.width),
+        document.querySelectorAll(".econ-screenshot-intro").length,
+        document.querySelectorAll(".econ-screenshot-pillar").length,
+        document.querySelectorAll(".econ-screenshot-ticks input").length
+      ];
+      body.setAttribute("data-econ-geometry",JSON.stringify(snapshot));
+    });
+  }
   console.info("Screenshot-style econometrics reader active",mode,id||"index",parts.length);
 }
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start,{once:true});
