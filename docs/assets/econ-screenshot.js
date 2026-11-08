@@ -313,7 +313,11 @@ function start(){
         document.querySelectorAll(".econ-screenshot-ticks input").length,
         Math.round(rect(top).height),
         Math.round(rect(cover).height),
-        parts.length?Math.round(rect(parts[0]).top):0
+        parts.length?Math.round(rect(parts[0]).top):0,
+        Math.round(rect(grid).top),
+        Math.round(rect(breadcrumb).height),
+        Math.round(rect(main.querySelector(".hero")||main).height),
+        Math.round(rect(main.querySelector(".econ-screenshot-facts")||main).height)
       ];
       body.setAttribute("data-econ-geometry",JSON.stringify(snapshot));
     });
