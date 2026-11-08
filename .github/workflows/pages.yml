@@ -271,6 +271,10 @@ jobs:
           set -euo pipefail
           node --check docs/assets/lesson-reader.js
           node --check docs/assets/selected-course-ui.js
+          node --check docs/assets/econ-screenshot.js
+          grep -Fq 'ECONOMETRICS SCREENSHOT REFERENCE' docs/assets/econ-screenshot.css
+          grep -Fq 'window.ECON_SCREENSHOT_MAP' _site/assets/econ-screenshot-map.js
+          node --check _site/assets/econ-screenshot-map.js
           test -s docs/assets/selected-burgundy.css
           test -s docs/assets/selected-lilac.css
           node --check docs/econometrics/study-progress.js
@@ -1190,4 +1194,46 @@ jobs:
             grep -Fq 'speaking/dual-track-2026/' "$file" || { echo "::error::A hub is not linked to the new speaking curriculum"; exit 1; }
           done
           echo "PASS both hubs open the new 126-lesson curriculum directly."
+
+          # Check the newly selected screenshot-matched econometrics layout, not just assets.
+          probe "assets/econ-screenshot.css" /tmp/econ-new.css 'ECONOMETRICS SCREENSHOT REFERENCE'
+          probe "assets/econ-screenshot.js" /tmp/econ-new.js 'ECONOMETRICS SCREENSHOT READER'
+          probe "assets/econ-screenshot-map.js" /tmp/econ-map.js 'window.ECON_SCREENSHOT_MAP'
+          for file in /tmp/econ-home.html /tmp/econ-lesson.html /tmp/econ-lesson-new.html /tmp/econ-module.html; do
+            for marker in 'econ-screenshot.css' 'econ-screenshot.js' 'econ-screenshot-map.js'; do
+              grep -Fq "$marker" "$file" || { echo "::error::Screenshot layout missing $marker in $file"; exit 1; }
+            done
+          done
+          "$CHROME" --headless --no-sandbox --disable-gpu --disable-dev-shm-usage \
+            --no-first-run --virtual-time-budget=15000 --dump-dom \
+            "$BASE/econometrics/lessons/01-01.html?layout=$DEPLOY_SHA" \
+            >/tmp/econ-screenshot-lesson-dom.html 2>/tmp/econ-screenshot-chrome.log
+          for marker in 'data-econ-layout="lesson"' 'econ-screenshot-grid' 'econ-screenshot-left' \
+                        'econ-screenshot-right' 'econ-screenshot-cover' 'econ-screenshot-tree' \
+                        'econ-screenshot-part' 'econ-screenshot-ticks' 'econ-screenshot-exercise-list'; do
+            grep -Fq "$marker" /tmp/econ-screenshot-lesson-dom.html || {
+              echo "::error::Screenshot layout DOM component missing: $marker"
+              tail -40 /tmp/econ-screenshot-chrome.log; exit 1
+            }
+          done
+          PAGE=/tmp/econ-screenshot-lesson-dom.html node <<'NODE'
+          const fs=require('node:fs');
+          const s=fs.readFileSync(process.env.PAGE,'utf8');
+          const chapterCount=(s.match(/class="econ-screenshot-chapter"/g)||[]).length;
+          const checkboxCount=(s.match(/type="checkbox" aria-label=/g)||[]).length;
+          const lessonCards=(s.match(/econ-screenshot-part/g)||[]).length;
+          if(!s.includes('第1章')||!s.includes('第10章')||lessonCards<7)
+            throw Error('Not all ten syllabus chapters or seven lesson sections are visible in rendered DOM');
+          if(checkboxCount<3)throw Error('Lesson checkboxes missing');
+          console.log('PASS econometrics screenshot layout in Chrome: ten chapters, seven sections, right-side self-check');
+          NODE
+          "$CHROME" --headless --no-sandbox --disable-gpu --disable-dev-shm-usage \
+            --no-first-run --virtual-time-budget=15000 --dump-dom \
+            "$BASE/econometrics/v2/modules/M01.html?layout=$DEPLOY_SHA" \
+            >/tmp/econ-screenshot-module-dom.html 2>/tmp/econ-module-chrome.log
+          for marker in 'data-econ-layout="module"' 'econ-screenshot-grid' 'econ-screenshot-part' '第6周'; do
+            grep -Fq "$marker" /tmp/econ-screenshot-module-dom.html || { echo "::error::Extension module reference layout missing: $marker"; exit 1; }
+          done
+          echo "PASS separate six-week 36-module layout, too."
+
 
