@@ -192,12 +192,26 @@ function start(){
     chips.forEach(t=>meta.append(e("span","",t)));
     const oldHero=main.querySelector(".hero");
     if(oldHero)oldHero.insertAdjacentElement("afterend",meta);else main.prepend(meta);
-    if(parts.length){
-      const tabs=e("nav","econ-screenshot-mini");
-      tabs.setAttribute("aria-label","本节讲义结构");
-      tabs.append(a("◉ 课程导览","#econ-screenshot-progress"));
-      parts.slice(0,7).forEach(p=>tabs.append(a(short(p.querySelector("h2")?.textContent||"课程内容",16),"#"+p.id)));
-      meta.insertAdjacentElement("afterend",tabs);
+    // The screenshot places section navigation in the left rail and right notes, not in an extra center strip.
+  }
+
+  // Compress the title panel to the screenshot's single-heading height.
+  // Move original auxiliary lesson metadata, dates and revision links into one
+  // accessible disclosure at the end — no source text is removed.
+  if(isLesson){
+    const hero=main.querySelector(":scope > .hero");
+    if(hero){
+      const list=Array.from(hero.querySelectorAll(".hero-badges,.badge,.meta,.lesson-eyebrow,.eyebrow,p"))
+        .filter(n=>!n.closest(".hero-art"));
+      const topLevel=list.filter(n=>!list.some(other=>other!==n&&other.contains(n)));
+      if(topLevel.length){
+        const record=e("details","econ-screenshot-lesson-info");
+        record.append(e("summary","","授课信息、日期与资料说明"));
+        const details=e("div","econ-screenshot-lesson-info-body");
+        topLevel.forEach(node=>details.append(node));
+        record.append(details);
+        main.append(record);
+      }
     }
   }
   // Right-side progress: only three MANUAL lesson checklist items, never inferred from published.
@@ -296,7 +310,10 @@ function start(){
         Math.round(r.left),Math.round(r.width),
         document.querySelectorAll(".econ-screenshot-intro").length,
         document.querySelectorAll(".econ-screenshot-pillar").length,
-        document.querySelectorAll(".econ-screenshot-ticks input").length
+        document.querySelectorAll(".econ-screenshot-ticks input").length,
+        Math.round(rect(top).height),
+        Math.round(rect(cover).height),
+        parts.length?Math.round(rect(parts[0]).top):0
       ];
       body.setAttribute("data-econ-geometry",JSON.stringify(snapshot));
     });
