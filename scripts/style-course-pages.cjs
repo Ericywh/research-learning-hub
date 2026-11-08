@@ -150,3 +150,71 @@ for(const course of ['speaking','econometrics']){
  selectedCounts[course]=n;
 }
 console.log('Selected visual designs deployed without altering lecture bodies:',JSON.stringify(selectedCounts));
+
+
+// ECONOMETRICS SCREENSHOT BUILD: add accessible three-column course layout
+// to original 120-lesson pages and to the independent 36-module extension.
+// Use the checked-in catalog as the only 120-lesson syllabus; do not modify it.
+{
+ const style=path.join(root,'assets','econ-screenshot.css');
+ const interaction=path.join(root,'assets','econ-screenshot.js');
+ for(const asset of [style,interaction]){
+   if(!fs.existsSync(asset)||fs.statSync(asset).size<6000)
+     throw Error('Econometrics screenshot asset missing or unexpectedly short: '+asset);
+ }
+ const catalogText=fs.readFileSync(path.join('docs','econometrics','catalog.js'),'utf8');
+ if(!catalogText.includes('window.ECON_COURSE'))throw Error('Canonical course data missing');
+ const catalog=JSON.parse(catalogText.slice(catalogText.indexOf('{'),catalogText.lastIndexOf('}')+1));
+ if(catalog.chapters.length!==10||catalog.chapters.flatMap(c=>c.lessons).length!==120)
+   throw Error('Econometrics catalog must remain ten chapters / 120 lessons');
+ const modules=[];
+ for(let i=1;i<=36;i++){
+   const id='M'+String(i).padStart(2,'0');
+   const page=fs.readFileSync(path.join('docs','econometrics','v2','modules',id+'.html'),'utf8');
+   const title=page.match(/<title[^>]*>([^<]+)<\/title>/i)?.[1];
+   if(!title)throw Error('Optional module title missing: '+id);
+   modules.push({id,week:Math.ceil(i/6),title:title.replace(/^M\d\d\s*[·:：—-]\s*/,'').replace(/&amp;/g,'&').trim()});
+ }
+ const map={
+   chapters:catalog.chapters.map(ch=>({
+     number:ch.number,title:ch.title,
+     lessons:ch.lessons.map(l=>({
+       id:l.id,number:l.number,chapter:l.chapter,section:l.section,
+       title:l.title,published:l.published===true,url:l.url||null
+     }))
+   })),
+   modules,
+   weekTitles:['线性模型与投影','大样本与稳健推断','内生性、IV与GMM',
+               'MLE与选择模型','面板与政策评估','RDD、时间序列与复现']
+ };
+ const mapFile=path.join(root,'assets','econ-screenshot-map.js');
+ fs.writeFileSync(mapFile,'window.ECON_SCREENSHOT_MAP='+JSON.stringify(map).replace(/</g,'\\u003c')+';\n','utf8');
+ const econRoot=path.join(root,'econometrics');
+ let count=0,lessons=0,modulesCount=0;
+ for(const file of scan(econRoot)){
+   const rel=path.relative(econRoot,file).split(path.sep).join('/');
+   const lesson=/^lessons\/\d\d-\d\d\.html$/.test(rel);
+   const module=/^v2\/modules\/M\d\d\.html$/.test(rel);
+   if(!lesson&&!module&&rel!=='index.html'&&rel!=='v2/index.html')continue;
+   const original=fs.readFileSync(file,'utf8');
+   if(!original.includes('data-selected-theme="lilac"'))
+     throw Error('Selected lilac design must load before screenshot layout: '+rel);
+   if(!/<\/head>/i.test(original)||!/<body\b/i.test(original))
+     throw Error('Cannot enhance invalid HTML: '+rel);
+   const relative=asset=>path.relative(path.dirname(file),asset).split(path.sep).join('/');
+   const query=sha?'?v='+sha:'';
+   const links=[
+     '<link rel="stylesheet" href="'+relative(style)+query+'" data-econ-screenshot-style>',
+     '<script defer src="'+relative(mapFile)+query+'"></script>',
+     '<script defer src="'+relative(interaction)+query+'"></script>'
+   ].join('\n');
+   const html=original.replace(/<\/head\s*>/i,links+'\n</head>');
+   if(html===original||!html.includes('econ-screenshot-map.js')||!html.includes('econ-screenshot.css'))
+     throw Error('Screenshot design not inserted: '+rel);
+   fs.writeFileSync(file,html,'utf8');
+   count++;if(lesson)lessons++;if(module)modulesCount++;
+ }
+ if(lessons!==120||modulesCount!==36||count!==158)
+   throw Error('Incomplete screenshot enhancement: '+JSON.stringify({count,lessons,modulesCount}));
+ console.log('Econometrics screenshot reference applied:',JSON.stringify({pages:count,lessons,modules:modulesCount,indices:2}));
+}
