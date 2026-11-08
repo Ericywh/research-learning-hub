@@ -333,9 +333,9 @@ window.MATH_COURSE={
           "number": 32,
           "title": "全方差公式",
           "published": true,
-          "date": "2026-10-29",
-          "url": "lessons/2026-10-29-03-06.html",
-          "delivered": false
+          "date": "2026-11-08",
+          "url": "lessons/2026-11-08-03-06.html",
+          "delivered": true
         },
         {
           "chapter": 3,
