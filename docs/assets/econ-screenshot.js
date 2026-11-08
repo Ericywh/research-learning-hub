@@ -205,7 +205,9 @@ function start(){
         .filter(n=>!n.closest(".hero-art"));
       const topLevel=list.filter(n=>!list.some(other=>other!==n&&other.contains(n)));
       const readingGuide=main.querySelector(":scope > .econ-reading-guide");
-      if(topLevel.length||readingGuide){
+      const extraNav=Array.from(main.children)
+        .filter(node=>node.matches("nav.toc,nav.econ-auto-toc,nav.lesson-nav,.reading-scope"));
+      if(topLevel.length||readingGuide||extraNav.length){
         const record=e("details","econ-screenshot-lesson-info");
         record.append(e("summary","","授课信息、日期与资料说明"));
         const details=e("div","econ-screenshot-lesson-info-body");
@@ -213,6 +215,10 @@ function start(){
         // Preserve the original reading guide, but avoid repeating a large
         // introductory panel above the illustrated first lecture section.
         if(readingGuide)details.append(readingGuide);
+        // The original module reader also inserts a 7-link navigation strip.
+        // Keep those links available here rather than stacking it between
+        // our lesson summary and the first illustrated content card.
+        extraNav.forEach(node=>details.append(node));
         record.append(details);
         main.append(record);
       }
