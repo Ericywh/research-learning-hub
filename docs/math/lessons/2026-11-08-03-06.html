@@ -1,0 +1,29 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>第32课｜全方差公式</title><meta name="lesson-status" content="taught"><script>window.MathJax={tex:{inlineMath:[['$','$']],displayMath:[['$$','$$']]}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script><style>body{max-width:820px;margin:45px auto;padding:0 24px;font:17px/1.85 system-ui,"Noto Sans CJK SC",sans-serif;color:#263342}h1{font-size:29px}h2{font-size:21px;margin-top:30px}p{margin:14px 0}.formula{overflow-x:auto;text-align:center;padding:12px;background:#f6f8fb;border-radius:8px}header{border-bottom:1px solid #ddd;padding-bottom:16px}footer{margin-top:36px;color:#657085}</style></head><body><header><h1>第3章·第6节｜全方差公式</h1><p>全课程第32课｜2026-11-08｜正式授课</p></header><main><p>&lt;b&gt;全课程第32课 / 共73课｜2026-11-08｜预计学习8分钟&lt;/b&gt;</p>
+<p>&lt;b&gt;核心问题：&lt;/b&gt; 总体方差如何分解为组内波动和组间均值差异？为什么只知道各组方差仍不足以计算总体方差？</p>
+<h2>一、从全期望走向全方差</h2>
+<p>上一课用全期望公式将各组条件均值按总体占比加权。本课把同一思路用于方差。设随机变量 $Y$ 具有有限二阶矩，$X$ 为分组变量，定义 $m(X)=E(Y\mid X)$。将 $Y-EY$ 拆成 $[Y-m(X)]+[m(X)-EY]$。平方后取期望，其中交叉项为零，因为 $E[Y-m(X)\mid X]=0$。于是</p>
+<div class="formula">$$
+\operatorname{Var}(Y)=E\{\operatorname{Var}(Y\mid X)\}+\operatorname{Var}\{E(Y\mid X)\}.
+$$</div>
+<p>左边是目标总体中 $Y$ 的方差；右边第一项是组内条件方差的加权平均，第二项是各组条件均值围绕总体均值的变异。这是概率恒等式，不要求 $X$ 与 $Y$ 独立。</p>
+<h2>二、离散分组如何计算</h2>
+<p>若 $X$ 有若干组，记组别概率为 $w_g=P(X=g)$、条件均值为 $\mu_g$、条件方差为 $\sigma_g^2$，且各组权重之和为1，则</p>
+<div class="formula">$$
+\mu=\sum_g w_g\mu_g,\qquad
+\operatorname{Var}(Y)=\sum_g w_g\sigma_g^2+\sum_g w_g(\mu_g-\mu)^2.
+$$</div>
+<p>第一项不能代替总体方差，因为不同群体即使各自内部很稳定，也可能因均值差异而使总体波动很大。注意这些都是总体概率及条件矩；实际抽样中的组均值和样本方差是其估计量，不能直接混为一谈。</p>
+<h2>三、保险赔付的手算例子</h2>
+<p>假设低风险组占60%，平均赔付100元、条件方差400元²；高风险组占40%，平均赔付400元、条件方差900元²。按上一课的全期望公式，总体均值为220元。</p>
+<p>组内方差的加权平均是 $0.6\times400+0.4\times900=600$ 元²。组间均值方差是 $0.6(100-220)^2+0.4(400-220)^2=21600$ 元²。因此总体方差为22200元²，标准差约149.0元。若只取组内方差600元²，就会严重低估总体赔付的离散程度。这里的数值是教学设定，不是实测保险数据。</p>
+<h2>四、统计应用及解释边界</h2>
+<p>在保险风险分层、地区收入差异或学校成绩分析中，全方差公式可以量化总体变异中来自组内与组间的部分。组间方差占比反映给定分组解释的均值异质性，但不能直接称为该分组变量的因果贡献。改变分组方式也会改变两部分的数值。它还是预测误差分析的基础：真实条件均值预测留下的平均条件方差，代表给定 $X$ 后仍未消除的波动。</p>
+<h2>五、两道自测</h2>
+<p>&lt;b&gt;第1题｜概念题：&lt;/b&gt; 如果所有组内条件方差都为零，总体方差是否必定为零？说明原因。</p>
+<p>&lt;b&gt;第2题｜计算题：&lt;/b&gt; 两组各占50%，条件均值分别为2和6，条件方差分别为1和3。求总体均值、组内方差项、组间方差项与总体方差。</p>
+<p>&lt;b&gt;参考答案&lt;/b&gt;</p>
+<p>&lt;b&gt;第1题：&lt;/b&gt; 不一定。组内方差为零时，$Y$ 在每组内固定，但不同组的固定值仍可能不同，总体方差等于组间均值方差。</p>
+<p>&lt;b&gt;第2题：&lt;/b&gt; 总体均值为4；组内项为 $0.5\times1+0.5\times3=2$；组间项为 $0.5(2-4)^2+0.5(6-4)^2=4$；总体方差为6。</p>
+<h2>六、衔接</h2>
+<p>第31课解决条件均值如何汇总，本课说明总体波动如何分解。下一课从总体概率规律转向统计量在重复抽样中的分布。</p>
+<p>&lt;b&gt;下一课：第3章·第7节｜统计量的抽样分布（全课程第33课）。&lt;/b&gt;</p></main><footer>本页为2026-11-08聊天实际授课版本；2026-10-29预发布版本另行保留。</footer></body></html>
