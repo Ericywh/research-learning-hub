@@ -241,3 +241,378 @@ body.rv-page[data-selected-theme="burgundy"].rv-focus .st-speaking-rail{display:
 body.rv-page[data-selected-theme="burgundy"].rv-focus .rv-layout{display:grid!important;grid-template-columns:minmax(0,1fr)!important}
 body.rv-page[data-selected-theme="burgundy"].rv-focus .rv-layout>.rv-main{grid-column:1!important}
 body.rv-page[data-selected-theme="burgundy"].rv-focus .rv-layout>.rv-sidebar{display:none!important}
+
+
+/* Screenshot-faithful Speaking v4 layout: wine-and-gold editorial theater.
+   The actual course has SIX chapters and 126 AM/PM lessons; no fake lesson IDs. */
+body.rv-page[data-selected-theme="burgundy"].st-speaking-reference{
+ background:#faf6f2!important;color:#392c34!important;
+ --st-wine:#7f1734;--st-red:#a12f4d;--st-gold:#e6b47b;
+ --st-blue:#185564;--st-paper:#fffefd;--st-border:#e8d9d5;
+}
+body.st-speaking-reference .st-stage-masthead{width:100%;margin:0 0 15px;position:relative;isolation:isolate}
+body.st-speaking-reference .st-stage-navbar{
+ min-height:51px;padding:0 max(17px,calc((100vw - 1470px)/2));
+ background:linear-gradient(90deg,#530919,#861a34 53%,#520b21);
+ display:flex;align-items:center;gap:15px;
+ border-bottom:1px solid #dd9a67;box-shadow:0 4px 15px #48112140
+}
+body.st-speaking-reference .st-stage-navbar a{color:#f8e3bd!important;text-decoration:none}
+body.st-speaking-reference .st-brand{
+ font-family:Georgia,"Noto Serif SC","Songti SC",serif;
+ font-size:clamp(17px,1.6vw,24px);font-weight:800;white-space:nowrap;
+ padding:10px 14px;border-right:1px solid #e5a76e5e
+}
+body.st-speaking-reference .st-mast-nav{
+ display:flex;align-items:center;gap:2px;overflow-x:auto;
+ scrollbar-width:thin;padding:6px 0;white-space:nowrap;min-width:0
+}
+body.st-speaking-reference .st-mast-link{
+ font-size:12px;font-weight:750;padding:8px 13px;border-radius:9px
+}
+body.st-speaking-reference .st-mast-link:hover{background:#ffffff18}
+body.st-speaking-reference .st-mast-link.is-current{
+ background:linear-gradient(100deg,#fbe2b7,#e4b57c);
+ color:#70233a!important;box-shadow:inset 0 1px 0 #fff7e0
+}
+body.st-speaking-reference .st-stage-banner{
+ position:relative;min-height:195px;
+ background:
+   linear-gradient(90deg,rgba(67,5,22,.97) 0%,rgba(111,20,43,.88) 52%,rgba(74,14,29,.42) 76%,rgba(34,10,20,.2) 100%),
+   url("https://images.pexels.com/photos/9547593/pexels-photo-9547593.jpeg?auto=compress&cs=tinysrgb&w=1600") center 47%/cover no-repeat;
+ overflow:hidden;border-bottom:1px solid #d2a779;
+ box-shadow:0 9px 28px #61223833
+}
+body.st-speaking-reference .st-stage-banner::before{
+ content:"";position:absolute;inset:0;pointer-events:none;
+ background:repeating-linear-gradient(102deg,transparent 0 70px,#f5c39c08 71px 73px,transparent 74px 132px);
+ opacity:.55
+}
+body.st-speaking-reference .st-stage-banner-copy{
+ padding:clamp(24px,2.8vw,38px) max(22px,calc((100vw - 1400px)/2));
+ position:relative;z-index:2
+}
+body.st-speaking-reference .st-stage-kicker{
+ font:750 11px/1.6 Inter,system-ui,sans-serif;
+ letter-spacing:.2em;color:#f6cca1
+}
+body.st-speaking-reference .st-stage-course-title{
+ font:800 clamp(28px,3.2vw,48px)/1.3 Georgia,"Noto Serif SC","Songti SC",serif;
+ letter-spacing:.045em;color:#fff0d4;text-shadow:0 3px 10px #2b0915ad;
+ margin:7px 0 8px;max-width:1050px
+}
+body.st-speaking-reference .st-stage-subtitle{
+ color:#f5e8da!important;font-size:13px;letter-spacing:.15em;
+ white-space:normal;margin:0
+}
+body.st-speaking-reference .st-stage-ornament{
+ position:absolute;bottom:-5px;left:0;right:0;height:82px;pointer-events:none;opacity:.85;
+}
+body.st-speaking-reference .st-stage-ornament svg{width:100%;height:100%}
+body.st-speaking-reference .rv-wrap{
+ width:min(1480px,calc(100% - 24px))!important;max-width:1480px!important;
+ padding:0 0 34px!important
+}
+body.st-speaking-reference .rv-wrap>.rv-hero{display:none!important}
+body.st-speaking-reference .rv-layout{
+ display:grid!important;grid-template-columns:310px minmax(0,1fr) 292px!important;
+ align-items:start!important;gap:15px!important;margin:0!important;max-width:none!important
+}
+body.st-speaking-reference .rv-layout>.rv-main{
+ grid-column:2!important;grid-row:1;min-width:0!important;
+ display:flex!important;flex-direction:column!important;gap:12px!important
+}
+body.st-speaking-reference .rv-layout>.rv-sidebar{
+ grid-column:3!important;grid-row:1;min-width:0!important;
+ display:flex!important;flex-direction:column!important;gap:14px!important;
+ position:sticky!important;top:12px!important;max-height:calc(100vh - 23px);overflow-y:auto;scrollbar-width:thin;
+ padding-bottom:10px
+}
+body.st-speaking-reference .rv-layout>.st-speaking-rail{
+ grid-column:1!important;grid-row:1;position:sticky!important;top:12px!important;
+ max-height:calc(100vh - 23px);overflow-y:auto;scrollbar-width:thin;
+ background:linear-gradient(180deg,#fffdfa,#fff8f5)!important;border:1px solid #eadedb!important;
+ padding:0 8px 18px!important;border-radius:16px!important;
+ box-shadow:0 9px 25px #55243920!important
+}
+body.st-speaking-reference .st-rail-head{
+ font-size:16px;font-weight:800;color:#fff5e9;background:linear-gradient(100deg,#75122f,#a02f4b);
+ margin:0 -8px 10px!important;border-radius:14px 14px 7px 7px;padding:15px!important;
+ text-align:left
+}
+body.st-speaking-reference .st-rail-top{
+ display:block;margin:9px 6px 12px;padding:11px;border:1px solid #e6cbd0;border-radius:9px;
+ font-size:13px;font-weight:800;text-decoration:none;background:#fff3f0;color:#8d2846!important
+}
+body.st-speaking-reference details.st-stage-chapter{
+ background:#fff!important;border:1px solid #eee5e2!important;border-radius:9px!important;
+ margin:6px 0!important;overflow:hidden!important;
+}
+body.st-speaking-reference details.st-stage-chapter>summary{
+ font:750 13px/1.6 "Noto Sans SC",sans-serif!important;cursor:pointer!important;
+ padding:11px 10px!important;color:#4f3b43!important;background:#fbf8f6!important;
+ display:list-item!important;list-style-position:inside!important
+}
+body.st-speaking-reference details.st-stage-chapter.is-current>summary{
+ color:#fff!important;background:linear-gradient(100deg,#8e1936,#ae3550)!important
+}
+body.st-speaking-reference .st-rail-chapter-index{
+ display:block;margin:6px 10px 8px;padding:4px 6px;font-size:11px!important;
+ text-decoration:none;color:#993750!important;font-weight:800
+}
+body.st-speaking-reference .st-rail-day{padding:9px 8px 11px;border-top:1px solid #f1e6e4}
+body.st-speaking-reference .st-rail-day.is-current{background:#fff0f1;border-radius:8px}
+body.st-speaking-reference .st-rail-day-no{
+ font:800 10px/1.4 Inter,system-ui,sans-serif;letter-spacing:.14em;
+ color:#a47a80;padding:0 7px 5px
+}
+body.st-speaking-reference .st-rail-lesson{
+ display:block;text-decoration:none;color:#5b454e!important;font-size:12px!important;
+ line-height:1.45!important;font-weight:550;padding:7px 9px!important;
+ border-radius:7px;max-width:100%;overflow-wrap:anywhere
+}
+body.st-speaking-reference .st-rail-lesson:hover{background:#f9edf0;color:#8e2343!important}
+body.st-speaking-reference .st-rail-lesson.is-active{
+ color:#871d3c!important;font-weight:850!important;background:#f7dfe6!important;
+ border-left:4px solid #ae3153
+}
+body.st-speaking-reference .st-rail-bottom{
+ display:block;margin:15px 6px 3px;text-decoration:none;color:#9a4d5c!important;font-weight:800;font-size:12px
+}
+body.st-speaking-reference .rv-main .st-reference-breadcrumb{
+ display:flex!important;flex-direction:row!important;justify-content:space-between!important;align-items:center!important;
+ min-height:44px;padding:11px 18px!important;margin:0!important;
+ border-radius:12px!important;border:1px solid #ebdfdc!important;background:#fff!important;
+ box-shadow:0 5px 15px #5823360b!important
+}
+body.st-speaking-reference .rv-main .st-reference-breadcrumb :is(a,span){
+ font-size:12px!important;color:#6c5b61!important;text-decoration:none!important
+}
+body.st-speaking-reference .rv-main .st-reference-breadcrumb a{color:#88213f!important;font-weight:750!important}
+body.st-speaking-reference .rv-main .st-lesson-title-hero{
+ background:#fff!important;min-height:0!important;
+ border:1px solid #eadfdc!important;border-radius:15px!important;
+ box-shadow:0 6px 21px #60273a10!important;padding:21px 24px!important;
+ margin:0!important;color:#41283b!important
+}
+body.st-speaking-reference .rv-main .st-lesson-title-hero:before,
+body.st-speaking-reference .rv-main .st-lesson-title-hero:after{display:none!important}
+body.st-speaking-reference .st-lesson-title-hero .rv-eyebrow{
+ font-size:11px!important;letter-spacing:.15em!important;color:#8d465b!important;
+ display:inline-block!important;background:#f8e8e6;border-radius:8px;padding:4px 9px
+}
+body.st-speaking-reference .st-lesson-title-hero h1{
+ color:#841c3a!important;text-shadow:none!important;
+ font:800 clamp(24px,2.5vw,33px)/1.35 Georgia,"Noto Serif SC","Songti SC",serif!important;
+ max-width:100%!important;margin:12px 0 10px!important;letter-spacing:.02em!important;
+}
+body.st-speaking-reference .st-lesson-title-hero .rv-lead{
+ color:#695a62!important;font-size:13px!important;margin-bottom:12px!important
+}
+body.st-speaking-reference .st-lesson-title-hero .rv-pills{margin-top:9px!important}
+body.st-speaking-reference .st-lesson-title-hero .rv-pills span{
+ border:1px solid #eed8d4!important;background:#fff4ef!important;
+ color:#9e4c52!important;font-size:11px!important;padding:4px 9px!important
+}
+body.st-speaking-reference .st-lesson-title-hero .soft-position{
+ padding:9px 12px!important;color:#81536a!important;background:#fbf0f1!important;
+ border:1px solid #e9d2d8!important;border-radius:10px!important;margin-top:12px!important
+}
+body.st-speaking-reference .st-lesson-title-hero .soft-position *{color:inherit}
+body.st-speaking-reference .st-lesson-title-hero .soft-position-track{background:#ead9de!important}
+body.st-speaking-reference .st-lesson-title-hero .soft-position-fill{background:linear-gradient(90deg,#9b2446,#d5a15d)!important}
+body.st-speaking-reference .st-lesson-title-hero :is(.rv-hero-art,.soft-hero-symbol){display:none!important}
+body.st-speaking-reference .rv-main .rv-tools{
+ margin:0!important;padding:10px 17px!important;border-radius:10px!important;
+ background:#fff!important;border:1px solid #eae1de!important;
+ display:flex!important;gap:14px!important;align-items:center!important;justify-content:space-between!important
+}
+body.st-speaking-reference .rv-main .rv-notice{
+ margin:0!important;padding:11px 16px!important;border-radius:9px!important;
+ background:#fff9ed!important;border:1px solid #eadabb!important;
+ border-left:4px solid #d6a05d!important;font-size:12px!important
+}
+body.st-speaking-reference .st-stage-photo{
+ position:relative;min-height:194px;margin:0!important;padding:33px 34px;
+ border:1px solid #b89e87;border-radius:11px!important;overflow:hidden;
+ background:linear-gradient(90deg,rgba(6,43,49,.96) 0%,rgba(7,48,56,.88) 38%,rgba(6,42,49,.15) 80%),
+ url("https://images.pexels.com/photos/31129059/pexels-photo-31129059.jpeg?auto=compress&cs=tinysrgb&w=1200") center 46%/cover no-repeat,
+ linear-gradient(120deg,#073e4e,#c89a83 89%);
+ box-shadow:0 10px 25px #09344125;display:flex;flex-direction:column;justify-content:center;
+}
+body.st-speaking-reference .st-stage-photo::after{
+ content:"";position:absolute;inset:auto 0 0;height:50px;pointer-events:none;
+ background:linear-gradient(135deg,transparent 30%,#e7b47f44 50%,transparent 69%);
+ border-bottom:2px solid #d69d6755
+}
+body.st-speaking-reference .st-stage-photo blockquote{
+ position:relative;z-index:1;white-space:pre-line;max-width:450px;
+ color:#fff3d7!important;font:700 clamp(20px,2vw,28px)/1.65 "Noto Serif SC","Songti SC",serif;
+ letter-spacing:.045em!important;margin:0!important;padding-left:38px!important;
+}
+body.st-speaking-reference .st-stage-photo blockquote::before{
+ content:"“";position:absolute;left:0;top:-25px;font:800 74px Georgia,serif;color:#d7ae81;opacity:.88
+}
+body.st-speaking-reference .st-stage-photo figcaption{
+ position:relative;z-index:1;margin:12px 0 0 38px;color:#e8c8a4;font-size:10px;
+ letter-spacing:.13em;font-weight:800
+}
+body.st-speaking-reference .st-lesson-tabs{
+ display:flex;align-items:stretch;gap:0;overflow-x:auto;
+ margin:0!important;border:1px solid #ebdfdc!important;
+ border-radius:11px!important;background:#fff!important;
+ scrollbar-width:thin
+}
+body.st-speaking-reference .st-tab{
+ flex:1 0 auto;min-width:115px;padding:11px 13px;
+ text-decoration:none!important;text-align:center;
+ border-right:1px solid #efe7e5;color:#36566c!important;
+ font-size:12px;font-weight:780!important;white-space:nowrap
+}
+body.st-speaking-reference .st-tab:first-child{
+ background:linear-gradient(105deg,#931e3f,#b14359);color:#fff!important;
+ border-radius:10px 0 0 10px
+}
+body.st-speaking-reference .st-tab:hover{background:#f8edf0!important;color:#941e42!important}
+body.st-speaking-reference .st-tab:first-child:hover{background:#a3324f!important;color:#fff!important}
+body.st-speaking-reference .rv-main .rv-article{gap:14px!important}
+body.st-speaking-reference .rv-main .rv-article>.rv-section,
+body.st-speaking-reference .rv-main .rv-article>.lesson-panel{
+ border-radius:13px!important;background:#fff!important;padding:clamp(17px,2vw,26px)!important;
+ border:1px solid #e9dfdb!important;box-shadow:0 5px 17px #542c3b0f!important
+}
+body.st-speaking-reference .rv-main .rv-article>.rv-section:nth-of-type(4n+1){border-top:4px solid #a53251!important}
+body.st-speaking-reference .rv-main .rv-article>.rv-section:nth-of-type(4n+2){border-top:4px solid #d49e58!important}
+body.st-speaking-reference .rv-main .rv-article>.rv-section:nth-of-type(4n+3){border-top:4px solid #27717d!important}
+body.st-speaking-reference .rv-main .rv-article>.rv-section:nth-of-type(4n+4){border-top:4px solid #8d5e88!important}
+body.st-speaking-reference .rv-main .rv-article>.rv-section>h2{
+ color:#821e40!important;font:800 19px/1.45 Georgia,"Noto Serif SC","Songti SC",serif!important;
+ margin:0 0 12px!important;padding:0 0 12px!important;
+ border-bottom:1px solid #eedddd!important
+}
+body.st-speaking-reference .rv-main :is(.rv-kicker,.soft-section-icon){color:#992846!important}
+body.st-speaking-reference .rv-main .rv-article .rv-step:nth-of-type(3n+1){background:#fff1f2!important}
+body.st-speaking-reference .rv-main .rv-article .rv-step:nth-of-type(3n+2){background:#f1f7ff!important}
+body.st-speaking-reference .rv-main .rv-article .rv-step:nth-of-type(3n+3){background:#fff7e8!important}
+body.st-speaking-reference .rv-sidebar>.soft-progress,
+body.st-speaking-reference .rv-sidebar>.st-training-card,
+body.st-speaking-reference .rv-sidebar>.st-inspiration-panel,
+body.st-speaking-reference .rv-sidebar>.rv-side-card{
+ position:relative!important;padding:17px!important;background:#fffefd!important;
+ border:1px solid #e8dcd7!important;border-radius:14px!important;
+ box-shadow:0 8px 19px #6a304115!important;min-width:0!important
+}
+body.st-speaking-reference .rv-sidebar>.soft-progress,
+body.st-speaking-reference .rv-sidebar>.st-training-card{flex-shrink:0}
+body.st-speaking-reference .st-progress-card-title,
+body.st-speaking-reference .st-training-card h2{
+ background:linear-gradient(90deg,#871935,#a33a50)!important;
+ color:#fff6e7!important;font:800 16px/1.4 Georgia,"Noto Serif SC","Songti SC",serif!important;
+ padding:12px 14px!important;margin:-17px -17px 17px!important;
+ border-radius:13px 13px 0 0!important
+}
+body.st-speaking-reference .st-progress-presentation{
+ display:flex;flex-direction:row;align-items:center;gap:12px;margin:0 0 12px
+}
+body.st-speaking-reference .st-progress-donut{
+ flex:0 0 95px;width:95px;height:95px;border-radius:50%;display:grid;place-items:center;
+ background:conic-gradient(#96314d 0 var(--st-progress,0%),#f1dcd8 var(--st-progress,0%) 100%);
+ position:relative;color:#8c1e40
+}
+body.st-speaking-reference .st-progress-donut::before{
+ content:"";position:absolute;inset:13px;background:#fff;border-radius:50%
+}
+body.st-speaking-reference .st-progress-donut strong{position:relative;z-index:1;font:800 20px Georgia,serif}
+body.st-speaking-reference .st-progress-caption{font-size:12px;font-weight:730;color:#694551;line-height:1.6}
+body.st-speaking-reference .rv-sidebar .st-reading-progress-card .soft-progress-label{font-size:11px}
+body.st-speaking-reference .rv-sidebar .st-reading-progress-card .soft-progress-track{background:#f1e6e3}
+body.st-speaking-reference .st-training-card ul{list-style:none;padding:0!important;margin:0!important}
+body.st-speaking-reference .st-training-card li{
+ display:flex;gap:11px;align-items:start;padding:10px 0;border-bottom:1px solid #efe9e6;
+ color:#5d444a;font-size:12px;line-height:1.7
+}
+body.st-speaking-reference .st-training-card li:last-child{border:0}
+body.st-speaking-reference .st-training-card li::before{
+ content:"✓";flex:0 0 18px;height:18px;border-radius:50%;display:grid;place-items:center;
+ color:#9d2847;border:1px solid #dca57a;font-size:11px;margin-top:1px
+}
+body.st-speaking-reference .st-inspiration-panel{
+ min-height:235px;overflow:hidden;
+ background:linear-gradient(180deg,#fff0e4,#f7d8c3)!important;
+ border:2px solid #fff6f0!important
+}
+body.st-speaking-reference .st-inspiration-mark{
+ color:#a16c5f;font:800 67px Georgia,serif;line-height:.8
+}
+body.st-speaking-reference .st-inspiration-panel blockquote{
+ white-space:pre-line;text-align:center;
+ color:#8a2541;font:800 19px/1.85 Georgia,"Noto Serif SC","Songti SC",serif!important;
+ margin:6px 0!important;position:relative;z-index:1
+}
+body.st-speaking-reference .st-inspiration-landscape{
+ position:absolute;left:0;right:0;bottom:0;height:99px;opacity:.85;pointer-events:none
+}
+body.st-speaking-reference .st-inspiration-landscape svg{width:100%;height:100%}
+body.st-speaking-reference .rv-sidebar .rv-side-card h2{
+ background:linear-gradient(95deg,#7e243f,#9b3650)!important;color:#fff!important;
+ font-size:15px!important;line-height:1.5!important
+}
+body.st-speaking-reference .rv-sidebar .rv-side-card{order:3}
+body.st-speaking-reference .rv-sidebar .st-reading-progress-card{order:0}
+body.st-speaking-reference .rv-sidebar .st-training-card{order:1}
+body.st-speaking-reference .rv-sidebar .st-inspiration-panel{order:2}
+body.st-speaking-reference .rv-sidebar .rv-side-card a{font-size:12px}
+body.st-speaking-catalog .rv-shell{width:min(1350px,calc(100% - 32px))!important;padding-top:0}
+body.st-speaking-catalog .rv-topbar{
+ margin:0 0 18px!important;border:1px solid #eadbd9!important;
+ background:#fffefd!important;color:#7b4156!important;padding:11px 16px!important;
+ border-radius:10px!important
+}
+body.st-speaking-catalog .rv-hero{
+ padding:25px 35px!important;min-height:0!important;
+ border-radius:15px!important;border:1px solid #ead8d7!important;
+ background:linear-gradient(110deg,#fff9f1,#fff4ef)!important;box-shadow:0 9px 20px #542a350d!important
+}
+body.st-speaking-catalog .rv-hero h1{color:#871e3f!important;font-size:clamp(25px,2.5vw,36px)!important;text-shadow:none!important}
+body.st-speaking-catalog .rv-hero :is(p,.rv-lead){color:#6c545e!important}
+body.st-speaking-catalog .rv-hero .rv-badges span{color:#8a2e4b!important;background:#fbe9e4!important}
+body.st-speaking-catalog :is(.rv-chapter-card,.rv-lesson-pair,.rv-card){border-color:#eeddd6!important}
+body.st-speaking-catalog .rv-chapter-nav a{color:#892448!important}
+@media(max-width:1350px){
+ body.st-speaking-reference .rv-layout{grid-template-columns:266px minmax(0,1fr) 272px!important}
+}
+@media(max-width:1180px){
+ body.st-speaking-reference .rv-layout{grid-template-columns:minmax(0,1fr) 270px!important}
+ body.st-speaking-reference .rv-layout>.st-speaking-rail{display:none!important}
+ body.st-speaking-reference .rv-layout>.rv-main{grid-column:1!important}
+ body.st-speaking-reference .rv-layout>.rv-sidebar{grid-column:2!important}
+}
+@media(max-width:825px){
+ body.st-speaking-reference .rv-layout{grid-template-columns:minmax(0,1fr)!important}
+ body.st-speaking-reference .rv-layout>.rv-main{grid-column:1!important}
+ body.st-speaking-reference .rv-layout>.rv-sidebar{grid-column:1!important;grid-row:2!important;position:static!important;overflow:visible!important;max-height:none!important}
+ body.st-speaking-reference .st-stage-banner{min-height:175px}
+ body.st-speaking-reference .st-stage-banner-copy{padding:27px 20px}
+ body.st-speaking-reference .st-stage-course-title{font-size:31px}
+ body.st-speaking-reference .st-brand{font-size:17px}
+ body.st-speaking-reference .rv-main .st-lesson-title-hero{padding:18px!important}
+}
+@media(max-width:560px){
+ body.st-speaking-reference .rv-wrap{width:calc(100% - 14px)!important}
+ body.st-speaking-reference .st-stage-course-title{font-size:26px}
+ body.st-speaking-reference .st-stage-subtitle{font-size:11px;letter-spacing:.08em}
+ body.st-speaking-reference .st-stage-banner{min-height:173px}
+ body.st-speaking-reference .rv-main .st-reference-breadcrumb{padding:10px 12px!important}
+ body.st-speaking-reference .st-stage-photo{min-height:192px;padding:23px 18px}
+ body.st-speaking-reference .st-stage-photo blockquote{font-size:20px;padding-left:25px!important}
+ body.st-speaking-reference .st-tab{min-width:112px;font-size:11px}
+ body.st-speaking-reference .rv-main .rv-article>.rv-section{padding:17px 15px!important}
+ body.st-speaking-reference .rv-main .rv-tools{flex-wrap:wrap!important}
+ body.st-speaking-reference .rv-main .st-lesson-title-hero h1{font-size:25px!important}
+}
+@media print{
+ body.st-speaking-reference .st-stage-masthead{display:none!important}
+ body.st-speaking-reference .rv-layout{display:block!important}
+ body.st-speaking-reference .rv-layout>.st-speaking-rail,body.st-speaking-reference .rv-layout>.rv-sidebar{display:none!important}
+ body.st-speaking-reference .st-stage-photo{background:#edf3f5!important;color:#142d3b;box-shadow:none!important}
+}
