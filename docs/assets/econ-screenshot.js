@@ -204,11 +204,15 @@ function start(){
       const list=Array.from(hero.querySelectorAll(".hero-badges,.badge,.meta,.lesson-eyebrow,.eyebrow,p"))
         .filter(n=>!n.closest(".hero-art"));
       const topLevel=list.filter(n=>!list.some(other=>other!==n&&other.contains(n)));
-      if(topLevel.length){
+      const readingGuide=main.querySelector(":scope > .econ-reading-guide");
+      if(topLevel.length||readingGuide){
         const record=e("details","econ-screenshot-lesson-info");
         record.append(e("summary","","授课信息、日期与资料说明"));
         const details=e("div","econ-screenshot-lesson-info-body");
         topLevel.forEach(node=>details.append(node));
+        // Preserve the original reading guide, but avoid repeating a large
+        // introductory panel above the illustrated first lecture section.
+        if(readingGuide)details.append(readingGuide);
         record.append(details);
         main.append(record);
       }
