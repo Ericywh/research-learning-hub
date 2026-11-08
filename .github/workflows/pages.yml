@@ -1119,3 +1119,53 @@ jobs:
           assert m['documents'][-1]['lessons']==120
           print('PASS 11 HTTPS Word documents, valid DOCX archives, 120 lesson manifest')
           PY
+
+  verify-selected-visual-designs:
+    name: Verify burgundy Speaking and lilac Econometrics over HTTPS
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Public design CSS, SVG and both course sites
+        shell: bash
+        env:
+          DEPLOY_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          BASE="https://ericywh.github.io/research-learning-hub"
+          probe() {
+            local relative="$1" file="$2" marker="$3" status
+            for attempt in $(seq 1 10); do
+              status=$(curl -L -sS --connect-timeout 12 --max-time 35 -o "$file" -w '%{http_code}' "$BASE/$relative?redesign=$DEPLOY_SHA" || true)
+              if [[ "$status" == "200" ]] && grep -Fq "$marker" "$file"; then
+                echo "PASS HTTPS 200 + verified: $relative"
+                return 0
+              fi
+              if (( attempt == 10 )); then echo "::error::Design verification failed: $relative ($status)"; return 1; fi
+              sleep 9
+            done
+          }
+          probe "assets/selected-burgundy.css" /tmp/wine.css "Selected design 04"
+          probe "assets/selected-lilac.css" /tmp/lilac.css "Selected design 02"
+          probe "assets/selected-course-ui.js" /tmp/course-ui.js "st-speaking-rail"
+          probe "assets/burgundy-stage.svg" /tmp/burgundy-stage.svg "<svg"
+          probe "assets/lilac-data.svg" /tmp/lilac-data.svg "<svg"
+          probe "speaking/" /tmp/speaking-home.html '公众表达与脱稿演讲'
+          probe "speaking/dual-track-2026/" /tmp/speaking-catalog.html "六章126课"
+          probe "speaking/dual-track-2026/am/day-01.html" /tmp/speak-am.html "先留下真实的一分钟"
+          probe "speaking/dual-track-2026/pm/day-63.html" /tmp/speak-pm.html "第63天终测与下一轮计划"
+          probe "econometrics/" /tmp/econ-home.html '计量经济学120天'
+          probe "econometrics/lessons/01-01.html" /tmp/econ-lesson.html '计量经济学的本质与适用范围'
+          probe "econometrics/lessons/02-15.html" /tmp/econ-lesson-new.html '工资影响因素综合实操'
+          probe "econometrics/v2/modules/M01.html" /tmp/econ-module.html '描述、预测与反事实因果'
+          for f in /tmp/speaking-home.html /tmp/speaking-catalog.html /tmp/speak-am.html /tmp/speak-pm.html; do
+            grep -Fq 'data-selected-theme="burgundy"' "$f" || { echo "::error::Burgundy theme not applied to $f"; exit 1; }
+            grep -Fq 'selected-burgundy.css' "$f" || { echo "::error::Burgundy CSS missing in $f"; exit 1; }
+          done
+          for f in /tmp/econ-home.html /tmp/econ-lesson.html /tmp/econ-lesson-new.html /tmp/econ-module.html; do
+            grep -Fq 'data-selected-theme="lilac"' "$f" || { echo "::error::Lilac theme not applied to $f"; exit 1; }
+            grep -Fq 'selected-lilac.css' "$f" || { echo "::error::Lilac CSS missing in $f"; exit 1; }
+          done
+          for f in /tmp/speak-am.html /tmp/speak-pm.html /tmp/econ-lesson.html /tmp/econ-module.html; do
+            grep -Fq 'selected-course-ui.js' "$f" || { echo "::error::UI component missing in $f"; exit 1; }
+          done
+          echo "PASS: two distinct selected designs, SVG illustrations, 126-lesson structure, original 120-lesson course and optional 36 modules."
