@@ -12,12 +12,14 @@
 html{scroll-padding-top:24px;}
 body.study-v2{
   color:var(--study-01-ink)!important;
-  background-color:#d4dfc5!important;
+  background-color:#eff4ef!important;
   background-image:
-    radial-gradient(ellipse 45% 65% at 4% 18%,rgba(255,239,154,.29),transparent 74%),
-    linear-gradient(180deg,rgba(219,235,192,.08),rgba(26,77,43,.14)),
-    url("https://images.unsplash.com/photo-1523712999610-f77fbcfc3843?auto=format&fit=crop&w=2600&q=86")!important;
-  background-position:center top,center,center 42%!important;
+    radial-gradient(ellipse 65vw 72vh at 7% 10%,rgba(200,229,201,.72) 0%,transparent 72%),
+    radial-gradient(ellipse 58vw 65vh at 94% 18%,rgba(193,222,235,.64) 0%,transparent 72%),
+    radial-gradient(ellipse 60vw 70vh at 88% 90%,rgba(231,214,237,.49) 0%,transparent 74%),
+    radial-gradient(ellipse 48vw 60vh at 10% 90%,rgba(250,224,192,.55) 0%,transparent 73%),
+    linear-gradient(135deg,#f0f5e9 0%,#eaf4f2 37%,#f6f3ed 71%,#edf0fa 100%)!important;
+  background-position:center!important;
   background-size:cover!important;
   background-repeat:no-repeat!important;
   background-attachment:fixed!important;
