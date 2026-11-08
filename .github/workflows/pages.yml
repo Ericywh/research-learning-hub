@@ -1236,4 +1236,38 @@ jobs:
           done
           echo "PASS separate six-week 36-module layout, too."
 
+          # Geometry QA uses the real Chromium layout engine at reference width.
+          "$CHROME" --headless --no-sandbox --disable-gpu --disable-dev-shm-usage \
+            --no-first-run --window-size=1472,1047 --force-device-scale-factor=1 \
+            --virtual-time-budget=15000 --dump-dom \
+            "$BASE/econometrics/lessons/01-01.html?layout-qa=1&sha=$DEPLOY_SHA" \
+            >/tmp/econ-desktop-geometry.html 2>/tmp/econ-desktop-geometry.log
+          "$CHROME" --headless --no-sandbox --disable-gpu --disable-dev-shm-usage \
+            --no-first-run --window-size=390,844 --force-device-scale-factor=1 \
+            --virtual-time-budget=15000 --dump-dom \
+            "$BASE/econometrics/lessons/01-01.html?layout-qa=1&sha=$DEPLOY_SHA" \
+            >/tmp/econ-mobile-geometry.html 2>/tmp/econ-mobile-geometry.log
+          node <<'NODE'
+          const fs=require('node:fs');
+          function get(name){
+            const html=fs.readFileSync('/tmp/econ-'+name+'-geometry.html','utf8');
+            const m=html.match(/data-econ-geometry="(\[[0-9,]+\])"/);
+            if(!m)throw Error('Rendered layout geometry missing: '+name);
+            return JSON.parse(m[1]);
+          }
+          const d=get('desktop'),s=get('mobile');
+          const [vw,sw,mast,left,lw,mid,mw,right,rw,intro,pillars,ticks]=d;
+          if(vw<1350 || mast<220 || mast>330)
+            throw Error('Reference masthead is not at expected screenshot dimensions: '+JSON.stringify(d));
+          if(!(left<mid && mid<right && lw>=250 && lw<=310 && mw>=650 && rw>=320 && rw<=380))
+            throw Error('Expected real 3-column screenshot layout: '+JSON.stringify(d));
+          if(intro!==1||pillars!==3||ticks<3)
+            throw Error('Illustration, 3 knowledge cards or self-check missing: '+JSON.stringify(d));
+          const [mv,ms,,ml,mlw,mm,mmw,mr,mrw,mi,mp,mt]=s;
+          if(mv>520 || ms>mv+18 || mlw>mv || mmw>mv || mrw>mv || mi!==1 || mp!==3 || mt<3)
+            throw Error('Mobile responsive layout check failed: '+JSON.stringify(s));
+          console.log('PASS screenshot geometry matches reference: desktop '+JSON.stringify(d)+'; mobile '+JSON.stringify(s));
+          NODE
+
+
 
