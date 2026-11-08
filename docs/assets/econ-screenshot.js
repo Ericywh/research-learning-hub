@@ -45,7 +45,7 @@ function start(){
     if((i===2&&!isModule)||(i===3&&isModule))link.setAttribute("aria-current","page");
     nav.append(link);
   });
-  top.append(nav);mast.append(top);
+  top.append(nav);const avatar=e("span","econ-screenshot-avatar","●");avatar.title="学习进度仅保存在本浏览器";avatar.setAttribute("aria-label","本地个人学习记录");top.append(avatar);mast.append(top);
   const cover=e("section","econ-screenshot-cover");
   cover.setAttribute("aria-label","计量经济学课程横幅");
   const inner=e("div","econ-screenshot-cover-inner");
@@ -148,6 +148,43 @@ function start(){
     if(h2)h2.dataset.eIcon=icon;
     if(!section.id)section.id="econ-screenshot-part-"+(i+1);
   });
+
+  // Display the reference's illustrated opening card using the existing lesson paragraph.
+  // The paragraph is moved once, never cloned or rewritten.
+  if(isLesson&&parts.length){
+    const first=parts[0];
+    let lead=Array.from(first.children).find(x=>x.tagName==="P"&&x.textContent?.trim().length>35);
+    if(!lead){
+      const primer=first.querySelector(".concept-primer");
+      if(primer)lead=Array.from(primer.children).find(x=>x.tagName==="P"&&x.textContent?.trim().length>35);
+    }
+    if(lead){
+      const row=e("div","econ-screenshot-intro");
+      const visual=e("figure","econ-screenshot-concept-art");
+      visual.setAttribute("role","img");
+      visual.setAttribute("aria-label","散点及趋势线的统计示意图");
+      visual.innerHTML='<svg viewBox="0 0 310 185" aria-hidden="true"><defs><linearGradient id="econIntro" x1="0" x2="1" y2="1"><stop stop-color="#f0c0ff"/><stop offset="1" stop-color="#9dcfff"/></linearGradient></defs><rect width="310" height="185" rx="9" fill="#28396f"/><g stroke="#b3c6ec" opacity=".23"><path d="M29 26H283M29 62H283M29 98H283M29 134H283M66 17V156M129 17V156M192 17V156M255 17V156"/></g><path d="M29 17V157H283" stroke="#a4bce7" stroke-width="2"/><path d="M42 135C103 126 153 89 266 43" stroke="url(#econIntro)" fill="none" stroke-width="5" stroke-linecap="round"/><g fill="#efc6f4"><circle cx="55" cy="127" r="5"/><circle cx="77" cy="127" r="5"/><circle cx="94" cy="109" r="4"/><circle cx="121" cy="112" r="5"/><circle cx="140" cy="85" r="4"/><circle cx="164" cy="82" r="5"/><circle cx="186" cy="92" r="4"/><circle cx="206" cy="64" r="5"/><circle cx="241" cy="58" r="4"/><circle cx="266" cy="39" r="5"/></g><g font-family="sans-serif" font-size="11" fill="#e9ebff"><text x="41" y="17">DATA × MODEL</text><text x="275" y="172">X</text><text x="15" y="24">Y</text></g></svg>';
+      const prose=e("div","econ-screenshot-intro-prose");
+      lead.parentNode.insertBefore(row,lead);
+      row.append(visual,prose);prose.append(lead);
+    }
+    // Three varied color tiles navigate to real headings, without inventing content.
+    if(parts.length>=3){
+      const section=parts[1],heading=section.querySelector(":scope > h2");
+      const tiles=e("nav","econ-screenshot-pillars");
+      tiles.setAttribute("aria-label","本课知识结构");
+      [parts[0],parts[1],parts[2]].forEach((part,i)=>{
+        if(!part.id)part.id="econ-screenshot-content-"+(i+1);
+        const tile=a("","#"+part.id,"econ-screenshot-pillar");
+        tile.append(e("span","econ-screenshot-pillar-icon",["◇","☷","◎"][i]));
+        const texts=e("span","econ-screenshot-pillar-copy");
+        texts.append(e("strong","",short(part.querySelector("h2")?.textContent||"本课内容",23)));
+        texts.append(e("small","",short(part.querySelector("p")?.textContent||"进入知识板块",42)));
+        tile.append(texts);tiles.append(tile);
+      });
+      if(heading)heading.insertAdjacentElement("afterend",tiles);
+    }
+  }
   if(isLesson){
     const meta=e("div","econ-screenshot-facts");
     const chips=isModule?["◇ "+id+" · 第"+current.week+"周","◷ 按理解进度学习","▤ 独立36模块拓展","◈ 理论 · 案例 · 练习"]:
@@ -199,7 +236,14 @@ function start(){
     progressContent.append(e("p","","按真实课次学习；网页已发布数量不等于个人实际完成数量。"));
     const meter=e("div","econ-screenshot-meter");meter.append(e("span"));progressContent.append(meter);
   }
-  progress.append(progressContent);right.append(progress);
+  progress.append(progressContent);
+  if(isLesson){
+    const art=e("span","econ-screenshot-progress-art");
+    art.setAttribute("aria-hidden","true");
+    art.innerHTML='<svg viewBox="0 0 85 105" fill="none"><rect x="14" y="15" width="60" height="80" rx="9" fill="#d7c5f9" stroke="#9977d5" stroke-width="4" transform="rotate(9 43 55)"/><rect x="27" y="7" width="26" height="14" rx="4" fill="#8864ca"/><g stroke="#8862c9" stroke-width="3.5" stroke-linecap="round"><path d="m23 34 6 5 9-12M44 37h20M24 55l6 5 9-12M45 58h18M25 76l6 5 9-12M46 79h17"/></g></svg>';
+    progress.append(art);
+  }
+  right.append(progress);
   if(isLesson){
     // Practice excerpts come ONLY from the lesson's question section, not the answer blocks.
     const practice=parts.find(s=>/练习|习题|自测|思考题|应用任务/.test(s.querySelector("h2")?.textContent||""));
