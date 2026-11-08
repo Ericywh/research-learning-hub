@@ -229,3 +229,15 @@ body[data-selected-theme="burgundy"] .rv-footer{border-top:1px solid #ead9ce;mar
  body[data-selected-theme="burgundy"] .rv-layout{display:block!important}
  body[data-selected-theme="burgundy"] .rv-main .rv-section{box-shadow:none!important;break-inside:avoid}
 }
+
+
+/* High-specificity precedence over legacy PM gradients, and retained focus mode. */
+body.rv-page[data-selected-theme="burgundy"] .rv-hero,
+body.rv-page[data-selected-theme="burgundy"][data-mode="pm"] .rv-hero{
+ background:linear-gradient(90deg,rgba(67,11,26,.55),rgba(91,18,42,.32) 60%,rgba(64,15,31,.08)),url("./burgundy-stage.svg") center/cover no-repeat!important;
+ border:1px solid #a45d57!important;
+}
+body.rv-page[data-selected-theme="burgundy"].rv-focus .st-speaking-rail{display:none!important}
+body.rv-page[data-selected-theme="burgundy"].rv-focus .rv-layout{display:grid!important;grid-template-columns:minmax(0,1fr)!important}
+body.rv-page[data-selected-theme="burgundy"].rv-focus .rv-layout>.rv-main{grid-column:1!important}
+body.rv-page[data-selected-theme="burgundy"].rv-focus .rv-layout>.rv-sidebar{display:none!important}
