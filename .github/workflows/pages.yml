@@ -837,7 +837,7 @@ jobs:
           const fs=require('node:fs');
           const html=fs.readFileSync(process.env.PAGE,'utf8');
           const first=html.match(/<div class="course-grid" id="course-grid">\s*<a[^>]*href="([^"]+)"/);
-          if(!first||!/(?:^|\/)speaking\/$/.test(first[1]))throw Error('Speaking is not the first course in '+process.env.PAGE);
+          if(!first||!/(?:^|\/)speaking\/dual-track-2026\/$/.test(first[1]))throw Error('New 126-lesson speaking course is not the first entry in '+process.env.PAGE);
           const count=(html.match(/class="course-card(?: course-card-featured)?"/g)||[]).length;
           if(count!==8)throw Error('Expected eight course cards, found '+count);
           const cards=[...html.matchAll(/<a class="course-card(?: course-card-featured)?" href="([^"]+)"/g)].map(m=>m[1]);
@@ -1169,3 +1169,26 @@ jobs:
             grep -Fq 'selected-course-ui.js' "$f" || { echo "::error::UI component missing in $f"; exit 1; }
           done
           echo "PASS: two distinct selected designs, SVG illustrations, 126-lesson structure, original 120-lesson course and optional 36 modules."
+
+          # Visual DOM test: verify dynamically constructed components, not just static HTML.
+          CHROME="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || true)"
+          if [[ -z "$CHROME" ]]; then echo "::error::Chrome unavailable for public visual DOM verification"; exit 1; fi
+          "$CHROME" --headless --no-sandbox --disable-gpu --disable-dev-shm-usage \
+            --no-first-run --virtual-time-budget=12500 --dump-dom \
+            "$BASE/speaking/dual-track-2026/am/day-01.html?layout=$DEPLOY_SHA" \
+            >/tmp/speaking-v4-dom.html 2>/tmp/speaking-chrome.log
+          for marker in 'st-speaking-reference' 'st-stage-masthead' 'st-stage-photo' \
+                        'st-lesson-tabs' 'st-training-card' 'st-rail-day' 'st-inspiration-panel'; do
+            grep -Fq "$marker" /tmp/speaking-v4-dom.html || { echo "::error::Reference-04 DOM component missing: $marker"; tail -35 /tmp/speaking-chrome.log; exit 1; }
+          done
+          echo "PASS public-speaking reference-04 components actually rendered by Chrome."
+          for file in /tmp/speaking-home.html /tmp/speaking-catalog.html; do
+            grep -Fq 'dual-track-2026' "$file" || { echo "::error::Speaking does not lead to new dual-track curriculum"; exit 1; }
+          done
+          probe "study/" /tmp/study-home.html 'course-grid'
+          probe "" /tmp/root-home.html 'course-grid'
+          for file in /tmp/study-home.html /tmp/root-home.html; do
+            grep -Fq 'speaking/dual-track-2026/' "$file" || { echo "::error::A hub is not linked to the new speaking curriculum"; exit 1; }
+          done
+          echo "PASS both hubs open the new 126-lesson curriculum directly."
+
