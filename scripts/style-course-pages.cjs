@@ -107,3 +107,46 @@ for(const [directory,theme] of Object.entries(themes)){
 if(lessonTotal<45)throw Error('Too few enhanced lessons: '+lessonTotal);
 console.log('Course design system applied to '+total+' HTML pages:',JSON.stringify(counts));
 console.log('Lesson reader enhanced '+lessonTotal+' independently published lesson HTML pages.');
+
+
+// Selected burgundy/lilac course designs; source lesson bodies are not modified.
+// Apply after the existing general styling, including revised econometrics modules.
+const selectedCss={
+  speaking:path.join(root,'assets','selected-burgundy.css'),
+  econometrics:path.join(root,'assets','selected-lilac.css')
+};
+const selectedJS=path.join(root,'assets','selected-course-ui.js');
+for(const assetFile of [...Object.values(selectedCss),selectedJS]){
+ if(!fs.existsSync(assetFile) || fs.statSync(assetFile).size<4000)
+   throw Error('Missing approved course design asset: '+assetFile);
+}
+const selectedCounts={};
+for(const course of ['speaking','econometrics']){
+ const courseRoot=path.join(root,course);
+ if(!fs.existsSync(courseRoot))throw Error('Selected course missing: '+course);
+ let n=0;
+ for(const file of scan(courseRoot)){
+   const rel=path.relative(courseRoot,file).split(path.sep).join('/');
+   if(course==='econometrics' && rel.startsWith('archive/'))continue;
+   const original=fs.readFileSync(file,'utf8');
+   if(!/<head\b[^>]*>/.test(original)||!/<\/head\s*>/i.test(original)||!/<body\b/i.test(original))
+     throw Error('Invalid selected course HTML: '+file);
+   if(/data-selected-theme=|selected-course-ui\.js|selected-burgundy\.css|selected-lilac\.css/.test(original))
+     throw Error('Selected theme source already injected: '+file);
+   const href=path.relative(path.dirname(file),selectedCss[course]).split(path.sep).join('/');
+   const jsHref=path.relative(path.dirname(file),selectedJS).split(path.sep).join('/');
+   const marker=course==='speaking'?'burgundy':'lilac';
+   const css='<link rel="stylesheet" href="'+href+(sha?'?v='+sha:'')+'" data-selected-course-css="'+marker+'">';
+   const js='<script defer src="'+jsHref+(sha?'?v='+sha:'')+'"></script>';
+   let html=original.replace(/<\/head\s*>/i,css+'\n'+js+'\n</head>');
+   html=html.replace(/<body(\s[^>]*?)?>/i,(_,attrs='')=>
+     '<body'+attrs+' data-selected-theme="'+marker+'">');
+   if(!html.includes('data-selected-theme="'+marker+'"')||!html.includes('selected-course-ui.js'))
+     throw Error('Selected theme injection failed: '+file);
+   fs.writeFileSync(file,html,'utf8');
+   n++;
+ }
+ if(n<12)throw Error('Too few selected pages: '+course+' '+n);
+ selectedCounts[course]=n;
+}
+console.log('Selected visual designs deployed without altering lecture bodies:',JSON.stringify(selectedCounts));
