@@ -515,3 +515,17 @@ body[data-econ-layout] .econ-screenshot-mini{display:none!important}
   body[data-econ-layout] .econ-screenshot-lesson-info{margin-bottom:16px!important}
   body[data-econ-layout] .econ-screenshot-cover-inner{padding:18px 12px!important}
 }
+
+
+/* Root-cause fix: the original 36-module stylesheet sets ALL <header> nodes
+   to width 1100px with 17px vertical padding. Our new site-wide screenshot
+   header must override that inherited generic rule to truly go edge-to-edge. */
+body[data-econ-layout] > header.econ-screenshot-head,
+body[data-selected-theme="lilac"][data-econ-layout] > header.econ-screenshot-head{
+  display:block!important;position:relative!important;
+  width:100%!important;max-width:none!important;min-width:0!important;
+  height:auto!important;min-height:0!important;
+  margin:0!important;padding:0!important;border:0!important;
+  border-radius:0!important;background:transparent!important;
+  box-shadow:none!important;overflow:visible!important;
+}
