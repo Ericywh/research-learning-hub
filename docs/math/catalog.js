@@ -343,9 +343,9 @@ window.MATH_COURSE={
           "number": 33,
           "title": "统计量的抽样分布",
           "published": true,
-          "date": "2026-10-29",
-          "url": "lessons/2026-10-29-03-07.html",
-          "delivered": false
+          "date": "2026-11-09",
+          "url": "lessons/2026-11-09-03-07.html",
+          "delivered": true
         },
         {
           "chapter": 3,
