@@ -1,0 +1,26 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>第33课｜统计量的抽样分布</title><script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script><style>body{font-family:system-ui,'Noto Sans SC',sans-serif;max-width:820px;margin:40px auto;padding:0 20px;line-height:1.85;color:#222}h1{line-height:1.3}h2{margin-top:1.7em}.math{overflow:auto}.tableline{font-family:monospace}aside{color:#666}</style></head><body><h1>第3章·第7节｜统计量的抽样分布</h1><aside>全课程第33课｜2026-11-09｜正式授课（taught）</aside><h2>核心问题</h2><br>
+为什么同一个统计量在不同样本中会得到不同数值？怎样准确理解其抽样分布？<br>
+<h2>一、统计量是随机样本的函数</h2><br>
+上一课用全方差公式描述总体随机变量的变异。本课转向由样本计算出的统计量。设随机样本为 \(Z_1,\ldots,Z_n\)，统计量是只依赖样本且不含未知总体参数的可测函数，例如样本均值：<br>
+<div class="math">\[T_n=t(Z_1,\ldots,Z_n),\qquad \bar Z=\frac1n\sum_{i=1}^n Z_i.\]</div><br>
+抽样之前，\(Z_i\) 和 \(T_n\) 都是随机对象；取得一组数据后，\(z_i\) 和 \(t_n\) 才是具体实现值。抽样分布是统计量在既定抽样机制下的概率分布，不是单次样本中原始观测值的经验分布。<br>
+<h2>二、抽样分布由什么决定</h2><br>
+统计量的分布由总体分布、样本量、抽样依赖结构及统计量的构造共同决定。对独立同分布且具有有限方差的样本，设总体均值为 \(\mu\)、总体方差为 \(\sigma^2\)，则<br>
+<div class="math">\[E(\bar Z)=\mu,\qquad \operatorname{Var}(\bar Z)=\frac{\sigma^2}{n}.\]</div><br>
+推导利用期望线性性，以及独立条件下交叉协方差为零。若观测之间相关，方差还包含协方差项，不能机械套用 \(\sigma^2/n\)。这些矩性质并未规定抽样分布必为正态；其具体形状取决于总体分布和样本量。<br>
+<h2>三、两次抛硬币的精确例子</h2><br>
+令每次抛掷结果 \(Z_i\) 为正面取1、反面取0，且两次独立、公平。四个等概率样本为 \((0,0),(0,1),(1,0),(1,1)\)。样本均值 \(\bar Z\) 的可能值及概率如下：<br>
+<p class='tableline'>| 样本均值 | 0 | 0.5 | 1 |</p><br>
+<p class='tableline'>| --- | --- | --- | --- |</p><br>
+<p class='tableline'>| 概率 | 1/4 | 1/2 | 1/4 |</p><br>
+因此抽样分布并非原始伯努利变量的分布。直接计算得到 \(E(\bar Z)=0.5\)，\(\operatorname{Var}(\bar Z)=1/8\)，也等于总体方差 \(1/4\) 除以样本量2。若实际观察到 \((0,1)\)，样本均值只是0.5；不能把这一实现值当成整个抽样分布。<br>
+<h2>四、统计与计量应用</h2><br>
+调查中样本平均收入、保险样本平均赔付以及回归系数估计量都有抽样分布。标准误衡量统计量在重复抽样中的离散程度，而不是样本原始数据的标准差。基于抽样分布才能构造置信区间和检验统计量；这些推断还依赖抽样设计及模型条件。抽样分布刻画估计的不确定性，本身不解决因果识别问题。<br>
+<h2>五、两道自测及答案</h2><br>
+&lt;b&gt;概念题：&lt;/b&gt; 抽样分布与一次样本的经验分布有何区别？<br>
+&lt;b&gt;答案：&lt;/b&gt; 抽样分布是统计量跨可能样本的概率规律；经验分布是已观测样本中各取值的相对频率。<br>
+&lt;b&gt;计算题：&lt;/b&gt; 独立抛掷两次公平硬币，求样本均值等于0.5的概率及其方差。<br>
+&lt;b&gt;答案：&lt;/b&gt; 两种样本 \((0,1),(1,0)\) 满足条件，概率为 \(2/4=1/2\)；方差为 \((1/4)/2=1/8\)。<br>
+<h2>六、前后课衔接</h2><br>
+第27—32课建立联合、条件分布与条件矩，本课进一步把概率规律应用于统计量。下一课专门研究样本均值方差对抽样独立条件的依赖。<br>
+&lt;b&gt;下一课：第3章·第8节《样本均值的方差与抽样独立条件》（全课程第34课）。&lt;/b&gt;</body></html>
