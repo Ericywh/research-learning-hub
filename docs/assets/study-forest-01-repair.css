@@ -169,6 +169,7 @@ body.study-v2{
   .study-v2 .study-main-column>#courses .course-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important}
 }
 @media(max-width:800px){
+  :root{--study-01-frame:calc(100% - 28px)}
   body.study-v2{background-attachment:scroll!important;background-position:center top!important;background-size:auto 100vh!important}
   .study-v2 .theme-badge{display:none!important}
   .study-v2 .site-nav{overflow-x:auto!important;justify-content:flex-start!important}
@@ -177,6 +178,7 @@ body.study-v2{
   .study-v2 .study-side-column>.learning-dashboard{grid-row:auto!important}
 }
 @media(max-width:650px){
+  :root{--study-01-frame:calc(100% - 18px)}
   .study-v2 #courses .filter-bar{grid-template-columns:1fr!important;gap:6px!important}
   .study-v2 #courses .filter-pills{flex-wrap:nowrap!important}
   .study-v2 #courses .course-sort{justify-self:end;border-left:0;padding-top:0}
