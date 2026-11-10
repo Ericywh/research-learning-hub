@@ -353,9 +353,9 @@ window.MATH_COURSE={
           "number": 34,
           "title": "样本均值的方差与抽样独立条件",
           "published": true,
-          "date": "2026-10-29",
-          "url": "lessons/2026-10-29-03-08.html",
-          "delivered": false
+          "date": "2026-11-10",
+          "url": "lessons/2026-11-10-03-08.html",
+          "delivered": true
         },
         {
           "chapter": 3,
