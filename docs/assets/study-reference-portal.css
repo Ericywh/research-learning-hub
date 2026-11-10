@@ -282,3 +282,224 @@ svg{display:block;width:100%;height:100%;pointer-events:none}
  .motivation-feature .motivation-refresh{font-size:12px;padding:7px 11px}
  .featured-ribbon{font-size:11px;padding:6px 10px}
 }
+
+
+/* 2026-11-10 visual refinement: balanced study data, weekly goals, and
+   a full-width 7-day chart. No empty phantom columns. */
+.portal-learning-tools details[open]{
+  background:linear-gradient(135deg,#fff 0%,#fdfbff 62%,#f8f5ff 100%);
+}
+.study-extras{
+  display:grid;
+  grid-template-columns:minmax(0,1.37fr) minmax(300px,1fr);
+  grid-template-rows:auto auto;
+  align-items:stretch;
+  column-gap:18px;
+  row-gap:15px;
+  padding:0 20px 20px;
+}
+.study-extras > .learning-dashboard,
+.study-extras > .study-goals-panel,
+.study-extras > .weekly-trend-card{
+  display:flex;
+  flex-direction:column;
+  height:auto;
+  min-width:0;
+  margin:0;
+  padding:19px 23px;
+  border:1px solid #e5def5;
+  border-radius:17px;
+  background:linear-gradient(150deg,#fff 0%,#faf8ff 100%);
+  box-shadow:0 5px 14px rgba(77,61,135,.045),0 12px 26px rgba(77,61,135,.045),inset 0 1px 0 #fff;
+}
+.study-extras > .learning-dashboard{grid-column:1;grid-row:1}
+.study-extras > .study-goals-panel{grid-column:2;grid-row:1;justify-content:flex-start}
+.study-extras > .weekly-trend-card{grid-column:1/-1;grid-row:2;padding:19px 24px 14px}
+.learning-dashboard .dashboard-top{margin-bottom:13px}
+.learning-dashboard .learning-summary-grid{gap:10px}
+.learning-dashboard .summary-stat{padding:11px 13px}
+.learning-dashboard .summary-stat strong{font-size:24px;line-height:1.15}
+.learning-dashboard .learning-progress-panel{margin-top:12px}
+.learning-dashboard .dashboard-metrics-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+  margin-top:13px;
+}
+.learning-dashboard .dashboard-metrics-grid .dashboard-metric-row{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:9px;
+  min-width:0;
+  min-height:119px;
+  margin:0;
+  padding:12px 14px;
+  background:#f4f1ff;
+  border:1px solid #e7e0f8;
+  border-radius:13px;
+}
+.learning-dashboard .dashboard-metrics-grid .metric-copy{
+  display:flex;flex-direction:column;gap:4px;
+}
+.learning-dashboard .dashboard-metrics-grid .metric-copy strong{
+  font-size:18px;line-height:1.15;
+}
+.learning-dashboard .dashboard-metrics-grid .timer-compact{
+  align-items:flex-start;
+  width:100%;
+}
+.learning-dashboard .dashboard-metrics-grid .timer-compact>strong{
+  font-size:18px;
+}
+.learning-dashboard .dashboard-metrics-grid .timer-actions{margin-top:4px}
+.learning-dashboard .dashboard-metrics-grid .streak-note{
+  align-self:flex-start;
+  line-height:1.45;
+}
+.learning-dashboard .dashboard-note{
+  margin:11px 0 0;color:#77738d;font-size:10px;line-height:1.5;
+}
+.study-extras > .study-goals-panel .goals-heading{
+  margin-bottom:6px;
+  align-items:center;
+}
+.study-extras > .study-goals-panel .goals-subtitle{
+  margin:0 0 12px;
+  line-height:1.5;
+}
+.study-extras > .study-goals-panel .goal-line{
+  flex:1 1 0;
+  min-height:59px;
+  margin:0;
+  padding:12px 4px;
+  font-size:14px;
+  line-height:1.5;
+}
+.study-extras > .study-goals-panel .goal-line:last-child{border-bottom:1px solid #e7e4f1}
+.study-extras > .study-goals-panel .goal-line input{
+  width:17px;height:17px;flex:0 0 17px;
+}
+.study-extras > .weekly-trend-card .trend-heading{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:14px;margin-bottom:11px;
+}
+.study-extras > .weekly-trend-card .trend-heading h3{
+  color:#37305f;font-size:17px;font-weight:800;
+}
+.study-extras > .weekly-trend-card .trend-heading p,
+.study-extras > .weekly-trend-card .trend-total{font-size:12px}
+.study-extras > .weekly-trend-card .weekly-chart{
+  display:grid;
+  grid-template-columns:repeat(7,minmax(0,1fr));
+  align-items:end;
+  width:min(100%,1120px);
+  height:152px;
+  min-height:0;
+  margin:0 auto;
+  gap:9px;
+  overflow:hidden;
+}
+.study-extras > .weekly-trend-card .week-column{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-end;
+  gap:6px;
+  height:147px;
+  min-width:0;
+}
+.study-extras > .weekly-trend-card .week-bar-track{
+  width:min(38px,46%);
+  height:91px;
+  min-height:91px;
+  border-radius:8px;
+}
+.study-extras > .weekly-trend-card .week-day{
+  font-size:11px;
+}
+.study-extras > .weekly-trend-card .week-value{
+  font-size:10px;
+}
+/* Elevated photo tiles: layered shadows, a thin highlight, lift on hover. */
+.portal-card{
+  position:relative;
+  isolation:isolate;
+  border:1px solid rgba(218,213,238,.92);
+  border-radius:16px;
+  background:linear-gradient(180deg,#fff 0%,#fbfaff 100%);
+  box-shadow:
+    0 2px 5px rgba(39,32,85,.045),
+    0 9px 19px rgba(57,46,107,.115),
+    0 22px 37px rgba(57,46,107,.075),
+    inset 0 1px 0 rgba(255,255,255,.98);
+  transform:translateY(0);
+  transition:transform .24s cubic-bezier(.2,.75,.2,1),box-shadow .24s ease,border-color .24s ease;
+}
+.portal-card:hover{
+  transform:translateY(-7px) scale(1.012);
+  border-color:#c9b9f5;
+  box-shadow:
+    0 6px 12px rgba(49,34,98,.085),
+    0 19px 35px rgba(65,45,125,.18),
+    0 32px 54px rgba(65,45,125,.11),
+    inset 0 1px 0 rgba(255,255,255,.98);
+}
+.portal-card:focus-visible{
+  transform:translateY(-4px);
+  box-shadow:0 0 0 3px #cbb5ff,0 18px 37px rgba(73,49,145,.18);
+}
+.portal-cover{box-shadow:inset 0 -8px 18px rgba(31,24,68,.07)}
+.portal-card .portal-cover img{transition:transform .35s cubic-bezier(.2,.75,.2,1)}
+.portal-card:hover .portal-cover img{transform:scale(1.06)}
+.portal-card[data-featured="true"]{
+  border:2px solid #8759dc;
+  background:linear-gradient(180deg,#fff 0%,#f8f3ff 100%);
+  box-shadow:
+    0 0 0 4px rgba(135,88,218,.11),
+    0 10px 24px rgba(84,50,161,.20),
+    0 28px 45px rgba(84,50,161,.13),
+    inset 0 1px 0 rgba(255,255,255,.98);
+}
+.portal-card[data-featured="true"]:hover{
+  transform:translateY(-8px) scale(1.013);
+  border-color:#7142d5;
+  box-shadow:
+    0 0 0 5px rgba(135,88,218,.14),
+    0 19px 36px rgba(84,50,161,.26),
+    0 36px 58px rgba(84,50,161,.15),
+    inset 0 1px 0 #fff;
+}
+@media(max-width:1000px){
+  .study-extras{grid-template-columns:1fr;grid-template-rows:auto;gap:14px}
+  .study-extras > .learning-dashboard,
+  .study-extras > .study-goals-panel,
+  .study-extras > .weekly-trend-card{
+    grid-column:1;grid-row:auto;
+  }
+  .study-extras > .study-goals-panel .goal-line{
+    flex:0 0 auto;min-height:50px;
+  }
+}
+@media(max-width:560px){
+  .study-extras{padding:0 12px 12px;gap:11px}
+  .study-extras > .learning-dashboard,
+  .study-extras > .study-goals-panel,
+  .study-extras > .weekly-trend-card{
+    padding:15px 14px;border-radius:13px;
+  }
+  .learning-dashboard .dashboard-metrics-grid{grid-template-columns:1fr;gap:9px}
+  .learning-dashboard .dashboard-metrics-grid .dashboard-metric-row{min-height:0}
+  .study-extras > .weekly-trend-card .weekly-chart{gap:3px}
+  .study-extras > .weekly-trend-card .week-bar-track{width:min(25px,60%)}
+  .study-extras > .weekly-trend-card .week-day{font-size:9px}
+}
+@media(hover:none){
+  .portal-card:hover,.portal-card[data-featured="true"]:hover{transform:none}
+  .portal-card:hover .portal-cover img{transform:none}
+}
+@media(prefers-reduced-motion:reduce){
+  .portal-card,.portal-cover img{transition:none!important}
+  .portal-card:hover,.portal-card[data-featured="true"]:hover{transform:none!important}
+}
