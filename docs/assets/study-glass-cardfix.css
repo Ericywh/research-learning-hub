@@ -1,0 +1,69 @@
+/* Compact two-column course catalog | 2026-11-10.
+   Stop 284px-316px heights inherited from hub.css and crop each photo. */
+body.study-dashboard-page #course-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;grid-auto-rows:190px!important;gap:11px!important;align-items:start!important}
+body.study-dashboard-page #course-grid>a.course-card,
+body.study-dashboard-page #course-grid>a.course-card.course-card-featured{
+display:grid!important;grid-column:auto!important;grid-template-columns:minmax(155px,31%) minmax(0,1fr)!important;grid-template-rows:minmax(0,1fr)!important;
+height:190px!important;min-height:190px!important;max-height:190px!important;
+width:100%!important;box-sizing:border-box!important;align-items:stretch!important;gap:12px!important;padding:9px!important;overflow:hidden!important;
+border:1px solid rgba(255,255,255,.94)!important;border-radius:17px!important;background:linear-gradient(135deg,#fff,#f9f7ff)!important;
+box-shadow:0 7px 22px rgba(74,68,135,.10),inset 0 1px 0 #fff!important}
+body.study-dashboard-page #course-grid>a.course-card::before,
+body.study-dashboard-page #course-grid>a.course-card::after{content:none!important;display:none!important}
+body.study-dashboard-page #course-grid .course-photo{
+position:relative!important;display:block!important;width:100%!important;height:100%!important;min-height:0!important;max-height:172px!important;
+align-self:stretch!important;overflow:hidden!important;border-radius:12px!important;background:#dfe7fa!important}
+body.study-dashboard-page #course-grid .course-photo img{
+position:absolute!important;inset:0!important;display:block!important;width:100%!important;height:100%!important;min-height:0!important;
+max-height:none!important;object-fit:cover!important;object-position:center!important;border-radius:12px!important}
+body.study-dashboard-page #course-grid .course-body{
+display:flex!important;flex-direction:column!important;gap:0!important;min-width:0!important;min-height:0!important;height:100%!important;
+padding:2px 3px 1px!important;overflow:hidden!important}
+body.study-dashboard-page #course-grid .course-heading{flex:0 0 auto!important;display:flex!important;align-items:flex-start!important;gap:9px!important}
+body.study-dashboard-page #course-grid .course-index{flex:0 0 24px!important;width:24px!important;height:24px!important;font-size:10px!important}
+body.study-dashboard-page #course-grid .course-category{display:block!important;margin:0 0 2px!important;color:#7970b3!important;font-size:9px!important;line-height:1.15!important;font-weight:800!important}
+body.study-dashboard-page #course-grid .course-heading h3,
+body.study-dashboard-page #course-grid .course-card.course-card-featured h3{
+display:-webkit-box!important;-webkit-box-orient:vertical!important;-webkit-line-clamp:2!important;overflow:hidden!important;
+margin:0!important;padding:0!important;color:#252848!important;font-size:clamp(14px,1.08vw,17px)!important;
+line-height:1.3!important;letter-spacing:-.015em!important;font-weight:820!important;text-shadow:none!important}
+body.study-dashboard-page #course-grid p.course-description,
+body.study-dashboard-page #course-grid .course-card.course-card-featured p.course-description{
+display:-webkit-box!important;-webkit-box-orient:vertical!important;-webkit-line-clamp:2!important;overflow:hidden!important;
+flex:0 0 auto!important;margin:5px 0 6px!important;padding:0!important;max-width:none!important;
+color:#555d7c!important;font-size:11px!important;line-height:1.55!important;font-weight:450!important}
+body.study-dashboard-page #course-grid .course-tags{display:flex!important;flex:0 0 auto!important;flex-wrap:nowrap!important;gap:5px!important;min-width:0!important;overflow:hidden!important;margin:0 0 5px!important}
+body.study-dashboard-page #course-grid .course-tags .tag,
+body.study-dashboard-page #course-grid .course-card.course-card-featured .course-tags .tag{
+flex:0 0 auto!important;display:inline-block!important;padding:3px 7px!important;border:1px solid #e3e6f7!important;border-radius:99px!important;
+background:#eff0fc!important;color:#5e6197!important;font-size:9px!important;line-height:1.15!important;font-weight:700!important;white-space:nowrap!important}
+body.study-dashboard-page #course-grid .course-progress{flex:0 0 auto!important;margin:auto 0 0!important;min-width:0!important}
+body.study-dashboard-page #course-grid .course-progress-heading{margin-bottom:3px!important;color:#737998!important;font-size:10px!important;line-height:1.3!important}
+body.study-dashboard-page #course-grid .course-progress-heading strong{color:#6049b6!important;font-size:11px!important}
+body.study-dashboard-page #course-grid .course-progress-track{height:7px!important;margin:0!important;overflow:hidden!important;border:0!important;border-radius:99px!important;background:#e3e1f1!important}
+body.study-dashboard-page #course-grid .course-progress-track>span{height:100%!important;background:linear-gradient(90deg,#648bf2,#7b5de6 68%,#a16be9)!important}
+body.study-dashboard-page #course-grid .course-progress-meta{margin-top:3px!important;color:#8285a4!important;font-size:9px!important;line-height:1.25!important}
+body.study-dashboard-page #course-grid .course-progress-meta small{font-size:8px!important}
+body.study-dashboard-page #course-grid .course-card-foot{margin-top:5px!important;min-height:24px!important;display:flex!important;align-items:center!important;justify-content:space-between!important}
+body.study-dashboard-page #course-grid .course-status{color:#9e99bb!important;font-size:9px!important}
+body.study-dashboard-page #course-grid .go,
+body.study-dashboard-page #course-grid .course-card.course-card-featured .go{display:inline-flex!important;align-items:center!important;padding:6px 12px!important;border:0!important;border-radius:99px!important;background:linear-gradient(115deg,#668af0,#8258e7)!important;color:#fff!important;font-size:10px!important;font-weight:800!important;box-shadow:0 4px 12px rgba(99,79,195,.19)!important}
+body.study-dashboard-page #course-grid>a.course-card:hover{transform:translateY(-2px)!important;border-color:#bdadf8!important;box-shadow:0 12px 28px rgba(77,66,150,.15)!important}
+body.study-dashboard-page #course-grid>a.course-card[hidden]{display:none!important}
+@media(max-width:1200px){
+body.study-dashboard-page #course-grid{grid-template-columns:1fr!important;grid-auto-rows:185px!important}
+body.study-dashboard-page #course-grid>a.course-card,body.study-dashboard-page #course-grid>a.course-card.course-card-featured{grid-template-columns:190px minmax(0,1fr)!important;height:185px!important;min-height:185px!important;max-height:185px!important}
+body.study-dashboard-page #course-grid .course-photo{max-height:167px!important}
+body.study-dashboard-page #course-grid .course-heading h3{font-size:16px!important}}
+@media(max-width:760px){
+body.study-dashboard-page #course-grid{grid-template-columns:1fr!important;grid-auto-rows:auto!important;gap:10px!important}
+body.study-dashboard-page #course-grid>a.course-card,body.study-dashboard-page #course-grid>a.course-card.course-card-featured{grid-template-columns:clamp(100px,24vw,148px) minmax(0,1fr)!important;height:auto!important;min-height:188px!important;max-height:none!important;padding:8px!important;gap:9px!important}
+body.study-dashboard-page #course-grid .course-photo{height:100%!important;min-height:170px!important;max-height:none!important}
+body.study-dashboard-page #course-grid .course-heading h3{font-size:14px!important}
+body.study-dashboard-page #course-grid p.course-description{font-size:10px!important}
+body.study-dashboard-page #course-grid .course-tags .tag{font-size:8px!important;padding:2px 5px!important}}
+@media(max-width:430px){
+body.study-dashboard-page #course-grid>a.course-card,body.study-dashboard-page #course-grid>a.course-card.course-card-featured{grid-template-columns:98px minmax(0,1fr)!important;min-height:205px!important;gap:8px!important}
+body.study-dashboard-page #course-grid .course-heading h3{font-size:13px!important}
+body.study-dashboard-page #course-grid .course-status,body.study-dashboard-page #course-grid .course-progress-meta small{display:none!important}}
+@media(prefers-reduced-motion:reduce){body.study-dashboard-page #course-grid>a.course-card:hover{transform:none!important}}
