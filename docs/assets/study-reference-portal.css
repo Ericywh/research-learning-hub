@@ -132,13 +132,13 @@ svg{display:block;width:100%;height:100%;pointer-events:none}
 .portal-cover{height:124px;min-height:124px;flex-basis:124px}
 .portal-card-body{padding:10px 13px 13px}
 .portal-card h3{
-  display:-webkit-box;
-  -webkit-box-orient:vertical;
-  -webkit-line-clamp:2;
+  display:flex;
+  align-items:center;
+  gap:9px;
   white-space:normal;
   overflow:hidden;
   min-height:47px;
-  align-items:center;
+  max-height:51px;
   margin:0 0 6px;
   font-size:17px;
   line-height:1.35;
