@@ -158,6 +158,12 @@ jobs:
             const previous = fs.readFileSync(item.file, 'utf8');
             const updated = previous.replace(item.regex, 'src="' + item.target + '?v=' + sha + '"');
             if (updated === previous) {
+              // The redesigned /study/ portal uses a self-contained stylesheet
+              // and controller. Legacy catalog scripts are optional on that page.
+              if (item.file === '_site/study/index.html') {
+                console.log('Skipped obsolete study catalog reference: ' + item.target);
+                continue;
+              }
               throw Error('Cannot version catalog reference: ' + item.file);
             }
             fs.writeFileSync(item.file, updated);
@@ -840,15 +846,35 @@ jobs:
             PAGE="$file" node <<'NODE'
           const fs=require('node:fs');
           const html=fs.readFileSync(process.env.PAGE,'utf8');
-          const first=html.match(/<div class="course-grid" id="course-grid">\s*<a[^>]*href="([^"]+)"/);
-          if(!first||!/(?:^|\/)speaking\/dual-track-2026\/$/.test(first[1]))throw Error('New 126-lesson speaking course is not the first entry in '+process.env.PAGE);
-          const count=(html.match(/class="course-card(?: course-card-featured)?"/g)||[]).length;
-          if(count!==8)throw Error('Expected eight course cards, found '+count);
-          const cards=[...html.matchAll(/<a class="course-card(?: course-card-featured)?" href="([^"]+)"/g)].map(m=>m[1]);
-          if(!cards[1]||!/(?:^|\/)english\/$/.test(cards[1]))throw Error('English is not the second course in '+process.env.PAGE);
-          if(!cards[2]||!/(?:^|\/)econometrics\/$/.test(cards[2]))throw Error('Econometrics must be the third course in '+process.env.PAGE);
-          if(!cards[3]||!/(?:^|\/)psm-did\/$/.test(cards[3]))throw Error('PSM-DID must be the fourth course in '+process.env.PAGE);
-          console.log('PASS eight-course rankings (speaking, English, econometrics, PSM-DID) in '+process.env.PAGE);
+          const isStudy=process.env.PAGE.includes('featured-study-');
+          if(isStudy){
+            // DOM order follows the supplied reference image: four columns × two rows.
+            const expected=[
+              '../math/','../econometrics/','../psm-did/','../frontier/',
+              '../cssci/','../economic-classics/','../speaking/dual-track-2026/','../english/'
+            ];
+            if(!html.includes('class="portal-course-grid" id="course-grid"'))
+              throw Error('New study page is missing the reference four-column grid');
+            const cards=[...html.matchAll(/<a class="portal-card course-card" href="([^"]+)" data-course-progress="([^"]+)"/g)];
+            if(cards.length!==8||cards.some((c,i)=>c[1]!==expected[i]))
+              throw Error('Study photo-card catalog does not match the eight verified course entrances');
+            if((html.match(/class="portal-track" role="progressbar"/g)||[]).length!==8)
+              throw Error('Each of the eight study courses requires an accessible progress bar');
+            if(!html.includes('study-reference-portal.css')||!html.includes('study-reference-portal.js'))
+              throw Error('New study stylesheet or interactive controller not referenced');
+            console.log('PASS reference portal: eight photo courses, visual order, links and progress bars');
+          }else{
+            // Retain the established root-homepage featured-course contract.
+            const first=html.match(/<div class="course-grid" id="course-grid">\s*<a[^>]*href="([^"]+)"/);
+            if(!first||!/(?:^|\/)speaking\/dual-track-2026\/$/.test(first[1]))throw Error('New 126-lesson speaking course is not the first entry in '+process.env.PAGE);
+            const count=(html.match(/class="course-card(?: course-card-featured)?"/g)||[]).length;
+            if(count!==8)throw Error('Expected eight course cards, found '+count);
+            const cards=[...html.matchAll(/<a class="course-card(?: course-card-featured)?" href="([^"]+)"/g)].map(m=>m[1]);
+            if(!cards[1]||!/(?:^|\/)english\/$/.test(cards[1]))throw Error('English is not the second course in '+process.env.PAGE);
+            if(!cards[2]||!/(?:^|\/)econometrics\/$/.test(cards[2]))throw Error('Econometrics must be the third course in '+process.env.PAGE);
+            if(!cards[3]||!/(?:^|\/)psm-did\/$/.test(cards[3]))throw Error('PSM-DID must be the fourth course in '+process.env.PAGE);
+            console.log('PASS root eight-course rankings (speaking, English, econometrics, PSM-DID)');
+          }
           NODE
           done
           status=$(curl -L -sS --connect-timeout 10 --max-time 30 -o /tmp/speaking-first.html -w '%{http_code}' "$BASE/speaking/lessons/01-01.html?design=$DEPLOY_SHA" || true)
