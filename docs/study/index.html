@@ -3,205 +3,153 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#6966d9">
-<meta name="description" content="研究学习中心：数学、计量经济学、因果推断、统计研究前沿、实证论文精读、经济学经典、公众表达与英语表达八门课程的统一学习入口。">
-<title>研究学习中心｜八门公开课程</title>
-<link rel="stylesheet" href="../assets/hub.css?v=soft-glass-20261023">
-<link rel="stylesheet" href="../assets/hub-polish.css?v=20261030">
-<link rel="stylesheet" href="../assets/study-glass-dashboard.css?v=20261109-02">
-<link rel="stylesheet" href="../assets/study-glass-cardfix.css?v=20261110-readability-04">
-<script defer src="../math/catalog.js"></script>
-<script defer src="../econometrics/catalog.js?v=20261011-05"></script>
-<script defer src="../assets/hub.js?v=20261011-auto"></script>
-<script defer src="../assets/reading-status.js?v=20261030a"></script>
+<meta name="theme-color" content="#faf9ff">
+<meta name="description" content="研究学习中心：八门系统课程，覆盖数学、计量经济学、因果推断、统计研究、论文精读、经济学经典与学术表达。">
+<title>研究学习中心｜课程中心</title>
+<link rel="stylesheet" href="../assets/study-reference-portal.css?v=20261110-01">
 <script defer src="../assets/study-dashboard.js?v=20261105-2"></script>
 <script defer src="../assets/study-quote.js?v=20261105"></script>
 <script defer src="../assets/study-goals-v1.js?v=20261108"></script>
-<script defer src="../assets/study-course-progress.js?v=20261109-02"></script>
+<script defer src="../assets/study-reference-portal.js?v=20261110-01"></script>
 </head>
-<body class="study-dashboard-page">
-<header class="study-header">
- <div class="study-header-inner">
-  <a class="study-brand" href="../" aria-label="研究学习中心首页">
-   <span class="brand-icon" aria-hidden="true">▤</span>
-   <span><strong>研究学习中心</strong><small>Research Learning Hub</small></span>
-  </a>
-  <nav class="study-top-nav" aria-label="主导航">
-   <a href="../"><span aria-hidden="true">⌂</span> 首页</a>
-   <a class="current" href="#courses"><span aria-hidden="true">▣</span> 课程</a>
-   <a href="#overview"><span aria-hidden="true">▱</span> 资源</a>
-   <a href="#motivation"><span aria-hidden="true">♧</span> 学术社区</a>
-  </nav>
-  <div class="study-header-tools">
-   <label class="study-search"><span aria-hidden="true">⌕</span><input id="course-search" type="search" placeholder="搜索课程、文献、方法与资源…" autocomplete="off"><button id="search-submit" type="button" aria-label="搜索课程">搜索</button></label>
-   <a class="header-bell" href="#overview" aria-label="学习数据">♧</a>
-   <a class="header-avatar" href="#overview" aria-label="个人学习记录">学</a>
+<body class="reference-portal">
+<header class="portal-header" id="home">
+ <div class="portal-header-inner">
+  <a class="portal-brand" href="./" aria-label="研究学习中心首页"><span class="brand-symbol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6c-3.1-2.1-6.3-2.3-10-1.3v14.5c3.6-1.1 6.8-.7 10 1.2 3.1-1.9 6.4-2.3 10-1.2V4.7c-3.7-1-6.9-.8-10 1.3Z"/><path d="M12 6v14.4M5 8.5c1.9-.4 3.5-.2 4.8.5m4.4 0c1.3-.7 2.9-.9 4.8-.5"/></svg></span><span><strong>研究学习中心</strong><small>Research Learning Hub</small></span></a>
+  <div class="brand-divider" aria-hidden="true"></div>
+  <nav class="portal-nav" aria-label="顶部导航"><a class="active" href="./" aria-current="page">首页</a><a href="#courses">课程中心</a><a href="#study-tools" data-open-tools>学习路径</a><a href="../frontier/">研究资源</a><a href="#connect">社区交流</a><a href="#about">关于我们</a></nav>
+  <div class="portal-header-actions">
+   <button class="nav-icon-button" id="header-search-button" type="button" aria-label="搜索课程" aria-controls="portal-search-panel" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m16 16 5 5"/></svg></button>
+   <a class="nav-icon-button notification-link" href="#study-tools" data-open-tools aria-label="学习提醒"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 8-3 10h18c0-2-3-3-3-10ZM10 22h4"/></svg><i aria-hidden="true"></i></a>
+   <a class="portal-avatar" href="#study-tools" data-open-tools aria-label="查看我的学习记录"><span class="avatar-head"></span><span class="avatar-body"></span></a>
+   <button class="avatar-chevron" type="button" id="avatar-expand" aria-label="展开学习记录" aria-controls="tools-panel" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7 10 5 5 5-5"/></svg></button>
   </div>
  </div>
+ <form class="portal-search-panel" id="portal-search-panel" role="search" hidden><label for="course-search">搜索课程</label><input id="course-search" type="search" placeholder="输入课程名称、方法或主题" autocomplete="off"><button id="search-submit" type="submit">搜索</button><button class="search-close" type="button" id="search-close" aria-label="关闭搜索">×</button></form>
 </header>
-<div class="study-app">
- <aside class="study-sidebar" aria-label="学习中心导航">
-  <div class="sidebar-label">LEARNING SPACE</div>
-  <nav class="sidebar-nav">
-   <a class="active" href="#courses"><span class="side-icon">♧</span><span>课程学习</span></a>
-   <a href="#goals-title"><span class="side-icon">▦</span><span>学习计划</span></a>
-   <a href="#overview"><span class="side-icon">◴</span><span>学习数据</span></a>
-   <a href="#motivation"><span class="side-icon">☆</span><span>我的收藏</span></a>
-   <a href="../cssci/"><span class="side-icon">✎</span><span>学习笔记</span></a>
-   <a href="../frontier/"><span class="side-icon">▤</span><span>资料库</span></a>
-  </nav>
-  <div class="sidebar-note"><span class="sidebar-note-icon">✦</span><strong>持续学习</strong><p>把方法、证据与思想沉淀为长期研究能力。</p><a href="#overview">查看学习概况 ↗</a></div>
- </aside>
- <main class="study-main">
-  <section class="study-hero" aria-labelledby="main-title">
-   <img class="hero-photo" src="https://images.unsplash.com/photo-1769092992766-9504cdd93696?auto=format&fit=crop&fm=jpg&ixid=NHwxMjA3fDA%3D&ixlib=rb-4.1.0&q=60&w=2200" alt="书桌、书籍与电脑构成的学习空间" fetchpriority="high" loading="eager" decoding="async">
-   <div class="hero-overlay"></div>
-   <div class="hero-copy">
-    <div class="hero-eyebrow">RESEARCH LEARNING HUB</div>
-    <h1 id="main-title">研究学习中心 <em>/ Research Learning Hub</em></h1>
-    <p>面向科研与高阶学习的系统课程平台，夯实理论基础、掌握研究方法、提升学术表达。</p>
-   </div>
-   <div class="hero-stats" aria-label="课程体系概况">
-    <div class="hero-stat"><span class="stat-icon">▤</span><div><strong>8 <small>门</small></strong><span>公开课程</span></div></div>
-    <div class="hero-stat"><span class="stat-icon">◉</span><div><strong>126 <small>课</small></strong><span>公众表达训练</span></div></div>
-    <div class="hero-stat"><span class="stat-icon">β</span><div><strong>36 <small>模块</small></strong><span>计量方法拓展</span></div></div>
-    <div class="hero-stat"><span class="stat-icon">∑</span><div><strong>73 <small>节</small></strong><span>数学微课程</span></div></div>
-   </div>
-  </section>
-  <section class="course-panel" id="courses" aria-labelledby="courses-title">
-   <div class="course-panel-heading">
-    <div><div class="panel-eyebrow">YOUR LEARNING JOURNEY</div><h2 id="courses-title"><span aria-hidden="true">▤</span> 我的课程 <small>(8)</small></h2><p>八条学习主线，按课程持续归档与更新。</p></div>
-    <div class="panel-status"><span class="status-dot"></span><span id="filter-status">显示 8 / 8 门课程</span><span class="panel-separator"></span><span>本地学习记录</span></div>
-   </div>
-   <div class="course-filter-bar" role="group" aria-label="课程筛选">
-    <div class="filter-pills">
-     <button type="button" class="filter" data-group-filter="all" aria-pressed="true">全部课程</button>
-     <button type="button" class="filter" data-group-filter="methods" aria-pressed="false">研究方法</button>
-     <button type="button" class="filter" data-group-filter="reading" aria-pressed="false">学术阅读</button>
-     <button type="button" class="filter" data-group-filter="speaking" aria-pressed="false">表达与沟通</button>
-    </div>
-    <span class="filter-hint">选择课程，继续上次的学习</span>
-   </div>
-   <div class="course-grid" id="course-grid">
-<a class="course-card course-card-featured" href="../speaking/dual-track-2026/" data-group="speaking" data-course-progress="speaking" style="order:7" aria-label="进入公众表达与脱稿演讲系统训练">
-  <div class="course-photo"><img src="https://images.pexels.com/photos/9547593/pexels-photo-9547593.jpeg?auto=compress&amp;dpr=1&amp;h=750&amp;w=1260" alt="空剧场中的话筒与红色座席" title="空剧场中的话筒与红色座席" loading="lazy" decoding="async"></div>
-  <div class="course-body">
-   <div class="course-heading"><span class="course-index">01</span><div><span class="course-category">表达与沟通</span><h3>公众表达与脱稿演讲系统训练</h3></div></div>
-   <p class="course-description">早晚双轨 · 每日两节，每节约18分钟，训练日常沟通、自然接话、即兴表达、评委点评与脱稿演讲；完整练习素材随课提供。</p>
-   <div class="course-tags"><span class="tag">即兴表达</span><span class="tag">评委点评</span><span class="tag">脱稿演讲</span><span class="tag">9周63天 · 126课</span></div>
-   <div class="course-progress">
-    <div class="course-progress-heading"><span>个人学习进度</span><strong data-progress-percent>0%</strong></div>
-    <div class="course-progress-track" role="progressbar" aria-label="公众表达与脱稿演讲系统训练个人学习进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span data-progress-fill></span></div>
-    <div class="course-progress-meta"><span data-progress-count>已完成 0 / 126 课</span></div>
-   </div>
-   <div class="course-card-foot"><span class="go">进入课程 <span aria-hidden="true">›</span></span></div>
+<main>
+ <section class="portal-hero" aria-labelledby="main-title">
+  <div class="portal-hero-inner">
+   <h1 id="main-title">研究学习中心</h1>
+   <p class="hero-english">Research Learning Hub</p>
+   <p class="hero-callout"><span>系统学习研究方法 · 提升学术与表达能力</span></p>
   </div>
- </a>
-<a class="course-card" href="../english/" data-group="speaking" data-course-progress="english" style="order:8" aria-label="进入英语表达提升系统课程">
-  <div class="course-photo"><img src="https://images.pexels.com/photos/5239563/pexels-photo-5239563.jpeg?auto=compress&amp;dpr=1&amp;h=750&amp;w=1260" alt="木桌上的英语与学术教材" title="木桌上的英语与学术教材" loading="lazy" decoding="async"></div>
-  <div class="course-body">
-   <div class="course-heading"><span class="course-index">02</span><div><span class="course-category">英语表达</span><h3>英语表达提升｜日常聊天 × 学术英语</h3></div></div>
-   <p class="course-description">面向统计学科研场景：晨间10分钟开口、晚间10分钟静默巩固。以真实对话、词块精讲、发音、追问与纠错训练自然表达。</p>
-   <div class="course-tags"><span class="tag">日常聊天</span><span class="tag">学术交流</span><span class="tag">美式发音</span><span class="tag">12周168课</span></div>
-   <div class="course-progress">
-    <div class="course-progress-heading"><span>个人学习进度</span><strong data-progress-percent>0%</strong></div>
-    <div class="course-progress-track" role="progressbar" aria-label="英语表达提升｜日常聊天 × 学术英语个人学习进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span data-progress-fill></span></div>
-    <div class="course-progress-meta"><span data-progress-count>已完成 0 / 168 课</span></div>
-   </div>
-   <div class="course-card-foot"><span class="go">进入课程 <span aria-hidden="true">›</span></span></div>
+ </section>
+ <section class="catalog-section" id="courses" aria-label="八门公开课程">
+  <div class="portal-toolbar">
+   <div class="toolbar-filters"><span class="filter-caption"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h18l-7 8v6l-4 2v-8L3 5Z"/></svg><b>课程筛选：</b></span><div class="filter-options" role="group" aria-label="课程筛选"><button class="portal-filter selected" type="button" data-group-filter="all" aria-pressed="true"><span>全部课程</span></button>
+<button class="portal-filter" type="button" data-group-filter="methods" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 20V12m6 8V5m6 15v-9m5 9V3"/><path d="M2 20h20"/></svg><span>研究方法</span></button>
+<button class="portal-filter" type="button" data-group-filter="economics" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9h20L12 3 2 9Zm2 2v9m5-9v9m6-9v9m5-9v9M2 22h20M2 11h20"/></svg><span>经济学</span></button>
+<button class="portal-filter" type="button" data-group-filter="statistics" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 18 10 7l5 6 5-9"/><circle cx="4" cy="18" r="2"/><circle cx="10" cy="7" r="2"/><circle cx="15" cy="13" r="2"/><circle cx="20" cy="4" r="2"/></svg><span>统计与数据</span></button>
+<button class="portal-filter" type="button" data-group-filter="reading" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6c-3.1-2.1-6.3-2.3-10-1.3v14.5c3.6-1.1 6.8-.7 10 1.2 3.1-1.9 6.4-2.3 10-1.2V4.7c-3.7-1-6.9-.8-10 1.3Z"/><path d="M12 6v14.4M5 8.5c1.9-.4 3.5-.2 4.8.5m4.4 0c1.3-.7 2.9-.9 4.8-.5"/></svg><span>学术阅读</span></button>
+<button class="portal-filter" type="button" data-group-filter="speaking" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 17v5m-4 0h8"/></svg><span>表达与沟通</span></button></div></div>
+   <label class="sort-control" for="course-sort"><span>排序：</span><select id="course-sort" aria-label="课程排序"><option value="recommended">推荐优先</option><option value="title">按课程名称</option><option value="progress">按学习进度</option></select></label>
   </div>
- </a>
-<a class="course-card" href="../econometrics/" data-group="methods" data-course-progress="econometrics" style="order:2" aria-label="进入计量经济学6周36模块新主线">
-  <div class="course-photo"><img src="https://images.pexels.com/photos/6120209/pexels-photo-6120209.jpeg?auto=compress&amp;dpr=1&amp;h=750&amp;w=1260" alt="笔记本电脑与数据分析图表" title="笔记本电脑与数据分析图表" loading="lazy" decoding="async"></div>
-  <div class="course-body">
-   <div class="course-heading"><span class="course-index">03</span><div><span class="course-category">计量方法</span><h3>计量经济学 · 6周36模块新主线</h3></div></div>
-   <p class="course-description">从线性模型与投影出发，系统衔接大样本推断、IV/GMM、MLE与现代因果识别。原120课仅作为历史档案。</p>
-   <div class="course-tags"><span class="tag">36模块</span><span class="tag">Stata + Python</span><span class="tag">识别与推断</span></div>
-   <div class="course-progress">
-    <div class="course-progress-heading"><span>个人学习进度</span><strong data-progress-percent>0%</strong></div>
-    <div class="course-progress-track" role="progressbar" aria-label="计量经济学 · 6周36模块新主线个人学习进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span data-progress-fill></span></div>
-    <div class="course-progress-meta"><span data-progress-count>已完成 0 / 36 模块</span></div>
-   </div>
-   <div class="course-card-foot"><span class="go">进入课程 <span aria-hidden="true">›</span></span></div>
+  <div class="portal-results"><span id="filter-status" role="status" aria-live="polite">显示 8 / 8 门课程</span><span>选择课程，继续学习</span></div>
+  <div class="portal-course-grid" id="course-grid">
+<a class="portal-card course-card" href="../math/" data-course-progress="math" data-category="methods statistics" data-recommended="1" data-progress-total="73" data-full-title="每日10分钟数学微课程" style="--accent:#7c55f3;--accent-rgb:124,85,243" aria-label="进入每日10分钟数学微课程">
+ <div class="portal-cover"><img src="https://images.pexels.com/photos/22690750/pexels-photo-22690750/free-photo-of-close-up-of-complicated-equations-written-on-a-blackboard.jpeg?auto=compress&amp;dpr=1&amp;h=750&amp;w=1260" alt="黑板上的数学方程" loading="lazy" decoding="async"></div>
+ <div class="portal-card-body">
+  <h3><span class="portal-course-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3 2 21h20L12 3Z"/><path d="m11 15 2-4m-4 0h5m-2-3v9"/></svg></span>数学基础</h3>
+  <p class="portal-description">夯实科研所需的数学基础，系统梳理微积分、线性代数与概率统计，为计量及统计研究打好根基。</p>
+  <div class="portal-tags"><span>数学</span><span>基础理论</span><span>研究工具</span></div>
+  <div class="portal-card-bottom">
+   <div class="portal-progress" aria-label="数学基础学习进度"><div class="portal-track" role="progressbar" aria-label="数学基础个人学习进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span data-progress-fill></span></div><strong data-progress-percent>0%</strong></div>
+   <span class="portal-enter">进入课程</span>
   </div>
- </a>
-<a class="course-card" href="../psm-did/" data-group="methods" data-course-progress="psm" style="order:3" aria-label="进入PSM-DID系统精讲课程">
-  <div class="course-photo"><img src="https://images.pexels.com/photos/6285258/pexels-photo-6285258.jpeg?auto=compress&amp;dpr=1&amp;h=750&amp;w=1260" alt="数据图表、研究报告与电脑" title="数据图表、研究报告与电脑" loading="lazy" decoding="async"></div>
-  <div class="course-body">
-   <div class="course-heading"><span class="course-index">04</span><div><span class="course-category">因果推断</span><h3>PSM-DID系统精讲课程</h3></div></div>
-   <p class="course-description">以中国“宽带中国”示范城市和城市公开面板数据为案例，系统学习TWFE、事件研究、交错DID、PSM与DR-DID及双软件实操。</p>
-   <div class="course-tags"><span class="tag">PSM + DID</span><span class="tag">中国城市数据</span><span class="tag">Stata / Python</span><span class="tag">4章10节</span></div>
-   <div class="course-progress">
-    <div class="course-progress-heading"><span>个人学习进度</span><strong data-progress-percent>0%</strong></div>
-    <div class="course-progress-track" role="progressbar" aria-label="PSM-DID系统精讲课程个人学习进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span data-progress-fill></span></div>
-    <div class="course-progress-meta"><span data-progress-count>已阅读 0 / 10 节</span></div>
-   </div>
-   <div class="course-card-foot"><span class="go">进入课程 <span aria-hidden="true">›</span></span></div>
+ </div>
+</a>
+<a class="portal-card course-card" href="../econometrics/" data-course-progress="econometrics" data-category="methods economics statistics" data-recommended="2" data-progress-total="36" data-full-title="计量经济学 · 6周36模块新主线" style="--accent:#2a96f0;--accent-rgb:42,150,240" aria-label="进入计量经济学 · 6周36模块新主线">
+ <div class="portal-cover"><img src="https://images.pexels.com/photos/6120209/pexels-photo-6120209.jpeg?auto=compress&amp;dpr=1&amp;h=750&amp;w=1260" alt="笔记本电脑与数据分析图表" loading="lazy" decoding="async"></div>
+ <div class="portal-card-body">
+  <h3><span class="portal-course-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 20V12m6 8V5m6 15v-9m5 9V3"/><path d="M2 20h20"/></svg></span>计量经济学</h3>
+  <p class="portal-description">系统学习回归分析、模型估计与推断，衔接工具变量、GMM、极大似然及现代因果识别。</p>
+  <div class="portal-tags"><span>计量</span><span>实证方法</span><span>政策评估</span></div>
+  <div class="portal-card-bottom">
+   <div class="portal-progress" aria-label="计量经济学学习进度"><div class="portal-track" role="progressbar" aria-label="计量经济学个人学习进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span data-progress-fill></span></div><strong data-progress-percent>0%</strong></div>
+   <span class="portal-enter">进入课程</span>
   </div>
- </a>
-<a class="course-card" href="../math/" data-group="methods" data-course-progress="math" style="order:1" aria-label="进入每日10分钟数学微课程">
-  <div class="course-photo"><img src="https://images.pexels.com/photos/22690750/pexels-photo-22690750/free-photo-of-close-up-of-complicated-equations-written-on-a-blackboard.jpeg?auto=compress&amp;dpr=1&amp;h=750&amp;w=1260" alt="黑板上的数学方程" title="黑板上的数学方程" loading="lazy" decoding="async"></div>
-  <div class="course-body">
-   <div class="course-heading"><span class="course-index">05</span><div><span class="course-category">数学基础</span><h3>每日10分钟数学微课程</h3></div></div>
-   <p class="course-description">从向量与随机结构出发，经由 OLS 几何、概率推断、矩阵分解及渐近理论，通往高级计量方法。</p>
-   <div class="course-tags"><span class="tag">线性代数</span><span class="tag">概率与统计</span><span class="tag">6章73节</span></div>
-   <div class="course-progress">
-    <div class="course-progress-heading"><span>个人学习进度</span><strong data-progress-percent>0%</strong></div>
-    <div class="course-progress-track" role="progressbar" aria-label="每日10分钟数学微课程个人学习进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span data-progress-fill></span></div>
-    <div class="course-progress-meta"><span data-progress-count>已阅读 0 / 73 节</span></div>
-   </div>
-   <div class="course-card-foot"><span class="go">进入课程 <span aria-hidden="true">›</span></span></div>
+ </div>
+</a>
+<a class="portal-card course-card" href="../psm-did/" data-course-progress="psm" data-category="methods economics" data-recommended="3" data-progress-total="10" data-full-title="PSM-DID系统精讲课程" style="--accent:#35b64d;--accent-rgb:53,182,77" aria-label="进入PSM-DID系统精讲课程">
+ <div class="portal-cover"><img src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&amp;fit=crop&amp;w=900&amp;q=80" alt="阳光下的自然景观与研究路径" loading="lazy" decoding="async"><div class="causal-signposts" aria-hidden="true"><span>因果效应</span><span>识别策略</span><span>自然实验</span><span>DID / IV / RDD</span></div></div>
+ <div class="portal-card-body">
+  <h3><span class="portal-course-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 18 10 7l5 6 5-9"/><circle cx="4" cy="18" r="2"/><circle cx="10" cy="7" r="2"/><circle cx="15" cy="13" r="2"/><circle cx="20" cy="4" r="2"/></svg></span>因果推断</h3>
+  <p class="portal-description">围绕因果识别与政策评估，学习双重差分、事件研究、倾向得分匹配和双重稳健方法。</p>
+  <div class="portal-tags"><span>因果识别</span><span>政策评估</span><span>实证研究</span></div>
+  <div class="portal-card-bottom">
+   <div class="portal-progress" aria-label="因果推断学习进度"><div class="portal-track" role="progressbar" aria-label="因果推断个人学习进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span data-progress-fill></span></div><strong data-progress-percent>0%</strong></div>
+   <span class="portal-enter">进入课程</span>
   </div>
- </a>
-<a class="course-card" href="../frontier/" data-group="reading" data-course-progress="frontier" style="order:4" aria-label="进入统计与实证研究前沿日报">
-  <div class="course-photo"><img src="https://images.pexels.com/photos/34084875/pexels-photo-34084875/free-photo-of-cozy-library-interior-with-open-books-on-table.jpeg?auto=compress&amp;dpr=1&amp;h=750&amp;w=1260" alt="大学图书馆与开放书籍" title="大学图书馆与开放书籍" loading="lazy" decoding="async"></div>
-  <div class="course-body">
-   <div class="course-heading"><span class="course-index">06</span><div><span class="course-category">研究前沿</span><h3>统计与实证研究前沿日报</h3></div></div>
-   <p class="course-description">追踪近期统计方法与实证研究，聚焦研究问题、识别假设、证据质量及可复现性。</p>
-   <div class="course-tags"><span class="tag">研究前沿</span><span class="tag">方法评论</span><span class="tag">每日精读</span></div>
-   <div class="course-progress">
-    <div class="course-progress-heading"><span>个人学习进度</span><strong data-progress-percent>0%</strong></div>
-    <div class="course-progress-track" role="progressbar" aria-label="统计与实证研究前沿日报个人学习进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span data-progress-fill></span></div>
-    <div class="course-progress-meta"><span data-progress-count>已阅读 0 / 23 篇</span></div>
-   </div>
-   <div class="course-card-foot"><span class="go">进入课程 <span aria-hidden="true">›</span></span></div>
+ </div>
+</a>
+<a class="portal-card course-card" href="../frontier/" data-course-progress="frontier" data-category="statistics reading" data-recommended="4" data-progress-total="23" data-full-title="统计与实证研究前沿日报" style="--accent:#b63af3;--accent-rgb:182,58,243" aria-label="进入统计与实证研究前沿日报">
+ <div class="portal-cover"><img src="../assets/lilac-data.svg" alt="紫蓝色数据曲线与统计可视化" loading="lazy" decoding="async"></div>
+ <div class="portal-card-body">
+  <h3><span class="portal-course-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><path d="m12 2 10 6-10 6L2 8l10-6Zm-10 11 10 6 10-6M2 18l10 5 10-5"/></svg></span>统计研究前沿</h3>
+  <p class="portal-description">跟踪统计方法与数据科学研究进展，关注推断、识别、证据质量及可复现性。</p>
+  <div class="portal-tags"><span>统计前沿</span><span>数据科学</span><span>方法研究</span></div>
+  <div class="portal-card-bottom">
+   <div class="portal-progress" aria-label="统计研究前沿学习进度"><div class="portal-track" role="progressbar" aria-label="统计研究前沿个人学习进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span data-progress-fill></span></div><strong data-progress-percent>0%</strong></div>
+   <span class="portal-enter">进入课程</span>
   </div>
- </a>
-<a class="course-card" href="../cssci/" data-group="reading" data-course-progress="cssci" style="order:5" aria-label="进入CSSCI实证论文复现精读库">
-  <div class="course-photo"><img src="https://images.pexels.com/photos/5905439/pexels-photo-5905439.jpeg?auto=compress&amp;dpr=1&amp;h=750&amp;w=1260" alt="学术笔记本与文献材料" title="学术笔记本与文献材料" loading="lazy" decoding="async"></div>
-  <div class="course-body">
-   <div class="course-heading"><span class="course-index">07</span><div><span class="course-category">论文复现</span><h3>CSSCI实证论文复现精读库</h3></div></div>
-   <p class="course-description">系统检索中文实证论文的识别策略、数据结构与复现线索，严格区分公开书目和复现结果。</p>
-   <div class="course-tags"><span class="tag">论文精读</span><span class="tag">DID / IV</span><span class="tag">Stata复现</span></div>
-   <div class="course-progress">
-    <div class="course-progress-heading"><span>个人学习进度</span><strong data-progress-percent>0%</strong></div>
-    <div class="course-progress-track" role="progressbar" aria-label="CSSCI实证论文复现精读库个人学习进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span data-progress-fill></span></div>
-    <div class="course-progress-meta"><span data-progress-count>已阅读 0 / 16 篇</span></div>
-   </div>
-   <div class="course-card-foot"><span class="go">进入课程 <span aria-hidden="true">›</span></span></div>
+ </div>
+</a>
+<a class="portal-card course-card" href="../cssci/" data-course-progress="cssci" data-category="reading methods" data-recommended="5" data-progress-total="16" data-full-title="CSSCI实证论文复现精读库" style="--accent:#f5a00b;--accent-rgb:245,160,11" aria-label="进入CSSCI实证论文复现精读库">
+ <div class="portal-cover"><img src="https://images.pexels.com/photos/5905439/pexels-photo-5905439.jpeg?auto=compress&amp;dpr=1&amp;h=750&amp;w=1260" alt="学术笔记本与文献材料" loading="lazy" decoding="async"></div>
+ <div class="portal-card-body">
+  <h3><span class="portal-course-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><path d="M12 6c-3.2-2.2-6.4-2.3-10-1v15c3.6-1.2 6.8-.7 10 1.2 3.2-1.9 6.4-2.4 10-1.2V5c-3.6-1.3-6.8-1.2-10 1Z"/><path d="M12 6v15"/></svg></span>实证论文精读</h3>
+  <p class="portal-description">精读实证论文，分析研究问题、识别策略与复现线索，提升论文阅读和研究设计能力。</p>
+  <div class="portal-tags"><span>论文阅读</span><span>实证方法</span><span>研究设计</span></div>
+  <div class="portal-card-bottom">
+   <div class="portal-progress" aria-label="实证论文精读学习进度"><div class="portal-track" role="progressbar" aria-label="实证论文精读个人学习进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span data-progress-fill></span></div><strong data-progress-percent>0%</strong></div>
+   <span class="portal-enter">进入课程</span>
   </div>
- </a>
-<a class="course-card" href="../economic-classics/" data-group="reading" data-course-progress="classics" style="order:6" aria-label="进入每日经济学经典精读">
-  <div class="course-photo"><img src="https://images.pexels.com/photos/33352856/pexels-photo-33352856/free-photo-of-vintage-leather-bound-books-on-wooden-desk.jpeg?auto=compress&amp;dpr=1&amp;h=750&amp;w=1260" alt="古旧皮革装帧书籍" title="古旧皮革装帧书籍" loading="lazy" decoding="async"></div>
-  <div class="course-body">
-   <div class="course-heading"><span class="course-index">08</span><div><span class="course-category">经济思想史</span><h3>每日经济学经典精读</h3></div></div>
-   <p class="course-description">以《国富论》为新起点，沿经济思想史理解经典理论的形成、争论与现实应用。</p>
-   <div class="course-tags"><span class="tag">经济思想史</span><span class="tag">经典原著</span><span class="tag">现实应用</span></div>
-   <div class="course-progress">
-    <div class="course-progress-heading"><span>个人学习进度</span><strong data-progress-percent>0%</strong></div>
-    <div class="course-progress-track" role="progressbar" aria-label="每日经济学经典精读个人学习进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span data-progress-fill></span></div>
-    <div class="course-progress-meta"><span data-progress-count>已阅读 0 / 8 课</span></div>
-   </div>
-   <div class="course-card-foot"><span class="go">进入课程 <span aria-hidden="true">›</span></span></div>
+ </div>
+</a>
+<a class="portal-card course-card" href="../economic-classics/" data-course-progress="classics" data-category="economics reading" data-recommended="6" data-progress-total="8" data-full-title="每日经济学经典精读" style="--accent:#ef4779;--accent-rgb:239,71,121" aria-label="进入每日经济学经典精读">
+ <div class="portal-cover"><img src="https://images.pexels.com/photos/33352856/pexels-photo-33352856/free-photo-of-vintage-leather-bound-books-on-wooden-desk.jpeg?auto=compress&amp;dpr=1&amp;h=750&amp;w=1260" alt="古旧皮革装帧书籍" loading="lazy" decoding="async"></div>
+ <div class="portal-card-body">
+  <h3><span class="portal-course-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9h20L12 3 2 9Zm2 2v9m5-9v9m6-9v9m5-9v9M2 22h20M2 11h20"/></svg></span>经济学经典</h3>
+  <p class="portal-description">以《国富论》为起点，沿经济思想史梳理经典理论的形成、主要争论及其现实意义。</p>
+  <div class="portal-tags"><span>经济学理论</span><span>经典著作</span><span>思想史</span></div>
+  <div class="portal-card-bottom">
+   <div class="portal-progress" aria-label="经济学经典学习进度"><div class="portal-track" role="progressbar" aria-label="经济学经典个人学习进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span data-progress-fill></span></div><strong data-progress-percent>0%</strong></div>
+   <span class="portal-enter">进入课程</span>
   </div>
- </a>
-   </div>
-   <p class="progress-disclaimer">进度依据你在课程页面主动标记的已阅读或已完成记录计算，保存在当前浏览器；未标记的课程显示 0%，不以课程发布数量代替个人学习进度。</p>
-   <p class="no-results" id="no-results" hidden>没有找到匹配课程。请更换关键词或筛选条件。</p>
-  </section>
-  <section class="study-extras" aria-label="学习数据与辅助功能">
- <div class="study-extras-primary">
-  <section class="learning-dashboard" id="overview" aria-labelledby="overview-title">
+ </div>
+</a>
+<a class="portal-card course-card" href="../speaking/dual-track-2026/" data-course-progress="speaking" data-category="speaking" data-recommended="7" data-progress-total="126" data-full-title="公众表达与脱稿演讲系统训练" style="--accent:#05acd7;--accent-rgb:5,172,215" aria-label="进入公众表达与脱稿演讲系统训练">
+ <div class="portal-cover"><img src="https://images.pexels.com/photos/9547593/pexels-photo-9547593.jpeg?auto=compress&amp;dpr=1&amp;h=750&amp;w=1260" alt="空剧场中的话筒与红色座席" loading="lazy" decoding="async"></div>
+ <div class="portal-card-body">
+  <h3><span class="portal-course-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 17v5m-4 0h8"/></svg></span>公众表达</h3>
+  <p class="portal-description">通过日常沟通、即兴表达和脱稿演讲训练，提升表达逻辑、评议能力与公众演讲水平。</p>
+  <div class="portal-tags"><span>演讲技巧</span><span>即兴表达</span><span>学术汇报</span></div>
+  <div class="portal-card-bottom">
+   <div class="portal-progress" aria-label="公众表达学习进度"><div class="portal-track" role="progressbar" aria-label="公众表达个人学习进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span data-progress-fill></span></div><strong data-progress-percent>0%</strong></div>
+   <span class="portal-enter">进入课程</span>
+  </div>
+ </div>
+</a>
+<a class="portal-card course-card" href="../english/" data-course-progress="english" data-category="speaking reading" data-recommended="8" data-progress-total="168" data-full-title="英语表达提升｜日常聊天 × 学术英语" style="--accent:#8259f3;--accent-rgb:130,89,243" aria-label="进入英语表达提升｜日常聊天 × 学术英语">
+ <div class="portal-cover"><img src="https://images.pexels.com/photos/5239563/pexels-photo-5239563.jpeg?auto=compress&amp;dpr=1&amp;h=750&amp;w=1260" alt="木桌上的英语与学术教材" loading="lazy" decoding="async"></div>
+ <div class="portal-card-body">
+  <h3><span class="portal-course-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="15" height="18" rx="2"/><path d="m5 16 4.5-10L14 16M6.8 12h5.5M18 9h4m-2-2v9m-2-1c.8 1.3 2.2 2.2 4 3"/></svg></span>英语表达</h3>
+  <p class="portal-description">面向日常交流与学术情境，训练自然开口、学术写作、论文表达和科研沟通。</p>
+  <div class="portal-tags"><span>学术英语</span><span>论文写作</span><span>国际交流</span></div>
+  <div class="portal-card-bottom">
+   <div class="portal-progress" aria-label="英语表达学习进度"><div class="portal-track" role="progressbar" aria-label="英语表达个人学习进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span data-progress-fill></span></div><strong data-progress-percent>0%</strong></div>
+   <span class="portal-enter">进入课程</span>
+  </div>
+ </div>
+</a>
+  </div>
+  <p class="portal-no-results" id="no-results" hidden>没有找到匹配的课程，请调整筛选条件或搜索关键词。</p>
+ </section>
+ <section class="portal-learning-tools" id="study-tools">
+  <details id="tools-panel"><summary><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l4 2"/></svg> 学习数据与每周计划</span><span class="tools-prompt">查看学习时长、学习目标与每日激励 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7 10 5 5 5-5"/></svg></span></summary>
+   <div class="study-extras">
+    <div class="study-extras-primary"><section class="learning-dashboard" id="overview" aria-labelledby="overview-title">
   <div class="dashboard-top"><div class="dashboard-title"><div class="eyebrow">YOUR LEARNING</div><h2 id="overview-title">学习数据</h2></div><span class="dashboard-chevron" aria-hidden="true">›</span></div>
   <div class="learning-summary-grid">
     <article class="summary-stat"><span>开放课程</span><strong>8</strong><small>当前课程目录</small></article>
@@ -213,25 +161,23 @@
   <div class="dashboard-metric-row streak-row"><div class="metric-copy"><span>连续学习天数</span><strong data-study-streak>0 天</strong></div><span class="streak-note">持续积累，稳步前进</span></div>
   <div class="weekly-trend-card"><div class="trend-heading"><div><h3>近7天学习时长</h3><p>按本地计时记录自动汇总</p></div><span class="trend-total" data-week-total>近7天 0 分钟</span></div><div class="weekly-chart" data-week-chart role="img" aria-label="近7天学习时长柱状图"></div></div>
   <p class="dashboard-note">学习计时与阅读标记保存在当前浏览器，不会自动同步到其他设备。</p>
-</section>
- </div>
- <div class="study-extras-secondary">
-  <section class="motivation-panel" id="motivation" aria-labelledby="motivation-title">
+</section></div>
+    <div class="study-extras-secondary"><section class="motivation-panel" id="motivation" aria-labelledby="motivation-title">
   <div class="motivation-top"><div><div class="eyebrow">A DAILY REMINDER</div><h2 id="motivation-title">激励语录 <span>/ Motivation</span></h2></div><span class="motivation-leaf" aria-hidden="true">❧</span></div>
   <blockquote class="motivation-quote"><span class="quote-mark" aria-hidden="true">“</span><p data-motivation-text>持续投入的力量，藏在每一次认真完成的小事里。</p></blockquote>
   <div class="motivation-bottom"><span data-motivation-source>研究札记 · 每日一语</span><button type="button" class="motivation-refresh" data-motivation-refresh>⤨ 每次打开随机显示一句</button></div>
-</section>
-  <section class="study-goals-panel" aria-labelledby="goals-title">
+</section><section class="study-goals-panel" aria-labelledby="goals-title">
       <div class="goals-heading"><h2 id="goals-title">本周学习目标</h2><span class="goals-count" data-goals-count>0 / 3 已完成</span></div>
       <p class="goals-subtitle">建议微目标 · 勾选记录仅保存在当前浏览器</p>
       <label class="goal-line"><input type="checkbox" data-study-goal="lesson"><span>完成至少一节课程学习</span></label>
       <label class="goal-line"><input type="checkbox" data-study-goal="reading"><span>阅读一篇研究文献</span></label>
       <label class="goal-line"><input type="checkbox" data-study-goal="notes"><span>整理一条研究方法笔记</span></label>
-    </section>
- </div>
-</section>
- </main>
-</div>
-<footer class="site-footer"><div class="container footer-inner"><span>研究学习中心 · Research Learning Hub · 2026</span><span>数学 · 计量 · PSM-DID · 前沿 · CSSCI · 经济思想史 · 公众表达 · 英语表达</span><span class="photo-credit">实景摄影：Unsplash · Arthur Tseng、Sixteen Miles Out、Allie Reefer、Fiona Murray-deGraaff、Markus Spiske、2H Media、Vida Huang、Dionisis Anagnostopoulos、Yen Vu、Ilya Semenov、Johannes Plenio · <a href="https://unsplash.com/license" target="_blank" rel="noopener">Unsplash License</a></span><a href="#courses">返回课程目录 ↑</a></div></footer>
+    </section></div>
+   </div>
+  </details>
+ </section>
+ <section class="portal-info" id="connect"><h2>学术交流与表达</h2><p>通过课程学习与公开表达训练，将研究问题、方法和证据组织为清晰的学术表达。</p><a href="../speaking/dual-track-2026/">进入公众表达课程</a></section>
+</main>
+<footer class="portal-footer" id="about"><div><strong>研究学习中心</strong><span>Research Learning Hub</span></div><p>数学 · 计量经济学 · 因果推断 · 统计研究 · 论文精读 · 经济学经典 · 公众表达 · 英语表达</p><p class="portal-credit">课程摄影来自 Pexels、Unsplash；部分统计图形使用本站原有装饰素材。阅读进度仅保存在当前浏览器。</p></footer>
 </body>
 </html>
