@@ -1,0 +1,25 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>第34课｜样本均值的方差与抽样独立条件</title><script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script><style>body{max-width:800px;margin:45px auto;padding:0 22px;font:17px/1.85 system-ui,"Noto Sans SC",sans-serif;color:#20242b}h1{font-size:29px}h2{font-size:21px;margin-top:32px}p{margin:13px 0}.meta{color:#64748b}.math{overflow-x:auto;padding:10px 0}</style></head><body><h1>第3章·第8节｜样本均值的方差与抽样独立条件</h1><p class="meta">全课程第34课／73课 · 2026-11-10 · 正式授课版本（taught）</p><h2>核心问题</h2>
+<p>样本量增加为何通常能提高均值估计的精度？当观测值相关时，标准误为什么可能被严重低估？</p>
+<h2>一、从抽样分布到方差公式</h2>
+<p>上一课区分了统计量的抽样分布与一次样本的经验分布。本课研究样本均值的抽样波动。设随机变量 \(Z_1,\ldots,Z_n\) 均有有限二阶矩，样本均值为 \(\bar Z=n^{-1}\sum_{i=1}^n Z_i\)。对任何协方差结构，都有</p>
+<div class="math">\[\operatorname{Var}(\bar Z)=\frac{1}{n^2}\left[\sum_{i=1}^n\operatorname{Var}(Z_i)+2\sum_{i&lt;j}\operatorname{Cov}(Z_i,Z_j)\right].\]</div>
+<p>这是对线性组合求方差的直接结果，不要求独立或同分布。交叉协方差是否为零，决定能否简化。</p>
+<h2>二、独立、同方差与标准误</h2>
+<p>若各观测两两不相关，且方差同为 \(\sigma^2\)，交叉项消失，得到</p>
+<div class="math">\[\operatorname{Var}(\bar Z)=\frac{\sigma^2}{n},\qquad \operatorname{SD}(\bar Z)=\frac{\sigma}{\sqrt n}.\]</div>
+<p>独立是使协方差为零的充分条件，却不是必要条件。若独立但异方差，则方差为 \(n^{-2}\sum_i\sigma_i^2\)。若还具有共同均值 \(\mu\)，样本均值无偏估计 \(\mu\)。实际计算中的 \(s/\sqrt n\) 是基于样本标准差 \(s\) 的标准误估计，并非已知的总体标准差。</p>
+<h2>三、手算：两次观察存在相关性</h2>
+<p>设 \(n=2\)，两个变量方差均为4，协方差为2。由一般公式，</p>
+<div class="math">\[\operatorname{Var}(\bar Z)=\frac{4+4+2\times2}{4}=3.\]</div>
+<p>如果错误地按独立样本计算，会得到 \(4/2=2\)，低估方差三分之一。正确标准差为 \(\sqrt3\approx1.732\)，错误结果为 \(\sqrt2\approx1.414\)。若协方差为负，忽略相关性则可能高估方差。相关方向和强度必须由抽样设计及数据生成机制判断。</p>
+<h2>四、统计与计量应用</h2>
+<p>在学校内抽取学生、家庭内调查成员或对同一企业进行重复观察时，同组观测常具有共同冲击。将所有记录当作独立个体，通常会夸大有效样本量。实践中可根据抽样设计使用聚类稳健标准误；时间序列还需考虑序列相关及适当的长期方差估计。标准误修正解决推断方差问题，不会自动消除选择偏差、内生性或因果识别不足。</p>
+<h2>五、两道自测</h2>
+<p>&lt;b&gt;概念题：&lt;/b&gt; 推出 \(\operatorname{Var}(\bar Z)=\sigma^2/n\) 是否一定要求独立同分布？说明足够条件。</p>
+<p>&lt;b&gt;计算题：&lt;/b&gt; 三个观测方差均为9，任意两个不同观测的协方差均为3。计算样本均值的方差，并与错误的独立假设结果比较。</p>
+<p>&lt;b&gt;参考答案&lt;/b&gt;</p>
+<p>&lt;b&gt;概念题：&lt;/b&gt; 不必要求独立同分布；两两不相关且方差同为 \(\sigma^2\) 已足够。独立但异方差时应使用各方差之和除以 \(n^2\)。</p>
+<p>&lt;b&gt;计算题：&lt;/b&gt; 三项方差和为27，三对协方差的双倍和为18，故 \(\operatorname{Var}(\bar Z)=(27+18)/9=5\)；错误地按独立计算得到3，低估2。</p>
+<h2>六、衔接</h2>
+<p>第33课说明统计量为什么有抽样分布，本课明确样本均值方差依赖观测之间的协方差。下一课将把这种条件方差思路应用到OLS系数向量。</p>
+<p>&lt;b&gt;下一课：第3章·第9节《OLS系数的条件方差》（全课程第35课）。&lt;/b&gt;</p></body></html>
