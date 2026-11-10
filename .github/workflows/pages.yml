@@ -848,10 +848,10 @@ jobs:
           const html=fs.readFileSync(process.env.PAGE,'utf8');
           const isStudy=process.env.PAGE.includes('featured-study-');
           if(isStudy){
-            // DOM order follows the supplied reference image: four columns × two rows.
+            // DOM order follows the user-selected eight-course priority: Speaking, Econometrics, English, PSM-DID, CSSCI, Classics, Math, Frontier.
             const expected=[
-              '../math/','../econometrics/','../psm-did/','../frontier/',
-              '../cssci/','../economic-classics/','../speaking/dual-track-2026/','../english/'
+              '../speaking/dual-track-2026/','../econometrics/','../english/','../psm-did/',
+              '../cssci/','../economic-classics/','../math/','../frontier/'
             ];
             if(!html.includes('class="portal-course-grid" id="course-grid"'))
               throw Error('New study page is missing the reference four-column grid');
@@ -862,7 +862,7 @@ jobs:
               throw Error('Each of the eight study courses requires an accessible progress bar');
             if(!html.includes('study-reference-portal.css')||!html.includes('study-reference-portal.js'))
               throw Error('New study stylesheet or interactive controller not referenced');
-            console.log('PASS reference portal: eight photo courses, visual order, links and progress bars');
+            console.log('PASS reference portal: user-selected course priority, eight links and progress bars');
           }else{
             // Retain the established root-homepage featured-course contract.
             const first=html.match(/<div class="course-grid" id="course-grid">\s*<a[^>]*href="([^"]+)"/);

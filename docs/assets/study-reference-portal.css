@@ -169,3 +169,116 @@ svg{display:block;width:100%;height:100%;pointer-events:none}
   .portal-card h3{font-size:18px;min-height:47px}
   .portal-description{font-size:12.5px}
 }
+
+/* 2026-11-10: First-priority public speaking course and front-page daily motivation. */
+.portal-card[data-featured="true"]{
+ position:relative;
+ border:2px solid #7a50dc;
+ background:linear-gradient(180deg,#fff 0%,#f7f2ff 100%);
+ box-shadow:0 0 0 4px rgba(139,91,229,.10),0 12px 27px rgba(100,65,176,.21);
+}
+.portal-card[data-featured="true"]:hover{
+ transform:translateY(-5px);
+ box-shadow:0 0 0 5px rgba(139,91,229,.14),0 18px 34px rgba(100,65,176,.26);
+}
+.portal-card[data-featured="true"] .portal-cover{
+ background:#30234f;
+}
+.portal-card[data-featured="true"] .portal-cover:before{
+ content:"";position:absolute;inset:0;z-index:1;
+ background:linear-gradient(90deg,rgba(48,30,99,.27),transparent 70%);
+ pointer-events:none;
+}
+.featured-ribbon{
+ position:absolute;z-index:3;top:10px;left:10px;
+ display:inline-flex;align-items:center;gap:6px;
+ padding:7px 11px;border-radius:6px;
+ background:linear-gradient(115deg,#6f45d3,#9b62e5);
+ box-shadow:0 5px 14px rgba(48,30,96,.27);
+ color:#fff;font-size:12px;font-weight:850;letter-spacing:.02em;
+}
+.featured-ribbon:before{content:"★";font-size:13px;color:#ffe9a8}
+.portal-card[data-featured="true"] h3{color:#39217a}
+.portal-card[data-featured="true"] .portal-course-icon{color:#7543d3}
+.portal-card[data-featured="true"] .portal-enter{
+ background:linear-gradient(120deg,#6635cf,#8f4ce6);
+ box-shadow:0 5px 12px rgba(99,51,198,.25);
+}
+
+/* Daily motivation: standalone, large, readable and placed before the catalog. */
+.motivation-feature{
+ position:relative;isolation:isolate;
+ display:grid;grid-template-columns:minmax(170px,.9fr) minmax(0,2.9fr) minmax(150px,.8fr);
+ align-items:center;column-gap:23px;
+ max-width:1552px;margin:16px auto 4px;padding:21px 28px;
+ border:1px solid #e1d6fb;border-left:5px solid #8955e0;border-radius:17px;
+ background:linear-gradient(112deg,#f1eaff 0%,#fcfaff 53%,#edf4ff 100%);
+ box-shadow:0 8px 22px rgba(86,64,150,.075);
+ overflow:hidden;
+}
+.motivation-feature:before{
+ content:"“";position:absolute;right:20%;top:-66px;z-index:-1;
+ font-family:Georgia,serif;font-size:215px;line-height:1;color:rgba(126,82,211,.055);
+ pointer-events:none;
+}
+.motivation-feature .motivation-top{display:flex;flex-direction:column;gap:4px;align-items:flex-start;min-width:0;margin:0}
+.motivation-feature .motivation-top .eyebrow{
+ color:#8a61c9;font-size:11px;font-weight:800;letter-spacing:.15em;
+}
+.motivation-feature h2{
+ margin:0;font-size:23px;line-height:1.25;
+ color:#38256d;font-weight:850;white-space:nowrap;
+}
+.motivation-feature h2 span{display:block;font:italic 14px Georgia,serif;color:#8071ac;margin-top:3px;letter-spacing:.03em}
+.motivation-feature .motivation-leaf{display:none}
+.motivation-feature .motivation-quote{
+ display:flex;align-items:center;gap:9px;min-width:0;margin:0;padding:0;
+ border:0;background:none;
+}
+.motivation-feature .quote-mark{
+ display:block;flex:0 0 auto;
+ font-family:Georgia,serif;font-size:50px;line-height:.8;color:#a17de4;
+ transform:translateY(-3px);
+}
+.motivation-feature .motivation-quote p{
+ margin:0;color:#322b60;
+ font-size:clamp(19px,1.5vw,24px);font-weight:700;line-height:1.5;
+ letter-spacing:.015em;text-wrap:pretty;
+}
+.motivation-feature .motivation-bottom{
+ display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:8px;
+ min-width:0;color:#78739d;
+}
+.motivation-feature [data-motivation-source]{font-size:12px;white-space:nowrap}
+.motivation-feature .motivation-refresh{
+ display:inline-flex;align-items:center;justify-content:center;
+ padding:8px 13px;border:1px solid #d8c8fb;
+ border-radius:999px;background:rgba(255,255,255,.88);
+ color:#6e45b9;font-size:13px;font-weight:750;
+ white-space:nowrap;transition:background .18s,border-color .18s;
+}
+.motivation-feature .motivation-refresh:hover{background:#f1e9ff;border-color:#bb9ef0}
+@media(max-width:1580px){
+ .motivation-feature{margin-left:24px;margin-right:24px}
+}
+@media(max-width:1120px){
+ .motivation-feature{grid-template-columns:minmax(150px,.65fr) minmax(0,2fr);row-gap:10px}
+ .motivation-feature .motivation-bottom{grid-column:1/-1;flex-direction:row;justify-content:flex-end;align-items:center}
+}
+@media(max-width:800px){
+ .motivation-feature{margin:12px 14px 4px;padding:17px 20px;grid-template-columns:1fr;row-gap:11px}
+ .motivation-feature .motivation-top{flex-direction:row;align-items:center;flex-wrap:wrap;gap:7px 12px}
+ .motivation-feature .motivation-top .eyebrow{width:100%}
+ .motivation-feature h2{font-size:21px}
+ .motivation-feature h2 span{display:inline;margin-left:6px;font-size:13px}
+ .motivation-feature .motivation-quote p{font-size:20px}
+ .motivation-feature .motivation-bottom{grid-column:auto;justify-content:space-between;flex-wrap:wrap}
+}
+@media(max-width:560px){
+ .motivation-feature{margin:11px 14px 0;padding:17px 17px 15px}
+ .motivation-feature .motivation-quote p{font-size:18px;line-height:1.6}
+ .motivation-feature .quote-mark{font-size:42px}
+ .motivation-feature [data-motivation-source]{font-size:11px}
+ .motivation-feature .motivation-refresh{font-size:12px;padding:7px 11px}
+ .featured-ribbon{font-size:11px;padding:6px 10px}
+}
