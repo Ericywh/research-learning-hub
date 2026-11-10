@@ -126,3 +126,46 @@ svg{display:block;width:100%;height:100%;pointer-events:none}
 @media(max-width:800px){.portal-header-inner{height:auto;min-height:60px;flex-wrap:wrap;gap:8px;padding:7px 0}.portal-brand{flex:1}.portal-brand strong{font-size:18px}.brand-symbol{width:44px;height:38px}.portal-nav{order:3;flex:0 0 100%;max-width:100%;overflow-x:auto;justify-content:space-between;padding-bottom:4px}.portal-nav a{flex:0 0 auto}.portal-header-actions{gap:11px}.portal-hero{height:206px}.portal-hero h1{font-size:43px}.catalog-section{padding:0 14px}.portal-toolbar{padding:13px 0;align-items:flex-start;flex-wrap:wrap}.toolbar-filters{flex-wrap:wrap;gap:7px}.filter-options{gap:7px}.sort-control{margin-left:auto}.portal-course-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.portal-card{height:290px}.portal-cover{height:122px;flex-basis:122px}.portal-card h3{font-size:16px}.portal-description{font-size:11px}.portal-enter{padding:0 8px}.study-extras{grid-template-columns:1fr}.portal-info{margin:18px 14px 0;flex-wrap:wrap}}
 @media(max-width:560px){.portal-header-inner{width:calc(100% - 22px)}.portal-nav{gap:5px}.portal-nav a{padding:7px 8px}.portal-header-actions .notification-link{display:none}.portal-hero{height:190px}.portal-hero h1{font-size:35px}.hero-english{font-size:17px}.hero-callout{font-size:12px;padding:7px 13px}.portal-toolbar{gap:10px}.filter-caption{font-size:12px}.filter-caption svg{width:18px}.portal-filter{padding:7px 9px;min-height:32px;font-size:11px;gap:5px}.portal-filter svg{width:15px;height:15px}.sort-control{font-size:11px}.sort-control select{font-size:11px;padding:7px 22px 7px 9px}.portal-course-grid{grid-template-columns:1fr}.portal-card{height:310px}.portal-cover{height:143px;flex-basis:143px}.portal-card-body{padding:10px 15px 14px}.portal-card h3{font-size:20px}.portal-description{font-size:12.5px}.portal-enter{padding:0 14px;font-size:12px}.portal-tags span{font-size:11px}.portal-learning-tools{padding:0 14px}.portal-learning-tools summary{padding:14px}.study-extras{padding:0 12px 12px}.learning-dashboard,.motivation-panel,.study-goals-panel{padding:12px}.portal-footer{padding:18px 14px 30px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
+
+/* 2026-11-10: fit original, exact course titles and descriptions. */
+.portal-card{height:322px}
+.portal-cover{height:124px;min-height:124px;flex-basis:124px}
+.portal-card-body{padding:10px 13px 13px}
+.portal-card h3{
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:2;
+  white-space:normal;
+  overflow:hidden;
+  min-height:47px;
+  align-items:center;
+  margin:0 0 6px;
+  font-size:17px;
+  line-height:1.35;
+}
+.portal-course-icon{float:left;vertical-align:middle;margin-right:2px}
+.portal-description{min-height:42px;max-height:42px;margin-bottom:8px;font-size:12px;line-height:1.65}
+.portal-tags{min-height:24px}
+.portal-tags span{font-size:10.5px}
+.portal-card-bottom{gap:8px}
+@media(max-width:1460px){
+  .portal-card{height:323px}
+  .portal-card h3{font-size:15px;min-height:43px}
+  .portal-description{font-size:11.5px}
+}
+@media(max-width:1140px){
+  .portal-card{height:318px}
+  .portal-cover{height:129px;min-height:129px;flex-basis:129px}
+  .portal-card h3{font-size:18px;min-height:47px}
+  .portal-description{font-size:12px}
+}
+@media(max-width:800px){
+  .portal-card{height:323px}
+  .portal-card h3{font-size:16px;min-height:44px}
+}
+@media(max-width:560px){
+  .portal-card{height:325px}
+  .portal-cover{height:135px;min-height:135px;flex-basis:135px}
+  .portal-card h3{font-size:18px;min-height:47px}
+  .portal-description{font-size:12.5px}
+}
