@@ -363,8 +363,8 @@ window.MATH_COURSE={
           "number": 35,
           "title": "OLS系数的条件方差",
           "published": true,
-          "date": "2026-10-29",
-          "url": "lessons/2026-10-29-03-09.html",
+          "date": "2026-11-11",
+          "url": "lessons/2026-11-11-03-09.html",
           "delivered": false
         },
         {
