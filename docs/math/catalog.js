@@ -373,9 +373,9 @@ window.MATH_COURSE={
           "number": 36,
           "title": "正态误差下的有限样本t与F推断",
           "published": true,
-          "date": "2026-10-29",
-          "url": "lessons/2026-10-29-03-10.html",
-          "delivered": false
+          "date": "2026-11-12",
+          "url": "lessons/2026-11-12-03-10.html",
+          "delivered": true
         },
         {
           "chapter": 3,
