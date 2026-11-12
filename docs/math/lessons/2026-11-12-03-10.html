@@ -1,0 +1,51 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>第36课｜正态误差下的有限样本t与F推断</title><script>MathJax={tex:{inlineMath:[['$','$']],displayMath:[['$$','$$']]}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script><style>body{max-width:820px;margin:3rem auto;padding:0 1.3rem;font:17px/1.85 system-ui,sans-serif;color:#202936}pre{white-space:pre-wrap;font:inherit}.status{color:#16734d;font-weight:600}</style></head><body><h1>第3章·第10节｜正态误差下的有限样本t与F推断</h1><p class="status">正式授课 · taught · 2026-11-12</p><pre>全课程第36课／73课｜2026-11-12｜预计8分钟
+
+核心问题： 为什么正态误差能使OLS的t检验和F检验在有限样本下具有精确分布？需要哪些附加条件？
+
+## 一、从条件方差走向精确分布
+
+上一课得到了OLS系数的条件方差。本课进一步设定 $\mathbf y=X\boldsymbol\beta+\mathbf u$，其中 $X\in\mathbb R^{n\times p}$ 满列秩，$n&gt;p$，且给定 $X$ 后 $\mathbf u\sim N(\mathbf0_n,\sigma^2I_n)$、$\sigma^2&gt;0$。因此系数估计量条件正态，其均值为 $\boldsymbol\beta$，协方差为 $\sigma^2(X^{\mathsf T}X)^{-1}$。这里正态性、同方差和条件不相关共同构成精确有限样本推断的基础；仅知道协方差公式并不足够。
+
+## 二、单个系数的t统计量
+
+设 $c_{jj}$ 为 $(X^{\mathsf T}X)^{-1}$ 的第 $j$ 个对角元。残差平方和 $RSS=\hat{\mathbf u}^{\mathsf T}\hat{\mathbf u}$，残差方差估计 $s^2=RSS/(n-p)$。在原假设 $H_0:\beta_j=b_0$ 下，
+
+$$
+t=\frac{\hat\beta_j-b_0}{s\sqrt{c_{jj}}}\mid X\sim t_{n-p}.
+$$
+
+原因是分子除以真实标准差服从标准正态，$(n-p)s^2/\sigma^2$ 服从自由度 $n-p$ 的卡方分布，且二者在上述正态模型下独立。用估计标准差替代未知的 $\sigma$，就得到t分布。
+
+## 三、多个线性限制的F检验
+
+对于 $q$ 个线性独立限制 $H_0:R\boldsymbol\beta=\mathbf r$，其中 $R\in\mathbb R^{q\times p}$ 满行秩、$1\le q\le p$，相应统计量为
+
+$$
+F=\frac{(R\hat{\boldsymbol\beta}-\mathbf r)^{\mathsf T}[R(X^{\mathsf T}X)^{-1}R^{\mathsf T}]^{-1}(R\hat{\boldsymbol\beta}-\mathbf r)/q}{s^2}\mid X\sim F_{q,n-p}.
+$$
+
+分子是标准化的限制偏离程度，分母估计扰动方差。单个限制时，使用同一协方差估计有 $F=t^2$。
+
+## 四、手算例子与计量应用
+
+假设 $n=12,p=2$，某斜率估计为2，$c_{jj}=1/4$，$RSS=40$。则 $s^2=40/10=4$，标准误为 $2\times1/2=1$。检验斜率为零得到 $t=2$，自由度10；对应单限制F统计量为4，自由度 $(1,10)$。这些数值仅为演算设定，不代表实证结果。
+
+工资方程中的教育系数可以进行单参数检验，多个教育类别虚拟变量可进行联合F检验。但统计显著性不能替代外生性或因果识别。异方差、组内相关或非正态扰动下，常规t/F统计量一般不再具有上述精确有限样本分布，需根据条件采用稳健或渐近推断。
+
+## 五、两道自测
+
+概念题： 仅假设 $E(\mathbf u\mid X)=0$ 和 $\operatorname{Var}(\mathbf u\mid X)=\sigma^2I_n$，能否保证常规t统计量精确服从 $t_{n-p}$？为什么？
+
+计算题： 给定 $n=18,p=3$，$\hat\beta_j=3$，$b_0=1$，$RSS=60$，$c_{jj}=1/5$。求 $s^2$、标准误、t统计量和单限制F统计量。
+
+参考答案
+
+概念题： 不能。条件一、二阶矩不足以保证正态分子、独立卡方分母的有限样本分布；通常还需要条件联合正态等条件。
+
+计算题： 自由度15，$s^2=60/15=4$，标准误 $\sqrt{4/5}=2/\sqrt5$，$t=(3-1)/(2/\sqrt5)=\sqrt5\approx2.236$，$F=t^2=5$。
+
+## 六、衔接与复习
+
+第33—36课由抽样分布、样本均值方差、OLS条件方差走向有限样本检验。下一课研究支撑卡方和F分布的二次型结构。
+
+下一课：第3章·第11节《二次型与卡方结构》（全课程第37课）。</pre></body></html>
