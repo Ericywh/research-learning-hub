@@ -383,9 +383,9 @@ window.MATH_COURSE={
           "number": 37,
           "title": "二次型与卡方结构",
           "published": true,
-          "date": "2026-10-29",
-          "url": "lessons/2026-10-29-03-11.html",
-          "delivered": false
+          "date": "2026-11-13",
+          "url": "lessons/2026-11-13-03-11.html",
+          "delivered": true
         },
         {
           "chapter": 3,
