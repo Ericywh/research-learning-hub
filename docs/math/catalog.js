@@ -393,8 +393,8 @@ window.MATH_COURSE={
           "number": 38,
           "title": "半正定和正定矩阵及协方差矩阵",
           "published": true,
-          "date": "2026-10-29",
-          "url": "lessons/2026-10-29-03-12.html",
+          "date": "2026-11-14",
+          "url": "lessons/2026-11-14-03-12.html",
           "delivered": false
         }
       ]
