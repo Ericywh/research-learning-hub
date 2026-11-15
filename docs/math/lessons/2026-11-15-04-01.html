@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="每日10分钟数学微课程，第39课：特征值与特征向量"><meta name="course-status" content="taught"><title>第4章·第1节｜特征值与特征向量</title><link rel="stylesheet" href="../site.css"><script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script><style>.article-wrap{max-width:840px;margin:0 auto;padding:34px 20px 80px}.article{line-height:1.92;font-size:17px;color:#263d3a}.article h2{margin-top:1.8em}.article h3{margin-top:1.4em}.article p{margin:1em 0}.article .math{overflow-x:auto;padding:14px;background:#f2f8f5;border-radius:9px}.article .lead{border-left:4px solid #4d8e7d;padding:10px 18px;background:#eaf6f1;border-radius:8px}.muted{font-size:14px;color:#596b66}.taught{border:1px solid #b7dfd1;background:#eef9f4;color:#225e4d;border-radius:8px;padding:10px 16px}@media(max-width:650px){.article-wrap{padding:24px 16px 60px}.article{font-size:16px}}</style><script defer src="../../assets/reading-status.js?v=20261030a"></script></head>
+<body><header><div class="wrap"><a href="../">← 数学课程目录</a><a href="../../">研究学习中心</a></div></header>
+<main class="article-wrap"><div class="kicker">MATHEMATICS · PROBABILITY · ECONOMETRICS</div><h1>第4章·第1节｜特征值与特征向量</h1><p class="muted">全课程第39课 / 共73课 · 2026-11-15正式授课 · 预计8分钟</p><aside class="taught">正式授课版本：已在聊天中完整交付，并同步至私人Notion讲义。</aside><article class="article"><p><strong>全课程第39课／73课｜2026年11月15日｜预计8分钟</strong></p>
+<p><strong>核心问题：</strong> 矩阵变换中，哪些方向只发生比例伸缩？这些特殊方向为什么能够揭示多变量数据的主要波动结构？</p>
+<h2>一、从矩阵变换到特征方向</h2>
+<p>前一课讨论协方差矩阵的正定性，本课进一步研究矩阵沿不同方向的作用。一般而言，矩阵乘以向量后，向量的长度和方向都会改变。但某些非零向量经过变换后，结果恰好是原向量的数倍。</p>
+<p>设 \(A\in\mathbb R^{k\times k}\)。若存在标量 \(\lambda\) 和非零向量 \(v\in\mathbb R^k\)，满足</p>
+<div class="math">\[Av=\lambda v,\qquad v\ne 0,\]</div>
+<p>则 \(\lambda\) 称为特征值，\(v\) 称为对应的特征向量。正特征值保持向量朝向，负特征值使方向反转，零特征值则把该方向压缩为零向量。特征向量不要求单位长度，任意非零倍数仍属于同一特征方向。</p>
+<h2>二、特征值如何求出</h2>
+<p>把特征方程移项：</p>
+<div class="math">\[(A-\lambda I_k)v=0
+\quad\Longrightarrow\quad
+\det(A-\lambda I_k)=0.\]</div>
+<p>因为要求非零解，\(A-\lambda I_k\) 必须奇异，这就是特征方程。先求其根，再代回线性方程组确定对应的非零特征向量。实矩阵未必具有全部为实数的特征值；但实对称矩阵的特征值必为实数，而且能够选择相互正交的单位特征向量。</p>
+<h2>三、手算例子：两个变量的协方差</h2>
+<p>考虑假设性的总体协方差矩阵</p>
+<div class="math">\[\Sigma=
+\begin{pmatrix}
+2&1\\
+1&2
+\end{pmatrix}.\]</div>
+<p>其特征方程为 \((2-\lambda)^2-1=0\)，得到两个特征值3和1。对应单位特征向量分别可取 \(v_1=(1,1)^{\mathsf T}/\sqrt2\) 与 \(v_2=(1,-1)^{\mathsf T}/\sqrt2\)。直接相乘可验证 \(\Sigma v_1=3v_1\)、\(\Sigma v_2=v_2\)。</p>
+<p>对中心化随机向量 \(X-E(X)\)，沿单位方向 \(v\) 投影的总体方差为 \(v^{\mathsf T}\Sigma v\)。因此两个特征方向上的方差分别为3和1，总方差为4；第一方向贡献75%的总方差。这个结果为后续主成分分析提供了代数基础，但这里尚未涉及样本特征向量的估计误差。</p>
+<h2>四、计量应用及解释边界</h2>
+<p>在高度相关的经济指标中，协方差矩阵的大特征值对应数据波动较大的组合方向，小特征值对应波动较小的方向。分析时应注意变量量纲：收入以元或万元计量，会改变协方差矩阵的特征值和特征向量。对于重合或接近的特征值，单个特征向量的方向也可能不稳定。特征分解反映协方差结构，本身不识别因果关系。</p>
+<h2>五、两道自测</h2>
+<p><strong>第1题（概念题）：</strong> 特征向量为什么必须非零？若 \(v\) 是特征向量，\(-2v\) 是否仍为同一特征值对应的特征向量？</p>
+<p><strong>第2题（计算题）：</strong> 对 \(A=\begin{pmatrix}4&amp;0\\0&amp;2\end{pmatrix}\)，求两个特征值，并验证 \(v=(0,1)^{\mathsf T}\) 对应哪一个特征值。</p>
+<p><strong>参考答案</strong></p>
+<p><strong>第1题：</strong> 零向量对任何 \(\lambda\) 都满足方程，无法确定特殊变换方向，因此必须排除。由于 \(A(-2v)=-2Av=\lambda(-2v)\)，所以 \(-2v\) 仍是对应同一特征值的特征向量。</p>
+<p><strong>第2题：</strong> 特征方程为 \((4-\lambda)(2-\lambda)=0\)，特征值为4和2。因为 \(Av=(0,2)^{\mathsf T}=2v\)，所以给定向量对应特征值2。</p>
+<h2>六、课程衔接</h2>
+<p>第38课用正定性认识协方差矩阵，本课以特征值和特征向量揭示矩阵的特殊作用方向。下一课将说明实对称矩阵如何由这些正交方向重构。</p>
+<p><strong>下一课：第4章·第2节《对称矩阵的谱分解》（全课程第40课）。</strong></p></article>
+<p class="muted">上一课：第3章·第12节｜半正定和正定矩阵及协方差矩阵 · 下一课：第4章·第2节｜对称矩阵的谱分解</p>
+<nav><a href="2026-11-14-03-12.html">← 上一课</a>　<a href="../">课程目录</a>　<a href="2026-10-29-04-02.html">下一课 →</a></nav></main></body></html>
