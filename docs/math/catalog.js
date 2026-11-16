@@ -409,8 +409,8 @@ window.MATH_COURSE={
           "number": 39,
           "title": "特征值与特征向量",
           "published": true,
-          "date": "2026-11-15",
-          "url": "lessons/2026-11-15-04-01.html",
+          "date": "2026-11-16",
+          "url": "lessons/2026-11-16-04-01.html",
           "delivered": true
         },
         {
