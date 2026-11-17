@@ -419,8 +419,8 @@ window.MATH_COURSE={
           "number": 40,
           "title": "对称矩阵的谱分解",
           "published": true,
-          "date": "2026-10-29",
-          "url": "lessons/2026-10-29-04-02.html",
+          "date": "2026-11-17",
+          "url": "lessons/2026-11-17-04-02.html",
           "delivered": false
         },
         {
