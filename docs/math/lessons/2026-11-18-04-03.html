@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="每日10分钟数学微课程，第41课：特征值和协方差矩阵的非负性">
+<meta name="course-status" content="taught">
+<title>第4章·第3节｜特征值和协方差矩阵的非负性</title>
+<link rel="stylesheet" href="../site.css">
+<script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]}};</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+.article-wrap{max-width:830px;margin:0 auto;padding:36px 20px 80px}
+.article{font-size:17px;line-height:1.9;color:#263d3a}
+.article h2{margin-top:1.8em;font-size:1.24em}
+.article p{margin:1em 0}.article .math{overflow:auto;padding:12px;background:#f4f8f5;border-radius:9px}
+.muted{font-size:14px;color:#61736e}
+@media(max-width:650px){.article-wrap{padding:24px 16px 64px}.article{font-size:16px}}
+</style>
+<script defer src="../../assets/reading-status.js?v=20261030a"></script>
+</head>
+<body>
+<header><div class="wrap"><a href="../">← 数学课程目录</a><a href="../../">研究学习中心</a></div></header>
+<main class="article-wrap">
+<div class="kicker">MATHEMATICS · PROBABILITY · ECONOMETRICS</div>
+<h1>第4章·第3节｜特征值和协方差矩阵的非负性</h1>
+<p class="muted">全课程第41课 / 共73课 · 2026-11-18聊天正式授课 · 预计学习8分钟</p>
+<article class="article">
+<p><b>全课程第41课／73课｜2026年11月18日｜预计学习8分钟</b></p>
+<p><b>核心问题：为什么真实的协方差矩阵不可能具有负特征值？零特征值又意味着什么？</b></p>
+<h2>一、由谱分解回到协方差</h2>
+<p>第39课引入特征值与特征向量，第40课说明实对称矩阵可以沿正交特征方向分解。本课增加一个统计约束：如果被分解的矩阵是协方差矩阵，那么它的特征值必须非负。</p>
+<p>设 \(X\in\mathbb R^k\) 是具有有限二阶矩的随机列向量，均值为 \(\mu=E(X)\)，总体协方差矩阵为</p>
+<div class="math">\[\Sigma=E[(X-\mu)(X-\mu)^{\mathsf T}]
+\in\mathbb R^{k\times k}.\]</div>
+<p>由于协方差满足对称性，\(\Sigma\) 是实对称矩阵；又由于任意线性组合的方差非负，它是半正定矩阵。关键是将这一概率性质与特征方程联系起来。</p>
+<h2>二、特征值非负的严格推导</h2>
+<p>设 \(v\in\mathbb R^k\) 为非零特征向量，满足 \(\Sigma v=\lambda v\)。对两边左乘 \(v^{\mathsf T}\)，得到</p>
+<div class="math">\[0\leq\operatorname{Var}(v^{\mathsf T}X)
+=v^{\mathsf T}\Sigma v
+=\lambda v^{\mathsf T}v
+\quad\Longrightarrow\quad\lambda\geq0.\]</div>
+<p>因为 \(v^{\mathsf T}v>0\)，特征值不可能为负。这里不要求随机向量服从多元正态，也不要求不同分量独立；有限二阶矩足以保证结论。</p>
+<p>若 \(\lambda=0\)，相应特征方向上的线性组合方差为零，意味着 \(v^{\mathsf T}X\) 几乎处处等于一个常数。零特征值因此对应总体中的精确线性依赖，而不是简单的弱相关。若所有特征值严格为正，协方差矩阵正定且可逆。</p>
+<h2>三、二维手算例子</h2>
+<p>考虑教学设定的总体协方差矩阵：</p>
+<div class="math">\[\Sigma=
+\begin{pmatrix}2&-2\\-2&2\end{pmatrix},
+\qquad
+\lambda_1=4,\quad\lambda_2=0.\]</div>
+<p>由特征方程 \((2-\lambda)^2-4=0\)，得到两个特征值4与0。对应的单位特征向量分别是 \((1,-1)^{\mathsf T}/\sqrt2\) 和 \((1,1)^{\mathsf T}/\sqrt2\)。</p>
+<p>两个正交方向的总体方差：差异方向4；共同方向0。总体方差集中于差异方向，图示依据假设矩阵计算。</p>
+<p>因此，\(X_1-X_2\) 可以随机变化，而 \(X_1+X_2\) 几乎处处为常数。矩阵的迹为4，等于两个特征值之和，且行列式为零，所以矩阵不可逆。</p>
+<h2>四、统计与计量应用</h2>
+<p>主成分分析按照非负特征值衡量各正交方向的方差。零特征值对应没有信息增量的方向；小特征值意味着某些线性组合的方差很低，但不直接证明因果关系。</p>
+<p>样本协方差矩阵同样半正定。不过，当变量数 \(k\) 大于或等于样本量 \(n\) 时，使用样本均值中心化后的协方差矩阵秩最多为 \(n-1\)，必然出现零特征值。这种样本奇异性不等于总体协方差矩阵必然奇异。数值软件出现极微小负特征值时，应结合计算精度、矩阵构造及舍入误差判断。</p>
+<h2>五、两道自测</h2>
+<p><b>第1题（概念题）：</b>协方差矩阵存在零特征值，是否意味着它不是合法的协方差矩阵？零特征值的总体统计含义是什么？</p>
+<p><b>第2题（计算题）：</b>若总体协方差矩阵为 \(\begin{pmatrix}3&0\\0&0\end{pmatrix}\)，求其特征值、迹、秩，并判断是否可逆。</p>
+<p><b>参考答案</b></p>
+<p>第1题：仍然合法。协方差矩阵只要求半正定；零特征值表示存在非零权重向量，使相应随机线性组合的方差为零，因而该组合几乎处处为常数。</p>
+<p>第2题：特征值为3与0，迹为3，秩为1，行列式为0，故不可逆。</p>
+<h2>六、课程衔接</h2>
+<p>第40课建立了正交谱分解，本课证明协方差矩阵的谱必然非负，并区分总体线性依赖与有限样本秩不足。</p>
+<p><b>下一课：第4章·第4节《协方差椭圆》（全课程第42课）。</b></p>
+</article>
+<p class="muted">上一课：第4章·第2节｜对称矩阵的谱分解 · 下一课：第4章·第4节｜协方差椭圆</p>
+<nav><a href="2026-11-17-04-02.html">← 上一课</a>　<a href="../">课程目录</a>　<a href="2026-10-29-04-04.html">下一课 →</a></nav>
+</main></body></html>
