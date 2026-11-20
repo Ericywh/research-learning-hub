@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="每日10分钟数学微课程第43课：PCA的主方向，2026年11月20日正式授课">
+<meta name="course-status" content="taught">
+<title>第4章·第5节｜PCA的主方向</title>
+<link rel="stylesheet" href="../site.css">
+<script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]}};</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+.article-wrap{max-width:830px;margin:0 auto;padding:36px 20px 80px}
+.article{font-size:17px;line-height:1.9;color:#263d3a}
+.article h2{margin-top:1.8em;font-size:1.24em}
+.article p{margin:1em 0}
+.article .math{overflow:auto;padding:12px;background:#f4f8f5;border-radius:9px}
+.article .lead{border-left:4px solid #5b998a;padding:12px 20px;background:#edf7f2;border-radius:8px}
+.muted{font-size:14px;color:#61736e}
+@media(max-width:650px){.article-wrap{padding:24px 16px 64px}.article{font-size:16px}}
+</style>
+<script defer src="../../assets/reading-status.js?v=20261030a"></script>
+</head>
+<body>
+<header><div class="wrap"><a href="../">← 数学课程目录</a><a href="../../">研究学习中心</a></div></header>
+<main class="article-wrap">
+<div class="kicker">MATHEMATICS · PROBABILITY · ECONOMETRICS</div>
+<h1>第4章·第5节｜PCA的主方向</h1>
+<p class="muted">全课程第43课 / 共73课 · 2026-11-20已在聊天正式授课 · 预计学习8分钟</p>
+<article class="article">
+<p>第4章·第5节｜2026年11月20日｜预计学习8分钟</p>
+<p><strong>核心问题：为什么主成分分析（PCA）选择最大特征值对应的特征向量作为第一主方向？</strong></p>
+<h2>一、把多变量信息投影到一条直线上</h2>
+<p>上一课用协方差椭圆描述二维变量的联合波动：特征向量决定椭圆主轴，特征值决定沿该方向的方差。本课进一步考虑：如果只能保留一个方向上的信息，应当选择哪条轴？</p>
+<p>设随机向量 \(X\in\mathbb R^p\) 具有有限二阶矩，总体均值为 \(\mu\)，总体协方差矩阵为 \(\Sigma\in\mathbb R^{p\times p}\)。选择单位向量 \(w\in\mathbb R^p\)，将中心化后的随机向量投影到该方向：</p>
+<div class="math">\[Z=w^{\mathsf T}(X-\mu),\qquad
+\operatorname{Var}(Z)=w^{\mathsf T}\Sigma w,\qquad
+w^{\mathsf T}w=1.\]</div>
+<p>其中 \(Z\) 是一维随机变量，\(w\) 是确定的投影方向。单位长度约束防止通过任意放大权重人为增加方差。</p>
+<h2>二、为什么最大方差方向等于主特征向量</h2>
+<p>PCA第一主方向的总体优化问题为</p>
+<div class="math">\[\max_{w^{\mathsf T}w=1}w^{\mathsf T}\Sigma w,
+\qquad
+\Sigma w_1=\lambda_{\max}w_1.\]</div>
+<p>构造拉格朗日函数 \(L=w^{\mathsf T}\Sigma w-\lambda(w^{\mathsf T}w-1)\)。由于协方差矩阵对称，一阶条件为 \(2\Sigma w-2\lambda w=0\)，即特征方程。</p>
+<p>进一步利用谱分解，将单位向量写成正交特征向量的线性组合，其投影方差就是各特征值的非负加权平均，权重之和为1，因此最大值为 \(\lambda_{\max}\)。最大特征值对应的单位特征向量就是第一主方向。若最大特征值重复，最优方向不唯一。</p>
+<h2>三、二维协方差矩阵手算</h2>
+<p>考虑总体协方差矩阵</p>
+<div class="math">\[\Sigma=
+\begin{pmatrix}5&4\\4&5\end{pmatrix},
+\quad
+\lambda_1=9,\ \lambda_2=1,
+\quad
+w_1=\frac1{\sqrt2}
+\begin{pmatrix}1\\1\end{pmatrix}.\]</div>
+<p>特征方程为 \((5-\lambda)^2-16=0\)。第一主成分为两个中心化变量之和除以 \(\sqrt2\)，其方差为9；与之正交的差值方向方差为1。</p>
+<p>两个正交方向上的总体投影方差：第一主方向为9，第二主方向为1。这是教学设定的总体协方差矩阵，并非实际样本估计。</p>
+<h2>四、统计与计量应用</h2>
+<p>对于 \(n\) 个样本观测，可以用中心化数据计算样本协方差矩阵，再提取其最大特征值对应的样本特征向量，得到估计的主方向。总体主方向与样本估计方向需要区分。</p>
+<p>PCA可用于多指标降维和构造综合指标，但它最大化的是变量自身的方差，不是对某个结果变量的预测能力。变量量纲差异明显时，是否标准化会改变主方向；提取的成分也不能直接获得因果解释。</p>
+<h2>五、两道自测</h2>
+<p><strong>概念题：</strong> 第一主成分一定是原始数据中某一个变量吗？主特征向量整体改变符号会影响所解释的方差吗？</p>
+<p><strong>计算题：</strong> 给定协方差矩阵 \(\Sigma=\operatorname{diag}(7,2)\)，求第一主方向、对应投影方差，以及第二个正交主方向。</p>
+<p><strong>参考答案</strong></p>
+<p><strong>概念题：</strong> 不一定。第一主成分通常是多个中心化变量的线性组合。将特征向量由 \(w_1\) 改为 \(-w_1\)，投影值符号翻转，但方差不变。</p>
+<p><strong>计算题：</strong> 第一主方向为 \((1,0)^{\mathsf T}\)，投影方差为7；第二主方向为 \((0,1)^{\mathsf T}\)，投影方差为2。各方向均可整体改变符号。</p>
+<h2>六、前后课衔接</h2>
+<p>第42课由特征向量解释协方差椭圆的主轴，第43课通过最大化投影方差选出第一主方向。下一课将利用全部特征值计算各主成分保留的信息比例，判断应保留多少个维度。</p>
+<p><strong>下一课：第4章·第6节《PCA解释方差》（全课程第44课）。</strong></p>
+</article>
+<p class="muted">上一课：第4章·第4节｜协方差椭圆 · 下一课：第4章·第6节｜PCA解释方差</p>
+<nav><a href="2026-11-19-04-04.html">← 上一课</a>　<a href="../">课程目录</a>　<a href="2026-10-29-04-06.html">下一课 →</a></nav>
+</main>
+</body>
+</html>
