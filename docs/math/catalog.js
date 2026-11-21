@@ -459,8 +459,8 @@ window.MATH_COURSE={
           "number": 44,
           "title": "PCA解释方差",
           "published": true,
-          "date": "2026-10-29",
-          "url": "lessons/2026-10-29-04-06.html",
+          "date": "2026-11-21",
+          "url": "lessons/2026-11-21-04-06.html",
           "delivered": false
         },
         {
