@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="每日10分钟数学微课程第44课：PCA解释方差；正式聊天授课2026-11-21">
+<meta name="course-status" content="taught">
+<title>第4章·第6节｜PCA解释方差</title>
+<link rel="stylesheet" href="../site.css">
+<script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]}};</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<script defer src="../../assets/reading-status.js?v=20261030a"></script>
+<style>
+.article-wrap{max-width:830px;margin:0 auto;padding:36px 20px 80px}
+.article{font-size:17px;line-height:1.92;color:#263d3a}
+.article h2{margin-top:1.8em;font-size:1.24em}
+.article p{margin:1em 0}
+.article .math{overflow-x:auto;padding:12px;background:#f4f8f5;border-radius:9px}
+.article table{width:100%;border-collapse:collapse;margin:16px 0;font-size:16px}
+.article th,.article td{border:1px solid #dce7e4;padding:7px 11px;text-align:left}
+.article th{background:#eef6f1}
+.muted{font-size:14px;color:#61736e}
+@media(max-width:650px){.article-wrap{padding:24px 16px 64px}.article{font-size:16px}}
+</style>
+</head>
+<body><header><div class="wrap"><a href="../">← 数学课程目录</a><a href="../../">研究学习中心</a></div></header>
+<main class="article-wrap">
+<div class="kicker">MATHEMATICS · PROBABILITY · ECONOMETRICS</div>
+<h1>第4章·第6节｜PCA解释方差</h1>
+<p class="muted">全课程第44课 / 共73课 · 2026-11-21正式授课 · 预计8分钟</p>
+<article class="article"><p><b>全课程第44课｜第4章·第6节｜2026年11月21日｜预计8分钟</b></p>
+<p><b>核心问题：主成分的解释方差比例如何计算？累计解释方差能否直接决定保留多少个主成分？</b></p>
+<h2>一、解释方差的数学来源</h2>
+<p>上一课说明，第一主成分是在单位长度约束下使样本投影方差最大的方向。第二主成分还须与第一方向正交，依此类推。今天进一步讨论：这些方向分别保留了多少数据变异。</p>
+<p>设中心化后的数据矩阵为 \(Z\in\mathbb R^{n\times p}\)，其中 \(n>1\)，样本协方差矩阵为 \(S=Z^{\mathsf T}Z/(n-1)\)。作为实对称半正定矩阵，\(S\) 具有非负特征值，并可按大小排序：</p>
+<div class="math">\[\lambda_1\geq\lambda_2\geq\cdots\geq\lambda_p\geq0,\qquad
+\operatorname{tr}(S)=\sum_{j=1}^{p}\lambda_j.\]</div>
+<p>每个单位特征向量对应一个主成分，其样本方差恰好等于相应特征值。迹等于全部变量的样本方差之和，因此特征值之和就是原数据的总样本方差。</p>
+<h2>二、单个比例与累计比例</h2>
+<p>当总方差严格大于零时，第 \(j\) 个主成分的解释方差比例及前 \(m\) 个主成分的累计比例为</p>
+<div class="math">\[\mathrm{EVR}_j=\frac{\lambda_j}{\sum_{k=1}^{p}\lambda_k},\qquad
+\mathrm{CEVR}(m)=\frac{\sum_{j=1}^{m}\lambda_j}{\sum_{k=1}^{p}\lambda_k},
+\quad 1\leq m\leq p.\]</div>
+<p>前一指标衡量单个方向的方差份额，后一指标衡量降至 \(m\) 维后保留的总方差份额。由于主成分两两正交，前 \(m\) 个方向的保留方差就是对应特征值之和。其余特征值之和表示被舍弃方向的样本方差。</p>
+<h2>三、手算例子与维数选择</h2>
+<p>考虑三个变量的样本协方差矩阵 \(S=\operatorname{diag}(5,2,1)\)。其特征值为5、2、1，总方差为8。三个主成分的解释方差比例依次为62.5%、25%和12.5%。</p>
+<table><tr><th>主成分</th><th>样本方差</th><th>解释方差比例</th></tr><tr><td>PC1</td><td>5</td><td>62.5%</td></tr><tr><td>PC2</td><td>2</td><td>25%</td></tr><tr><td>PC3</td><td>1</td><td>12.5%</td></tr><tr><td>前两个累计</td><td>7</td><td>87.5%</td></tr></table>
+<p>上述数值是教学演算，不是实证估计结果。</p>
+<p>若事先规定累计比例至少90%，保留两个主成分尚不满足要求，必须保留三个。这是明确阈值下的计算结论，而90%本身属于研究者设定的决策准则。</p>
+<h2>四、统计与计量应用</h2>
+<p>在地区经济指标、保险风险变量或高维预测数据中，PCA可压缩相关变量。但解释方差衡量的是样本中的总体波动，并不直接衡量预测效果，更不代表变量的因果贡献。低方差方向也可能包含重要预测信号。</p>
+<p>使用协方差矩阵与相关矩阵进行PCA，得到的解释比例一般不同。前者受变量计量单位和尺度影响，后者相当于先将各变量标准化。实际选择维数时，还应结合交叉验证、样本外表现及主成分稳定性。</p>
+<h2>五、两道自测</h2>
+<p><b>第1题（概念题）：</b> 累计解释方差达到90%，是否足以断定保留的主成分具有最佳预测能力？</p>
+<p><b>答案：</b> 不能。累计解释方差是无监督的样本变异保留指标，没有使用预测目标，也未检验样本外损失。</p>
+<p><b>第2题（计算题）：</b> 某样本协方差矩阵的特征值依次为6、3、1，求前两个主成分的累计解释方差比例及舍弃第三个主成分损失的方差比例。</p>
+<p><b>答案：</b> 总方差为10，累计比例为 \((6+3)/10=90\%\)，舍弃的方差比例为 \(1/10=10\%\)。</p>
+<h2>六、阶段复习与衔接</h2>
+<p>第39—44课依次讨论特征值、谱分解、协方差矩阵的半正定性、协方差椭圆、PCA主方向及解释方差。共同的数学基础是：特征值刻画正交方向上的方差，特征向量确定方向。下一课转向回归中的小特征值，分析多重共线性为何使系数估计不稳定。</p>
+<p><b>下一课：第45课《多重共线性与小特征值》（第4章·第7节）。</b></p></article>
+<p class="muted">上一课：第4章·第5节｜PCA的主方向 · 下一课：第4章·第7节｜多重共线性与小特征值</p>
+<nav><a href="2026-11-20-04-05.html">← 上一课</a>　<a href="../">课程目录</a>　<a href="2026-10-29-04-07.html">下一课 →</a></nav>
+</main></body></html>
