@@ -471,7 +471,7 @@ window.MATH_COURSE={
           "published": true,
           "date": "2026-11-22",
           "url": "lessons/2026-11-22-04-07.html",
-          "delivered": false
+          "delivered": true
         },
         {
           "chapter": 4,
