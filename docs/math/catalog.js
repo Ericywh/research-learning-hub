@@ -469,8 +469,8 @@ window.MATH_COURSE={
           "number": 45,
           "title": "多重共线性与小特征值",
           "published": true,
-          "date": "2026-10-29",
-          "url": "lessons/2026-10-29-04-07.html",
+          "date": "2026-11-22",
+          "url": "lessons/2026-11-22-04-07.html",
           "delivered": false
         },
         {
