@@ -479,8 +479,8 @@ window.MATH_COURSE={
           "number": 46,
           "title": "奇异值分解",
           "published": true,
-          "date": "2026-10-29",
-          "url": "lessons/2026-10-29-04-08.html",
+          "date": "2026-11-23",
+          "url": "lessons/2026-11-23-04-08.html",
           "delivered": false
         },
         {
