@@ -1,0 +1,72 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>第052课｜让叙述有时间与因果顺序</title><style>
+:root{color-scheme:light;font-family:system-ui,-apple-system,"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;font-size:16px;line-height:1.76;color:#29354b;background:#fafbff}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 100% 0,#ebdcff,transparent 36%),radial-gradient(ellipse at 0 55%,#dff8f1,transparent 42%),#f9faff}a{color:#5443a6;text-underline-offset:3px}button,select{font:inherit}button{cursor:pointer;min-height:42px;border-radius:11px;border:1px solid #c4c9dd;background:#fff;color:#25344b;padding:8px 15px}button:hover{background:#f0ecff}button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #9a81e7;outline-offset:3px}
+.wrap{max-width:940px;margin:0 auto;padding:20px 19px 52px}.top{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:0 3px 15px;font-size:13px}.hero{background:linear-gradient(115deg,#3e4d99,#7551b7 56%,#b063a8);color:white;border-radius:22px;padding:35px;box-shadow:0 17px 36px #5f4ca635}.hero h1{font-size:clamp(26px,5vw,39px);line-height:1.3;margin:6px 0 12px}.hero p{margin:0;color:#f6f3ff}.kicker{font-size:12px;letter-spacing:.1em;color:#e7dcff;font-weight:780}.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}.chips span{font-size:12px;border:1px solid #ffffff88;background:#ffffff20;padding:4px 11px;border-radius:40px}
+main{display:grid;gap:17px;margin-top:19px}section{background:#fff;border:1px solid #e6e1f2;border-radius:18px;padding:23px 26px;box-shadow:0 8px 27px #554ca410}h2{font-size:21px;color:#354473;margin:0 0 12px;line-height:1.45}h3{font-size:17px;color:#3c5591;margin:19px 0 8px}p{margin:9px 0}.note{padding:15px 18px;border-radius:12px;background:#eef2ff;border-left:4px solid #7d68bd}.note.teal{background:#edf9f3;border-color:#3fa586}.note.amber{background:#fff8ea;border-color:#daa35c}.meta{font-size:13px;color:#637187}.keyword-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.key{padding:12px 8px;border-radius:11px;background:#f1efff;border:1px solid #e4daf7;text-align:center}.key strong{display:block;color:#5645a2}.key small{font-size:12px;color:#61748c}.timeitem{display:grid;grid-template-columns:122px 1fr;gap:14px;border-left:4px solid #8068c3;background:#faf8ff;padding:12px 14px;margin:10px 0;border-radius:0 12px 12px 0}.timeitem:nth-child(2){border-color:#41a78f;background:#f0faf5}.timeitem:nth-child(3){border-color:#db9b47;background:#fffbf2}.timeitem:nth-child(4){border-color:#598ad2;background:#f3f7ff}.timeitem:nth-child(5){border-color:#c76fa3;background:#fff4f9}.timeitem time{font-size:13px;font-weight:760;color:#65549d;font-variant-numeric:tabular-nums}.timeitem strong{display:block}.timeitem p{font-size:14px;margin:3px 0}
+.timer{border:1px solid #d4d0ea;border-radius:16px;padding:21px;text-align:center;background:linear-gradient(135deg,#f8f4ff,#f0fbf6)}.timer select{background:white;border:1px solid #c0b8da;border-radius:8px;padding:8px}.clock{font-size:clamp(45px,9vw,69px);font-weight:820;font-variant-numeric:tabular-nums;color:#4e438b;line-height:1.3;margin:10px}.bar{height:10px;background:#e9e4f0;border-radius:99px;overflow:hidden;margin:0 auto 16px;max-width:450px}.bar>div{width:0;height:100%;background:linear-gradient(95deg,#3daa90,#8468ca)}.controls{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}.controls button:first-child{background:#6050b2;color:white;border-color:#6050b2}.timer .meta{margin-top:14px}
+.scoreline{border-bottom:1px solid #e8e8f2;display:flex;justify-content:space-between;gap:10px;align-items:center;padding:13px 0}.scoreline>span{flex:1}.scoregroups{display:flex;gap:13px;flex-wrap:wrap}.scoregroup small{display:block;text-align:center;color:#6b758c}.opts{display:flex;gap:5px}.opts label{cursor:pointer;border-radius:9px;border:1px solid #dadbed;padding:3px 7px;font-size:14px}.opts input{accent-color:#594baa}.scoretotal{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:16px}.scoretotal strong{color:#514493;font-size:20px}
+details{background:#f4f8ff;border:1px solid #b7c9ed;border-radius:14px;overflow:hidden}summary{cursor:pointer;background:#e5efff;color:#294b88;font-weight:800;padding:17px 19px}details .inside{padding:8px 20px 22px}table{border-collapse:collapse;width:100%;font-size:14px;margin:9px 0 19px}th,td{border-bottom:1px solid #d9e3f3;padding:9px;text-align:left;vertical-align:top}th{background:#eaf1fd;color:#37518b}footer{font-size:13px;color:#6f7f96;padding:19px 3px}
+@media(max-width:640px){.wrap{padding:12px 10px 25px}.hero{padding:24px 19px;border-radius:16px}main{gap:12px;margin-top:12px}section{padding:19px 16px;border-radius:14px}h2{font-size:19px}.timeitem{grid-template-columns:1fr;gap:3px}.keyword-grid{gap:6px}.key{padding:9px 5px}.key small{font-size:11px}.scoreline{align-items:flex-start;flex-direction:column}.scoregroups{width:100%;justify-content:space-between}.opts label{padding:4px 10px}details .inside{padding:7px 13px 17px}th,td{font-size:12px;padding:7px 5px}}
+</style><style>.step{background:#f4f6fc;border-left:3px solid #7889c7;padding:10px 14px;border-radius:8px}.keywords{background:#e9f5f1;padding:12px;border-radius:9px}.clock{font-size:44px;font-variant-numeric:tabular-nums;font-weight:800;color:#51449e}.track{height:8px;background:#e1e6f0;border-radius:8px;overflow:hidden}.track div{height:100%;width:0;background:#6952b0}details{background:#edf4ff;border:1px solid #c5d8f1;border-radius:12px;padding:14px}summary{cursor:pointer;font-weight:700;color:#244e91}.refbody{padding:8px 4px}section:nth-child(3n+2){border-top:3px solid #b2dacd}section:nth-child(3n){border-top:3px solid #d7c6ed}</style></head><body><div class="wrap"><nav class="top"><a href="../legacy-18week.html">返回18周课程目录</a><a href="03-09.html">上一课</a></nav><header class="hero"><div class="kicker">第3章 · 第10节 · 第8周</div><h1>第052课｜让叙述有时间与因果顺序</h1><p>理清事件先后，准确解释行动原因。个人录音和评分不公开。</p><div class="chips"><span>18分钟</span><span>60—75秒首录</span><span>陌生迁移</span></div></header><main><section><h2>一、正式练习题</h2><p>原创模拟高校工作情境，非真实工作记录。你负责整理学生学术交流会材料，周四16:00前须将最终议程交给主持人。以下事件未按时间排列：</p>
+<p class="step">A 15:30：核对全部六组汇报题目，将最终议程发给主持人。</p>
+<p class="step">B 10:00：发现两组学生报名表与PPT首页题目不一致。</p>
+<p class="step">C 14:00：两组学生分别确认最终题目，据此修改议程。</p>
+<p class="step">D 10:30：无法判断最终版本，标记两处待确认，联系学生核实。</p>
+<p class="step">E 12:00：等待回复期间，完成其他四组材料核对及议程排版。</p>
+<p>负责组织的同事问：“听说上午有两组学生的材料出了问题，后来是怎么处理的？有没有影响议程提交？”</p>
+<p>准备15秒，脱稿讲述60—75秒，说明发现、核实原因、等待期间的工作、解决及提交结果。保存首录、重录、陌生迁移和独立评分。</p></section>
+<section><h2>二、朗读素材（独立原创模拟）</h2><p>昨天上午，我原本打算先去银行办事，再去附近的书店。出门前查了一下，发现银行当天上午的营业时间有临时调整，要晚一个小时才开始办理业务。</p>
+<p>因为不想在那里空等，我就先去了书店，买完需要的书以后，又在附近吃了早餐。等银行开始营业，我再过去办理业务。虽然原来的行程顺序变了，但两件事情都在上午完成了。</p>
+<p>这次主要是根据营业时间调整了做事顺序，没有必要因为一项安排发生变化，就把整个上午的计划都取消。</p>
+<p>读两遍，第二遍留意因果与时间连接，合上材料用30秒复述。</p></section>
+<section><h2>三、三词提纲与接续句式</h2><p class="step">题目不一致：起因。</p>
+<p class="step">核实与并行：行动及等待期间的安排。</p>
+<p class="step">按时提交：结果。</p>
+<p>时间线：10:00发现 → 10:30核实 → 12:00其他四组 → 14:00确认修改 → 15:30提交。</p>
+<p>因果线：版本不一致 → 无法确定 → 联系核实、暂不定稿 → 确认后修改。等待期间可以处理其他材料，最终在截止前提交。</p>
+<p>句式：“因为当时还没办法确定……所以我先……”“在等对方回复的这段时间，我先把……”“等……确认以后，我就……最后……”</p>
+<p>卡住自问：接下来发生什么？为什么这样做？最终解决了吗？</p></section>
+<section><h2>四、18分钟训练</h2><p class="step">00:00—03:00：0:00—1:00读正式题；1:00—2:00朗读素材两遍；2:00—3:00关稿30秒复述，再口头排序五项事件。</p>
+<p class="step">03:00—06:00：3:00—4:00检查先后；4:00—5:00搭三词骨架，说明核实与并行原因；5:00—6:00练三个衔接句，不写稿。</p>
+<p class="step">06:00—11:00：6:00—6:15准备；6:15—7:30首录60—75秒；7:30—9:00回听标记跳跃与原因不清；9:00—10:00重说两个混乱句；10:00—11:00口头解释核实、等待、提交关系。</p>
+<p class="step">11:00—16:00：11:00—11:45修改；11:45—13:00重录；13:00—13:45比较；13:45—14:15压缩为30秒工作汇报；14:15—14:40读迁移题；14:40—14:50准备；14:50—15:50录60秒；15:50—16:00标记回听位置。</p>
+<p class="step">16:00—18:00：16:00—16:30回听迁移片段；16:30—17:00分别独立评分；17:00—18:00展开参考区对照。</p></section><section class="timer"><h2>练习倒计时</h2><label for="preset">选择时长</label> <select id="preset"><option value="75">75秒正式题</option><option value="60">60秒迁移</option><option value="30">30秒压缩</option><option value="15">15秒准备</option><option value="10">10秒准备</option><option value="1080">18分钟全课</option></select><div id="clock" class="clock" aria-live="off">01:15</div><div class="track"><div id="progress"></div></div><p id="timerStatus" role="status">准备开始</p><button id="start">开始 / 继续</button> <button id="pause">暂停</button> <button id="reset">重置</button></section>
+<section><h2>五、时间与因果辨析</h2><p>“上午发现题目不一致，下午学生进行了确认”是先后；“因为无法确认最终版本，所以先联系学生核实”有明确行动原因；“因为完成其他四组排版，所以学生下午回复”缺乏因果依据。根据关系选择后来、与此同时、因为、等到。</p></section>
+<section><h2>六、陌生迁移</h2><p>原创模拟：周末邀请两位朋友到家吃饭，约18:00开饭。11:00采购食材；15:00发现烤箱无法启动，因故障原因未知，暂不使用，检查哪些菜可以改用炒锅制作；16:00确定调整后菜单，完成清洗准备；17:30几道菜陆续做好；18:00朋友到达，按时开饭。第二天没参加的朋友问：“你昨天不是说烤箱突然坏了吗？后来晚饭怎么安排的？”</p>
+<p>10秒准备，60秒讲述，撤掉原提纲。说明改变做法的原因、调整与结果，不虚构故障原因或修复情况。</p></section>
+<section><h2>七、独立自评</h2><p>首次与重录分别对事件顺序、行动原因、时间与因果区分、结果与自然表达四项评分。0未做到、1部分做到、2清楚做到，各满分8。记录一处改进。</p><div id="scoreRows"></div><div class="totals"><p>首次：<strong id="firstTotal">— / 8</strong>　重录：<strong id="secondTotal">— / 8</strong></p></div><button id="clear">清空评分</button><p><label><input type="checkbox" id="confirmed"> 我已完成录音、回听及独立自评</label></p></section>
+<section><details id="reference"><summary>八、完成录音及独立自评后展开：双示范、关键词与细化依据</summary><div class="refbody"><h3>参考一｜按时间顺序完整讲述</h3>
+<p>上午整理交流会议程的时候，我发现有两组学生的汇报题目不一致，报名表上写的是一个版本，PPT首页上又是另一个版本。</p>
+<p>因为当时没办法确定哪个才是最终题目，我就先把这两处标记为待确认，同时联系学生，让他们核实一下。</p>
+<p>在等学生回复的这段时间，我没有停下其他工作，而是先把另外四组的材料核对了一遍，也把议程的基本格式排好了。</p>
+<p>下午两点左右，两组学生分别确认了最终题目，我就根据他们的回复修改议程。随后又把六组汇报题目整体检查了一遍，下午三点半发给了主持人。</p>
+<p>原定是下午四点之前提交，所以这次虽然中间多了一道核实程序，但没有耽误最后的交付。</p>
+<p class="keywords">关键词：两个版本（起因）；待确认（核实原因与行动）；另外四组（并行工作）；两点回复（关键进展）；三点半提交（结果）。</p>
+<h3>参考二｜结果先行，再说明解决过程</h3>
+<p>没有影响提交，最终议程下午三点半就已经发给主持人了，比原定截止时间早了半个小时。</p>
+<p>上午主要遇到的问题是，两组学生的报名表和PPT首页上的汇报题目不一致。我不确定他们后来有没有修改题目，所以没有直接选其中一个版本，而是先联系学生确认。</p>
+<p>等待回复的时候，我把可以确定的部分先做完，包括另外四组材料的核对和议程排版。这样，未确认的题目就没有阻断其他工作。</p>
+<p>下午两点收到两组学生的确认以后，我把最终题目补进去，再重新核对全部六组的汇报题目，确保议程使用的是学生确认的版本。</p>
+<p>最后三点半提交了。整个过程主要多了一步题目核实，其他准备工作仍然继续推进。</p>
+<p class="keywords">关键词：提前半小时（结果先行）；报名表与PPT（问题细节）；学生确认（定稿条件）；先做确定部分（并行安排）；六组复核（最终行动）。</p>
+<h3>四项细化自评依据</h3>
+<p>1. 是否准确说明发现、核实、并行处理、确认、提交的顺序？</p>
+<p>2. 是否解释不能直接选版本及等待时继续工作的原因？</p>
+<p>3. 是否避免把其他四组排版说成学生回复的原因？</p>
+<p>4. 是否说明15:30提交、未超过16:00截止时间，60—75秒自然完成？</p>
+<p>两份同题，路径不同。不要求背诵。</p></div></details><p id="gate">请先完成两轮评分并勾选确认，再打开参考。</p></section>
+<section><h2>九、完成记录</h2><p>保留首录、重录、30秒压缩、60秒迁移及两轮自评。交付不等于本人练完。下一课：第053课《一个画面让故事更具体》。</p></section></main><footer>18周126课 · 第052课　<a href="../legacy-18week.html">返回课程目录</a></footer></div><script>(function(){"use strict";
+var preset=document.getElementById("preset"),clock=document.getElementById("clock"),bar=document.getElementById("progress"),status=document.getElementById("timerStatus");
+var duration=75,remaining=75,interval=null,deadline=0;
+function render(){clock.textContent=String(Math.floor(remaining/60)).padStart(2,"0")+":"+String(remaining%60).padStart(2,"0");bar.style.width=(100*(duration-remaining)/duration)+"%";}
+function stop(){if(interval!==null){clearInterval(interval);interval=null;}}
+function tick(){remaining=Math.max(0,Math.ceil((deadline-Date.now())/1000));render();if(remaining===0){stop();status.textContent="倒计时结束。请保存录音并继续下一步。";}}
+function reset(){stop();duration=Number(preset.value);remaining=duration;status.textContent="已重置，可以开始。";render();}
+preset.addEventListener("change",reset);
+document.getElementById("start").addEventListener("click",function(){if(interval!==null||remaining<=0)return;deadline=Date.now()+remaining*1000;interval=setInterval(tick,100);status.textContent="正在倒计时。";});
+document.getElementById("pause").addEventListener("click",function(){if(interval!==null){tick();stop();status.textContent="已暂停，可以继续。";}});
+document.getElementById("reset").addEventListener("click",reset);render();
+var criteria=["事件的先后顺序是否清楚","行动原因是否解释准确","是否区分因果关系与时间先后","结果是否完整且表达自然"],rows=document.getElementById("scoreRows");
+function compute(){["first","second"].forEach(function(k){var vals=criteria.map(function(_,i){var v=document.querySelector('input[name="'+k+"-"+i+'"]:checked');return v?Number(v.value):null;});document.getElementById(k+"Total").textContent=vals.every(function(x){return x!==null;})?vals.reduce(function(a,b){return a+b;},0)+" / 8":"— / 8";});}
+criteria.forEach(function(t,i){var row=document.createElement("div");row.className="scoreline";var label=document.createElement("span");label.textContent=(i+1)+". "+t;row.appendChild(label);var groups=document.createElement("div");groups.className="scoregroups";["first","second"].forEach(function(k){var group=document.createElement("div");group.className="scoregroup";var head=document.createElement("small");head.textContent=k==="first"?"首次":"重录";group.appendChild(head);var opts=document.createElement("div");opts.className="opts";[0,1,2].forEach(function(v){var l=document.createElement("label"),r=document.createElement("input");r.type="radio";r.name=k+"-"+i;r.value=String(v);r.addEventListener("change",compute);l.appendChild(r);l.appendChild(document.createTextNode(String(v)));opts.appendChild(l);});group.appendChild(opts);groups.appendChild(group);});row.appendChild(groups);rows.appendChild(row);});
+document.getElementById("clear").addEventListener("click",function(){document.querySelectorAll('#scoreRows input[type="radio"]').forEach(function(x){x.checked=false;});compute();});compute();
+var ref=document.getElementById("reference"),confirmed=document.getElementById("confirmed"),gate=document.getElementById("gate");function ready(){return confirmed.checked&&document.querySelectorAll('#scoreRows input:checked').length===8;}ref.querySelector("summary").addEventListener("click",function(e){if(!ready()&&!ref.open){e.preventDefault();gate.textContent="请先完成两轮各四项评分并勾选确认。";}});confirmed.addEventListener("change",function(){if(!confirmed.checked)ref.open=false;});document.getElementById("clear").addEventListener("click",function(){confirmed.checked=false;ref.open=false;});})();</script></body></html>
