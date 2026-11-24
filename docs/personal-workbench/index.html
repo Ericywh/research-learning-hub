@@ -1,0 +1,1177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="description" content="可离线使用的个人工作台">
+<title>个人工作台</title>
+<style>:root{
+  color-scheme:light; --paper:#f6f5ef; --card:#fffefa; --ink:#1e3128; --muted:#53685b;
+  --pine:#164735; --pine-dark:#0c3528; --accent:#df955f; --sage:#e7efe5; --line:#e3e8de;
+  --shadow:0 4px 16px #23433309; --radius:18px;
+  font-family:"Microsoft YaHei UI","PingFang SC","Noto Sans CJK SC",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{margin:0;background:var(--paper);color:var(--ink);line-height:1.5}
+button,input,textarea,select{font:inherit}
+button,a,input,select,textarea{-webkit-tap-highlight-color:transparent}
+a{color:inherit;text-decoration:none}
+button{cursor:pointer}
+button:disabled{opacity:.5;cursor:default}
+:focus-visible{outline:3px solid #a45b32;outline-offset:3px}
+svg{width:20px;height:20px;display:block;flex:none}
+h1,h2,h3,p,ul,dl{margin:0}
+ul{list-style:none;padding:0}
+.skip{position:absolute;top:8px;left:8px;transform:translateY(-160%);z-index:9;padding:10px;background:white}
+.skip:focus{transform:none}
+.container,.top-inner{width:min(1360px,calc(100% - 64px));margin-inline:auto}
+.top{position:sticky;top:0;z-index:3;background:#fbfaf5f5;border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}
+.top-inner{height:66px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.brand{display:flex;align-items:center;gap:10px;font-size:17px;font-weight:800;letter-spacing:.055em;white-space:nowrap}
+.brand-mark{display:grid;place-items:center;width:34px;height:34px;border-radius:10px;background:var(--pine);color:white}
+.top nav{display:flex;gap:24px;color:#41594d;font-size:14px}
+.top nav a{padding:8px 2px}
+.top nav a:hover{color:var(--pine);box-shadow:0 2px var(--pine)}
+.button,.icon-button,.text-button{border:0;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:700}
+.button{padding:9px 13px;min-height:40px;background:var(--sage);color:var(--pine);font-size:14px}
+.button svg,.icon-button svg{width:17px;height:17px}
+.button:hover,.icon-button:hover,.text-button:hover{filter:brightness(.95)}
+.button.backup{background:transparent;border:1px solid #c9d6ca}
+.button.primary{background:var(--pine);color:white}
+.button.light{background:#fcfaf3;color:var(--pine-dark)}
+.button.on-dark{background:#ffffff14;color:#fff;border:1px solid #ffffff40}
+.button.danger{background:#f8e5e1;color:#872f25}
+.button.ghost{background:#f0f2ec;color:#365549}
+.text-button{background:transparent;color:var(--pine);padding:6px 7px;min-height:34px;font-size:14px}
+.text-button.danger{color:#8b392c}
+.icon-button{width:40px;height:40px;flex:none;background:#edf2eb;color:var(--pine)}
+.icon-button.small{width:34px;height:34px}
+.hero{min-height:236px;position:relative;isolation:isolate;overflow:hidden;margin:28px 0 26px;border-radius:24px;padding:29px 34px;display:grid;grid-template-columns:1fr minmax(360px,.82fr);align-items:center;gap:34px;color:#fcfaf0;background:linear-gradient(105deg,#123d30,#215341 72%,#294e3e);box-shadow:0 12px 25px #18443520}
+.hero::before{content:"";position:absolute;z-index:-1;inset:0 0 0 32%;opacity:.45;background:repeating-radial-gradient(ellipse at 85% 140%,transparent 0 24px,#b7c7a24a 25px 26px,transparent 27px 44px);mask-image:linear-gradient(90deg,transparent,#000 40%)}
+.hero-date{font-size:14px;color:#d6e2c9;letter-spacing:.07em}
+.hero h1{font-size:clamp(2.05rem,4.4vw,3.25rem);letter-spacing:.075em;line-height:1.18;margin:7px 0 9px}
+.hero-note{color:#e3ecdf;font-size:16px}
+.hero-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:19px}
+.hero-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid #e0ebd842;background:#12382b83;border-radius:16px;overflow:hidden}
+.hero-stat{padding:14px 12px 15px;border:0;text-align:left;background:transparent;color:#fff;min-width:0}
+.hero-stat+.hero-stat{border-left:1px solid #d7dfd331}
+.hero-stat:hover{background:#ffffff16}
+.hero-stat strong{display:block;font-size:clamp(1.26rem,2.25vw,1.95rem);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.hero-stat span{font-size:13px;color:#e1e9dc}
+.section{margin-top:23px}
+.section-heading{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin:0 1px 11px}
+.section-heading h2{font-size:21px;letter-spacing:.045em;font-weight:800}
+.section-heading span{color:var(--muted);font-size:13px}
+.card-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.card,.travel-card{min-width:0;border:1px solid var(--line);border-radius:var(--radius);background:var(--card);box-shadow:var(--shadow)}
+.card{min-height:227px;padding:14px;display:flex;flex-direction:column;transition:box-shadow .18s,border-color .18s}
+.card:hover,.travel-card:hover{border-color:#b9ccba;box-shadow:0 6px 20px #23433311}
+.card-heading{display:flex;align-items:center;gap:8px;margin-bottom:11px}
+.card-heading h3{flex:1;font-size:17px;white-space:nowrap}
+.card-icon{width:33px;height:33px;flex:none;display:grid;place-items:center;border-radius:9px;color:var(--pine);background:#e9f0e7}
+.card-icon.warm{background:#f7ebdf;color:#8b4e30}
+.card-icon.blue{background:#e7eff1;color:#2d5d63}
+.card-icon.purple{background:#f0edf5;color:#665470}
+.card-icon svg{width:18px;height:18px}
+.card-more{border:0;background:none;color:#426254;font-size:13px;padding:5px 4px;min-height:34px;white-space:nowrap;border-radius:8px}
+.card-more:hover{background:var(--sage)}
+.card-content{flex:1;min-width:0}
+.card-footer{margin-top:9px;display:flex;justify-content:space-between;align-items:center;gap:4px;color:var(--muted);font-size:13px;border-top:1px solid #edf0e9;padding-top:8px;min-height:29px}
+.card-footer button{min-height:28px;padding:2px 4px}
+.chip{display:inline-flex;vertical-align:middle;align-items:center;border-radius:999px;padding:3px 8px;background:#ecf0e9;color:#416051;white-space:nowrap;font-size:13px;font-weight:650}
+.chip.done{background:#e3efe3;color:#205a3c}.chip.active{background:#f8ecd9;color:#7a4c2a}
+.mini-list{display:grid;gap:4px}
+.mini-row{display:flex;align-items:center;gap:7px;min-width:0;min-height:31px;font-size:14px;border-bottom:1px solid #edf0e9}
+.mini-row:last-child{border-bottom:0}
+.mini-row .label{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mini-row small,.soft{color:var(--muted);font-size:13px}
+.mini-row label{display:flex;align-items:center;gap:7px;min-width:0;flex:1;cursor:pointer}
+input[type=checkbox]{accent-color:var(--pine);width:17px;height:17px;margin:0;flex:none;cursor:pointer}
+.mini-row input:checked+.label,.list-title.checked{text-decoration:line-through;color:#647a6f}
+.metric-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;background:#f3f5ee;padding:7px;border-radius:10px}
+.metric-row span{font-size:12px;color:var(--muted);display:block}
+.metric-row strong{font-size:15px;display:block;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.metric-row .negative{color:#9a4e37}
+.meter{height:5px;border-radius:5px;background:#eaf0e8;overflow:hidden}
+.meter>span{display:block;height:100%;background:#3f7758;border-radius:5px}
+.cal-mini{width:100%;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:1px;text-align:center;font-size:12px;line-height:1.15}
+.cal-mini span,.cal-mini button{min-height:17px;display:grid;place-items:center}
+.cal-mini button{position:relative;border:0;background:none;border-radius:5px;color:var(--ink);font-size:12px;line-height:1.2;padding:2px}
+.cal-mini button:hover{background:var(--sage)}
+.cal-mini button.current{background:var(--pine);color:white;font-weight:800}
+.cal-mini button.has::after{content:"";position:absolute;bottom:0;left:50%;width:3px;height:3px;background:#b56a3b;border-radius:50%;transform:translateX(-50%)}
+.cal-mini button.current.has::after{background:#ffbc83}
+.book-list{display:grid;gap:6px}
+.book-row{display:grid;grid-template-columns:26px minmax(0,1fr) auto;align-items:center;gap:7px}
+.book-cover{width:26px;height:33px;border-radius:3px 5px 5px 3px;display:grid;place-items:center;font-size:13px;color:#fff;background:#255d48;box-shadow:inset 3px 0 #ffffff25}
+.book-cover.c1{background:#886148}.book-cover.c2{background:#3f6277}
+.book-row strong{font-size:14px;font-weight:700;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-bottom:3px}
+.book-row small{font-size:12px;color:var(--muted)}
+.habit-preview{display:flex;align-items:center;gap:10px}
+.habit-preview .mini-list{flex:1}
+.ring{width:60px;height:60px;flex:none;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#397454 var(--pct),#eaf0e7 0);position:relative}
+.ring::before{content:"";position:absolute;inset:6px;border-radius:50%;background:var(--card)}
+.ring strong{position:relative;font-size:13px}
+.mood-select{display:flex;flex-wrap:wrap;gap:4px;margin:3px 0 9px}
+.mood-button{width:36px;height:36px;border:1px solid #e4e9df;background:#fafbf6;border-radius:9px;font-size:17px;padding:0}
+.mood-button:hover,.mood-button.selected{background:#e7f1e4;border-color:#6a9374}
+.mood-copy{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:14px;color:var(--muted)}
+.bars{height:62px;margin-top:7px;display:flex;align-items:stretch;gap:6px}
+.bars>div{min-width:0;flex:1;display:grid;grid-template-rows:1fr auto;gap:2px;text-align:center}
+.bar-fill{height:100%;display:flex;align-items:flex-end}
+.bar-fill>span{background:#4d846d;width:100%;border-radius:4px 4px 0 0}
+.bars small{font-size:11px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;color:var(--muted)}
+.empty{font-size:14px;color:var(--muted);padding:9px 0}
+.travel-card{display:grid;grid-template-columns:minmax(180px,1fr) minmax(0,1.3fr) minmax(0,1.4fr);overflow:hidden}
+.travel-visual{position:relative;isolation:isolate;min-height:158px;overflow:hidden;display:flex;align-items:flex-end;padding:15px 17px;background:linear-gradient(#c5dcd2 0%,#e4e5c9 53%,#7b9f94 54%,#376658 100%);color:white}
+.travel-visual::before,.travel-visual::after{content:"";position:absolute;z-index:-1;inset:12% 0 22%;background:linear-gradient(145deg,#547b73,#70918b 55%,#2e564b);clip-path:polygon(0 79%,14% 53%,23% 59%,38% 15%,45% 34%,54% 23%,61% 53%,69% 42%,83% 9%,92% 38%,100% 48%,100% 100%,0 100%)}
+.travel-visual::after{inset:22% 0 0;background:linear-gradient(160deg,#456c56 0%,#567e65 60%,#24483e 100%);clip-path:polygon(0 20%,16% 36%,27% 55%,42% 61%,60% 58%,76% 45%,88% 28%,100% 37%,100% 67%,87% 79%,68% 83%,49% 77%,35% 84%,14% 96%,0 87%)}
+.travel-visual span{z-index:1;background:#12392bdd;border-radius:999px;padding:4px 10px;font-size:13px}
+.travel-info,.travel-list{padding:16px}
+.travel-info h3{font-size:20px;margin:4px 0 3px;overflow-wrap:anywhere}
+.travel-info .metric-row{margin-top:9px}
+.travel-list{border-left:1px solid var(--line)}
+.travel-list>.travel-actions{display:flex;justify-content:flex-end;margin-top:5px}
+.bottom{padding:18px 2px 24px;display:flex;justify-content:space-between;gap:8px;font-size:13px;color:var(--muted)}
+.status-dot{margin-right:7px;display:inline-block;width:7px;height:7px;background:#508560;border-radius:50%;vertical-align:2px}
+.toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:10;color:white;background:#153c2e;border-radius:10px;padding:10px 16px;box-shadow:0 8px 18px #0003;max-width:calc(100% - 24px);width:max-content}
+.noscript{padding:10px}
+dialog{border:1px solid #d7e3d8;border-radius:19px;padding:0;color:var(--ink);background:#fffefa;width:min(820px,calc(100% - 28px));max-height:calc(100% - 32px);box-shadow:0 15px 80px #09291d48}
+dialog::backdrop{background:#112d23a0}
+.dialog-head{position:sticky;top:0;z-index:2;display:flex;justify-content:space-between;align-items:center;padding:12px 17px;background:#fffefa;border-bottom:1px solid var(--line);gap:10px}
+.dialog-identity{display:flex;align-items:center;gap:10px;min-width:0}
+.dialog-head h2{font-size:21px;overflow-wrap:anywhere}
+.close{font-size:25px;font-weight:500}
+.dialog-body{padding:17px}
+.toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:13px}
+.toolbar .spacer{flex:1}
+.toolbar label{display:flex;align-items:center;gap:5px;font-size:14px;color:var(--muted)}
+.tabline{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.tabline .selected{background:var(--pine);color:#fff}
+.field{display:grid;gap:5px;align-content:start;min-width:0;font-size:14px;font-weight:650}
+.field.full{grid-column:1/-1}
+.field input:not([type=checkbox]),.field select,.field textarea,.toolbar input,.toolbar select{
+  width:100%;min-width:0;min-height:40px;padding:8px 10px;border:1px solid #cdd8ce;border-radius:9px;color:var(--ink);background:#fdfefa;font-size:16px
+}
+.field textarea{min-height:85px;resize:vertical}
+.toolbar input,.toolbar select{width:auto;max-width:100%;font-size:14px}
+.field input[type=checkbox]{height:22px;width:22px;margin-top:6px}
+.field small,.help{color:var(--muted);font-size:14px;font-weight:400}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.form-actions{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;margin-top:17px}
+.list{border-top:1px solid var(--line)}
+.list-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;padding:10px 2px;align-items:center;border-bottom:1px solid var(--line)}
+.list-main{min-width:0}
+.list-top{display:flex;align-items:center;flex-wrap:wrap;gap:6px}
+.list-title{font-size:16px;font-weight:750;overflow-wrap:anywhere}
+.list-details{font-size:14px;color:var(--muted);overflow-wrap:anywhere;white-space:pre-wrap}
+.row-actions{display:flex;gap:4px;align-items:center}
+.row-actions .text-button{padding:3px 5px}
+.detail-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:10px 0 14px}
+.detail-grid>div{padding:9px;border-radius:10px;background:#eef3ec;min-width:0}
+.detail-grid span{display:block;color:var(--muted);font-size:14px}
+.detail-grid strong{font-size:19px;overflow-wrap:anywhere}
+.calendar{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px}
+.cal-day{min-height:43px;border:1px solid #e2e9df;background:#fafcf8;border-radius:7px;color:var(--ink);padding:4px;font-size:14px}
+.cal-day.today{box-shadow:inset 0 0 0 1px #5e9174}
+.cal-day.selected{background:var(--pine);color:white}
+.cal-day span{display:block;font-size:11px;min-height:12px}
+.cal-weekday{text-align:center;color:var(--muted);font-size:13px}
+.cal-title{font-weight:800;min-width:98px;text-align:center}
+.subhead{font-size:16px;margin:14px 0 5px}
+.dialog-chart{display:grid;gap:8px;margin-bottom:14px}
+.horizontal-bar{display:grid;grid-template-columns:minmax(64px,.28fr) minmax(44px,1fr) minmax(50px,.4fr);gap:10px;align-items:center;font-size:14px}
+.horizontal-bar .meter{height:9px}
+.dialog-intro{margin:0 0 12px;font-size:15px;color:var(--muted)}
+.error{background:#f9e9e5;color:#8b3126;font-size:14px;padding:8px;border-radius:8px;margin-top:10px}
+.day-habits{display:grid;gap:7px;margin:10px 0}
+.day-habits label{display:flex;gap:9px;align-items:center;padding:9px;border-radius:9px;background:#eef3eb;cursor:pointer}
+.board{display:grid;grid-template-columns:repeat(var(--lane-count,3),minmax(0,1fr));gap:8px;margin-bottom:12px}
+.board-lane{background:#f1f4ed;padding:8px;border-radius:9px;min-width:0}
+.board-lane.drop-ready{outline:2px dashed #4d846d;outline-offset:-2px;background:#e5efe3}
+.board-lane h3{font-size:14px;margin-bottom:5px}
+.board-lane .item{display:block;width:100%;border:1px solid var(--line);background:#fffefa;padding:7px;border-radius:7px;margin-bottom:4px;text-align:left;color:var(--ink);overflow-wrap:anywhere}
+.backup-actions{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+@media(max-width:1180px){.container,.top-inner{width:calc(100% - 40px)}.card-grid{gap:10px}.card{padding:12px}.card-heading h3{font-size:16px}}
+@media(max-width:1020px){.card-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.hero{grid-template-columns:1fr minmax(340px,.9fr);gap:18px}.card{min-height:212px}}
+@media(max-width:760px){.container,.top-inner{width:calc(100% - 24px)}.top-inner{height:60px}.top nav{display:none}.hero{margin-top:15px;padding:20px;border-radius:18px;grid-template-columns:1fr;gap:16px}.hero h1{font-size:2.1rem}.hero-stat{padding:9px 8px}.hero-stat strong{font-size:1.35rem}.travel-card{grid-template-columns:1fr 1fr}.travel-visual{grid-column:1/-1;min-height:120px}.travel-info,.travel-list{padding:12px}}
+@media(max-width:560px){.card-grid,.travel-card{grid-template-columns:1fr}.section-heading span{display:none}.card{min-height:0;padding:14px}.travel-visual{grid-column:auto}.travel-list{border-left:0;border-top:1px solid var(--line)}.bottom{flex-wrap:wrap}.card-heading h3{font-size:17px}.cal-mini button{min-height:25px}.mini-row{min-height:35px}.form-grid,.board{grid-template-columns:1fr}.list-row{gap:5px}.dialog-body{padding:12px}.dialog-head{padding:10px 12px}.dialog-head h2{font-size:18px}.toolbar label{max-width:100%}.toolbar input{max-width:200px}.dialog-identity{gap:7px}.row-actions .text-button{font-size:13px}.detail-grid strong{font-size:16px}.hero-actions .button{min-height:42px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">跳到主要内容</a>
+<header class="top"><div class="top-inner">
+  <a class="brand" href="#main" aria-label="个人工作台首页"><span class="brand-mark" data-icon="brand"></span>个人工作台</a>
+  <nav aria-label="模块导航"><a href="#work">计划与项目</a><a href="#life">生活记录</a><a href="#travel">旅行</a></nav>
+  <button class="button backup" data-action="backup"><span data-icon="archive"></span><span>数据备份</span></button>
+</div></header>
+<main id="main" class="container">
+  <section class="hero" aria-labelledby="greeting">
+    <div class="hero-copy"><p class="hero-date" id="hero-date"></p><h1 id="greeting">个人工作台</h1><div class="hero-actions"><button class="button light" data-action="new" data-table="tasks"><span data-icon="plus"></span>新建任务</button><button class="button on-dark" data-action="open" data-key="learning">学习日历</button><button class="button on-dark" data-action="open" data-key="travel">旅行规划</button></div></div>
+    <div class="hero-stats" id="hero-stats" aria-label="当前概览"></div>
+  </section>
+  <section id="work" class="section" aria-labelledby="work-title"><header class="section-heading"><h2 id="work-title">计划与项目</h2><span>学习、任务、创作与阅读</span></header><div class="card-grid" id="work-cards"></div></section>
+  <section id="life" class="section" aria-labelledby="life-title"><header class="section-heading"><h2 id="life-title">生活记录</h2><span>习惯、心情、财务与家庭</span></header><div class="card-grid" id="life-cards"></div></section>
+  <section id="travel" class="section travel-section" aria-labelledby="travel-title"><header class="section-heading"><h2 id="travel-title">旅行规划</h2></header><div id="travel-card"></div></section>
+  <footer class="bottom"><span><span class="status-dot"></span><span id="storage-label">数据保存在当前浏览器</span></span><span id="sample-status"></span></footer>
+</main>
+<dialog id="panel" aria-labelledby="panel-title"><div class="dialog-head"><div class="dialog-identity"><span class="card-icon" id="panel-icon"></span><h2 id="panel-title"></h2></div><button class="icon-button close" type="button" data-action="close" aria-label="关闭" title="关闭">×</button></div><div class="dialog-body" id="panel-body"></div></dialog>
+<div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+<noscript><p class="noscript">请启用 JavaScript 后重新打开工作台。</p></noscript>
+<script>'use strict';
+
+const $ = (selector) => document.querySelector(selector);
+const panel = $('#panel');
+const body = $('#panel-body');
+const STORAGE_KEY = 'personal-workspace-v1';
+const outcomes = ['待办','进行中','已完成'];
+const contentStages = ['选题','写作中','待发布','已发布'];
+const moods = [['很低落','😞'],['有些低落','😕'],['平静','😐'],['不错','🙂'],['很愉快','😄']];
+const habitDays = ['一','二','三','四','五','六','日'];
+const currency = new Intl.NumberFormat('zh-CN',{style:'currency',currency:'CNY',maximumFractionDigits:2,minimumFractionDigits:0});
+const compact = new Intl.NumberFormat('zh-CN',{maximumFractionDigits:1,notation:'compact'});
+const fields = {
+  text:(key,label,required=true,max=120)=>({key,label,type:'text',required,max}),
+  note:(key='note',label='备注')=>({key,label,type:'textarea',max:4000}),
+  date:(key,label,required=true)=>({key,label,type:'date',required}),
+  num:(key,label,min=0,step=1,max=99999999)=>({key,label,type:'number',required:true,min,max,step}),
+  select:(key,label,options)=>({key,label,type:'select',required:true,options}),
+  relation:(key,label,table,required=true)=>({key,label,type:'relation',required,table}),
+  check:(key,label)=>({key,label,type:'checkbox'})
+};
+const {text:tx,note:nt,date:dt,num:nm,select:sl,relation:rl,check:ck} = fields;
+const schemas = {
+  sessions:{label:'学习计划',module:'learning',title:'title',items:[tx('title','学习主题'),dt('date','计划日期'),nm('plan','计划时长（分钟）',0,1,1440),nm('actual','实际时长（分钟）',0,1,1440),ck('done','已完成'),nt()]},
+  projects:{label:'项目',module:'tasks',title:'title',items:[tx('title','项目名称'),sl('kind','项目类别',['科研','教学','课题','个人','其他']),dt('date','截止日期',false),nt()]},
+  tasks:{label:'任务',module:'tasks',title:'title',items:[tx('title','任务名称'),rl('project','所属项目','projects',false),sl('status','状态',outcomes),dt('date','截止日期',false),nt()]},
+  content:{label:'创作条目',module:'content',title:'title',items:[tx('title','选题或标题'),tx('platform','平台'),sl('status','创作阶段',contentStages),dt('date','计划发布日期',false),dt('published','实际发布日期',false),{key:'url',label:'作品链接',type:'url',max:500},nt()]},
+  books:{label:'书籍',module:'reading',title:'title',items:[tx('title','书名'),tx('author','作者',false),nm('total','总页数',1,1,99999),nm('read','已读页数',0,1,99999),dt('finished','读完日期',false),nt('note','阅读笔记')]},
+  habits:{label:'习惯',module:'habits',title:'title',items:[tx('title','习惯名称'),nm('target','每周目标（天）',1,1,7)]},
+  habitLogs:{label:'打卡',module:'habits',title:'date',items:[rl('habit','习惯','habits'),dt('date','打卡日期')]},
+  moods:{label:'心情记录',module:'mood',title:'date',items:[dt('date','记录日期'),sl('mood','心情',moods.map(([label])=>label)),tx('tags','事件标签',false),nt('note','日记正文')]},
+  transactions:{label:'收支记录',module:'finance',title:'title',items:[tx('title','收支事项'),dt('date','记账日期'),sl('kind','收支类型',['支出','收入']),tx('category','类别'),nm('amount','金额（元）',0.01,0.01,99999999),nt()]},
+  household:{label:'家庭事项',module:'home',title:'title',items:[tx('title','事项名称'),sl('kind','事项类别',['采购','家务','家庭安排','其他']),tx('owner','负责人',false),dt('date','计划日期',false),ck('done','已完成'),nt()]},
+  trips:{label:'旅行',module:'travel',title:'title',items:[tx('title','旅行名称'),tx('place','目的地'),dt('start','出发日期'),dt('end','返回日期'),nm('budget','总预算（元）',0,0.01,99999999),nt()]},
+  itinerary:{label:'行程',module:'travel',title:'title',items:[tx('title','行程名称'),rl('trip','所属旅行','trips'),dt('date','行程日期'),{key:'time',label:'开始时间',type:'time',required:true},sl('kind','行程类别',['景点','交通','住宿','餐饮','其他']),nm('cost','预计费用（元）',0,0.01,99999999),nt()]},
+  packing:{label:'出行准备',module:'travel',title:'title',items:[tx('title','准备事项'),rl('trip','所属旅行','trips'),ck('done','已完成')]}
+};
+const modules = {
+  learning:{title:'学习规划',icon:'calendar',color:'blue',table:'sessions'},
+  tasks:{title:'任务项目管理',icon:'checklist',color:'',table:'tasks'},
+  content:{title:'自媒体创作',icon:'video',color:'warm',table:'content'},
+  reading:{title:'阅读成长',icon:'book',color:'purple',table:'books'},
+  habits:{title:'习惯追踪',icon:'target',color:'',table:'habits'},
+  mood:{title:'心情日记',icon:'smile',color:'warm',table:'moods'},
+  finance:{title:'个人财务',icon:'wallet',color:'blue',table:'transactions'},
+  home:{title:'家庭生活',icon:'home',color:'purple',table:'household'},
+  travel:{title:'旅行规划',icon:'plane',color:'',table:'trips'},
+  backup:{title:'数据备份',icon:'archive',color:''}
+};
+const icons = {
+  brand:'<rect x="4" y="4" width="7" height="7" rx="1"/><rect x="13" y="4" width="7" height="7" rx="1"/><rect x="4" y="13" width="7" height="7" rx="1"/><path d="M14 17h6m-3-3v6"/>',
+  calendar:'<rect x="3.5" y="5.5" width="17" height="15" rx="2"/><path d="M7.5 3.5v4m9-4v4m-13 3h17m-12 4h2m3 0h2m-7 3h2"/>',
+  checklist:'<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M8 9l1 1 2-2m2 2h3m-8 5 1 1 2-2m2 2h3"/>',
+  video:'<rect x="3" y="5" width="18" height="14" rx="3"/><path d="m10 9 5 3-5 3z"/>',
+  book:'<path d="M12 6c-3-2-6-2-9-1v14c3-1 6-1 9 1 3-2 6-2 9-1V5c-3-1-6-1-9 1zm0 0v14"/>',
+  target:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>',
+  smile:'<circle cx="12" cy="12" r="9"/><path d="M8 14c2 3 6 3 8 0m-7-4h0m6 0h0"/>',
+  wallet:'<path d="M20 8V6a2 2 0 0 0-2-2H6a3 3 0 0 0 0 6h13a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H6a3 3 0 0 1-3-3V7m18 6h-5a2 2 0 0 0 0 4h5"/>',
+  home:'<path d="m3 11 9-7 9 7m-2-1v10h-5v-6h-4v6H5V10"/>',
+  plane:'<path d="m3 12 17-8-4 16-4-6-7 2 4-4zM12 14l8-10"/>',
+  archive:'<rect x="4" y="5" width="16" height="4" rx="1"/><path d="M5 9v10h14V9m-9 4h4"/>',
+  plus:'<path d="M12 5v14M5 12h14"/>',
+  prev:'<path d="m14 6-6 6 6 6"/>',
+  next:'<path d="m10 6 6 6-6 6"/>'
+};
+
+function icon(name){
+  return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icons[name] || icons.brand}</svg>`;
+}
+function esc(value=''){
+  return String(value ?? '').replace(/[&<>"']/g,(letter)=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[letter]);
+}
+const $2 = (number) => String(number).padStart(2,'0');
+function dateKey(date=new Date()){
+  return `${date.getFullYear()}-${$2(date.getMonth()+1)}-${$2(date.getDate())}`;
+}
+function dateFrom(key){
+  const [year,month,day]=key.split('-').map(Number);
+  return new Date(year,month-1,day,12);
+}
+function shiftDate(key,amount){
+  const date=dateFrom(key);
+  date.setDate(date.getDate()+amount);
+  return dateKey(date);
+}
+function monday(key){
+  return shiftDate(key,-((dateFrom(key).getDay()+6)%7));
+}
+function validDate(value){
+  return typeof value==='string' && /^[1-9]\d{3}-\d{2}-\d{2}$/.test(value) && dateKey(dateFrom(value))===value;
+}
+function niceDay(key){
+  return key ? `${Number(key.slice(5,7))}月${Number(key.slice(8))}日` : '';
+}
+function niceMonth(key){
+  return `${key.slice(0,4)}年${Number(key.slice(5,7))}月`;
+}
+function dayDifference(start,end){
+  const utc = (key)=>Date.parse(`${key}T00:00:00Z`);
+  return Math.round((utc(end)-utc(start))/86400000);
+}
+function identifier(){
+  return globalThis.crypto?.randomUUID?.() ?? `r${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
+}
+function emptyData(){
+  return {version:1,revision:0,...Object.fromEntries(Object.keys(schemas).map(key=>[key,[]]))};
+}
+function sampleData(){
+  const data=emptyData();
+  const today=dateKey(), last=shiftDate(today,-1), week=monday(today);
+  const add=(table,id,record)=>data[table].push({id:`demo-${id}`,sample:true,...record});
+  add('projects','course',{title:'保险大数据分析课程',kind:'教学',date:shiftDate(today,14),note:''});
+  add('projects','paper',{title:'制造业企业价值链研究',kind:'科研',date:shiftDate(today,25),note:''});
+  add('tasks','t1',{title:'补充第4章理论讲解',project:'demo-course',status:'进行中',date:today,note:''});
+  add('tasks','t2',{title:'核对 Python 示例代码',project:'demo-course',status:'待办',date:shiftDate(week,6),note:''});
+  add('tasks','t3',{title:'整理课程练习题',project:'demo-course',status:'已完成',date:last,note:''});
+  add('tasks','t4',{title:'更新实证结果表',project:'demo-paper',status:'待办',date:today,note:''});
+  add('sessions','s1',{title:'阅读一篇因果推断论文',date:today,plan:45,actual:35,done:false,note:''});
+  add('sessions','s2',{title:'练习 Python 文本清洗',date:shiftDate(today,2),plan:35,actual:0,done:false,note:''});
+  add('sessions','s3',{title:'整理计量笔记',date:last,plan:30,actual:30,done:true,note:''});
+  add('content','c1',{title:'用一张图讲清楚缩尾',platform:'公众号',status:'写作中',date:shiftDate(today,2),published:'',url:'',note:''});
+  add('content','c2',{title:'保险文本分析课堂笔记',platform:'公众号',status:'待发布',date:shiftDate(today,4),published:'',url:'',note:''});
+  add('content','c3',{title:'从问题出发设计实证',platform:'个人站点',status:'已发布',date:today,published:today,url:'',note:''});
+  add('books','b1',{title:'经济学的思维方式',author:'保罗·海恩 等',total:360,read:145,finished:'',note:''});
+  add('books','b2',{title:'因果推断导论',author:'',total:290,read:96,finished:'',note:''});
+  add('books','b3',{title:'阅读笔记选编',author:'',total:180,read:180,finished:today,note:''});
+  add('habits','h1',{title:'阅读 30 分钟',target:7});
+  add('habits','h2',{title:'运动 20 分钟',target:5});
+  add('habits','h3',{title:'写一段研究笔记',target:5});
+  add('habitLogs','hl1',{habit:'demo-h1',date:today});
+  add('habitLogs','hl2',{habit:'demo-h3',date:today});
+  add('habitLogs','hl3',{habit:'demo-h1',date:last});
+  add('moods','m1',{date:today,mood:'不错',tags:'备课、阅读',note:'把课程的几个难点重新理顺了。'});
+  add('transactions','x1',{title:'本月收入',date:today,kind:'收入',category:'收入',amount:8200,note:''});
+  [['周末采购','生活',240],['通勤','交通',180],['购买教材','学习',320],['家庭聚餐','餐饮',460],['日用品','生活',120],['水电','居住',260]].forEach(([title,category,amount],i)=>add('transactions',`x${i+2}`,{title,date:today,kind:'支出',category,amount,note:''}));
+  add('household','f1',{title:'补购厨房用品',kind:'采购',owner:'',date:today,done:false,note:''});
+  add('household','f2',{title:'安排周末家庭聚餐',kind:'家庭安排',owner:'',date:shiftDate(today,3),done:false,note:''});
+  add('household','f3',{title:'整理药箱',kind:'家务',owner:'',date:last,done:true,note:''});
+  const start=shiftDate(today,14),end=shiftDate(today,16);
+  add('trips','trip',{title:'周末湖山散步',place:'湖畔与山间',start,end,budget:2400,note:'示例行程，可编辑替换。'});
+  add('itinerary','trip1',{title:'出发与办理入住',trip:'demo-trip',date:start,time:'10:00',kind:'住宿',cost:490,note:''});
+  add('itinerary','trip2',{title:'湖畔步道',trip:'demo-trip',date:start,time:'15:00',kind:'景点',cost:50,note:''});
+  add('itinerary','trip3',{title:'山间观景',trip:'demo-trip',date:shiftDate(start,1),time:'09:00',kind:'景点',cost:90,note:''});
+  add('packing','p1',{title:'确认交通与住宿',trip:'demo-trip',done:true});
+  add('packing','p2',{title:'准备证件及随身物品',trip:'demo-trip',done:false});
+  return data;
+}
+
+function normalize(field,value){
+  const {label,type,required,key}=field;
+  if(type==='checkbox'){
+    if(typeof value==='boolean')return value;
+    throw new Error(`「${label}」格式无效。`);
+  }
+  if(type==='number'){
+    if(typeof value!=='number'||!Number.isFinite(value)||value<field.min||value>field.max||
+      Math.abs(value/field.step-Math.round(value/field.step))>0.00001){
+      throw new Error(`请检查「${label}」的数值和单位。`);
+    }
+    return field.step===.01 ? Math.round(value*100)/100 : value;
+  }
+  if(typeof value!=='string')throw new Error(`「${label}」格式无效。`);
+  const clean=value.trim();
+  if(!clean){
+    if(required)throw new Error(`请填写「${label}」。`);
+    return '';
+  }
+  if((field.max && clean.length>field.max) ||
+     (type==='date' && !validDate(clean)) ||
+     (type==='time' && !/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(clean)) ||
+     (type==='select' && !field.options.includes(clean)) ||
+     (key==='url' && !/^https?:\/\/[^/\s]+\S*$/i.test(clean))){
+    throw new Error(`请检查「${label}」的格式。`);
+  }
+  return clean;
+}
+
+function validateData(input){
+  if(!input||input.version!==1||!Number.isSafeInteger(input.revision)||input.revision<0){
+    throw new Error('这个文件不是受支持的工作台备份。');
+  }
+  const clean={version:1,revision:input.revision};
+  const ids={};
+  for(const [table,schema] of Object.entries(schemas)){
+    if(!Array.isArray(input[table])||input[table].length>20000)throw new Error(`「${schema.label}」的数据格式无效或记录过多。`);
+    ids[table]=new Set();
+    clean[table]=input[table].map(item=>{
+      if(!item||typeof item.id!=='string'||!/^[a-zA-Z0-9-]{1,80}$/.test(item.id)||ids[table].has(item.id)){
+        throw new Error(`「${schema.label}」有重复或无效的记录编号。`);
+      }
+      ids[table].add(item.id);
+      const entry={id:item.id};
+      if(item.sample===true)entry.sample=true;
+      for(const field of schema.items)entry[field.key]=normalize(field,item[field.key]);
+      return entry;
+    });
+  }
+  const trips=new Map(clean.trips.map(row=>[row.id,row]));
+  const habitKeys=new Set(),moodKeys=new Set();
+  for(const [table,schema] of Object.entries(schemas)){
+    for(const row of clean[table]){
+      for(const field of schema.items){
+        if(field.type==='relation'&&row[field.key]&&!ids[field.table].has(row[field.key]))throw new Error(`「${schema.label}」关联的记录不存在。`);
+      }
+      if(table==='books' && (row.read>row.total || (row.finished && row.read!==row.total)))throw new Error('已读页数不能超过总页数，填写读完日期时须读到最后一页。');
+      if(table==='content' && row.status==='已发布'&&!row.published)throw new Error('已发布的内容需要实际发布日期。');
+      if(table==='trips' && row.end<row.start)throw new Error('返回日期须在出发当天或之后。');
+      if(table==='itinerary'){
+        const trip=trips.get(row.trip);
+        if(row.date<trip.start||row.date>trip.end)throw new Error('行程日期须在所属旅行的起止日期之间。');
+      }
+      if(table==='habitLogs'){
+        const key=`${row.habit}|${row.date}`;
+        if(habitKeys.has(key))throw new Error('同一习惯在同一天只能打卡一次。');
+        habitKeys.add(key);
+      }
+      if(table==='moods'){
+        if(moodKeys.has(row.date))throw new Error('每天只保留一条心情记录，可以打开当天记录补写。');
+        moodKeys.add(row.date);
+      }
+    }
+  }
+  return clean;
+}
+
+let storageEnabled=true, storedRaw=null, state;
+let startupWarning='';
+try {
+  storedRaw=localStorage.getItem(STORAGE_KEY);
+} catch {
+  storageEnabled=false;
+  startupWarning='浏览器限制了本地保存，关闭前请导出备份。';
+}
+if(storedRaw){
+  try { state=validateData(JSON.parse(storedRaw)); }
+  catch { state=emptyData(); startupWarning='原有记录读取失败，已停止自动覆盖。可通过备份导入恢复。'; }
+} else {
+  state=sampleData();
+}
+let corrupted=Boolean(storedRaw&&startupWarning&&!state.tasks.length);
+
+function save(next,{replace=false}={}){
+  if(corrupted&&!replace)throw new Error('本地记录读取失败。请从数据备份导入一个有效文件后再编辑。');
+  next.revision=state.revision+1;
+  const validated=validateData(next);
+  const raw=JSON.stringify(validated);
+  if(storageEnabled){
+    try {
+      if(localStorage.getItem(STORAGE_KEY)!==storedRaw)throw new Error('另一个页面修改了数据，请刷新后重试。');
+      localStorage.setItem(STORAGE_KEY,raw);
+      storedRaw=raw;
+    } catch(error){
+      if(error.name!=='QuotaExceededError' && error.name!=='SecurityError')throw error;
+      throw new Error('浏览器没有保存这次更改。请先导出备份，检查存储权限或清理空间。');
+    }
+  }
+  corrupted=false;
+  state=validated;
+  renderHome();
+}
+function editData(change,options){
+  const draft=JSON.parse(JSON.stringify(state));
+  change(draft);
+  save(draft,options);
+}
+window.addEventListener('storage',event=>{
+  if(event.key!==STORAGE_KEY||event.newValue===storedRaw)return;
+  try{
+    const updated=event.newValue ? validateData(JSON.parse(event.newValue)) : emptyData();
+    storedRaw=event.newValue;
+    corrupted=false;
+    state=updated;
+    renderHome();
+    if(panel.open && current?.type==='module')renderPanel();
+    notify('已同步当前浏览器另一个页面的更改。');
+  }catch{ notify('检测到无法读取的本地数据。'); }
+});
+
+function orderDate(a,b){return (a.date||'9999-12-31').localeCompare(b.date||'9999-12-31');}
+function byId(table,id){return state[table].find(row=>row.id===id);}
+function percent(part,total){return total ? Math.round(100*part/total) : 0;}
+function money(number){return currency.format(number);}
+function totalCents(rows,field){return rows.reduce((sum,row)=>sum+Math.round(row[field]*100),0);}
+function progress(project){
+  const tasks=state.tasks.filter(task=>task.project===project);
+  const done=tasks.filter(task=>task.status==='已完成').length;
+  return {total:tasks.length,done,rate:percent(done,tasks.length)};
+}
+function dateInWeek(date,key=dateKey()){
+  const start=monday(key);
+  return date>=start&&date<=shiftDate(start,6);
+}
+function enrolledHabits(key){
+  return new Set(state.habitLogs.filter(log=>log.date===key).map(log=>log.habit));
+}
+function financeStats(month){
+  const rows=state.transactions.filter(row=>row.date.startsWith(month));
+  const income=totalCents(rows.filter(row=>row.kind==='收入'),'amount');
+  const expenses=rows.filter(row=>row.kind==='支出');
+  const expenditure=totalCents(expenses,'amount');
+  const groups=new Map();
+  for(const row of expenses)groups.set(row.category,(groups.get(row.category)||0)+Math.round(100*row.amount));
+  return {rows,income:income/100,spend:expenditure/100,balance:(income-expenditure)/100,groups:[...groups].sort((a,b)=>b[1]-a[1]).map(([k,c])=>[k,c/100])};
+}
+function journeyRows(id){
+  return state.itinerary.filter(item=>item.trip===id).sort((a,b)=>orderDate(a,b)||a.time.localeCompare(b.time));
+}
+function upcomingTrip(){
+  const today=dateKey();
+  return state.trips.filter(trip=>trip.end>=today).sort((a,b)=>a.start.localeCompare(b.start))[0] ||
+    [...state.trips].sort((a,b)=>b.start.localeCompare(a.start))[0];
+}
+function tripStats(trip,rows){
+  return {days:dayDifference(trip.start,trip.end)+1,spots:rows.filter(row=>row.kind==='景点').length,plan:totalCents(rows,'cost')/100};
+}
+function moodEmoji(name){return moods.find(([label])=>label===name)?.[1]||'•';}
+function newRecord(table,context={}){
+  const today=dateKey();
+  const defaults={
+    sessions:{plan:30,actual:0},tasks:{status:'待办',project:''},books:{total:100,read:0},
+    habits:{target:7},moods:{mood:'平静'},transactions:{kind:'支出'},trips:{start:today,end:today,budget:0},
+    itinerary:{time:'09:00',cost:0},packing:{done:false}
+  };
+  const base=Object.fromEntries(schemas[table].items.map(field=>[field.key,
+    field.type==='checkbox' ? false :
+    field.type==='select' ? field.options[0] :
+    field.key==='date'&&field.required ? today : '']));
+  return {...base,...defaults[table],...context};
+}
+let toastTimer;
+function notify(message){
+  const toast=$('#toast');
+  toast.textContent=message;
+  toast.hidden=false;
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>{toast.hidden=true;},3600);
+}
+
+
+function button(action,label,attributes='',kind=''){
+  return `<button type="button" class="button ${kind}" data-action="${action}" ${attributes}>${label}</button>`;
+}
+const keyAttr = (key) => `data-key="${key}"`;
+const rowAttr = (table,id) => `data-table="${table}" data-id="${id}"`;
+const newButton=(table,label,kind='primary')=>button('new',`${icon('plus')}${label}`,`data-table="${table}"`,kind);
+function chip(text,style=''){return `<span class="chip ${style}">${esc(text)}</span>`;}
+const statusChip=(status)=>chip(status,['已完成','已发布'].includes(status)?'done':['进行中','写作中','待发布'].includes(status)?'active':'');
+const empty=(text='暂无记录')=>`<p class="empty">${text}</p>`;
+const meter=(rate)=>`<div class="meter" role="img" aria-label="完成 ${rate}%"><span style="width:${Math.min(100,rate)}%"></span></div>`;
+function statRow(stats,kind='metric-row'){
+  return `<div class="${kind}">${stats.map(([text,value,style=''])=>`<div><span>${esc(text)}</span><strong class="${style}">${esc(value)}</strong></div>`).join('')}</div>`;
+}
+function card(key,content,footer){
+  const {title,icon:mark,color}=modules[key];
+  return `<article class="card" aria-labelledby="card-${key}"><div class="card-heading"><span class="card-icon ${color}">${icon(mark)}</span><h3 id="card-${key}">${title}</h3><button type="button" class="card-more" data-action="open" data-key="${key}" aria-label="打开${title}">打开</button></div><div class="card-content">${content}</div><div class="card-footer">${footer}</div></article>`;
+}
+const smallNew=(table,text)=>`<button class="text-button" type="button" data-action="new" data-table="${table}">＋ ${text}</button>`;
+function monthCells(key){
+  const [year,month]=key.split('-').map(Number);
+  const offset=(new Date(year,month-1,1).getDay()+6)%7;
+  const count=new Date(year,month,0).getDate();
+  return [...Array(offset).fill(''),...Array.from({length:count},(_,i)=>`${year}-${$2(month)}-${$2(i+1)}`)];
+}
+function calendarMarkup(month,selected,rows,label,mini=false){
+  const totals=new Map();
+  for(const row of rows)totals.set(row.date,(totals.get(row.date)||0)+1);
+  return `<div class="${mini?'cal-mini':'calendar'}" aria-label="${niceMonth(month)}日历">
+  ${habitDays.map(day=>`<span class="cal-weekday">${day}</span>`).join('')}
+  ${monthCells(month).map(key=>{
+    if(!key)return '<span aria-hidden="true"></span>';
+    const count=totals.get(key)||0,today=key===dateKey();
+    const classes=mini ? `${today?'current':''} ${count?'has':''}` : `cal-day ${today?'today':''} ${key===selected?'selected':''}`;
+    return `<button type="button" class="${classes}" data-action="${mini?'open-day':'pick-day'}" data-date="${key}" aria-label="${key}，${count} 条${label}"${mini?'':` aria-pressed="${key===selected}"`}>${Number(key.slice(8))}${mini?'':`<span>${count ? count+' 条' : ''}</span>`}</button>`;
+  }).join('')}</div>`;
+}
+function quickCheck(table,row){
+  const checked=table==='tasks'?row.status==='已完成':row.done;
+  return `<input type="checkbox" data-toggle="record" ${rowAttr(table,row.id)} ${checked?'checked':''} aria-label="标记${esc(row.title)}完成">`;
+}
+function chartPreview(groups){
+  if(!groups.length)return empty('本月暂无支出');
+  const top=groups.slice(0,5),max=top[0][1];
+  return `<div class="bars" aria-label="本月分类支出">${top.map(([name,value])=>`<div title="${esc(name+' '+money(value))}"><div class="bar-fill"><span style="height:${percent(value,max)}%"></span></div><small>${esc(name)}</small></div>`).join('')}</div>`;
+}
+function renderHome(){
+  const today=dateKey(),month=today.slice(0,7),start=monday(today),end=shiftDate(start,6);
+  const pending=state.tasks.filter(row=>row.status!=='已完成').sort(orderDate);
+  const weekPending=pending.filter(row=>row.date>=start&&row.date<=end);
+  const weekStudy=state.sessions.filter(row=>dateInWeek(row.date,today)).reduce((sum,row)=>sum+row.actual,0);
+  const finance=financeStats(month), todayHabits=enrolledHabits(today);
+  const completedHabits=todayHabits.size;
+  const pct=percent(completedHabits,state.habits.length);
+  const recentMood=[...state.moods].sort((a,b)=>orderDate(b,a))[0];
+  const todayMood=state.moods.find(row=>row.date===today);
+  const titles=[...state.content].sort((a,b)=>(a.status==='已发布')-(b.status==='已发布')||orderDate(a,b));
+  const books=[...state.books].sort((a,b)=>(a.read===a.total)-(b.read===b.total)).slice(0,3);
+  const homeItems=[...state.household].sort((a,b)=>Number(a.done)-Number(b.done)||orderDate(a,b));
+  $('#hero-date').textContent=new Intl.DateTimeFormat('zh-CN',{year:'numeric',month:'long',day:'numeric',weekday:'long'}).format(dateFrom(today));
+  $('#hero-stats').innerHTML=[['本周待办',weekPending.length,'tasks'],['本周已学',weekStudy+' 分钟','learning'],['本月支出',finance.spend>=10000?'¥'+compact.format(finance.spend):money(finance.spend),'finance']]
+    .map(([label,value,key])=>`<button type="button" class="hero-stat" data-action="stat-open" data-key="${key}"><strong>${esc(value)}</strong><span>${label}</span></button>`).join('');
+  const featuredProject=state.projects.find(item=>pending.some(task=>task.project===item.id))||state.projects[0];
+  const prog=featuredProject&&progress(featuredProject.id);
+  $('#work-cards').innerHTML=[
+    card('learning',calendarMarkup(month,today,state.sessions,'学习计划',true),`<span>${niceMonth(month)}</span>${smallNew('sessions','添加计划')}`),
+    card('tasks',`<ul class="mini-list">${pending.slice(0,3).map(row=>`<li class="mini-row"><label>${quickCheck('tasks',row)}<span class="label" title="${esc(row.title)}">${esc(row.title)}</span></label><small>${niceDay(row.date)}</small></li>`).join('')||`<li class="empty">待办已清空</li>`}</ul>${prog?.total?`<div class="mini-row" style="margin:3px 0;border:0"><span class="label soft" title="${esc(featuredProject.title)}">${esc(featuredProject.title)}</span><small>${prog.done}/${prog.total}</small></div>${meter(prog.rate)}`:''}`,
+      `<span>${weekPending.length} 项本周待办</span>${smallNew('tasks','新建任务')}`),
+    card('content',`<ul class="mini-list">${titles.slice(0,3).map(row=>`<li class="mini-row"><span class="label" title="${esc(row.title)}">${esc(row.title)}</span>${statusChip(row.status)}</li>`).join('')||`<li class="empty">暂无创作条目</li>`}</ul>`,
+      `<span>本月已发 ${state.content.filter(row=>row.status==='已发布'&&row.published.startsWith(month)).length} 篇</span>${smallNew('content','新增选题')}`),
+    card('reading',`<div class="book-list">${books.map((row,i)=>`<div class="book-row"><span class="book-cover c${i}">${esc(row.title.slice(0,1))}</span><div><strong title="${esc(row.title)}">${esc(row.title)}</strong>${meter(percent(row.read,row.total))}</div><small>${percent(row.read,row.total)}%</small></div>`).join('')||empty('书架还是空的')}</div>`,
+      `<span>本月读完 ${state.books.filter(row=>row.finished.startsWith(month)).length} 本</span>${smallNew('books','添加书籍')}`)
+  ].join('');
+  $('#life-cards').innerHTML=[
+    card('habits',`<div class="habit-preview"><ul class="mini-list">${state.habits.slice(0,3).map(row=>`<li class="mini-row"><label><input type="checkbox" data-toggle="habit" data-id="${row.id}" data-date="${today}" ${todayHabits.has(row.id)?'checked':''}><span class="label">${esc(row.title)}</span></label></li>`).join('')||`<li class="empty">暂无习惯</li>`}</ul><div class="ring" style="--pct:${pct}%" aria-label="今日完成 ${pct}%"><strong>${pct}%</strong></div></div>`,
+      `<span>今日 ${completedHabits}/${state.habits.length}</span>${smallNew('habits','新增习惯')}`),
+    card('mood',`<p class="soft">今天的心情</p><div class="mood-select">${moods.map(([name,emoji])=>`<button type="button" class="mood-button ${todayMood?.mood===name?'selected':''}" data-action="quick-mood" data-mood="${name}" aria-label="${name}" title="${name}">${emoji}</button>`).join('')}</div>
+      ${recentMood?`<p class="mood-copy">${esc(recentMood.note||recentMood.tags||recentMood.mood)}</p>`:empty('写下今天的一件事')}`,
+      `<span>${recentMood?`最近记录 ${niceDay(recentMood.date)}`:'暂无日记'}</span><button type="button" class="text-button" data-action="open" data-key="mood">查看日记</button>`),
+    card('finance',statRow([['收入',money(finance.income)],['支出',money(finance.spend)],['结余',money(finance.balance),finance.balance<0?'negative':'']])+chartPreview(finance.groups),
+      `<span>${niceMonth(month)}</span>${smallNew('transactions','记一笔')}`),
+    card('home',`<ul class="mini-list">${homeItems.slice(0,3).map(row=>`<li class="mini-row"><label>${quickCheck('household',row)}<span class="label">${esc(row.title)}</span></label>${chip(row.kind)}</li>`).join('')||`<li class="empty">暂无家庭待办</li>`}</ul>`,
+      `<span>${homeItems.filter(row=>!row.done).length} 项待安排</span>${smallNew('household','新增事项')}`)
+  ].join('');
+  const trip=upcomingTrip(),rows=trip?journeyRows(trip.id):[],tripMetrics=trip&&tripStats(trip,rows);
+  $('#travel-card').innerHTML=`<article class="travel-card"><div class="travel-visual" aria-hidden="true"><span>${trip?'行程与准备清单':'我的行程'}</span></div>
+    <div class="travel-info">${trip?`<p class="soft">${esc(trip.place)} · ${niceDay(trip.start)}—${niceDay(trip.end)}</p><h3>${esc(trip.title)}</h3>${statRow([['天数',tripMetrics.days],['景点',tripMetrics.spots],['预算',money(trip.budget)]])}`:`<h3>安排下一次出行</h3>${empty('添加旅行后可安排日程和准备清单。')}`}</div>
+    <div class="travel-list"><ul class="mini-list">${rows.slice(0,2).map(row=>`<li class="mini-row"><small>${niceDay(row.date)}　${esc(row.time)}</small><span class="label">${esc(row.title)}</span></li>`).join('')}</ul>
+      <div class="travel-actions">${trip?button('open','打开旅行规划','data-key="travel"','primary'):newButton('trips','新建旅行')}</div></div></article>`;
+  const samples=Object.keys(schemas).reduce((sum,key)=>sum+state[key].filter(row=>row.sample).length,0);
+  $('#sample-status').textContent=samples?'含示例数据，可在「数据备份」中清除':'';
+  $('#storage-label').textContent=corrupted?'本地数据读取失败':storageEnabled?'数据保存在当前浏览器':'临时模式，请导出备份';
+}
+
+
+function list(rows,table,infoFor,{emptyLabel='暂无记录',quick=false}={}){
+  if(!rows.length)return empty(emptyLabel);
+  return `<ul class="list">${rows.map(row=>{
+    const {title,labels=[],details=[],extra='',checked=false}=infoFor(row);
+    return `<li class="list-row"><div class="list-main"><div class="list-top">
+      ${quick?quickCheck(table,row):''}<span class="list-title ${checked?'checked':''}">${esc(title)}</span>${labels.join('')}</div>
+      ${details.filter(Boolean).length?`<p class="list-details">${details.filter(Boolean).map(esc).join(' · ')}</p>`:''}${extra}</div>
+      <div class="row-actions"><button type="button" class="text-button" data-action="edit" ${rowAttr(table,row.id)} aria-label="编辑${esc(title)}">编辑</button>
+      <button type="button" class="text-button danger" data-action="delete" ${rowAttr(table,row.id)} aria-label="删除${esc(title)}">删除</button></div></li>`;
+  }).join('')}</ul>`;
+}
+const toolbar=(html)=>`<div class="toolbar">${html}</div>`;
+const spacer='<span class="spacer"></span>';
+function selectControl(key,label,options,selected){
+  return `<label>${esc(label)}<select data-filter="${key}">${options.map(([value,title])=>`<option value="${esc(value)}" ${value===selected?'selected':''}>${esc(title)}</option>`).join('')}</select></label>`;
+}
+function inputControl(type,key,label,value,max=''){
+  return `<label>${label}<input type="${type}" data-filter="${key}" value="${esc(value)}" ${max?`max="${max}"`:''}></label>`;
+}
+function tabs(values,active){
+  return `<div class="tabline">${values.map(([key,title])=>button('tab',title,`${keyAttr(key)} aria-pressed="${key===active}"`,key===active?'selected':'ghost')).join('')}</div>`;
+}
+function navButton(action,step,desc){
+  return `<button type="button" class="icon-button small" data-action="${action}" data-step="${step}" aria-label="${desc}" title="${desc}">${icon(step<0?'prev':'next')}</button>`;
+}
+const views={
+  learning:{month:dateKey().slice(0,7),day:dateKey()},
+  tasks:{tab:'list',scope:'all',project:''},
+  content:{status:'',tab:'board',month:dateKey().slice(0,7),day:dateKey()},
+  reading:{status:''},
+  habits:{day:dateKey()},
+  mood:{month:dateKey().slice(0,7)},
+  finance:{month:dateKey().slice(0,7),kind:''},
+  home:{kind:'',status:'open'},
+  travel:{id:'',tab:'itinerary'}
+};
+
+const render = {
+  learning(){
+    const opts=views.learning,start=monday(opts.day),end=shiftDate(start,6);
+    const rows=state.sessions.filter(row=>row.date===opts.day);
+    const week=state.sessions.filter(row=>dateInWeek(row.date,opts.day));
+    const actual=week.reduce((sum,row)=>sum+row.actual,0), planned=week.reduce((sum,row)=>sum+row.plan,0);
+    return toolbar(navButton('shift-month',-1,'上个月')+`<span class="cal-title">${niceMonth(opts.month)}</span>`+navButton('shift-month',1,'下个月')+button('today','今天')+spacer+newButton('sessions','添加计划'))+
+      calendarMarkup(opts.month,opts.day,state.sessions,'学习计划')+statRow([['当周计划',planned+' 分钟'],['当周实际',actual+' 分钟'],['当周完成',week.filter(row=>row.done).length+' 项']],'detail-grid')+
+      `<h3 class="subhead">${niceDay(opts.day)}的安排</h3><p class="soft">统计周为 ${niceDay(start)}—${niceDay(end)}</p>`+
+      list(rows,'sessions',row=>({title:row.title,checked:row.done,details:[`计划 ${row.plan} 分钟`,`实际 ${row.actual} 分钟`,row.note]}),{quick:true,emptyLabel:'当天暂无学习安排'});
+  },
+  tasks(){
+    const opts=views.tasks;
+    const rows=state.tasks.filter(row=>(!opts.project||row.project===opts.project)&&
+      (opts.scope==='all'||opts.scope==='week'&&row.status!=='已完成'&&row.date&&dateInWeek(row.date)||
+       opts.scope==='open'&&row.status!=='已完成'||opts.scope==='done'&&row.status==='已完成')).sort(orderDate);
+    const bar=tabs([['list','任务列表'],['board','状态看板'],['projects','项目进度']],opts.tab);
+    if(opts.tab==='projects'){
+      return bar+toolbar(spacer+newButton('projects','新建项目'))+list([...state.projects].sort(orderDate),'projects',row=>{
+        const stats=progress(row.id);
+        return {title:row.title,labels:[chip(row.kind)],details:[row.date?'截止 '+niceDay(row.date):'',row.note],extra:`<div class="soft">${stats.total?`已完成 ${stats.done}/${stats.total} · ${stats.rate}%`:'尚无任务'}</div>${stats.total?meter(stats.rate):''}<button class="text-button" type="button" data-action="project-tasks" data-id="${row.id}">查看任务</button>`};
+      },{emptyLabel:'先新建一个项目，再将任务关联到项目。'});
+    }
+    const filters=selectControl('scope','范围',[['all','全部任务'],['week','本周待办'],['open','全部待办'],['done','已完成']],opts.scope)+
+      selectControl('project','项目',[['','全部项目'],...state.projects.map(row=>[row.id,row.title])],opts.project);
+    const details=row=>({title:row.title,checked:row.status==='已完成',labels:[statusChip(row.status)],details:[byId('projects',row.project)?.title||'',row.date?'截止 '+niceDay(row.date):'',row.note]});
+    return bar+toolbar(filters+spacer+newButton('tasks','新建任务'))+(opts.tab==='board'?board(rows,'tasks',outcomes):list(rows,'tasks',details,{quick:true,emptyLabel:'当前筛选下暂无任务'}));
+  },
+  content(){
+    const opts=views.content;
+    const month=dateKey().slice(0,7);
+    const rows=state.content.filter(row=>!opts.status||row.status===opts.status).sort(orderDate);
+    const header=tabs([['board','创作看板'],['calendar','发布日历'],['list','发布清单']],opts.tab)+toolbar(selectControl('status','阶段',[['','全部阶段'],...contentStages.map(stage=>[stage,stage])],opts.status)+spacer+newButton('content','新增选题'))+
+      statRow([['待发布',state.content.filter(row=>row.status==='待发布').length],['本月已发布',state.content.filter(row=>row.status==='已发布'&&row.published.startsWith(month)).length],['全部选题',state.content.length]],'detail-grid');
+    const showRows=(items)=>list(items,'content',row=>({
+      title:row.title,labels:[statusChip(row.status)],details:[row.platform,row.date?'计划 '+niceDay(row.date):'',row.published?'发布 '+niceDay(row.published):'',row.note],
+      extra:row.url?`<a class="text-button" href="${esc(row.url)}" target="_blank" rel="noopener noreferrer">打开作品链接</a>`:''
+    }),{emptyLabel:'当前没有符合条件的创作条目'});
+    if(opts.tab==='board')return header+board(rows,'content',contentStages);
+    const schedule=rows.map(row=>({...row,scheduledOn:row.status==='已发布'?row.published:row.date}));
+    if(opts.tab==='calendar'){
+      return header+toolbar(navButton('shift-month',-1,'上个月')+`<span class="cal-title">${niceMonth(opts.month)}</span>`+navButton('shift-month',1,'下个月')+button('today','今天'))+
+        calendarMarkup(opts.month,opts.day,schedule.map(row=>({date:row.scheduledOn})),'创作条目')+
+        `<h3 class="subhead">${niceDay(opts.day)}的发布安排</h3>`+showRows(schedule.filter(row=>row.scheduledOn===opts.day));
+    }
+    return header+showRows(schedule.sort((a,b)=>(a.scheduledOn||'9999-12-31').localeCompare(b.scheduledOn||'9999-12-31')));
+  },
+  reading(){
+    const opts=views.reading;
+    const rows=state.books.filter(row=>!opts.status||opts.status===(row.read===row.total?'done':row.read>0?'active':'todo'));
+    return toolbar(selectControl('status','阅读状态',[['','全部书籍'],['todo','未开始'],['active','在读'],['done','已读完']],opts.status)+spacer+newButton('books','添加书籍'))+list(rows,'books',row=>({
+      title:row.title,labels:[chip(percent(row.read,row.total)+'%',row.read===row.total?'done':'')],details:[row.author,`${row.read}/${row.total} 页`,row.finished?'读完于 '+niceDay(row.finished):'',row.note],extra:meter(percent(row.read,row.total))
+    }),{emptyLabel:'当前没有符合条件的书籍'});
+  },
+  habits(){
+    const opts=views.habits,start=monday(opts.day),end=shiftDate(start,6);
+    const done=enrolledHabits(opts.day);
+    const week=state.habitLogs.filter(row=>row.date>=start&&row.date<=end);
+    return toolbar(inputControl('date','day','打卡日期',opts.day,dateKey())+spacer+newButton('habits','新增习惯'))+
+      (state.habits.length?`<div class="day-habits">${state.habits.map(row=>`<label><input type="checkbox" data-toggle="habit" data-id="${row.id}" data-date="${opts.day}" ${done.has(row.id)?'checked':''}>${esc(row.title)}</label>`).join('')}</div>`:empty('添加习惯后即可打卡。'))+
+      `<h3 class="subhead">每周进度</h3><p class="soft">${niceDay(start)}—${niceDay(end)}</p>`+
+      list(state.habits,'habits',row=>{
+        const count=week.filter(log=>log.habit===row.id).length;
+        return {title:row.title,details:[`完成 ${count} 天 / 目标 ${row.target} 天`],extra:meter(percent(Math.min(count,row.target),row.target))};
+      });
+  },
+  mood(){
+    const rows=state.moods.filter(row=>row.date.startsWith(views.mood.month)).sort((a,b)=>orderDate(b,a));
+    const groups=moods.map(([name,emoji])=>[emoji+' '+name,rows.filter(row=>row.mood===name).length]);
+    return toolbar(inputControl('month','month','月份',views.mood.month)+spacer+button('quick-mood','写今天的日记','','primary')+newButton('moods','补记','ghost'))+
+      (rows.length?horizontalChart(groups,value=>value+' 次'):'')+
+      list(rows,'moods',row=>({title:`${moodEmoji(row.mood)} ${niceDay(row.date)} · ${row.mood}`,details:[row.tags,row.note]}),{emptyLabel:'本月暂无心情日记'});
+  },
+  finance(){
+    const opts=views.finance,summary=financeStats(opts.month);
+    const rows=summary.rows.filter(row=>!opts.kind||row.kind===opts.kind).sort((a,b)=>orderDate(b,a));
+    return toolbar(inputControl('month','month','月份',opts.month)+selectControl('kind','类型',[['','全部收支'],['收入','收入'],['支出','支出']],opts.kind)+spacer+newButton('transactions','记一笔'))+
+      statRow([['本月收入',money(summary.income)],['本月支出',money(summary.spend)],['本月结余',money(summary.balance)]],'detail-grid')+
+      (summary.groups.length?`<h3 class="subhead">分类支出</h3>${horizontalChart(summary.groups,money)}`:'')+
+      list(rows,'transactions',row=>({title:row.title,labels:[chip((row.kind==='收入'?'+':'−')+money(row.amount),row.kind==='收入'?'done':'active')],details:[niceDay(row.date),row.category,row.note]}),{emptyLabel:'当前筛选下暂无收支记录'});
+  },
+  home(){
+    const opts=views.home;
+    const rows=state.household.filter(row=>(!opts.kind||row.kind===opts.kind)&&(!opts.status||(opts.status==='done')===row.done)).sort(orderDate);
+    return toolbar(selectControl('kind','事项',[['','全部类别'],...schemas.household.items[1].options.map(name=>[name,name])],opts.kind)+
+      selectControl('status','状态',[['open','未完成'],['done','已完成'],['','全部事项']],opts.status)+spacer+newButton('household','新增事项'))+
+      list(rows,'household',row=>({title:row.title,checked:row.done,labels:[chip(row.kind)],details:[row.owner,niceDay(row.date),row.note]}),{quick:true,emptyLabel:'当前筛选下暂无家庭事项'});
+  },
+  travel(){
+    const opts=views.travel;
+    const trip=byId('trips',opts.id)||upcomingTrip();
+    if(!trip)return toolbar(spacer+newButton('trips','新建旅行'))+empty('还没有旅行计划。');
+    opts.id=trip.id;
+    const routes=journeyRows(trip.id), stats=tripStats(trip,routes);
+    const tripBar=toolbar(selectControl('id','旅行',state.trips.map(item=>[item.id,item.title]),trip.id)+spacer+newButton('trips','新建旅行','ghost')+
+      button('edit','编辑旅行',rowAttr('trips',trip.id),'ghost')+button('delete','删除旅行',rowAttr('trips',trip.id),'ghost'));
+    const heading=`<h3>${esc(trip.place)}</h3><p class="help">${niceDay(trip.start)}—${niceDay(trip.end)} · ${stats.days} 天 · ${stats.spots} 个景点</p>${trip.note?`<p class="help">${esc(trip.note)}</p>`:''}${statRow([['预算',money(trip.budget)],['预计费用',money(stats.plan)],['预算余额',money((Math.round(trip.budget*100)-Math.round(stats.plan*100))/100)]],'detail-grid')}`;
+    const chooser=tabs([['itinerary','行程时间表'],['packing','出行清单']],opts.tab);
+    if(opts.tab==='packing'){
+      const rows=state.packing.filter(row=>row.trip===trip.id).sort((a,b)=>Number(a.done)-Number(b.done));
+      return tripBar+heading+chooser+toolbar(spacer+newButton('packing','新增准备事项'))+
+        list(rows,'packing',row=>({title:row.title,checked:row.done,details:[]}),{quick:true,emptyLabel:'还没有准备事项'});
+    }
+    const dates=[...new Set(routes.map(row=>row.date))];
+    return tripBar+heading+chooser+toolbar(spacer+newButton('itinerary','添加行程'))+
+      (dates.length?dates.map(day=>`<h3 class="subhead">${niceDay(day)}</h3>${list(routes.filter(row=>row.date===day),'itinerary',row=>({title:`${row.time}　${row.title}`,labels:[chip(row.kind)],details:[money(row.cost),row.note]}))}`).join(''):empty('还没有行程明细'));
+  },
+  backup(){
+    return `<p class="dialog-intro">${storageEnabled?'记录保存在当前浏览器。更换设备、浏览器或 HTML 文件位置时，可先导出备份，再在新位置导入。':'当前为临时模式。请在关闭网页之前导出备份。'}</p>
+      <div class="backup-actions">${button('export','导出 JSON','','primary')}${button('import','导入 JSON','','ghost')}${Object.keys(schemas).some(table=>state[table].some(row=>row.sample))?button('clear-demo','清除示例数据','','ghost'):''}</div>
+      <input type="file" id="import-file" accept=".json,application/json" hidden>
+      <p class="help">导入会用备份替换当前记录，请先导出当前数据。示例数据可用于熟悉操作。</p>`;
+  }
+};
+function board(rows,table,stages){
+  return `<div class="board" style="--lane-count:${stages.length}">${stages.map(stage=>{
+    const entries=rows.filter(row=>row.status===stage);
+    return `<section class="board-lane" data-drop-state="${stage}" data-table="${table}"><h3>${stage} · ${entries.length}</h3>${entries.map(row=>`<button type="button" class="item" draggable="true" data-action="edit" ${rowAttr(table,row.id)}>${esc(row.title)}</button>`).join('')}</section>`;
+  }).join('')}</div>`;
+}
+function horizontalChart(values,format){
+  const max=Math.max(1,...values.map(([,value])=>value));
+  return `<div class="dialog-chart">${values.map(([name,value])=>`<div class="horizontal-bar"><span>${esc(name)}</span>${meter(percent(value,max))}<span>${esc(format(value))}</span></div>`).join('')}</div>`;
+}
+
+
+let current=null, returnView=null, lastTrigger=null;
+function show(view){
+  current=view;
+  if(!panel.open){
+    lastTrigger=document.activeElement;
+    panel.showModal();
+  }
+  panel.scrollTop=0;
+  renderPanel();
+}
+function closePanel(){
+  if(panel.open)panel.close();
+}
+panel.addEventListener('close',()=>{
+  current=null;
+  returnView=null;
+  document.body.append($('#toast'));
+  if(lastTrigger?.isConnected)lastTrigger.focus();
+});
+function insideToast(message){
+  if(panel.open)panel.append($('#toast'));
+  notify(message);
+}
+function openModule(key){
+  if(!modules[key])return;
+  returnView=null;
+  show({type:'module',key});
+}
+function back(){
+  if(returnView){
+    const last=returnView;
+    returnView=null;
+    show(last);
+  }else closePanel();
+}
+function renderPanel(){
+  if(!current)return;
+  const {type,key,table,record}=current;
+  const module=modules[key]||modules[schemas[table].module];
+  $('#panel-title').textContent=type==='form' ? `${record.id?'编辑':'新建'}${schemas[table].label}` : module.title;
+  const mark=$('#panel-icon');
+  mark.className=`card-icon ${module.color}`;
+  mark.innerHTML=icon(module.icon);
+  body.innerHTML=type==='form' ? formMarkup(table,record) : render[key]();
+}
+function formMarkup(table,record){
+  return `<form id="record-form"><div class="form-grid">${schemas[table].items.map(field=>fieldMarkup(field,record[field.key])).join('')}</div>
+    <p class="error" id="form-error" role="alert" hidden></p>
+    <div class="form-actions"><button type="button" class="button ghost" data-action="back">返回</button><button type="submit" class="button primary">保存记录</button></div>
+    </form>`;
+}
+function fieldMarkup(field,value){
+  const {type,key,label,required}=field;
+  const attrs=`id="field-${key}" name="${key}" ${required?'required':''}`;
+  let control;
+  if(type==='relation'||type==='select'){
+    const options=type==='relation'
+      ? [['',required?'请选择':'无'],...state[field.table].map(row=>[row.id,row.title])]
+      : field.options.map(item=>[item,item]);
+    control=`<select ${attrs}>${options.map(([id,text])=>`<option value="${esc(id)}" ${id===value?'selected':''}>${esc(text)}</option>`).join('')}</select>`;
+  }else if(type==='textarea'){
+    control=`<textarea ${attrs} maxlength="${field.max}">${esc(value)}</textarea>`;
+  }else if(type==='checkbox'){
+    control=`<input type="checkbox" ${attrs} ${value?'checked':''}>`;
+  }else{
+    const limits=type==='number'?`min="${field.min}" max="${field.max}" step="${field.step}"`:field.max?`maxlength="${field.max}"`:'';
+    control=`<input type="${type}" ${attrs} ${limits} value="${esc(value)}">`;
+  }
+  return `<label class="field ${type==='textarea'?'full':''}" for="field-${key}">${label}${control}</label>`;
+}
+function formContext(table){
+  const today=dateKey();
+  if(table==='sessions')return {date:views.learning.day};
+  if(table==='tasks')return {project:byId('projects',views.tasks.project)?views.tasks.project:''};
+  if(table==='content'&&current?.key==='content'&&views.content.tab==='calendar')return {date:views.content.day};
+  if(table==='household')return views.home.kind?{kind:views.home.kind}:{};
+  if(table==='transactions'){
+    const date=today.startsWith(views.finance.month)?today:views.finance.month+'-01';
+    return {date,...(views.finance.kind?{kind:views.finance.kind}:{})};
+  }
+  if(table==='moods'){
+    return {date:today.startsWith(views.mood.month)?today:views.mood.month+'-01'};
+  }
+  if(['itinerary','packing'].includes(table)){
+    const trip=byId('trips',views.travel.id)||upcomingTrip();
+    return trip?(table==='itinerary'?{trip:trip.id,date:trip.start}:{trip:trip.id}):{};
+  }
+  return {};
+}
+function openForm(table,record=null,context={}){
+  if(!schemas[table])return;
+  returnView=current?.type==='module'?{...current}:null;
+  show({type:'form',table,record:{...(record||newRecord(table,formContext(table))),...context},original:record,revision:state.revision});
+  body.querySelector('input:not([type="checkbox"]), select, textarea')?.focus();
+}
+function fieldsFromForm(form,table){
+  const output={};
+  for(const field of schemas[table].items){
+    const item=form.elements.namedItem(field.key);
+    if(field.type==='checkbox')output[field.key]=item.checked;
+    else if(field.type==='number')output[field.key]=item.valueAsNumber;
+    else output[field.key]=item.value.trim();
+  }
+  if(table==='content'&&output.status==='已发布'&&!output.published)output.published=dateKey();
+  if(table==='books'&&output.read===output.total&&!output.finished)output.finished=dateKey();
+  return output;
+}
+body.addEventListener('submit',event=>{
+  if(event.target.id!=='record-form'||current?.type!=='form')return;
+  event.preventDefault();
+  const {table,record,original,revision}=current;
+  const message=$('#form-error');
+  try{
+    if(original&&revision!==state.revision&&JSON.stringify(byId(table,original.id))!==JSON.stringify(original)){
+      throw new Error('当前记录刚在另一个页面更新。请返回后重新打开。');
+    }
+    const next={id:record.id||identifier(),...fieldsFromForm(event.target,table)};
+    editData(draft=>{
+      const index=draft[table].findIndex(row=>row.id===next.id);
+      if(index===-1)draft[table].push(next);
+      else draft[table][index]=next;
+    });
+    if(table==='trips')views.travel.id=next.id;
+    if(table==='sessions'){views.learning.day=next.date;views.learning.month=next.date.slice(0,7);}
+    if(table==='content'&&current?.type==='form'){
+      const date=next.status==='已发布'?next.published:next.date;
+      if(date){views.content.day=date;views.content.month=date.slice(0,7);}
+    }
+    if(table==='transactions')views.finance.month=next.date.slice(0,7);
+    if(table==='moods')views.mood.month=next.date.slice(0,7);
+    if(returnView)back();
+    else{
+      const destination=schemas[table].module;
+      if(table==='projects')views.tasks.tab='projects';
+      openModule(destination);
+    }
+    insideToast('已保存记录');
+  }catch(error){
+    message.textContent=error.message;
+    message.hidden=false;
+  }
+});
+function removeRecord(table,id){
+  const found=byId(table,id);
+  if(!found)return;
+  if(table==='trips'&&(state.itinerary.some(row=>row.trip===id)||state.packing.some(row=>row.trip===id))){
+    insideToast('请先删除或迁移这次旅行的行程和准备事项。');
+    return;
+  }
+  const relatedTaskCount=table==='projects'?state.tasks.filter(row=>row.project===id).length:0;
+  const description=table==='habits'?'这个习惯的打卡记录也会删除。':relatedTaskCount?`这将解除 ${relatedTaskCount} 条任务的项目关联。任务本身会保留。`:'';
+  if(!window.confirm(`删除「${found[schemas[table].title]}」？${description}`))return;
+  editData(draft=>{
+    draft[table]=draft[table].filter(row=>row.id!==id);
+    if(table==='habits')draft.habitLogs=draft.habitLogs.filter(row=>row.habit!==id);
+    if(table==='projects'){
+      for(const task of draft.tasks)if(task.project===id)task.project='';
+      if(views.tasks.project===id)views.tasks.project='';
+    }
+  });
+  renderPanel();
+  insideToast('已删除记录');
+}
+function clearDemo(){
+  if(!window.confirm('清除示例数据？已新增或编辑的记录及其依赖会保留。'))return;
+  editData(draft=>{
+    const dependencies={
+      projects:new Set(draft.tasks.filter(row=>!row.sample).map(row=>row.project)),
+      habits:new Set(draft.habitLogs.filter(row=>!row.sample).map(row=>row.habit)),
+      trips:new Set([...draft.itinerary,...draft.packing].filter(row=>!row.sample).map(row=>row.trip))
+    };
+    for(const table of Object.keys(schemas)){
+      draft[table]=draft[table].filter(row=>!row.sample||dependencies[table]?.has(row.id));
+      for(const row of draft[table])delete row.sample;
+    }
+  });
+  if(!byId('projects',views.tasks.project))views.tasks.project='';
+  renderPanel();
+  insideToast('已清除示例数据');
+}
+function exportData(){
+  const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const link=document.createElement('a');
+  link.href=url;
+  link.download=`个人工作台备份-${dateKey()}.json`;
+  document.body.append(link);
+  link.click();
+  link.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1500);
+  insideToast('已发起备份下载');
+}
+async function importData(file){
+  if(!file)return;
+  try{
+    if(file.size>10*1024*1024)throw new Error('备份文件大小超过 10 MB。');
+    let decoded;
+    try{decoded=JSON.parse((await file.text()).replace(/^\uFEFF/,''));}
+    catch{throw new Error('无法解析文件。请选择从工作台导出的 JSON。');}
+    const imported=validateData(decoded);
+    if(!window.confirm('用备份替换当前记录？如果需要保留现有记录，请先导出备份。'))return;
+    save(imported,{replace:true});
+    if(!byId('projects',views.tasks.project))views.tasks.project='';
+    renderPanel();
+    insideToast('已导入备份，首页统计已更新。');
+  }catch(error){insideToast(error.message);}
+}
+function toggleRecord(input){
+  const {table,id}=input.dataset;
+  editData(draft=>{
+    const row=draft[table].find(item=>item.id===id);
+    if(!row)return;
+    if(table==='tasks')row.status=input.checked?'已完成':'待办';
+    else row.done=input.checked;
+  });
+}
+function toggleHabit(input){
+  const {id,date}=input.dataset;
+  editData(draft=>{
+    const index=draft.habitLogs.findIndex(row=>row.habit===id&&row.date===date);
+    if(input.checked&&index===-1)draft.habitLogs.push({id:identifier(),habit:id,date});
+    if(!input.checked&&index!==-1)draft.habitLogs.splice(index,1);
+  });
+}
+document.addEventListener('change',event=>{
+  const input=event.target;
+  if(input.id==='import-file'){
+    importData(input.files[0]);
+    input.value='';
+    return;
+  }
+  if(input.dataset.toggle){
+    try{
+      if(input.dataset.toggle==='record')toggleRecord(input);
+      else toggleHabit(input);
+      const fromPanel=input.closest('dialog');
+      if(fromPanel&&panel.open)renderPanel();
+      const refreshed=[...(fromPanel?body:document).querySelectorAll('[data-toggle]')].find(item=>
+        item.dataset.toggle===input.dataset.toggle&&item.dataset.table===input.dataset.table&&item.dataset.id===input.dataset.id&&item.dataset.date===input.dataset.date);
+      if(refreshed)refreshed.focus({preventScroll:true});
+    }catch(error){input.checked=!input.checked;insideToast(error.message);}
+    return;
+  }
+  if(current?.type==='form'){
+    if(input.id==='field-read'&&+input.value<+( $('#field-total')?.value??0)){
+      const finish=$('#field-finished');
+      if(finish)finish.value='';
+    }
+    return;
+  }
+  if(current?.type==='module'&&input.dataset.filter&&input.checkValidity()){
+    if(input.type==='month'&&!/^[1-9]\d{3}-\d{2}$/.test(input.value))return;
+    if(input.type==='date'&&!validDate(input.value))return;
+    views[current.key][input.dataset.filter]=input.value;
+    renderPanel();
+    body.querySelector(`[data-filter="${input.dataset.filter}"]`)?.focus({preventScroll:true});
+  }
+});
+document.addEventListener('click',event=>{
+  const trigger=event.target.closest('[data-action]');
+  if(!trigger)return;
+  const {action,key,table,id,step,date,mood}=trigger.dataset;
+  try{
+    switch(action){
+      case 'open':openModule(key);break;
+      case 'stat-open':
+        if(key==='tasks'){views.tasks.tab='list';views.tasks.scope='week';views.tasks.project='';}
+        if(key==='finance'){views.finance.month=dateKey().slice(0,7);views.finance.kind='';}
+        if(key==='learning'){views.learning.day=dateKey();views.learning.month=dateKey().slice(0,7);}
+        openModule(key);
+        break;
+      case 'new':openForm(table);break;
+      case 'edit':{
+        const row=byId(table,id);
+        if(row)openForm(table,row);
+        break;
+      }
+      case 'delete':removeRecord(table,id);break;
+      case 'close':closePanel();break;
+      case 'back':back();break;
+      case 'backup':openModule('backup');break;
+      case 'export':exportData();break;
+      case 'import':$('#import-file')?.click();break;
+      case 'clear-demo':clearDemo();break;
+      case 'open-day':views.learning.day=date;views.learning.month=date.slice(0,7);openModule('learning');break;
+      case 'pick-day':views[current.key].day=date;renderPanel();body.querySelector(`[data-date="${date}"]`)?.focus();break;
+      case 'shift-month':{
+        const view=views[current.key];
+        const target=dateFrom(view.month+'-01');
+        target.setMonth(target.getMonth()+Number(step));
+        view.day=dateKey(target);
+        view.month=view.day.slice(0,7);
+        renderPanel();
+        body.querySelector(`[data-step="${step}"]`)?.focus();
+        break;
+      }
+      case 'today':views[current.key].day=dateKey();views[current.key].month=dateKey().slice(0,7);renderPanel();break;
+      case 'tab':views[current.key].tab=key;renderPanel();body.querySelector(`[data-key="${key}"]`)?.focus();break;
+      case 'project-tasks':views.tasks.tab='list';views.tasks.scope='all';views.tasks.project=id;renderPanel();break;
+      case 'quick-mood':{
+        const today=dateKey(), existing=state.moods.find(row=>row.date===today);
+        openForm('moods',existing,{date:today,...(mood?{mood}:{})});
+        break;
+      }
+    }
+  }catch(error){insideToast(error.message);}
+});
+let dragRecord=null;
+body.addEventListener('dragstart',event=>{
+  const item=event.target.closest('.board .item');
+  if(!item)return;
+  dragRecord={table:item.dataset.table,id:item.dataset.id};
+  event.dataTransfer.effectAllowed='move';
+  event.dataTransfer.setData('text/plain',item.textContent);
+});
+function clearDragStyles(){
+  body.querySelectorAll('.drop-ready').forEach(lane=>lane.classList.remove('drop-ready'));
+}
+body.addEventListener('dragover',event=>{
+  const lane=event.target.closest('[data-drop-state]');
+  if(!lane||lane.dataset.table!==dragRecord?.table)return;
+  event.preventDefault();
+  event.dataTransfer.dropEffect='move';
+  if(!lane.classList.contains('drop-ready')){
+    clearDragStyles();
+    lane.classList.add('drop-ready');
+  }
+});
+body.addEventListener('dragend',()=>{
+  dragRecord=null;
+  clearDragStyles();
+});
+body.addEventListener('drop',event=>{
+  const lane=event.target.closest('[data-drop-state]');
+  if(!lane||lane.dataset.table!==dragRecord?.table)return;
+  event.preventDefault();
+  const {table,id}=dragRecord, nextStatus=lane.dataset.dropState;
+  dragRecord=null;
+  clearDragStyles();
+  const existing=byId(table,id);
+  if(!existing||existing.status===nextStatus)return;
+  try{
+    editData(draft=>{
+      const row=draft[table].find(item=>item.id===id);
+      row.status=nextStatus;
+      if(table==='content'&&nextStatus==='已发布'&&!row.published)row.published=dateKey();
+    });
+    renderPanel();
+    insideToast('已更新状态');
+  }catch(error){insideToast(error.message);}
+});
+for(const element of document.querySelectorAll('[data-icon]'))element.innerHTML=icon(element.dataset.icon);
+renderHome();
+if(startupWarning)notify(startupWarning);
+</script>
+</body>
+</html>
