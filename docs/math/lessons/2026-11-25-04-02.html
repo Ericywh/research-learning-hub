@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="每日10分钟数学微课程，第40课：对称矩阵的谱分解">
+<meta name="course-status" content="taught">
+<title>第4章·第2节｜对称矩阵的谱分解</title>
+<link rel="stylesheet" href="../site.css">
+<script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]}};</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+.article-wrap{max-width:830px;margin:0 auto;padding:36px 20px 80px}
+.article{font-size:17px;line-height:1.9;color:#263d3a}
+.article h2{margin-top:1.8em;font-size:1.24em}
+.article p{margin:1em 0}.article .math{overflow:auto;padding:12px;background:#f4f8f5;border-radius:9px}
+.article .lead{border-left:4px solid #5b998a;padding:12px 20px;background:#edf7f2;border-radius:8px}
+.muted{font-size:14px;color:#61736e}
+@media(max-width:650px){.article-wrap{padding:24px 16px 64px}.article{font-size:16px}}
+</style>
+<script defer src="../../assets/reading-status.js?v=20261030a"></script>
+</head>
+<body>
+<header><div class="wrap"><a href="../">← 数学课程目录</a><a href="../../">研究学习中心</a></div></header>
+<main class="article-wrap">
+<div class="kicker">MATHEMATICS · PROBABILITY · ECONOMETRICS</div>
+<h1>第4章·第2节｜对称矩阵的谱分解</h1>
+<p class="muted">全课程第40课 / 共73课 · 2026-11-25补发完整聊天正文 · 预计学习8分钟</p>
+<article class="article">
+<p><b>全课程第40课／73课｜预计8分钟</b></p>
+<p><b>核心问题：</b>为什么实对称矩阵能够分解成彼此正交的特征方向？这种分解怎样揭示协方差矩阵的统计结构？</p>
+<p>原归档日期：2026年11月17日；2026年11月25日补发完整聊天正文。</p>
+<h2>一、从特征向量到谱分解</h2>
+<p>上一课讨论了特征值和特征向量：若 \(Av=\lambda v\)，矩阵沿特征方向只改变向量的尺度。问题在于，能否找到一组特征向量构成整个空间的基，并且彼此正交？</p>
+<p>对于任意实对称矩阵 \(A\in\mathbb R^{k\times k}\)，谱定理保证存在 \(k\) 个正交归一的实特征向量，即使某些特征值重复也成立。将它们作为列向量组成 \(Q\)，对应特征值排列在对角矩阵 \(\Lambda\) 中，便得到</p>
+<div class="math">\[A=Q\Lambda Q^{\mathsf T},\qquad Q^{\mathsf T}Q=QQ^{\mathsf T}=I_k.\]</div>
+<p>其中 \(Q\in\mathbb R^{k\times k}\)，\(\Lambda\in\mathbb R^{k\times k}\)。因为 \(AQ=Q\Lambda\)，再右乘 \(Q^{\mathsf T}\) 就得到分解式。对不同特征值，利用 \(A=A^{\mathsf T}\) 可得 \(\lambda_i q_i^{\mathsf T}q_j=\lambda_j q_i^{\mathsf T}q_j\)，故两向量正交。重复特征值对应的子空间可以选取正交归一基。正交变换保留长度和内积，因而可以把复杂的矩阵作用理解成：转换到特征坐标系、沿各轴伸缩、再转换回原坐标系。</p>
+<h2>二、谱分解与统计方差</h2>
+<p>设 \(\Sigma\) 为具有有限二阶矩的 \(k\) 维随机向量的总体协方差矩阵。它实对称且半正定，因此所有特征值均非负。写 \(Q=(q_1,\ldots,q_k)\)，谱分解还可以表示为</p>
+<div class="math">\[\Sigma=\sum_{j=1}^{k}\lambda_jq_jq_j^{\mathsf T},\qquad \operatorname{Var}(a^{\mathsf T}X)=\sum_{j=1}^{k}\lambda_j(q_j^{\mathsf T}a)^2.\]</div>
+<p>这里 \(a\in\mathbb R^k\) 为固定权重向量。第二式表明，任意线性组合的总体方差，都可以拆为各正交特征方向的贡献。谱分解本身是矩阵恒等式；将特征值解释为方差，需要矩阵确实是协方差矩阵。</p>
+<h2>三、手算例子</h2>
+<p>考虑假设性协方差矩阵</p>
+<div class="math">\[\Sigma=
+\begin{pmatrix}2&1\\1&2\end{pmatrix}
+=
+\frac12
+\begin{pmatrix}1&1\\1&-1\end{pmatrix}
+\begin{pmatrix}3&0\\0&1\end{pmatrix}
+\begin{pmatrix}1&1\\1&-1\end{pmatrix}.\]</div>
+<p>两个单位特征方向分别是 \((1,1)^{\mathsf T}/\sqrt2\) 和 \((1,-1)^{\mathsf T}/\sqrt2\)，对应特征值3和1。矩阵重构后，对角元为2，非对角元为1，计算正确。两个方向上的总体方差分别为3和1，总方差为迹 \(2+2=4\)，第一方向占75%。这只是总体协方差结构的代数示例，不代表实际样本的估计结果。</p>
+<h2>四、计量应用及适用边界</h2>
+<p>主成分分析利用协方差矩阵的正交特征方向，构造互不相关的线性组合。小特征值也有助于识别数据中的低变异方向及回归设计矩阵的数值不稳定性。若变量量纲不同，协方差矩阵的特征结构会随单位变化；是否标准化，应由研究目标决定。重复特征值对应的单个特征向量可以不唯一，但相应特征子空间仍有明确意义。一般非对称矩阵不能保证这种正交谱分解。</p>
+<h2>五、两道自测</h2>
+<p><b>第1题（概念题）：</b>实对称矩阵有重复特征值时，是否仍可正交谱分解？单个特征向量是否必然唯一？</p>
+<p><b>第2题（计算题）：</b>对 \(B=\begin{pmatrix}3&1\\1&3\end{pmatrix}\)，求两个特征值及一组正交归一特征向量，并验证其谱分解。</p>
+<p><b>参考答案</b></p>
+<p><b>第1题：</b>仍然可以。实对称矩阵总能选取正交归一特征基；重复特征值对应的特征子空间中有多种基的选择，所以单个特征向量一般不唯一。</p>
+<p><b>第2题：</b>特征方程为 \((3-\lambda)^2-1=0\)，得到特征值4和2。可取 \(q_1=(1,1)^{\mathsf T}/\sqrt2\)、\(q_2=(1,-1)^{\mathsf T}/\sqrt2\)。令 \(Q=(q_1,q_2)\)，则 \(Q\operatorname{diag}(4,2)Q^{\mathsf T}=\begin{pmatrix}3&1\\1&3\end{pmatrix}=B\)。</p>
+<h2>六、衔接</h2>
+<p>第39课识别特征方向，本课利用谱定理说明实对称矩阵可用一组正交特征方向完整重构。下一课将进一步证明，协方差矩阵的特征值为什么不可能为负，并讨论零特征值的统计含义。</p>
+<p><b>下一课：第4章·第3节《特征值和协方差矩阵的非负性》（全课程第41课）。</b></p>
+</article>
+<p class="muted">上一课：第4章·第1节｜特征值与特征向量 · 下一课：第4章·第3节｜特征值和协方差矩阵的非负性</p>
+<nav><a href="2026-11-24-04-01.html">← 上一课</a>　<a href="../">课程目录</a>　<a href="2026-11-18-04-03.html">下一课 →</a></nav>
+</main></body></html>
