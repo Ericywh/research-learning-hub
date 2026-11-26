@@ -429,8 +429,8 @@ window.MATH_COURSE={
           "number": 41,
           "title": "特征值和协方差矩阵的非负性",
           "published": true,
-          "date": "2026-11-18",
-          "url": "lessons/2026-11-18-04-03.html",
+          "date": "2026-11-26",
+          "url": "lessons/2026-11-26-04-03.html",
           "delivered": true
         },
         {
