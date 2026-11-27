@@ -10,11 +10,15 @@
     frontier: { total:23, unit:"篇", kind:"read", prefix:READ+"frontier/" },
     cssci: { total:16, unit:"篇", kind:"read", prefix:READ+"cssci/lessons/" },
     classics: { total:8, unit:"课", kind:"read", prefix:READ+"economic-classics/lessons/" },
-    speaking: { total:126, unit:"课", kind:"speaking", prefix:"speaking-course-complete:v1:" },
+    speaking: { total:48, unit:"单元", kind:"speaking", key:"speaking-coach-8w:personal:v1" },
     english: { total:70, unit:"课", kind:"read", prefix:READ+"english:lesson:" }
   };
   function readCount(config) {
     try {
+      if (config.kind === "speaking") {
+        const units=JSON.parse(localStorage.getItem(config.key)||"{}").units||{};
+        return Array.from({length:48},(_,i)=>i+1).filter(n=>units[n]?.complete===true).length;
+      }
       if (config.kind === "econ") {
         const value = JSON.parse(localStorage.getItem(config.key) || "{}");
         return value && typeof value === "object" ? Object.keys(value).filter(k => /^\d{2}-\d{2}$/.test(k)).length : 0;
