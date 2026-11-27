@@ -80,40 +80,59 @@ function renderWarm(step){
 function renderCasePrep(){show(`<section class="card"><p class="kicker">U44 · 素材积累</p><h2>先整理可核实的案例</h2><p>在原有10分钟整理槽中编辑8—10个候选案例。没有真实材料就留空。</p>${secondary("打开案例卡","open-assets")}<div class="actions">${primary("进入60秒口述","launch-main")}</div></section>`)}
 function renderMaintenancePrep(){show(`<section class="card"><p class="kicker">U48 · 复盘</p><h2>先核对自己的实际记录</h2><p>查看原始录像和自评，确定一项保持、一项待改，再制定90天维持计划。</p>${secondary("打开成长与维护","open-assets")}<div class="actions">${primary("开始口述计划","launch-main")}</div></section>`)}
 function launch(task){
- clearAux();clearClock();stopTracks();current={...task,shown:!task.sealed,send:pref.auto&&aiReady()&&unit!==42,video:true,frames:[],frameChoice:pref.frames,kind:task.kind||"first"};view="task";phase="ready";renderTask()
+ clearAux();clearClock();stopTracks();current={...task,shown:!task.sealed,send:pref.auto&&aiReady()&&unit!==42,source:session.captureMode||"video",video:(session.captureMode||"video")==="video",frames:[],frameChoice:pref.frames,kind:task.kind||"first",deviceError:""};view="task";phase="ready";renderTask()
 }
 function steps(k){return `<div class="steps">${["准备","首录","复盘","重录 / 迁移"].map((x,i)=>`<div class="step ${i===k?"on":i<k?"past":""}">${i+1} ${x}</div>`).join("")}</div>`}
 function renderTask(){
- const t=current,u=U(),idx=t.kind==="first"?1:t.kind==="warm"?0:3;
+ const t=current,u=U(),idx=t.kind==="first"?1:t.kind==="warm"?0:3,external=t.source==="external";
  let question=t.shown?`<div class="prompt" id="prompt-text">${E(t.task)}</div>`:`<div class="panel" style="text-align:center;padding:32px"><p>本张题卡未揭示</p>${primary("翻牌读题","reveal-card")}</div>`;
  let visible=t.shown;
- show(steps(idx)+`<section class="card"><div class="row"><span class="pill">U${pad(unit)} · ${E(t.label)}</span><span class="pill">${t.prep}秒准备 / ${t.seconds}秒发言</span></div><h2 style="margin-top:12px">${E(u.title)}</h2>${question}${visible?`<div class="camera" id="camera"><video id="preview" muted playsinline autoplay hidden></video><span class="placeholder" id="preview-hint">先连接摄像头或麦克风</span></div>${unit===27?'<label class="check"><input id="gaze-guide" type="checkbox">显示左、中、右目光提示点</label>':""}<div id="media-controls" class="row" style="margin-top:12px"><label><input type="radio" name="media" value="video" ${t.video?"checked":""}> 视频</label><label><input type="radio" name="media" value="audio" ${!t.video?"checked":""}> 纯音频（体态未测）</label></div><label class="check preflight"><input type="checkbox" id="send-ai" ${t.send?"checked":""} ${!aiReady()?"disabled":""}>本轮发送音频至已配置AI ${!aiReady()?"（未配置本轮凭证，保持本地）":""}</label>${pref.mode!=="local"?`<label class="check preflight"><input type="checkbox" id="send-frames" ${t.frameChoice&&unit!==42?"checked":""}>另行同意发送最多3张低清画面（可选）</label>`:""}${t.sealed?`<label class="check preflight"><input type="checkbox" id="familiar">以前已接触过这道题（如实记录）</label>`:""}<div class="timer" id="clock">${clock(t.prep)}</div><p class="timer-label" id="clock-label">读完题后再开始准备</p><div class="track"><div id="count-track" style="width:0"></div></div><div id="special-note" class="status" hidden></div><div class="actions" id="record-actions">${secondary("连接设备","device")}${primary("开始准备","start-prep",'disabled id="begin"')}</div>`:""}<div class="actions" id="task-back">${secondary("暂停本轮并返回","cancel")}</div><p id="message"></p></section>`);
- if(stream&&visible)attachPreview();
+ show(steps(idx)+`<section class="card"><div class="row"><span class="pill">U${pad(unit)} · ${E(t.label)}</span><span class="pill">${t.prep}秒准备 / ${t.seconds}秒发言</span></div><h2 style="margin-top:12px">${E(u.title)}</h2>${question}${visible?`<div class="camera ${external?"timer-only":t.source==="audio"?"audio":""}" id="camera"><video id="preview" muted playsinline autoplay hidden></video><span class="placeholder" id="preview-hint">${external?"独立计时 · 手机或其他设备录音":"可连接设备，也可直接开始计时"}</span></div>${unit===27?'<label class="check"><input id="gaze-guide" type="checkbox">显示左、中、右目光提示点</label>':""}<div id="media-controls" class="row" style="margin-top:12px"><label><input type="radio" name="media" value="video" ${t.source==="video"?"checked":""}> 视频</label><label><input type="radio" name="media" value="audio" ${t.source==="audio"?"checked":""}> 纯音频（体态未测）</label><label class="external-option"><input type="radio" name="media" value="external" ${external?"checked":""}> 仅计时 / 手机录音</label></div>${external?'<p class="small preflight">准备结束后用手机开始录音或录像；发言结束后导入本地文件。</p>':""}${t.deviceError?`<p class="warning preflight">${E(t.deviceError)}<br>Windows：设置 → 隐私和安全性 → 麦克风／摄像头。也可直接使用系统 Chrome 或 Edge。</p>`:""}<label class="check preflight"><input type="checkbox" id="send-ai" ${t.send?"checked":""} ${!aiReady()||external?"disabled":""}>本轮发送音频至已配置AI ${!aiReady()?"（未配置本轮凭证，保持本地）":""}</label>${pref.mode!=="local"?`<label class="check preflight"><input type="checkbox" id="send-frames" ${t.frameChoice&&unit!==42?"checked":""}>另行同意发送最多3张低清画面（可选）</label>`:""}${t.sealed?`<label class="check preflight"><input type="checkbox" id="familiar" ${t.familiar?"checked":""}>以前已接触过这道题（如实记录）</label>`:""}<div class="timer" id="clock">${clock(t.prep)}</div><p class="timer-label" id="clock-label">读完题后再开始准备</p><div class="track"><div id="count-track" style="width:0"></div></div><div id="special-note" class="status" hidden></div><div class="actions" id="record-actions">${!external?secondary("连接设备","device")+secondary("检测设备","detect-device"):""}${primary("开始准备","start-prep",'id="begin"')}</div>`:""}<div class="actions" id="task-back">${secondary("暂停本轮并返回","cancel")}</div><p id="message"></p></section>`);
+ if(stream&&visible&&!external)attachPreview();
 }
-function attachPreview(){let v=$("preview");if(v){v.hidden=false;v.srcObject=stream;v.play().catch(()=>{});$("preview-hint").hidden=true;$("begin").disabled=false}}
+function attachPreview(){let v=$("preview");if(v){v.hidden=!current.video;v.srcObject=stream;v.play().catch(()=>{});$("preview-hint").hidden=current.video;if(!current.video)$("preview-hint").textContent="麦克风已连接 · 纯音频"}}
 function supportedType(video){let choices=video?["video/webm;codecs=vp8,opus","video/webm","video/mp4"]:["audio/webm;codecs=opus","audio/ogg;codecs=opus","audio/mp4","audio/webm"];return choices.find(x=>MediaRecorder.isTypeSupported(x))||""}
+function captureSource(){return document.querySelector('input[name="media"]:checked')?.value||current?.source||"video"}
+function deviceMessage(e){let n=e?.name||"",m=String(e?.message||"");if(n==="NotFoundError"||n==="DevicesNotFoundError"||/device not found|no device/i.test(m))return "浏览器没有找到所需麦克风或摄像头，可能是设备未接入、系统未识别或内置浏览器无法访问。";if(n==="NotAllowedError"||n==="SecurityError"||n==="PermissionDeniedError")return "浏览器或系统没有授予录音权限。";if(n==="NotReadableError"||n==="TrackStartError")return "设备无法读取，可能被其他应用占用。";if(n==="OverconstrainedError")return "设备参数不受支持，请选择系统默认设备。";return "无法连接设备："+(m||n||"当前浏览器不支持录制")}
+async function detectDevices(){if(busy())return;try{if(!navigator.mediaDevices?.enumerateDevices)throw Error("当前浏览器不支持设备检测");const d=await navigator.mediaDevices.enumerateDevices();notice("浏览器可见 "+d.filter(x=>x.kind==="audioinput").length+" 个麦克风、"+d.filter(x=>x.kind==="videoinput").length+" 个摄像头。未授权时清单可能不完整。","status")}catch(e){notice(deviceMessage(e),"warning")}}
+function rememberFamiliar(){if(current&&$("familiar"))current.familiar=$("familiar").checked}
 async function getDevice(){
- if(preparing||busy())return;preparing=true;const mine=++epoch;try{
+ if(preparing||busy()||!current)return;rememberFamiliar();preparing=true;const mine=++epoch;try{
   if(!navigator.mediaDevices?.getUserMedia||!window.MediaRecorder)throw Error("当前浏览器不支持录制，请用支持MediaRecorder的HTTPS浏览器。");
-  stopTracks();const sel=document.querySelector('input[name="media"]:checked');current.video=sel?.value!=="audio";
+  stopTracks();current.source=captureSource();current.video=current.source==="video";if(current.source==="external")return;
   const s=await navigator.mediaDevices.getUserMedia({audio:true,video:current.video?{width:{ideal:720},height:{ideal:480},facingMode:"user"}:false});
-  if(mine!==epoch||view!=="task"){s.getTracks().forEach(t=>t.stop());return}stream=s;attachPreview();if(!current.video)$("camera").classList.add("audio");
+  if(mine!==epoch||view!=="task"){s.getTracks().forEach(t=>t.stop());return}stream=s;session.captureMode=current.source;current.deviceError="";attachPreview();if(!current.video)$("camera").classList.add("audio");
   try{beeper??=new (window.AudioContext||window.webkitAudioContext)();await beeper.resume()}catch{}
- }catch(e){notice("无法连接设备："+(e.name==="NotAllowedError"?"请允许麦克风/摄像头权限":e.message||"请检查设备"));}finally{preparing=false;syncNav()}
+ }catch(e){if(mine===epoch&&view==="task"){stopTracks();current.deviceError=deviceMessage(e);current.source="external";current.video=false;current.send=false;session.captureMode="external";renderTask();notice("已切换到独立计时，直接点击开始准备即可。","status")}}finally{preparing=false;syncNav()}
 }
 function beep(){try{if(!beeper)return;let o=beeper.createOscillator(),g=beeper.createGain();o.frequency.value=660;g.gain.setValueAtTime(.06,beeper.currentTime);g.gain.exponentialRampToValueAtTime(.0001,beeper.currentTime+.13);o.connect(g).connect(beeper.destination);o.start();o.stop(beeper.currentTime+.15)}catch{}}
 function tickCountdown(seconds,label,onDone,onTick){clearClock();const start=performance.now(),end=start+seconds*1000;function draw(){const elapsed=Math.max(0,(performance.now()-start)/1000),left=Math.max(0,Math.ceil((end-performance.now())/1000));if($("clock"))$("clock").textContent=clock(left);if($("clock-label"))$("clock-label").textContent=label;if($("count-track"))$("count-track").style.width=Math.min(100,elapsed/Math.max(1,seconds)*100)+"%";if(onTick)onTick(elapsed);if(!left){clearClock();onDone()}}if(seconds<=0){onDone();return}ticker=setInterval(draw,100);draw()}
 function startPrep(){
- if(!stream||busy())return;current.send=!!$("send-ai")?.checked&&aiReady();current.familiar=!!$("familiar")?.checked;current.frameChoice=current.video&&current.send&&!!$("send-frames")?.checked;
+ if(busy()||!current?.shown)return;rememberFamiliar();current.source=captureSource();if(!stream&&current.source!=="external"){if(!confirm("未连接录音设备。是否使用独立计时，并在结束后导入手机录音？"))return;current.source="external"}if(current.source==="external"){stopTracks();current.video=false;current.send=false;current.frameChoice=false;renderTask()}else{current.send=!!$("send-ai")?.checked&&aiReady();current.frameChoice=current.video&&current.send&&!!$("send-frames")?.checked}session.captureMode=current.source;
  phase="prepare";document.body.classList.add("recording");$("record-actions").innerHTML=secondary("取消准备","cancel-prep");$("task-back").hidden=true;
- if(beeper)beeper.resume().catch(()=>{});
- tickCountdown(current.prep,"准备倒计时",()=>{beep();beginRecord()})
+ try{beeper??=new (window.AudioContext||window.webkitAudioContext)();beeper.resume().catch(()=>{})}catch{}
+ tickCountdown(current.prep,"准备倒计时",()=>{beep();if(current.source==="external"||!stream)beginExternal();else beginRecord()})
 }
+function beginExternal(){
+ if(!current||phase!=="prepare")return;current.source="external";current.video=false;current.send=false;current.frameChoice=false;session.captureMode="external";
+ phase="record";startedAt=performance.now();lastFlags={};$("record-actions").innerHTML='<button class="danger" data-action="stop-record">结束发言</button>';
+ $("special-note").hidden=false;$("special-note").textContent="现在开始说话 · 同时开启手机录音/录像";
+ tickCountdown(current.seconds,"发言倒计时 · 仅计时",()=>endExternal(),elapsed=>{
+ if(unit===5&&current.kind==="first"&&elapsed>=35&&!lastFlags.pause){lastFlags.pause=true;$("special-note").textContent="主动停顿2秒，然后接续"}
+ if(unit===23&&current.kind==="revision"&&elapsed>=60&&!lastFlags.close){lastFlags.close=true;beep();$("special-note").textContent="只剩30秒，请收束"}
+ if(current.key==="U40-cut"&&elapsed>=120&&!lastFlags.cut){lastFlags.cut=true;beep();$("special-note").textContent="模拟投影中断 · 脱屏收束"}
+ });
+}
+function endExternal(){if(phase!=="record"||current?.source!=="external")return;clearClock();beep();current.timerSeconds=Math.max(0,Math.round((performance.now()-startedAt)/100)/10);phase="";view="external";document.body.classList.remove("recording");renderExternal()}
+function renderExternal(){const t=current;show(steps(t.kind==="first"?2:3)+`<section class="card"><p class="kicker">独立计时完成 · ${E(t.label)}</p><h2>${clock(Math.round(t.timerSeconds))} · 保存本轮发言</h2><div class="panel"><h3>导入本轮的真实音视频</h3><p>在手机或其他软件停止录制，把文件传到当前设备。选择文件仅用于本机回放，不会自动上传。</p><label class="check"><input type="checkbox" id="external-attest">这是按本题计时录下的原始发言，未拼接或重做。</label><div class="actions">${primary("选择本地录音 / 录像","external-pick")}</div><input id="external-file" type="file" accept="audio/*,video/*,.mp3,.m4a,.wav,.webm,.ogg,.aac,.flac,.mp4,.mov" hidden><p class="small">支持浏览器可解码的文件；读取不到准确时长时记为未核验。</p></div><div class="actions">${secondary("没有录音 · 仅保留计时","timer-only-save")}${secondary("返回本轮题目","external-retry")}</div><p class="small">仅计时不计为完整AM或有效基线；声音、体态未测。</p><p id="message"></p></section>`)}
+function inspectMedia(file){return new Promise((resolve,reject)=>{const url=URL.createObjectURL(file),v=document.createElement("video");let settled=false;const done=(err)=>{if(settled)return false;settled=true;clearTimeout(deadline);v.removeAttribute("src");try{v.load()}catch{}if(err){URL.revokeObjectURL(url);reject(err)}return true};const deadline=setTimeout(()=>done(Error("无法读取媒体信息，请试用MP3、M4A、WAV或MP4")),8000);v.preload="metadata";v.onloadedmetadata=()=>{let seconds=Number.isFinite(v.duration)&&v.duration>0?Math.round(v.duration*10)/10:null,video=v.videoWidth>0&&v.videoHeight>0;if(done())resolve({url,seconds,video})};v.onerror=()=>done(Error("浏览器无法解码此文件"));v.src=url})}
+async function importExternal(file){if(view!=="external"||!current||!file)return;const t=current;if(!$("external-attest")?.checked){notice("请先确认这是本轮原始发言。");return}if(file.size<=0||file.size>300*1024*1024||!(/^(audio|video)\//.test(file.type)||/\.(mp3|m4a|wav|webm|ogg|aac|flac|mp4|mov)$/i.test(file.name))){notice("请选择可播放的音视频文件（最大300MB）。");return}notice("正在读取本地文件……","status");try{let info=await inspectMedia(file);if(current!==t||view!=="external"){URL.revokeObjectURL(info.url);return}let known=info.seconds!==null,seconds=known?info.seconds:t.timerSeconds;saveCapture(t,{blob:file,url:info.url,seconds,video:info.video,source:"external",name:file.name,downloaded:true,verified:known,attested:true,timerSeconds:t.timerSeconds,noMedia:false,short:!known||Math.abs(seconds-t.seconds)>3||Math.abs(t.timerSeconds-t.seconds)>3})}catch(e){notice(e.message)}}
+function saveTimerOnly(){if(view!=="external"||!current)return;if(!confirm("本轮没有真实录音，只记录实际计时与自我回忆，不计完整训练或有效录像测评。继续？"))return;let t=current;saveCapture(t,{seconds:t.timerSeconds,video:false,source:"timer",name:"仅计时",downloaded:true,verified:false,noMedia:true,short:true,timerSeconds:t.timerSeconds})}
 function newRecorder(s,isVideo){const mime=supportedType(isVideo),options=mime?{mimeType:mime}:{};if(!isVideo)options.audioBitsPerSecond=24000;try{return new MediaRecorder(s,options)}catch{return new MediaRecorder(s)}}
 function collect(r){let chunks=[];let done=new Promise((resolve,reject)=>{r.ondataavailable=e=>{if(e.data.size)chunks.push(e.data)};r.onstop=()=>resolve(new Blob(chunks,{type:r.mimeType||chunks[0]?.type}));r.onerror=e=>reject(e.error||Error("录制失败"))});return done}
 let capturedPromise,audioPromise,startedAt,frameMarks=[],lastFlags={};
 function beginRecord(){
- if(!stream||phase!=="prepare"){cancelPrep();return}
+ if(phase!=="prepare")return;if(!stream){beginExternal();return}
  try{
   phase="record";lastFlags={};current.frames=[];rec=newRecorder(stream,current.video);capturedPromise=collect(rec);
   audioRec=null;audioPromise=null;
@@ -128,26 +147,28 @@ function beginRecord(){
     if(current.key==="U40-cut"&&elapsed>=120&&!lastFlags.cut){lastFlags.cut=true;beep();$("camera").classList.add("black");$("special-note").textContent="投影中断 · 只剩2分钟，脱屏收束"}
     if(current.frameChoice)frameMarks.forEach((m,i)=>{if(elapsed>=m&&!lastFlags["f"+i]){lastFlags["f"+i]=true;const v=$("preview");if(v?.videoWidth){let c=document.createElement("canvas");c.width=320;c.height=Math.round(v.videoHeight*320/v.videoWidth);c.getContext("2d").drawImage(v,0,0,c.width,c.height);current.frames.push(c.toDataURL("image/jpeg",.55))}}});
   })
- }catch(e){clearClock();stopTracks();document.body.classList.remove("recording");phase="ready";renderTask();notice("录制失败："+(e.message||"请检查设备"))}
+ }catch(e){clearClock();try{if(rec&&rec.state!=="inactive")rec.stop();if(audioRec&&audioRec.state!=="inactive")audioRec.stop()}catch{}stopTracks();current.deviceError="网页录制未启动："+(e.message||"设备异常");current.source="external";phase="prepare";beginExternal();$("special-note").textContent="录制设备不可用，已改为独立计时；请用手机录音。"}
+}
+function saveCapture(t,meta,audio=null,frames=[]){
+ const date=new Date(),blob=meta.blob||null,seconds=meta.seconds,video=!!meta.video,noMedia=!!meta.noMedia;
+ let ext=blob?.type?.includes("mp4")?(video?"mp4":"m4a"):blob?.type?.includes("ogg")?"ogg":"webm";
+ const name=meta.name||("W"+U().week+"_U"+pad(unit)+"_"+t.label.replace(/[^a-zA-Z0-9\u4e00-\u9fa5_-]/g,"")+"_"+date.toISOString().slice(0,10).replace(/-/g,"")+"_"+Date.now()+"."+ext);
+ const r={id:session.id+"-"+session.records.length,key:t.key,kind:t.kind,label:t.label,task:t.task,prep:t.prep,target:t.seconds,seconds,video,blob,url:meta.url||(blob?URL.createObjectURL(blob):null),name,source:meta.source||"browser",verified:meta.verified!==false,noMedia,timerSeconds:meta.timerSeconds??null,attested:meta.attested??null,scoreDraft:[undefined,undefined,undefined,undefined,noMedia?null:undefined,video?undefined:null],seen:!!t.familiar,oral:undefined,locked:false,downloaded:!!meta.downloaded,short:!!meta.short,aiStatus:t.send&&audio?"分析中":"本地自评 / 免费AI网页",ai:null,aiShown:false,fix:"",weak:""};
+ session.records.push(r);state.records.push({id:r.id,session:session.id,unit,key:r.key,kind:r.kind,label:r.label,prep:r.prep,target:r.target,seconds:r.seconds,video:r.video,name,date:date.toISOString(),source:r.source,verified:r.verified,noMedia:r.noMedia,timerSeconds:r.timerSeconds,attested:r.attested,short:r.short,familiar:r.seen,score:null,oral:null,ai:null,downloaded:r.downloaded,mode:session.mode});persist();
+ stopTracks();document.body.classList.remove("recording");phase="";view="captured";current=null;stopping=false;
+ if(t.kind==="first")session.firsts.push(r);if(t.kind==="warm")session.warmups.push(r);if(t.kind==="revision")session.revisionDone=true;if(t.kind==="transfer")session.transferDone=true;
+ if(t.send&&audio&&t.kind!=="warm"&&r.source==="browser")runAI(r,audio,frames);else if(t.send&&!audio)r.aiStatus="未取得独立音频，请用免费AI网页或本地自评";
+ renderCaptured(r)
 }
 async function stopRecord(){
+ if(current?.source==="external"){endExternal();return}
  if(stopping||phase!=="record")return;stopping=true;clearClock();
  const t=current,seconds=Math.max(0,Math.round((performance.now()-startedAt)/100)/10);$("record-actions").innerHTML='<span class="muted">正在封存录制……</span>';
  try{
   if(rec?.state!=="inactive")rec.stop();if(audioRec&&audioRec.state!=="inactive")audioRec.stop();let blob=await capturedPromise;let audio=t.video?(audioPromise?await audioPromise.catch(()=>null):null):blob;
   if(!blob.size)throw Error("录制为空，请检查权限后重试");
-  let ext=blob.type.includes("mp4")?(t.video?"mp4":"m4a"):blob.type.includes("ogg")?"ogg":"webm";
-  const date=new Date(),name="W"+U().week+"_U"+pad(unit)+"_"+t.label.replace(/[^a-zA-Z0-9\u4e00-\u9fa5_-]/g,"")+"_"+date.toISOString().slice(0,10).replace(/-/g,"")+"_"+Date.now()+"."+ext;
-  let r={id:session.id+"-"+session.records.length,key:t.key,kind:t.kind,label:t.label,task:t.task,prep:t.prep,target:t.seconds,seconds,video:t.video,blob,url:URL.createObjectURL(blob),name,scoreDraft:[undefined,undefined,undefined,undefined,undefined,t.video?undefined:null],seen:!!t.familiar,oral:undefined,locked:false,downloaded:false,short:seconds<t.seconds-2,aiStatus:t.send&&audio?"分析中":"本地自评",ai:null,aiShown:false,fix:"",weak:""};
-  session.records.push(r);state.records.push({id:r.id,session:session.id,unit,key:r.key,kind:r.kind,label:r.label,prep:r.prep,target:r.target,seconds:r.seconds,video:r.video,name,date:date.toISOString(),short:r.short,familiar:r.seen,score:null,oral:null,ai:null,downloaded:false,mode:session.mode});persist();
-  stopTracks();document.body.classList.remove("recording");phase="";view="captured";current=null;stopping=false;
-  if(t.kind==="first")session.firsts.push(r);
-  if(t.kind==="warm")session.warmups.push(r);
-  if(t.kind==="revision")session.revisionDone=true;
-  if(t.kind==="transfer")session.transferDone=true;
-  if(t.send&&audio&&t.kind!=="warm")runAI(r,audio,t.frames);else if(t.send&&!audio)r.aiStatus="未取得独立音频，使用本地自评";
-  renderCaptured(r)
- }catch(e){stopTracks();document.body.classList.remove("recording");phase="";stopping=false;renderTask();notice("无法保存本次录制："+e.message)}
+  saveCapture(t,{blob,seconds,video:t.video,source:"browser",short:seconds<t.seconds-2||seconds>t.seconds+3},audio,t.frames);
+ }catch(e){stopTracks();document.body.classList.remove("recording");phase="";stopping=false;t.source="external";t.send=false;t.video=false;t.timerSeconds=seconds;view="external";renderExternal();notice("网页录制未成功："+e.message+"。可导入本轮外部文件或只保留计时。","warning")}
 }
 async function runAI(r,audio,frames){
  try{
@@ -158,12 +179,12 @@ async function runAI(r,audio,frames){
  }catch(e){r.aiStatus="评审未返回："+(e.name==="AbortError"?"15秒超时":e.message||"接口故障")+"；继续本地自评"}
  if(view==="review"&&session?.records.includes(r))refreshAI(r);if(view==="captured"&&$("capture-ai"))$("capture-ai").textContent=r.aiStatus;
 }
-function player(r){return `<div class="camera ${!r.video?"audio":""}" id="play-box"><video id="playback" src="${E(r.url)}" playsinline controls preload="metadata"></video></div><div class="actions">${r.video?secondary("静音看体态","mute"):""}${secondary("黑屏只听声","listen")}${secondary("下载存档","download",`data-rid="${E(r.id)}"`)}</div>`}
+function player(r){if(r.noMedia||!r.url)return '<div class="panel"><h3>仅计时 · 无录音</h3><p>本轮没有可回放材料。声音、体态未测，只记录实际计时及自我回忆。</p></div>';if(!r.video)return `<div class="audio-player"><p class="kicker">音频回听</p><audio id="playback" src="${E(r.url)}" controls preload="metadata"></audio></div><div class="actions">${secondary("下载录音","download",`data-rid="${E(r.id)}"`)}</div>`;return `<div class="camera ${!r.video?"audio":""}" id="play-box"><video id="playback" src="${E(r.url)}" playsinline controls preload="metadata"></video></div><div class="actions">${r.video?secondary("静音看体态","mute"):""}${secondary("黑屏只听声","listen")}${secondary("下载存档","download",`data-rid="${E(r.id)}"`)}</div>`}
 function lastRecord(){return session.records.at(-1)}
 function renderCaptured(r){
- view="captured";show(steps(r.kind==="first"?1:3)+`<section class="card"><p class="kicker">${E(r.label)} · 已保存到本轮内存</p><h2>本次 ${clock(Math.round(r.seconds))}</h2>${r.short?'<p class="warning">本次录制未达到原定时长，已如实保留；测评不能冒充完整首录。</p>':""}${player(r)}<p class="status" id="capture-ai">${E(r.aiStatus)}</p><p class="small">视频文件仅在当前页面内存；点击下载保存原件，进度和评分另存本机。刷新后无法恢复未下载视频。</p><div class="actions">${primary("下载后继续下一步","after-capture")}${secondary("退出本轮","cancel")}</div><p id="message"></p></section>`)
+ view="captured";show(steps(r.kind==="first"?1:3)+`<section class="card"><p class="kicker">${E(r.label)} · 已保存到本轮内存</p><h2>本次 ${clock(Math.round(r.seconds))}</h2>${r.short?'<p class="warning">没有录音、时长不符或无法核验，已如实保留；不计完整训练或有效测评。</p>':""}${player(r)}<p class="status" id="capture-ai">${E(r.aiStatus)}</p><p class="small">视频文件仅在当前页面内存；点击下载保存原件，进度和评分另存本机。刷新后无法恢复未下载视频。</p><div class="actions">${primary(r.noMedia?"继续（仅计时记录）":r.source==="external"?"继续下一步":"下载后继续下一步","after-capture")}${secondary("退出本轮","cancel")}</div><p id="message"></p></section>`)
 }
-function doDownload(id){let r=session?.records.find(x=>x.id===id);if(!r)return;let a=document.createElement("a");a.href=r.url;a.download=r.name;document.body.append(a);a.click();a.remove();r.downloaded=true;updateMeta(r,{downloaded:true})}
+function doDownload(id){let r=session?.records.find(x=>x.id===id);if(!r||!r.url)return;let a=document.createElement("a");a.href=r.url;a.download=r.name;document.body.append(a);a.click();a.remove();r.downloaded=true;updateMeta(r,{downloaded:true})}
 function afterCapture(){
  const r=lastRecord();if(!r.downloaded){doDownload(r.id);if(!confirm("已触发本地下载。请确认文件已保存，再继续。"))return;}
  if(r.kind==="warm"){
@@ -176,7 +197,7 @@ function afterCapture(){
 }
 function scoreTotal(a){return Array.isArray(a)&&a.length===6&&a.every(x=>[0,1,2].includes(x))?a.reduce((s,x)=>s+x,0):null}
 function renderReview(r){
- view="review";activeReview=session.firsts.indexOf(r);const u=U();let choices=labels.map((l,i)=>`<div class="score-row"><span>${E(l)}</span><div class="row">${[0,1,2,null].map(v=>`<button class="${r.scoreDraft[i]===v?"selected ":""}${v===null?"na":""}" data-action="score" data-i="${i}" data-value="${v===null?"na":v}" ${r.locked||i===5&&!r.video?"disabled":""}>${v===null?"未测":v}</button>`).join("")}</div></div>`).join("");
+ view="review";activeReview=session.firsts.indexOf(r);const u=U();let choices=labels.map((l,i)=>`<div class="score-row"><span>${E(l)}</span><div class="row">${[0,1,2,null].map(v=>`<button class="${r.scoreDraft[i]===v?"selected ":""}${v===null?"na":""}" data-action="score" data-i="${i}" data-value="${v===null?"na":v}" ${r.locked||i===5&&!r.video||i===4&&r.noMedia?"disabled":""}>${v===null?"未测":v}</button>`).join("")}</div></div>`).join("");
  show(steps(2)+`<section class="card"><p class="kicker">独立首录 · ${activeReview+1}/${session.firsts.length}</p><h2>先自己观察，再看AI</h2><div class="review-grid"><div>${player(r)}<div class="panel" style="margin-top:15px"><h3>先自评 · 6维12分</h3><p class="small">0未做到 / 1部分做到 / 2清楚做到。无法观察可保留未测。</p>${choices}${u.week>=5?`<div class="score-row"><span>口语活度（独立）</span><div class="row">${[0,1,2,null].map(v=>`<button class="${r.oral===v?"selected":""}" data-action="oral" data-value="${v===null?"na":v}" ${r.locked?"disabled":""}>${v===null?"未测":v}</button>`).join("")}</div></div>`:""}${details("本地指标（未测可留空）",`<label class="field">实质首句耗时（秒）<input id="manual-opening" type="number" min="0" max="${r.seconds}" step="0.1" value="${E(r.manual?.opening??"")}" ${r.locked?"disabled":""}></label><label class="field">全段无意义口癖次数<input id="manual-filler" type="number" min="0" step="1" value="${E(r.manual?.filler??"")}" ${r.locked?"disabled":""}></label><label class="field">全段转写净字数<input id="manual-chars" type="number" min="0" step="1" value="${E(r.manual?.chars??"")}" ${r.locked?"disabled":""}></label><p class="small">仅在实际回听或计数后填写；留空为未测。</p>`)}<div class="section-title" style="margin-top:13px"><b>自评总分</b><b>${scoreTotal(r.scoreDraft)??"—"} / 12</b></div><label class="field">个人快记（只选一项最弱表现）<select id="weak" ${r.locked?"disabled":""}><option value="">未选择</option>${weakLabels.map(v=>`<option ${r.weak===v?"selected":""}>${E(v)}</option>`).join("")}</select></label><label class="field">时间戳 / 原句 / 一个修订点<textarea id="fix-draft" ${r.locked?"disabled":""} placeholder="例如：00:14开头重复，下一遍直接回应">${E(r.fix)}</textarea></label>${r.locked?'<p class="status">原始自评已封存，不被重录或AI建议覆盖。</p>':primary("封存独立自评","lock-score")}</div></div><div><div id="ai-panel"></div><div class="panel" style="margin-top:12px"><h3>本课训练焦点</h3>${r.locked?`<p>${E(u.fix)}</p>`:'<p class="muted">封存原始自评后显示。</p>'}</div></div></div><div class="actions">${activeReview>0?secondary("上一段首录","prev-review"):""}${primary(activeReview<session.firsts.length-1?"下一段首录":"进入单点重录","next-review",r.locked?"":"disabled")} ${secondary("退出本轮","cancel")}</div><p id="message"></p></section>`);
  refreshAI(r)
 }
@@ -195,7 +216,7 @@ function readManual(r){const val=id=>{let v=$(id)?.value;return v===undefined||v
 function lockScore(){
  let r=session.firsts[activeReview];r.weak=$("weak")?.value||"";r.fix=$("fix-draft")?.value||"";
  if(r.scoreDraft.some(v=>v===undefined)||U().week>=5&&r.oral===undefined){notice("请逐项选择0、1、2或明确标为未测；纯音频的体态已自动标为未测。");return}if(!r.weak&&!r.fix){notice("请先选择一个弱项或记下一处可观察的问题。");return}r.manual=readManual(r);
- r.locked=true;if(!r.video)r.scoreDraft[5]=null;
+ r.locked=true;if(!r.video)r.scoreDraft[5]=null;if(r.noMedia)r.scoreDraft[4]=null;
  updateMeta(r,{score:[...r.scoreDraft],oral:r.oral??null,weak:r.weak,fix:r.fix,manual:r.manual,total:scoreTotal(r.scoreDraft),independent:!(r.aiShown&&pref.reveal==="fast"&&!U().assessment)});
  renderReview(r)
 }
@@ -248,7 +269,7 @@ function cancelPrep(){clearClock();phase="ready";document.body.classList.remove(
 function endSession(force=false){
  if(phase==="record"){if(!confirm("先结束并保存当前录制？"))return;stopRecord();return}
  if(!force&&session&&!session.finished&&!confirm("退出后本轮未下载的录像将丢失，已保存的本地记录保留。确定退出？"))return;
- epoch++;clearClock();clearAux();stopTracks();document.body.classList.remove("recording");phase="";if(session){session.records.forEach(r=>URL.revokeObjectURL(r.url));session=null}current=null;renderHome()
+ epoch++;clearClock();clearAux();stopTracks();document.body.classList.remove("recording");phase="";if(session){session.records.forEach(r=>r.url&&URL.revokeObjectURL(r.url));session=null}current=null;renderHome()
 }
 function openSettings(){
  drawer("AI评审与本机设置",`<p class="muted">默认不上传音频。配置成功并主动开启后，停止录制时自动发往所选服务；第42单元默认不发送。第三方处理和计费按所选服务条款执行。</p><label class="field">评审路径<select id="cfg-mode"><option value="local" ${pref.mode==="local"?"selected":""}>仅本地自评</option><option value="worker" ${pref.mode==="worker"?"selected":""}>Cloudflare Worker 代理</option><option value="gemini" ${pref.mode==="gemini"?"selected":""}>Gemini API 直连（BYOK）</option></select></label><label class="field">Worker HTTPS地址<input id="cfg-endpoint" type="url" value="${E(pref.endpoint)}" placeholder="https://…workers.dev"></label><label class="field">代理访问口令（当前会话）<input id="cfg-token" type="password" autocomplete="off" value="${E(credential.token||"")}"></label><label class="field">Gemini模型ID（需支持原生音频和JSON Schema）<input id="cfg-model" type="text" value="${E(pref.model)}" placeholder="按账号实际可用模型填写"></label><label class="field">API Key（当前会话）<input id="cfg-key" type="password" autocomplete="off" value="${E(credential.key||"")}"></label><label class="check"><input type="checkbox" id="cfg-auto" ${pref.auto?"checked":""}>已知悉音频将发送到配置服务，启用录后自动评审</label><label class="check"><input type="checkbox" id="cfg-frames" ${pref.frames?"checked":""}>允许默认勾选附带低清关键帧；每轮可关闭</label><label class="field">揭示方式<select id="cfg-reveal"><option value="strict" ${pref.reveal==="strict"?"selected":""}>严谨：自评后揭晓</option><option value="fast" ${pref.reveal==="fast"?"selected":""}>极速：普通练习自动展开（测评仍门禁）</option></select></label><div class="actions">${primary("保存设置","save-settings")}${secondary("清除会话凭证","clear-secret")}</div><p class="small">不把密钥写入仓库、永久本地存储或JSON备份。直接连接受跨域和模型权限影响，代理未部署前不会调用。15秒超时后不阻断本地训练。不要把未公开研究、真实学生身份或他人录音上传。</p><p><a href="worker/README.md">代理配置说明</a></p><hr><h3>进度备份</h3><div class="actions">${secondary("导出JSON","export")}${secondary("导入恢复","import")}</div><input type="file" id="import-file" accept=".json,application/json" hidden><p id="settings-message" class="status"></p>`)
@@ -295,6 +316,10 @@ document.addEventListener("click",async ev=>{
  case "launch-main":launch(session.plan[0]);break;
  case "reveal-card":current.shown=true;renderTask();break;
  case "device":await getDevice();break;
+ case "detect-device":await detectDevices();break;
+ case "external-pick":if(!$("external-attest")?.checked){notice("请先确认本轮原始发言。");break}$("external-file")?.click();break;
+ case "timer-only-save":saveTimerOnly();break;
+ case "external-retry":if(current){current.timerSeconds=null;phase="ready";view="task";renderTask()}break;
  case "start-prep":startPrep();break;
  case "cancel-prep":cancelPrep();break;
  case "stop-record":await stopRecord();break;
@@ -327,7 +352,8 @@ document.addEventListener("click",async ev=>{
 });
 document.addEventListener("change",async ev=>{
  let e=ev.target;
- if(e.name==="media"&&stream&&!busy()){stopTracks();current.video=e.value==="video";renderTask()}
+ if(e.name==="media"&&!busy()&&current&&view==="task"){rememberFamiliar();stopTracks();current.source=e.value;current.video=e.value==="video";current.deviceError="";session.captureMode=e.value;renderTask()}
+ if(e.id==="external-file"&&e.files?.[0])await importExternal(e.files[0]);
  if(e.id==="gaze-guide"&&$("camera")){$("camera").style.boxShadow=e.checked?"inset 0 0 0 4px #6ab5ae":"none";$("special-note").hidden=!e.checked;$("special-note").textContent=e.checked?"左 · 中 · 右　按意群缓慢转移目光":""}
  if(e.id==="revision-choice"){session.selected=+e.value;renderRevisionChoice()}
  if(e.dataset.case!==undefined&&state.cases[+e.dataset.case]&&["title","text"].includes(e.dataset.field)){state.cases[+e.dataset.case][e.dataset.field]=e.value;persist()}
