@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="每日10分钟数学微课程，第42课：协方差椭圆">
+<meta name="course-status" content="taught">
+<title>第4章·第4节｜协方差椭圆</title>
+<link rel="stylesheet" href="../site.css">
+<script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]}};</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<script defer src="../../assets/reading-status.js?v=20261030a"></script>
+<style>.article-wrap{max-width:830px;margin:0 auto;padding:36px 20px 80px}.article{font-size:17px;line-height:1.92;color:#263d3a}.article h2{font-size:1.24em;margin-top:1.7em}.article p{margin:1em 0}.article .math{overflow-x:auto;background:#f4f8f5;border-radius:9px;padding:12px}.muted{font-size:14px;color:#61736e}@media(max-width:650px){.article-wrap{padding:24px 16px 64px}.article{font-size:16px}}</style>
+</head>
+<body>
+<header><div class="wrap"><a href="../">← 数学课程目录</a><a href="../../">研究学习中心</a></div></header>
+<main class="article-wrap"><div class="kicker">MATHEMATICS · PROBABILITY · ECONOMETRICS</div>
+<h1>第4章·第4节｜协方差椭圆</h1>
+<article class="article">
+<p>第4章·第4节｜2026年11月27日聊天正文补发｜预计学习8分钟</p>
+<p><b>核心问题：二维随机变量的联合波动，为什么可以用一条椭圆表示？椭圆的方向和轴长分别由什么决定？</b></p>
+<h2>一、从协方差矩阵到椭圆</h2>
+<p>第39—41课讨论了特征值、谱分解及协方差矩阵的半正定性。本课把这些代数性质转化为几何图形。</p>
+<p>设二维随机向量 \(X=(X_1,X_2)^{\mathsf T}\) 有有限二阶矩，总体均值为 \(\mu\in\mathbb R^2\)，总体协方差矩阵为 \(\Sigma\in\mathbb R^{2\times2}\)。若 \(\Sigma\) 正定，定义等马氏距离曲线：</p>
+<div class="math">\[
+(x-\mu)^{\mathsf T}\Sigma^{-1}(x-\mu)=c,\qquad c&gt;0.
+\]</div>
+<p>这里 \(x\) 是二维空间中的确定点，不能与随机向量 \(X\) 混淆。相同的 \(c\) 表示相同的标准化平方距离。</p>
+<h2>二、主轴方向与轴长的推导</h2>
+<p>根据实对称矩阵的谱分解，\(\Sigma=Q\Lambda Q^{\mathsf T}\)，其中 \(Q\) 为 \(2\times2\) 正交矩阵，\(\Lambda=\operatorname{diag}(\lambda_1,\lambda_2)\)，且两个特征值均为正。令 \(u=Q^{\mathsf T}(x-\mu)\)，代入前式：</p>
+<div class="math">\[
+\frac{u_1^2}{c\lambda_1}+\frac{u_2^2}{c\lambda_2}=1.
+\]</div>
+<p>这就是标准椭圆方程。特征向量决定椭圆主轴方向，半轴长度分别为 \(\sqrt{c\lambda_1}\) 和 \(\sqrt{c\lambda_2}\)。大特征值对应更大的波动方向；两特征值相等时，轮廓成为圆。</p>
+<h2>三、手算例子</h2>
+<p>考虑教学设定的协方差矩阵：</p>
+<div class="math">\[
+\Sigma=\begin{pmatrix}5&amp;4\\4&amp;5\end{pmatrix},\quad\lambda_1=9,\quad\lambda_2=1.
+\]</div>
+<p>由特征方程 \((5-\lambda)^2-16=0\)，得到特征值9与1。对应单位特征向量分别为 \((1,1)^{\mathsf T}/\sqrt2\) 和 \((1,-1)^{\mathsf T}/\sqrt2\)。</p>
+<p>当 \(c=1\)、\(\mu=(0,0)^{\mathsf T}\) 时，椭圆长、短半轴分别为3和1，长轴沿45度方向。这与正协方差4相吻合：两个变量往往同向波动。</p>
+<h2>四、统计与计量应用</h2>
+<p>协方差椭圆可用于描述收入与消费、两项资产收益或两个回归系数估计量的联合离散程度。使用样本协方差矩阵绘制时，图形是样本统计摘要，其可靠程度取决于抽样设计及估计质量。</p>
+<p>对任意具有正定协方差矩阵的二维分布，都能定义上述等马氏距离椭圆；只有在多元正态等适当分布假设下，才能进一步将其直接解释为等密度轮廓。它也不是未经推导就成立的均值置信区域，更不能从椭圆倾斜推断因果方向。</p>
+<p>若 \(X\sim N_2(\mu,\Sigma)\) 且 \(\Sigma\) 正定，则平方马氏距离服从自由度为2的卡方分布。取 \(c=1\) 时椭圆内部概率约为39.35%，而不是68%；取 \(c\approx5.991\) 时才覆盖95%的总体随机向量。若协方差矩阵只有一个正特征值，中心化向量几乎处处位于一条直线上，普通逆矩阵形式不再适用。两个特征值相等时，任意正交方向均可作为圆的主轴。这里讨论的是随机向量的概率覆盖区域，不是均值参数的置信区域。</p>
+<h2>五、两道自测</h2>
+<p><b>第1题（概念题）：</b> 协方差椭圆的主轴方向由什么决定？为什么协方差矩阵必须正定才能直接使用普通逆矩阵构造该椭圆？</p>
+<p><b>第2题（计算题）：</b> 若 \(\Sigma=\operatorname{diag}(16,4)\)，中心为原点，且 \(c=4\)，求椭圆两个半轴长度及长短轴之比。</p>
+<p><b>参考答案</b></p>
+<p>第1题：主轴方向由协方差矩阵的单位特征向量决定。正定性保证两个特征值严格为正、矩阵可逆，因而能够得到非退化椭圆。</p>
+<p>第2题：半轴分别为 \(\sqrt{4\times16}=8\) 和 \(\sqrt{4\times4}=4\)，长短轴之比为2。</p>
+<h2>六、前后课衔接</h2>
+<p>第41课证明协方差矩阵特征值非负；本课利用特征方向解释联合波动的几何形状。</p>
+<p><b>下一课：第4章·第5节《PCA的主方向》（全课程第43课）。</b></p>
+</article>
+<p class="muted">2026-11-27聊天正文补发版本，taught；上一课：第41课；下一课：第43课。</p>
+<nav><a href="2026-11-26-04-03.html">← 上一课</a>　<a href="../">课程目录</a>　<a href="2026-11-20-04-05.html">下一课 →</a></nav>
+</main></body></html>
