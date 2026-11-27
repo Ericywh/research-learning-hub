@@ -219,13 +219,103 @@ function tick(){if(!timer?.running)return;let t=timer;t.remaining=Math.max(0,Mat
 function pauseTimer(){if(!timer||timer.phase==="done")return;if(timer.running){timer.remaining=Math.max(0,Math.ceil((timer.deadline-Date.now())/1000));timer.running=false;clearInterval(interval)}else{timer.running=true;timer.deadline=Date.now()+timer.remaining*1000;interval=setInterval(tick,160)}paint()}
 function resetTimer(){if(!timer)return;clearInterval(interval);let p=timer.initialMode==="both"&&timer.prepare>0?"prep":"speech";timer.phase=p;timer.total=timer.remaining=p==="prep"?timer.prepare:timer.duration;timer.running=false;timer.cue="";timer.cued=false;paint()}
 function closeTimer(){clearInterval(interval);timer=null;$("dock").hidden=true}
-function openDialog(title,html){$("dialog-title").textContent=title;$("dialog-body").innerHTML=html;$("dialog").showModal()}
+const readerTools=(function readerTools(){
+ const between=(s,a,b)=>{let i=s.indexOf(a);if(i<0)throw Error("missing "+a);let j=b?s.indexOf(b,i+a.length):-1;if(b&&j<0)throw Error("missing "+b);return s.slice(i+a.length,j<0?undefined:j).trim()};
+ const flowText=s=>String(s??"").replace(/\r/g,"").split("\n").map(x=>x.trim()).filter(Boolean).reduce((a,x)=>a+(a&&/[A-Za-z0-9]$/.test(a)&&/^[A-Za-z0-9]/.test(x)?" ":"")+x,"");
+ const p=s=>`<p>${E(flowText(s))}</p>`;
+ const section=(title,body,tone="purple",sub="")=>`<section class="tool-section tone-${tone}"><header class="tool-section-head"><i></i><div><h3>${E(title)}</h3>${sub?`<small>${E(sub)}</small>`:""}</div></header><div class="tool-section-body">${body}</div></section>`;
+ const hero=(label,title,desc,stats=[],tone="purple")=>`<header class="tool-hero tone-${tone}"><div class="tool-kicker">${E(label)}</div><h3>${E(title)}</h3>${p(desc)}${stats.length?`<div class="tool-metrics">${stats.map(([n,l])=>`<div><b>${E(n)}</b><span>${E(l)}</span></div>`).join("")}</div>`:""}</header>`;
+ const callout=(title,body,tone="gold")=>`<div class="tool-callout tone-${tone}"><b>${E(title)}</b>${p(body)}</div>`;
+ const cards=rows=>`<div class="tool-card-grid">${rows.map(([title,body,tone="purple"])=>`<article class="tool-mini-card tone-${tone}"><h4>${E(title)}</h4>${p(body)}</article>`).join("")}</div>`;
+ const table=(headers,rows)=>`<div class="tool-table-wrap"><table class="tool-table"><thead><tr>${headers.map(x=>`<th scope="col">${E(x)}</th>`).join("")}</tr></thead><tbody>${rows.map(row=>`<tr>${row.map((x,i)=>`<td data-label="${E(headers[i])}">${E(x)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+ const steps=xs=>`<div class="tool-flow">${xs.map((x,i)=>`<div><span>${pad(i+1)}</span><b>${E(x)}</b></div>`).join("")}</div>`;
+ const numbered=s=>`<ol class="tool-numbered">${s.split(/(?:^|\n)\s*\d+\.\s+/).filter(x=>x.trim()).map(x=>`<li>${E(flowText(x))}</li>`).join("")}</ol>`;
+ const link=(n,title)=>`<a class="tool-link" data-tool-unit="${n}" href="#u${pad(n)}">${E(title||("进入第 "+pad(n)+" 单元"))}</a>`;
+ const actions=h=>`<div class="tool-actions">${h}</div>`;
+ const colors=["purple","blue","gold","teal","rose"];
+ function guide(){
+ const g=data.guide;
+ const modes=[
+ ["完整训练","30—35 分钟","前晚 PM 10 分钟：方法、正反对照、静默预演；次晨 AM 普通 20 分钟、长任务 25 分钟（11、23、30、33、34、38、45、47 单元）。","分别记录 PM 与 AM；测评前晚仅做设备准备，不泄题。"],
+ ["一站式","25—30 分钟","5 分钟方法输入＋20 分钟普通 AM 或 25 分钟长任务 AM。","独立记录为合并模式；只读方法不等于完成 AM。测评仅检查设备，不预习题目或框架。"],
+ ["忙碌日","5 分钟","普通短题：读题约 20 秒、准备 10 秒、录像 60 秒、回听 60 秒、选一处改动并重说 60 秒，其余记录。","标为保底，不是完整训练；基线、终测和长演讲另补，不改测评条件。"],
+ ["第 7 天","弹性休整","休息、补练或 W7D7/W8D7 自选一次 8 分钟代表作录像＋5—7 分钟抽查自评；若疲劳则移至另一天。","记录实际训练，不按日期自动增加课次。"]];
+ const reviews=[
+ ["目标偏离，闲聊占比过大","取消独立闲聊模块。第 3—4 周集中会议点名、请求决策、分歧、致谢、寄语、主持、评议、答辩；第 6—8 周推进完整演讲。"],
+ ["早晚闭环倒置","PM 提前学习次日同一技能，使用近似但非正式首录的情境；基线/陌生测评例外，不先提供提示。"],
+ ["重复模板、跨章错位、示范过短","48 单元逐课重写题目和示范；第 2 周整合故事、科普、数字，第 4 周集中证据与点评，删除原第 35/36 天连续周测错位。"],
+ ["没有即兴框架和真正的限时","前两周认识八框架，02—08 集中练基础，09—11 专注类比、数字、关键词；礼仪、点评和质疑在第 3—4 周专练。准备 30 秒→15/10/5 秒→末周 3 秒挑战。"],
+ ["声音、体态与现场感染力空缺","W5 先 8 分钟熟段孤立练、后 12 分钟新题整合；30 单元另加 5 分钟。加入温和呼吸与渐进真实听众练习。"],
+ ["公众演讲太晚、时长太短","W2 开始 SCQA 和故事，W6 完整 3 分钟，W7—8 完整 5 分钟，另附可插入 3 分钟的扩展段；设置跨受众、互动及设备意外。"],
+ ["时间账失真、缺休整与外部反馈","普通 AM 20 分钟；指定长任务 25 分钟；5—8 分钟演讲抽查及局部重录；独立题卡、语音陪练、弹性休整及真实听众反馈。"]];
+ const weeks=`<div class="tool-week-grid">${weekNames.map((name,i)=>`<details class="tool-week tone-${colors[i%5]}"><summary><span class="tool-week-num">W${pad(i+1)}</span><span><b>${E(name)}</b><small>6 个单元 · 第 7 天休整或补练</small></span></summary><div class="tool-week-list">${data.units.filter(u=>u.week===i+1).map(u=>`<a class="tool-unit-link" data-tool-unit="${u.id}" href="#u${pad(u.id)}"><span>${pad(u.id)}</span><span>${E(u.title)}</span></a>`).join("")}</div></details>`).join("")}</div>`;
+ const checkpoint=flowText(between(g,"阶段检查点","直接进入第 01 单元"));
+ const idx1=checkpoint.indexOf("W6 末"),idx2=checkpoint.indexOf("W3、W5、W6、W7—8"),idx3=checkpoint.indexOf("上述为训练目标");
+ const cp=idx1>0&&idx2>idx1&&idx3>idx2?cards([["W4 · 即兴启动",checkpoint.slice(0,idx1),"purple"],["W6 · 声音与节奏",checkpoint.slice(idx1,idx2),"blue"],["W8 · 真实场合",checkpoint.slice(idx2,idx3),"teal"]])+p(checkpoint.slice(idx3)):p(checkpoint);
+ return hero("START HERE · 开练指南","56天的学习节奏","前晚理解方法，次晨独立开口；每周留出实战与休整时间。",[["8","周"],["48","训练单元"],["8","休整／补练日"]])+
+ section("一、课程定位与第一次练习",p(between(g,"怎样使用这本训练教材","第一天特别规则"))+callout("第01单元 · 无提示基线",between(g,"第一天特别规则","直接进入第 01 单元"))+actions(link(1,"直接进入第01单元"))+p("基于2026年11月27日三轮终审定稿。40个核心训练单元、8个实战/阶段评估单元；8大框架、6维12分＋口语活度、独立题卡、实时陪练与练后双示范。"),"purple")+
+ section("二、每天如何执行",`<div class="tool-mode-grid">${modes.map((m,i)=>`<article class="tool-mini-card tone-${colors[i]}"><div class="tool-mode-time">${E(m[1])}</div><h4>${E(m[0])}</h4>${p(m[2])}<div class="tool-mode-note"><b>完成口径</b>${p(m[3])}</div></article>`).join("")}</div><p class="tool-editor-note">上述是教材训练口径；当前网页沿用手机独立录制和一键完成，不需额外勾选 PM／AM 状态。</p>`,"blue")+
+ section("三、三条操作纪律",numbered(between(g,"三条操作纪律","除第 42 单元"))+callout("案例与证据边界","除第 42 单元"+between(g,"除第 42 单元","个性化训练版 | 开练指南"),"teal"),"teal")+
+ section("四、开练准备与执行护栏",p(between(g,"56 天开练与执行护栏","开始前一晚"))+callout("开始前一晚｜只准备设备",between(g,"开始前一晚｜只准备设备，不提前学题","四条执行护栏"))+numbered(between(g,"四条执行护栏","阶段检查点")),"gold")+
+ section("五、阶段检查点",cp,"rose")+
+ section("六、八周课程目录",weeks,"purple","按周展开，点击单元即可进入训练。")+
+ section("七、教材重构依据",fold("评审意见与本次修改的对应关系",table(["评审指出的问题","本版落实方式"],reviews))+fold("原课资源整合路径与评审边界",p(between(g,"原课资源整合路径","课程导航\n第 1—4 周"))),"blue")+
+ `<p class="tool-editor-note">仅作为个人训练教材；本版新编号不覆盖历史课程、录音或完成记录。网页版无需连接录音设备。</p>`;
+ }
+ function framework(){
+ const raw=sliceGuide("八大高频框架：1—4","6 维 12 分：统一操作量表");
+ const matches=[...raw.matchAll(/(?:^|\n)(0[1-8]) ([^\n]+)\n([\s\S]*?)(?=\n0[1-8] |\n思维框架库 |\n框架调用安排：|$)/g)];
+ if(matches.length!==8)throw Error("framework count "+matches.length);
+ const units=[[2],[3],[4],[7],[8],[16,17],[20],[22]];
+ return hero("FRAMEWORK LIBRARY · 八大框架","面对不同场合，调用适合的结构","第01单元独立首录之后再阅读。框架用于组织思路，不是逐字稿。",[["8","高频框架"],["4","优先调用"]])+
+ `<div class="tool-framework-grid">${matches.map((m,i)=>{const b=m[3].trim();return `<article class="tool-framework tone-${colors[i%5]}"><header><span class="tool-framework-no">${m[1]}</span><div><h3>${E(m[2])}</h3><p>${E(flowText(between(b,"场合","破题例")))}</p></div></header>${steps(b.split("\n")[0].split("→").map(x=>x.trim()))}<div class="tool-example"><b>破题例</b>${p(between(b,"破题例","卡住时"))}</div><div class="tool-framework-help"><b>卡住时怎么处理</b>${p(between(b,"卡住时",""))}</div>${actions(units[i].map(n=>link(n)).join(""))}</article>`}).join("")}</div>`+
+ section("框架调用安排",p(between(raw,"框架调用安排：","评估与反馈")),"blue");
+ }
+ function personal(){
+ const r=data.personal,a=between(r,"一、先解决思路与持续表达","下一页：五种内容展开路径"),b=between(r,"二、说完观点，下一句从哪里来？","下一页：口语句式和轻量辨音"),c=between(r,"三、把常用句式练成可调用工具","个人五项快记 |");
+ const group=(v,re)=>[...v.matchAll(re)].map((m,i)=>[m[1],m[2],colors[i%5]]);
+ const stages=group(between(a,"阶段顺序","四种优先调用的框架"),/(?:^|\n)(第 [1-8]—[1-8] 周)：([\s\S]*?)(?=\n第 [1-8]—[1-8] 周：|$)/g);
+ const pri=group(between(a,"四种优先调用的框架（其他四式仍按课表学习）","SCQA、STAR"),/(?:^|\n)((?:PREP|亮—核—建|黄金三点|接—定—推)（[^）]+）)：([\s\S]*?)(?=\n(?:PREP|亮—核—建|黄金三点|接—定—推)（|$)/g);
+ const dir=group(between(b,"五个方向｜以社区阅读区是否设置手机静音区为例","重说时的实际操作"),/(?:^|\n)(原因|例子|影响|对比|行动)：([\s\S]*?)(?=\n(?:原因|例子|影响|对比|行动)：|$)/g);
+ const phr=[...c.matchAll(/(?:^|\n)(提出观点|补充角度|深入解释|引出例子|卡住恢复|抓住重点|自然过渡|自然收束)：([^\n]+)/g)].map(m=>[m[1],m[2]]);
+ const pr=between(c,"可选 2 分钟普通话辨音（辅助，不计分）","");
+ const sounds=[...pr.matchAll(/(?:^|\n)(n\/l|r\/l|前后鼻音)：([^\n]+)/g)].map(m=>[m[1],m[2]]);
+ const q=between(data.tools,"个人五项快记与下周训练选择","返回个人训练导航");
+ const quick=group(q,/(?:^|\n)(启动速度|思路形成|内容展开|卡壳恢复|脱稿程度)：([\s\S]*?)(?=\n(?:启动速度|思路形成|内容展开|卡壳恢复|脱稿程度)：|\n一周之后怎样决定是否调整|$)/g);
+ if([stages.length,pri.length,dir.length,phr.length,sounds.length,quick.length].join()!=="4,4,5,8,3,5")throw Error("personal counts "+[stages.length,pri.length,dir.length,phr.length,sounds.length,quick.length].join());
+ return hero("PERSONAL ROADMAP · 个人训练导航","先形成思路，再自然展开","围绕高校教学、科研与会议表达安排训练重点；以首录实际表现判断薄弱项。",[["4","训练阶段"],["5","展开方向"],["8","功能句式"]],"teal")+
+ section("一、先解决思路与持续表达",p(a.slice(0,a.indexOf("阶段顺序")))+cards(stages)+`<h4 class="tool-subtitle">四种优先调用的框架</h4>`+cards(pri)+p("SCQA、STAR"+between(a,"SCQA、STAR",""))+actions(btn("查阅八大框架","framework","","smallbtn")+link(2)),"purple")+
+ section("二、说完观点，下一句从哪里来？",p(b.slice(0,b.indexOf("五个方向｜")))+`<h4 class="tool-subtitle">五种展开方向｜社区阅读区手机静音案例</h4>`+cards(dir)+`<h4 class="tool-subtitle">重说时的实际操作</h4>`+p(between(b,"重说时的实际操作","卡住时的接续顺序"))+callout("卡住时的接续顺序",between(b,"卡住时的接续顺序",""),"blue")+actions(link(2)+link(5)),"blue")+
+ section("三、把常用句式练成可调用工具",p(c.slice(0,c.indexOf("提出观点：")))+`<div class="tool-phrase-grid">${phr.map(([l,v])=>`<article class="tool-phrase"><b>${E(l)}</b>${p(v)}</article>`).join("")}</div>`,"rose")+
+ section("四、轻量辨音 · 可选2分钟",p(pr.slice(0,pr.indexOf("n/l：")))+steps(["30秒慢读词组","45秒读短句","45秒自然改述"])+table(["辨音组","词组与短句"],sounds)+p(pr.slice(pr.indexOf("每次选一组。"))),"gold")+
+ section("五、个人五项快记与下周训练选择",p(q.slice(0,q.indexOf("启动速度：")))+cards(quick)+`<h4 class="tool-subtitle">一周之后怎样决定是否调整</h4>`+p(between(q,"一周之后怎样决定是否调整","")),"teal","每次依据实际首录选择一个弱项；原评分口径不变。");
+ }
+ function assets(){
+ const done=countDone(),oldCount=old.records.length,records=garden.assessments.slice(-25).reverse();
+ const rows=records.map(r=>["U"+pad(r.unit)+" "+(r.key||""),r.round||"—",r.media==="video"?"视频":r.media==="audio"?"音频":"无录音",r.total??"未测",r.opening??"—",r.fillerPerMin??"—"]);
+ const baseline=["B1","B2"].map(k=>{const v=n=>[...garden.assessments].reverse().find(r=>r.unit===n&&r.key===k&&r.round==="首录"&&r.media!=="none");return [k,v(1)?.total??"未测",v(46)?.total??"未测"]});
+ const cases=garden.cases.map((c,i)=>fold("案例 "+(i+1)+" · "+(c.title||"待填写"),`<label class="field">标题<input data-case="${i}" data-field="title" value="${E(c.title)}"></label><label class="field">事实、卡点、动作、结果、启发<textarea data-case="${i}" data-field="text">${E(c.text)}</textarea></label>${actions(btn("删除本案例","case-delete",`data-i="${i}"`,"smallbtn"))}`)).join("");
+ const maintenance=garden.maintenance.map(x=>`<article class="tool-maint"><time>${E(x.date)}</time>${p(x.text)}</article>`).join("");
+ return hero("GROWTH & BACKUP · 成长与备份","让练习留下真实记录","原有记录和本版独立自评均保留；不自动推断训练效果。",[[done+"/48","已完成单元"],[oldCount,"旧版记录"],[garden.assessments.length,"本版独立记录"]],"purple")+
+ section("一、备份与恢复",`<p>数据保存在当前浏览器。备份包含学习进度、复盘、独立自评、案例库及维护计划，不含录音录像和 API 凭证。</p>${actions(btn("导出本机 JSON 备份","export","","primary")+btn("导入备份恢复","import","","smallbtn"))}<input id="backup-file" type="file" accept=".json,application/json" hidden><p id="asset-msg" class="tool-editor-note">请妥善保存备份；恢复前建议先导出当前记录。</p>`,"gold")+
+ section("二、近期独立自评",rows.length?table(["题目","轮次","媒介","总分/12","启动秒","口癖/分"],rows):`<div class="tool-empty"><b>暂无本版自评记录</b><p>完成单元练习后，可按需保存六维独立自评；不自动生成分数。</p></div>`,"blue","显示最近25条，完整记录仍包含在备份中。")+
+ section("三、01／46 基线同题记录",table(["题卡","第01单元 /12","第46单元 /12"],baseline)+p("只有条件相近的有效录像才适合描述性比较；同题熟练、评分者和设备变化需另记。"),"teal")+
+ section("四、个人案例库",p("只保存去标识、本人核实的经历。")+(cases||`<p class="tool-editor-note">尚未添加案例。</p>`)+actions(btn("新增案例卡","case-add","","primary")),"rose")+
+ section("五、90天维持计划",p("每周一次真实应用，每月一次录像检查。没有真实场合时留待补。")+`<div class="tool-form"><label class="field">日期<input id="maint-date" type="date" value="${new Date().toISOString().slice(0,10)}"></label><label class="field">真实场合／下一次行动<textarea id="maint-text"></textarea></label></div>`+actions(btn("新增维护记录","maint-add","","primary"))+(maintenance||""),"purple")+
+ actions(btn("完整复盘工具","tools","","smallbtn"));
+ }
+ return {guide,framework,personal,assets}
+})();
+function openDialog(title,html,view="default"){
+ const dialog=$("dialog"),body=$("dialog-body");$("dialog-title").textContent=title;
+ dialog.setAttribute("data-view",view);body.innerHTML=html;if(!dialog.open)dialog.showModal();dialog.scrollTop=0;body.scrollTop=0;
+}
 function closeDialog(){if($("dialog").open)$("dialog").close()}
 function guideDialog(which){
- if(which==="guide")openDialog("56天开练与使用说明",text(data.guide.slice(0,data.guide.indexOf("思维框架库")))+`<p class="small">网页版采用自由阅读和手机独立录制。Word中的跳转说明以网页操作为准。</p>`);
- else if(which==="personal")openDialog("个人训练导航",text(data.personal));
- else if(which==="framework")openDialog("八大高频思维框架",text(sliceGuide("八大高频框架：1—4","6 维 12 分：统一操作量表")));
- else openDialog("课程工具 · 复盘与反馈",text(data.tools)+fold("六维量表与反馈方法",text(sliceGuide("6 维 12 分：统一操作量表","二轮精修工具：独立题卡")))+fold("四套AI陪练脚本",text(sliceGuide("脚本 1｜盲抽考官","第 5 周固定熟段"))))
+ if(which==="guide")openDialog("56天开练指南",readerTools.guide(),"guide");
+ else if(which==="personal")openDialog("个人训练导航",readerTools.personal(),"personal");
+ else if(which==="framework")openDialog("八大高频框架",readerTools.framework(),"framework");
+ else openDialog("课程工具 · 复盘与反馈",text(data.tools)+fold("六维量表与反馈方法",text(sliceGuide("6 维 12 分：统一操作量表","二轮精修工具：独立题卡")))+fold("四套AI陪练脚本",text(sliceGuide("脚本 1｜盲抽考官","第 5 周固定熟段"))),"reference");
 }
 function saveNote(){if(!unit)return;garden.notes[unit]={note:$("lesson-note")?.value||"",feedback:$("real-feedback")?.value||"",updated:new Date().toISOString()};persist();status(storageOK?"已保存到本浏览器。":"存储不可用，请复制记录或导出备份。")}
 function scoringTotal(scores){return scores.length===6&&scores.every(v=>[0,1,2].includes(v))?scores.reduce((a,b)=>a+b,0):null}
@@ -254,15 +344,11 @@ async function copyText(s,where){try{await navigator.clipboard.writeText(s);$(wh
 async function aiCopy(key){let t=taskByKey(key);if(!t)return;let u=current(),tr=$("ai-transcript").value.trim(),audio=$("ai-audio").checked,secs=$("ai-seconds").value;let prompt=`你是高校教师即兴发言训练教练。单元：${u.title}。\n实际题干：${t.task}\n实际发言时长：${secs?secs+"秒":"未提供"}。请只依据我提供的原始发言材料，不编造原句、数据或个人经历。${audio?"我会另附录音；只有能真正读取原声音时，才分析声音、节奏及填充词。":"只依据文字评价主旨、内容展开、逻辑、例证与情境。不能据此推断实际声音、停顿位置、破题秒数或体态。"}\n先给一个可核查的亮点，再指出唯一最影响听众理解的问题，引用实际原句并提供一句自然口语改写。按0/1/2分给六维建议（破题、结构、例证、情境、声音、体态），未测项留空；无连续视频不能评体态。没有真实材料先请我补充，不评分。不要把相关说成因果。${u.week>=5?"独立评价口语活度0—2分，不计入六维总分。":""}\n${tr?"原始转写：\n"+tr:"原始材料将由我另行提供。"}\n最后给一项可执行的重录动作。`;
  $("ai-prompt").value=prompt;await copyText(prompt,"ai-status")
 }
-function assetsDialog(){
- const records=garden.assessments.slice(-25).reverse(),oldCount=Array.isArray(old.records)?old.records.length:0;
- const rows=records.map(r=>`<tr><td>U${pad(r.unit)} ${E(r.key)}</td><td>${E(r.round)}</td><td>${E(r.media==="video"?"视频":r.media==="audio"?"音频":"无录音")}</td><td>${E(r.total??"未测")}</td><td>${E(r.opening??"—")}</td><td>${E(r.fillerPerMin??"—")}</td></tr>`).join("");
- const baseline=["B1","B2"].map(k=>{const v=n=>[...garden.assessments].reverse().find(r=>r.unit===n&&r.key===k&&r.round==="首录"&&r.media!=="none");let a=v(1),b=v(46);return `<p>${k}：01 ${E(a?.total??"未测")} / 12；46 ${E(b?.total??"未测")} / 12</p>`}).join("");
- openDialog("成长记录与备份",`<p class="muted">旧版互动训练的本地记录仍保留（${oldCount} 条）；本版新增独立记录 ${garden.assessments.length} 条。新旧记录不覆盖、不自动判定进步。</p><div class="table-wrap"><table><thead><tr><th>题目</th><th>轮次</th><th>媒介</th><th>总分/12</th><th>启动秒</th><th>口癖/分</th></tr></thead><tbody>${rows||'<tr><td colspan="6">暂无本版自评</td></tr>'}</tbody></table></div>${fold("01 / 46 基线同题记录",baseline+"<p class='small'>只有条件相近的有效录像才适合描述性比较；同题熟练、评分者和设备变化需另记。</p>")}${fold("个人案例库",`<p class="small">只保存去标识、本人核实的经历。</p>${garden.cases.map((c,i)=>fold("案例 "+(i+1)+" · "+(c.title||"待填写"),`<label class="field">标题<input data-case="${i}" data-field="title" value="${E(c.title)}"></label><label class="field">事实、卡点、动作、结果、启发<textarea data-case="${i}" data-field="text">${E(c.text)}</textarea></label>${btn("删除","case-delete",`data-i="${i}"`,"smallbtn")}`)).join("")}${btn("新增案例卡","case-add","","smallbtn")}`)}${fold("90天维持计划",`<p>每周一次真实应用，每月一次录像检查。没有真实场合时留待补。</p><label class="field">日期<input id="maint-date" type="date" value="${new Date().toISOString().slice(0,10)}"></label><label class="field">真实场合 / 下一次行动<textarea id="maint-text"></textarea></label>${btn("新增维护记录","maint-add","","smallbtn")}${garden.maintenance.map(x=>`<p class="small">${E(x.date)} · ${E(x.text)}</p>`).join("")}`)}<div class="actions">${btn("导出本机JSON备份","export","","primary")}${btn("导入恢复","import","","smallbtn")}${btn("完整复盘工具","tools","","smallbtn")}</div><input id="backup-file" type="file" accept=".json,application/json" hidden><p id="asset-msg" class="small">备份可能包含个人记录，仅本人保管。不含录音录像和API凭证。</p>`)
-}
+function assetsDialog(){openDialog("成长记录与备份",readerTools.assets(),"assets")}
 function exportBackup(){let file=new Blob([JSON.stringify({schema:"speaking-garden-v1",exported:new Date().toISOString(),legacy:old,garden},null,2)],{type:"application/json"}),url=URL.createObjectURL(file),a=document.createElement("a");a.href=url;a.download="speaking-garden-"+new Date().toISOString().slice(0,10)+".json";document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)}
-async function importBackup(file){try{if(file.size>20*1024*1024)throw Error("备份文件过大");let p=JSON.parse(await file.text());if(p.schema!=="speaking-garden-v1"||!p.legacy?.units||!Array.isArray(p.legacy.records)||!p.garden?.notes||!p.garden?.marks||!Array.isArray(p.garden.assessments)||!Array.isArray(p.garden.cases)||!Array.isArray(p.garden.maintenance))throw Error("不是青柠花园备份");if(Object.keys(p.legacy.units).some(k=>!/^\d+$/.test(k)||+k<1||+k>48)||p.garden.assessments.some(x=>!x||!Number.isInteger(x.unit)||x.unit<1||x.unit>48||!Array.isArray(x.score)||x.score.length!==6||x.score.some(v=>v!==null&&![0,1,2].includes(v)))||p.garden.cases.some(x=>!x||typeof x.title!=="string"||typeof x.text!=="string")||p.garden.maintenance.some(x=>!x||typeof x.date!=="string"||typeof x.text!=="string"))throw Error("备份记录结构不正确");if(!confirm("恢复会替换此浏览器的新版记录。建议先备份当前记录，确定继续？"))return;old=p.legacy;garden=p.garden;persist();closeDialog();route()}catch(e){$("asset-msg").textContent="导入失败："+e.message}}
+async function importBackup(file){try{if(file.size>20*1024*1024)throw Error("备份文件过大");let p=JSON.parse(await file.text());if(p.schema!=="speaking-garden-v1"||!p.legacy?.units||!Array.isArray(p.legacy.records)||!p.garden?.notes||!p.garden?.marks||!Array.isArray(p.garden.assessments)||!Array.isArray(p.garden.cases)||!Array.isArray(p.garden.maintenance))throw Error("不是本课程兼容的备份文件");if(Object.keys(p.legacy.units).some(k=>!/^\d+$/.test(k)||+k<1||+k>48)||p.garden.assessments.some(x=>!x||!Number.isInteger(x.unit)||x.unit<1||x.unit>48||!Array.isArray(x.score)||x.score.length!==6||x.score.some(v=>v!==null&&![0,1,2].includes(v)))||p.garden.cases.some(x=>!x||typeof x.title!=="string"||typeof x.text!=="string")||p.garden.maintenance.some(x=>!x||typeof x.date!=="string"||typeof x.text!=="string"))throw Error("备份记录结构不正确");if(!confirm("恢复会替换此浏览器的新版记录。建议先备份当前记录，确定继续？"))return;old=p.legacy;garden=p.garden;persist();closeDialog();route()}catch(e){$("asset-msg").textContent="导入失败："+e.message}}
 document.addEventListener("click",async e=>{
+ const lesson=e.target.closest("[data-tool-unit]");if(lesson){e.preventDefault();const target=Number(lesson.dataset.toolUnit);closeDialog();const hash="#u"+pad(target);if(location.hash===hash)route();else location.hash=hash;return}
  const jump=e.target.closest("[data-jump]");if(jump){e.preventDefault();const dest=$("g-"+jump.dataset.jump);if(dest?.tagName==="DETAILS")dest.open=true;dest?.scrollIntoView({behavior:document.body.classList.contains("no-motion")?"auto":"smooth",block:"start"});return}
  const b=e.target.closest("[data-act]");if(!b||b.disabled)return;
  const act=b.dataset.act;
