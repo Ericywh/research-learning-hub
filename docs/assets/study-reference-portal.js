@@ -8,7 +8,7 @@ const searchClose=document.getElementById("search-close"), searchForm=document.g
 const sort=document.getElementById("course-sort"), status=document.getElementById("filter-status"), empty=document.getElementById("no-results");
 let active="all";
 const ROOT="rlh:read:v1:";
-const totals={math:73,econometrics:36,psm:10,frontier:23,cssci:16,classics:8,speaking:126,english:168};
+const totals={math:73,econometrics:36,psm:10,frontier:23,cssci:16,classics:8,speaking:48,english:168};
 const prefixes={math:ROOT+"math/lessons/",psm:ROOT+"psm-did/",frontier:ROOT+"frontier/",cssci:ROOT+"cssci/lessons/",classics:ROOT+"economic-classics/lessons/"};
 function stored(prefix,acceptedValue="1"){const keys=[];try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith(prefix)&&localStorage.getItem(k)===acceptedValue)keys.push(k)}}catch(_){}return keys}
 function count(id){
@@ -20,10 +20,7 @@ function count(id){
   return Math.min(36,ids.size);
  }
  if(id==="speaking"){
-  const ids=new Set();
-  for(const k of stored("speaking:lesson-complete:v1:")){const name=k.slice("speaking:lesson-complete:v1:".length);if(/^(?:am|pm):day-(?:0[1-9]|[1-5][0-9]|6[0-3])$/.test(name))ids.add(name)}
-  for(const k of stored("speaking-course-complete:v1:","yes")){const m=k.match(/\/speaking\/dual-track-2026\/(am|pm)\/day-(\d{2})\.html$/);if(m)ids.add(m[1]+":day-"+m[2])}
-  return Math.min(126,ids.size);
+  try{const units=JSON.parse(localStorage.getItem("speaking-coach-8w:personal:v1")||"{}").units||{};return Array.from({length:48},(_,i)=>i+1).filter(n=>units[n]?.complete===true).length}catch(_){return 0}
  }
  if(id==="english"){
   const ids=new Set();
