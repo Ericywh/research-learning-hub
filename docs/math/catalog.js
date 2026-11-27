@@ -439,8 +439,8 @@ window.MATH_COURSE={
           "number": 42,
           "title": "协方差椭圆",
           "published": true,
-          "date": "2026-11-19",
-          "url": "lessons/2026-11-19-04-04.html",
+          "date": "2026-11-27",
+          "url": "lessons/2026-11-27-04-04.html",
           "delivered": true
         },
         {
