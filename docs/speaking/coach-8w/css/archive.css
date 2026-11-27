@@ -36,3 +36,126 @@ dialog{background:#fcf9ff;border-color:#d4c1ea;color:var(--ink);box-shadow:0 22p
 @media(max-width:720px){.shell{padding-top:13px}.hero{border-radius:21px 14px 21px 14px}.hero-copy{padding:19px 0 18px 15px}.hero h1{font-size:27px}.hero-art{flex-basis:32%}.hero-copy p{font-size:12px}.archive-stack{gap:9px}.archive-file>summary.archive-head{min-height:66px;padding:10px 11px;gap:8px}.archive-file .picon{width:34px;height:34px}.archive-title{font-size:16px}.archive-caption{font-size:10px;letter-spacing:0}.archive-no{font-size:10px;min-width:19px}.archive-chevron{width:26px;height:26px}.archive-body{padding:12px}.archive-file{border-radius:12px!important}.archive-chevron svg{width:16px;height:16px}}
 @media(max-width:370px){.archive-no{display:none}.archive-caption{font-size:10px}.hero-art{flex-basis:26%}.hero h1{font-size:24px}.archive-file .picon{width:31px;height:31px}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+/* Amethyst Archive · tool reading room. Local, responsive, no CDN. */
+#dialog[open]{display:flex;flex-direction:column;overflow:hidden;max-width:min(960px,calc(100vw - 36px));width:100%;max-height:88vh;max-height:88dvh;border-radius:20px}
+#dialog[open]>.dialoghead{flex:0 0 auto;position:relative;top:auto;padding:14px 21px;background:linear-gradient(110deg,#e4d5fa,#f4e0ef 68%,#fff0ca);border-bottom:1px solid #e4d6ec;box-shadow:0 3px 11px #6a4f9320}
+#dialog[open]>.dialoghead h2{font-size:20px;color:#503b78;letter-spacing:.01em}
+#dialog[open]>.dialoghead button{flex:none;min-height:36px;background:#ffffffc9;border-color:#dfd2ee}
+#dialog[open]>.dialogbody{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;scrollbar-gutter:stable;scroll-behavior:auto;padding:18px 22px 24px;background:radial-gradient(ellipse at 100% 0%,#f9e6ef80,transparent 45%),#f9f6ff}
+#dialog[data-view="guide"],#dialog[data-view="personal"],#dialog[data-view="framework"],#dialog[data-view="assets"]{--reading:#453c59;--sub:#6b6080;color:var(--reading)}
+#dialog .tone-purple{--tint:#eee5ff;--tint2:#dcd0f8;--accent:#7856b0;--edge:#ded0f2}
+#dialog .tone-blue{--tint:#e8f3ff;--tint2:#cfe3f8;--accent:#426da4;--edge:#d1e3f3}
+#dialog .tone-gold{--tint:#fff4d9;--tint2:#f8e3aa;--accent:#856329;--edge:#f0dfb7}
+#dialog .tone-teal{--tint:#e0f5ef;--tint2:#c5e9e4;--accent:#2c796e;--edge:#cde8e1}
+#dialog .tone-rose{--tint:#fce8f0;--tint2:#f4d3e1;--accent:#9e5076;--edge:#edd4e0}
+#dialog .tool-hero{padding:23px 24px;margin:0 0 17px;border:1px solid var(--edge);border-radius:17px;background:radial-gradient(ellipse at 98% 0%,#fff8,transparent 58%),linear-gradient(120deg,var(--tint2),var(--tint) 64%,#fff5e4);box-shadow:0 5px 14px #785a9d16,inset 0 1px 2px #fff}
+#dialog .tool-kicker{font-size:10px;font-weight:750;letter-spacing:.13em;color:var(--accent);margin-bottom:8px}
+#dialog .tool-hero h3{font-size:26px;line-height:1.45;color:#4e3b70;font-weight:800;margin-bottom:7px}
+#dialog .tool-hero p{font-size:14px;line-height:1.85;color:#5d536e}
+#dialog .tool-metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin-top:16px}
+#dialog .tool-metrics>div{background:#ffffffe0;border:1px solid #fff;border-radius:10px;padding:10px 12px;box-shadow:0 2px 6px #61507e14;min-width:0}
+#dialog .tool-metrics b{font-size:25px;line-height:1.3;color:var(--accent);font-variant-numeric:tabular-nums;display:block;overflow-wrap:anywhere}
+#dialog .tool-metrics span{font-size:12px;display:block;color:#6f6383;margin-top:4px}
+#dialog .tool-section{background:#fff;border:1px solid var(--edge);border-radius:13px;overflow:hidden;margin:0 0 14px;box-shadow:0 3px 10px #5e458f0d;min-width:0}
+#dialog .tool-section-head{display:flex;align-items:flex-start;gap:10px;padding:13px 16px;background:linear-gradient(110deg,var(--tint),#fff);border-bottom:1px solid var(--edge)}
+#dialog .tool-section-head>i{width:10px;height:10px;flex:none;border-radius:4px;background:var(--accent);margin-top:8px;box-shadow:0 2px 5px var(--tint2)}
+#dialog .tool-section-head h3{font-size:17px;font-weight:750;color:#4e4366;line-height:1.5}
+#dialog .tool-section-head small{display:block;color:#766984;font-size:12px;margin-top:4px}
+#dialog .tool-section-body{padding:15px 17px}
+#dialog .tool-section-body p,#dialog .tool-framework p{font-size:15px;line-height:1.95;color:#493f5c;overflow-wrap:anywhere;word-break:normal;white-space:normal}
+#dialog .tool-section-body p+p{margin-top:10px}
+#dialog .tool-section-body p:last-child{margin-bottom:0}
+#dialog .tool-section-body .tool-editor-note,#dialog .tool-editor-note{font-size:12px;line-height:1.8;color:#786a8b;margin:10px 0 0;overflow-wrap:anywhere}
+#dialog .tool-subtitle{font-size:15px;font-weight:750;color:#665180;margin:17px 0 10px;padding-left:9px;border-left:3px solid #aa8ed5}
+#dialog .tool-callout{margin:12px 0;padding:13px 15px;border:1px solid var(--edge);border-left:4px solid var(--accent);border-radius:9px;background:linear-gradient(140deg,var(--tint),#fff);color:#544768}
+#dialog .tool-callout>b{display:block;font-size:14px;color:var(--accent);margin-bottom:6px}
+#dialog .tool-card-grid,#dialog .tool-mode-grid,#dialog .tool-phrase-grid,#dialog .tool-week-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:11px 0;align-items:start}
+#dialog .tool-mini-card{min-width:0;border:1px solid var(--edge);background:linear-gradient(145deg,var(--tint),#fff 86%);border-radius:10px;padding:13px 14px}
+#dialog .tool-mini-card h4{font-size:15px;color:var(--accent);margin-bottom:7px;font-weight:750}
+#dialog .tool-mini-card p{font-size:14px;line-height:1.85}
+#dialog .tool-mode-time{font-size:22px;font-weight:800;color:var(--accent);letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.4;margin-bottom:5px}
+#dialog .tool-mode-note{margin-top:10px;padding-top:10px;border-top:1px solid var(--edge)}
+#dialog .tool-mode-note>b{font-size:12px;color:var(--accent)}
+#dialog .tool-mode-note p{font-size:13px}
+#dialog .tool-numbered{list-style:none;padding:0;margin:0;counter-reset:rule;display:flex;flex-direction:column;gap:10px}
+#dialog .tool-numbered li{counter-increment:rule;position:relative;padding:9px 10px 9px 42px;background:#faf8ff;border:1px solid #ede6f6;border-radius:9px;font-size:14px;line-height:1.9;color:#4c405d}
+#dialog .tool-numbered li:before{content:counter(rule,decimal-leading-zero);position:absolute;left:10px;top:11px;width:23px;height:23px;display:grid;place-items:center;font-size:11px;font-weight:750;color:var(--accent);background:var(--tint);border-radius:7px}
+#dialog .tool-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:13px 0 5px}
+#dialog .tool-link{display:inline-flex;align-items:center;justify-content:center;min-height:35px;padding:7px 12px;border:1px solid #dcd0ef;border-radius:8px;background:linear-gradient(140deg,#fff,#f1e9fc);font-size:13px;font-weight:650;color:#65489b;line-height:1.45;overflow-wrap:anywhere}
+#dialog .tool-link:hover{text-decoration:none;background:#eaddfb}
+#dialog .tool-week{margin:0;min-width:0;background:#fff;border:1px solid var(--edge);box-shadow:none;border-radius:10px}
+#dialog .tool-week>summary{display:flex;align-items:center;gap:9px;justify-content:flex-start;background:linear-gradient(110deg,var(--tint),#fff);padding:11px}
+#dialog .tool-week>summary:after{margin-left:auto;flex:none}
+#dialog .tool-week-num{width:36px;height:36px;flex:none;display:grid;place-items:center;background:#fff;border-radius:8px;font-size:12px;font-weight:800;color:var(--accent)}
+#dialog .tool-week>summary b{display:block;font-size:13px;font-weight:750;line-height:1.5}
+#dialog .tool-week>summary small{font-size:10px;line-height:1.5;color:#807390;display:block;margin-top:3px}
+#dialog .tool-week-list{padding:5px 11px 8px}
+#dialog .tool-unit-link{display:flex;align-items:flex-start;gap:9px;font-size:13px;line-height:1.65;padding:8px 0;color:#51466a;border-bottom:1px solid #ece6f4}
+#dialog .tool-unit-link:last-child{border:0}
+#dialog .tool-unit-link span:first-child{flex:none;width:23px;font-weight:750;color:var(--accent)}
+#dialog .tool-unit-link:hover{text-decoration:none;color:#7851b8}
+#dialog .tool-table-wrap{width:100%;min-width:0;border:1px solid #e5dced;border-radius:10px;overflow:hidden;margin:8px 0 12px}
+#dialog table.tool-table{width:100%;border-collapse:collapse;table-layout:auto;font-size:13px;line-height:1.75}
+#dialog .tool-table th,#dialog .tool-table td{white-space:normal;overflow-wrap:anywhere;word-break:normal;vertical-align:top;padding:10px 11px;border-bottom:1px solid #eae4f2;text-align:left}
+#dialog .tool-table thead th{background:linear-gradient(145deg,var(--tint,#eee5ff),#f9f6fd);font-weight:750;font-size:12px;color:#695782}
+#dialog .tool-table tbody tr:nth-child(even){background:#faf8fe}
+#dialog .tool-table tbody tr:last-child td{border-bottom:0}
+#dialog .tool-table td:first-child{font-weight:650;color:#614e84}
+#dialog .tool-framework-grid{display:flex;flex-direction:column;gap:13px;margin-bottom:14px}
+#dialog .tool-framework{background:linear-gradient(145deg,#fff 35%,var(--tint));border:1px solid var(--edge);border-radius:14px;padding:16px 18px;box-shadow:0 3px 11px #624b8c0e;min-width:0}
+#dialog .tool-framework header{display:flex;gap:12px;align-items:center;margin-bottom:13px}
+#dialog .tool-framework-no{width:44px;height:44px;flex:none;display:grid;place-items:center;font-size:19px;font-weight:800;color:var(--accent);background:linear-gradient(140deg,#fff,var(--tint2));border:1px solid var(--edge);border-radius:12px;box-shadow:0 3px 6px #74569d15}
+#dialog .tool-framework h3{font-size:19px;color:#54416f;font-weight:750;line-height:1.4}
+#dialog .tool-framework header p{font-size:12px;line-height:1.65;color:#7c6f8d;margin-top:4px}
+#dialog .tool-flow{display:flex;flex-wrap:wrap;gap:7px;margin:11px 0 13px}
+#dialog .tool-flow>div{min-width:0;flex:1 1 135px;border:1px solid var(--edge,#ded0f2);border-radius:9px;background:linear-gradient(130deg,#fff,var(--tint,#eee5ff));display:flex;align-items:flex-start;gap:8px;padding:10px 11px;box-shadow:inset 0 1px 1px #fff}
+#dialog .tool-flow>div span{flex:none;width:22px;height:22px;display:grid;place-items:center;border-radius:7px;background:#fff;font-size:10px;color:var(--accent,#7856b0);font-weight:750}
+#dialog .tool-flow>div b{font-size:13px;color:#514463;line-height:1.65;overflow-wrap:anywhere}
+#dialog .tool-example{padding:12px 13px;border-radius:9px;background:#ffffffc9;border:1px solid var(--edge);margin:9px 0}
+#dialog .tool-example>b,#dialog .tool-framework-help>b{display:block;font-size:12px;color:var(--accent);margin-bottom:5px}
+#dialog .tool-example p{font-size:15px;font-weight:600}
+#dialog .tool-framework-help{padding:11px 13px;background:var(--tint);border-radius:9px;margin-top:10px}
+#dialog .tool-framework-help p{font-size:14px}
+#dialog .tool-phrase{border:1px solid #e8d9ea;background:linear-gradient(140deg,#fdf0f6,#fff);padding:12px 14px;border-radius:9px}
+#dialog .tool-phrase b{font-size:12px;color:#9a5277;display:block;margin-bottom:6px}
+#dialog .tool-phrase p{font-size:14px;font-weight:550}
+#dialog .tool-empty{padding:20px 14px;border:1px dashed #ddd0ee;border-radius:10px;background:#faf7ff;text-align:center}
+#dialog .tool-empty b{display:block;color:#6f5a96;font-size:15px;margin-bottom:5px}
+#dialog .tool-empty p{font-size:13px;color:#7c6f8b}
+#dialog .tool-form{display:grid;grid-template-columns:minmax(0,.6fr) minmax(0,1.4fr);gap:12px}
+#dialog .tool-form .field{min-width:0}
+#dialog .tool-maint{padding:10px 13px;border-left:3px solid #b29bd8;background:#f8f4fd;border-radius:0 8px 8px 0;margin-top:9px}
+#dialog .tool-maint time{display:block;font-size:12px;font-weight:650;color:#846bb0}
+#dialog .tool-maint p{font-size:14px}
+@media(max-width:720px){
+#dialog[open]{max-width:calc(100vw - 18px);max-height:92vh;max-height:92dvh;border-radius:15px}
+#dialog[open]>.dialoghead{padding:11px 12px;gap:8px}
+#dialog[open]>.dialoghead h2{font-size:18px}
+#dialog[open]>.dialogbody{padding:11px;scrollbar-gutter:auto}
+#dialog .tool-hero{padding:16px 14px;border-radius:12px;margin-bottom:12px}
+#dialog .tool-hero h3{font-size:21px}
+#dialog .tool-metrics{grid-template-columns:repeat(auto-fit,minmax(80px,1fr));gap:6px}
+#dialog .tool-metrics>div{padding:8px}
+#dialog .tool-metrics b{font-size:20px}
+#dialog .tool-metrics span{font-size:11px}
+#dialog .tool-section-head{padding:10px 12px}
+#dialog .tool-section-head h3{font-size:16px}
+#dialog .tool-section-body{padding:12px}
+#dialog .tool-section-body p,#dialog .tool-framework p{font-size:14px}
+#dialog .tool-card-grid,#dialog .tool-mode-grid,#dialog .tool-week-grid{grid-template-columns:1fr;gap:8px}
+#dialog .tool-phrase-grid{grid-template-columns:1fr}
+#dialog .tool-framework{padding:13px 12px}
+#dialog .tool-framework h3{font-size:17px}
+#dialog .tool-flow>div{flex:1 1 125px;padding:8px}
+#dialog .tool-form{grid-template-columns:1fr;gap:0}
+#dialog .tool-table-wrap{border:0;overflow:visible}
+#dialog .tool-table,#dialog .tool-table tbody,#dialog .tool-table tr,#dialog .tool-table td{display:block;width:100%}
+#dialog .tool-table thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+#dialog .tool-table tr{border:1px solid #e5dced;border-radius:10px;margin-bottom:8px;background:#fff;overflow:hidden}
+#dialog .tool-table td{display:grid;grid-template-columns:minmax(75px,30%) minmax(0,1fr);gap:8px;padding:9px 10px;border-bottom:1px solid #eee8f5;font-size:13px}
+#dialog .tool-table td:before{content:attr(data-label);font-size:11px;font-weight:750;color:#827194;line-height:1.7}
+#dialog .tool-table td:last-child{border-bottom:0}
+#dialog .tool-table tbody tr:nth-child(even){background:#fff}
+#dialog .tool-actions>*{max-width:100%}
+}
